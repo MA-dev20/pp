@@ -1,0 +1,20 @@
+<%= image_tag 'game/choose.png', class: 'bg-image' %> 
+<div id="redirect">
+    <%= render partial: 'state' %>
+</div>
+<script>
+    
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                $('.bg-image').text($('#redirect').text().trim() == 'choose');
+                if($('#redirect').text().trim() == 'choose') {
+                    $('#redirect').load('choose #redirect');
+                } else {
+                    window.location.replace('<%= gma_turn_path %>')
+                }
+            }, 2000)
+        }
+    );
+    
+</script>

@@ -1,0 +1,61 @@
+<section id="gd_team">
+<div class="searchbar">
+    <input type="text" id="searchField" placeholder="suchen" onfocus='team_hide()' onblur="team_show()">
+    <%= image_tag 'dash/search.png' %>
+</div>
+</section>
+
+<section id="teams-container">
+    <div class="add_team">
+       <a href="" data-toggle="modal" data-target="#new_team"></a>
+        <div class="head">
+            Team
+        </div>
+        <div class="middle">
+            +
+        </div>
+        <div class="bottom">
+            hinzufügen
+        </div>
+    </div>
+    <% @teams.each do |t| %>
+    <div class="team_card">
+       <%= link_to '', dash_admin_team_users_path(t.id) %>
+        <div class="head">
+            <%= t.name %>
+        </div>
+        <div class="middle">
+            <span><%= t.users.count %></span> User
+        </div>
+        <div class="bottom">
+            <%= link_to '', dash_admin_team_stats_path(t.id), class: 'fas fa-chart-line' %>
+            <%= link_to '', destroy_team_path(t.id), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie das Team unwiederuflich löschen möchten?" }%>
+        </div>
+    </div>
+    <% end %>
+</section>
+
+
+
+
+<script>
+var $rows = $('.team_card');
+$('#searchField').keyup(function() {
+    
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val, 'i'),
+        text;
+    
+    $rows.show().filter(function() {
+        text = $(this).text().replace(/\s+/g, ' ');
+        return !reg.test(text);
+    }).hide();
+});
+team_show = function() {
+    $('.add_team').show();
+}
+team_hide = function() {
+    $('.add_team').hide();
+}
+new PerfectScrollbar('#teams-container');
+</script>

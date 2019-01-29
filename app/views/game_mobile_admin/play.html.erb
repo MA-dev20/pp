@@ -1,0 +1,30 @@
+<section id="content">
+    <div class="head">
+        <%= @cur_user.fname %> Pitcht!
+    </div>
+    <div class="middle">
+        <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
+    </div>
+    <div class="bottom">
+      <%= link_to 'beenden!', gma_redirect_path %>
+    </div>
+</section>
+<div id="redirect">
+    <%= render partial: 'state' %>
+</div>
+
+
+<script>
+    
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                if($('#redirect').text().trim() == 'play') {
+                    $('#redirect').load('play #redirect');
+                } else {
+                    window.location.replace('<%= gma_rate_url %>');
+                }
+            }, 2000);
+        }
+    );
+</script>

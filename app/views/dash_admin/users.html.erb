@@ -1,0 +1,95 @@
+<section id="gd_users">
+    
+<div class="top">
+
+    <div class="select-text">Spielgruppe wählen</div>
+    <div class="select">
+        <select class="cs-select cs-skin-underline form-field">
+            <option value="" disabled selected>Alle Teams</option>
+            <option value="" data-link="<%= dash_admin_users_path %>" data-class="cs-selected">Alle Teams</option>
+            <% @teams.each do |t| %>
+                    <option value="<%= t.id %>" data-link="<%= dash_admin_team_users_path(t.id) %>">
+                         <%= t.name %>
+                    </option>
+            <% end %>
+        </select>
+    </div>
+    
+    <div class="searchbar">
+        <input type="text" id="searchField" placeholder="Spieler suchen">
+        <%= image_tag 'dash/search.png' %>
+    </div>
+</div>
+   
+<div class="users" id="users">
+   <div id="table">
+    <table id="myTable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Unternehmen</th>
+            <th>Letztes Spiel</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @users.each do |u| %>
+        <tr class="user-row">
+           <td><%= image_tag(u.avatar.quad.url) if u.avatar? %></td>
+            <td class="name"><%= u.fname %> <%= u.lname %></td>
+            <td><%= u.email %></td>
+            <td><%= u.company_name %></td>
+            <td><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
+            <td><%= link_to '', destroy_user_path(u), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie den User unwiederuflich löschen möchten?" } %></td>
+            <td><% if u.teams.count > 0 %>
+                <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line" %>
+                <% end %>
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+
+
+<script>
+    $(document).ready( function () {
+    $('#myTable').DataTable( {
+        "paging":   false,
+        "info":     false,
+        'searching': false,
+        "order": [ 1, 'asc' ],
+        "columnDefs": [
+            { "orderable": false, "targets": 0 },
+            { "orderable": false, "targets": 5 },
+            { "orderable": false, "targets": 6 },
+        ]
+    } );
+} );
+(function() {
+				[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
+					new SelectFx(el);
+                    newTab: false;
+				} );
+			})();
+    
+var $rows = $('.user-row');
+$('#searchField').keyup(function() {
+    
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val, 'i'),
+        text;
+    
+    $rows.show().filter(function() {
+        text = $(this).text().replace(/\s+/g, ' ');
+        return !reg.test(text);
+    }).hide();
+});
+new PerfectScrollbar('#table');
+new PerfectScrollbar('.cs-options');
+</script>

@@ -1,0 +1,78 @@
+.rangeslider,
+.rangeslider__fill {
+  display: block;
+}
+
+.rangeslider {
+  background: #c2dfff;
+  position: relative;
+}
+
+.rangeslider--horizontal {
+    position: absolute;
+    left: 0;
+    top: 80px;
+    height: 25px;
+    border-radius: 12.5px;
+    width: 100%;
+    background: #c2dfff;
+    margin: 0;
+}
+
+.rangeslider--disabled {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+  opacity: 0.4;
+}
+
+.rangeslider__fill {
+  background: linear-gradient(to right, #ff3232 0vw,#faff00 50vw,#00e38b 100vw);
+  position: absolute;
+  border-radius: 12.5px;
+}
+.rangeslider--horizontal .rangeslider__fill {
+  top: 0;
+  height: 100%;
+}
+.rangeslider--vertical .rangeslider__fill {
+  bottom: 0;
+  width: 100%;
+}
+
+.rangeslider__handle {
+  cursor: pointer;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  background-image: image-url('game/wolf_button.png');
+  background-size: 100px;
+}
+.rangeslider__handle:after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: image-url('game/wolf_button.png');
+  background-size: 100px;
+}
+.rangeslider__handle:active, .rangeslider--active .rangeslider__handle {
+  background-image: image-url('game/wolf_button.png');
+  background-size: 100px 100px;
+}
+.rangeslider--horizontal .rangeslider__handle {
+  top: -40px;
+  touch-action: pan-y;
+  -ms-touch-action: pan-y;
+}
+.rangeslider--vertical .rangeslider__handle {
+  left: 0;
+  touch-action: pan-x;
+  -ms-touch-action: pan-x;
+}
+

@@ -1,0 +1,11 @@
+/*
+ *= require main/bootstrap.min
+ *= require main/style
+ *= require main/media
+ *= require acumin
+ *= require barack
+ *= require font-awesome
+ */
+.alert {
+    z-index: 1000;
+}

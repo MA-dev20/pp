@@ -1,0 +1,47 @@
+<section id="content">
+    <% if @admin.avatar? %>
+    <div class="head">
+        <div class="h100">Wow!</div>
+        <div class="h50">Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</div>
+    </div>
+    <% else %>
+    <div class="head">
+        <div class="h100">Bild hinzufügen!</div>
+        <div class="h50">Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</div>
+    </div>
+    <% end %>
+    <%= form_for(:user, url: gma_new_avatar_path) do |f| %>
+    <div class="middle">
+        <% if @admin.avatar? %>
+            <label for="user_avatar" id="user_pic">
+                <%= image_tag @admin.avatar.quad.url, class: 'mid-img blue' %>
+            </label>
+            <div class="add">
+                <i class="fas fa-check-circle"></i>
+            </div>
+        <% else %>
+            <label for="user_avatar" id='user_pic'>
+                <%= image_tag 'game/plus.png', class: 'mid-img pulse' %>
+            </label>
+        <% end %>
+        <%= f.file_field :avatar, onchange: 'auto()' %>
+        <%= f.submit '', style: 'display:none'%>
+    </div>
+    <% end %>
+    <% if @admin.avatar? %>
+    <div class="bottom">
+       <button onclick="redirect()" class="link" >weiter</button>
+    </div>
+    <% end %>
+</section>
+
+
+<script>
+function redirect() {
+    window.location.replace('<%= gma_intro_url %>');
+}
+function auto() {
+    $('form').submit();
+    $('.bottom').show();
+}
+</script>

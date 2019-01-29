@@ -1,0 +1,43 @@
+<div class="gd_bg"></div>
+<section id="gd_head">
+    <div class="question">
+        <%= @user.fname %>, du bist dran!
+    </div>
+</section>
+<section id="gd_middle">
+   <div class="circle">
+     <%= image_tag @user.avatar.quad.url %>
+    </div>
+</section>
+<section id="gd_bottom">
+  <%= link_to 'bereit!', gda_redirect_path %>
+</section>
+<div id="redirect">
+    <%= render partial: 'state' %>
+</div>
+<%= audio_tag('turn/besonderescatchword.mp3', id: 'tag1') %>
+<%= audio_tag('turn/glaskugel.mp3', id: 'tag2') %>
+<%= audio_tag('turn/lettheshow.mp3', id: 'tag3') %>
+<%= audio_tag('turn/naechstevertriebsleiter.mp3', id: 'tag4') %>
+<%= audio_tag('turn/shakkaduschaffst.mp3', id: 'tag5') %>
+<%= audio_tag('turn/wow.mp3', id: 'tag6') %>
+
+<link rel="preload" href="/assets/countdown.mp4", as="video">
+<link rel="preload" href="/assets/play/intro.mp3", as="audio">
+<link rel="preload" href="/assets/play/theme.mp3", as="audio">
+
+<script>
+    pick(6);
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                if($('#redirect').text().trim() == 'turn') {
+                    $('#redirect').load('turn #redirect');
+                } else {
+                    window.location.replace('<%= gda_play_url %>');
+                }
+            }, 2000);
+        }
+    );
+                            
+</script>

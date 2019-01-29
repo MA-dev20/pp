@@ -1,0 +1,30 @@
+<section id="content">
+    <div class="head">
+        <% if @admin == @cur_user %>
+            <div class="h100">Du wirst bewertet!</div>
+        <% else %>
+            <div class="h100">Bewertung abgegeben!</div>
+        <% end %>
+    </div>
+    <div class="middle" id="middle">
+        <%= render partial: 'rated' %>
+    </div>
+    <div class="bottom">
+      <%= link_to 'Bewertung beenden!', gma_redirect_path %>
+    </div>
+</section>
+
+<script>
+    
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                if($('#redirect').text().trim() == 'rate') {
+                    $('#middle').load('rated #middle');
+                } else {
+                    window.location.replace('<%= gma_rating_url %>');
+                }
+            }, 2000)
+        }
+    )
+</script>

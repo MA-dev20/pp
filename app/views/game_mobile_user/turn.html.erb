@@ -1,0 +1,38 @@
+<section id="content">
+    <div class="head">
+        <% if @user == @cur_user %>
+            <%= @user.fname %>
+        <% else %>
+            <%= @cur_user.fname %> <% @cur_user.lname %>
+        <% end %>
+    </div>
+    <div class="middle">
+        <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green' %>
+    </div>
+    <div class="bottom">
+        <% if @user == @cur_user %>
+            du bist dran!
+        <% else %>
+            ist dran!
+        <% end %>
+    </div>
+</section>
+<div id="redirect">
+    <%= render partial: 'state' %>
+</div>
+
+<script>    
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                if($('#redirect').text().trim() == 'turn') {
+                    $('#redirect').load('turn #redirect');
+                } else if($('#redirect').text().trim() == 'play') {
+                    $('#redirect').load('turn #redirect');
+                } else {                    
+                    window.location.replace('<%= gmu_rate_path %>');
+                }
+            }, 2000);
+        }
+    );
+</script>

@@ -1,0 +1,30 @@
+<section id="content">
+    <div class="head">
+        Das war
+    </div>
+    <div class="middle">
+        <%= image_tag @user.avatar.quad330.url, class: 'mid-img green' %>
+    </div>
+    <div class="bottom">
+        eine tolle Runde!
+    </div>
+</section>
+<div id="redirect">
+    <%= render partial: 'state' %>
+</div>
+
+<script>
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                if($('#redirect').text().trim() == 'bestlist') {
+                    $('#redirect').load('bestlist #redirect');
+                } else if($('#redirect').text().trim() == 'replay') {
+                    window.location.replace('<%= gmu_replay_url(@user, @game) %>');
+                } else {
+                    window.location.replace('<%= gma_ended_url %>');
+                }
+            }, 2000);
+        }
+    );
+</script>

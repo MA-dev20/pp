@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+}
+#gd_wait {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+#gd_wait > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1000;
+}
+#gd_wait > .head {
+    position: absolute;
+    top: 10vh;
+    left: 0;
+    height: 10vh;
+    width: 100vw;
+    line-height: 10vh;
+    color: white;
+    font-size: 10vh;
+    text-align: center;
+    font-weight: bold;
+}
+#gd_wait > .count {
+    position: absolute;
+    top: 25vh;
+    height: 50vh;
+    left: 0;
+    width: 100vw;
+    line-height: 50vh;
+    font-size: 40vh;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    animation-name: pulse-grow;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+}
+@keyframes pulse-grow {
+  to {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+}
+#gd_wait > .bottom {
+    position: absolute;
+    top: 80vh;
+    height: 10vh;
+    left: 0;
+    width: 100vw;
+    line-height: 10vh;
+    font-size: 8vh;
+    text-align: center;
+    font-weight: bold;
+}
+#gd_wait > .bottom > a {
+    color: white;
+    background-color: #1ddaaf;
+    text-decoration: none;
+    border-radius: 4vh;
+    height: 8vh;
+    padding: 2vh;
+    line-height: 4vh;
+    font-size: 4vh;
+    border: 2px solid #1ddaaf;
+}
+#gd_wait > .bottom > a:hover {
+    color: #1ddaaf;
+    background-color: transparent;
+}

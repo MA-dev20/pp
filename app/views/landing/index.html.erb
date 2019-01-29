@@ -1,0 +1,282 @@
+<section class="wrapper"> 
+  <!-- Header
+------------------------------------->
+  <div class="white-text">
+    <header>
+      <div class="logo"><%= link_to image_tag('defaults/logo.png'), root_path %> </div>
+      <div class="container-fluid mob-pad">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="top-bar">
+              <li><%= link_to('Login Coaches', register_coach_path) %></li>
+              <li><%= link_to('Login Unternehmen', register_company_path) %></li>
+            </ul>
+          </div>
+        </div>
+        <nav class="navbar navbar-expand-md navbar-dark">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"> <i class="fas fa-bars"></i> </button>
+          <div class="collapse navbar-collapse justify-content-center justify-content-sm-none" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                  <%= link_to('Coaches', coach_info_path, class: 'nav-link') %>
+              </li>
+              <li class="nav-item">
+                  <%= link_to('Unternehmen', company_info_path, class: 'nav-link') %>
+              </li>
+              <li class="nav-item"> <a class="nav-link" href="#">Preise</a> </li>
+              <li class="nav-item"> <a class="nav-link" href="#">Jetzt testen!</a> </li>
+            </ul>
+            <ul class="ml-auto top-icons">
+              <li><a href="#"><i class="fas fa-phone"></i></a></li>
+              <li><a href="#"><i class="fas fa-user"></i></a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+  </div>
+  <!-- Top Banner
+-------------------------------------------->
+  <section class="top-banner blue-shape">
+    <div class="top_right_blue"> <%= image_tag('main/Polygon1-w.png') %> </div>
+    <div class="container-fluid pd-0">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="main-shape">
+            <div class="img_main"> <%= image_tag('main/Polygon-white.png') %>
+              <div class="content-holder">
+                <%= form_for(:session, url: login_game_path, html: {class: 'form-shape'}) do |f| %>
+                  <h2>Spielgruppe beitreten!</h2>
+                  <div class="form-row">
+                    <div class="col">
+                      <%= f.email_field :email, placeholder: 'E-mail?', class: 'form-control' %>
+                    </div>
+                    <div class="col">
+                      <%= f.text_field :password, placeholder: 'Spielpasswort?', class: 'form-control' %>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <%= f.submit "Let's Play !", class: 'btn btn-links' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="d-flex  fl-end">
+            <div class="text-box">
+              <h2>PETER PITCH</h2>
+              <p>Das erste digitale Trainingstool für Kommunikation und Vertrieb. </p>
+              <ul class="list_banner">
+                <li><span><%= image_tag('main/check1.png') %></span> Softskills verbessern</li>
+                <li><span><%= image_tag('main/check1.png') %></span> Gamification Erlebnis</li>
+                <li><span><%= image_tag('main/check1.png') %></span> Digital und interaktiv </li>
+                <li><span><%= image_tag('main/check1.png') %></span> Learning by doing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--Coaches
+        ------------------------------------------->
+  <section class="coaches">
+    <div class="container">
+      <div class="wrapper-coach">
+        <div class="row">
+          <div class="wrapper-coach">
+            <div class="row">
+              <div class="col-md-6 pd-30">
+                <div class="bx-wrapper"> <%= image_tag("main/trainer.png", class: 'img-fluid') %>
+                  <div class="content_coach">
+                    <h2>Für Coaches</h2>
+                    <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus
+                      est Lorem ip sit amet. </p>
+                    <a href="#">Mehr erfahren</a>
+                    <div class="inner-link"> <a href="#" class="btn btn-secondary">Probemonat starten</a> </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 pd-30">
+                <div class="bx-wrapper"> <%= image_tag('main/ofice.png', class: 'img-fluid') %>
+                  <div class="content_coach">
+                    <h2>Für Unternehmen</h2>
+                    <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus
+                      est Lorem ip sit amet. </p>
+                    <a href="#">Mehr erfahren</a>
+                    <div class="inner-link"> <a href="#" class="btn btn-secondary">Probemonat starten</a> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--pitchit
+        ------------------------------------------->
+  <section class="pitchit">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 order-1 order-sm-1 order-md-1">
+          <div class="text-sm-center text-md-right bx-pitch"> <%= image_tag('main/1.png', class: 'img-fluid') %> </div>
+        </div>
+        <div class="col-md-6 order-2 order-sm-2 order-md-2">
+          <div class="text-sm-center text-md-left bx-pitch">
+            <div class="text-holder">
+              <h2>Gamifcation - Pitch it! </h2>
+              <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus est Lorem
+                ip sit amet. </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 order-4 order-sm-4 order-md-3">
+          <div class="text-right text-sm-center text-md-right bx-pitch">
+            <div class="text-holder">
+              <h2>Interaktion - par excellence </h2>
+              <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus est Lorem
+                ip sit amet. </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 order-3 order-sm-3 order-md-4">
+          <div class="text-left text-sm-center text-md-left bx-pitch"> <%= image_tag('main/2.png', class: 'img-fluid') %> </div>
+        </div>
+        <div class="col-md-6 order-5 order-sm-5 order-md-5">
+          <div class="text-sm-center text-md-right bx-pitch"> <%= image_tag("main/3.png", class: "img-fluid") %> </div>
+        </div>
+        <div class="col-md-6 order-6 order-sm-6 order-md-6">
+          <div class="text-left text-sm-center text-md-left bx-pitch">
+            <div class="text-holder">
+              <h2>Controlling - maximale Transparenz </h2>
+              <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus est Lorem
+                ip sit amet. </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--Customer Says ------------------------------------------->
+<section class="customer">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h2 class="lead"> <span>Das sagen unsere</span> Kunden </h2>
+            <div class="cust-container">
+                <div class="media cutomer-review text-left">
+                    <div class="cst-holder">
+                        <div class="img-customer"> <%= image_tag('main/cst1.png') %> </div>
+                        <div class="cst_shape">
+                            <%= image_tag('main/shape-cst.png', class: 'mob-sh') %>
+                            <div class="logo-holder"> <%= image_tag("main/material.png") %> </div>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <h3>Daniel Schütt, Masterplan.com</h3>
+                        <div class="desc_box">
+                            <p> “Die Mitarbeiter lieben es - unsere Schulungen avancieren mit Peter Pitch zu echten Highlights.” </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="media cutomer-review text-right">
+                    <div class="review-content">
+                        <h3>Marc Seebener, Coach</h3>
+                        <div class="desc_box">
+                            <p> “Was mich von den anderen 8.000 Coaches in Deutschland unterscheidet? Peter Pitch.” </p>
+                        </div>
+                    </div>
+                    <div class="cst-holder">
+                        <div class="img-customer"> <%= image_tag("main/cst2.png") %> </div>
+                        <div class="cst_shape"> <%= image_tag("main/shape-cst.png", class: "mob-sh") %>
+                            <div class="logo-holder"> <%= image_tag("main/coachcompa.png") %> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="media cutomer-review text-left">
+                    <div class="cst-holder">
+                        <div class="img-customer"> <%= image_tag("main/cst3.png") %> </div>
+                        <div class="cst_shape"> <%= image_tag("main/shape-cst.png", class: "mob-sh") %>
+                            <div class="logo-holder"> <%= image_tag("main/tremoniamedia-mobile.png") %></div>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <h3>Christian Krüger, Tremoniamedia</h3>
+                        <div class="desc_box">
+                            <p class="text-center"> “Erstmals sind Soft Skills messbar. Wir verbessern die wesentlichen Elemente der Kommunikation - spielend leicht.” </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<!--Training ------------------------------------------->
+<section class="Training train_d ">
+<div class="container">
+    <div class="row cst_pad">
+        <div class="media wrapper-training">
+            <div class="des_con">
+                <h2>Schulungs-Teilnehmer haben mehr verdient als langweilige Powerpoints, oder?!     </h2>
+                <p>Jetzt theoretische Trainingsinhalte direkt in die Praxis umsetzen. Individuelle Coachings mit Lern- UND Spaßfaktor. </p>
+            </div>
+            <div class="link_training">
+                <h2>Jetzt testen als...</h2>
+                <a href="" class="btn btn-primary">Coach</a> <a href="" class="btn btn-primary">Jetzt starten!</a>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+<!-- footer------------------------------------------->
+<footer>
+<div class="container">
+    <div class="row footer justify-content-center">
+        <div class="col-lg-2 col-md-6 ab_txt">
+            <ul class="social">
+                <li> <a href="#"><%= image_tag("main/facebook.svg") %></a> </li>
+                <li> <a href="#"><%= image_tag("main/you-tube.svg") %></a> </li>
+                <li> <a href="#"><%= image_tag("main/instagram.svg") %></a> </li>
+            </ul>
+        </div>
+        <div class="col-lg-2 col-md-6">
+            <div class="ft-wrapper">
+                <h2>Coaches</h2>
+                <ul class="q_links">
+                  <li><a href="#">Registrieren</a></li>
+                  <li><a href="#">Preise</a></li>
+                  <li><a href="#">Informationen</a></li>
+                  <li><a href="#">Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-6">
+            <div class="ft-wrapper">
+                <h2>Unternehmen</h2>
+                <ul class="q_links">
+                    <li><a href="#">Registrieren</a></li>
+                    <li><a href="#">Preise</a></li>
+                    <li><a href="#">Informationen</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-6">
+            <div class="ft-wrapper">
+                <h2>Rechtliches</h2>
+                <ul class="q_links">
+                    <li><a href="#">Impressum</a></li>
+                    <li><a href="#">Datenschutz</a></li>
+                    <li><a href="#">AGB</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</footer>
+
+</section>

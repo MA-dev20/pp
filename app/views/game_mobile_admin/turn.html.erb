@@ -1,0 +1,33 @@
+<section id="content">
+    <div class="head">
+        <% if @admin == @cur_user %>
+        <div class="h100">Du bist dran!</div>
+        <% else %>
+        <div class="h100"><%= @cur_user.fname %> ist dran!</div>
+        <% end %>
+    </div>
+    <div class="middle">
+        <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green' %>
+    </div>
+    <div class="bottom">
+       <%= link_to 'Pitch starten!', gma_redirect_path %>
+    </div>
+</section>
+<div id="redirect">
+    <%= render partial: 'state' %>
+</div>
+
+<script>
+    
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                if($('#redirect').text().trim() == 'turn') {
+                    $('#redirect').load('turn #redirect');
+                } else {                    
+                    window.location.replace('<%= gma_play_url %>');
+                }
+            }, 2000);
+        }
+    );
+</script>

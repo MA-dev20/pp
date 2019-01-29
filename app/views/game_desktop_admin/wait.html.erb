@@ -1,0 +1,37 @@
+<div class="gd_bg"></div>
+<section id="gd_wait">
+    <div class="head">
+        Jetzt Spiel beitreten!
+        <a href="#" class="open" style="display: none">Open Fullscreen</a>
+    </div>
+    <div class="count" id='count'>
+        <%= render partial: 'count' %>
+    </div>
+    <div class="bottom">
+       <%= link_to 'Spiel starten!', gda_redirect_url %>
+    </div>
+</section>
+<%= audio_tag('wait/ping.mp3', id: 'ping') %>
+<%= audio_tag('wait/aufgeregt.mp3', id: 'tag1') %>
+<%= audio_tag('wait/bereit.mp3', id: 'tag2') %>
+<%= audio_tag('wait/kommando.mp3', id: 'tag3') %>
+<%= audio_tag('wait/truppe.mp3', id: 'tag4') %>
+<script>
+    pick(4);
+    var count = $('#count').text().trim();
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                if($('#redirect').text().trim() == 'wait') {
+                    $('#count').load('wait #count');
+                    if(count != $('#count').text().trim()) {
+                        document.getElementById('ping').play();
+                        count = $('#count').text().trim();
+                    }  
+                } else {
+                    window.location.replace('<%= gda_choose_url %>');
+                }                
+            }, 2000);
+        }
+    );
+</script>

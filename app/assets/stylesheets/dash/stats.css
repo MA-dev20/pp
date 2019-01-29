@@ -1,0 +1,172 @@
+#dash_stats {
+    position: absolute;
+    top: 0vh;
+    left: 5vw;
+    height: 85vh;
+    width: 75vw;
+}
+#dash_stats .head {
+    width: 70vw;
+    text-align: center;
+    font-weight: normal;
+    font-size: 3vh;
+}
+#dash_stats .head span {
+    font-weight: bold;
+}
+#dash_stats .stats_overview {
+    position: absolute;
+    top: 8vh;
+    left: 0;
+    height: 25vh;
+    width: 75vw;
+}
+#dash_stats .gesamt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25vh;
+    width: 20vh;
+}
+#dash_stats .spontan {
+    position: absolute;
+    top: 5vh;
+    left: 20vh;
+    height: 20vh;
+    width: 20vh;
+}
+#dash_stats .kreativ {
+    position: absolute;
+    top: 5vh;
+    left: 40vh;
+    height: 20vh;
+    width: 60vh;
+}
+#dash_stats .body {
+    position: absolute;
+    top: 5vh;
+    left: 60vh;
+    height: 20vh;
+    width: 20vh;
+}
+#dash_stats .rhetorik {
+    position: absolute;
+    top: 5vh;
+    left: 80vh;
+    height: 20vh;
+    width: 20vh;
+}
+#dash_stats .circle {
+    position: absolute;
+    top: 0;
+    left: 2.5vh;
+    height: 15vh;
+    width: 15vh;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.2);
+    background-color: rgba(28, 161, 222, 0.5);
+    cursor: pointer;
+    font-size: 4vh;
+    color: white;
+}
+#dash_stats .rate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15vh;
+    width: 20vh;
+    line-height: 15vh;
+    text-align: center;
+    color: white;
+    font-size: 4vh;
+}
+#dash_stats .text {
+    position: absolute;
+    top: 16vh;
+    left: 0;
+    height: 5vh;
+    width: 20vh;
+    text-align: center;
+    font-size: 3vh;
+    line-height: 5vh;
+}
+
+#dash_stats .gesamt .circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20vh;
+    width: 20vh;
+    border-radius: 50%;
+    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.2);
+    background-color: #1ca1de;
+    border: 1vh solid #00e38b;
+    opacity: 1;
+    cursor: pointer;
+}
+#dash_stats .gesamt .circle .text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18vh;
+    line-height: 20vh;
+    color: white;
+    font-size: 4vh;
+    text-align: center;
+}
+
+#dash_stats .gesamt .circle img {
+    position: absolute;
+    top: 0vh;
+    left: 0vh;
+    height: 18vh;
+    width: 18vh;
+    border-radius: 50%;
+    opacity: 0.5;
+}
+#dash_stats .gesamt .text {
+    position: absolute;
+    top: 21vh;
+    left: 0;
+    height: 5vh;
+    width: 20vh;
+    text-align: center;
+    font-size: 4vh;
+    font-weight: bold;
+}
+#dash_stats .stats_chart {
+    position: absolute;
+    top: 40vh;
+    height: 45vh;
+    left: 0;
+    width: 70vw;
+    background-color: #1ca1de;
+    border-radius: 50px;
+    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.2);
+}
+#dash_stats .stats_chart .chart-container {
+    position: relative;
+    top: 25px;
+    left: 25px;
+    height: calc(45vh - 50px);
+    width: calc(70vw - 50px);
+}
+canvas {
+    height: 420px;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+#dash_stats .circle:hover {
+    background-color: rgba(28, 161, 222, 1.0);
+    font-weight: bold;
+}
+#dash_stats .gesamt .circle:hover {
+    font-weight: bold;
+    background-color: rgba(28, 161, 222, 1.0);
+}
+#dash_stats .active {
+    font-weight: bold;
+    background-color: rgba(28, 161, 222, 1.0);
+}

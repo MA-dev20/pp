@@ -1,0 +1,334 @@
+#gd_rated,
+#gd_rated_spontan,
+#gd_rated_creativ,
+#gd_rated_body,
+#gd_rated_rhetoric,
+#gd_rated_ges,
+#gd_rated_bottom {
+    position: absolute;
+}
+#gd_rated .text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+#gd_rated .circle {
+    position: absolute;
+    background-color: #becee0;
+    border-radius: 50%;
+    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
+}
+.circle .bg_1 {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #1ca2e8;
+}
+.circle .bg_2 {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #156db9;
+}
+.circle .avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0.4;
+}
+#gd_rated .pol,
+#gd_rated .rate {
+    position: absolute;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+
+@media only screen and (min-height: 720px) and (min-width: 1280px) {
+    #gd_rated {
+        left: calc( 50% - 640px );
+        top: calc( 50% - 360px );
+        width: 1280px;
+        height: 720px;
+    }
+    #gd_rated_spontan,
+    #gd_rated_creativ,
+    #gd_rated_body,
+    #gd_rated_rhetoric {
+        height: 300px;
+        width: 200px;
+    }
+    #gd_rated_spontan {
+        top: 50px;
+        left: 100px;
+    }
+    #gd_rated_creativ {
+        bottom: 50px;
+        left: 100px;
+    }
+    #gd_rated_body {
+        top: 50px;
+        right: 100px;
+    }
+    #gd_rated_rhetoric {
+        bottom: 50px;
+        right: 100px;
+    }
+    .text {
+        height: 50px;
+        font-size: 30px;
+    }
+    .circle {
+        top: 50px;
+        height: 200px;
+        width: 200px
+    }
+    .circle .bg_1,
+    .circle .bg_2 {
+        top: 15px;
+        left: 15px;
+        height: 170px;
+        width: 170px;
+    }
+    .circle .shield {
+        position: absolute;
+        top: 35px;
+        left: 35px;
+        height: 100px;
+        width: 100px;
+    }
+    #gd_rated .pol,
+    #gd_rated .rate {
+        top: 160px;
+        left: 110px;
+        height: 110px;
+        width: 110px;
+        line-height: 120px;
+        font-size: 35px;
+        animation-name: pulse1;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+    }
+    @keyframes pulse1 {
+        0% {
+            transform: scale(1, 1)
+        }
+        70% {
+            box-shadow: 0 0 0 0 rgba(0, 227, 139, 0);
+            transform: scale(1.03, 1.03)
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(0, 227, 139, 0);
+            transform: scale(1, 1)
+        }
+    }
+    .rate {
+        width: 115px;
+    }
+    #gd_rated_ges {
+        top: 150px;
+        left: 490px;
+        height: 400px;
+        width: 300px;
+    }
+    #gd_rated_ges .text {
+        height: 80px;
+        font-size: 50px;
+    }
+    #gd_rated_ges .circle {
+        top: 80px;
+        height: 300px;
+        width: 300px;
+    }
+    #gd_rated_ges .circle .avatar {
+        top: 20px;
+        left: 20px;
+        height: 260px;
+        width: 260px;
+        opacity: 1;
+    }
+    #gd_rated_ges .pol,
+    #gd_rated_ges .rate {
+        top: 230px;
+        left: 150px;
+        height: 210px;
+        width: 210px;
+        line-height: 220px;
+        font-size: 80px;
+        font-weight: bolder;
+        animation-name: pulse2;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+    }
+    #gd_rated_ges .rate {
+        width: 220px;
+    }
+    @keyframes pulse2 {
+        0% {
+            transform: scale(1, 1)
+        }
+        70% {
+            box-shadow: 0 0 0 0 rgba(0, 227, 139, 0);
+            transform: scale(1.1, 1.1)
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(0, 227, 139, 0);
+            transform: scale(1, 1)
+        }
+    }
+}
+@media only screen and (min-height: 900px) and (min-width: 1600px) {
+    #gd_rated {
+        left: calc( 50% - 800px );
+        top: calc( 50% - 450px );
+        width: 1600px;
+        height: 900px;
+    }
+    #gd_rated_spontan,
+    #gd_rated_creativ,
+    #gd_rated_body,
+    #gd_rated_rhetoric {
+        height: 400px;
+        width: 400px;
+    }
+    #gd_rated_spontan {
+        top: 50px;
+        left: 100px;
+    }
+    #gd_rated_creativ {
+        bottom: 50px;
+        left: 100px;
+        animation-delay: 10s;
+    }
+    #gd_rated_body {
+        top: 50px;
+        right: 100px;
+        animation-delay: 20s;
+    }
+    #gd_rated_rhetoric {
+    bottom: 50px;
+    right: 100px;
+    animation-delay: 30s
+}
+.text {
+    height: 50px;
+    font-size: 50px;
+}
+.circle {
+    top: 70px;
+    left: 50px;
+    height: 300px;
+    width: 300px
+}
+.circle .bg_1,
+.circle .bg_2 {
+    top: 15px;
+    left: 15px;
+    height: 270px;
+    width: 270px;
+}
+.circle .shield {
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    height: 200px;
+    width: 200px;
+}
+#gd_rated .pol,
+#gd_rated .rate {
+    top: 250px;
+    left: 220px;
+    height: 160px;
+    width: 160px;
+    line-height: 170px;
+    font-size: 50px;
+    animation-name: pulse1;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+@keyframes pulse1 {
+    0% {
+        transform: scale(1, 1)
+    }
+    70% {
+        box-shadow: 0 0 0 50px rgba(0, 227, 139, 0);
+        transform: scale(1.03, 1.03)
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 227, 139, 0);
+        transform: scale(1, 1)
+    }
+}
+    .rate {
+        width: 115px;
+    }
+    #gd_rated_ges {
+        top: 150px;
+        left: 600px;
+        height: 500px;
+        width: 400px;
+    }
+    #gd_rated_ges .text {
+        height: 80px;
+        font-size: 80px;
+    }
+    #gd_rated_ges .circle {
+        top: 100px;
+        left: 0;
+        height: 400px;
+        width: 400px;
+    }
+    #gd_rated_ges .circle .avatar {
+        top: 20px;
+        left: 20px;
+        height: 360px;
+        width: 360px;
+        opacity: 1;
+    }
+    #gd_rated_ges .pol,
+    #gd_rated_ges .rate {
+        top: 330px;
+        left: 250px;
+        height: 210px;
+        width: 210px;
+        line-height: 220px;
+        font-size: 80px;
+        font-weight: bolder;
+        animation-name: pulse2;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+    }
+    #gd_rated_ges .rate {
+        width: 220px;
+    }
+@keyframes pulse2 {
+  0% {
+    transform: scale(1, 1)
+  }
+  70% {
+    box-shadow: 0 0 0 50px rgba(0, 227, 139, 0);
+    transform: scale(1.1, 1.1)
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 227, 139, 0);
+    transform: scale(1, 1)
+  }
+}
+}
+#creativ svg {
+    animation-delay: 10s;
+}
+#body {
+    animation-delay: 20s;
+}
+#rhetoric {
+    animation-delay: 30s;
+}
+#ges {
+    animation-delay: 40s
+}

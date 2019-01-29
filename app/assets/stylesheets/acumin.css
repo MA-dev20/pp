@@ -1,0 +1,19 @@
+@font-face {
+	font-family: 'AcuminPro-BoldItalic';
+	src: url('acumin/AcuminPro-BoldItalic.eot?#iefix') format('embedded-opentype'), url('acumin/AcuminPro-BoldItalic.otf') format('opentype'), url('acumin/AcuminPro-BoldItalic.woff') format('woff'), url('acumin/AcuminPro-BoldItalic.ttf') format('truetype'), url('acumin/AcuminPro-BoldItalic.svg#AcuminPro-BoldItalic') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'AcuminPro-Bold';
+	src: url('acumin/AcuminPro-Bold.eot?#iefix') format('embedded-opentype'), url('acumin/AcuminPro-Bold.otf') format('opentype'), url('acumin/AcuminPro-Bold.woff') format('woff'), url('acumin/AcuminPro-Bold.ttf') format('truetype'), url('acumin/AcuminPro-Bold.svg#AcuminPro-Bold') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'AcuminPro-Regular';
+	src: url('acumin/AcuminPro-Regular.eot?#iefix') format('embedded-opentype'), url('acumin/AcuminPro-Regular.otf') format('opentype'), url('acumin/AcuminPro-Regular.woff') format('woff'), url('acumin/AcuminPro-Regular.ttf') format('truetype'), url('acumin/AcuminPro-Regular.svg#AcuminPro-Regular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+

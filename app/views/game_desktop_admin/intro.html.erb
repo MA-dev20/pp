@@ -1,0 +1,27 @@
+<section id="content">
+<%= video_tag 'gameintro.mp4', id: 'video-bg', autoplay: false, controls: false, onended: 'redir()' %>
+<section id="gd_skip">
+   <%= link_to 'Skip Intro', gda_redirect_path %>
+</section>
+</section>
+<div id="redirect">
+    <%= render partial: 'state' %>
+</div>
+<script>
+    document.getElementById('video-bg').play();
+    function redir() {
+        window.location.replace('<%= gda_redirect_url %>');
+    }
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                if($('#redirect').text().trim() == "intro") {
+                    $('#redirect').load('intro #redirect');
+                } else {
+                    window.location.replace('<%= gda_wait_url %>');
+                }                
+            }, 2000);
+        }
+    )
+
+</script>

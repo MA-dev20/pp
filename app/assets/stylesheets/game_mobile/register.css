@@ -1,0 +1,21 @@
+#gm .register {
+    position: absolute;
+    top: 0;
+    left: 50px;
+    width: calc( 100% - 100px );
+}
+#gm .register .form-field {
+    position: relative;
+    margin-top: 10px;
+    height: 80px;
+    margin-bottom: 10px;
+    left: 0;
+    width: calc( 100% - 40px );
+    background-color: white;
+    border: none;
+    color: black;
+    border-radius: 80px;
+    padding-left: 40px;
+    line-height: 80px;
+    font-size: 40px;
+}

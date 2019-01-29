@@ -1,0 +1,75 @@
+<%= video_tag 'countdown.mp4', id: 'video-bg', autoplay: true %>
+<section id="gd_play">
+    <div class="top">
+        <%= image_tag 'defaults/logo.png', id: 'logo' %>
+        <%= image_tag @user.avatar.quad.url || '', id: 'avatar' %>
+        <%= image_tag @admin.logo.url || '', id: 'cust-logo' %>
+    </div>
+    <div class="mid">
+        <div class="countdown animated flipInX"><span class="timer" id='timerall'></span></div>
+        <div id="word" data-target-resolver><%= @word.name %></div>
+    </div>
+</section>
+<section id="gd_skip">
+   <%= link_to 'Pitch beenden!', gda_redirect_path %>
+</section>
+<div id="redirect">
+    <%= render partial: 'state' %>
+</div>
+
+
+<%= audio_tag("play/intro.mp3", autoplay: false, loop: true, id: 'intro') %>
+<%= audio_tag(@word.sound, id: "word_sound") %>
+<%= audio_tag('play/theme.mp3', id: 'theme') %>
+
+<link rel="preload" href="/assets/rate/haltemichraus.mp3", as="audio">
+<link rel="preload" href="/assets/rate/lehnezurueck.mp3", as="audio">
+<link rel="preload" href="/assets/rate/nichtschlecht.mp3", as="audio">
+
+
+
+<script type="text/javascript">
+    textanim();
+    document.getElementById('intro').play();
+    document.getElementById("intro").volume = 0.67;
+    document.getElementById("theme").volume = 0.67;
+    document.getElementById("word_sound").volume = 1.0;
+    
+    function callback() {
+        startTimer('80', document.getElementById('timerall'));
+        document.getElementById('video-bg').currentTime = 9;
+        document.getElementById('intro').pause();
+        document.getElementById('word_sound').play();
+        document.getElementById('theme').play();
+    };
+    
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+        
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+        
+            if (timer < 0) {
+                window.location.replace('<%= gda_redirect_url %>');
+            }
+            timer--;
+        }, 1000);
+    };
+    $(document).ready(
+        function() {
+            setInterval(function() {
+                if($('#redirect').text().trim() == 'play') {
+                    $('#redirect').load('play #redirect');
+                } else {
+                    window.location.replace('<%= gda_rate_url %>');
+                }
+            }, 2000);
+        }
+    );
+    
+</script>

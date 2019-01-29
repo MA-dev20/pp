@@ -1,0 +1,12 @@
+@font-face {
+	font-family: 'Barack-Medium';
+	src: url('barack/Barack-Medium.eot?#iefix') format('embedded-opentype'), url('barack/Barack-Medium.otf') format('opentype'), url('barack/Barack-Medium.woff') format('woff'), url('barack/Barack-Medium.ttf') format('truetype'), url('barack/Barack-Medium.svg#Barack-Medium') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'BarackPro-Solid';
+	src: url('barack/BarackPro-Solid.eot?#iefix') format('embedded-opentype'), url('barack/BarackPro-Solid.otf') format('opentype'), url('barack/BarackPro-Solid.woff') format('woff'), url('barack/BarackPro-Solid.ttf') format('truetype'), url('barack/BarackPro-Solid.svg#BarackPro-Solid') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}

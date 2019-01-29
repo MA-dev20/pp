@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Peter Pitch</title>
+
+    <%= stylesheet_link_tag    'dash/main', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'dash/main', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+    <section id="navbar">
+        Hallo, <%= @admin.fname %> <%= @admin.lname %>!
+    </section>
+    
+    <section id="sidebar">
+        <% if @admin.avatar? %>
+            <%= image_tag @admin.avatar.quad.url %>
+        <% else %>
+            <%= image_tag 'defaults/wolf.jpg' %>
+        <% end %>
+        <div class="links">
+            <% if current_page?(dash_admin_path) %>
+                <%= link_to "Let's Play", dash_admin_path, class: 'l1 active' %>
+            <% elsif @team && current_page?(dash_admin_games_path(@team)) %>
+                <%= link_to "Let's Play", dash_admin_path, class: 'l1 active' %>
+            <% else %>
+                <%= link_to "Let's Play", dash_admin_path, class: 'l1' %>
+            <% end %>
+            
+            <% if current_page?( dash_admin_teams_path ) %>
+                <%= link_to "Teams", dash_admin_teams_path, class: 'l2 active' %>
+            <% elsif @team && current_page?(dash_admin_team_stats_path(@team)) %>
+                <%= link_to "Teams", dash_admin_teams_path, class: 'l2 active' %>
+            <% else %>
+                <%= link_to "Teams", dash_admin_teams_path, class: 'l2' %>
+            <% end %>
+            
+            <% if current_page?(dash_admin_users_path) %>
+                <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
+            <% elsif @team && current_page?(dash_admin_team_users_path(@team)) %>
+                <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
+            <% elsif @team && @user && current_page?(dash_admin_user_stats_path(@team, @user)) %>
+                <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
+            <% else %>
+                <%= link_to 'Nutzer', dash_admin_users_path, class: 'l3' %>
+            <% end %>
+            
+            <% if current_page?(dash_admin_account_path) %>
+                <%= link_to "Account", dash_admin_account_path, class: 'l4 active' %>
+            <% else %>
+                <%= link_to "Account", dash_admin_account_path, class: 'l4' %>
+            <% end %>
+        </div>
+    </section>
+    
+    <section id="content">
+        <% flash.each do |name, msg| %>
+            <% if msg.is_a?(String) %>
+                <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <%= content_tag :div, msg, :id => "flash_#{name}" %>
+                </div>
+            <% end %>
+        <% end %>
+        <%= yield %>
+    </section>
+    <div class="dropdown">
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <% if @admin.avatar? %>
+                    <%= image_tag @admin.avatar.quad.url %>
+                <% else %>
+                    <%= image_tag 'defaults/wolf.jpg' %>
+                <% end %>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Account', dash_admin_account_path, class: 'dropdown-item' %>
+                <%= link_to 'Logout', logout_admin_path, class: 'dropdown-item red' %>
+            </div>
+        </div>
+
+<div class="modal" id="new_team" tabindex="-1" role="dialog" aria-labelledby="new_teamLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="new_teamLabel">Team hinzufügen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <%= form_for(:team, url: new_team_path(@admin)) do |f| %>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Teamname:</label>
+                    <%= f.text_field :name, placeholder: 'Team erstellen', class: 'form-control' %>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <%= f.submit 'Erstellen', class: 'btn btn-primary' %>
+            </div>
+            <% end %>
+        </div>
+    </div>
+    
+</div>
+</body>
+</html>

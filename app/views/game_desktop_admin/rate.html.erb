@@ -1,0 +1,36 @@
+<div class="gd_bg"></div>
+<section id="gd_head">
+        Jetzt <%= @user.fname %> bewerten!
+</section>
+<section id="gd_middle">
+    <div class="circle1">
+        <%= image_tag @user.avatar.quad.url %>
+    </div>
+</section>
+<section id="gd_bottom">
+  <%= link_to 'weiter!', gda_redirect_path %>
+</section>
+<div id="redirect">
+    <%= render partial: 'state' %>
+</div>
+
+
+<%= audio_tag('rate/haltemichraus.mp3', id: 'tag1') %>
+<%= audio_tag('rate/lehnezurueck.mp3', id: 'tag2') %>
+<%= audio_tag('rate/nichtschlecht.mp3', id: 'tag3') %>
+
+<script>
+    pick(3);
+    $(document).ready(
+        function() {
+            setInterval(function(){
+                if($('#redirect').text().trim() == 'rate') {
+                    $('#redirect').load('rate #redirect');
+                } else {
+                    window.location.replace('<%= gda_rating_url %>');
+                }
+            }, 2000);
+        }
+    );
+</script>
+<link rel="preload" href="/assets/rated/einzeln.mp3", as="audio">
