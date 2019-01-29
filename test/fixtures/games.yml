@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  admin: one
+  team: one
+  state: MyString
+  password: MyString
+  current_turn: 1
+  active: false
+
+two:
+  admin: two
+  team: two
+  state: MyString
+  password: MyString
+  current_turn: 1
+  active: false

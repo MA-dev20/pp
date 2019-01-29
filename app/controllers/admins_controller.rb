@@ -59,7 +59,7 @@ class AdminsController < ApplicationController
     
   private
     def admin_params
-      params.require(:admin).permit(:company_name, :email, :password, :password_confirmation, :fname, :lname, :street, :city, :avatar, :logo, :employees, :zipcode)
+      params.require(:admin).permit(:male, :company_name, :email, :password, :password_confirmation, :fname, :lname, :street, :city, :avatar, :logo, :employees, :zipcode)
     end
     def set_admin
       @admin = Admin.find(params[:admin_id])

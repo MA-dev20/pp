@@ -13,7 +13,7 @@ class Admin < ApplicationRecord
   mount_uploader :logo, PicUploader
     
   validates :fname, :lname, :street, :city, presence: true
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :email, uniqueness: { case_sensitive: false }, presence: true
   validates :employees, numericality: { only_integer: true, less_than: 1000000, greater_than: 0 }
   validates :zipcode, numericality: { only_integer: true, less_than: 100000, greater_than: 10000 }, presence: true
     
