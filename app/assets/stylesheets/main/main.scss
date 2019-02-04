@@ -1,0 +1,13 @@
+/*
+ *= require main/style
+ *= require main/media
+ *= require acumin
+ *= require barack
+ */
+@import 'bootstrap';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+
+.alert {
+    z-index: 1000;
+}

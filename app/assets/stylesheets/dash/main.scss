@@ -1,0 +1,192 @@
+/*
+ *= require dash/account
+ *= require dash/teams
+ *= require dash/games
+ *= require dash/users
+ *= require dash/stats
+ *= require perfect-scrollbar
+ *= require cs-select/cs-select
+ *= require cs-select/cs-skin-underline
+ *= require omnes
+ *= require dataTables/jquery.dataTables
+ */
+
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import 'font-awesome';
+
+.btn {
+    white-space: nowrap;
+}
+.btn:focus {
+    box-shadow: none;
+}
+.dropdown-toggle::after {
+    width: 0;
+    height: 0;
+}
+body {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Omnes';
+    color: black;
+    background-color: #ededed;
+    margin: 0;
+}
+
+#navbar {
+    position: fixed;
+    left: 10vw;
+    top: 0;
+    width: 90vw;
+    height: 8vh;
+    box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.1);
+    background-color: white;
+    padding-left: 2vw;
+    line-height: 8vh;
+    font-size: 2.5vh;
+    padding-left: 5vw;
+}
+.alert {
+    position: fixed;
+    top: 8vh;
+    left: 10vw;
+    width: 90vw;
+    background-color: rgba(210, 240, 240, 0.8);
+    border: none;
+    color: #2887b7;
+    font-size: 2vh;
+    line-height: 4vh;
+}
+.dropdown {
+    line-height: 8vh;
+    position: fixed;
+    right: 2vw;
+    top: 0;
+    height: 8vh;
+    width: 8vh;
+    background-color: transparent;
+    border: none;
+    z-index: 100;
+}
+.btn {
+    border: none;
+    transition: none;
+}
+.dropdown-menu {
+    padding: 0;
+}
+.dropdown-menu > a {
+    height: 10vh;
+    width: 100%;
+    z-index: 1000;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+.dropdown img {
+    position: relative;
+    left: 0;
+    top: 0;
+    height: 6vh;
+    width: 6vh;
+    border-radius: 50%;
+}
+
+.dropdown-menu .red {
+    color: red;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: none;
+}
+
+#sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 10vw;
+    background: linear-gradient(#1dacf1 0%, #1a8ed6 51%, #145daa 100%);
+    color: white;
+    box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.5);
+}
+#sidebar img {
+    position: relative;
+    top: 5vh;
+    height: 14vh;
+    left: calc(5vw - 7vh);
+    width: 14vh;
+    border-radius: 50%;
+    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
+}
+#sidebar .links {
+    position: relative;
+    top: 10vh;
+    left: 0;
+    height: 30vh;
+    width: 10vw;
+}
+#sidebar .links > .l1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 5vh;
+    width: 10vw;
+}
+#sidebar .links > .l2 {
+    position: absolute;
+    left: 0;
+    top: 5vh;
+    height: 5vh;
+    width: 10vw;
+}
+#sidebar .links > .l3 {
+    position: absolute;
+    left: 0;
+    top: 10vh;
+    height: 5vh;
+    width: 10vw;
+}
+#sidebar .links > .l4 {
+    position: absolute;
+    left: 0;
+    top: 15vh;
+    height: 5vh;
+   width: 10vw;
+}
+#sidebar .links > a {
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+    line-height: 5vh;
+    font-size: 2vh;
+    text-align: center;
+}
+#sidebar .links > a:hover,
+#sidebar .links > .active {
+    background-color: rgba(0,0,0,0.1);
+    font-weight: bold;
+}
+
+#content {
+    position: fixed;
+    left: 10vw;
+    top: 10vh;
+    height: 90vh;
+    width: 90vw;
+}
+:focus {outline:none !important;}
+.btn {
+    border-radius: 50px;
+}
+.btn-primary {
+    background-color: #2887b7;
+    border: 1px solid #2887b7;
+}
+.btn-primary:hover {
+    background-color: white;
+    color: #2887b7;
+    border-color: #2887b7;
+}

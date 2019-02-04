@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-  before_action :set_admin, only: [:edit, :update, :destroy]
+  before_action :set_admin, only: [:update, :destroy]
     
   def new_coach
   end
@@ -10,10 +10,11 @@ class AdminsController < ApplicationController
     @admin.company = false
     if @admin.save
       flash[:info] = 'Willkommen bei PeterPitch'
+      admin_login @admin
       redirect_to dash_admin_path
     else
-      flash[:danger] = 'Konnte Unternehmen nicht erstellen!'
-      redirect_to register_company_path
+      flash[:danger] = 'Konnte Coach nicht erstellen!'
+      redirect_to register_coach_path
     end
   end
     
@@ -26,6 +27,7 @@ class AdminsController < ApplicationController
     @admin.company = true
     if @admin.save
       flash[:info] = 'Willkommen bei PeterPitch'
+      admin_login @admin
       redirect_to dash_admin_path
     else
       flash[:danger] = 'Konnte Unternehmen nicht erstellen!'
@@ -59,7 +61,7 @@ class AdminsController < ApplicationController
     
   private
     def admin_params
-      params.require(:admin).permit(:male, :company_name, :email, :password, :password_confirmation, :fname, :lname, :street, :city, :avatar, :logo, :employees, :zipcode)
+      params.require(:admin).permit(:male, :company_name, :email, :password, :fname, :lname, :street, :city, :avatar, :logo, :employees, :zipcode)
     end
     def set_admin
       @admin = Admin.find(params[:admin_id])

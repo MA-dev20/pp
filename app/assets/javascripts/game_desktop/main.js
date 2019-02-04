@@ -1,5 +1,5 @@
 /*
- *= require game_desktop/jquery-3.3.1.min
+ *= require jquery3
  *= require game_desktop/typed.min
  *= require game_desktop/progressbar.min
  */
