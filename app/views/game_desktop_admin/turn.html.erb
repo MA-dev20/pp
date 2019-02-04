@@ -1,15 +1,12 @@
-<div class="gd_bg"></div>
-<section id="gd_head">
-    <div class="question">
-        <%= @user.fname %>, du bist dran!
-    </div>
+<section id="head">
+    <%= @user.fname %>, du bist dran!
 </section>
-<section id="gd_middle">
+<section id="middle">
    <div class="circle">
-     <%= image_tag @user.avatar.quad.url %>
+     <%= image_tag @user.avatar.quad.url, class: 'pulse' %>
     </div>
 </section>
-<section id="gd_bottom">
+<section id="bottom">
   <%= link_to 'bereit!', gda_redirect_path %>
 </section>
 <div id="redirect">

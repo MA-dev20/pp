@@ -97,8 +97,8 @@ body {
     height: 100%;
     width: 100%;
 }
-.gd_bg {
-    position: absolute;
+#content {
+    position: fixed;
     height: 100%;
     width: 100%;
     left: 0;
@@ -114,40 +114,34 @@ body {
     background-color: black;
 }
 
-#gd_head {
+#head {
     position: absolute;
-    top: calc( 50vh - 350px);
-    height: 100px;
-    line-height: 100px;
+    top: 10vh;
     left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 80px;
-    font-weight: bold;
+    height: 10vh;
+    width: 100vw;
+    line-height: 10vh;
     color: white;
+    font-size: 10vh;
+    text-align: center;
+    font-weight: bold;
 }
-#gd_middle .circle img{
+#middle .circle img{
     position: absolute;
-    top: calc(50% - 152px);
-    left: calc(50% - 152px);
-    height: 280px;
-    width: 280px;
+    top: 35vh;
+    left: calc(50% - 15vh);
+    height: 30vh;
+    width: 30vh;
     border: 12px solid rgba(29, 218, 175, 1);
     border-radius: 50%;
     box-shadow: 0 0 0 0 rgba(29, 218, 175, 0.5);
+}
+.pulse {
     animation-name: pulse;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
 }
-#gd_middle .circle1 img{
-    position: absolute;
-    top: calc(50% - 152px);
-    left: calc(50% - 152px);
-    height: 280px;
-    width: 280px;
-    border: 12px solid rgba(29, 218, 175, 1);
-    border-radius: 50%;
-    box-shadow: 0 0 0 0 rgba(29, 218, 175, 0.5);
+.buzz {
     animation-name: buzz;
     animation-duration: 2s;
     animation-iteration-count: infinite;
@@ -216,8 +210,8 @@ body {
   }
 }
 
-#gd_bottom,
-#gd_skip {
+#bottom,
+#skip {
     position: absolute;
     bottom: calc(50% - 350px);
     height: 100px;
@@ -229,7 +223,7 @@ body {
     font-weight: bold;
     color: white;
 }
-#gd_bottom a {
+#bottom a {
     color: white;
     background-color: #1ddaaf;
     text-decoration: none;
@@ -240,12 +234,12 @@ body {
     font-size: 2vh;
     border: 2px solid rgba(29, 218, 175, 1);
 }
-#gd_bottom a:hover {
+#bottom a:hover {
     color: #1ddaaf;
     background-color: transparent;
 }
 
-#gd_skip a {
+#skip a {
     position: absolute;
     top: 0px;
     height: 60px;
@@ -260,7 +254,7 @@ body {
     font-weight: 100;
     opacity: 0.8;
 }
-#gd_skip a:hover {
+#skip a:hover {
     background-color: #afaeae;
     opacity: 1;
 }

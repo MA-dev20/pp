@@ -15,6 +15,7 @@ class TeamsController < ApplicationController
       @rating.save
       redirect_to dash_admin_teams_path
     else
+      flash[:danger] = 'Team konnte nicht erstellt werden!'
       redirect_to dash_admin_teams_path
     end
   end
@@ -26,7 +27,8 @@ class TeamsController < ApplicationController
       @team_rating.save
       redirect_to dash_admin_games_path(@team)
     else
-      redirect_to dash_admin_teams_path
+      flash[:danger] = 'Team konnte nicht erstellt werden!'
+      redirect_to dash_admin_path
     end
   end
     

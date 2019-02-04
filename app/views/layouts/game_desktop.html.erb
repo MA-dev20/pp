@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Peterpitch</title>
     <meta name="theme-color" content="#1dacf1"/>
     
@@ -9,9 +9,14 @@
 
     <%= stylesheet_link_tag    'game_desktop/main', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'game_desktop/main', 'data-turbolinks-track': 'reload' %>
-  </head>
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body>
+    <section id="content">
+        <%= yield %>
+    </section>
+</body>
+<script>
+    setInterval(updateGradient,10);
+</script>
 </html>

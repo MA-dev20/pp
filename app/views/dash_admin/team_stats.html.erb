@@ -6,8 +6,8 @@
     
     <div class="stats_overview">
         
-        <div class="gesamt">
-            <button class="circle" id="chart_gesamt"><%= @rating.ges / 10.0 %></button>
+        <div class="gesamt active">
+            <button class="circle" id="chart_gesamt"><span><%= @rating.ges / 10.0 %></span></button>
             <div class="text" id="t_gesamt">Gesamt</div>
         </div>
         
@@ -109,16 +109,8 @@ var gesamtChart = new Chart(ctx, {
     }
 });
 document.getElementById('chart_gesamt').addEventListener('click', function() {
-    document.getElementById('chart_spontan').style.cssText = 'background-color: rgba(28, 161, 222, 0.5);';
-    document.getElementById('chart_gesamt').style.cssText = 'background-color: rgba(28, 161, 222, 0.5);';
-    document.getElementById('chart_kreativ').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_body').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_rhetorik').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('t_gesamt').style.fontWeight = 'bold';
-    document.getElementById('t_spontan').style.fontWeight = 'normal';
-    document.getElementById('t_kreativ').style.fontWeight = 'normal';
-    document.getElementById('t_body').style.fontWeight = 'normal';
-    document.getElementById('t_rhetorik').style.fontWeight = 'normal';
+    $('.active').removeClass('active');
+    $('.gesamt').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
         datapoints[i] = <%= g.ges / 10.0 %>;
@@ -128,16 +120,8 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
     window.gesamtChart.update();
 });
 document.getElementById('chart_spontan').addEventListener('click', function() {
-    document.getElementById('chart_gesamt').style.cssText = 'background-color: rgba(28, 161, 222, 0.5); border: 1vh solid rgba(28, 161, 222, 0.5);';
-    document.getElementById('chart_spontan').style.cssText = 'background-color: rgba(28, 161, 222, 1.0); border: 1vh solid #00e38b; font-weight: bold;';
-    document.getElementById('chart_kreativ').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_body').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_rhetorik').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('t_gesamt').style.fontWeight = 'normal';
-    document.getElementById('t_spontan').style.fontWeight = 'bold';
-    document.getElementById('t_kreativ').style.fontWeight = 'normal';
-    document.getElementById('t_body').style.fontWeight = 'normal';
-    document.getElementById('t_rhetorik').style.fontWeight = 'normal';
+    $('.active').removeClass('active');
+    $('.spontan').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
         datapoints[i] = <%= g.spontan / 10.0 %>;
@@ -147,16 +131,8 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
     window.gesamtChart.update();
 });
 document.getElementById('chart_kreativ').addEventListener('click', function() {
-    document.getElementById('chart_gesamt').style.cssText = 'background-color: rgba(28, 161, 222, 0.5); border: 1vh solid rgba(28, 161, 222, 0.5);';
-    document.getElementById('chart_spontan').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_kreativ').style.cssText = 'background-color: rgba(28, 161, 222, 1.0); border: 1vh solid #00e38b; font-weight: bold;';
-    document.getElementById('chart_body').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_rhetorik').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('t_gesamt').style.fontWeight = 'normal';
-    document.getElementById('t_spontan').style.fontWeight = 'normal';
-    document.getElementById('t_kreativ').style.fontWeight = 'bold';
-    document.getElementById('t_body').style.fontWeight = 'normal';
-    document.getElementById('t_rhetorik').style.fontWeight = 'normal';
+    $('.active').removeClass('active');
+    $('.kreativ').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
         datapoints[i] = <%= g.creative / 10.0 %>;
@@ -166,16 +142,8 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
     window.gesamtChart.update();
 });
 document.getElementById('chart_body').addEventListener('click', function() {
-    document.getElementById('chart_spontan').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_gesamt').style.cssText = 'background-color: rgba(28, 161, 222, 0.5); border: 1vh solid rgba(28, 161, 222, 0.5);';
-    document.getElementById('chart_kreativ').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_body').style.cssText = 'background-color: rgba(28, 161, 222, 1.0); border: 1vh solid #00e38b; font-weight: bold;';
-    document.getElementById('chart_rhetorik').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('t_gesamt').style.fontWeight = 'normal';
-    document.getElementById('t_spontan').style.fontWeight = 'normal';
-    document.getElementById('t_kreativ').style.fontWeight = 'normal';
-    document.getElementById('t_body').style.fontWeight = 'bold';
-    document.getElementById('t_rhetorik').style.fontWeight = 'normal';
+    $('.active').removeClass('active');
+    $('.body').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
         datapoints[i] = <%= g.body / 10.0 %>;
@@ -185,16 +153,8 @@ document.getElementById('chart_body').addEventListener('click', function() {
     window.gesamtChart.update();
 });
 document.getElementById('chart_rhetorik').addEventListener('click', function() {
-    document.getElementById('chart_gesamt').style.cssText = 'background-color: rgba(28, 161, 222, 0.5); border: 1vh solid rgba(28, 161, 222, 0.5);';
-    document.getElementById('chart_spontan').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_kreativ').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_body').style.cssText = 'background-color: rgba(28, 161, 222, 0.5)';
-    document.getElementById('chart_rhetorik').style.cssText = 'background-color: rgba(28, 161, 222, 1.0); border: 1vh solid #00e38b; font-weight: bold;';
-    document.getElementById('t_gesamt').style.fontWeight = 'normal';
-    document.getElementById('t_spontan').style.fontWeight = 'normal';
-    document.getElementById('t_kreativ').style.fontWeight = 'normal';
-    document.getElementById('t_body').style.fontWeight = 'normal';
-    document.getElementById('t_rhetorik').style.fontWeight = 'bold';
+    $('.active').removeClass('active');
+    $('.rhetorik').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
         datapoints[i] = <%= g.rhetoric / 10.0 %>;
@@ -203,10 +163,6 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     <% end %>
     window.gesamtChart.update();
 });
-document.getElementById('chart_gesamt').addEventListener('mouseover', function() {
-    document.getElementById('chart_gesamt').style.cssText = 'background-color: rgba(28, 161, 222, 1.0)';
-    document.getElementById('t_gesamt').style.fontWeight = 'bold';
-})
 
 
 </script>
