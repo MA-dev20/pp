@@ -1,7 +1,7 @@
 class DashAdminController < ApplicationController
   before_action :require_admin, :set_admin
-  before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats]
-  before_action :set_user, only: [:user_stats]
+  before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats]
+  before_action :set_user, only: [:user_stats, :compare_user_stats]
   layout 'dash_admin'
     
   def index
@@ -27,12 +27,23 @@ class DashAdminController < ApplicationController
   end
     
   def user_stats
-    @turns = TurnRating.where(user_id: @user.id)
+    @users = User.where(admin_id: @admin.id)
+    @turns = Turn.where(user_id: @user.id)
+    @turns_rating = TurnRating.where(user_id: @user.id).last(7)
     @rating = UserRating.find_by(user_id: @user.id)
     if !@rating
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       redirect_to dash_admin_users_path
     end
+  end
+    
+  def compare_user_stats
+    @users = User.where(admin_id: @admin.id)
+    @turns = Turn.where(user_id: @user.id)
+    @turns_rating = TurnRating.where(user_id: @user.id).last(7)
+    @rating = UserRating.find_by(user_id: @user.id)
+      
+    @user1 = User.find(params[:compare_user_id])
   end
     
   def account

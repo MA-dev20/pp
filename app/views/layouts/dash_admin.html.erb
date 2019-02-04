@@ -41,6 +41,8 @@
                 <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
             <% elsif @team && @user && current_page?(dash_admin_user_stats_path(@team, @user)) %>
                 <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
+            <% elsif @team && @user && @user1 && current_page?(dash_admin_compare_user_stats_path(@team, @user, @user1)) %>
+                <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
             <% else %>
                 <%= link_to 'Nutzer', dash_admin_users_path, class: 'l3' %>
             <% end %>
@@ -57,7 +59,6 @@
         <% flash.each do |name, msg| %>
             <% if msg.is_a?(String) %>
                 <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <%= content_tag :div, msg, :id => "flash_#{name}" %>
                 </div>
             <% end %>
@@ -104,4 +105,12 @@
     
 </div>
 </body>
+<script>
+    $(document).ready(function() {
+        window.setTimeout(function() {
+           $('.alert').slideUp(500);
+        }, 4000);
+    })
+</script>
+
 </html>

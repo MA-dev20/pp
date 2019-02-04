@@ -28,8 +28,33 @@
             <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric / 10.0 %></button>
             <div class="text" id="t_rhetorik">Rhetorik</div>
         </div>
+        <div class="places">
+           <div class="first">
+               <%= image_tag 'defaults/cup.png' %>
+               <div class="txt"><%= @turns.where(place: 1).count %></div>
+           </div>
+           <div class="second">
+               <%= image_tag 'defaults/silver.png' %>
+               <div class="txt"><%= @turns.where(place: 2).count %></div>
+           </div>
+           <div class="third">
+               <%= image_tag 'defaults/bronze.png' %>
+               <div class="txt"><%= @turns.where(place: 3).count %></div>
+           </div>
+        </div>
         <div class="compare">
-            <%= image_tag 'defaults/cup.png' %>
+        
+        <select class="cs-select cs-skin-underline form-field">
+            <option value="" disabled selected>Vergleiche mit</option>
+            <% @users.each do |u| %>
+                   <% if @user.id != u.id %>
+                    <option value="<%= u.id %>" data-link="<%= dash_admin_compare_user_stats_path(@team.id, @user.id, u.id) %>">
+                         <%= u.fname %> <%= u.lname %>
+                    </option>
+                    <% end %>
+            <% end %>
+        </select>
+        
         </div>
     </div>
     <div class="stats_chart">
@@ -39,21 +64,34 @@
     </div>
 </section>
 <script>
+(function() {
+[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
+    function(el) {
+	   new SelectFx(el);
+       newTab: false;
+    } );
+})();
     
 var ctx = document.getElementById("Chart");
 var datapoints = [NaN, NaN, NaN, NaN, NaN, NaN, NaN ];
+var datapoints2 = [NaN, NaN, NaN, NaN, NaN, NaN, NaN ];
 var label = [NaN, NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
-<% @turns.each do |g| %>
+<% @turns_rating.each do |g| %>
     datapoints[i] = <%= g.ges / 10.0 %>;
+    <% if GameRating.where(game_id: g.game_id).first %>
+    datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.ges / 10.0 %>;
+    <% end %>
     label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
     i++;
 <% end %>
+var user1 = '<%= @user.fname %>';
 var gesamtChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: label,
         datasets: [{
+            label: user1,
             data: datapoints,
             fill:false,
             borderColor:"rgba(255,255,255,1.0)",
@@ -65,6 +103,20 @@ var gesamtChart = new Chart(ctx, {
             pointBorderWidth: 5,
             pointRadius: 5,
             pointHoverRadius: 8,
+            lineTension:0,
+        }, {
+            label: 'Team',
+            data: datapoints2,
+            fill: false,
+            borderColor:"rgba(255,255,255,0.30)",
+            borderWidth: 5,
+            pointBorderColor:"rgba(255,255,255,0.30)",
+            pointBackgroundColor:"rgba(255,255,255,0.30)",
+            pointHoverBackgroundColor:"rgba(255,255,255,0.30)",
+            pointHoverBorderColor:"rgba(255,255,255,0.30)",
+            pointBorderWidth: 5,
+            pointRadius: 1,
+            pointHoverRadius: 1,
             lineTension:0,
         }]
     },
@@ -78,7 +130,9 @@ var gesamtChart = new Chart(ctx, {
             display: false,
         },
         tooltips: {
-            mode: 'index'
+            mode: 'index',
+            multiKeyBackground:"rgba(255,255,255,0)",
+            intersect: false,
         },
         scales: {
             yAxes: [{
@@ -119,9 +173,12 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
     document.getElementById('t_kreativ').style.fontWeight = 'normal';
     document.getElementById('t_body').style.fontWeight = 'normal';
     document.getElementById('t_rhetorik').style.fontWeight = 'normal';
-    var i = 1;
-    <% @turns.each do |g| %>
+    var i = 0;
+    <% @turns_rating.each do |g| %>
         datapoints[i] = <%= g.ges / 10.0 %>;
+        <% if GameRating.where(game_id: g.game_id).first %>
+        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.ges / 10.0 %>;
+        <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
@@ -138,9 +195,12 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
     document.getElementById('t_kreativ').style.fontWeight = 'normal';
     document.getElementById('t_body').style.fontWeight = 'normal';
     document.getElementById('t_rhetorik').style.fontWeight = 'normal';
-    var i = 1;
-    <% @turns.each do |g| %>
+    var i = 0;
+    <% @turns_rating.each do |g| %>
         datapoints[i] = <%= g.spontan / 10.0 %>;
+        <% if GameRating.where(game_id: g.game_id).first %>
+        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.spontan / 10.0 %>;
+        <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
@@ -157,9 +217,12 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
     document.getElementById('t_kreativ').style.fontWeight = 'bold';
     document.getElementById('t_body').style.fontWeight = 'normal';
     document.getElementById('t_rhetorik').style.fontWeight = 'normal';
-    var i = 1;
-    <% @turns.each do |g| %>
+    var i = 0;
+    <% @turns_rating.each do |g| %>
         datapoints[i] = <%= g.creative / 10.0 %>;
+        <% if GameRating.where(game_id: g.game_id).first %>
+        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.creative / 10.0 %>;
+        <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
@@ -176,9 +239,12 @@ document.getElementById('chart_body').addEventListener('click', function() {
     document.getElementById('t_kreativ').style.fontWeight = 'normal';
     document.getElementById('t_body').style.fontWeight = 'bold';
     document.getElementById('t_rhetorik').style.fontWeight = 'normal';
-    var i = 1;
-    <% @turns.each do |g| %>
+    var i = 0;
+    <% @turns_rating.each do |g| %>
         datapoints[i] = <%= g.body / 10.0 %>;
+        <% if GameRating.where(game_id: g.game_id).first %>
+        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.body / 10.0 %>;
+        <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
@@ -195,9 +261,12 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     document.getElementById('t_kreativ').style.fontWeight = 'normal';
     document.getElementById('t_body').style.fontWeight = 'normal';
     document.getElementById('t_rhetorik').style.fontWeight = 'bold';
-    var i = 1;
-    <% @turns.each do |g| %>
+    var i = 0;
+    <% @turns_rating.each do |g| %>
         datapoints[i] = <%= g.rhetoric / 10.0 %>;
+        <% if GameRating.where(game_id: g.game_id).first %>
+        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.rhetoric / 10.0 %>;
+        <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>

@@ -3,6 +3,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
+gem 'rangesliderjs-rails', '~> 2.3', '>= 2.3.1'
+gem 'jquery-datatables-rails', '~> 3.4.0'
+gem 'font-awesome-sass', '~> 5.6.1'
+gem 'chart-js-rails'
+gem 'bootstrap', '~> 4.2', '>= 4.2.1'
+gem 'jquery-rails'
 gem 'carrierwave'
 gem 'execjs'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -12,7 +18,7 @@ gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sassc', '~> 2.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes

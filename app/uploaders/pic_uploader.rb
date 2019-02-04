@@ -9,10 +9,6 @@ class PicUploader < CarrierWave::Uploader::Base
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
-    
-  def default_url(*args)
-    "defaults/wolf.jpg"
-  end
 
   def fix_exif_rotation
     manipulate! do |img|

@@ -19,7 +19,7 @@
     top: 8vh;
     left: 0;
     height: 25vh;
-    width: 75vw;
+    width: 70vw;
 }
 #dash_stats .gesamt {
     position: absolute;
@@ -40,7 +40,7 @@
     top: 5vh;
     left: 40vh;
     height: 20vh;
-    width: 60vh;
+    width: 20vh;
 }
 #dash_stats .body {
     position: absolute;
@@ -48,6 +48,67 @@
     left: 60vh;
     height: 20vh;
     width: 20vh;
+}
+#dash_stats .compare {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 5vh;
+    width: 21vh;
+}
+#dash_stats .compare .cs-select {
+    height: 4vh;
+    border-radius: 2vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    line-height: 4vh;
+}
+#dash_stats .places {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 12vh;
+    width: 21vh;
+}
+#dash_stats .places > .first {
+    position: absolute;
+    top: 0;
+    left: 0vh;
+    height: 7vh;
+    width: 7vh;
+}
+#dash_stats .places > .second {
+    position: absolute;
+    top: 0;
+    left: 7vh;
+    height: 7vh;
+    width: 7vh;
+}
+#dash_stats .places > .third {
+    position: absolute;
+    top: 0;
+    left: 14vh;
+    height: 7vh;
+    width: 7vh;
+}
+#dash_stats .places > .first > img,
+#dash_stats .places > .second > img,
+#dash_stats .places > .third > img {
+    position: absolute;
+    top: 0;
+    right: 0.5vh;
+    height: 6vh;
+}
+#dash_stats .places .txt {
+    position: absolute;
+    top: 7vh;
+    left: 0;
+    width: 7vh;
+    line-height: 4vh;
+    text-align: center;
+    font-size: 3.5vh;
+    font-weight: bold;
+    color: darkgray;
 }
 #dash_stats .rhetorik {
     position: absolute;

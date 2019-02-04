@@ -15,7 +15,7 @@
                         <%= t.name %>
                     </option>
                 <% else %>
-                    <option value="<%= t.id %>" data-link="<%= dash_users_path(t.id) %>">
+                    <option value="<%= t.id %>" data-link="<%= dash_admin_team_users_path(t.id) %>">
                          <%= t.name %>
                     </option>
                 <% end %>
@@ -50,7 +50,7 @@
             <td class="name"><%= u.fname %> <%= u.lname %></td>
             <td><%= u.email %></td>
             <td><%= u.company_name %></td>
-            <td><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %></td>
+            <td><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
             <td><%= link_to '', destroy_user_path(u), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie den User unwiederuflich löschen möchten?" } %></td>
             <td><%= link_to '', dash_admin_user_stats_path(@team, u), class: "fas fa-chart-line" %></td>
         </tr>

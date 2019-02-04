@@ -1,6 +1,5 @@
 /*
- *= require scrollbar/scrollbar
- *= require bootstrap/bootstrap
+ *= require perfect-scrollbar
  */
 #gd_team .searchbar {
     position: absolute;

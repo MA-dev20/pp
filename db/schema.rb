@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_16_073524) do
+ActiveRecord::Schema.define(version: 2018_12_31_152342) do
 
   create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.boolean "male"
     t.string "company_name"
     t.string "email"
     t.string "password_digest"
@@ -59,6 +60,8 @@ ActiveRecord::Schema.define(version: 2019_01_16_073524) do
 
   create_table "ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "turn_id"
+    t.integer "user_id"
+    t.integer "admin_id"
     t.integer "ges"
     t.integer "body"
     t.integer "creative"
@@ -66,26 +69,12 @@ ActiveRecord::Schema.define(version: 2019_01_16_073524) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "admin_id"
     t.index ["turn_id"], name: "index_ratings_on_turn_id"
-  end
-
-  create_table "root_admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "root_id"
-    t.bigint "admin_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["admin_id"], name: "index_root_admins_on_admin_id"
-    t.index ["root_id"], name: "index_root_admins_on_root_id"
   end
 
   create_table "roots", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
-    t.boolean "edit_words"
-    t.boolean "edit_admins"
-    t.boolean "edit_root"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -123,6 +112,8 @@ ActiveRecord::Schema.define(version: 2019_01_16_073524) do
   create_table "turn_ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "turn_id"
     t.bigint "game_id"
+    t.integer "user_id"
+    t.integer "admin_id"
     t.integer "ges"
     t.integer "body"
     t.integer "creative"
@@ -130,8 +121,6 @@ ActiveRecord::Schema.define(version: 2019_01_16_073524) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "admin_id"
     t.index ["game_id"], name: "index_turn_ratings_on_game_id"
     t.index ["turn_id"], name: "index_turn_ratings_on_turn_id"
   end
@@ -188,8 +177,6 @@ ActiveRecord::Schema.define(version: 2019_01_16_073524) do
   add_foreign_key "games", "admins"
   add_foreign_key "games", "teams"
   add_foreign_key "ratings", "turns"
-  add_foreign_key "root_admins", "admins"
-  add_foreign_key "root_admins", "roots"
   add_foreign_key "team_ratings", "teams"
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"
