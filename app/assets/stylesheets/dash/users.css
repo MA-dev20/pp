@@ -16,30 +16,29 @@
     line-height: 10vh;
 }
 
-#gd_users .top .searchbar {
+#gd_users .top #searchField {
     position: absolute;
     bottom: 74vh;
     left: 25vw;
+    width: 20vw;
     height: 6vh;
     background-color: white;
+    padding-right: 3vh;
+    padding-left: 3vh;
     color: black;
     border-radius: 4vh;
-    min-width: calc(20vw - 2.5vh);
+    border: 2px solid white;
     
 }
-#gd_users .top .searchbar #searchField {
-    height: 6vh;
-    background-color: white;
-    border: none;
-    margin-left: 3vh;
-    line-height: 6vh;
-    font-size: 2vh;
+#gd_users .top #searchField:focus {
+    border-color: rgba(29, 218, 175, 1);
 }
-#gd_users .top .searchbar > img {
+#gd_users .top > img {
     position: absolute;
-    top: calc(3vh - 15px);
-    right: 1vh;
-    padding-right: 1vh;
+    bottom: 75.5vh;
+    left: calc(45vw - 5vh);
+    height: 3vh;
+    width: 3vh;
 }
 #gd_users .users {
     position: absolute;

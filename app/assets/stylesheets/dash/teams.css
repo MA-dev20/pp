@@ -1,16 +1,26 @@
 /*
  *= require perfect-scrollbar
  */
-#gd_team .searchbar {
+#gd_team #searchField {
     position: absolute;
     top: 5vh;
     left: 5vw;
     width: 20vw;
+    height: 6vh;
+    background-color: white;
+    padding-right: 3vh;
+    padding-left: 3vh;
+    color: black;
+    border-radius: 4vh;
+    border: 2px solid white;
 }
-#gd_team .searchbar > img {
+#gd_team #searchField:focus {
+    border-color: rgba(29, 218, 175, 1);
+}
+#gd_team > img {
     position: absolute;
-    top: 2vh;
-    right: 3vh;
+    top: 6.5vh;
+    left: calc(25vw - 5vh);
     height: 3vh;
     width: 3vh;
 }
