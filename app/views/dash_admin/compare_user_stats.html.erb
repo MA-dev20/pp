@@ -3,9 +3,10 @@
         <span><%= @user.fname %> <%= @user.lname %></span>, <%= @team.name %>
     </div>
     <div class="stats_overview">
-        <div class="gesamt">
-            <button class="circle" id="chart_gesamt"><%= image_tag @user.avatar.quad.url %>
-            <span class="text"><%= @rating.ges / 10.0 %></span>
+        <div class="gesamt active">
+            <button class="circle" id="chart_gesamt">
+            <span><%= @rating.ges / 10.0 %></span>
+            <%= image_tag @user.avatar.quad.url %>
             </button>
             <div class="text" id="t_gesamt">Gesamt</div>
         </div>
