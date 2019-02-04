@@ -1,13 +1,12 @@
-<div class="gd_bg"></div>
-<section id="gd_head">
+<section id="head">
         Jetzt <%= @user.fname %> bewerten!
 </section>
-<section id="gd_middle">
-    <div class="circle1">
-        <%= image_tag @user.avatar.quad.url %>
+<section id="middle">
+    <div class="circle">
+        <%= image_tag @user.avatar.quad.url, class: 'buzz' %>
     </div>
 </section>
-<section id="gd_bottom">
+<section id="bottom">
   <%= link_to 'weiter!', gda_redirect_path %>
 </section>
 <div id="redirect">

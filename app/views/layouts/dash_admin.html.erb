@@ -19,39 +19,47 @@
             <%= image_tag 'defaults/wolf.jpg' %>
         <% end %>
         <div class="links">
+            <div class="link">
             <% if current_page?(dash_admin_path) %>
-                <%= link_to "Let's Play", dash_admin_path, class: 'l1 active' %>
+                <%= link_to "Let's Play", dash_admin_path, class: 'active' %>
             <% elsif @team && current_page?(dash_admin_games_path(@team)) %>
-                <%= link_to "Let's Play", dash_admin_path, class: 'l1 active' %>
+                <%= link_to "Let's Play", dash_admin_path, class: 'active' %>
             <% else %>
-                <%= link_to "Let's Play", dash_admin_path, class: 'l1' %>
+                <%= link_to "Let's Play", dash_admin_path %>
             <% end %>
+            </div>
             
+            <div class="link">
             <% if current_page?( dash_admin_teams_path ) %>
-                <%= link_to "Teams", dash_admin_teams_path, class: 'l2 active' %>
+                <%= link_to "Teams", dash_admin_teams_path, class: 'active' %>
             <% elsif @team && current_page?(dash_admin_team_stats_path(@team)) %>
-                <%= link_to "Teams", dash_admin_teams_path, class: 'l2 active' %>
+                <%= link_to "Teams", dash_admin_teams_path, class: 'active' %>
             <% else %>
-                <%= link_to "Teams", dash_admin_teams_path, class: 'l2' %>
+                <%= link_to "Teams", dash_admin_teams_path %>
             <% end %>
+            </div>
             
+            <div class="link">
             <% if current_page?(dash_admin_users_path) %>
-                <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
+                <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
             <% elsif @team && current_page?(dash_admin_team_users_path(@team)) %>
-                <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
+                <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
             <% elsif @team && @user && current_page?(dash_admin_user_stats_path(@team, @user)) %>
-                <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
+                <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
             <% elsif @team && @user && @user1 && current_page?(dash_admin_compare_user_stats_path(@team, @user, @user1)) %>
-                <%= link_to "Nutzer", dash_admin_users_path, class: 'l3 active' %>
+                <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
             <% else %>
-                <%= link_to 'Nutzer', dash_admin_users_path, class: 'l3' %>
+                <%= link_to 'Nutzer', dash_admin_users_path %>
             <% end %>
+            </div>
             
+            <div class="link">
             <% if current_page?(dash_admin_account_path) %>
-                <%= link_to "Account", dash_admin_account_path, class: 'l4 active' %>
+                <%= link_to "Account", dash_admin_account_path, class: 'active' %>
             <% else %>
-                <%= link_to "Account", dash_admin_account_path, class: 'l4' %>
+                <%= link_to "Account", dash_admin_account_path %>
             <% end %>
+            </div>
         </div>
     </section>
     

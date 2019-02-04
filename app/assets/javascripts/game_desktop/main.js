@@ -1,8 +1,66 @@
 /*
+ *= require rails-ujs
+ *= require activestorage
+ *= require turbolinks
  *= require jquery3
  *= require game_desktop/typed.min
  *= require game_desktop/progressbar.min
  */
+
+// Background Animation
+var colors = new Array(
+  [29,172,241],
+  [20,93,170],
+  [29,218,175],
+  [26,142,214]);
+
+var step = 0;
+var colorIndices = [0,1,2,3];
+
+//transition speed
+var gradientSpeed = 0.002;
+
+function updateGradient()
+{
+  
+  if ( $===undefined ) return;
+  
+var c0_0 = colors[colorIndices[0]];
+var c0_1 = colors[colorIndices[1]];
+var c1_0 = colors[colorIndices[2]];
+var c1_1 = colors[colorIndices[3]];
+
+var istep = 1 - step;
+var r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
+var g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
+var b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
+var color1 = "rgb("+r1+","+g1+","+b1+")";
+
+var r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
+var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
+var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
+var color2 = "rgb("+r2+","+g2+","+b2+")";
+
+ $('#content').css({
+   background: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"}).css({
+    background: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"});
+  
+  step += gradientSpeed;
+  if ( step >= 1 )
+  {
+    step %= 1;
+    colorIndices[0] = colorIndices[1];
+    colorIndices[2] = colorIndices[3];
+    
+    //pick two new target color indices
+    //do not pick the same as the current one
+    colorIndices[1] = ( colorIndices[1] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
+    colorIndices[3] = ( colorIndices[3] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
+    
+  }
+}
+
+
 // Pick Sound
 function pick(xnum) {
         var number = (Math.floor(Math.random() * xnum) + 1);
@@ -11,7 +69,6 @@ function pick(xnum) {
 }
 
 // Text Effect on gdesktop Turn
-/* Text Animation */
 function textanim() {
 const resolver = {
   resolve: function resolve(options, callback) {
@@ -76,9 +133,6 @@ const resolver = {
   } 
 };
 
-/* Some GLaDOS quotes from Portal 2 chapter 9: The Part Where He Kills You
- * Source: http://theportalwiki.com/wiki/GLaDOS_voice_lines#Chapter_9:_The_Part_Where_He_Kills_You
- */
 const strings = [
     document.getElementById('word').innerHTML
 ];
@@ -103,6 +157,8 @@ const options = {
 resolver.resolve(options, callback);
 }
 /* END */
+
+//Color in Circles
 function myColor(val) {
     if (val < 0.5 ) {
         if(val*510 <= 16)
@@ -119,7 +175,7 @@ function myColor(val) {
         }
     }
 }
-/* Animated Circle on game_desktop/rated */
+/* Animated Circle on game_desktop/rating */
 function ratecircle(id,text_id,val) {
     var tId = document.getElementById(text_id)
     var bar = new ProgressBar.Circle(id, {

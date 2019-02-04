@@ -1,12 +1,6 @@
 /*
 
  */
-.btn:focus {
-    box-shadow: none;
-}
-.dropdown-toggle {
-    background-color: transparent;
-}
 
 #game-container > h1 {
     position: absolute;
@@ -46,13 +40,6 @@
     width: 20vw;
 }
 
-#game-container .row1 {
-    position: absolute;
-    top: 20vh;
-    height: 10vh;
-    width: 100%;
-    text-align: center;
-}
 #game-container .col1 > .row1 {
     position: absolute;
     top: 23vh;
@@ -161,9 +148,10 @@
     border-radius: 50%;
     border: 1px solid darkgray;
     color: darkgray;
-    line-height: 4vh;
+    line-height: calc(4vh - 4px);
     text-align: center;
     font-size: 3.5vh;
+    padding: 1px;
     background-color: white;
     cursor: pointer;
 }

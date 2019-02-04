@@ -15,20 +15,15 @@
 .row_2 > label {
     line-height: 13vh;
 }
-.row_2 > .field1 > img{
+.row_2 > img{
     position: absolute;
     left: calc(17vw - 5.5vh);
     top: 1vh;
     height: 11vh;
     width: 11vh;
-    border-radius: 50%;
 }
-.row_2 > .field2 > img{
-    position: absolute;
-    left: calc(17vw - 5.5vh);
-    top: 1vh;
-    height: 11vh;
-    width: 11vh;
+.row_2 > #ava_pic {
+    border-radius: 50%;
 }
 .submit-line {
     position: absolute;
@@ -54,13 +49,6 @@
     line-height: 5vh;
     width: 5vw;
     height: 5vh;
-    font-size: 2vh;
-}
-.form-label_2 {
-    position: absolute;
-    left: 40vw;
-    width: 5vw;
-    line-height: 5vh;
     font-size: 2vh;
 }
 .account-form-field {
@@ -125,8 +113,6 @@ input[type=number] {
     cursor: pointer;
 }
 
-.account-form-field1:hover,
-.account-form-field2:hover,
 .form-submit:hover {
     background-color: #ededed;
     color: #1ddaaf;

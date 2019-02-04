@@ -1,11 +1,3 @@
-
-#gd_users {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
 #gd_users .top .select-text{
     position: absolute;
     top: 4vh;

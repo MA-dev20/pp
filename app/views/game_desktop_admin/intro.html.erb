@@ -1,8 +1,6 @@
-<section id="content">
 <%= video_tag 'gameintro.mp4', id: 'video-bg', autoplay: false, controls: false, onended: 'redir()' %>
-<section id="gd_skip">
+<section id="skip">
    <%= link_to 'Skip Intro', gda_redirect_path %>
-</section>
 </section>
 <div id="redirect">
     <%= render partial: 'state' %>

@@ -15,16 +15,6 @@
 @import "font-awesome-sprockets";
 @import 'font-awesome';
 
-.btn {
-    white-space: nowrap;
-}
-.btn:focus {
-    box-shadow: none;
-}
-.dropdown-toggle::after {
-    width: 0;
-    height: 0;
-}
 body {
     position: absolute;
     left: 0;
@@ -75,6 +65,14 @@ body {
 .btn {
     border: none;
     transition: none;
+    white-space: nowrap;
+}
+.btn:focus {
+    box-shadow: none;
+}
+.dropdown-toggle::after {
+    width: 0;
+    height: 0;
 }
 .dropdown-menu {
     padding: 0;
@@ -128,44 +126,30 @@ body {
     height: 30vh;
     width: 10vw;
 }
-#sidebar .links > .l1 {
+#sidebar .links > .link {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 5vh;
+    width: 10vw;
+    line-height: 5vh;
+    cursor: pointer;
+}
+#sidebar .links a {
     position: absolute;
     left: 0;
     top: 0;
     height: 5vh;
     width: 10vw;
-}
-#sidebar .links > .l2 {
-    position: absolute;
-    left: 0;
-    top: 5vh;
-    height: 5vh;
-    width: 10vw;
-}
-#sidebar .links > .l3 {
-    position: absolute;
-    left: 0;
-    top: 10vh;
-    height: 5vh;
-    width: 10vw;
-}
-#sidebar .links > .l4 {
-    position: absolute;
-    left: 0;
-    top: 15vh;
-    height: 5vh;
-   width: 10vw;
-}
-#sidebar .links > a {
-    background-color: transparent;
     color: white;
     text-decoration: none;
     line-height: 5vh;
     font-size: 2vh;
     text-align: center;
 }
-#sidebar .links > a:hover,
-#sidebar .links > .active {
+#sidebar .links a:hover,
+#sidebar .links a:focus,        
+#sidebar .links .active {
     background-color: rgba(0,0,0,0.1);
     font-weight: bold;
 }
@@ -177,16 +161,9 @@ body {
     height: 90vh;
     width: 90vw;
 }
-:focus {outline:none !important;}
+:focus {
+    outline:none !important;
+}
 .btn {
     border-radius: 50px;
-}
-.btn-primary {
-    background-color: #2887b7;
-    border: 1px solid #2887b7;
-}
-.btn-primary:hover {
-    background-color: white;
-    color: #2887b7;
-    border-color: #2887b7;
 }
