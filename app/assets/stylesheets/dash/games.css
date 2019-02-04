@@ -44,8 +44,10 @@
     position: absolute;
     top: 23vh;
     height: 2vh;
+    width: 100%;
     line-height: 2vh;
     font-size: 2vh;
+    text-align: center;
 }
 
 #game-container .row2 {
