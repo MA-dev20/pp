@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :team_users, dependent: :destroy
   has_many :teams, through: :team_users
   has_many :turns, dependent: :destroy
+  has_many :turn_ratings, dependent: :destroy
     
   has_secure_password validations: false
     

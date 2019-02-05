@@ -100,11 +100,7 @@ class GameMobileUserController < ApplicationController
     
     def set_turn
       @turn = Turn.find_by(id: @game.current_turn)
-      if !@turn.user_id.nil?
-        @cur_user = User.find_by(id: @turn.user_id)
-      else
-        @cur_user = Admin.find_by(id: @turn.admin_id)
-      end
+      @cur_user = @turn.findUser
     end
     
     def user_params

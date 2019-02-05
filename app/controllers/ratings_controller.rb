@@ -6,8 +6,7 @@ class RatingsController < ApplicationController
     
   def create
     @admin = current_game_admin
-    @rating = Rating.new(rating_params)
-    @rating.turn_id = @turn.id
+    @rating = @turn.ratings.new(rating_params)
     @rating.ges = (@rating.body + @rating.creative + @rating.rhetoric + @rating.spontan) / 4
     @rating.admin_id = @admin.id
     if @rating.save
@@ -22,8 +21,7 @@ class RatingsController < ApplicationController
     
   def create_user
     @user = current_game_user
-    @rating = Rating.new(rating_params)
-    @rating.turn_id = @turn.id
+    @rating = @turn.ratings.new(rating_params)
     @rating.ges = (@rating.body + @rating.creative + @rating.rhetoric + @rating.spontan) / 4
     @rating.user_id = @user.id
     if @rating.save
