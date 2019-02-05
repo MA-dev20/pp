@@ -11,8 +11,6 @@ class TeamsController < ApplicationController
   def create
     @team = @admin.teams.new(team_params)
     if @team.save
-      @rating = TeamRating.new(team_id: @team.id, ges: 0, body: 0, creative: 0, rhetoric: 0, spontan: 0)
-      @rating.save
       redirect_to dash_admin_teams_path
     else
       flash[:danger] = 'Team konnte nicht erstellt werden!'
@@ -23,8 +21,6 @@ class TeamsController < ApplicationController
   def create_game
     @team = @admin.teams.new(team_params)
     if @team.save
-      @team_rating = TeamRating.new(team_id: @team.id, ges: 0, body: 0, creative: 0, rhetoric: 0, spontan: 0)
-      @team_rating.save
       redirect_to dash_admin_games_path(@team)
     else
       flash[:danger] = 'Team konnte nicht erstellt werden!'

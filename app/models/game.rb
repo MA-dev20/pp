@@ -4,4 +4,6 @@ class Game < ApplicationRecord
     
   has_one :game_rating, dependent: :destroy
   has_many :turns, dependent: :destroy
+    
+
 end

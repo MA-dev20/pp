@@ -43,7 +43,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def choose
-    @turns = @game.turns.where(play:true, played: false).sample(100)
+    @turns = @game.turns.playable.sample(100)
     if @game.turns.count < 2
       game_logout
       @game.destroy
@@ -88,14 +88,14 @@ class GameDesktopAdminController < ApplicationController
       @turn.update(played: true)
       update_turn_rating @turn
       update_user_rating @user
-      @rating = TurnRating.find_by(turn_id: @turn.id)
+      @rating = @turn.turn_rating
     end
   end
     
   def bestlist
     update_game_rating @game
     update_team_rating @team
-    @turn_ratings = TurnRating.where(game_id: @game.id).rating_order
+    @turn_ratings = @game.turn_ratings.rating_order
     place = 1
     @turn_ratings.each do |t|
         @turn = Turn.find(t.turn_id)
@@ -138,12 +138,8 @@ class GameDesktopAdminController < ApplicationController
       @state = @game.state
     end
     def set_turn
-      @turn = Turn.find_by(id: @game.current_turn)
-      if !@turn.user_id.nil?
-        @user = User.find_by(id: @turn.user_id)
-      elsif !@turn.admin_id.nil?
-        @user = Admin.find_by(id: @turn.admin_id)
-      end
-      @word = Word.find_by(id: @turn.word_id)
+      @turn = Turn.find(@game.current_turn)
+      @user = @turn.findUser
+      @word = Word.find(@turn.word_id)
     end
 end

@@ -37,7 +37,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def new_turn
-    @turn = @game.turns.find_by(admin_id: @admin.id)
+    @turn = @game.turns.find(@admin.id)
     if @turn
       redirect_to gma_intro_path
     elsif @admin.avatar.nil?
@@ -121,14 +121,12 @@ class GameMobileAdminController < ApplicationController
       @team = Team.find(@game.team_id)
       @state = @game.state
     end
+    
     def set_turn
       @turn = Turn.find_by(id: @game.current_turn)
-      if @turn.user_id.nil?
-        @cur_user = Admin.find_by(id: @turn.admin_id)
-      else
-        @cur_user = User.find_by(id: @turn.user_id)
-      end
+      @cur_user = @turn.findUser
     end
+    
     def turn_params
       params.require(:turn).permit[:play]
     end

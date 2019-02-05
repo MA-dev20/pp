@@ -19,18 +19,18 @@ class DashAdminController < ApplicationController
   end
     
   def users
-    @users = @admin.users.all
+    @users = @admin.users
   end
     
   def team_users
-    @users = @team.users.all
+    @users = @team.users
   end
     
   def user_stats
     @users = @admin.users
-    @turns = Turn.where(user_id: @user.id)
-    @turns_rating = TurnRating.where(user_id: @user.id).last(7)
-    @rating = UserRating.find_by(user_id: @user.id)
+    @turns = @user.turns
+    @turns_rating = @user.turn_ratings.last(7)
+    @rating = @user.user_rating
     if !@rating
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       redirect_to dash_admin_users_path
@@ -39,9 +39,9 @@ class DashAdminController < ApplicationController
     
   def compare_user_stats
     @users = @admin.users
-    @turns = Turn.where(user_id: @user.id)
-    @turns_rating = TurnRating.where(user_id: @user.id).last(7)
-    @rating = UserRating.find_by(user_id: @user.id)
+    @turns = @user.turns
+    @turns_rating = @user.turn_ratings.last(7)
+    @rating = @user.user_rating
       
     @user1 = User.find(params[:compare_user_id])
   end
