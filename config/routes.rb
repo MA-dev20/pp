@@ -3,10 +3,8 @@ Rails.application.routes.draw do
     
   root 'landing#index'
     
-  get 'coaches/register', to: 'landing#register_coach', as: 'register_coach'
-  get 'companies/register', to: 'landing#register_company', as: 'register_company'
+  get 'admins/register', to: 'landing#register', as: 'register'
   get 'coaches/info', to: 'landing#coach', as: 'coach_info'
-  get 'companies/info', to: 'landing#company', as: 'company_info'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 ########
 # Game #
@@ -92,8 +90,7 @@ Rails.application.routes.draw do
 ##############
     
   get 'backoffice', to: 'backoffice#index', as: 'backoffice'
-  get 'backoffice/coaches', to: 'backoffice#coaches', as: 'backoffice_coaches'
-  get 'backoffice/companies', to: 'backoffice#companies', as: 'backoffice_companies'
+  get 'backoffice/admins', to: 'backoffice#admins', as: 'backoffice_admins'
   get 'backoffice/words', to: 'backoffice#words', as: 'backoffice_words'
 
 #########
@@ -123,12 +120,10 @@ Rails.application.routes.draw do
 # Admin #
 #########
     
-  get 'coaches/login', to: 'admin_session#new_coach', as: 'login_coach'
-  post 'coaches/login', to: 'admin_session#create_coach'
-  get 'companies/login', to: 'admin_session#new_company', as: 'login_company'
-  post 'companies/login', to: 'admin_session#create_coach'
+  get 'admins/login', to: 'admin_session#new', as: 'login_admin'
+  post 'admins/login', to: 'admin_session#create'
     
-  get 'admin/logout', to: 'admin_session#destroy', as: 'logout_admin'
+  get 'admins/logout', to: 'admin_session#destroy', as: 'logout_admin'
 
 ########
 # Root #
@@ -153,10 +148,8 @@ Rails.application.routes.draw do
 # Admin #
 #########
     
-  get 'coaches/new', to: 'admins#new_coach', as: 'new_coach'
-  post 'coaches/new', to: 'admins#create_coach'
-  get 'companies/new', to: 'admins#new_company', as: 'new_company'
-  post 'companies/new', to: 'admins#create_company'
+  get 'admins/new', to: 'admins#new', as: 'new_admin'
+  post 'admins/new', to: 'admins#create'
     
   get 'admins/:admin_id/edit', to: 'admins#edit', as: 'edit_admin'
   post 'admins/:admin_id/edit', to: 'admins#update'

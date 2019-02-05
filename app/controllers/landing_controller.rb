@@ -6,12 +6,7 @@ class LandingController < ApplicationController
   def coach
   end
     
-  def company
+  def register
   end
-    
-  def register_coach
-  end
-    
-  def register_company
-  end
+
 end

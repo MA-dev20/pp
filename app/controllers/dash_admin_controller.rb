@@ -14,8 +14,8 @@ class DashAdminController < ApplicationController
   end
     
   def team_stats
-    @rating = TeamRating.find_by(team_id: @team.id)
-    @gameratings = GameRating.last(7)
+    @rating = @team.team_rating
+    @gameratings = @team.game_ratings.last(7)
   end
     
   def users
@@ -27,7 +27,7 @@ class DashAdminController < ApplicationController
   end
     
   def user_stats
-    @users = User.where(admin_id: @admin.id)
+    @users = @admin.users
     @turns = Turn.where(user_id: @user.id)
     @turns_rating = TurnRating.where(user_id: @user.id).last(7)
     @rating = UserRating.find_by(user_id: @user.id)
@@ -38,7 +38,7 @@ class DashAdminController < ApplicationController
   end
     
   def compare_user_stats
-    @users = User.where(admin_id: @admin.id)
+    @users = @admin.users
     @turns = Turn.where(user_id: @user.id)
     @turns_rating = TurnRating.where(user_id: @user.id).last(7)
     @rating = UserRating.find_by(user_id: @user.id)
@@ -52,7 +52,7 @@ class DashAdminController < ApplicationController
   private
     def set_admin
       @admin = current_admin
-      @teams = @admin.teams.all
+      @teams = @admin.teams
     end
     
     def set_team

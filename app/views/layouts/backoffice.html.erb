@@ -19,23 +19,13 @@
     <a href="<%= root_path %>" ><%= image_tag 'defaults/wolf.jpg', class: 'logo-top' %></a>
     <div class="links">
     
-    <% if current_page?(backoffice_coaches_path) %>
+    <% if current_page?(backoffice_admins_path) %>
         <div class="link active">
-            <%= link_to 'Coaches', backoffice_coaches_path %>
+            <%= link_to 'Admins', backoffice_admins_path %>
         </div>
     <% else %>
         <div class="link">
-            <%= link_to 'Coaches', backoffice_coaches_path %>
-        </div>
-    <% end %>
-         
-    <% if current_page?(backoffice_companies_path) %>
-        <div class="link active">
-            <%= link_to 'Companies', backoffice_companies_path %>
-        </div>
-    <% else %>
-        <div class="link">
-            <%= link_to 'Companies', backoffice_companies_path %>
+            <%= link_to 'Admins', backoffice_admins_path %>
         </div>
     <% end %>
  
