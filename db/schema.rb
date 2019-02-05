@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
 
   create_table "ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "turn_id"
-    t.integer "user_id"
-    t.integer "admin_id"
+    t.bigint "user_id"
+    t.bigint "admin_id"
     t.integer "ges"
     t.integer "body"
     t.integer "creative"
@@ -69,7 +69,9 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_ratings_on_admin_id"
     t.index ["turn_id"], name: "index_ratings_on_turn_id"
+    t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
   create_table "roots", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -112,8 +114,8 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
   create_table "turn_ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "turn_id"
     t.bigint "game_id"
-    t.integer "user_id"
-    t.integer "admin_id"
+    t.bigint "user_id"
+    t.bigint "admin_id"
     t.integer "ges"
     t.integer "body"
     t.integer "creative"
@@ -121,21 +123,25 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_turn_ratings_on_admin_id"
     t.index ["game_id"], name: "index_turn_ratings_on_game_id"
     t.index ["turn_id"], name: "index_turn_ratings_on_turn_id"
+    t.index ["user_id"], name: "index_turn_ratings_on_user_id"
   end
 
   create_table "turns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "game_id"
     t.bigint "word_id"
-    t.integer "user_id"
-    t.integer "admin_id"
+    t.bigint "user_id"
+    t.bigint "admin_id"
     t.integer "place"
     t.boolean "play"
     t.boolean "played"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_turns_on_admin_id"
     t.index ["game_id"], name: "index_turns_on_game_id"
+    t.index ["user_id"], name: "index_turns_on_user_id"
     t.index ["word_id"], name: "index_turns_on_word_id"
   end
 
@@ -176,14 +182,20 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
   add_foreign_key "game_ratings", "teams"
   add_foreign_key "games", "admins"
   add_foreign_key "games", "teams"
+  add_foreign_key "ratings", "admins"
   add_foreign_key "ratings", "turns"
+  add_foreign_key "ratings", "users"
   add_foreign_key "team_ratings", "teams"
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"
   add_foreign_key "teams", "admins"
+  add_foreign_key "turn_ratings", "admins"
   add_foreign_key "turn_ratings", "games"
   add_foreign_key "turn_ratings", "turns"
+  add_foreign_key "turn_ratings", "users"
+  add_foreign_key "turns", "admins"
   add_foreign_key "turns", "games"
+  add_foreign_key "turns", "users"
   add_foreign_key "turns", "words"
   add_foreign_key "user_ratings", "users"
   add_foreign_key "users", "admins"

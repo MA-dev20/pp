@@ -1,5 +1,5 @@
 <div id="table">
-<table id='company_table'>
+<table id='admin_table'>
 <thead>
     <th scope="col">Name</th>
     <th scope='col'>E-mail</th>
@@ -8,13 +8,13 @@
     <th scope="col">Delete</th>
 </thead>
 <tbody>
-<% @companies.each do |c| %>
+<% @admins.each do |c| %>
     <tr>
         <td><%= c.fname %> <%= c.lname %></td>
         <td><%= c.email %></td>
         <td><%= c.company_name %></td>
         <td><%= c.users.all.count %></td>
-        <td><%= link_to '', destroy_admin_path(c.id), class: 'fas fa-trash-alt' %></td>
+        <td><%= link_to '', destroy_admin_path(c.id), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie den Admin unwiederuflich löschen möchten?" } %></td>
     </tr>
 <% end %>
 </tbody>
@@ -24,7 +24,7 @@
 
 <script>
 $(document).ready( function () {
-    $('#company_table').DataTable( {
+    $('#admin_table').DataTable( {
         "paging":   false,
         "info":     false,
         'searching': false,

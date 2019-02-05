@@ -7,8 +7,8 @@
       <div class="row">
         <div class="col-md-12">
           <ul class="top-bar">
-            <li><%= link_to('Login Coaches', register_coach_path) %></li>
-              <li><%= link_to('Login Unternehmen', register_company_path) %></li>
+            <li><%= link_to('Login Coaches', register_path) %></li>
+              <li><%= link_to('Login Unternehmen', register_path) %></li>
           </ul>
         </div>
       </div>
@@ -20,7 +20,7 @@
                   <%= link_to('Coaches', coach_info_path, class: 'nav-link') %>
               </li>
               <li class="nav-item">
-                  <%= link_to('Unternehmen', company_info_path, class: 'nav-link') %>
+                  <%= link_to('Unternehmen', coach_info_path, class: 'nav-link') %>
               </li>
             <li class="nav-item"> <a class="nav-link" href="#">Preise</a> </li>
             <li class="nav-item"> <a class="nav-link" href="#">Jetzt testen!</a> </li>

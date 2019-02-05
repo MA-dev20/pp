@@ -5,14 +5,9 @@ class BackofficeController < ApplicationController
   def index
   end
     
-  #GET backoffice_coaches
-  def coaches
-    @coaches = Admin.where(coach: true)
-  end
-    
-  #GET backoffice_companies
-  def companies
-    @companies = Admin.where(coach: false)
+  #GET backoffice_admins
+  def admins
+    @admins = Admin.all
   end
     
   #GET backoffice_words

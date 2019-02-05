@@ -1,37 +1,18 @@
 class AdminsController < ApplicationController
   before_action :set_admin, only: [:update, :destroy]
     
-  def new_coach
+  def new
   end
     
-  def create_coach
+  def create
     @admin = Admin.new(admin_params)
-    @admin.coach = true
-    @admin.company = false
     if @admin.save
       flash[:info] = 'Willkommen bei PeterPitch'
       admin_login @admin
       redirect_to dash_admin_path
     else
-      flash[:danger] = 'Konnte Coach nicht erstellen!'
-      redirect_to register_coach_path
-    end
-  end
-    
-  def new_company
-  end
-    
-  def create_company
-    @admin = Admin.new(admin_params)
-    @admin.coach = false
-    @admin.company = true
-    if @admin.save
-      flash[:info] = 'Willkommen bei PeterPitch'
-      admin_login @admin
-      redirect_to dash_admin_path
-    else
-      flash[:danger] = 'Konnte Unternehmen nicht erstellen!'
-      redirect_to register_company_path
+      flash[:danger] = 'Konnte Admin nicht erstellen!'
+      redirect_to register_path
     end
   end
     

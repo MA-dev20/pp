@@ -39,7 +39,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def wait
-    @count = @game.turns.all.count
+    @count = @game.turns.count
   end
     
   def choose
@@ -94,46 +94,15 @@ class GameDesktopAdminController < ApplicationController
     
   def bestlist
     update_game_rating @game
-    @team = Team.find(@game.team_id)
     update_team_rating @team
-    @list = TurnRating.where(game_id: @game.id).map{|t| {:user_id => t.user_id, :admin_id => t.admin_id, :turn_id => t.turn_id, :ges => t.ges, }}
-    @list.sort_by!{|e| -e[:ges]}
-    if @list.length == 0
-        game_logout
-        @game.destroy
-        redirect_to dash_admin_path
-        return
+    @turn_ratings = TurnRating.where(game_id: @game.id).rating_order
+    place = 1
+    @turn_ratings.each do |t|
+        @turn = Turn.find(t.turn_id)
+        @turn.update(place: place)
+        place += 1
     end
-    if @list.length >= 1
-        if @list.first[:user_id].nil?
-          @user1 = Admin.find(@list.first[:admin_id])
-        else
-          @user1 = User.find(@list.first[:user_id])
-        end
-        @turn = Turn.find(@list.first[:turn_id])
-        @turn.update(place: 1)
-        @rat1 = @list.first[:ges]
-    end
-    if @list.length >= 2
-        if @list.second[:user_id].nil?
-          @user2 = Admin.find(@list.second[:admin_id])
-        else
-          @user2 = User.find(@list.second[:user_id])
-        end
-        @turn = Turn.find(@list.second[:turn_id])
-        @turn.update(place: 2)
-        @rat2 = @list.second[:ges]
-    end
-    if @list.length >= 3
-        if @list.third[:user_id].nil?
-          @user3 = Admin.find(@list.third[:admin_id])
-        else
-          @user3 = User.find(@list.third[:user_id])
-        end
-        @turn = Turn.find(@list.third[:turn_id])
-        @turn.update(place: 3)
-        @rat3 = @list.third[:ges]
-    end
+    
   end
     
   def ended
@@ -165,6 +134,7 @@ class GameDesktopAdminController < ApplicationController
     def set_vars
       @game = current_game
       @admin = current_admin
+      @team = Team.find(@game.team_id)
       @state = @game.state
     end
     def set_turn

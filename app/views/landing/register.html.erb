@@ -24,7 +24,7 @@
     <!-- Login Section -->
 
     <h1 class="caption">Login</h1>
-    <%= form_for(:session, url: login_coach_path) do |f| %>
+    <%= form_for(:session, url: login_admin_path) do |f| %>
         <div class="form">
             <div class="form-group">
                 <label for=""> E-mail</label>
@@ -46,7 +46,7 @@
     <!-- Register Section -->
     
     <h1 class="caption">Registrieren</h1>
-    <%= form_for(:admin, url: new_coach_path) do |f| %>
+    <%= form_for(:admin, url: new_admin_path) do |f| %>
         <div class="form register">
             
             <div class="form-group">

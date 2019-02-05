@@ -4,6 +4,7 @@ class Admin < ApplicationRecord
   has_many :ratings, dependent: :destroy
   has_many :teams, dependent: :destroy
   has_many :users, dependent: :destroy
+  has_many :turns, dependent: :destroy
 
   has_secure_password
     
