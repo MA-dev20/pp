@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.bigint "team_id"
     t.string "state"
     t.string "password"
-    t.integer "current_turn"
+    t.bigint "current_turn"
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

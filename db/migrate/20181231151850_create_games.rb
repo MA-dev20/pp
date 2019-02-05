@@ -5,7 +5,7 @@ class CreateGames < ActiveRecord::Migration[5.2]
       t.belongs_to :team, foreign_key: true
       t.string :state
       t.string :password
-      t.integer :current_turn
+      t.bigint :current_turn
       t.boolean :active
 
       t.timestamps
