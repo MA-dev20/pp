@@ -202,5 +202,5 @@ Rails.application.routes.draw do
   post 'words/:word_id/edit', to: 'words#update'
     
   get 'words/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
-
+  mount ActionCable.server => '/cable'
 end
