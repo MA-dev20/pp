@@ -7,6 +7,7 @@
  *= require game_desktop/progressbar.min
  */
 
+
 // Background Animation
 var colors = new Array(
   [29,172,241],
