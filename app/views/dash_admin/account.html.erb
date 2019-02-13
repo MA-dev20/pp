@@ -1,4 +1,4 @@
-<%= form_for(:admin, url: edit_admin_path(@admin)) do |f| %>
+<%= form_for(:admin, as: Admin, url: registration_path(Admin), html: { method: :put }) do |f| %>
 
     <div class="row_1">
         <%= f.label :company_name, 'Firmenname', class: 'form-label' %>

@@ -18,4 +18,5 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.permit(:sign_up, keys: [:company_name, :fname, :lname, :street, :city, :employees, :zipcode])
       devise_parameter_sanitizer.permit(:account_update, keys: [:company_name, :fname, :lname, :street, :city, :avatar, :logo, :employees, :zipcode])
     end
+
 end
