@@ -1,5 +1,5 @@
 class GameDesktopAdminController < ApplicationController
-  before_action :require_game, :require_admin, :set_vars, except: [:replay]
+  before_action :require_game, :authenticate_admin!, :set_vars, except: [:replay]
   before_action :set_turn, only: [:turn, :play, :rate, :rating]
     
   layout 'game_desktop', except: [:load_media]

@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :require_admin, :set_admin
+  before_action :authenticate_admin!, :set_admin
 
   def new
   end
