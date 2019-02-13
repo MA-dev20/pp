@@ -8,14 +8,6 @@ class GameMobileUserController < ApplicationController
     
   def create_name
     @user.update(user_params)
-    redirect_to gmu_new_password_path
-  end
-    
-  def new_password
-  end
-    
-  def create_password
-    @user.update(user_params)
     redirect_to gmu_new_company_path
   end
     
@@ -104,6 +96,6 @@ class GameMobileUserController < ApplicationController
     end
     
     def user_params
-      params.require(:user).permit(:avatar, :company, :fname, :lname, :password)
+      params.require(:user).permit(:avatar, :company, :fname, :lname)
     end
 end
