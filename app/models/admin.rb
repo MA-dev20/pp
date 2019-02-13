@@ -12,6 +12,4 @@ class Admin < ApplicationRecord
     
   mount_uploader :avatar, PicUploader
   mount_uploader :logo, PicUploader
-
-  before_save { self.email = email.downcase }
 end

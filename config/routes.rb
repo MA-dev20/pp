@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'admins/sessions' }
   get 'landing/index'
     
@@ -57,9 +58,6 @@ Rails.application.routes.draw do
     
   get 'mobile/user/name', to: 'game_mobile_user#new_name', as: 'gmu_new_name'
   post 'mobile/user/name', to: 'game_mobile_user#create_name'
-  
-  get 'mobile/user/password', to: 'game_mobile_user#new_password', as: 'gmu_new_password'
-  post 'mobile/user/password', to: 'game_mobile_user#create_password'
     
   get 'mobile/user/company', to: 'game_mobile_user#new_company', as: 'gmu_new_company'
   post 'mobile/user/company', to: 'game_mobile_user#create_company'
