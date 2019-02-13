@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :admins
   get 'landing/index'
     
   root 'landing#index'
@@ -116,15 +117,6 @@ Rails.application.routes.draw do
 # Sessions #
 ############
 
-#########
-# Admin #
-#########
-    
-  get 'admins/login', to: 'admin_session#new', as: 'login_admin'
-  post 'admins/login', to: 'admin_session#create'
-    
-  get 'admins/logout', to: 'admin_session#destroy', as: 'logout_admin'
-
 ########
 # Root #
 ########
@@ -143,18 +135,6 @@ Rails.application.routes.draw do
 ##################
 # CRUD Ressource #
 ##################
-
-#########
-# Admin #
-#########
-    
-  get 'admins/new', to: 'admins#new', as: 'new_admin'
-  post 'admins/new', to: 'admins#create'
-    
-  get 'admins/:admin_id/edit', to: 'admins#edit', as: 'edit_admin'
-  post 'admins/:admin_id/edit', to: 'admins#update'
-    
-  get 'admins/:admin_id/destroy', to: 'admins#destroy', as: 'destroy_admin'
     
 ########
 # Team #
@@ -202,5 +182,5 @@ Rails.application.routes.draw do
   post 'words/:word_id/edit', to: 'words#update'
     
   get 'words/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
-  mount ActionCable.server => '/cable'
+
 end

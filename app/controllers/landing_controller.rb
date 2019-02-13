@@ -7,6 +7,7 @@ class LandingController < ApplicationController
   end
     
   def register
+    @admin = Admin.new
   end
 
 end
