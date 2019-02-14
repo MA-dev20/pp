@@ -1,5 +1,5 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :new, :create]
+  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :new, :create, :ended]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
     
@@ -111,6 +111,8 @@ class GameMobileAdminController < ApplicationController
   end
     
   def ended
+    @game = Game.find(params[:game_id])
+    @admin = @game.admin
     @game.update(state: 'ended')
     sign_out(@admin)
     sign_out(@game)
@@ -119,7 +121,7 @@ class GameMobileAdminController < ApplicationController
     
   def replay
     @game = Game.find(params[:game_id])
-    @admin = Admin.find(params[:admin_id])
+    @admin = @game.admin
     @game.update(state: 'replay')
     @game1 = Game.where(password: @game.password, active: true).first
     if @game1

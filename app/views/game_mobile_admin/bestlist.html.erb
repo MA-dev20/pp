@@ -7,7 +7,7 @@
     </div>
     <div class="bottom">
        <%= link_to 'neue Runde!', gma_replay_path(@game, @admin), class: 'link' %>
-       <%= link_to 'beenden!', gma_ended_path, class: 'link' %>
+       <%= link_to 'beenden!', gma_ended_path(@game), class: 'link' %>
     </div>
 </section>
 <div id="redirect">
@@ -23,7 +23,7 @@
                 } else if($('#redirect').text().trim() == 'replay') {
                     window.location.replace('<%= gma_replay_url(@game, @admin) %>');
                 } else {
-                    window.location.replace('<%= gma_ended_url %>');
+                    window.location.replace('<%= gma_ended_url(@game) %>');
                 }
             }, 2000);
         }
