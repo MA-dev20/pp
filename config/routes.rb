@@ -34,8 +34,8 @@ Rails.application.routes.draw do
 # Admin Mobile #
 ################
 
-  get 'mobile/admin/start/:password', to: 'game_mobile_admin#new', as: 'gma_start'
-  post 'mobile/admin/start/:password', to: 'game_mobile_admin#create'
+  get 'mobile/admins/:password', to: 'game_mobile_admin#new', as: 'gma_start'
+  post 'mobile/admin/:password', to: 'game_mobile_admin#create'
   get 'mobile/admin/avatar', to: 'game_mobile_admin#new_avatar', as: 'gma_new_avatar'
   post 'mobile/admin/avatar', to: 'game_mobile_admin#create_avatar'
   get 'mobile/admin/new_turn', to: 'game_mobile_admin#new_turn', as: 'gma_new_turn'
@@ -59,7 +59,7 @@ Rails.application.routes.draw do
 # User Mobile #
 ###############
     
-  get 'mobile/user/start/:password', to: 'game_mobile_user#new', as: 'gmu_start'
+  get 'mobile/users/:password', to: 'game_mobile_user#new', as: 'gmu_start'
   post 'mobile/user/start/:password', to: 'game_mobile_user#create'
   get 'mobile/user/name', to: 'game_mobile_user#new_name', as: 'gmu_new_name'
   post 'mobile/user/name', to: 'game_mobile_user#create_name'
@@ -129,12 +129,6 @@ Rails.application.routes.draw do
 
   get 'root/logout', to: 'root_session#destroy', as: 'logout_root'
 
-########
-# Game #
-########
-    
-  get 'games/login', to: 'game_session#new', as: 'login_game'
-  post 'games/login', to: 'game_session#create'
 ##################
 # CRUD Ressource #
 ##################

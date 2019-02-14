@@ -45,20 +45,20 @@
           <div class="main-shape">
             <div class="img_main"> <%= image_tag('main/Polygon-white.png') %>
               <div class="content-holder">
-                <%= form_for(:session, url: login_game_path, html: {class: 'form-shape'}) do |f| %>
+                <form class="form-shape">
                   <h2>Spielgruppe beitreten!</h2>
                   <div class="form-row">
                     <div class="col">
-                      <%= f.email_field :email, placeholder: 'E-mail?', class: 'form-control' %>
+                      <input type="text" placeholder="E-mail?" class="form-control">
                     </div>
                     <div class="col">
-                      <%= f.text_field :password, placeholder: 'Spielpasswort?', class: 'form-control' %>
+                     <input type="text" placeholder="Spielpasswort?" class="form-control">
                     </div>
                   </div>
                   <div class="text-center">
-                    <%= f.submit "Let's Play !", class: 'btn btn-links' %>
+                    <submit class="btn-btn-links">Let's Play!</submit>
                   </div>
-                <% end %>
+                  </form>
               </div>
             </div>
           </div>
