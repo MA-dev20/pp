@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   include DatabaseHelper
-  include GameSessionHelper
   include RootSessionHelper
     
   before_action :authenticate

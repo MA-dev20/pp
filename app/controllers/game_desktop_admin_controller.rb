@@ -1,5 +1,5 @@
 class GameDesktopAdminController < ApplicationController
-  before_action :require_game, :authenticate_admin!, :set_vars, except: [:replay]
+  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay]
   before_action :set_turn, only: [:turn, :play, :rate, :rating]
     
   layout 'game_desktop', except: [:load_media]
@@ -108,7 +108,7 @@ class GameDesktopAdminController < ApplicationController
   def ended
     @game.update(state: 'ended')
     @state = @game.state
-    game_logout
+    sign_out(@game)
     redirect_to dash_admin_path
   end
     
@@ -118,13 +118,13 @@ class GameDesktopAdminController < ApplicationController
     @game.update(state: 'replay')
     @game1 = Game.where(password: @game.password, active: true).first
     if @game1
-      game_logout
-      game_login @game1
+      sign_out(@game)
+      sign_in(@game1)
       redirect_to gda_wait_path
     else
       @game1 = Game.create(admin_id: @admin.id, team_id: @game.team_id, active: true, state: 'wait', password: @game.password)
-      game_logout
-      game_login @game1
+      sign_out(@game)
+      sign_in(@game1)
       redirect_to gda_wait_path
     end
     

@@ -1,7 +1,6 @@
 class CreateAdmins < ActiveRecord::Migration[5.2]
   def change
     create_table :admins do |t|
-      t.boolean :male
       t.string :company_name
       t.string :email
       t.string :password_digest

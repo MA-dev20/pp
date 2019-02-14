@@ -3,8 +3,8 @@ class CreateTurnRatings < ActiveRecord::Migration[5.2]
     create_table :turn_ratings do |t|
       t.belongs_to :turn, foreign_key: true
       t.belongs_to :game, foreign_key: true
-      t.belongs_to :user, foreign_key: true
-      t.belongs_to :admin, foreign_key: true
+      t.integer :user_id
+      t.integer :admin_id
       t.integer :ges
       t.integer :body
       t.integer :creative
