@@ -1,11 +1,8 @@
 class GameDesktopAdminController < ApplicationController
-  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay]
+  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :ended]
   before_action :set_turn, only: [:turn, :play, :rate, :rating]
     
-  layout 'game_desktop', except: [:load_media]
-
-  def load_media
-  end
+  layout 'game_desktop'
     
   def redirect
     if @game.state == 'intro'
@@ -106,6 +103,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def ended
+    @game = Game.find(params[:game_id])
     @game.update(state: 'ended')
     @state = @game.state
     sign_out(@game)
@@ -114,7 +112,7 @@ class GameDesktopAdminController < ApplicationController
     
   def replay
     @game = Game.find(params[:game_id])
-    @admin = current_admin
+    @admin = @game.admin
     @game.update(state: 'replay')
     @game1 = Game.where(password: @game.password, active: true).first
     if @game1

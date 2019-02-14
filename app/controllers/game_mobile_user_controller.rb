@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_user!, :authenticate_game!, :set_vars, except: [:replay, :new, :create]
+  before_action :authenticate_user!, :authenticate_game!, :set_vars, except: [:replay, :new, :create, :ended]
   before_action :set_turn, only: [:turn, :rate, :rated, :rating]
   layout 'game_mobile'
     
@@ -99,6 +99,8 @@ class GameMobileUserController < ApplicationController
   end
     
   def ended
+    @game = Game.find(params[:game_id])
+    @user = User.find(params[:user_id])
     sign_out(@game)
     sign_out(@user)
     redirect_to root_path

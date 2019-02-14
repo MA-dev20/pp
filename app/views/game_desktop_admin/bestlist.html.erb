@@ -64,7 +64,7 @@
     <% end %>
 </section>
 <section id="gd_bottom_ended">
-  <%= link_to 'beenden!', gda_ended_path %>
+  <%= link_to 'beenden!', gda_ended_path(@game) %>
 </section>
 <div id="redirect">
     <%= render partial: 'state' %>
@@ -184,7 +184,7 @@ setTimeout('fall()',40);
                 if($('#redirect').text().trim() == 'bestlist') {
                     $('#redirect').load('bestlist #redirect');
                 } else if($('#redirect').text().trim() == 'ended') {
-                    window.location.replace('<%= gda_ended_url %>');
+                    window.location.replace('<%= gda_ended_path(@game) %>');
                 } else if($('#redirect').text().trim() == 'replay') {
                     window.location.replace('<%= gda_replay_url(@game) %>');
                 }
