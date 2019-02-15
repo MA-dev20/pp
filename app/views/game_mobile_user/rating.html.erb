@@ -23,7 +23,7 @@
                 } else if($('#redirect').text().trim() == 'replay') {
                     window.location.replace('<%= gmu_replay_path(@user, @game) %>');
                 } else if($('#redirect').text().trim() == 'ended') {
-                    window.location.replace('<%= gmu_ended_path %>');
+                    window.location.replace('<%= gmu_ended_path(@user, @game) %>');
                 } else {
                     window.location.replace('<%= gmu_choose_path %>');
                 }

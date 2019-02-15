@@ -1,0 +1,17 @@
+<div id="content">
+    <div class="head">
+      <div class="h100">Wie ist deine E-Mail?</div>
+    </div>
+    <%= form_for(:user, url: gmu_start_path, html: {autocomplete: 'off'}) do |f| %>
+    <div class="middle">
+       <div class="row">
+        <div class="col-12">
+        <%= f.email_field :email, placeholder: 'E-Mail', class: 'form-field' %>
+        </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <%= f.submit 'weiter!', class: 'link pulse' %>
+    </div>
+    <% end %>
+</div>

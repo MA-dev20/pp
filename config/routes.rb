@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :games
+  devise_for :users
+  devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'admins/sessions' }
   get 'landing/index'
     
   root 'landing#index'
@@ -22,7 +25,7 @@ Rails.application.routes.draw do
   get 'games/rate', to: 'game_desktop_admin#rate', as: 'gda_rate'
   get 'games/rating', to: 'game_desktop_admin#rating', as: 'gda_rating'
   get 'games/bestlist', to: 'game_desktop_admin#bestlist', as: 'gda_bestlist'
-  get 'games/ended', to: 'game_desktop_admin#ended', as: 'gda_ended'
+  get 'games/:game_id/ended', to: 'game_desktop_admin#ended', as: 'gda_ended'
   get 'games/:game_id/replay', to: 'game_desktop_admin#replay', as: 'gda_replay'
     
   get 'games/redirect', to: 'game_desktop_admin#redirect', as: 'gda_redirect'
@@ -31,6 +34,8 @@ Rails.application.routes.draw do
 # Admin Mobile #
 ################
 
+  get 'mobile/admins/:password', to: 'game_mobile_admin#new', as: 'gma_start'
+  post 'mobile/admins/:password', to: 'game_mobile_admin#create'
   get 'mobile/admin/avatar', to: 'game_mobile_admin#new_avatar', as: 'gma_new_avatar'
   post 'mobile/admin/avatar', to: 'game_mobile_admin#create_avatar'
   get 'mobile/admin/new_turn', to: 'game_mobile_admin#new_turn', as: 'gma_new_turn'
@@ -45,8 +50,8 @@ Rails.application.routes.draw do
   get 'mobile/admin/rated', to: 'game_mobile_admin#rated', as: 'gma_rated'
   get 'mobile/admin/rating', to: 'game_mobile_admin#rating', as: 'gma_rating'
   get 'mobile/admin/bestlist', to: 'game_mobile_admin#bestlist', as: 'gma_bestlist'
-  get 'mobile/:game_id/admin/:admin_id/replay', to: 'game_mobile_admin#replay', as: 'gma_replay'
-  get 'mobile/admin/ended', to: 'game_mobile_admin#ended', as: 'gma_ended'
+  get 'mobile/:game_id/admin/replay', to: 'game_mobile_admin#replay', as: 'gma_replay'
+  get 'mobile/:game_id/admin/ended', to: 'game_mobile_admin#ended', as: 'gma_ended'
     
   get 'mobile/admin/redirect', to: 'game_mobile_admin#redirect', as: 'gma_redirect'
     
@@ -54,11 +59,10 @@ Rails.application.routes.draw do
 # User Mobile #
 ###############
     
+  get 'mobile/users/:password', to: 'game_mobile_user#new', as: 'gmu_start'
+  post 'mobile/users/:password', to: 'game_mobile_user#create'
   get 'mobile/user/name', to: 'game_mobile_user#new_name', as: 'gmu_new_name'
   post 'mobile/user/name', to: 'game_mobile_user#create_name'
-  
-  get 'mobile/user/password', to: 'game_mobile_user#new_password', as: 'gmu_new_password'
-  post 'mobile/user/password', to: 'game_mobile_user#create_password'
     
   get 'mobile/user/company', to: 'game_mobile_user#new_company', as: 'gmu_new_company'
   post 'mobile/user/company', to: 'game_mobile_user#create_company'
@@ -77,7 +81,7 @@ Rails.application.routes.draw do
   get 'mobile/user/game/rating', to: 'game_mobile_user#rating', as: 'gmu_rating'
   get 'mobile/user/game/bestlist', to: 'game_mobile_user#bestlist', as: 'gmu_bestlist'
   get 'mobile/user/:user_id/game/:game_id/replay', to: 'game_mobile_user#replay', as: 'gmu_replay'
-  get 'mobile/user/game/ended', to: 'game_mobile_user#ended', as: 'gmu_ended'
+  get 'mobile/user/:user_id/game/:game_id/ended', to: 'game_mobile_user#ended', as: 'gmu_ended'
   
     
 ####################################################################################
@@ -116,15 +120,6 @@ Rails.application.routes.draw do
 # Sessions #
 ############
 
-#########
-# Admin #
-#########
-    
-  get 'admins/login', to: 'admin_session#new', as: 'login_admin'
-  post 'admins/login', to: 'admin_session#create'
-    
-  get 'admins/logout', to: 'admin_session#destroy', as: 'logout_admin'
-
 ########
 # Root #
 ########
@@ -134,28 +129,10 @@ Rails.application.routes.draw do
 
   get 'root/logout', to: 'root_session#destroy', as: 'logout_root'
 
-########
-# Game #
-########
-    
-  get 'games/login', to: 'game_session#new', as: 'login_game'
-  post 'games/login', to: 'game_session#create'
 ##################
 # CRUD Ressource #
 ##################
 
-#########
-# Admin #
-#########
-    
-  get 'admins/new', to: 'admins#new', as: 'new_admin'
-  post 'admins/new', to: 'admins#create'
-    
-  get 'admins/:admin_id/edit', to: 'admins#edit', as: 'edit_admin'
-  post 'admins/:admin_id/edit', to: 'admins#update'
-    
-  get 'admins/:admin_id/destroy', to: 'admins#destroy', as: 'destroy_admin'
-    
 ########
 # Team #
 ########

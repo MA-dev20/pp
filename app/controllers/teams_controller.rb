@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_action :require_admin, :set_admin
+  before_action :authenticate_admin!, :set_admin
   before_action :set_team, only: [:destroy]
 
   def new

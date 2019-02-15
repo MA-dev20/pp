@@ -24,7 +24,7 @@
     <!-- Login Section -->
 
     <h1 class="caption">Login</h1>
-    <%= form_for(:session, url: login_admin_path) do |f| %>
+    <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
         <div class="form">
             <div class="form-group">
                 <label for=""> E-mail</label>
@@ -46,9 +46,9 @@
     <!-- Register Section -->
     
     <h1 class="caption">Registrieren</h1>
-    <%= form_for(:admin, url: new_admin_path) do |f| %>
+    <%= form_for(:admin, url: registration_path(Admin)) do |f| %>
         <div class="form register">
-            
+            <%= render "devise/shared/error_messages", resource: @admin %>
             <div class="form-group">
                 <label for=""> Anrede*</label>
                 <div class="form-row">

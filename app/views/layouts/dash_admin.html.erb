@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <title>Peter Pitch</title>
     <%= action_cable_meta_tag %>
@@ -83,7 +83,7 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right">
                 <%= link_to 'Account', dash_admin_account_path, class: 'dropdown-item' %>
-                <%= link_to 'Logout', logout_admin_path, class: 'dropdown-item red' %>
+                <%= link_to 'Logout', destroy_admin_session_path, class: 'dropdown-item red' %>
             </div>
         </div>
 
