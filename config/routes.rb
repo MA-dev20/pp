@@ -203,4 +203,5 @@ Rails.application.routes.draw do
     
   get 'words/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
   mount ActionCable.server => '/cable'
+
 end
