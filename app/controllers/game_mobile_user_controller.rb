@@ -1,20 +1,34 @@
 class GameMobileUserController < ApplicationController
-  before_action :require_game_user, :require_game, :set_vars, except: [:replay]
+  before_action :authenticate_user!, :authenticate_game!, :set_vars, except: [:replay, :new, :create, :ended]
   before_action :set_turn, only: [:turn, :rate, :rated, :rating]
   layout 'game_mobile'
     
+  def new
+  end
+    
+  def create
+    @game = Game.where(password: params[:password], active: true).first
+    if @game
+      sign_in(@game)
+      @admin = Admin.find(@game.admin_id)
+      @user = User.find_by(email: params[:user][:email])
+      if @user && @user.admin == @admin
+        sign_in(@user)
+        redirect_to gmu_new_turn_path
+      else
+        @user = @admin.users.create(email: params[:user][:email])
+        sign_in(@user)
+        redirect_to gmu_new_name_path
+      end
+    else
+      flash[:danger] = 'Konnte kein passendes Spiel finden!'
+      redirect_to root_path
+    end
+  end
   def new_name
   end
     
   def create_name
-    @user.update(user_params)
-    redirect_to gmu_new_password_path
-  end
-    
-  def new_password
-  end
-    
-  def create_password
     @user.update(user_params)
     redirect_to gmu_new_company_path
   end
@@ -78,22 +92,23 @@ class GameMobileUserController < ApplicationController
     
   def replay
     @game = Game.find(params[:game_id])
-    @user = User.find(params[:user_id])
     @game1 = Game.where(password: @game.password, active: true).first
-    game_logout
-    game_login @game1
-    game_user_login @user
+    sign_out(@game)
+    sign_in(@game1)
     redirect_to gmu_new_turn_path
   end
     
   def ended
-    game_logout
+    @game = Game.find(params[:game_id])
+    @user = User.find(params[:user_id])
+    sign_out(@game)
+    sign_out(@user)
     redirect_to root_path
   end
     
   private
     def set_vars
-      @user = current_game_user
+      @user = current_user
       @game = current_game
       @state = @game.state
     end
@@ -104,6 +119,6 @@ class GameMobileUserController < ApplicationController
     end
     
     def user_params
-      params.require(:user).permit(:avatar, :company, :fname, :lname, :password)
+      params.require(:user).permit(:avatar, :company, :fname, :lname)
     end
 end

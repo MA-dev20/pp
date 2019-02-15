@@ -1,7 +1,28 @@
 class GameMobileAdminController < ApplicationController
-  before_action :require_game, :require_game_admin, :set_vars, except: [:replay]
+  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :new, :create, :ended]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
+    
+    def new
+    end
+    
+    def create
+      @game = Game.where(password: params[:password], active: true).first
+      if @game
+        sign_in(@game)
+        @admin = Admin.where(id: @game.admin_id, email: params[:admin][:email].downcase).first
+        if @admin && @admin.valid_password?(params[:admin][:password])
+          sign_in(@admin)
+          redirect_to gma_new_turn_path
+        else
+          flash[:danger] = "Unbekannte E-Mail / Password Kombination"
+          redirect_to root_path
+        end
+      else
+        flash[:danger] = "Konnte kein passende Siel finden"
+        redirect_to root_path
+      end
+    end
 
     def redirect
     if @game.state == 'intro'
@@ -37,11 +58,11 @@ class GameMobileAdminController < ApplicationController
   end
     
   def new_turn
-    @turn = @game.turns.find(@admin.id)
-    if @turn
-      redirect_to gma_intro_path
-    elsif @admin.avatar.nil?
+    @turn = @game.turns.find_by(admin_id: @admin.id)
+    if @admin.avatar.nil?
       redirect_to gma_new_avatar_path
+    elsif @turn
+      redirect_to gma_intro_path
     end
   end
     
@@ -90,33 +111,34 @@ class GameMobileAdminController < ApplicationController
   end
     
   def ended
+    @game = Game.find(params[:game_id])
+    @admin = @game.admin
     @game.update(state: 'ended')
-    game_logout
+    sign_out(@admin)
+    sign_out(@game)
     redirect_to root_path
   end
     
   def replay
     @game = Game.find(params[:game_id])
-    @admin = Admin.find(params[:admin_id])
+    @admin = @game.admin
     @game.update(state: 'replay')
     @game1 = Game.where(password: @game.password, active: true).first
     if @game1
-      game_logout
-      game_login @game1
-      game_admin_login @admin
+      sign_out(@game)
+      sign_in(@game1)
       redirect_to gma_new_turn_path
     else
       @game1 = Game.create(admin_id: @admin.id, team_id: @game.team_id, active: true, state: 'intro', password: @game.password)
-      game_logout
-      game_login @game1
-      game_admin_login @admin
+      sign_out(@game)
+      sign_in(@game1)
       redirect_to gma_new_turn_path
     end
   end
     
   private
     def set_vars
-      @admin = current_game_admin
+      @admin = current_admin
       @game = current_game
       @team = Team.find(@game.team_id)
       @state = @game.state

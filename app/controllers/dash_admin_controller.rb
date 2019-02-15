@@ -1,5 +1,5 @@
 class DashAdminController < ApplicationController
-  before_action :require_admin, :set_admin
+  before_action :authenticate_admin!, :set_admin
   before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats]
   before_action :set_user, only: [:user_stats, :compare_user_stats]
   layout 'dash_admin'

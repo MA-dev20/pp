@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_admin, :set_vars
+  before_action :authenticate_admin!, :set_vars
   
   def destroy
     if @user.destroy

@@ -3,6 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
+gem 'devise'
+gem 'cancancan'
+gem 'rolify'
 gem 'rangesliderjs-rails', '~> 2.3', '>= 2.3.1'
 gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'font-awesome-sass', '~> 5.6.1'
@@ -66,3 +69,6 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
 end
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
