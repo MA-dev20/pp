@@ -10,9 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_31_152342) do
+ActiveRecord::Schema.define(version: 2019_02_05_144023) do
 
-  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
     t.boolean "male"
     t.string "company_name"
     t.string "email"
@@ -29,9 +32,15 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.boolean "company"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["coach"], name: "index_admins_on_coach"
+    t.index ["company"], name: "index_admins_on_company"
+    t.index ["company_name"], name: "index_admins_on_company_name"
+    t.index ["email"], name: "index_admins_on_email"
+    t.index ["fname"], name: "index_admins_on_fname"
+    t.index ["lname"], name: "index_admins_on_lname"
   end
 
-  create_table "game_ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "game_ratings", force: :cascade do |t|
     t.bigint "game_id"
     t.bigint "team_id"
     t.integer "ges"
@@ -45,7 +54,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.index ["team_id"], name: "index_game_ratings_on_team_id"
   end
 
-  create_table "games", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "games", force: :cascade do |t|
     t.bigint "admin_id"
     t.bigint "team_id"
     t.string "state"
@@ -54,11 +63,14 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["active"], name: "index_games_on_active"
     t.index ["admin_id"], name: "index_games_on_admin_id"
+    t.index ["current_turn"], name: "index_games_on_current_turn"
+    t.index ["state"], name: "index_games_on_state"
     t.index ["team_id"], name: "index_games_on_team_id"
   end
 
-  create_table "ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "ratings", force: :cascade do |t|
     t.bigint "turn_id"
     t.bigint "user_id"
     t.bigint "admin_id"
@@ -74,14 +86,15 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.index ["user_id"], name: "index_ratings_on_user_id"
   end
 
-  create_table "roots", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "roots", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["username"], name: "index_roots_on_username"
   end
 
-  create_table "team_ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "team_ratings", force: :cascade do |t|
     t.bigint "team_id"
     t.integer "ges"
     t.integer "body"
@@ -93,7 +106,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.index ["team_id"], name: "index_team_ratings_on_team_id"
   end
 
-  create_table "team_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "team_users", force: :cascade do |t|
     t.bigint "team_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -102,7 +115,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.index ["user_id"], name: "index_team_users_on_user_id"
   end
 
-  create_table "teams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "teams", force: :cascade do |t|
     t.bigint "admin_id"
     t.string "name"
     t.string "logo"
@@ -111,7 +124,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.index ["admin_id"], name: "index_teams_on_admin_id"
   end
 
-  create_table "turn_ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "turn_ratings", force: :cascade do |t|
     t.bigint "turn_id"
     t.bigint "game_id"
     t.bigint "user_id"
@@ -129,7 +142,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.index ["user_id"], name: "index_turn_ratings_on_user_id"
   end
 
-  create_table "turns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "turns", force: :cascade do |t|
     t.bigint "game_id"
     t.bigint "word_id"
     t.bigint "user_id"
@@ -141,11 +154,14 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_turns_on_admin_id"
     t.index ["game_id"], name: "index_turns_on_game_id"
+    t.index ["place"], name: "index_turns_on_place"
+    t.index ["play"], name: "index_turns_on_play"
+    t.index ["played"], name: "index_turns_on_played"
     t.index ["user_id"], name: "index_turns_on_user_id"
     t.index ["word_id"], name: "index_turns_on_word_id"
   end
 
-  create_table "user_ratings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "user_ratings", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "ges"
     t.integer "body"
@@ -157,7 +173,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.index ["user_id"], name: "index_user_ratings_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.bigint "admin_id"
     t.string "company_name"
     t.string "email"
@@ -171,11 +187,13 @@ ActiveRecord::Schema.define(version: 2018_12_31_152342) do
     t.index ["admin_id"], name: "index_users_on_admin_id"
   end
 
-  create_table "words", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "words", force: :cascade do |t|
     t.string "name"
     t.string "sound"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_words_on_name"
+    t.index ["sound"], name: "index_words_on_sound"
   end
 
   add_foreign_key "game_ratings", "games"
