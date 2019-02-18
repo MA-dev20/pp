@@ -4,4 +4,5 @@
  *= require turbolinks
  *= require jquery3
  *= require rangeslider
+ *= require cable
  */
