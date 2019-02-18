@@ -12,8 +12,7 @@ class CreateAdmins < ActiveRecord::Migration[5.2]
       t.string :logo
       t.integer :employees
       t.integer :zipcode
-      t.boolean :coach
-      t.boolean :company
+      t.boolean :male
 
       t.timestamps
     end
