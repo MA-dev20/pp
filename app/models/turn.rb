@@ -9,6 +9,10 @@ class Turn < ApplicationRecord
     
   scope :playable, -> { where(play:true, played: false) }
     
+  after_update_commit do
+    Game.find(self.game_id).touch
+  end
+
   def findUser
     if user_id
       User.find(user_id)

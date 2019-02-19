@@ -3,51 +3,23 @@ class GameDesktopAdminController < ApplicationController
   before_action :set_turn, only: [:turn, :play, :rate, :rating]
     
   layout 'game_desktop'
-    
-  def redirect
-    if @game.state == 'intro'
-      @game.update(state: 'wait')
-      redirect_to gda_wait_path
-    elsif @game.state == 'wait'
-      @game.update(state: 'choose')
-      redirect_to gda_choose_path
-    elsif @game.state == 'choose'
-      @game.update(state: 'turn')
-      redirect_to gda_turn_path
-    elsif @game.state == 'turn'
-      @game.update(state: 'play')
-      redirect_to gda_play_path
-    elsif @game.state == 'play'
-      @game.update(state: 'rate')
-      redirect_to gda_rate_path
-    elsif @game.state == 'rate'
-      @game.update(state: 'rating')
-      redirect_to gda_rating_path
-    elsif @game.state = 'rating'
-      @game.update(state: 'choose')
-      redirect_to gda_choose_path
-    elsif @game.state == 'replay'
-      @game.update(state: 'choose')
-      redirect_to gda_choose_path
-    end
-  end
 
   def intro
   end
     
   def wait
+    if @game.state == 'intro' || @game.state == 'replay'
+        @game.update(state: 'wait')
+    end
     @count = @game.turns.count
   end
     
   def choose
+    if @game.state == 'wait' || @game.state == 'rating'
+      @game.update(state: 'choose')
+    end
     @turns = @game.turns.playable.sample(100)
-    if @game.turns.count < 2
-      game_logout
-      @game.destroy
-      flash[:danger] = 'Zu wenig Spieler!'
-      redirect_to dash_admin_path
-      return
-    elsif @turns.count > 1
+    if @turns.count > 1
       @game.update(active: false, current_turn: @turns.first.id)
       @turn = Turn.find_by(id: @game.current_turn)
       if !@turn.user_id.nil?
@@ -68,15 +40,31 @@ class GameDesktopAdminController < ApplicationController
   end
 
   def turn
+    if @game.state == 'choose'
+      @game.update(state: 'turn')
+    end
   end
     
   def play
+    if @game.state == 'turn'
+      @game.update(state: 'play')
+    end
   end
     
   def rate
+    if @game.state == 'play'
+      @game.update(state: 'rate')
+    end
+    if @game.turns.count == 1
+      @game.turns.first.ratings.create(body: 0, creative: 0, rhetoric: 0, spontan: 0, ges: 0)
+      redirect_to gda_rating_path
+    end
   end
     
   def rating
+    if @game.state == 'rate'
+      @game.update(state: 'rating')
+    end
     if @turn.ratings.count == 0
       @turn.destroy
       @game.update(state: 'choose')
@@ -101,31 +89,29 @@ class GameDesktopAdminController < ApplicationController
     end
     
   end
-    
+
   def ended
-    @game = Game.find(params[:game_id])
-    @game.update(state: 'ended')
-    @state = @game.state
-    sign_out(@game)
+    if @game = current_game
+      @game.update(state: 'ended')
+      sign_out(current_game)
+    end
     redirect_to dash_admin_path
   end
     
   def replay
-    @game = Game.find(params[:game_id])
-    @admin = @game.admin
-    @game.update(state: 'replay')
-    @game1 = Game.where(password: @game.password, active: true).first
-    if @game1
+    if @game = current_game
+      @admin = @game.admin
+      @game1 = Game.where(password: @game.password, active: true).first
+      @game.update(state:'replay')
       sign_out(@game)
+      if !@game1
+        @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
+      end
       sign_in(@game1)
       redirect_to gda_wait_path
     else
-      @game1 = Game.create(admin_id: @admin.id, team_id: @game.team_id, active: true, state: 'wait', password: @game.password)
-      sign_out(@game)
-      sign_in(@game1)
-      redirect_to gda_wait_path
+      redirect_to root_path
     end
-    
   end
     
   private

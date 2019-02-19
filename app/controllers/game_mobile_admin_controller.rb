@@ -3,49 +3,24 @@ class GameMobileAdminController < ApplicationController
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
     
-    def new
-    end
+  def new
+  end
     
-    def create
-      @game = Game.where(password: params[:password], active: true).first
-      if @game
-        sign_in(@game)
-        @admin = Admin.where(id: @game.admin_id, email: params[:admin][:email].downcase).first
-        if @admin && @admin.valid_password?(params[:admin][:password])
-          sign_in(@admin)
-          redirect_to gma_new_turn_path
-        else
-          flash[:danger] = "Unbekannte E-Mail / Password Kombination"
-          redirect_to root_path
-        end
+  def create
+    @game = Game.where(password: params[:password], active: true).first
+    if @game
+      sign_in(@game)
+      @admin = Admin.where(id: @game.admin_id, email: params[:admin][:email].downcase).first
+      if @admin && @admin.valid_password?(params[:admin][:password])
+        sign_in(@admin)
+        redirect_to gma_new_turn_path
       else
-        flash[:danger] = "Konnte kein passende Siel finden"
+        flash[:danger] = "Unbekannte E-Mail / Password Kombination"
         redirect_to root_path
       end
-    end
-
-    def redirect
-    if @game.state == 'intro'
-      @game.update(state: 'wait')
-      redirect_to gma_wait_path
-    elsif @game.state == 'wait' || @game.state == 'replay'
-      @game.update(state: 'choose')
-      redirect_to gma_choose_path
-    elsif @game.state == 'choose'
-      @game.update(state: 'turn')
-      redirect_to gma_turn_path
-    elsif @game.state == 'turn'
-      @game.update(state: 'play')
-      redirect_to gma_play_path
-    elsif @game.state == 'play'
-      @game.update(state: 'rate')
-      redirect_to gma_rate_path
-    elsif @game.state == 'rate'
-      @game.update(state: 'rating')
-      redirect_to gma_rating_path
-    elsif @game.state == 'rating'
-      @game.update(state: 'choose')
-      redirect_to gma_choose_path
+    else
+      flash[:danger] = "Konnte kein passende Siel finden"
+      redirect_to root_path
     end
   end
     
@@ -80,18 +55,33 @@ class GameMobileAdminController < ApplicationController
   end
     
   def wait
+    if @game.state == 'intro' || @game.state == 'replay'
+      @game.update(state: 'wait')
+    end
   end
     
   def choose
+    if @game.state == 'wait' || @game.state == 'rating'
+      @game.update(state: 'choose')
+    end
   end
     
   def turn
+    if @game.state == 'choose'
+      @game.update(state: 'turn')
+    end
   end
     
   def play
+    if @game.state == 'turn'
+      @game.update(state: 'play')
+    end
   end
     
   def rate
+    if @game.state == 'play'
+      @game.update(state: 'rate')
+    end
     if @turn.ratings.find_by(admin_id: @admin.id)
       redirect_to gma_rated_path
     elsif @admin == @cur_user
@@ -105,34 +95,35 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rating
+    if @game.state == 'rate'
+      @game.update(state: 'rating')
+    end
   end
     
   def bestlist
   end
     
   def ended
-    @game = Game.find(params[:game_id])
-    @admin = @game.admin
-    @game.update(state: 'ended')
-    sign_out(@admin)
-    sign_out(@game)
+    if @game = current_game
+      @game.update(state: 'ended')
+      sign_out(@game)
+    end
     redirect_to root_path
   end
     
   def replay
-    @game = Game.find(params[:game_id])
-    @admin = @game.admin
-    @game.update(state: 'replay')
-    @game1 = Game.where(password: @game.password, active: true).first
-    if @game1
+    if @game = current_game
+      @admin = @game.admin
+      @game1 = Game.where(password: @game.password, active: true).first
+      @game.update(state: 'replay')
       sign_out(@game)
+      if !@game1
+        @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
+      end
       sign_in(@game1)
-      redirect_to gma_new_turn_path
+      redirect_to gma_wait_path
     else
-      @game1 = Game.create(admin_id: @admin.id, team_id: @game.team_id, active: true, state: 'intro', password: @game.password)
-      sign_out(@game)
-      sign_in(@game1)
-      redirect_to gma_new_turn_path
+      redirect_to root_path
     end
   end
     

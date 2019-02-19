@@ -1,6 +1,6 @@
 class GameMobileUserController < ApplicationController
   before_action :authenticate_user!, :authenticate_game!, :set_vars, except: [:replay, :new, :create, :ended]
-  before_action :set_turn, only: [:turn, :rate, :rated, :rating]
+  before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
     
   def new
@@ -75,6 +75,9 @@ class GameMobileUserController < ApplicationController
   def turn
   end
     
+  def play
+  end
+    
   def rate
     if @user == @cur_user || @turn.ratings.find_by(user_id: @user.id)
         redirect_to gmu_rated_path
@@ -91,18 +94,23 @@ class GameMobileUserController < ApplicationController
   end
     
   def replay
-    @game = Game.find(params[:game_id])
-    @game1 = Game.where(password: @game.password, active: true).first
-    sign_out(@game)
-    sign_in(@game1)
-    redirect_to gmu_new_turn_path
+    if @game = current_game
+      @game1 = Game.where(password: @game.password, active: true).first
+      sign_out(@game)
+      sign_in(@game1)
+      redirect_to gmu_new_turn_path
+    else
+      redirect_to root_path
+    end
   end
     
   def ended
-    @game = Game.find(params[:game_id])
-    @user = User.find(params[:user_id])
-    sign_out(@game)
-    sign_out(@user)
+    if @game = current_game
+      sign_out(@game)
+    end
+    if @user = current_user
+      sign_out(@user)
+    end
     redirect_to root_path
   end
     

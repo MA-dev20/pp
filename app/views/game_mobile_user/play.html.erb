@@ -1,11 +1,12 @@
 <section id="content">
     <div class="head">
-        <%= @cur_user.fname %> Pitcht!
+        <% if @cur_user == @user %>
+            Du Pitcht!
+        <% else %>
+            <%= @cur_user.fname %> Pitcht!
+        <% end %>
     </div>
     <div class="middle">
         <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
-    </div>
-    <div class="bottom">
-      <%= link_to 'beenden!', gma_rate_path %>
     </div>
 </section>

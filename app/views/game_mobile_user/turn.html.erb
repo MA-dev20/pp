@@ -17,22 +17,3 @@
         <% end %>
     </div>
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
-
-<script>    
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'turn') {
-                    $('#redirect').load('turn #redirect');
-                } else if($('#redirect').text().trim() == 'play') {
-                    $('#redirect').load('turn #redirect');
-                } else {                    
-                    window.location.replace('<%= gmu_rate_path %>');
-                }
-            }, 2000);
-        }
-    );
-</script>
