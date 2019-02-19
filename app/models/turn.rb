@@ -9,7 +9,7 @@ class Turn < ApplicationRecord
     
   scope :playable, -> { where(play:true, played: false) }
     
-  after_update_commit do
+  after_create_commit do
     Game.find(self.game_id).touch
   end
 
