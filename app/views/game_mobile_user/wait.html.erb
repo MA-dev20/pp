@@ -9,23 +9,3 @@
         Gleich geht's los...
     </div>
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
-
-
-<script>
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'intro') {
-                    $('#redirect').load('wait #redirect');
-                } else if ($('#redirect').text().trim() == 'wait') {
-                    $('#redirect').load('wait #redirect');
-                } else{
-                    window.location.replace('<%= gmu_choose_path %>');
-                }
-            }, 2000);
-        }
-    );
-</script>

@@ -1,9 +1,0 @@
-def rated
-  @ratings_count = @turn.ratings.count
-  @player_count = @game.turns.count-1
-  if @ratings_count == @player_count
-    @game.update(state: 'rating')
-  end
-  @state = @game.state
-  render partial: 'rated'
-end

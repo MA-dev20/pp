@@ -20,20 +20,3 @@
     </div>
 <% end %>
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
-
-<script>
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'rate') {
-                    $('#redirect').load('rated #redirect');
-                } else {
-                    window.location.replace('<%= gmu_rating_path %>');
-                }
-            }, 2000)
-        }
-    );
-</script>

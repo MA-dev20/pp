@@ -13,9 +13,6 @@
 <section id="skip">
    Skip mit Leertaste
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
 
 
 <%= audio_tag("play/intro.mp3", autoplay: false, loop: true, id: 'intro') %>
@@ -56,16 +53,10 @@
             timer--;
         }, 1000);
     };
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'play') {
-                    $('#redirect').load('play #redirect');
-                } else {
-                    window.location.replace('<%= gda_rate_url %>');
-                }
-            }, 2000);
-        }
-    );
+    $(window).keypress(function (e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            window.location.replace('<%= gda_rate_path %>');
+        };
+    })
     
 </script>

@@ -12,7 +12,7 @@
     Jetzt Spiel beitreten!
 </section>
 <div id="count" class="count">
-    <%= render partial: 'count' %>
+    <%= @count %>
 </div>
 <section id="bottom">
     <div class="ajax-loader">
@@ -39,21 +39,9 @@
 <%= audio_tag('wait/truppe.mp3', id: 'tag4') %>
 <script>
     pick(4);
-    var count = $('#count').text().trim();
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'wait') {
-                    $('#count').load('wait #count');
-                    if(count != $('#count').text().trim()) {
-                        document.getElementById('ping').play();
-                        count = $('#count').text().trim();
-                    }  
-                } else {
-                    window.location.replace('<%= gda_choose_url %>');
-                }                
-            }, 2000);
-        }
-    );
-                
+    $(window).keypress(function (e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            window.location.replace('<%= gda_choose_path %>');
+        };
+    })
 </script>

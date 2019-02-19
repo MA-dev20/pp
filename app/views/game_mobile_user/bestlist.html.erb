@@ -9,22 +9,3 @@
         eine tolle Runde!
     </div>
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
-
-<script>
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'bestlist') {
-                    $('#redirect').load('bestlist #redirect');
-                } else if($('#redirect').text().trim() == 'replay') {
-                    window.location.replace('<%= gmu_replay_url(@user, @game) %>');
-                } else {
-                    window.location.replace('<%= gmu_ended_url(@user, @game) %>');
-                }
-            }, 2000);
-        }
-    );
-</script>

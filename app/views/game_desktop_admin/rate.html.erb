@@ -9,9 +9,6 @@
 <section id="skip">
    Skip mit Leertaste
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
 
 
 <%= audio_tag('rate/haltemichraus.mp3', id: 'tag1') %>
@@ -20,16 +17,10 @@
 
 <script>
     pick(3);
-    $(document).ready(
-        function() {
-            setInterval(function(){
-                if($('#redirect').text().trim() == 'rate') {
-                    $('#redirect').load('rate #redirect');
-                } else {
-                    window.location.replace('<%= gda_rating_url %>');
-                }
-            }, 2000);
-        }
-    );
+    $(window).keypress(function (e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            window.location.replace('<%= gda_rating_path %>');
+        };
+    })
 </script>
 <link rel="preload" href="/assets/rated/einzeln.mp3", as="audio">
