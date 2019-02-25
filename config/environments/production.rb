@@ -43,7 +43,7 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
-  config.action_cable.url = 'wss://peterpitch.de/cable'
+  config.action_cable.url = 'ws://peterpitch.de/cable'
   config.action_cable.allowed_request_origins = ['http://peterpitch.de', 'https://peterpitch.de', 'http://www.peterpitch.de', 'https://www.peterpitch.de', 'http://peterpitch.com', 'http://www.peterpitch.com', 'https://peterpitch.com', 'https://www.peterpitch.com']
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
