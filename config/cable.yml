@@ -1,6 +1,6 @@
 production:
   adapter: redis
-  url: redis://redis.peterpitch.com:6379
+  url: redis://redis.peterpitch.de:6379
 
 redis: &redis
   adapter: redis
