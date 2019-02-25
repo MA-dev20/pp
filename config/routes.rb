@@ -27,8 +27,6 @@ Rails.application.routes.draw do
   get 'games/bestlist', to: 'game_desktop_admin#bestlist', as: 'gda_bestlist'
   get 'games/ended', to: 'game_desktop_admin#ended', as: 'gda_ended'
   get 'games/replay', to: 'game_desktop_admin#replay', as: 'gda_replay'
-    
-  get 'games/redirect', to: 'game_desktop_admin#redirect', as: 'gda_redirect'
 
 ################
 # Admin Mobile #
