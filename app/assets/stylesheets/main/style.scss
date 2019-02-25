@@ -403,7 +403,7 @@ header .navbar {
 	border-color: #1c9ee0;
 }
 .Certifi {
-	background-image: url('/assets/main/shap1.png');
+	background-image: image_url('main/shap1.png');
 	background-repeat: no-repeat;
 	background-size: cover;
 	margin-top: -72px;
@@ -494,7 +494,7 @@ header .navbar {
 }
 .head_box .head_shape.f1_shape:after {
 	position: absolute;
-	background-image: url('/assets/main/line1.png');
+	background-image: image_url('main/line1.png');
 	content: '';
 	bottom: -62px;
 	right: -170px;
@@ -546,7 +546,7 @@ header .navbar {
 }
 .head_box .head_shape.f2_shape:after {
 	position: absolute;
-	background-image: url('/assets/main/line1.png');
+	background-image: image_url('main/line1.png');
 	content: '';
 	top: -69px;
 	right: -133px;
@@ -557,7 +557,7 @@ header .navbar {
 }
 .head_box .head_shape.f3_shape:after {
 	position: absolute;
-	background-image: url('/assets/main/line1.png');
+	background-image: image_url('main/line1.png');
 	content: '';
 	bottom: -10px;
 	right: -190px;
@@ -1177,7 +1177,7 @@ form.form-shape .form-row .col:first-child .form-control {
 *****************************/
 
 .banner_registeration {
-	background-image: url('/assets/main/registerbg.png');
+	background-image: image_url('main/registerbg.png');
 	background-repeat: no-repeat;
 	background-size: cover;
 	min-height: 1182px;
@@ -1221,7 +1221,7 @@ form.form-shape .form-row .col:first-child .form-control {
 	margin: 0;
 }
 .caption:before {
-	content: url('/assets/main/heading-bg.png');
+	content: image_url('main/heading-bg.png');
 	left: -37px;
 	top: -18px;
 	position: absolute;
