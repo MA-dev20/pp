@@ -48,7 +48,7 @@
             display.textContent = minutes + ":" + seconds;
         
             if (timer < 0) {
-                window.location.replace('<%= gda_redirect_url %>');
+                window.location.replace('<%= gda_rate_path %>');
             }
             timer--;
         }, 1000);
