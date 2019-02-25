@@ -30,16 +30,13 @@
     <% end %>
     <% if @admin.avatar? %>
     <div class="bottom">
-       <button onclick="redirect()" class="link" >weiter</button>
+       <%= link_to 'weiter!', gmu_new_turn_path, class: 'link pulse' %>
     </div>
     <% end %>
 </section>
 
 
 <script>
-function redirect() {
-    window.location.replace('<%= gma_intro_path %>');
-}
 function auto() {
     $('form').submit();
     $('.bottom').show();

@@ -13,7 +13,7 @@ class GameMobileAdminController < ApplicationController
       @admin = Admin.where(id: @game.admin_id, email: params[:admin][:email].downcase).first
       if @admin && @admin.valid_password?(params[:admin][:password])
         sign_in(@admin)
-        redirect_to gma_new_turn_path
+        redirect_to gma_new_avatar_path
       else
         flash[:danger] = "Unbekannte E-Mail / Password Kombination"
         redirect_to root_path
@@ -34,9 +34,7 @@ class GameMobileAdminController < ApplicationController
     
   def new_turn
     @turn = @game.turns.find_by(admin_id: @admin.id)
-    if @admin.avatar.nil?
-      redirect_to gma_new_avatar_path
-    elsif @turn
+    if @turn
       redirect_to gma_intro_path
     end
   end
