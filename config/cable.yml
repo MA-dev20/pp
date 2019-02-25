@@ -1,10 +1,7 @@
-production:
-  adapter: redis
-  url: redis://peterpitch.de:6379
-
 redis: &redis
   adapter: redis
-  url: redis://localhost:6379
+  url: redis://localhost:6379/1
 
+production: *redis
 development: *redis
 test: *redis
