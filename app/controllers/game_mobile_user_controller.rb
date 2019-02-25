@@ -13,10 +13,14 @@ class GameMobileUserController < ApplicationController
       @admin = Admin.find(@game.admin_id)
       @user = User.find_by(email: params[:user][:email])
       if @user && @user.admin == @admin
+        if TeamUser.where(user_id: @user.id, team_id: @game.team_id).count == 0
+            TeamUser.create(user_id: @user.id, team_id: @game.team_id)
+        end
         sign_in(@user)
         redirect_to gmu_new_turn_path
       else
         @user = @admin.users.create(email: params[:user][:email])
+        TeamUser.create(user_id: @user.id, team_id: @game.team_id)
         sign_in(@user)
         redirect_to gmu_new_name_path
       end
