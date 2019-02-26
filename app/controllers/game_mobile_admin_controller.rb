@@ -1,5 +1,5 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :wait, :choose, :turn, :play, :rate, :rated, :rating]
+  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
@@ -110,21 +110,21 @@ class GameMobileAdminController < ApplicationController
   end
     
   def ended
-    if @game = current_game
+    if @game.state == 'bestlist'
       @game.update(state: 'ended')
-      sign_out(@game)
     end
+    sign_out(@game)
+    sign_out(@admin)
     redirect_to root_path
   end
     
   def replay
     @game = current_game
-    @admin = @game.admin
-    @game1 = Game.where(password: @game.password, active: true).first
-    if !@game1
-      @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
+    if @game.state == 'bestlist'
+      @game.update(state: 'replay')
     end
-    @game.update(state: 'replay')
+    @admin = @game.admin
+    @game1 = @admin.games.where(password: @game.password, active: true).first
     sign_out(@game)
     session[:game_id] = @game1.id
     redirect_to gma_new_turn_path
