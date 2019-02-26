@@ -103,14 +103,11 @@ class GameMobileUserController < ApplicationController
   end
     
   def replay
-    if @game = current_game
-      @game1 = Game.where(password: @game.password, active: true).first
-      sign_out(@game)
-      session[:game_id] = @game1.id
-      redirect_to gmu_new_turn_path
-    else
-      redirect_to root_path
-    end
+    @game = current_game
+    @game1 = Game.where(password: @game.password, active: true).first
+    sign_out(@game)
+    session[:game_id] = @game1.id
+    redirect_to gmu_new_turn_path
   end
     
   def ended

@@ -96,19 +96,16 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def replay
-    if @game = current_game
-      @admin = @game.admin
-      @game1 = Game.where(password: @game.password, active: true).first
-      @game.update(state:'replay')
-      sign_out(@game)
-      if !@game1
-        @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
-      end
-      sign_in(@game1)
-      redirect_to gda_wait_path
-    else
-      redirect_to root_path
+    @game = current_game
+    @admin = @game.admin
+    @game1 = Game.where(password: @game.password, active: true).first
+    @game.update(state:'replay')
+    sign_out(@game)
+    if @game1.nil?
+      @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
     end
+    sign_in(@game1)
+    redirect_to gda_wait_path
   end
     
   private
