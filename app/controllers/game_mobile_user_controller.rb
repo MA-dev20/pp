@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, except: [:replay, :new, :create, :ended, :new_name, :create_name, :new_company, :create_company, :new_turn, :create_turn]
+  before_action :authenticate_game!, :set_game, only: [:intro, :wait, :choose, :turn, :rate, :rated, :rating, :bestlist]
   before_action :authenticate_user!, :set_user, except: [:new, :create]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
