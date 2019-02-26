@@ -8,10 +8,6 @@ class Turn < ApplicationRecord
   has_many :ratings, dependent: :destroy
     
   scope :playable, -> { where(play:true, played: false) }
-    
-  after_create_commit do
-    Game.find(self.game_id).touch
-  end
 
   def findUser
     if user_id
