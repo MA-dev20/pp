@@ -63,8 +63,9 @@
     </div>
     <% end %>
 </section>
-<section id="gd_bottom_ended">
-  <%= link_to 'beenden!', gda_ended_path %>
+<section id="skip">
+   Beenden mit Leertaste <br>
+   Neue Runde mit Enter
 </section>
 
 
@@ -179,5 +180,8 @@ $(window).keypress(function (e) {
   if (e.key === ' ' || e.key === 'Spacebar') {
     window.location.replace('<%= gda_ended_path %>');
   };
+  if (e.keycode == '13' || e.key === 'Enter') {
+    window.location.replace('<%= gda_replay_path %>');
+   };
 }) 
 </script>
