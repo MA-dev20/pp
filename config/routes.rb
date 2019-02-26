@@ -130,6 +130,12 @@ Rails.application.routes.draw do
 # CRUD Ressource #
 ##################
 
+#########
+# Admin #
+#########
+    
+  get 'admins/:admin_id/destroy', to: 'admins#destroy', as: 'destroy_admin'
+
 ########
 # Team #
 ########
