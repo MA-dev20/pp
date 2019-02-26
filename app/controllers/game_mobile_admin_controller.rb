@@ -1,5 +1,6 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :new, :create, :ended, :new_avatar, :create_avatar, :new_turn, :create_turn]
+  before_action :authenticate_game!, :set_game, only: [:intro, :wait, :choose, :turn, :play, :rate, :rated, :rating]
+  before_action :authenticate_admin!, :set_admin, except: [:new, :create]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
     
@@ -130,11 +131,13 @@ class GameMobileAdminController < ApplicationController
   end
     
   private
-    def set_vars
-      @admin = current_admin
+    def set_game
       @game = current_game
       @team = Team.find(@game.team_id)
       @state = @game.state
+    end
+    def set_admin
+      @admin = current_admin
     end
     
     def set_turn
