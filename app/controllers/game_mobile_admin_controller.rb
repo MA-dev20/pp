@@ -124,7 +124,7 @@ class GameMobileAdminController < ApplicationController
         @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
       end
       sign_in(@game1)
-      redirect_to gma_wait_path
+      redirect_to gma_new_turn_path
     else
       redirect_to root_path
     end
