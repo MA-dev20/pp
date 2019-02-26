@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_user!, :authenticate_game!, :set_vars, except: [:replay, :new, :create, :ended]
+  before_action :authenticate_user!, :authenticate_game!, :set_vars, except: [:replay, :new, :create, :ended, :new_name, :create_name, :new_company, :create_company, :new_turn, :create_turn]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
     
@@ -9,7 +9,7 @@ class GameMobileUserController < ApplicationController
   def create
     @game = Game.where(password: params[:password], active: true).first
     if @game
-      sign_in(@game)
+      session[:game_id] = @game.id
       @admin = Admin.find(@game.admin_id)
       @user = User.find_by(email: params[:user][:email])
       if @user && @user.admin == @admin
@@ -54,6 +54,7 @@ class GameMobileUserController < ApplicationController
   end
     
   def new_turn
+    @game = Game.find(session[:game_id])
     @turn = @game.turns.find_by(user_id: @user.id)
     if @turn
       redirect_to gmu_wait_path
@@ -61,9 +62,12 @@ class GameMobileUserController < ApplicationController
   end
     
   def create_turn
+    @game = Game.find(session[:game_id])
     @word = Word.all.sample(5).first
     @turn = Turn.new(user_id: @user.id, game_id: @game.id, word_id: @word.id, play: params[:turn][:play], played: false)
     if @turn.save
+      sessiion.delete(:game_id)
+      sign_in(@game)
       redirect_to gmu_wait_path
     else
       redirect_to gmu_new_turn_path
