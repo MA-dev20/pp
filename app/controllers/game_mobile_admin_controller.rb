@@ -67,8 +67,9 @@ class GameMobileAdminController < ApplicationController
   end
     
   def choose
+    @turns = @game.turns.playable.sample(100)
     if @game.state == 'wait' || @game.state == 'rating'
-      @game.update(state: 'choose')
+      @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
     end
   end
     
