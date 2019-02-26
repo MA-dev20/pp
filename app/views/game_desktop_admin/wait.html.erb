@@ -47,9 +47,9 @@
     $(document).ready(
         function() {
             setInterval(function() {
-                var count = $('#count').text().trim();
+                var counter = $('#count').text().trim();
                 $('#count').load('wait #count');
-                if(count != $('#count').text().trim()) {
+                if(counter != $('#count').text().trim()) {
                         document.getElementById('ping').play();
                 };
             }, 2000);
