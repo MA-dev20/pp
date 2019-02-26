@@ -12,7 +12,7 @@
     Jetzt Spiel beitreten!
 </section>
 <div id="count" class="count">
-    <%= @count %>
+    <%= render partial: 'count' %>
 </div>
 <section id="bottom">
     <div class="ajax-loader">
@@ -44,4 +44,14 @@
             window.location.replace('<%= gda_choose_path %>');
         };
     })
+    $(document).ready( function() {
+        setIntervall(function() {
+            var count = $('#count').text().trim();
+            $('#count').load('wait #count');
+            if( count != $('#count').text.trim()) {
+                document.getElementById('ping').play();
+            }
+        }, 2000)
+    }
+    );
 </script>
