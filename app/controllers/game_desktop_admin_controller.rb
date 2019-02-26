@@ -16,18 +16,16 @@ class GameDesktopAdminController < ApplicationController
     
   def choose
     @turns = @game.turns.playable.sample(100)
-    if @game.state == 'wait' || @game.state == 'rating'
+    if @turns.count == 1
+      @game.update(state: 'turn', active: false, current_turn: @turns.first.id)
+      redirect_to gda_turn_path
+      return
+    elsif @turns.count == 0 
+      @game.update(state: 'bestlist', active: false)
+      redirect_to gda_bestlist_path
+      return
+    elsif @game.state == 'wait' || @game.state == 'rating'
       @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
-    elsif @game.state == 'choose'
-      if @turns.count == 1
-        @game.update(state: 'turn', active: false, current_turn: @turns.first.id)
-        redirect_to gda_turn_path
-        return
-      elsif @turns.count == 0 
-        @game.update(state: 'bestlist', active: false)
-        redirect_to gda_bestlist_path
-        return
-      end
     end
   end
 
