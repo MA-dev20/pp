@@ -1,5 +1,5 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :new, :create, :ended]
+  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :new, :create, :ended, :new_avatar, :create_avatar, :new_turn, :create_turn]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
     
@@ -9,7 +9,7 @@ class GameMobileAdminController < ApplicationController
   def create
     @game = Game.where(password: params[:password], active: true).first
     if @game
-      sign_in(@game)
+      session[:game_id] = @game.id
       @admin = Admin.where(id: @game.admin_id, email: params[:admin][:email].downcase).first
       if @admin && @admin.valid_password?(params[:admin][:password])
         sign_in(@admin)
@@ -33,6 +33,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def new_turn
+    @game = Game.find(session[:game_id])
     @turn = @game.turns.find_by(admin_id: @admin.id)
     if @turn
       redirect_to gma_intro_path
@@ -40,9 +41,12 @@ class GameMobileAdminController < ApplicationController
   end
     
   def create_turn
+    @game = Game.find(session[:game_id])
     @word = Word.all.sample(5).first
     @turn = Turn.new(play: params[:turn][:play], admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false)
     if @turn.save
+      session.delete(:game_id)
+      sign_in(@game)
       redirect_to gma_intro_path
     else
       redirect_to gma_new_turn_path
