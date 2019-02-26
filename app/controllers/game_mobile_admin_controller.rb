@@ -55,6 +55,9 @@ class GameMobileAdminController < ApplicationController
   end
     
   def intro
+    if @game.state == 'wait'
+      redirect_to gma_wait_path
+    end
   end
     
   def wait
