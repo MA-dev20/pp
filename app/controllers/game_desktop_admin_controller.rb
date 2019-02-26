@@ -17,11 +17,11 @@ class GameDesktopAdminController < ApplicationController
   def choose
     @turns = @game.turns.playable.sample(100)
     if @turns.count == 1
-      @game.update(active:false, state: 'turn', current_turn: @turns.first.id)
+      @game.update(active:false, current_turn: @turns.first.id)
       redirect_to gda_turn_path
       return
     elsif @turns.count == 0
-      @game.update(active: false, state: 'bestlist')
+      @game.update(active: false)
       redirect_to gda_bestlist_path
       return
     else
@@ -75,6 +75,9 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def bestlist
+    if @game.state == 'choose'
+      @game.update(state: 'bestlist')
+    end
     update_game_rating @game
     update_team_rating @team
     @turn_ratings = @game.turn_ratings.rating_order
@@ -99,11 +102,11 @@ class GameDesktopAdminController < ApplicationController
     @game = current_game
     @admin = @game.admin
     @game1 = Game.where(password: @game.password, active: true).first
-    @game.update(state:'replay')
-    sign_out(@game)
-    if @game1.nil?
+    if !@game1
       @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
     end
+    @game.update(state:'replay')
+    sign_out(@game)
     sign_in(@game1)
     redirect_to gda_wait_path
   end
