@@ -16,23 +16,18 @@ class GameDesktopAdminController < ApplicationController
     
   def choose
     @turns = @game.turns.playable.sample(100)
-    if @turns.count == 1
-      @game.update(state: 'choose', active: false, current_turn: @turns.first.id)
-      redirect_to gda_turn_path
-      return
-    elsif @turns.count == 0
-      @game.update(state: 'choose', active: false)
-      redirect_to gda_bestlist_path
-      return
-    else
-      @game.update(state: 'choose', active: false, current_turn: @turns.first.id)
-      @turn = Turn.find_by(id: @game.current_turn)
-      if !@turn.user_id.nil?
-        @user = User.find_by(id: @turn.user_id)
-      elsif !@turn.admin_id.nil?
-        @user = Admin.find_by(id: @turn.admin_id)
+    if @game.state == 'wait' || @game.state == 'rating'
+      @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
+    elsif @game.state == 'choose'
+      if @turns.count == 1
+        @game.update(state: 'turn', active: false, current_turn: @turns.first.id)
+        redirect_to gda_turn_path
+        return
+      elsif @turns.count == 0 
+        @game.update(state: 'bestlist', active: false)
+        redirect_to gda_bestlist_path
+        return
       end
-      @word = Word.find_by(id: @turn.word_id)
     end
   end
 
