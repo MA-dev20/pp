@@ -115,19 +115,16 @@ class GameMobileAdminController < ApplicationController
   end
     
   def replay
-    if @game = current_game
-      @admin = @game.admin
-      @game1 = Game.where(password: @game.password, active: true).first
-      @game.update(state: 'replay')
-      sign_out(@game)
-      if !@game1
-        @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
-      end
-      sign_in(@game1)
-      redirect_to gma_new_turn_path
-    else
-      redirect_to root_path
+    @game = current_game
+    @admin = @game.admin
+    @game1 = Game.where(password: @game.password, active: true).first
+    if @game1.nil?
+      @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
     end
+    @game.update(state: 'replay')
+    sign_out(@game)
+    session[:game_id] = @game1.id
+    redirect_to gma_new_turn_path
   end
     
   private
