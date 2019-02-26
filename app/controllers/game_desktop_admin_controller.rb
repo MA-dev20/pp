@@ -24,7 +24,7 @@ class GameDesktopAdminController < ApplicationController
       @game.update(active: false, state: 'bestlist')
       redirect_to gda_bestlist_path
       return
-    elsif @game.state == 'wait' || @game.state == 'rating'
+    else
       @game.update(state: 'choose', active: false, current_turn: @turns.first.id)
       @turn = Turn.find_by(id: @game.current_turn)
       if !@turn.user_id.nil?
