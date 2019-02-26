@@ -1,5 +1,6 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_user!, :authenticate_game!, :set_vars, except: [:replay, :new, :create, :ended, :new_name, :create_name, :new_company, :create_company, :new_turn, :create_turn]
+  before_action :authenticate_game!, :set_game, except: [:replay, :new, :create, :ended, :new_name, :create_name, :new_company, :create_company, :new_turn, :create_turn]
+  before_action :authenticate_user!, :set_user, except: [:new, :create]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
     
@@ -123,10 +124,12 @@ class GameMobileUserController < ApplicationController
   end
     
   private
-    def set_vars
-      @user = current_user
+    def set_game
       @game = current_game
       @state = @game.state
+    end
+    def set_user
+      @user = current_user
     end
     
     def set_turn
