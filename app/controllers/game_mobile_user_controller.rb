@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist]
+  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended]
   before_action :authenticate_user!, :set_user, except: [:new, :create]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
@@ -106,7 +106,7 @@ class GameMobileUserController < ApplicationController
     if @game = current_game
       @game1 = Game.where(password: @game.password, active: true).first
       sign_out(@game)
-      sign_in(@game1)
+      session[:game_id] = @game1.id
       redirect_to gmu_new_turn_path
     else
       redirect_to root_path
@@ -114,12 +114,8 @@ class GameMobileUserController < ApplicationController
   end
     
   def ended
-    if @game = current_game
-      sign_out(@game)
-    end
-    if @user = current_user
-      sign_out(@user)
-    end
+    sign_out(@game)
+    sign_out(@user)
     redirect_to root_path
   end
     
