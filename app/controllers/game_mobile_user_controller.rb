@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :wait, :choose, :turn, :rate, :rated, :rating, :bestlist]
+  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist]
   before_action :authenticate_user!, :set_user, except: [:new, :create]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
@@ -67,7 +67,7 @@ class GameMobileUserController < ApplicationController
     @word = Word.all.sample(5).first
     @turn = Turn.new(user_id: @user.id, game_id: @game.id, word_id: @word.id, play: params[:turn][:play], played: false)
     if @turn.save
-      sessiion.delete(:game_id)
+      session.delete(:game_id)
       sign_in(@game)
       redirect_to gmu_wait_path
     else
