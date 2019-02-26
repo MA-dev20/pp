@@ -118,7 +118,7 @@ class GameMobileAdminController < ApplicationController
     @game = current_game
     @admin = @game.admin
     @game1 = Game.where(password: @game.password, active: true).first
-    if @game1.nil?
+    if !@game1
       @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
     end
     @game.update(state: 'replay')
