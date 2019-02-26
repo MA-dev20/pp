@@ -10,7 +10,7 @@ class GameMobileAdminController < ApplicationController
   def create
     @game = Game.where(password: params[:password], active: true).first
     if @game
-      session[:game_id] = @game.id
+      session[:game_session_id] = @game.id
       @admin = Admin.where(id: @game.admin_id, email: params[:admin][:email].downcase).first
       if @admin && @admin.valid_password?(params[:admin][:password])
         sign_in(@admin)
@@ -34,7 +34,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def new_turn
-    @game = Game.find(session[:game_id])
+    @game = Game.find(session[:game_session_id])
     @turn = @game.turns.find_by(admin_id: @admin.id)
     if @turn
       redirect_to gma_intro_path
@@ -42,11 +42,11 @@ class GameMobileAdminController < ApplicationController
   end
     
   def create_turn
-    @game = Game.find(session[:game_id])
+    @game = Game.find(session[:game_session_id])
     @word = Word.all.sample(5).first
     @turn = Turn.new(play: params[:turn][:play], admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false)
     if @turn.save
-      session.delete(:game_id)
+      session.delete(:game_session_id)
       sign_in(@game)
       redirect_to gma_intro_path
     else
@@ -126,7 +126,7 @@ class GameMobileAdminController < ApplicationController
     @admin = @game.admin
     @game1 = @admin.games.where(password: @game.password, active: true).first
     sign_out(@game)
-    session[:game_id] = @game1.id
+    session[:game_session_id] = @game1.id
     redirect_to gma_new_turn_path
   end
     

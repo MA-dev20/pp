@@ -27,7 +27,7 @@ class GameDesktopAdminController < ApplicationController
     elsif @game.state == 'wait' || @game.state == 'rating'
       @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
     elsif @game.state == 'choose' && @game.active
-      @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
+      @game.update(active: false, current_turn: @turns.first.id)
     end
   end
 
