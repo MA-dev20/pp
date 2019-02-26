@@ -46,11 +46,12 @@
     });
     $(document).ready(
         function() {
+            var counter = $('#count').text().trim();
             setInterval(function() {
-                var counter = $('#count').text().trim();
                 $('#count').load('wait #count');
                 if(counter != $('#count').text().trim()) {
-                        document.getElementById('ping').play();
+                    document.getElementById('ping').play();
+                    counter = $('#count').text().trim();
                 };
             }, 2000);
         }
