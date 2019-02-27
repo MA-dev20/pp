@@ -67,25 +67,32 @@ class GameMobileAdminController < ApplicationController
   end
     
   def choose
-    if @game.state == 'wait' || @game.state == 'rating'
-      @game.update(state: 'choose')
+    @turns = @game.turns.playable.sample(100)
+    if @turns.count == 1
+      redirect_to gda_turns_path
+      return
+    elsif @turns.count == 0
+      redirect_to gda_ended_path
+      return
+    elsif @game.state != 'choose'
+      @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
     end
   end
     
   def turn
-    if @game.state == 'choose'
-      @game.update(state: 'turn')
+    if @game.state != 'turn'
+      @game.update(state: 'turn', active: false)
     end
   end
     
   def play
-    if @game.state == 'turn'
+    if @game.state != 'play'
       @game.update(state: 'play')
     end
   end
     
   def rate
-    if @game.state == 'play'
+    if @game.state != 'rate'
       @game.update(state: 'rate')
     end
     if @turn.ratings.find_by(admin_id: @admin.id)
@@ -101,17 +108,31 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rating
-    if @game.state == 'rate'
+    if @game.state != 'rating'
       @game.update(state: 'rating')
     end
   end
     
+  def after_rating
+    @turns = @game.turns.playable.sample(100)
+    if @turns.count == 1
+      redirect_to gma_turn_path
+    elsif @turns.count == 0
+      redirect_to gma_bestlist_path
+    else
+      redirect_to gma_choose_path
+    end
+  end
+    
   def bestlist
+    if @game.state != 'bestlist'
+      @game.update(state: 'bestlist')
+    end
   end
     
   def ended
-    if @game.state == 'bestlist'
-      @game.update(state: 'ended')
+    if @game.state != 'ended'
+      @game.update(state: 'ended', active: false)
     end
     sign_out(@game)
     sign_out(@admin)
@@ -120,14 +141,16 @@ class GameMobileAdminController < ApplicationController
     
   def replay
     @game = current_game
-    if @game.state == 'bestlist'
+    @admin = current_admin
+    if @game.state != 'replay'
       @game.update(state: 'replay')
+      @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
+    else
+      @game1 = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
     end
-    @admin = @game.admin
-    @game1 = @admin.games.where(password: @game.password, active: true).first
     sign_out(@game)
-    session[:game_session_id] = @game1.id
-    redirect_to gma_new_turn_path
+    sign_in(@game1)
+    redirect_to gda_wait_path
   end
     
   private
