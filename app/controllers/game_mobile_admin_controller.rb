@@ -1,5 +1,5 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended]
+  before_action :authenticate_game!, :set_game, only: [:intro, :wait, :choose, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
