@@ -104,7 +104,7 @@ class GameMobileUserController < ApplicationController
     
   def replay
     @game = current_game
-    @admin = @game.admin_id
+    @admin = Admin.find(@game.admin_id)
     @game1 = @admin.games.where(password: @game.password, active: true).first
     sign_out(@game)
     session[:game_session_id] = @game1.id
