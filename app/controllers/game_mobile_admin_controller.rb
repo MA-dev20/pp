@@ -162,7 +162,7 @@ class GameMobileAdminController < ApplicationController
     end
     sign_out(@game)
     sign_in(@game1)
-    redirect_to gda_wait_path
+    redirect_to gma_new_turn_path
   end
     
   private
