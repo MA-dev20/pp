@@ -25,10 +25,10 @@ Rails.application.routes.draw do
   get 'games/rate', to: 'game_desktop_admin#rate', as: 'gda_rate'
   get 'games/rating', to: 'game_desktop_admin#rating', as: 'gda_rating'
   get 'games/bestlist', to: 'game_desktop_admin#bestlist', as: 'gda_bestlist'
-  get 'games/:game_id/ended', to: 'game_desktop_admin#ended', as: 'gda_ended'
-  get 'games/:game_id/replay', to: 'game_desktop_admin#replay', as: 'gda_replay'
+  get 'games/ended', to: 'game_desktop_admin#ended', as: 'gda_ended'
+  get 'games/replay', to: 'game_desktop_admin#replay', as: 'gda_replay'
     
-  get 'games/redirect', to: 'game_desktop_admin#redirect', as: 'gda_redirect'
+  get 'games/after_rating', to: 'game_desktop_admin#after_rating', as: 'gda_after_rating'
 
 ################
 # Admin Mobile #
@@ -50,10 +50,10 @@ Rails.application.routes.draw do
   get 'mobile/admin/rated', to: 'game_mobile_admin#rated', as: 'gma_rated'
   get 'mobile/admin/rating', to: 'game_mobile_admin#rating', as: 'gma_rating'
   get 'mobile/admin/bestlist', to: 'game_mobile_admin#bestlist', as: 'gma_bestlist'
-  get 'mobile/:game_id/admin/replay', to: 'game_mobile_admin#replay', as: 'gma_replay'
-  get 'mobile/:game_id/admin/ended', to: 'game_mobile_admin#ended', as: 'gma_ended'
+  get 'mobile/admin/replay', to: 'game_mobile_admin#replay', as: 'gma_replay'
+  get 'mobile/admin/ended', to: 'game_mobile_admin#ended', as: 'gma_ended'
     
-  get 'mobile/admin/redirect', to: 'game_mobile_admin#redirect', as: 'gma_redirect'
+  get 'mobile/admin/after_rating', to: 'game_mobile_admin#after_rating', as: 'gma_after_rating'
     
 ###############
 # User Mobile #
@@ -72,16 +72,17 @@ Rails.application.routes.draw do
     
   get 'mobile/user/game/new_turn', to: 'game_mobile_user#new_turn', as: 'gmu_new_turn'
   post 'mobile/user/game/new_turn', to: 'game_mobile_user#create_turn'
-    
+
   get 'mobile/user/game/wait', to: 'game_mobile_user#wait', as: 'gmu_wait'
   get 'mobile/user/game/choose', to: 'game_mobile_user#choose', as: 'gmu_choose'
   get 'mobile/user/game/turn', to: 'game_mobile_user#turn', as: 'gmu_turn'
+  get 'mobile/user/game/play', to: 'game_mobile_user#play', as: 'gmu_play'
   get 'mobile/user/game/rate', to: 'game_mobile_user#rate', as: 'gmu_rate'
   get 'mobile/user/game/rated', to: 'game_mobile_user#rated', as: 'gmu_rated'
   get 'mobile/user/game/rating', to: 'game_mobile_user#rating', as: 'gmu_rating'
   get 'mobile/user/game/bestlist', to: 'game_mobile_user#bestlist', as: 'gmu_bestlist'
-  get 'mobile/user/:user_id/game/:game_id/replay', to: 'game_mobile_user#replay', as: 'gmu_replay'
-  get 'mobile/user/:user_id/game/:game_id/ended', to: 'game_mobile_user#ended', as: 'gmu_ended'
+  get 'mobile/user/game/replay', to: 'game_mobile_user#replay', as: 'gmu_replay'
+  get 'mobile/user/game/ended', to: 'game_mobile_user#ended', as: 'gmu_ended'
   
     
 ####################################################################################
@@ -132,7 +133,13 @@ Rails.application.routes.draw do
 ##################
 # CRUD Ressource #
 ##################
+
+#########
+# Admin #
+#########
     
+  get 'admins/:admin_id/destroy', to: 'admins#destroy', as: 'destroy_admin'
+
 ########
 # Team #
 ########
@@ -179,5 +186,6 @@ Rails.application.routes.draw do
   post 'words/:word_id/edit', to: 'words#update'
     
   get 'words/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
+  mount ActionCable.server => '/cable'
 
 end

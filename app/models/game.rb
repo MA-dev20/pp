@@ -9,6 +9,9 @@ class Game < ApplicationRecord
   has_one :game_rating, dependent: :destroy
   has_many :turns, dependent: :destroy
   has_many :turn_ratings, dependent: :destroy
-    
+
+  after_update_commit do
+    NotificationBroadcastJob.perform_later(self)
+  end
 
 end

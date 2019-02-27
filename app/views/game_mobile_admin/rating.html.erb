@@ -6,28 +6,6 @@
         <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
     </div>
     <div class="bottom">
-        <%= link_to 'weiter!', gma_redirect_path %>
+        <%= link_to 'weiter!', gma_after_rating_path %>
     </div>
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
-
-<script>
-    
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'rating') {
-                    $('#redirect').load('rating #redirect');
-                } else if($('#redirect').text().trim() == 'turn') {
-                    window.location.replace('<%= gma_turn_url %>');
-                } else if($('#redirect').text().trim() == 'bestlist') {
-                    window.location.replace('<%= gma_bestlist_url %>');
-                } else {
-                    window.location.replace('<%= gma_choose_url %>');
-                }
-            }, 2000);
-        }
-    );
-</script>

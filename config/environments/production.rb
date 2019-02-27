@@ -23,8 +23,8 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
-  # config.assets.css_compressor = :sass
+  config.assets.js_compressor = Uglifier.new(harmony: true)
+  config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
@@ -43,8 +43,8 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
-  # config.action_cable.url = 'wss://example.com/cable'
-  # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
+  config.action_cable.url = 'ws://peterpitch.de/cable'
+  config.action_cable.allowed_request_origins = ['http://peterpitch.de', 'https://peterpitch.de', 'http://www.peterpitch.de', 'https://www.peterpitch.de', 'http://peterpitch.com', 'http://www.peterpitch.com', 'https://peterpitch.com', 'https://www.peterpitch.com']
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
@@ -63,7 +63,21 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "peterpitch_#{Rails.env}"
 
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: 'peterpitch.de' }
+  config.action_mailer.default_options = {from: 'no-reply@peterpitch.de'}
   config.action_mailer.perform_caching = false
+    
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.strato.de',
+    port:                 465,
+    domain:               'peterpitch.de',
+    user_name:            'support@peterpitch.de',
+    password:             'ABuPwMScWZgyYs9y',
+    authentication:       'plain',
+    enable_starttls_auto: true }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
