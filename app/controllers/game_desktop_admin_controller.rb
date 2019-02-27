@@ -69,6 +69,7 @@ class GameDesktopAdminController < ApplicationController
   def after_rating
     @turns = @game.turns.playable.sample(100)
     if @turns.count == 1
+      @game.update(current_turn: @turns.first.id)
       redirect_to gda_turn_path
     elsif @turns.count == 0
       redirect_to gda_bestlist_path
