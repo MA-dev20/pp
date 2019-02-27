@@ -161,7 +161,7 @@ class GameMobileAdminController < ApplicationController
       @game1 = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
     end
     sign_out(@game)
-    sign_in(@game1)
+    session[:game_session_id] = @game1.id
     redirect_to gma_new_turn_path
   end
     
