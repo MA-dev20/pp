@@ -48,11 +48,11 @@
         function() {
             var counter = $('#count').text().trim();
             setInterval(function() {
-                $('#count').load('wait #count');
                 if(counter != $('#count').text().trim()) {
                     document.getElementById('ping').play();
                     counter = $('#count').text().trim();
                 };
+                $('#count').load('wait #count');
             }, 2000);
         }
     );
