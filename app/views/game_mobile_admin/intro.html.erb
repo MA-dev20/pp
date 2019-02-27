@@ -4,23 +4,6 @@
         <%= image_tag 'game/wolf_button.png', class: 'mid-img green' %>
     </div>
     <div class="bottom">
-        <%= link_to 'überspringen!', gma_redirect_path %>
+        <%= link_to 'überspringen!', gma_wait_path %>
     </div>
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
-
-<script>
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'intro') {
-                    $('#redirect').load('intro #redirect');
-                } else {
-                    window.location.replace('<%= gma_wait_url %>');
-                }
-            }, 2000);
-        }
-    );
-</script>

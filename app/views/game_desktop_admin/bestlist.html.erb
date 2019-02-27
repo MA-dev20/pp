@@ -63,12 +63,10 @@
     </div>
     <% end %>
 </section>
-<section id="gd_bottom_ended">
-  <%= link_to 'beenden!', gda_ended_path(@game) %>
+<section id="skip">
+   Beenden mit Leertaste <br>
+   Neue Runde mit Enter
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
 
 
 
@@ -178,17 +176,12 @@ setTimeout('fall()',40);
     }, 8000);
     
     
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'bestlist') {
-                    $('#redirect').load('bestlist #redirect');
-                } else if($('#redirect').text().trim() == 'ended') {
-                    window.location.replace('<%= gda_ended_path(@game) %>');
-                } else if($('#redirect').text().trim() == 'replay') {
-                    window.location.replace('<%= gda_replay_url(@game) %>');
-                }
-            }, 2000);
-        }
-    );
+$(window).keypress(function (e) {
+  if (e.which == 32) {
+    window.location.replace('<%= gda_ended_path %>');
+  };
+  if (e.which == 13) {
+    window.location.replace('<%= gda_replay_path %>');
+   };
+}) 
 </script>

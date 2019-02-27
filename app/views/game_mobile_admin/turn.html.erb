@@ -10,24 +10,6 @@
         <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green' %>
     </div>
     <div class="bottom">
-       <%= link_to 'Pitch starten!', gma_redirect_path %>
+       <%= link_to 'Pitch starten!', gma_play_path %>
     </div>
 </section>
-<div id="redirect">
-    <%= render partial: 'state' %>
-</div>
-
-<script>
-    
-    $(document).ready(
-        function() {
-            setInterval(function() {
-                if($('#redirect').text().trim() == 'turn') {
-                    $('#redirect').load('turn #redirect');
-                } else {                    
-                    window.location.replace('<%= gma_play_url %>');
-                }
-            }, 2000);
-        }
-    );
-</script>

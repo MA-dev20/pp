@@ -10,4 +10,5 @@
  *= require dash/perfect-scrollbar.min
  *= require dash/classie.min
  *= require dash/selectFx.min
+ *= require cable
  */

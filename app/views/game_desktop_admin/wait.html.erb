@@ -39,21 +39,22 @@
 <%= audio_tag('wait/truppe.mp3', id: 'tag4') %>
 <script>
     pick(4);
-    var count = $('#count').text().trim();
+    $(window).keypress(function (e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            window.location.replace('<%= gda_choose_path %>');
+        };
+    });
     $(document).ready(
         function() {
+            var counter = $('#count').text().trim();
             setInterval(function() {
-                if($('#redirect').text().trim() == 'wait') {
-                    $('#count').load('wait #count');
-                    if(count != $('#count').text().trim()) {
-                        document.getElementById('ping').play();
-                        count = $('#count').text().trim();
-                    }  
-                } else {
-                    window.location.replace('<%= gda_choose_url %>');
-                }                
+                if(counter != $('#count').text().trim()) {
+                    document.getElementById('ping').play();
+                    counter = $('#count').text().trim();
+                };
+                $('#count').load('wait #count');
             }, 2000);
         }
     );
-                
+
 </script>

@@ -13,13 +13,17 @@ class GamesController < ApplicationController
         flash[:danger] = 'Bitte wähle ein anderes Passwort'
         redirect_to dash_admin_games_path(params[:game][:team_id])
     else
-      @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
-      if @game.save
-        sign_in(@game)
-        redirect_to gda_intro_path
+      if params[:game][:team_id].present?
+        @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
+        if @game.save
+          sign_in(@game)
+          redirect_to gda_intro_path
+        else
+          flash[:danger] = 'Konnte Spiel nicht speichern'
+          redirect_to dash_admin_games_path(params[:game][:team_id])
+        end
       else
-        flash[:danger] = 'Konnte Spiel nicht speichern'
-        redirect_to dash_admin_games_path(params[:game][:team_id])
+        redirect_back fallback_location: root_path
       end
     end
   end

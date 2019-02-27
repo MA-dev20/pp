@@ -32,6 +32,6 @@ class RootController < ApplicationController
     end
     
     def root_params
-      params.require(:root).permit(:username, :password, :password_digest)
+      params.require(:root).permit(:username, :password)
     end
 end
