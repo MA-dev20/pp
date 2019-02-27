@@ -69,6 +69,7 @@ class GameMobileAdminController < ApplicationController
   def choose
     @turns = @game.turns.playable.sample(100)
     if @turns.count == 1
+      @game.update(active: false, current_turn: @turns.first.id)
       redirect_to gda_turns_path
       return
     elsif @turns.count == 0
@@ -116,6 +117,7 @@ class GameMobileAdminController < ApplicationController
   def after_rating
     @turns = @game.turns.playable.sample(100)
     if @turns.count == 1
+      @game.update(active: false, current_turn: @turns.first.id)
       redirect_to gma_turn_path
     elsif @turns.count == 0
       redirect_to gma_bestlist_path
