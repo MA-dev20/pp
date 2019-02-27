@@ -69,7 +69,6 @@ class GameMobileAdminController < ApplicationController
   def choose
     @turns = @game.turns.playable.sample(100)
     if @turns.count == 1
-      @game.update(active: false, current_turn: @turns.first.id)
       redirect_to gda_turns_path
       return
     elsif @turns.count == 0
@@ -81,8 +80,11 @@ class GameMobileAdminController < ApplicationController
   end
     
   def turn
-    if @game.state != 'turn'
-      @game.update(state: 'turn', active: false)
+    @turns = @game.turns.playable.sample(100)
+    if @game.state != 'turn' && @turns.count == 1
+      @game.update(state: 'turn', active: false, current_turn: @turns.first.id)
+    elsif @game.state != 'turn'
+      @game.update(state: 'turn')
     end
   end
     
@@ -109,20 +111,26 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rating
-    if @game.state != 'rating'
-      @game.update(state: 'rating')
+    if @game.state != 'rating' && @turn.ratings.count == 0
+      @turn.destroy
+      redirect_to gma_after_rating_path
+      return
+    elsif @game.state != 'rating'
+      @turn.update(state: 'rating', played: true)
     end
   end
     
   def after_rating
     @turns = @game.turns.playable.sample(100)
     if @turns.count == 1
-      @game.update(active: false, current_turn: @turns.first.id)
       redirect_to gma_turn_path
+      return
     elsif @turns.count == 0
       redirect_to gma_bestlist_path
+      return
     else
       redirect_to gma_choose_path
+      return
     end
   end
     
@@ -133,6 +141,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def ended
+    @game = current_game
     if @game.state != 'ended'
       @game.update(state: 'ended', active: false)
     end

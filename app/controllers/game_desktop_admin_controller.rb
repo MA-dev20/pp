@@ -8,7 +8,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def wait
-    if @game.state == 'intro' || @game.state == 'replay'
+    if @game.state != 'wait'
         @game.update(state: 'wait')
     end
     @count = @game.turns.count
@@ -16,11 +16,10 @@ class GameDesktopAdminController < ApplicationController
     
   def choose
     @turns = @game.turns.playable.sample(100)
-    if @turns.count == 1
-      @game.update(active: false, current_turn: @turns.first.id)
+    if @game.state != 'choose' && @turns.count == 1
       redirect_to gda_turns_path
       return
-    elsif @turns.count == 0
+    elsif @game.state != 'choose' && @turns.count == 0
       redirect_to gda_ended_path
       return
     elsif @game.state != 'choose'
@@ -29,7 +28,10 @@ class GameDesktopAdminController < ApplicationController
   end
 
   def turn
-    if @game.state != 'turn'
+    @turns = @game.turns.playable.sample(100)
+    if @game.state != 'turn' && @turns.count == 1
+      @game.update(state: 'turn', active: false, current_turn: @turns.first.id)
+    elsif @game.state != 'turn'
       @game.update(state: 'turn')
     end
   end
@@ -44,37 +46,32 @@ class GameDesktopAdminController < ApplicationController
     if @game.state != 'rate'
       @game.update(state: 'rate')
     end
-    if @game.turns.count == 1
-      @game.turns.first.ratings.create(body: 0, creative: 0, rhetoric: 0, spontan: 0, ges: 0)
-      redirect_to gda_rating_path
-    end
   end
     
   def rating
-    if @game.state != 'rating'
-      @game.update(state: 'rating')
-    end
-    if @turn.ratings.count == 0
+    if @game.state != 'rating' && @turn.ratings.count == 0
       @turn.destroy
-      @game.update(state: 'choose')
-      redirect_to gda_choose_path
-    else
-      @turn.update(played: true)
-      update_turn_rating @turn
-      update_user_rating @user
-      @rating = @turn.turn_rating
+      redirect_to gda_after_rating_path
+      return
+    elsif @game.state != 'rating'
+      @turn.update(state: 'rating', played: true)
     end
+    update_turn_rating @turn
+    update_user_rating @user
+    @rating = @turn.turn_rating
   end
     
   def after_rating
     @turns = @game.turns.playable.sample(100)
     if @turns.count == 1
-      @game.update(current_turn: @turns.first.id)
       redirect_to gda_turn_path
+      return
     elsif @turns.count == 0
       redirect_to gda_bestlist_path
+      return
     else
       redirect_to gda_choose_path
+      return
     end
   end
     

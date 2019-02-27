@@ -177,10 +177,10 @@ setTimeout('fall()',40);
     
     
 $(window).keypress(function (e) {
-  if (e.key === ' ' || e.key === 'Spacebar') {
+  if (e.which == 32) {
     window.location.replace('<%= gda_ended_path %>');
   };
-  if (e.keycode == '13' || e.key === 'Enter') {
+  if (e.which == 13) {
     window.location.replace('<%= gda_replay_path %>');
    };
 }) 
