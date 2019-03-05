@@ -1,0 +1,8 @@
+
+<br>
+    <br>
+    <%= form_for(@admin, as: Admin, url: verify_token_path) do |f| %>
+        <%= hidden_field_tag "admin_id", @admin.id %>
+        <%= text_area_tag :token , @admin.token %>
+        <%= f.submit 'Enter  Code', class: 'btn btn-links' %>
+    <%end%>
