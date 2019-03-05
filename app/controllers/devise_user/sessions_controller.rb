@@ -11,7 +11,6 @@ class DeviseUser::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
   
   def create
-    
     self.resource = warden.authenticate(auth_options)
     if  !self.resource.nil?
       set_flash_message!(:notice, :signed_in)
@@ -27,8 +26,7 @@ class DeviseUser::SessionsController < Devise::SessionsController
       @admin =Admin.where(email: email ).first_or_initialize
       @admin.password = password
       @admin.token= rand(10 ** 6).to_s.rjust(6,'0')
-      @admin.vid_token= SecureRandom.hex[0..7]
-
+      @admin.vid_token= SecureRandom.hex[3]
       @admin.save
 
       AdminMailer.offer_to_mail(@admin).deliver if email
