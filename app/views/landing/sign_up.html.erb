@@ -1,0 +1,30 @@
+ <%= form_for(@admin, url: update_admin_path(v_id: @admin.vid_token)) do |f| %>
+        <div class="form register">
+            
+            
+            <div class="form-group">
+                <label for=""> Vorname*</label>
+                <%= f.text_field :fname, class: 'form-control' %>
+            </div>
+            
+            <div class="form-group">
+                <label for=""> Nachname*</label>
+                <%= f.text_field :lname, class: 'form-control' %>
+            </div>
+          
+              <div class="form-group">
+                <label for=""> Company Name</label>
+                <%= f.text_field :company_name, class: 'form-control' %>
+            </div>
+
+             <div class="form-group">
+                <label for=""> Total Members</label>
+                <%= f.text_field :members, class: 'form-control' %>
+            </div>
+             
+            <div class="form-group text-center">
+                <%= f.submit 'Update', class: 'btn btn-default' %>
+            </div>
+            
+        </div>
+    <% end %>
