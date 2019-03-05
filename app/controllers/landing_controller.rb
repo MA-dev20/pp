@@ -11,9 +11,7 @@ class LandingController < ApplicationController
   end
 
   def update_admin
-    debugger
     @admin = Admin.where(vid_token: :vid_token).first
-    debugger
     respond_to do |format|
       if @admin.update_attributes(admin_params)
         format.html { redirect_to root_path, :notice => 'updated.' }
@@ -27,7 +25,6 @@ class LandingController < ApplicationController
     end
   end
   def sign_up
-    debugger
     @admin = Admin.where(vid_token: params[:v_id]).first
 
   end
