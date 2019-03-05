@@ -1,5 +1,5 @@
 class DashAdminController < ApplicationController
-  before_action :authenticate_admin!, :set_admin
+  before_action :authenticate_admin!, :set_admin , unless: :skip_action?
   before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats]
   before_action :set_user, only: [:user_stats, :compare_user_stats]
   layout 'dash_admin'
@@ -49,6 +49,10 @@ class DashAdminController < ApplicationController
   def account
   end
     
+  def verification
+    @token = params[:token]     
+  end
+
   private
     def set_admin
       @admin = current_admin
@@ -62,4 +66,9 @@ class DashAdminController < ApplicationController
     def set_user
       @user = User.find(params[:user_id])
     end
+
+   def skip_action?
+    (params[:token]) ? true : false  
+   end
+
 end

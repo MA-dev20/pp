@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
   devise_for :games
   devise_for :users
-  devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'admins/sessions' }
+  devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'devise_user/sessions' }
   get 'landing/index'
     
   root 'landing#index'
-    
+  patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'
+  get 'admins/sign_up/:v_id', to: 'landing#sign_up', as: 'edit_admin'
+  patch 'admins/update_admin/:v_id', to: 'landing#update_admin', as: 'update_admin'
   get 'coaches/info', to: 'landing#coach', as: 'coach_info'
+  get '/verfication/:token' , to: 'verification#token' , as: 'verification_token'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 ########
 # Game #
@@ -101,6 +104,8 @@ Rails.application.routes.draw do
 #########
 # Admin #
 #########
+
+    get 'admin/verification/:token', to: 'dash_admin#verification', as: 'dash_admin_verfication'
     
     get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
     get 'admin/dash/teams/:team_id/games', to: 'dash_admin#games', as: 'dash_admin_games'

@@ -38,47 +38,51 @@
   <!-- Top Banner
 -------------------------------------------->
   <section class="top-banner blue-shape">
-    <div class="top_right_blue"> <%= image_tag('main/Polygon1-w.png') %> </div>
-    <div class="container-fluid pd-0">
-      <div class="row">
-        <div class="col-md-6 col-sm-6">
-          <div class="main-shape">
-            <div class="img_main"> <%= image_tag('main/Polygon-white.png') %>
-              <div class="content-holder">
-                <form class="form-shape">
-                  <h2>Spielgruppe beitreten!</h2>
-                  <div class="form-row">
-                    <div class="col">
-                      <input type="text" placeholder="E-mail?" class="form-control">
-                    </div>
-                    <div class="col">
-                     <input type="text" placeholder="Spielpasswort?" class="form-control">
-                    </div>
+
+    <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
+
+        <div class="top_right_blue"> <%= image_tag('main/Polygon1-w.png') %> </div>
+        <div class="container-fluid pd-0">
+          <div class="row">
+            <div class="col-md-6 col-sm-6">
+              <div class="main-shape">
+                <div class="img_main"> <%= image_tag('main/Polygon-white.png') %>
+                  <div class="content-holder">
+                    <form class="form-shape">
+                      <h2>Spielgruppe beitreten!</h2>
+                      <div class="form-row">
+                        <div class="col">
+                          <%= f.email_field :email, class: 'form-control',placeholder:"E-mail?"  %>
+                        </div>
+                        <div class="col">
+                        <%= f.password_field :password, class: 'form-control',placeholder:"Spielpasswort?" %>
+                        </div>
+                      </div>
+                      <div class="text-center">
+                      <%= f.submit 'Lets Play!', class: 'btn btn-links' %>
+                      </div>
+                      </form>
                   </div>
-                  <div class="text-center">
-                    <submit class="btn btn-links">Let's Play!</submit>
-                  </div>
-                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <div class="d-flex  fl-end">
+                <div class="text-box">
+                  <h2>PETER PITCH</h2>
+                  <p>Das erste digitale Trainingstool für Kommunikation und Vertrieb. </p>
+                  <ul class="list_banner">
+                    <li><span><%= image_tag('main/check1.png') %></span> Softskills verbessern</li>
+                    <li><span><%= image_tag('main/check1.png') %></span> Gamification Erlebnis</li>
+                    <li><span><%= image_tag('main/check1.png') %></span> Digital und interaktiv </li>
+                    <li><span><%= image_tag('main/check1.png') %></span> Learning by doing</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-sm-6">
-          <div class="d-flex  fl-end">
-            <div class="text-box">
-              <h2>PETER PITCH</h2>
-              <p>Das erste digitale Trainingstool für Kommunikation und Vertrieb. </p>
-              <ul class="list_banner">
-                <li><span><%= image_tag('main/check1.png') %></span> Softskills verbessern</li>
-                <li><span><%= image_tag('main/check1.png') %></span> Gamification Erlebnis</li>
-                <li><span><%= image_tag('main/check1.png') %></span> Digital und interaktiv </li>
-                <li><span><%= image_tag('main/check1.png') %></span> Learning by doing</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%end%>
   </section>
   <!--Coaches
         ------------------------------------------->
@@ -261,7 +265,7 @@
                     <li><a href="#">Registrieren</a></li>
                     <li><a href="#">Preise</a></li>
                     <li><a href="#">Informationen</a></li>
-                    <li><a href="#">Login</a></li>
+                    <li> <%= link_to "Logout", destroy_admin_session_path, method: :delete %></li>
                 </ul>
             </div>
         </div>
