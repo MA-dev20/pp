@@ -9,7 +9,6 @@ class GameMobileUserController < ApplicationController
     
   def create
     @game = Game.where(password: params[:password], active: true).first
-    debugger
     if @game
       session[:game_session_id] = @game.id
       @admin = Admin.find(@game.admin_id)
@@ -51,7 +50,6 @@ class GameMobileUserController < ApplicationController
   end
     
   def create_avatar
-    debugger
     @user.update(user_params)
     redirect_to gmu_new_avatar_path
   end
