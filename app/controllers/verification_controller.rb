@@ -8,7 +8,6 @@ class VerificationController < ApplicationController
     def verify_token
         @admin =Admin.where(token: params[:token]).first
         if @admin
-            debugger
             redirect_to edit_admin_path(v_id: @admin.vid_token)
         else
             redirect_to verification_token_url(@admin.vid_token)
