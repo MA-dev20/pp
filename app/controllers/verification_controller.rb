@@ -1,11 +1,13 @@
 class VerificationController < ApplicationController
 
     def token
+        debugger
         @admin =Admin.where(vid_token: params[:token]).first
     end
 
 
     def verify_token
+        debugger
         @admin =Admin.where(token: params[:token]).first
         if @admin
             debugger

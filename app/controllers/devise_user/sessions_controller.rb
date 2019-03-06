@@ -11,27 +11,30 @@ class DeviseUser::SessionsController < Devise::SessionsController
   # POST /resource/sign_in
   
   def create
+    debugger
     self.resource = warden.authenticate(auth_options)
+    debugger
     if  !self.resource.nil?
       set_flash_message!(:notice, :signed_in)
       sign_in(resource_name, resource)
       yield resource if block_given?
       respond_with resource, location: after_sign_in_path_for(resource) 
     else
-      # self.resource.token= rand(10 ** 6).to_s.rjust(6,'0') 
-      # puts self.token
       email = params.dig(:admin, :email)
       password = params.dig(:admin, :password)
 
       @admin =Admin.where(email: email ).first_or_initialize
       @admin.password = password
       @admin.token= rand(10 ** 6).to_s.rjust(6,'0')
-      @admin.vid_token= SecureRandom.hex[3]
+      debugger
+      @admin.vid_token= SecureRandom.hex
       @admin.save
 
-      AdminMailer.offer_to_mail(@admin).deliver if email
-            
-      redirect_to root_path , notice: 'Signup Information Sent to your Email Successfully.'
+      debugger
+      AdminMailer.offer_to_mail(@admin).deliver if 
+      debugger
+      redirect_to verification_token_url(@admin.vid_token)
+      # redirect_to root_path , notice: 'Signup Information Sent to your Email Successfully.'
       puts "Offer sent."
     end
   end

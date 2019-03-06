@@ -1,4 +1,4 @@
-class Admins::SssController < ApplicationController
+class Admins::SessionsController < ApplicationController
 
    
 
