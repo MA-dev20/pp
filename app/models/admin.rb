@@ -13,4 +13,18 @@ class Admin < ApplicationRecord
   mount_uploader :avatar, PicUploader
   mount_uploader :logo, PicUploader
 
+<<<<<<< HEAD
+=======
+
+  before_create :set_token
+
+
+
+
+
+  def set_token
+    self.vid_token = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
+  end
+>>>>>>> 4415f355ef3d402e015e9ccc7ace05d8a6b09b04
 end
+
