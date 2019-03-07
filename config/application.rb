@@ -12,6 +12,8 @@ module Peterpitch
     config.load_defaults 5.2
       
     config.i18n.default_locale = :de
+    config.action_mailer.delivery_method = :letter_opener
+    config.action_mailer.perform_deliveries = true
       
     config.action_mailer.default_url_options = { host: 'peterpitch.de' }
     # Settings in config/environments/* take precedence over those specified here.
