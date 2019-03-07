@@ -1,19 +1,6 @@
-@font-face {
-	font-family: 'Barack-Medium';
-	src: font_url('barack/Barack-Medium.eot?#iefix') format('embedded-opentype'), font_url('barack/Barack-Medium.otf') format('opentype'), font_url('barack/Barack-Medium.woff') format('woff'), font_url('barack/Barack-Medium.ttf') format('truetype'), font_url('barack/Barack-Medium.svg#Barack-Medium') format('svg');
-	font-weight: normal;
-	font-style: normal;
+body {
+  font-family: 'BarackPro-Solid' !important;
 }
-@font-face {
-	font-family: 'BarackPro-Solid';
-	src: font_url('barack/BarackPro-Solid.eot?#iefix') format('embedded-opentype'), font_url('barack/BarackPro-Solid.otf') format('opentype'), font_url('barack/BarackPro-Solid.woff') format('woff'), font_url('barack/BarackPro-Solid.ttf') format('truetype'), font_url('barack/BarackPro-Solid.svg#BarackPro-Solid') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-  
-  body {
-	  font-family: 'Barack Pro Solid';
-  }
   ul {
 	  padding: 0;
 	  margin: 0;
@@ -74,7 +61,7 @@
 	  margin-top: 30px;
   }
   .navbar-list .nav-item .nav-link {
-	  color: #fff;
+	  color: #fff !important;
 	  font-size: 1.125rem;
 	  transition: all 0.3s;
   }
@@ -273,15 +260,15 @@
 	  font-family: 'Barack Medium';
   }
   .btn-green {
-	  background-color: #1ddaaf;
-	  color: #fff;
-	  border: 1px solid #1ddaaf;
+	  background-color: #1ddaaf !important;
+	  color: #fff !important;
+	  border: 1px solid #1ddaaf !important;
 	  min-height: 44px;
 	  min-width: 170px;
 	  color: #fff;
 	  font-size: 1.125rem;
-	  background-color: #1ddaaf;
-	  border-radius: 22px;
+	  background-color: #1ddaaf !important;
+	  border-radius: 22px !important;
 	  padding: .45rem 1rem;
 	  -webkit-box-shadow: 0 9px 18px rgba(0,0,0,0.17);
 	  -moz-box-shadow: 0 9px 18px rgba(0,0,0,0.17);
@@ -289,9 +276,9 @@
   }
   .btn-green:hover,
   .btn-green:focus {
-	  color: #fff;
-	  border-color: #1988d0;
-	  background-color: #1988d0;
+	  color: #fff !important;
+	  border-color: #1988d0 !important;
+	  background-color: #1988d0 !important;
   }
   .trial-block {
 	  margin-top: -32px;
@@ -596,7 +583,7 @@
   .modal-backdrop.show {
 	  background-color: #1dabf1;
 	  background-image: linear-gradient(to right, rgba(29,171,241,0.57), rgba(17,82,160,0.57));
-	  opacity: 1;
+	  opacity: 1 !important;
   }
   .modal-peterpitch .modal-dialog {
 	  max-width: 100%;
