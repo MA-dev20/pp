@@ -11,9 +11,9 @@ class LandingController < ApplicationController
   end
 
   def update_admin
-    @admin = Admin.where(vid_token: :vid_token).first
+    @admin = Admin.where(vid_token: params[:v_id])
     respond_to do |format|
-      if @admin.update_attributes(admin_params)
+      if @admin.update(admin_params)
         format.html { redirect_to root_path, :notice => 'updated.' }
         format.json { respond_with_bip(@admin) }
       else
