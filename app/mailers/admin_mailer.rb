@@ -3,6 +3,6 @@ class AdminMailer < ApplicationMailer
   
     def offer_to_mail(admin)
         @admin = admin
-        mail to: @admin.email , subject:"Contact Email"
+        mail to: @admin.email , subject:"Token Verification Email"
     end
 end
