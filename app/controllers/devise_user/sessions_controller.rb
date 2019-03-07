@@ -12,19 +12,18 @@ class DeviseUser::SessionsController < Devise::SessionsController
   
   def create
     self.resource = warden.authenticate(auth_options)
-    debugger
+    
     if  !self.resource.nil?
-      debugger
       set_flash_message!(:notice, :signed_in)
       sign_in(resource_name, resource)
       yield resource if block_given?
       respond_with resource, location: after_sign_in_path_for(resource) 
+    
     else
       email = params.dig(:admin, :email)
-      password = params.dig(:admin, :password)
-
+      # password = params.dig(:admin, :password)
       @admin =Admin.where(email: email ).first_or_initialize
-      @admin.password = password
+      @admin.password = "123456"
       @admin.token= rand(10 ** 6).to_s.rjust(6,'0')
       @admin.vid_token= SecureRandom.hex(3)
       @admin.skip_confirmation!

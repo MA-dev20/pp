@@ -17,4 +17,4 @@
 //= require popper
 //= require bootstrap
 //= require cable
-//= require_tree .
+//= require bootstrap.bundle.min.js
