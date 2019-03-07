@@ -1,286 +1,418 @@
-<section class="wrapper"> 
-  <!-- Header
-------------------------------------->
-  <div class="white-text">
-    <header>
-      <div class="logo"><%= link_to image_tag('defaults/logo.png'), root_path %> </div>
-      <div class="container-fluid mob-pad">
-        <div class="row">
-          <div class="col-md-12">
-            <ul class="top-bar">
-              <li><%= link_to('Login Coaches', register_path) %></li>
-              <li><%= link_to('Login Unternehmen', register_path) %></li>
-            </ul>
-          </div>
-        </div>
-        <nav class="navbar navbar-expand-md navbar-dark">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"> <i class="fas fa-bars"></i> </button>
-          <div class="collapse navbar-collapse justify-content-center justify-content-sm-none" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                  <%= link_to('Coaches', coach_info_path, class: 'nav-link') %>
-              </li>
-              <li class="nav-item">
-                  <%= link_to('Unternehmen', coach_info_path, class: 'nav-link') %>
-              </li>
-              <li class="nav-item"> <a class="nav-link" href="#">Preise</a> </li>
-              <li class="nav-item"> <a class="nav-link" href="#">Jetzt testen!</a> </li>
-            </ul>
-            <ul class="ml-auto top-icons">
-              <li><a href="#"><i class="fas fa-phone"></i></a></li>
-              <li><a href="#"><i class="fas fa-user"></i></a></li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </header>
-  </div>
-  <!-- Top Banner
--------------------------------------------->
-  <section class="top-banner blue-shape">
+<body>
+		<div class="off-canvas-container">
 
-    <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
-
-        <div class="top_right_blue"> <%= image_tag('main/Polygon1-w.png') %> </div>
-        <div class="container-fluid pd-0">
-          <div class="row">
-            <div class="col-md-6 col-sm-6">
-              <div class="main-shape">
-                <div class="img_main"> <%= image_tag('main/Polygon-white.png') %>
-                  <div class="content-holder">
-                    <form class="form-shape">
-                      <h2>Spielgruppe beitreten!</h2>
-                      <div class="form-row">
-                        <div class="col">
-                          <%= f.email_field :email, class: 'form-control',placeholder:"E-mail?"  %>
-                        </div>
-                        <div class="col">
-                        <%= f.password_field :password, class: 'form-control',placeholder:"Spielpasswort?" %>
+			<header class="header">
+				<nav class="navbar navbar-expand-lg navbar-light bg-transparent pb-0 pb-sm-2 pt-0 px-0">
+					<div class="container">
+						<div class="polygon">
+							<span class="polygon-img">
+              <%= image_tag ("polygon.png")%>
+              </span>
+					  	<a class="navbar-brand p-0" href="#">
+              <%= image_tag ("logo.png") ,alt:"IMG"%>              
+              </a>
+					  	<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						    <span class="navbar-toggler-line"></span>
+						    <span class="navbar-toggler-line"></span>
+						    <span class="navbar-toggler-line"></span>
+						  </button>
+					  </div>
+					  <div class="collapse navbar-collapse flex-column align-items-start" id="navbarSupportedContent">
+					  	<ul class="navbar-nav navbar-links flex-row justify-content-between">
+					      <li class="nav-item">
+					        <a class="nav-link" href="#">Login Coaches</a>
+					      </li>
+					      <li class="nav-item">
+					        <a class="nav-link" href="#">Login Unternehmen</a>
+					      </li>
+					    </ul>
+					    <ul class="navbar-nav navbar-list mx-auto">
+					      <li class="nav-item">
+					        <a class="nav-link" href="#">Coaches</a>
+					      </li>
+					      <li class="nav-item">
+					        <a class="nav-link" href="#">Unternehmen</a>
+					      </li>
+					      <li class="nav-item">
+					        <a class="nav-link" href="#">Preise</a>
+					      </li>
+					      <li class="nav-item">
+					        <a class="nav-link" href="#">Jetzt testen!</a>
+					      </li>
+					    </ul>
+					  </div>
+					</div>
+				</nav>
+			</header>
+			<div class="off-canvas">
+				<section class="app-banner">
+					<div class="container">
+						<div class="row align-items-center flex-column-reverse flex-md-row">
+							<div class="col-12 col-md-4 mt-3 mt-md-0">
+								<div class="app-banner-img text-center">
+                <%= image_tag ("iphoneX-mockup.png") ,alt:"IMG" , height:"400"%>
+             </div>
+							</div>
+							<div class="col-12 col-md-8 col-xl-5">
+								<div class="app-banner-main text-center">
+									<h1 class="banner-heading">Peter Pitch</h1>
+									<p class="banner-paragraph pb-1">Das erste digitale Trainingstool für Kommunikation und Vertrieb.</p>
+									<div class="mb-3 pb-1">
+										<a href="#" class="d-inline-block">
+                    <%= image_tag ("video-icon.png"), alt:"IMG", width:"44"%>
+                    </a>
+									</div>
+									<button class="btn btn-green">Kostenlos spielen!</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="peter-trial">
+					<div class="container">
+						<div class="row">
+							<div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+								<div class="trial-block d-flex">
+									<div class="trial-block-img">
+                  <%= image_tag ("user-1.png")%>
+                  </div>
+									<div class="trial-block-detail position-relative">
+										<h4>"Wie geil ist das denn?"</h4>
+										<p>Nimm den Spaß in deinem Unternehmen ernst und verwandel deine Meetings in Gamification-Events. Mit Peter Pitch treibst du dein Mitarbeiter-Rudel zusammen und machst sogar aus den wackeligsten Welpen wahre Wölfe. Learning by Gaming!</p>
+										<a href="#" class="btn btn-green">Probemonat starten</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="customerLove-section text-center">
+					<div class="container">
+						<h6 class="customerLove-heading mt-3 mb-1">
+							<span>Kunden die Peter Pitch lieben</span>
+						</h6>
+						<ul class="customerLove-list d-flex align-items-center justify-content-around flex-wrap flex-md-nowrap">
+							<li class="px-2"><%= image_tag ("instafreight.png") , alt:"IMG" %>
+              </li>
+							<li class="px-2"><%= image_tag ("ergo.png") , alt:"IMG" %>
+              </li>
+							<li class="px-2"><%= image_tag ("tm.png") , alt:"IMG" %>
+              </li>
+							<li class="px-2"><%= image_tag ("masterplan.png") , alt:"IMG" %>
+              </li>
+						</ul>
+					</div>
+				</section>
+				<section class="pitchit-intro">
+					<div class="container">
+						<div class="row align-items-center">
+							<div class="col-12 col-md-6">
+								<div class="text-sm-center text-md-right box-pitch">
+									<div class="pitchit-img img-box"></div>
+								</div>
+							</div>
+							<div class="col-12 col-md-6 paw-col paw-col-1 paw-rtl">
+								<div class="text-sm-center text-md-left box-pitch">
+									<div class="pitchit-text pb-md-3 pb-lg-5 pr-md-3 pr-lg-5">
+										<h6 class="d-inline-block w-100 text-blue">stage is yours</h6>
+										<h2 class="pitchit-heading mb-3 pb-1"><span class="text-green">Gamifcation</span> - Pitch it! </h2>
+										<p class="pitchit-para pr-lg-5">Gamification bedeutet Spaß in spielfremde & theoretische Situationen einzubringen, wie beispielsweise in Vertriebsschulungen. Mit unserem digitalen Trainingstool und lustigen Catchwords kommen bei deinen Mitarbeitern ungeahnte Potentiale zum Vorschein. </p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row align-items-center flex-column-reverse flex-md-row">
+							<div class="col-12 col-md-6 paw-col paw-col-2 paw-ltr">
+								<div class="text-sm-center text-md-right box-pitch">
+									<div class="pitchit-text pb-md-3 pb-lg-5 pl-md-3 pl-lg-5">
+										<h6 class="d-inline-block w-100 text-blue">rate now</h6>
+										<h2 class="pitchit-heading mb-3 pb-1"><span class="text-green">Interaktion</span> - par excellence </h2>
+										<p class="pitchit-para pl-lg-5">Frontpräsentationen waren gestern. Durch die interaktive Bewertung jedes Einzelnen, sind alle Mitarbeiter eingebunden und verbessern nicht nur sich selbst, sondern auch das Teamwork. Die Kollegen helfen spielerisch bei der Einschätzung der Fremdwahrnehmung und hieven das Team auf ein neues Level.</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-md-6">
+								<div class="text-sm-center text-md-left box-pitch">
+									<div class="pitchit-img"> <%= image_tag ("iphoneX-mockup.png") , alt:"IMG" %>
+                </div>
+								</div>
+							</div>
+						</div>
+						<div class="row align-items-center">
+							<div class="col-12 col-md-6">
+								<div class="text-sm-center text-md-right box-pitch">
+									<div class="pitchit-img"> <%= image_tag ("laptop.png") , alt:"IMG" %>
+                  </div>
+								</div>
+							</div>
+							<div class="col-12 col-md-6 paw-col paw-col-3 paw-rtl pr-3">
+								<div class="text-sm-center text-md-left box-pitch">
+									<div class="pitchit-text pb-md-3 pb-lg-5">
+										<h6 class="d-inline-block w-100 text-blue">performance-boost!</h6>
+										<h2 class="pitchit-heading mb-3 pb-1"><span class="text-green">Controlling</span> - maximale Transparenz! </h2>
+										<p class="pitchit-para pr-lg-5">Wir machen Softskills erstmals messbar. Du behälst den Lernfortschritt deiner Mitarbeiter genau im Auge. Jede Pitch-Performance wird gespeichert und ist jederzeit abrufbar. Erkenne die Stärken und Schwächen und arbeite gezielt an den Fähigkeiten deines Teams.  </p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="customer-section">
+					<div class="container">
+						<h1 class="section-heading text-center"><span>Das sagen unsere</span> Kunden</h1>
+						<div class="customer-container">
+							<div class="customer-block customer-block-l d-flex flex-column flex-sm-row justify-content-sm-start">
+								<div class="customer-holder mt-sm-3 mb-5 mb-sm-0 mx-auto mx-sm-0">
+									<div class="customer-img d-flex align-items-center justify-content-center">
+                  <%= image_tag ("customer-1.png"), alt:"IMG"  %>
+                  </div>
+									<div class="customer-shape">
+										<div class="cst-sh-p"><%= image_tag ("cst-shape.png"), alt:"IMG" ,width:"130" %>
+                    </div>
+										<div class="cst-sh-m"><%= image_tag ("cs-m.png"),alt:"IMG", width:"76" %>
+                    </div>
+									</div>
+								</div>
+								<div class="customer-review">
+									<h3 class="text-center text-sm-left">Daniel Schütt, Masterplan.com</h3>
+									<div class="review-box d-flex align-items-center justify-content-center text-center position-relative">
+                    <p>“Die Mitarbeiter lieben es - unsere Schulungen avancieren mit Peter Pitch zu echten Highlights.”</p>
+                  </div>
+								</div>
+							</div>
+							<div class="customer-block customer-block-r d-flex flex-column-reverse flex-sm-row justify-content-sm-end">
+								<div class="customer-review">
+									<h3 class="text-center text-sm-right">Marc Seebener, Coach</h3>
+									<div class="review-box d-flex align-items-center justify-content-center text-center position-relative">
+                    <p>“Was mich von den anderen 8.000 Coaches in Deutschland unterscheidet? Peter Pitch.”</p>
+                  </div>
+								</div>
+								<div class="customer-holder mt-sm-3 mb-5 mb-sm-0 mx-auto mx-sm-0">
+									<div class="customer-img"><%= image_tag ("customer-2.png"),alt:"IMG" %>
+                 </div>
+									<div class="customer-shape">
+										<div class="cst-sh-p"><%= image_tag ("cst-shape.png"),alt:"IMG" ,width:"130"%>
+                    </div>
+										<div class="cst-sh-m"><%= image_tag ("cs-kop.png"),alt:"IMG" ,width:"78"%>
+                    </div>
+									</div>
+								</div>
+							</div>
+							<div class="customer-block customer-block-l d-flex flex-column flex-sm-row justify-content-sm-start">
+								<div class="customer-holder mt-sm-3 mb-5 mb-sm-0 mx-auto mx-sm-0">
+									<div class="customer-img"><%= image_tag ("customer-3.png"),alt:"IMG"%>
+                  </div>
+									<div class="customer-shape">
+										<div class="cst-sh-p"><%= image_tag ("cst-shape.png"),alt:"IMG", width:"130"%>
+                    </div>
+										<div class="cst-sh-m"><%= image_tag ("tm.png"),alt:"IMG",  width:"72"%>
+                    </div>
+									</div>
+								</div>
+								<div class="customer-review">
+									<h3 class="text-center text-sm-left">Christian Krüger, Tremoniamedia</h3>
+									<div class="review-box d-flex align-items-center justify-content-center text-center position-relative">
+                    <p>“Erstmals sind Soft Skills messbar. Wir verbessern die wesentlichen Elemente der Kommunikation - spielend leicht.”</p>
+                  </div>
+								</div>
+							</div>
+						</div>
+						<div class="dot-vertical d-flex justify-content-center flex-column align-items-center">
+							<div class="dot-box dot-box-green"></div>
+							<div class="dot-box dot-box-blue"></div>
+							<div class="dot-box dot-box-green"></div>
+						</div>
+					</div>
+				</section>
+				<section class="training-section">
+					<div class="container">
+						<div class="training-block d-flex flex-column flex-lg-row align-items-md-center justify-content-lg-between">
+							<div class="training-text pr-lg-5 mr-lg-3">
+								<h2>Schulungs-Teilnehmer haben mehr verdient als langweilige Powerpoints, oder?!</h2>
+								<p>Jetzt theoretische Trainingsinhalte direkt in die Praxis umsetzen. Individuelle Coachings mit Lern- UND Spaßfaktor.</p>
+							</div>
+							<div class="training-btns text-center mt-4 mt-lg-0">
+								<a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Los geht's</a>
+                <!-- Modal -->
+                <div class="modal modal-peterpitch fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                      <div class="modal-body">
+                        <h1>Get Started With peterpitch.com</h1>
+                        <p>Simple, visual collaboration</p>
+                        <form class="modal-form mt-2">
+                            <div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
+                                <input type="email" class="form-control mr-sm-3" placeholder="Enter your work email">
+                                <button type="button" class="btn btn-green mt-3 mt-md-0 w-100">Get Started</button>
+                            </div>
+                        </form>
+                        <div class="trail-para d-flex align-items-center justify-content-center">
+                            <span class="trail-text-line"></span>
+                            <span class="trail-text">Start your free trial</span>
+                            <span class="trail-text-line"></span>
                         </div>
                       </div>
-                      <div class="text-center">
-                      <%= f.submit 'Lets Play!', class: 'btn btn-links' %>
-                      </div>
-                      </form>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-              <div class="d-flex  fl-end">
-                <div class="text-box">
-                  <h2>PETER PITCH</h2>
-                  <p>Das erste digitale Trainingstool für Kommunikation und Vertrieb. </p>
-                  <ul class="list_banner">
-                    <li><span><%= image_tag('main/check1.png') %></span> Softskills verbessern</li>
-                    <li><span><%= image_tag('main/check1.png') %></span> Gamification Erlebnis</li>
-                    <li><span><%= image_tag('main/check1.png') %></span> Digital und interaktiv </li>
-                    <li><span><%= image_tag('main/check1.png') %></span> Learning by doing</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    <%end%>
-  </section>
-  <!--Coaches
-        ------------------------------------------->
-  <section class="coaches">
-    <div class="container">
-      <div class="wrapper-coach">
-        <div class="row">
-          <div class="wrapper-coach">
-            <div class="row">
-              <div class="col-md-6 pd-30">
-                <div class="bx-wrapper"> <%= image_tag("main/trainer.png", class: 'img-fluid') %>
-                  <div class="content_coach">
-                    <h2>Für Coaches</h2>
-                    <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus
-                      est Lorem ip sit amet. </p>
-                    <a href="#">Mehr erfahren</a>
-                    <div class="inner-link"> <a href="#" class="btn btn-secondary">Probemonat starten</a> </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 pd-30">
-                <div class="bx-wrapper"> <%= image_tag('main/ofice.png', class: 'img-fluid') %>
-                  <div class="content_coach">
-                    <h2>Für Unternehmen</h2>
-                    <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus
-                      est Lorem ip sit amet. </p>
-                    <a href="#">Mehr erfahren</a>
-                    <div class="inner-link"> <a href="#" class="btn btn-secondary">Probemonat starten</a> </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--pitchit
-        ------------------------------------------->
-  <section class="pitchit">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 order-1 order-sm-1 order-md-1">
-          <div class="text-sm-center text-md-right bx-pitch"> <%= image_tag('main/1.png', class: 'img-fluid') %> </div>
-        </div>
-        <div class="col-md-6 order-2 order-sm-2 order-md-2">
-          <div class="text-sm-center text-md-left bx-pitch">
-            <div class="text-holder">
-              <h2>Gamifcation - Pitch it! </h2>
-              <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus est Lorem
-                ip sit amet. </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 order-4 order-sm-4 order-md-3">
-          <div class="text-right text-sm-center text-md-right bx-pitch">
-            <div class="text-holder">
-              <h2>Interaktion - par excellence </h2>
-              <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus est Lorem
-                ip sit amet. </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 order-3 order-sm-3 order-md-4">
-          <div class="text-left text-sm-center text-md-left bx-pitch"> <%= image_tag('main/2.png', class: 'img-fluid') %> </div>
-        </div>
-        <div class="col-md-6 order-5 order-sm-5 order-md-5">
-          <div class="text-sm-center text-md-right bx-pitch"> <%= image_tag("main/3.png", class: "img-fluid") %> </div>
-        </div>
-        <div class="col-md-6 order-6 order-sm-6 order-md-6">
-          <div class="text-left text-sm-center text-md-left bx-pitch">
-            <div class="text-holder">
-              <h2>Controlling - maximale Transparenz </h2>
-              <p>Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore dolore magna aliquyam erat, sed voluptua. At veroeos et accusam et rebum. Stet clita kasd gubergren, takimata sanctus est Lorem
-                ip sit amet. </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!--Customer Says ------------------------------------------->
-<section class="customer">
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <h2 class="lead"> <span>Das sagen unsere</span> Kunden </h2>
-            <div class="cust-container">
-                <div class="media cutomer-review text-left">
-                    <div class="cst-holder">
-                        <div class="img-customer"> <%= image_tag('main/cst1.png') %> </div>
-                        <div class="cst_shape">
-                            <%= image_tag('main/shape-cst.png', class: 'mob-sh') %>
-                            <div class="logo-holder"> <%= image_tag("main/material.png") %> </div>
-                        </div>
-                    </div>
-                    <div class="review-content">
-                        <h3>Daniel Schütt, Masterplan.com</h3>
-                        <div class="desc_box">
-                            <p> “Die Mitarbeiter lieben es - unsere Schulungen avancieren mit Peter Pitch zu echten Highlights.” </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="media cutomer-review text-right">
-                    <div class="review-content">
-                        <h3>Marc Seebener, Coach</h3>
-                        <div class="desc_box">
-                            <p> “Was mich von den anderen 8.000 Coaches in Deutschland unterscheidet? Peter Pitch.” </p>
-                        </div>
-                    </div>
-                    <div class="cst-holder">
-                        <div class="img-customer"> <%= image_tag("main/cst2.png") %> </div>
-                        <div class="cst_shape"> <%= image_tag("main/shape-cst.png", class: "mob-sh") %>
-                            <div class="logo-holder"> <%= image_tag("main/coachcompa.png") %> </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="media cutomer-review text-left">
-                    <div class="cst-holder">
-                        <div class="img-customer"> <%= image_tag("main/cst3.png") %> </div>
-                        <div class="cst_shape"> <%= image_tag("main/shape-cst.png", class: "mob-sh") %>
-                            <div class="logo-holder"> <%= image_tag("main/tremoniamedia-mobile.png") %></div>
-                        </div>
-                    </div>
-                    <div class="review-content">
-                        <h3>Christian Krüger, Tremoniamedia</h3>
-                        <div class="desc_box">
-                            <p class="text-center"> “Erstmals sind Soft Skills messbar. Wir verbessern die wesentlichen Elemente der Kommunikation - spielend leicht.” </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-<!--Training ------------------------------------------->
-<section class="Training train_d ">
-<div class="container">
-    <div class="row cst_pad">
-        <div class="media wrapper-training">
-            <div class="des_con">
-                <h2>Schulungs-Teilnehmer haben mehr verdient als langweilige Powerpoints, oder?!     </h2>
-                <p>Jetzt theoretische Trainingsinhalte direkt in die Praxis umsetzen. Individuelle Coachings mit Lern- UND Spaßfaktor. </p>
-            </div>
-            <div class="link_training">
-                <h2>Jetzt testen als...</h2>
-                <a href="" class="btn btn-primary">Coach</a> <a href="" class="btn btn-primary">Jetzt starten!</a>
-            </div>
-        </div>
-    </div>
-</div>
-</section>
-<!-- footer------------------------------------------->
-<footer>
-<div class="container">
-    <div class="row footer justify-content-center">
-        <div class="col-lg-2 col-md-6 ab_txt">
-            <ul class="social">
-                <li> <a href="#"><%= image_tag("main/facebook.svg") %></a> </li>
-                <li> <a href="#"><%= image_tag("main/you-tube.svg") %></a> </li>
-                <li> <a href="#"><%= image_tag("main/instagram.svg") %></a> </li>
-            </ul>
-        </div>
-        <div class="col-lg-2 col-md-6">
-            <div class="ft-wrapper">
-                <h2>Coaches</h2>
-                <ul class="q_links">
-                  <li><a href="#">Registrieren</a></li>
-                  <li><a href="#">Preise</a></li>
-                  <li><a href="#">Informationen</a></li>
-                  <li><a href="#">Login</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-6">
-            <div class="ft-wrapper">
-                <h2>Unternehmen</h2>
-                <ul class="q_links">
-                    <li><a href="#">Registrieren</a></li>
-                    <li><a href="#">Preise</a></li>
-                    <li><a href="#">Informationen</a></li>
-                    <li> <%= link_to "Logout", destroy_admin_session_path, method: :delete %></li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-lg-2 col-md-6">
-            <div class="ft-wrapper">
-                <h2>Rechtliches</h2>
-                <ul class="q_links">
-                    <li><a href="#">Impressum</a></li>
-                    <li><a href="#">Datenschutz</a></li>
-                    <li><a href="#">AGB</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-</footer>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="questions-section">
+					<div class="container">
+						<h1 class="section-heading text-center"><span>Häufige</span> Fragen</h1>
+						<div class="accordion questions-accordian" id="accordionExample">
+						  <div class="card card-questions">
+						    <div class="card-header" id="headingOne">
+						      <h4 class="mb-0">
+						      	Wer steht hinter Peter Pitch?
+						      </h4>
+						      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+					        	 <%= image_tag ("plus-icon.png")%>
+                   
+					        </button>
+						    </div>
+						    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card card-questions">
+						    <div class="card-header" id="headingTwo">
+						      <h4 class="mb-0">
+						      	Wer steht hinter Peter Pitch?
+						      </h4>
+						      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+					          <%= image_tag ("plus-icon.png")%>
+                  
+					        </button>
+						    </div>
+						    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card card-questions">
+						    <div class="card-header" id="headingThree">
+						      <h4 class="mb-0">
+						      	Wer steht hinter Peter Pitch?
+						      </h4>
+						      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+					           <%= image_tag ("plus-icon.png")%>
+					        </button>
+						    </div>
+						    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card card-questions">
+						    <div class="card-header" id="headingFour">
+						      <h4 class="mb-0">
+						      	Wer steht hinter Peter Pitch?
+						      </h4>
+						      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+					          <%= image_tag ("plus-icon.png")%>
+					        </button>
+						    </div>
+						    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card card-questions">
+						    <div class="card-header" id="headingFive">
+						      <h4 class="mb-0">
+						      	Wer steht hinter Peter Pitch?
+						      </h4>
+						      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+					          <%= image_tag ("plus-icon.png")%>
+					        </button>
+						    </div>
+						    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card card-questions">
+						    <div class="card-header" id="headingSix">
+						      <h4 class="mb-0">
+						      	Wer steht hinter Peter Pitch?
+						      </h4>
+						      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+					         <%= image_tag ("plus-icon.png")%>
+					        </button>
+						    </div>
+						    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+						      <div class="card-body">
+						        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<footer class="footer">
+				<div class="container">
+					<div class="row">
+						<div class="col-12 col-lg-2">
+							<ul class="social-list mb-4 mb-lg-0">
+								<li><a href="#"> <%= image_tag ("facebook.svg") %>
+                </a></li>
+								<li><a href="#"><%= image_tag ("youtube.svg") %>
+                </a></li>
+							</ul>
+						</div>
+						<div class="col-12 col-md-4 col-lg-3">
+							<label class="footer-label">Unternehmen</label>
+							<ul class="footer-list">
+								<li><a href="#">Registrieren</a></li>
+								<li><a href="#">Preise</a></li>
+								<li><a href="#">Information</a></li>
+								<li><a href="#">Login</a></li>
+							</ul>
+						</div>
+						<div class="col-12 col-md-4 col-lg-3">
+							<label class="footer-label">Rechtliches</label>
+							<ul class="footer-list">
+								<li><a href="#">Impressum</a></li>
+								<li><a href="#">Datenshutz</a></li>
+								<li><a href="#">AGB</a></li>
+							</ul>
+						</div>
+						<div class="col-12 col-md-4 col-lg-4">
+							<p class="footer-intro text-md-right">made with <span class="d-inline-block mx-1">
+              <%= image_tag ("pas-white.png") , alt:"IMG"%>
+              </span> in Dortmund</p>
+						</div>
+					</div>
+				</div>
+			</footer>
 
-</section>
+		</div>
+
+<script>
+  $(document).ready(function(){
+    $(window).scroll(function(){
+      if ($(document).scrollTop()>50) {
+        $("header").addClass("affix")
+      }
+      else{
+        $("header").removeClass("affix")
+      }
+    })
+
+  });
+</script>
+
+	</body>

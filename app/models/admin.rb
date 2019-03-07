@@ -12,7 +12,8 @@ class Admin < ApplicationRecord
     
   mount_uploader :avatar, PicUploader
   mount_uploader :logo, PicUploader
-
+  
+  validates :email, uniqueness: true, presence: true
 
   # before_create :set_token
 

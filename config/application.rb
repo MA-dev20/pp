@@ -10,7 +10,7 @@ module Peterpitch
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
-      
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
     config.i18n.default_locale = :de
     config.action_mailer.delivery_method = :letter_opener
     config.action_mailer.perform_deliveries = true
