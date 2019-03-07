@@ -12,17 +12,17 @@ class Admin < ApplicationRecord
     
   mount_uploader :avatar, PicUploader
   mount_uploader :logo, PicUploader
-  
-  validates :email, uniqueness: true, presence: true
-
-  # before_create :set_token
 
 
 
+  before_create :set_token
 
 
-#   def set_token
-#     self.vid_token = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
-#   end
- end
+
+
+
+  def set_token
+    self.vid_token = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
+  end
+end
 
