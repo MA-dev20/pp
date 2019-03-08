@@ -167,3 +167,124 @@ body {
 .btn {
     border-radius: 50px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /*
+	=====================================================
+	Card
+	=====================================================
+	*/
+
+
+	.StripeElement {
+		box-sizing: border-box;
+	  
+		height: 40px;
+	  
+		padding: 10px 12px;
+	  
+		border: 1px solid transparent;
+		border-radius: 4px;
+		background-color: white;
+	  
+		box-shadow: 0 1px 3px 0 #e6ebf1;
+		-webkit-transition: box-shadow 150ms ease;
+		transition: box-shadow 150ms ease;
+	  }
+	  
+	  .StripeElement--focus {
+		box-shadow: 0 1px 3px 0 #cfd7df;
+	  }
+	  
+	  .StripeElement--invalid {
+		border-color: #fa755a;
+	  }
+	  
+	  .StripeElement--webkit-autofill {
+		background-color: #fefde5 !important;
+	  }
+	  .card-element .form-control {
+		  border: none;
+          border-radius: 0;
+          min-height: 44px;
+          font-weight: 600;
+          line-height: 28px;
+          padding: 0.6rem 1rem;
+      }
+      .card-element .form-control:focus {
+          outline: none;
+          box-shadow: none;
+      }
+      .payment-form label {
+          width: 100%;
+          display: inline-block;
+          margin-bottom: 16px;
+      }
+      .btn-green {
+        margin-left: 20px;
+        background-color: #1ddaaf !important;
+        color: #fff !important;
+        border: 1px solid #1ddaaf !important;
+        min-height: 44px;
+        min-width: 170px;
+        color: #fff;
+        font-size: 1.125rem;
+        background-color: #1ddaaf !important;
+        border-radius: 22px !important;
+        padding: .45rem 1rem;
+        -webkit-box-shadow: 0 9px 18px rgba(0,0,0,0.17);
+        -moz-box-shadow: 0 9px 18px rgba(0,0,0,0.17);
+        box-shadow: 0 9px 18px rgba(0,0,0,0.17);
+    }
+    .ce-card-no span {
+        position: absolute;
+        left: 20px;
+        top: 9px;
+    }
+    .ce-card-no .form-control {
+        border-radius: 22px 0px 0px 22px;
+        padding-left: 56px;
+        min-width: 260px;
+    }
+    .ce-date .form-control,
+    .ce-cvc .form-control {
+        width: 84px;
+        text-align: center;
+    }
+    .ce-cvc .form-control {
+        border-radius: 0px 22px 22px 0px;
+    }
+    .btn-green:hover,
+    .btn-green:focus {
+        color: #fff !important;
+        border-color: #1988d0 !important;
+        background-color: #1988d0 !important;
+    }
+
+	  
+    /*
+	=====================================================
+	Card
+	=====================================================
+	*/

@@ -1,0 +1,29 @@
+
+<div class="px-5 pt-5">
+    <form  id="payment-form" class="payment-form">
+    <div class="form-row">
+        <label for="card-element">
+        Credit or debit card
+        </label>
+        <div id="card-element" class="card-element d-flex align-items-center">
+            <div class="card-inner d-flex align-items-center">
+                <div class="ce-card-no position-relative">
+                    <span><svg width="22" height="16" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 21"><g fill="#000" fill-rule="evenodd"><g id="unknown" class="Icon-fill"><g id="card" transform="translate(0 2)"><path id="shape" d="M26.58 19H2.42A2.4 2.4 0 0 1 0 16.62V2.38A2.4 2.4 0 0 1 2.42 0h24.16A2.4 2.4 0 0 1 29 2.38v14.25A2.4 2.4 0 0 1 26.58 19zM10 5.83c0-.46-.35-.83-.78-.83H3.78c-.43 0-.78.37-.78.83v3.34c0 .46.35.83.78.83h5.44c.43 0 .78-.37.78-.83V5.83z" opacity=".2"></path><path id="shape" d="M25 15h-3c-.65 0-1-.3-1-1s.35-1 1-1h3c.65 0 1 .3 1 1s-.35 1-1 1zm-6 0h-3c-.65 0-1-.3-1-1s.35-1 1-1h3c.65 0 1 .3 1 1s-.35 1-1 1zm-6 0h-3c-.65 0-1-.3-1-1s.35-1 1-1h3c.65 0 1 .3 1 1s-.35 1-1 1zm-6 0H4c-.65 0-1-.3-1-1s.35-1 1-1h3c.65 0 1 .3 1 1s-.35 1-1 1z" opacity=".3"></path></g></g></g></svg></span>
+                    <input type="text" class="form-control" placeholder="Card number">
+                </div>
+                <div class="ce-date position-relative">
+                    <input type="text" class="form-control" placeholder="MM/YY">
+                </div>
+                <div class="ce-cvc position-relative">
+                    <input type="text" class="form-control" placeholder="CVC">
+                </div>
+            </div>
+            <button type="button" class="btn btn-green">Submit Payment</button>
+        </div>
+
+        <!-- Used to display form errors. -->
+        <div id="card-errors" role="alert"></div>
+    </div>
+
+    </form>
+</div>

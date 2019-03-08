@@ -119,6 +119,7 @@ Rails.application.routes.draw do
     get 'admins/teams/:team_id/users/:user_id/compare/:compare_user_id', to: 'dash_admin#compare_user_stats', as: 'dash_admin_compare_user_stats'
     
     get 'admins/dash/account', to: 'dash_admin#account', as: 'dash_admin_account'
+    get 'admins/dash/billing', to: 'dash_admin#billing', as: 'dash_admin_billing'
     
     
 
