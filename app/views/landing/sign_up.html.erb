@@ -1,35 +1,38 @@
- <%= form_for(@admin, url: update_admin_path(v_id: @admin.vid_token)) do |f| %>
-    <div class="form register">
-        <div class="form-group">
-            <label for=""> Vorname*</label>
-            <%= f.text_field :fname, class: 'form-control', autocomplete: "off" %>
-        </div>
-                
-        <div class="form-group">
-            <label for=""> Password</label>
-            <%= f.text_field :password, id:"password", class: 'form-control', autocomplete: "off" %>
-        </div>
+ 
+<div class="register-page">
+    <div class="container">
+    <a href="#" class="register-logo d-inline-block"><%= image_tag ("logo.png") ,alt:"IMG"%></a>
+    <div class="row">
+        <div class="col-12 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
+            <%= form_for(@admin, url: update_admin_path(v_id: @admin.vid_token)) do |f| %>
+            <div class="register-inner">
+                <h1 class="register-heading">registrieren</h1>
+                <div class="register-main">
+                    <div class="form-group">
+                        <label for=""> Vorname*</label>
+                        <%= f.text_field :fname, class: 'form-control', autocomplete: "off",required: true %>
+                    </div>
+                            
+                    <div class="form-group">
+                        <label for=""> Passwort*</label>
+                        <%= f.password_field :password, id:"password", class: 'form-control', autocomplete: "off", required: true , value: "" %>
+                    </div>
 
-        <div class="form-group">
-            <label for=""> Company Name</label>
-            <%= f.text_field :company_name, class: 'form-control' %>
-        </div>
+                    <div class="form-group">
+                        <label for=""> Name der Firma*</label>
+                        <%= f.text_field :company_name, class: 'form-control', required: true %>
+                    </div>
 
-        <div class="form-group">
-            <label for=""> Total Members</label>
-            <%= f.text_field :members, class: 'form-control' %>
+                    <div class="form-group">
+                        <label for=""> Mitglieder insgesamt*</label>
+                        <%= f.text_field :members, class: 'form-control', required: true %>
+                    </div>
+                        
+                    <div class="form-group text-center pt-2 px-md-5">
+                        <%= f.submit 'Jetzt registrieren', class: 'btn btn-green' %>
+                    </div>
+                </div>   
+            <% end %>
         </div>
-            
-        <div class="form-group text-center">
-            <%= f.submit 'Update', class: 'btn btn-default' %>
-        </div>   
     </div>
-<% end %>
-
-<script type="text/javascript">
-    $(document).on("ready",function() {
-        debugger;
-
-        $("#password").val('');
-    });
-</script>
+</div>

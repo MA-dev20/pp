@@ -397,7 +397,7 @@ body {
 	  font-size: 2.25rem;
 	  color: #020202;
   }
-  .section-heading span {
+  .text-grey {
 	  color: #8f9091;
   }
   .customer-section {
@@ -677,7 +677,115 @@ body {
 	  opacity: 1;
   }
   
+
+
+
+
+
+
+
+/*
+=====================================================
+  register
+=====================================================
+*/
+
+
+.register-page {
+	background: image_url('register-bg.png') ;
+}
+.register-inner {
+	padding: 19px 0;
+    border-radius: 10px;
+    background-color: #f3f3f3;
+	box-shadow: -4px -11px 111px rgba(0,0,0,0.16);
+	margin: 40px 0px 15px 0px;
+}
+.register-heading {
+	position: relative;
+	color: #fff;
+    font-size: 2.25rem;
+    z-index: 1;
+    padding: 16px 20px;
+    margin: 0;
+}
+.register-heading:before {
+	content: '';
+	background: image_url('heading-bg.png') ;
+    left: -37px;
+    top: -18px;
+    position: absolute;
+    height: 116px;
+    background-repeat: no-repeat;
+    z-index: -1;
+    width: 325px;
+}
+.register-main {
+	padding: 34px 60px 10px 60px;
+}
+.register-main label {
+	font-size: 1.4rem;
+	color: #000;
+	margin-bottom: 0.5rem;
+	font-family: Barack-Medium;
+}
+.register-main .form-control {
+	height: 64px;
+	border-radius: 50px;
+	padding: 1rem;
+    background-color: #f1f1f1;
+	font-size: 1.25rem;
+	color: #495057;
+}
+.register-main .form-control:focus {
+	outline: none;
+	box-shadow: none;
+}
+.register-main .form-group {
+	margin-bottom: 1.8rem;
+}
+.register-main .btn-green {
+	min-height: 64px;
+	border-radius: 60px !important;
+}
+
+
+
+
+
+@media only screen and (max-width: 767px) {
+	.register-inner {
+		margin-top: 0;
+	}
+	.register-logo {
+		overflow: hidden;
+		margin-left: -60px;
+	}
+	.register-page .container {
+		padding-left: 25px;
+		padding-right: 25px;
+	}
+	.register-main {
+		padding: 34px 30px 10px 30px;
+	}
+	.register-main label {
+		font-size: 1.25rem;
+	}
+}
+
+
+
+
+	/*
+  =====================================================
+  register
+  =====================================================
+  */
   
+
+
+
+
   
   
   
@@ -877,3 +985,86 @@ body {
 		  min-height: 150px;
 	  }
   }
+  /*
+=====================================================
+verification
+=====================================================
+*/
+
+
+
+	.verification-canvas {
+		background-color: #1dabf1;
+		background-image: linear-gradient(to right, rgba(29,171,241,0.57), rgba(17,82,160,0.57));
+		min-height: 100vh;
+		height: 100%;
+	}
+	.verification-canvas .container {
+		max-width: 640px;
+		widows: 100%;
+	}
+	.mail-digit {
+		position: absolute;
+		background-color: #1ddaaf;
+		border-radius: 50%;
+		font-size: 0.8125rem;
+		top: -9px;
+		right: -8px;
+		line-height: 20px;
+		text-align: center;
+		height: 20px;
+		width: 20px;
+		color: #fff;
+		font-family: 'Barack Medium';
+	}
+	.verification-heading {
+		font-size: 2.5rem;
+		font-family: 'Barack Medium';	
+		color: #fff;
+		margin-top: 32px;
+		margin-bottom: 20px;
+	}
+	.verification-para {
+		color: #fff;
+		font-size: 	0.875rem;
+		font-family: 'Barack Medium';
+		margin-bottom: 8px;
+	}
+	.digit-box {
+		margin-top: 40px;
+	}
+	.digit-box input {
+		padding: 0;
+		width: 50px;
+		height: 70px;
+		margin: 0px 4px;
+		text-align: center;
+		background: rgba(255,255,255,0.2);
+		border: 0;
+		border-radius: 10px;
+		font-size: 1.5rem;
+		font-weight: 300;
+		border: 2px solid #fafafa;
+		color: #fff;
+	}
+	.inputs-seperator>.center {
+		display: inline-block;
+		vertical-align: middle;
+		width: 16px;
+		height: 2px;
+		background: #fff;
+	}
+
+
+
+
+	/*
+	=====================================================
+	verification
+	=====================================================
+	*/
+
+
+
+
+   
