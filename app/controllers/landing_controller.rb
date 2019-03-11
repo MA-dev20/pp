@@ -31,6 +31,10 @@ class LandingController < ApplicationController
 
   def price
   end
+
+
+  def product
+  end
   
   private 
     def admin_params
