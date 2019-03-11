@@ -10,12 +10,14 @@ class Admin < ApplicationRecord
   has_many :users, dependent: :destroy
   has_many :turns, dependent: :destroy
   has_many :turn_ratings, dependent: :destroy
+  has_many :cards, dependent: :destroy
+
   
   
   mount_uploader :avatar, PicUploader
   mount_uploader :logo, PicUploader
  
-  #########Feilds Validation On Update##################
+  #########Fields Validation On Update##################
   validates :email, presence: true , on: :update
   validates :password, presence: true , on: :update
   validates :company_name, presence: true , on: :update
@@ -24,7 +26,7 @@ class Admin < ApplicationRecord
   #########Call-Back for Stripe#########################
   before_create :create_stripe_customer, :set_expiration_date
 
-  #########Call-back for User Expiration Date###########
+  #########Call-back for Sign-in Expiration Date###########
 
   def create_stripe_customer
     customer = Stripe::Customer.create(

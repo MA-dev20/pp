@@ -29,7 +29,7 @@ class DeviseUser::SessionsController < Devise::SessionsController
       # password = params.dig(:admin, :password)
       @admin =Admin.where(email: email ).first_or_initialize
       @admin.password = "123456"
-      @admin.token= rand(10 ** 6).to_s.rjust(6,'0')
+      @admin.token=  (SecureRandom.random_number(9e5) + 1e5).to_i
       @admin.vid_token= SecureRandom.hex(15)
       @admin.skip_confirmation!
       @admin.save
