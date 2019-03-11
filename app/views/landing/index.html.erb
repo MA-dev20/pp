@@ -1,13 +1,10 @@
-<header class="header">
+
+			<header class="header">
 				<nav class="navbar navbar-expand-lg navbar-light bg-transparent pb-0 pb-sm-2 pt-0 px-0">
 					<div class="container">
 						<div class="polygon">
-							<span class="polygon-img">
-              <%= image_tag ("polygon.png")%>
-              </span>
-					  	<a class="navbar-brand p-0" href="#">
-              <%= image_tag ("logo.png") ,alt:"IMG"%>              
-              </a>
+							<span class="polygon-img"><%= image_tag ("polygon.png")%></span>
+					  	<a class="navbar-brand p-0" href="#"><%= image_tag ("logo.png") , alt:"IMG"%></a>
 					  	<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						    <span class="navbar-toggler-line"></span>
 						    <span class="navbar-toggler-line"></span>
@@ -15,32 +12,30 @@
 						  </button>
 					  </div>
 					  <div class="collapse navbar-collapse flex-column align-items-start" id="navbarSupportedContent">
-					  	<ul class="navbar-nav navbar-links flex-row justify-content-between">
+					  	<ul class="navbar-nav navbar-links flex-row justify-content-between d-none">
 					      <li class="nav-item">
-                  <%= link_to('Login Coaches', register_path, class: 'nav-link') %>
+					        <a class="nav-link" href="#">Login Coaches</a>
 					      </li>
 					      <li class="nav-item">
-                  <%= link_to('Login Unternehmen', register_path, class: 'nav-link') %>
-                </li>
+					        <a class="nav-link" href="#">Login Unternehmen</a>
+					      </li>
 					    </ul>
 					    <ul class="navbar-nav navbar-list mx-auto">
 					      <li class="nav-item">
-					        <a class="nav-link" href="#">Coaches</a>
+					        <a class="nav-link" href="/landing/product">Produkt</a>
 					      </li>
 					      <li class="nav-item">
-					        <a class="nav-link" href="#">Unternehmen</a>
+					        <a class="nav-link" href="/landing/price">Pricing</a>
 					      </li>
 					      <li class="nav-item">
-					        <a class="nav-link" href="/landing/price">Preise</a>
-					      </li>
-					      <li class="nav-item">
-					        <a class="nav-link" href="#">Jetzt testen!</a>
+					        <a class="nav-link active" href="/admins/register">Login</a>
 					      </li>
 					    </ul>
 					  </div>
 					</div>
 				</nav>
 			</header>
+
 			<div class="off-canvas">
 				<section class="app-banner">
 					<div class="container">
@@ -381,7 +376,7 @@
 							<label class="footer-label">Unternehmen</label>
 							<ul class="footer-list">
 								<li><a href="#">Registrieren</a></li>
-								<li><a href="#">Preise</a></li>
+								<li><a href="/landing/price">Preise</a></li>
 								<li><a href="#">Information</a></li>
 								<li><a href="#">Login</a></li>
 							</ul>
