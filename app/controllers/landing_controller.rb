@@ -29,9 +29,12 @@ class LandingController < ApplicationController
     @admin = Admin.where(vid_token: params[:v_id]).first
   end
 
+  def price
+  end
+  
   private 
     def admin_params
       params.require(:admin).permit( :id, :company_name, :fname, :lname, :street,
-         :city, :employees, :zipcode, :male ,:members ,:vid_token, :password)
+         :city, :employees, :zipcode, :male ,:members ,:vid_token, :password , :expiration)
     end
 end

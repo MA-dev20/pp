@@ -9,7 +9,7 @@
         </div>
         <h1 class="verification-heading">Check your email</h1>
         <p class="verification-para">We sent a six-digit code to <span class="text-green"><%=@admin.email%></span></p>
-        <p class="verification-para">Enter it below to unlock your free trial of monday.com</p>
+        <p class="verification-para">Enter it below to unlock your free trial of peterpitch.com</p>
         <%= form_for @admin, as: Admin, url: verify_token_path  ,id: 'myForm' do |f| %>
             <%= hidden_field_tag "vid_token", @admin.vid_token %>
             <%= hidden_field_tag "token", @admin.token , id:"token"%>

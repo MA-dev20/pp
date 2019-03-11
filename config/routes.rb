@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'devise_user/sessions' }
   get 'landing/index'
-    
+  get 'landing/price', to: 'landing#price', as: 'price'
   root 'landing#index'
   patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'
