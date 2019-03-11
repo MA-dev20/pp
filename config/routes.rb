@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :games
   devise_for :users
   devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'devise_user/sessions' }
+  resource :cards
   get 'landing/index'
   get 'landing/price', to: 'landing#price', as: 'price'
   root 'landing#index'

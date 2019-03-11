@@ -53,6 +53,10 @@ class DashAdminController < ApplicationController
     @token = params[:token]     
   end
 
+  def billing
+
+  end
+  
   private
     def set_admin
       @admin = current_admin
