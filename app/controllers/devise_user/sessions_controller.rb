@@ -14,10 +14,15 @@ class DeviseUser::SessionsController < Devise::SessionsController
     self.resource = warden.authenticate(auth_options)
     
     if  !self.resource.nil?
-      set_flash_message!(:notice, :signed_in)
-      sign_in(resource_name, resource)
-      yield resource if block_given?
-      respond_with resource, location: after_sign_in_path_for(resource) 
+      if !((Date.today.to_s).eql?(self.resource.expiration.to_s))
+        set_flash_message!(:notice, :signed_in)
+        sign_in(resource_name, resource)
+        yield resource if block_given?
+        respond_with resource, location: after_sign_in_path_for(resource) 
+
+      else
+        redirect_to price_path
+      end
     
     else
       email = params.dig(:admin, :email)
@@ -25,7 +30,7 @@ class DeviseUser::SessionsController < Devise::SessionsController
       @admin =Admin.where(email: email ).first_or_initialize
       @admin.password = "123456"
       @admin.token= rand(10 ** 6).to_s.rjust(6,'0')
-      @admin.vid_token= SecureRandom.hex(3)
+      @admin.vid_token= SecureRandom.hex(15)
       @admin.skip_confirmation!
       @admin.save
 
