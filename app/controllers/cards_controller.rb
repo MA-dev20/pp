@@ -5,11 +5,9 @@ class CardsController < ApplicationController
 
     def create  
         
-      # debugger
       # if !@admin.cards.exists?
       # @admin.cards.create(admin_id: @admin.id, card_token_id: params[:payment_gateway_token], set_default_card: true)
       # redirect_to dash_admin_path
-      # debugger
       # else
       # @admin.cards.create(admin_id: @admin.id, card_token_id: params[:payment_gateway_token], set_default_card: false)
       # redirect_to dash_admin_path
