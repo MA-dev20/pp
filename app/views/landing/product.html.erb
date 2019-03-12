@@ -16,17 +16,11 @@
 					  </div>
 					  <div class="collapse navbar-collapse flex-column align-items-start" id="navbarSupportedContent">
 					    <ul class="navbar-nav navbar-list ml-auto mb-3 mb-lg-0 mt-2 mt-lg-0">
-					      <li class="nav-item">
-					        <a class="nav-link" href="#">Coaches</a>
+					       <li class="nav-item">
+					      <a class="nav-link" href="/landing/price">Pricing</a>
 					      </li>
 					      <li class="nav-item">
-					        <a class="nav-link" href="#">Unternehmen</a>
-					      </li>
-					      <li class="nav-item">
-					        <a class="nav-link" href="/landing/price">Preise</a>
-					      </li>
-					      <li class="nav-item">
-					        <a class="nav-link" href="#">Jetzt testen!</a>
+					        <a class="nav-link active" href="/admins/register">Login</a>
 					      </li>
 					    </ul>
 					  </div>
@@ -42,7 +36,33 @@
 							<div class="row">
 								<div class="col-12 col-md-6 offset-md-3">
 									<div class="position-relative">
-										<a href="#" class="btn btn-green">Jetzt Starten</a>
+										<a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Jetzt Starten</a>
+									<!-- Modal -->
+										<div class="modal modal-peterpitch fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+														<button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+													<div class="modal-body">
+														<h1>Get Started With peterpitch.com</h1>
+
+														<%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2'}) do |f| %>
+																<div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
+															<%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Enter your work email", required: true  %>
+															<%= f.submit 'Get Started!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
+																</div>
+															<% end %>
+															
+														<div class="trail-para d-flex align-items-center justify-content-center">
+																<span class="trail-text-line"></span>
+																<span class="trail-text">Start your free trial</span>
+																<span class="trail-text-line"></span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -177,10 +197,12 @@
 							</div>
 							<form>
 								<div class="pricing-signup po d-flex flex-column flex-md-row align-items-md-center">
-									<div class="form-group mr-md-3 mb-3 mb-md-0">
-										<input type="email" class="form-control" placeholder="Business E-mail Address">
-									</div>
-									<button type="button" class="btn btn-green">Jetzt Anmelden</button>
+									<%= form_for(:admin, as: Admin, url: session_path(Admin) ) do |f| %>
+										<div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
+											<%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Business E-mail Address", required: true  %>
+											<%= f.submit 'Jetzt Anmelden!', class: 'btn btn-green' %>
+										</div>
+									<% end %>
 								</div>
 							</form>
 							<div class="decoration-set decoration-right ml-1 ml-sm-2">
