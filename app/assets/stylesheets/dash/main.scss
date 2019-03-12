@@ -272,6 +272,14 @@ body {
         width: 84px;
         text-align: center;
     }
+    .ce-date input:first-child {
+        padding: 0.6rem 0;
+        width: 26px;
+    }
+    .ce-date input:last-child {
+        padding: 0.6rem 0;
+        width: 48px;
+    }
     .ce-cvc .form-control {
         border-radius: 0px 22px 22px 0px;
     }
