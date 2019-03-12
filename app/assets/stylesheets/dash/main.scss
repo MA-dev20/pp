@@ -289,7 +289,47 @@ body {
         border-color: #1988d0 !important;
         background-color: #1988d0 !important;
     }
-
+    .tableCard-container {
+        max-height: 530px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin-bottom: 30px;
+    }
+    .tabel-card {
+        thead {
+            th {
+                background: linear-gradient(#1dacf1 0%, #1a8ed6 51%, #145daa 100%);
+                border: none;
+                &:first-child {
+                    border-radius: 4px 0px 0px 4px;
+                }
+                &:last-child {
+                    border-radius: 0px 4px 4px 0px;
+                }
+            } 
+        }
+        tbody {
+            td {
+                font-weight: 600;
+            }
+        }
+    }
+    .accordion {
+        .card-billing {
+            border: none;
+            background-color: transparent;
+            .card-header {
+                padding: 0;
+                border: none;
+                background-color: transparent;
+                .btn-link {
+                    img {
+                        width: 36px;
+                    }    
+                }
+            }
+        }
+    }
 	  
     /*
 	=====================================================

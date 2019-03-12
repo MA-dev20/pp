@@ -41,8 +41,8 @@ gem 'redis', '~> 4.0'
 gem 'bcrypt', '~> 3.1.7'
 # Use to open mail in new tab
 gem "letter_opener"
-
-gem 'stripe-rails'
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'stripe'
 # Use ActiveStorage variant
 gem 'mini_magick', '~> 4.8'
 

@@ -54,7 +54,7 @@ class DashAdminController < ApplicationController
   end
 
   def billing
-
+    @credit_cards= @admin.cards.all
   end
   
   private
