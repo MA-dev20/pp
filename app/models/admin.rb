@@ -29,6 +29,7 @@ class Admin < ApplicationRecord
   #########Call-back for Sign-in Expiration Date###########
 
   def create_stripe_customer
+    debugger
     customer = Stripe::Customer.create(
       :email => self.email,
     )

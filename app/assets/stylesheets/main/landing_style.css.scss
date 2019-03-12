@@ -64,12 +64,15 @@ header
 	margin-top: 30px;
 }
 .navbar-list .nav-item .nav-link {
-	color: #fff;
+	color: #fff !important;
 	font-size: 1.125rem;
 	transition: all 0.3s;
 	border: 2px solid transparent;
 	border-radius: 20px;
-	padding: .25rem 1rem;
+	padding-top: .25rem;
+	padding-bottom: .25rem;
+	padding-left:  1rem !important;
+	padding-right:  1rem !important;
 	margin: 0 2px;	
 }
 .navbar-list .nav-item .nav-link:hover,
@@ -155,7 +158,7 @@ header
 	margin-bottom: 10px;
 }
 .header.affix .navbar-list .nav-item .nav-link {
-	color: #1c9ee0;
+	color: #1c9ee0 !important;
 	font-size: 0.875rem;
 }
 .header.affix .navbar-list .nav-item .nav-link:hover,
@@ -260,7 +263,7 @@ header
   
   
   .app-banner {
-	  background: image_url('Main-Background.png') no-repeat;
+	  background: image_url('Main-Background.png');
 	  background-size: cover;
 	  min-height: 750px;
 	  padding: 220px 0px 50px 0px;
@@ -710,15 +713,17 @@ header
 */
 
 
-.register-page {
-	background: image_url('register-bg.png') ;
+.banner-form {
+	background: image_url('register-bg.png') center center no-repeat;
+	min-height: 1182px;
+	background-size: cover;
 }
 .register-inner {
 	padding: 19px 0;
     border-radius: 10px;
     background-color: #f3f3f3;
 	box-shadow: -4px -11px 111px rgba(0,0,0,0.16);
-	margin: 40px 0px 15px 0px;
+	margin: 0px 0px 15px 0px;
 }
 .register-heading {
 	position: relative;
@@ -726,7 +731,8 @@ header
     font-size: 2.25rem;
     z-index: 1;
     padding: 16px 20px;
-    margin: 0;
+	margin: 0;
+	font-family: Barack-Medium;
 }
 .register-heading:before {
 	content: '';
@@ -767,8 +773,79 @@ header
 	min-height: 64px;
 	border-radius: 60px !important;
 }
-
-
+.capt-text h2 {
+	color: #fff;
+	font-size: 50px;
+}
+.custom-radio .custom-control-label:before {
+	top: 0.5rem;
+}
+.form-main .row [class*="col-"] {
+	padding: 0 30px;
+}
+.why_peter {
+	border-radius: 10px;
+	background-color: #f3f3f3;
+	box-shadow: -4px -11px 111px rgba(0,0,0,0.16);
+	padding: 28px 12px 117px 44px;
+}
+.why_peter h2 {
+	margin: 0;
+	font-size: 36px;
+	font-family: Barack-Medium;
+}
+.points li {
+	display: flex;
+	align-items: center;
+}
+.points li span {
+	display: inline-block;
+	margin-right: 12px;
+	min-width: 32px;
+}
+.points li p {
+	display: inline-block;
+	font-size: 22px;
+	border-bottom: 1px solid #cbcbcb;
+	margin: 0;
+	padding: 20px 0;
+	font-family: Barack-Medium;
+}
+.form-main-login {
+	margin-top: -691px;
+}
+.form-main-reg {
+	margin-top: -860px;
+}
+.coactches_say {
+	padding: 53px 33px;
+	position: relative;
+}
+.coactches_say p {
+	font-size: 18px;
+	margin: 0;
+	color: #000;
+	font-family: Barack-Medium;
+}
+.bx_fot {
+	padding-top: 30px;
+}
+.bx_fot h2 {
+	font-size: 16px;
+	font-family: Barack-Medium;
+	margin: 0;
+}
+.bx_fot p {
+	font-size: 14px;
+}
+.img-co {
+	position: absolute;
+	bottom: 0;
+	right: -33px;
+}
+.register-inner-rf {
+	min-height: 633px;
+}
 
 
 
@@ -790,8 +867,48 @@ header
 	.register-main label {
 		font-size: 1.25rem;
 	}
+	.banner-reg {
+		min-height: 810px;
+	}
+	.form-main-reg {
+		margin-top: -570px;
+	}
+	.banner-form .capt-text {
+		padding-top: 0px;
+	} 
+	.banner-form .capt-text h2 {
+		font-size: 40px;
+	}
+	.banner-login {
+		min-height: 1050px;
+	}
+	.form-main-login {
+		margin-top: -640px;
+	}
+	.form-main .row [class*="col-"] {
+		padding: 0 15px;
+	}
 }
-
+@media only screen and (max-width: 575px) {
+	.form-main-login {
+		margin-top: -750px;
+	}
+	.coactches_say {
+		padding: 30px 15px;
+	}
+	.img-co {
+		right: 0;
+	}
+	.img-co img {
+		height: 190px;
+	}
+	.banner-form .capt-text h2 {
+		font-size: 32px;
+	}
+	.why_peter {
+		padding: 25px 12px 40px 25px;
+	}
+} 
 
 
 
