@@ -1,35 +1,35 @@
 <body>
 
-    <div class="verification-canvas py-4 d-flex align-items-center justify-content-center">
-        <div class="container">
-            <div class="text-center">
-        <div class="mail-img position-relative d-inline-block">
-            <%= image_tag ("mail-icon.png") ,alt:"IMG"%>         
-            <span class="mail-digit">1</span>
-        </div>
-        <h1 class="verification-heading">Check your email</h1>
-        <p class="verification-para">We sent a six-digit code to <span class="text-green"><%=@admin.email%></span></p>
-        <p class="verification-para">Enter it below to unlock your free trial of peterpitch.com</p>
-        <%= form_for @admin, as: Admin, url: verify_token_path  ,id: 'myForm' do |f| %>
-            <%= hidden_field_tag "vid_token", @admin.vid_token %>
-            <%= hidden_field_tag "token", @admin.token , id:"token"%>
-            <div class="digit-box d-flex align-items-center justify-content-center" >
+  <div class="verification-canvas py-4 d-flex align-items-center justify-content-center">
+    <div class="container">
+      <div class="text-center">
+      <div class="mail-img position-relative d-inline-block">
+          <%= image_tag ("mail-icon.png") ,alt:"IMG"%>         
+          <span class="mail-digit">1</span>
+      </div>
+    <h1 class="verification-heading">Check your email</h1>
+    <p class="verification-para">We sent a six-digit code to <span class="text-green"><%=@admin.email%></span></p>
+    <p class="verification-para">Enter it below to unlock your free trial of peterpitch.com</p>
+    <%= form_for @admin, as: Admin, url: verify_token_path  ,id: 'myForm' do |f| %>
+      <%= hidden_field_tag "vid_token", @admin.vid_token %>
+      <%= hidden_field_tag "token", @admin.token , id:"token"%>
+      <div class="digit-box d-flex align-items-center justify-content-center" >
 
-                    <input class="digit-1" index="1" type="text" id="1" maxlength="1">
-                    <input class="digit-2" index="2" type="text" id="2"  maxlength="1">
-                    <input class="digit-3" index="3" type="text" id="3"  maxlength="1">
-                    <div class="inputs-seperator"><div class="center"></div></div>
-                    <input class="digit-4" index="4" type="text" id="4" maxlength="1">
-                    <input class="digit-5" index="5" type="text" id="5" maxlength="1">
-                    <input class="digit-6" index="6" type="text" id="6" maxlength="1">
-                </div>
-                </div>
-             <div class="form-group text-center ">
-                <%= f.submit 'Submit', class: 'btn btn-green mb-0 mt-4' %>
-            </div>
-            </div>
-        <%end%>
-    </div>
+        <input class="digit-1" index="1" type="text" id="1" maxlength="1">
+        <input class="digit-2" index="2" type="text" id="2"  maxlength="1">
+        <input class="digit-3" index="3" type="text" id="3"  maxlength="1">
+        <div class="inputs-seperator"><div class="center"></div></div>
+        <input class="digit-4" index="4" type="text" id="4" maxlength="1">
+        <input class="digit-5" index="5" type="text" id="5" maxlength="1">
+        <input class="digit-6" index="6" type="text" id="6" maxlength="1">
+      </div>
+          </div>
+      <div class="form-group text-center ">
+        <%= f.submit 'Submit', class: 'btn btn-green mb-0 mt-4' %>
+      </div>
+      </div>
+    <%end%>
+  </div>
 
 </body>
 

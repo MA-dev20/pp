@@ -20,9 +20,11 @@ class Admin < ApplicationRecord
   mount_uploader :logo, PicUploader
  
   #########Fields Validation On Update##################
+  validates :fname, presence: true ,  format:{ with: /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ },length: {minimum: 3 , maximum: 16} ,on: :update
   validates :email, presence: true , on: :update
-  validates :password, presence: true , on: :update
-  validates :company_name, presence: true , on: :update
+  validates :password, presence: true ,length: {minimum: 6 , maximum: 16}, on: :update
+  validates :password_confirm, presence: true ,length: {minimum: 6 , maximum: 16}, on: :update
+  validates :company_name, presence: true, format:{ with: /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ },length: {maximum: 40} , on: :update
   validates :members, presence: true , on: :update
 
   #########Call-Back for Stripe#########################

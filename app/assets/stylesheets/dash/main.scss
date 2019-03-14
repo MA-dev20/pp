@@ -294,7 +294,7 @@ body {
         overflow-y: auto;
         overflow-x: hidden;
         margin-bottom: 30px;
-        max-width: 768px;
+        max-width: 960px;
         margin: 0 auto;
     }
     .accordion {
@@ -337,6 +337,29 @@ body {
                 background-color: #1ddaaf;
             }
         }
+    }
+    .cn-row {
+        .cn-stars {
+            line-height: 13px;
+            padding-top: 8px;
+        }
+    }
+    .edit_card {
+        input[type="checkbox"] {
+            position: relative;
+            top: 2px;
+        }
+    }
+    .btn-green.btn-card-update {
+        padding: .25rem 1rem .25rem 0.75rem;
+        min-height: 30px;
+        min-width: 80px;
+        margin-left: 10px;
+        font-size: 1rem;
+    }
+    .btn-card-update.btn-grey {
+        background-color: #6c757d !important;
+        border-color: #6c757d !important;
     }
 	  
     /*

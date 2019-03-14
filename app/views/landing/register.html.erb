@@ -1,152 +1,152 @@
 <div class="register-page">
-    <section class="banner-form banner-login">
-        <div class="container">
-            <%= link_to image_tag("main/logo.png"), root_path, class: 'logo_reg' %>
-            <div class="row">
-                <div class="col-lg-6 col-xl-7 pr-xl-5">
-                    <div class="capt-text">
-                        <h2>Das Gamification-Tool für dein Unternehmen</h2>
+  <section class="banner-form banner-login">
+    <div class="container">
+      <%= link_to image_tag("main/logo.png"), root_path, class: 'logo_reg' %>
+      <div class="row">
+        <div class="col-lg-6 col-xl-7 pr-xl-5">
+          <div class="capt-text">
+            <h2>Das Gamification-Tool für dein Unternehmen</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-main form-main-login">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="form-wrapper">
+
+              <!-- Login Section -->
+            <div class="register-inner register-inner-rf">
+              <h1 class="caption register-heading">Login</h1>
+              <div class="register-main">
+                <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
+                  <div class="form">
+                    <div class="form-group">
+                      <label for=""> E-mail</label>
+                      <%= f.email_field :email, class: 'form-control' %>
                     </div>
+                    <div class="form-group">
+                      <label for=""> Passwort</label>
+                      <%= f.password_field :password, class: 'form-control' %>
+                    </div>
+                    <div class="form-group text-center">
+                      <a href="#" class="for_p">Passwort vergessen?</a>
+                    </div>
+                    <div class="form-group text-center border_btm">
+                      <%= f.submit 'Jetzt anmelden', class: 'btn btn-green' %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+              <!-- Register Section -->
+            <div class="register-inner d-none">
+              <h1 class="caption register-heading">Registrieren</h1>
+              <div class="register-main">
+                  <%= form_for(:admin, url: registration_path(Admin)) do |f| %>
+                      <div class="form register">
+                          <%= render "devise/shared/error_messages", resource: @admin %>
+                          <div class="form-group">
+                              <label for=""> Anrede*</label>
+                              <div class="form-row">
+                                  <div class="custom-control custom-radio">
+                                      <%= f.radio_button :male, true, class: 'custom-control-input' %>
+                                      <label class="custom-control-label" for="admin_male_true">Herr</label>
+                                  </div>
+                                  <div class="custom-control custom-radio ml-70">
+                                      <%= f.radio_button :male, false, class: 'custom-control-input' %>
+                                      <label class="custom-control-label" for="admin_male_false">Frau</label>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for=""> Vorname*</label>
+                              <%= f.text_field :fname, class: 'form-control' %>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for=""> Nachname*</label>
+                              <%= f.text_field :lname, class: 'form-control' %>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for=""> Straße und Hausnummer*</label>
+                              <%= f.text_field :street, class: 'form-control' %>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for=""> PLZ*</label>
+                              <%= f.number_field :zipcode, class: 'form-control' %>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for=""> Stadt*</label>
+                              <%= f.text_field :city, class: 'form-control' %>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for=""> E-Mail*</label>
+                              <%= f.email_field :email, class: 'form-control' %>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for=""> Passwort*</label>
+                              <%= f.password_field :password, class: 'form-control' %>
+                          </div>
+                          
+                          <div class="form-group">
+                              <label for=""> Wie viele Unternehmen<br>schulst du pro Jahr?</label>
+                              <%= f.number_field :employees, class: 'form-control' %>
+                          </div>
+                          
+                          <div class="form-group text-center">
+                              <%= f.submit 'Jetzt anmelden', class: 'btn btn-green' %>
+                          </div>
+                          
+                      </div>
+                  <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="why_peter">
+                <h2> Wieso Peter Pitch?</h2>
+                <ul class="points">
+                    <li> <span><%= image_tag "main/check-g.png" %></span>
+                        <p>Deine Lerninhalte spielerisch vermitteln.</p>
+                    </li>
+                    <li> <span><%= image_tag "main/check-g.png" %></span>
+                        <p>Deine Lerninhalte spielerisch vermitteln.</p>
+                    </li>
+                    <li> <span><%= image_tag "main/check-g.png" %></span>
+                        <p>Deine Lerninhalte spielerisch vermitteln.</p>
+                    </li>
+                    <li> <span><%= image_tag "main/check-g.png" %></span>
+                        <p>Deine Lerninhalte spielerisch vermitteln.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="coactches_say">
+                <p> „Was mich von den anderen 8.000 <br> Coaches in Deutschland <br> unterscheidet? <br> Peter Pitch.”</p>
+                <div class="bx_fot">
+                    <h2>Dominik Goerke </h2>
+                    <p>Verkaufs- und Vertriebstrainer</p>
+                    <p>IHK / ADE / DVNLP</p>
                 </div>
+                <div class="img-co"> <%= image_tag "main/Ebene26.png" %> </div>
             </div>
         </div>
-    </section>
 
-    <section class="form-main form-main-login">
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-        
-                        <div class="form-wrapper">
-
-                            <!-- Login Section -->
-                            <div class="register-inner register-inner-rf">
-                                <h1 class="caption register-heading">Login</h1>
-                                <div class="register-main">
-                                    <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
-                                        <div class="form">
-                                            <div class="form-group">
-                                                <label for=""> E-mail</label>
-                                                <%= f.email_field :email, class: 'form-control' %>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for=""> Passwort</label>
-                                                <%= f.password_field :password, class: 'form-control' %>
-                                            </div>
-                                            <div class="form-group text-center">
-                                                <a href="#" class="for_p">Passwort vergessen?</a>
-                                            </div>
-                                            <div class="form-group text-center border_btm">
-                                                <%= f.submit 'Jetzt anmelden', class: 'btn btn-green' %>
-                                            </div>
-                                        </div>
-                                    <% end %>
-                                </div>
-                            </div>
-
-                            <!-- Register Section -->
-                            <div class="register-inner d-none">
-                                <h1 class="caption register-heading">Registrieren</h1>
-                                <div class="register-main">
-                                    <%= form_for(:admin, url: registration_path(Admin)) do |f| %>
-                                        <div class="form register">
-                                            <%= render "devise/shared/error_messages", resource: @admin %>
-                                            <div class="form-group">
-                                                <label for=""> Anrede*</label>
-                                                <div class="form-row">
-                                                    <div class="custom-control custom-radio">
-                                                        <%= f.radio_button :male, true, class: 'custom-control-input' %>
-                                                        <label class="custom-control-label" for="admin_male_true">Herr</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio ml-70">
-                                                        <%= f.radio_button :male, false, class: 'custom-control-input' %>
-                                                        <label class="custom-control-label" for="admin_male_false">Frau</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for=""> Vorname*</label>
-                                                <%= f.text_field :fname, class: 'form-control' %>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for=""> Nachname*</label>
-                                                <%= f.text_field :lname, class: 'form-control' %>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for=""> Straße und Hausnummer*</label>
-                                                <%= f.text_field :street, class: 'form-control' %>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for=""> PLZ*</label>
-                                                <%= f.number_field :zipcode, class: 'form-control' %>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for=""> Stadt*</label>
-                                                <%= f.text_field :city, class: 'form-control' %>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for=""> E-Mail*</label>
-                                                <%= f.email_field :email, class: 'form-control' %>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for=""> Passwort*</label>
-                                                <%= f.password_field :password, class: 'form-control' %>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label for=""> Wie viele Unternehmen<br>schulst du pro Jahr?</label>
-                                                <%= f.number_field :employees, class: 'form-control' %>
-                                            </div>
-                                            
-                                            <div class="form-group text-center">
-                                                <%= f.submit 'Jetzt anmelden', class: 'btn btn-green' %>
-                                            </div>
-                                            
-                                        </div>
-                                    <% end %>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="why_peter">
-                        <h2> Wieso Peter Pitch?</h2>
-                        <ul class="points">
-                            <li> <span><%= image_tag "main/check-g.png" %></span>
-                                <p>Deine Lerninhalte spielerisch vermitteln.</p>
-                            </li>
-                            <li> <span><%= image_tag "main/check-g.png" %></span>
-                                <p>Deine Lerninhalte spielerisch vermitteln.</p>
-                            </li>
-                            <li> <span><%= image_tag "main/check-g.png" %></span>
-                                <p>Deine Lerninhalte spielerisch vermitteln.</p>
-                            </li>
-                            <li> <span><%= image_tag "main/check-g.png" %></span>
-                                <p>Deine Lerninhalte spielerisch vermitteln.</p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="coactches_say">
-                        <p> „Was mich von den anderen 8.000 <br> Coaches in Deutschland <br> unterscheidet? <br> Peter Pitch.”</p>
-                        <div class="bx_fot">
-                            <h2>Dominik Goerke </h2>
-                            <p>Verkaufs- und Vertriebstrainer</p>
-                            <p>IHK / ADE / DVNLP</p>
-                        </div>
-                        <div class="img-co"> <%= image_tag "main/Ebene26.png" %> </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </div>
