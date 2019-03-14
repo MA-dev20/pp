@@ -1,9 +1,9 @@
 class PlansController < ApplicationController
-    before_action :authenticate_admin!, :set_admin
-    layout 'main'
-   
-    def create
-    debugger
+  before_action :authenticate_admin!, :set_admin
+  layout 'main'
+  
+  def create
+
     @admin.update_columns(annually: :annually) 
     user= @admin.users.all.count
     a =8.85*100
@@ -12,31 +12,29 @@ class PlansController < ApplicationController
     year = (b.to_i )* user
       if !@admin.annually.eql?(true)
         @plan= Stripe::Plan.create({
-            amount:year,
-            interval: 'year',
-            product: {
-              name: 'Admin' +  SecureRandom.hex(1) + 'User_Plan' +user.to_s ,
-            },
-            currency: 'eur',
-            id: 'Admin' +  SecureRandom.hex(1) + 'User_Plan' +user.to_s,
-          })
+          amount:year,
+          interval: 'year',
+          product: {
+            name: 'Admin' +  SecureRandom.hex(1) + 'User_Plan' +user.to_s ,
+          },
+          currency: 'eur',
+          id: 'Admin' +  SecureRandom.hex(1) + 'User_Plan' +user.to_s,
+        })
         @plans= @admin.plans.create(admin_id: @admin.id, amount: @plan.amount,
-              product_name: @plan.product,interval: @plan.interval  ,currency: @plan.currency,
-              stripe_plan_id: @plan.id)
+          product_name: @plan.product,interval: @plan.interval  ,currency: @plan.currency,
+          stripe_plan_id: @plan.id)
           
         @subscription = Stripe::Subscription.create(
+          {
+            customer: @admin.stripe_id,
+            items: [
               {
-                customer: @admin.stripe_id,
-                items: [
-                  {
-                    plan:  @plan.id,
-                  },
-                ],
-              })
-        debugger
+                plan:  @plan.id,
+              },
+            ],
+          })
+        
         @plans.build_subscription(stripe_subscription_id: @subscription.id , plan_id:  @plans.id ).save
-              
-
         redirect_to dash_admin_billing_path
       else
         @plan= Stripe::Plan.create({
@@ -50,26 +48,25 @@ class PlansController < ApplicationController
         })
 
         @plans=@admin.plans.create(admin_id: @admin.id, amount: @plan.amount,
-            product_name: @plan.product,interval: @plan.interval  ,currency: @plan.currency,
-            stripe_plan_id: @plan.id)
-            @subscription = Stripe::Subscription.create(
+          product_name: @plan.product,interval: @plan.interval  ,currency: @plan.currency,
+          stripe_plan_id: @plan.id)
+        @subscription = Stripe::Subscription.create(
+          {
+            customer: @admin.stripe_id,
+            items: [
               {
-                customer: @admin.stripe_id,
-                items: [
-                  {
-                    plan:  @plan.id,
-                  },
-                ],
-              })
-        debugger
+                plan:  @plan.id,
+              },
+            ],
+          })
+
         @plans.build_subscription(stripe_subscription_id: @subscription.id , plan_id:  @plans.id ).save
         redirect_to dash_admin_billing_path
       end
-    end
+  end
 
+  def set_admin
+  @admin = current_admin
+  end
 
-    def set_admin
-    @admin = current_admin
-    end
-  
 end
