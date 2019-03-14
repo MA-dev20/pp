@@ -11,6 +11,8 @@ class Admin < ApplicationRecord
   has_many :turns, dependent: :destroy
   has_many :turn_ratings, dependent: :destroy
   has_many :cards, dependent: :destroy
+  has_many :plans, dependent: :destroy
+
 
   
   
@@ -29,7 +31,6 @@ class Admin < ApplicationRecord
   #########Call-back for Sign-in Expiration Date###########
 
   def create_stripe_customer
-    debugger
     customer = Stripe::Customer.create(
       :email => self.email,
     )

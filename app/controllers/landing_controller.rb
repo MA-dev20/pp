@@ -28,7 +28,10 @@ class LandingController < ApplicationController
   def sign_up
     @admin = Admin.where(vid_token: params[:v_id]).first
   end
+  def create_price
 
+   
+  end
   def price
   end
 
