@@ -48,11 +48,11 @@
 														<h1>Get Started With peterpitch.com</h1>
 
 														<%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2'}) do |f| %>
-																<div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
-															<%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Enter your work email", required: true  %>
-															<%= f.submit 'Get Started!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
-																</div>
-															<% end %>
+															<div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
+																<%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Enter your work email", required: true  %>
+																<%= f.submit 'Get Started!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
+															</div>
+														<% end %>
 															
 														<div class="trail-para d-flex align-items-center justify-content-center">
 																<span class="trail-text-line"></span>
@@ -195,16 +195,16 @@
 									<span class="dot-pin dot-pin-b"></span>
 								</svg>
 							</div>
-							<form>
+							<%= form_for(:admin, as: Admin, url: session_path(Admin) ) do |f| %>
 								<div class="pricing-signup po d-flex flex-column flex-md-row align-items-md-center">
-									<%= form_for(:admin, as: Admin, url: session_path(Admin) ) do |f| %>
+									
 										<div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
 											<%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Business E-mail Address", required: true  %>
 											<%= f.submit 'Jetzt Anmelden!', class: 'btn btn-green' %>
 										</div>
-									<% end %>
+									
 								</div>
-							</form>
+							<% end %>
 							<div class="decoration-set decoration-right ml-1 ml-sm-2">
 								<svg width="58" height="72" viewBox="0 0 61 77" xmlns="http://www.w3.org/2000/svg">
 									<title>signup decoration - right</title>
