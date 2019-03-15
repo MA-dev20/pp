@@ -55,6 +55,17 @@ class DashAdminController < ApplicationController
 
   def billing
     @credit_cards= @admin.cards.all
+
+    @invoice =@admin.invoices.all
+    # @invoices= Stripe::InvoiceItem.retrieve(
+    #    Invoice.where(stripe_invoice_id: @invoice.id)  
+    # )
+    # Invoice.create(plan_id: @invoice.values[1][0].id , 
+    #   invoice_interval: @invoice.values[1][0].lines.data[0].plan.interval ,
+    #   invoice_currency:@invoice.values[1][0].lines.data[0].plan.currency  ,
+    #   amount_paid: @invoice.values[1][0].lines.data[0].plan.amount )
+
+    
   end
   
   private
