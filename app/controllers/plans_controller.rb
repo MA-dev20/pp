@@ -7,9 +7,9 @@ class PlansController < ApplicationController
     @admin.update_columns(annually: :annually) 
     user= @admin.users.all.count
     a =8.85*100
-    month =(a.to_i) *user
+    month =(a.to_i) * 3
     b =7.17*100
-    year = (b.to_i )* user
+    year = (b.to_i )* 3
       if !@admin.annually.eql?(true)
         @plan= Stripe::Plan.create({
           amount:year,
@@ -35,7 +35,20 @@ class PlansController < ApplicationController
           })
         
         @plans.build_subscription(stripe_subscription_id: @subscription.id , plan_id:  @plans.id ).save
+        @invoice = Stripe::Invoice.list(limit: 3)
+        @admin_invoice =Admin.where(stripe_id: @invoice.values[1][0].customer ).first
+        @card=Card.where(stripe_custommer_id: @invoice.values[1][0].customer).first
+  
+        @admin_invoice.invoices.create(card_number:  @card.last_4_cards_digit ,
+          stripe_invoice_id:  @invoice.values[1][0].id,
+          invoice_currency: @invoice.values[1][0].lines.data[0].currency , 
+          amount_paid: @invoice.values[1][0].lines.data[0].amount ,
+          plan_id: @invoice.values[1][0].lines.data[0].plan.id,
+          invoice_interval: @invoice.values[1][0].lines.data[0].plan.interval
+        )
+
         redirect_to dash_admin_billing_path
+     
       else
         @plan= Stripe::Plan.create({
           amount: month,
@@ -60,7 +73,21 @@ class PlansController < ApplicationController
             ],
           })
 
-        @plans.build_subscription(stripe_subscription_id: @subscription.id , plan_id:  @plans.id ).save
+      @plans.build_subscription(stripe_subscription_id: @subscription.id , plan_id:  @plans.id ).save
+       
+
+      @invoice = Stripe::Invoice.list(limit: 3)
+      @admin_invoice =Admin.where(stripe_id: @invoice.values[1][0].customer ).first
+      @card=Card.where(stripe_custommer_id: @invoice.values[1][0].customer).first
+
+      @admin_invoice.invoices.create(card_number:  @card.last_4_cards_digit ,
+        stripe_invoice_id:  @invoice.values[1][0].id,
+        invoice_currency: @invoice.values[1][0].lines.data[0].currency , 
+        amount_paid: @invoice.values[1][0].lines.data[0].amount ,
+        plan_id: @invoice.values[1][0].lines.data[0].plan.id,
+        invoice_interval: @invoice.values[1][0].lines.data[0].plan.interval
+      )
+
         redirect_to dash_admin_billing_path
       end
   end

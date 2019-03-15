@@ -12,6 +12,7 @@ class Admin < ApplicationRecord
   has_many :turn_ratings, dependent: :destroy
   has_many :cards, dependent: :destroy
   has_many :plans, dependent: :destroy
+  has_many :invoices, dependent: :destroy
 
 
   
@@ -20,12 +21,27 @@ class Admin < ApplicationRecord
   mount_uploader :logo, PicUploader
  
   #########Fields Validation On Update##################
-  validates :fname, presence: true ,  format:{ with: /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ },length: {minimum: 3 , maximum: 16} ,on: :update
-  validates :email, presence: true , on: :update
-  validates :password, presence: true ,length: {minimum: 6 , maximum: 16}, on: :update
-  validates :password_confirm, presence: true ,length: {minimum: 6 , maximum: 16}, on: :update
-  validates :company_name, presence: true, format:{ with: /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ },length: {maximum: 40} , on: :update
-  validates :members, presence: true , on: :update
+  # validates_format_of :lname,   format:{ with: /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ },length: {minimum: 3 , maximum: 16} , allow_blank: true, on: :update 
+  # validates_format_of :password, length: {minimum: 6 , maximum: 16}, allow_blank: true, on: :update 
+  # validates_format_of :password_confirm,length: {minimum: 6 , maximum: 16}, allow_blank: true, on: :update 
+  # validates_format_of :company_name,  format:{ with: /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ },length: {maximum: 40} , allow_blank: true, on: :update 
+  # validates_format_of :street, format:{ with: /([- ,\/0-9a-zA-Z]+)/ },length: {maximum: 50} , allow_blank: true, on: :update 
+  # validates_format_of :city, format:{ with: /([- ,\/0-9a-zA-Z]+)/ },length: {maximum: 50} , allow_blank: true, on: :update 
+  # validates_format_of :zipcode, format:{ with:  /[0-9_,+#-]/ },length: {maximum: 50} , allow_blank: true, on: :update 
+
+  #  validates_format_of :lname,  :with => /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ , on: :update 
+  #  validates_format_of :fname,  :with => /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ , on: :update 
+  #  validates_format_of :company_name,  :with => /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ , on: :update 
+  #  validates_format_of :street,  :with => /([- ,\/0-9a-zA-Z]+)/ , on: :update 
+  #  validates_format_of :city,  :with => /([- ,\/0-9a-zA-Z]+)/ , on: :update 
+  #  validates_format_of :zipcode,  :with => /[0-9_,+#-]/ , on: :update 
+
+
+
+
+
+
+
 
   #########Call-Back for Stripe#########################
   before_create :create_stripe_customer, :set_expiration_date

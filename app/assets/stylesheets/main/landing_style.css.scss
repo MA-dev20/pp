@@ -1189,7 +1189,9 @@ price
 
 
 
-
+.register-page {
+	background-image: linear-gradient(to right, rgba(29, 164, 236, 0.57), rgba(21, 121, 196, 0.57));
+}
 .form-heading {
 	text-align: center;
 	color: #fff;
@@ -1202,24 +1204,27 @@ price
 	padding: 0 10px;
 }
 .form-main-canvas .form-control {
-	height: 70px;
-	background-color: rgba(0,0,0,0.2);
+	height: 60px;
+	background-color: transparent;
 	font-size: 1.25rem;
-	border: 2px solid #fafafa;
+	border: 2px solid #cdcdcd;
 	color: #fff;
 	font-family: 'Barack-Medium';
-	border-radius: 50px;
+	border-radius: 26px;
 	padding: 1rem 1.5rem;
 }
 .form-main-canvas .form-group {
-	margin-bottom: 1.5rem;
+	margin-bottom: 1.75rem;
 }
 .form-main-canvas .btn-green {
-	min-height: 70px;
-	border-radius: 50px !important;
+	min-height: 60px;
+	border-radius: 26px !important;
 	font-size: 1.15rem;
 	font-family: 'Barack-Medium';
-	padding: 1rem;
+	padding: 0.75rem 1rem;
+}
+.register-page .register-container {
+	max-width: 520px;
 }
 
 
@@ -1244,6 +1249,9 @@ price
 	.product-block-beit .product-detail,
 	.product-block-akku .product-detail {
 		margin-top: -44px;
+	}
+	.form-group-postal {
+		max-width: 50%;
 	}
 }
 @media only screen and (min-width: 768px) {

@@ -14,14 +14,27 @@ class LandingController < ApplicationController
 
   def update_admin
     @admin = Admin.where(vid_token: params[:v_id]).first
+    debugger
       if @admin.update(admin_params)
         if @admin.password.eql?(@admin.password_confirm)
-          sign_in @admin
-          redirect_to dash_admin_path
+          # sign_in @admin
+          redirect_to edit_next_admin_path( @admin.vid_token)
         else
           flash[:notice] = "Password Doesnot match"
           redirect_to edit_admin_path
         end
+      else
+        flash[:alert]= @admin.errors.full_messages.to_sentence
+        redirect_to  edit_admin_path  
+      end
+  end
+  def update_admin_details
+    @admin = Admin.where(vid_token: params[:v_id]).first
+
+    debugger
+      if @admin.update(admin_params)
+          sign_in @admin
+          redirect_to dash_admin_path
       else
         flash[:alert]= @admin.errors.full_messages.to_sentence
         redirect_to  edit_admin_path  
@@ -32,6 +45,13 @@ class LandingController < ApplicationController
     @admin = Admin.where(vid_token: params[:v_id]).first
   end
   
+  def sign_up_next
+    @admin = Admin.where(vid_token: params[:v_id]).first
+    # if !admin.errors.any?
+    #   format.html { , locales: {fname: @admin.fname, lname: }}  
+    # end
+
+  end
   def price
   end
 

@@ -1,5 +1,45 @@
 
 <div class="px-5 pt-5">
+<%if @admin.invoices.exists?%>
+<div class="tableCard-container">
+    <div class="payment-content mb-4">
+        <% @invoice.each do |invoice| %>
+            <div class="payment-block d-flex align-items-center justify-content-between">
+                <div class="payment-exm">
+                    <span>Invoice_ID:</span>
+                    <span> <%= invoice.id %> </span>
+                </div>
+               <span>Card Number:</span>
+               
+                <div class="cn-row d-flex align-items-center">
+                        <p class="cn-stars mb-0">
+                            <span class="mr-1">****</span>
+                            <span class="mr-1">****</span>
+                            <span class="mr-1">****</span>
+                        </p>
+                        <p class="mb-0"><%= invoice.card_number %></p>
+                 </div>
+              
+                <div class="payment-exm">
+                    <span>Plan_ID:</span>
+                    <span> <%= invoice.invoice_interval %> </span>
+                </div>
+                <div class="payment-emy">
+                    <span>Currency:</span>
+                    <span> <%= invoice.invoice_currency %> </span>
+                </div>
+                 <div class="payment-exm">
+                    <span>Amount_Paid:</span>
+                     <span><%= invoice.amount_paid %> </span>
+                </div>
+
+            </div>
+        <% end %>
+    </div>
+    
+    
+</div>
+<%end%>
 <% if @admin.cards.exists?%>
 <div class="tableCard-container">
     <div class="payment-content mb-4">
@@ -24,15 +64,15 @@
                 </div>
                 <div class="payment-exm">
                     <span>Ablaufmonat:</span>
-                     <span><%= credit_card.expiry_month %> <span>
+                     <span><%= credit_card.expiry_month %> </span>
                 </div>
                 <div class="payment-emy">
                     <span>Verfallsjahr:</span>
-                    <span> <%= credit_card.expiry_year %> <span>
+                    <span> <%= credit_card.expiry_year %> </span>
                 </div>
                 <div class="payment-br">
                     <span>Marke:</span>
-                     <span><%= credit_card.card_brand %> <span>
+                     <span><%= credit_card.card_brand %> </span>
                 </div>
 
                 <%= form_for(credit_card, as: :card, url:cards_path(id: credit_card.id)) do |f| %>
