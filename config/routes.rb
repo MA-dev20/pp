@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'
   get 'admins/sign_up/:v_id', to: 'landing#sign_up', as: 'edit_admin'
-  get 'admins/sign_up_next/:v_id', to: 'landing#sign_up_next' , as: 'edit_next_admin'
+  get 'admins/signup/:v_id', to: 'landing#signup' , as: 'edit_next_admin'
   patch 'admins/update_admin/:v_id', to: 'landing#update_admin', as: 'update_admin'
   patch 'admins/update_admin_details/:v_id', to: 'landing#update_admin_details', as: 'update_admin_details'
 
