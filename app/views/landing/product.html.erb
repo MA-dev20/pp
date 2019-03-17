@@ -45,21 +45,21 @@
 													<span aria-hidden="true">&times;</span>
 												</button>
 													<div class="modal-body">
-														<h1>Get Started With peterpitch.com</h1>
+                        								<h1>Beginnen Sie mit peterpitch.com</h1>
 
 														<%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2'}) do |f| %>
 															<div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
 																<%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Enter your work email", required: true  %>
-																<%= f.submit 'Get Started!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
+																<%= f.submit 'Loslegen!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
 															</div>
 														<% end %>
-															
+													
 														<div class="trail-para d-flex align-items-center justify-content-center">
 																<span class="trail-text-line"></span>
-																<span class="trail-text">Start your free trial</span>
+																<span class="trail-text">Starten Sie Ihre kostenlose Testversion</span>
 																<span class="trail-text-line"></span>
 														</div>
-													</div>
+                     								</div>
 												</div>
 											</div>
 										</div>
