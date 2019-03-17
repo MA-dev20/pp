@@ -14,7 +14,6 @@ class LandingController < ApplicationController
 
   def update_admin
     @admin = Admin.where(vid_token: params[:v_id]).first
-    debugger
       if @admin.update(admin_params)
         if @admin.password.eql?(@admin.password_confirm)
           # sign_in @admin
@@ -31,7 +30,6 @@ class LandingController < ApplicationController
   def update_admin_details
     @admin = Admin.where(vid_token: params[:v_id]).first
 
-    debugger
       if @admin.update(admin_params)
           sign_in @admin
           redirect_to dash_admin_path
@@ -45,12 +43,8 @@ class LandingController < ApplicationController
     @admin = Admin.where(vid_token: params[:v_id]).first
   end
   
-  def sign_up_next
+  def signup
     @admin = Admin.where(vid_token: params[:v_id]).first
-    # if !admin.errors.any?
-    #   format.html { , locales: {fname: @admin.fname, lname: }}  
-    # end
-
   end
   def price
   end

@@ -15,17 +15,20 @@
       <%= hidden_field_tag "token", @admin.token , id:"token"%>
       <div class="digit-box d-flex align-items-center justify-content-center" >
 
-        <input class="digit-1" index="1" type="text" id="1" minlength="1" maxlength="1">
-        <input class="digit-2" index="2" type="text" id="2" minlength="1" maxlength="1">
-        <input class="digit-3" index="3" type="text" id="3" minlength="1"  maxlength="1">
+        <input class="digit-1" index="1" type="text" id="1" minlength="1" maxlength="1" required>
+        <input class="digit-2" index="2" type="text" id="2" minlength="1" maxlength="1" required>
+        <input class="digit-3" index="3" type="text" id="3" minlength="1"  maxlength="1" required>
         <div class="inputs-seperator"><div class="center"></div></div>
-        <input class="digit-4" index="4" type="text" id="4" minlength="1" maxlength="1">
-        <input class="digit-5" index="5" type="text" id="5" minlength="1" maxlength="1">
-        <input class="digit-6" index="6" type="text" id="6" minlength="1" maxlength="1">
+        <input class="digit-4" index="4" type="text" id="4" minlength="1" maxlength="1" required>
+        <input class="digit-5" index="5" type="text" id="5" minlength="1" maxlength="1" required>
+        <input class="digit-6" index="6" type="text" id="6" minlength="1" maxlength="1" required>
       </div>
-          </div>
+
+      <div class="form-group" id="errordiv">
+      </div>
       <div class="form-group text-center ">
-        <%= f.submit 'Submit', class: 'btn btn-green mb-0 mt-4' %>
+        <button type="button"  class="btn btn-green mb-0 mt-4" id="submitbutton">Submit!</button>
+       <!--- <%= f.submit 'Submit', class: 'btn btn-green mb-0 mt-4', id:"submitbutton" %> ---->
       </div>
       </div>
     <%end%>
@@ -46,23 +49,52 @@ $(document).ready(function(){
    var e = ver_token.charAt(4);
    var f = ver_token.charAt(5);
 
-    $("input").on('change', function(){
+   
+
+    // $("input").on('change', function(){
+    //     v1=  $('#1').val();
+    //     v2=  $('#2').val();
+    //     v3 = $('#3').val();
+    //     v4= $('#4').val();
+    //     v5 = $('#5').val();
+    //     v6=  $('#6').val();
+      
+    //     if  ((v1== a) && (v2 == b) && (v3 == c) && (v4 == d) &&  (v5 == e) && (v6 == f)){
+    //     $('form').submit();
+    //     } 
+    //       else{
+    //          nameError = "Please enter correct token";
+    //       document.getElementById("errordiv").innerHTML = nameError; 
+    //       return true;
+
+    //       }
+            
+    // });
+    $('#submitbutton').click(function() {
+
         v1=  $('#1').val();
         v2=  $('#2').val();
         v3 = $('#3').val();
         v4= $('#4').val();
         v5 = $('#5').val();
         v6=  $('#6').val();
-
         if  ((v1== a) && (v2 == b) && (v3 == c) && (v4 == d) &&  (v5 == e) && (v6 == f)){
         $('form').submit();
-        } else{
-        //     // document.getElementById('1').value="enter token is invalid ";
-        //     console.log("kjdsnkdsj");
-        // //  window.alert("Invalid Token");
+        } //  else if   ((v1 == null || v1 == "")  &&  (v2 == null || v2 == "") &&
+        //   (v3 == null || v3 == "") && (v4 == null || v4 == "") && (v5 == null || v5 == "")
+        //     && (v5 == null || v5 == "") ) {
+        
+        //   nameError = "Please fill out all fields";
+        //   document.getElementById("errordiv").innerHTML = nameError; 
+        //    return true;
 
-        }
-            
+        //     }
+          else{
+          nameError = "Please enter correct token";
+          document.getElementById("errordiv").innerHTML = nameError; 
+          return true;
+
+          }
     });
 });
 

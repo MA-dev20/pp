@@ -1,4 +1,5 @@
 class VerificationController < ApplicationController
+    layout 'main'
 
     def token
         @admin =Admin.where(vid_token: params[:token]).first
