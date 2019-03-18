@@ -10,12 +10,22 @@ class GameMobileUserController < ApplicationController
     
   def create
     @game = Game.where(password: params[:password], active: true).first
-   
     if @game
       session[:game_session_id] = @game.id
       @admin = Admin.find(@game.admin_id)
-      @user = User.find_or_create_by(email: params[:user][:email])
-      ActionCable.server.broadcast "game_channel", game_state: 'wait' , user_added: @admin.id
+      @user = User.find_by(email: params[:user][:email])
+      if @user && @user.admin == @admin
+        if TeamUser.where(user_id: @user.id, team_id: @game.team_id).count == 0
+          TeamUser.create(user_id: @user.id, team_id: @game.team_id)
+        end
+        sign_in(@user)
+        redirect_to gmu_new_turn_path
+      else
+        @user = @admin.users.create(email: params[:user][:email])
+        TeamUser.create(user_id: @user.id, team_id: @game.team_id)
+        sign_in(@user)
+        redirect_to gmu_new_name_path
+      end
     else
       flash[:danger] = 'Konnte kein passendes Spiel finden!'
       redirect_to root_path
@@ -32,7 +42,6 @@ class GameMobileUserController < ApplicationController
   def accept_user
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 0)
-      set_action(@user)
     end
   end
 
@@ -98,6 +107,8 @@ class GameMobileUserController < ApplicationController
   end
     
   def wait
+    ActionCable.server.broadcast "game_channel", game_state: 'wait' , game_id: current_game.id, user_email: current_user.email, user_id: current_user.id
+
   end
 
   def choose
