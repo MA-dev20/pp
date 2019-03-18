@@ -7,18 +7,18 @@ class PlansController < ApplicationController
     @admin.update_columns(annually: :annually) 
     user= @admin.users.all.count
     a =8.85*100
-    month =(a.to_i) * 3
+    month =(a.to_i) * user
     b =7.17*100
-    year = (b.to_i )* 3
+    year = (b.to_i )* user
       if !@admin.annually.eql?(true)
         @plan= Stripe::Plan.create({
           amount:year,
           interval: 'year',
           product: {
-            name: 'Admin' +  SecureRandom.hex(1) + 'User_Plan' +user.to_s ,
+            name: 'Admin User_Plan' +SecureRandom.hex(1) +user.to_s ,
           },
           currency: 'eur',
-          id: 'Admin' +  SecureRandom.hex(1) + 'User_Plan' +user.to_s,
+          id: 'Admin User_Plan' +SecureRandom.hex(1) +user.to_s,
         })
         @plans= @admin.plans.create(admin_id: @admin.id, amount: @plan.amount,
           product_name: @plan.product,interval: @plan.interval  ,currency: @plan.currency,
@@ -54,10 +54,10 @@ class PlansController < ApplicationController
           amount: month,
           interval: 'month',
           product: {
-            name: 'Admin' +  SecureRandom.hex(1) + 'User_Plan' +user.to_s,
+            name: 'Admin User_Plan' +SecureRandom.hex(1) +user.to_s,
           },
           currency: 'eur',
-          id: 'Admin' +  SecureRandom.hex(1) + 'User_Plan' +user.to_s
+          id: 'Admin User_Plan' +SecureRandom.hex(1) +user.to_s
         })
 
         @plans=@admin.plans.create(admin_id: @admin.id, amount: @plan.amount,
