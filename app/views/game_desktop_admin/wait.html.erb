@@ -32,6 +32,11 @@
 <section id="skip">
    Skip mit Leertaste
 </section>
+
+
+<!-- Button trigger modal -->
+
+
 <%= audio_tag('wait/ping.mp3', id: 'ping') %>
 <%= audio_tag('wait/aufgeregt.mp3', id: 'tag1') %>
 <%= audio_tag('wait/bereit.mp3', id: 'tag2') %>
@@ -45,17 +50,17 @@
             window.location.replace('<%= gda_choose_path %>');
         };
     });
-    $(document).ready(
-        function() {
-            var counter = $('#count').text().trim();
-            setInterval(function() {
-                if(counter != $('#count').text().trim()) {
-                    document.getElementById('ping').play();
-                    counter = $('#count').text().trim();
-                };
-                $('#count').load('wait #count');
-            }, 2000);
-        }
-    );
+    // $(document).ready(
+    //     function() {
+    //         var counter = $('#count').text().trim();
+    //         setInterval(function() {
+    //             if(counter != $('#count').text().trim()) {
+    //                 document.getElementById('ping').play();
+    //                 counter = $('#count').text().trim();
+    //             };
+    //             $('#count').load('wait #count');
+    //         }, 2000);
+    //     }
+    // );
 
 </script>

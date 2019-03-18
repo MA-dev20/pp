@@ -11,9 +11,11 @@ class GameDesktopAdminController < ApplicationController
     if @game.state != 'wait'
         @game.update(state: 'wait')
     end
-    @count = @game.turns.count
+     @count = @game.turns.count
   end
     
+ 
+
   def choose
     @turns = @game.turns.playable.sample(100)
     if @game.state != 'choose' && @turns.count == 1

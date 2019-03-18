@@ -3,9 +3,11 @@
  *= require activestorage
  *= require turbolinks
  *= require jquery3
+ *= require bootstrap.bundle.min
  *= require game_desktop/typed.min
  *= require game_desktop/progressbar.min
  *= require cable
+
  */
 
 

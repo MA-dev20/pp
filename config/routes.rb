@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'devise_user/sessions' }
   resource :cards
   resource :plans
-  
+
+  # root to: 'games#show'
+  patch 'game_mobile_user/accept_user/:user_id', to: 'game_mobile_user#accept_user', as: 'accept_user'
+  patch 'game_mobile_user/reject_user/:user_id', to: 'game_mobile_user#reject_user', as: 'reject_user'
+
   get 'landing/index'
   get 'landing/price', to: 'landing#price', as: 'price'
   get 'landing/product', to: 'landing#product', as: 'product'

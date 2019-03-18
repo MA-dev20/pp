@@ -5,8 +5,11 @@
  *= require game_desktop/play
  *= require game_desktop/rated
  *= require game_desktop/ended
+ *= require bootstrap.min
  *= require omnes
  */
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 @-webkit-keyframes flipInX {
   from {
     -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
@@ -264,4 +267,64 @@ body {
     height: 100vh;
     width: 100vw;
     z-index: 1000;
+}
+.modal-email {
+  font-family: 'Open Sans', sans-serif;
+  .modal-dialog {
+    width: 100%;
+    max-width: 440px;
+  }
+  .modal-header {
+    position: relative;
+    .close {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-color: #1ddaaf;
+      color: #fff;
+      opacity: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.75em;
+      span {
+        line-height: 10px;
+        position: relative;
+        top: -5px;
+      }
+    }
+  }
+  .modal-body {
+    .mail-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+      .email-add {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+      }
+      .mail-btn {
+        min-width: 140px;
+        .btn-accept {
+          background-color: #1ddaaf;
+          border-color: #1ddaaf;
+          font-size: 0.87rem;
+          padding: 0.25rem 0.75rem 0.45rem 0.75rem;
+        }
+        .btn-reject {
+          background-color: #ff0000;
+          border-color: #ff0000;
+          font-size: 0.87rem;
+          padding: 0.25rem 0.75rem 0.45rem 0.75rem;
+        }
+      }
+    }
+  }
 }
