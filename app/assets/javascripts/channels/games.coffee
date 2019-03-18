@@ -3,7 +3,6 @@ jQuery(document).on 'turbolinks:load', ->
     channel: "GamesChannel"
   },
     connected: ->
-      log("connected");
 # Called when the subscription is ready for use on the server
 
     disconnected: ->
@@ -11,3 +10,13 @@ jQuery(document).on 'turbolinks:load', ->
 
     received: (data) ->
       location.replace(data['game_state']);
+      
+      console.log(data['game_state']);
+      # url = "https://google.com";
+      # popitup = (url) ->
+      # newwindow = window.open(url, 'name', 'height=200,width=150')
+      a = window.location.href
+      url = a.split('/')
+      wait = url[4]
+      if wait == 'wait'
+        $('#myModal').modal 'toggle'

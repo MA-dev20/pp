@@ -1,7 +1,8 @@
 class GameMobileUserController < ApplicationController
   before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended]
-  before_action :authenticate_user!, :set_user, except: [:new, :create]
+  before_action :authenticate_user!, :set_user, except: [:new, :create,:update_status]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
+  # before_action :pop_up ,only: :create
   layout 'game_mobile'
     
   def new
@@ -9,27 +10,48 @@ class GameMobileUserController < ApplicationController
     
   def create
     @game = Game.where(password: params[:password], active: true).first
+   
     if @game
       session[:game_session_id] = @game.id
       @admin = Admin.find(@game.admin_id)
-      @user = User.find_by(email: params[:user][:email])
-      if @user && @user.admin == @admin
-        if TeamUser.where(user_id: @user.id, team_id: @game.team_id).count == 0
-            TeamUser.create(user_id: @user.id, team_id: @game.team_id)
-        end
-        sign_in(@user)
-        redirect_to gmu_new_turn_path
-      else
-        @user = @admin.users.create(email: params[:user][:email])
-        TeamUser.create(user_id: @user.id, team_id: @game.team_id)
-        sign_in(@user)
-        redirect_to gmu_new_name_path
-      end
+      @user = User.find_or_create_by(email: params[:user][:email])
+      ActionCable.server.broadcast "game_channel", game_state: 'wait' , user_added: @admin.id
     else
       flash[:danger] = 'Konnte kein passendes Spiel finden!'
       redirect_to root_path
     end
   end
+  
+  def reject_user
+    @user = User.where(id: params[:user_id]).first
+    if @user.update_attributes(status: 1)
+    end
+  end
+
+
+  def accept_user
+    @user = User.where(id: params[:user_id]).first
+    if @user.update_attributes(status: 0)
+      set_action(@user)
+    end
+  end
+
+  def set_action(user)
+    @user = user
+    if @user && @user.admin == @admin
+      if TeamUser.where(user_id: @user.id, team_id: @game.team_id).count == 0
+          TeamUser.create(user_id: @user.id, team_id: @game.team_id)
+      end
+      sign_in(@user)
+      redirect_to gmu_new_turn_path
+    else
+      TeamUser.create(user_id: @user.id, team_id: @game.team_id)
+      sign_in(@user)
+      redirect_to gmu_new_name_path
+    end
+  end
+
+
   def new_name
   end
     
@@ -134,4 +156,13 @@ class GameMobileUserController < ApplicationController
     def user_params
       params.require(:user).permit(:avatar, :company, :fname, :lname)
     end
+    
+    # def pop_up
+    #   render(
+    #     html: "<script>alert('No users!')</script>".html_safe,
+    #     layout: 'application'
+    #   )
+    # end
+
+
 end

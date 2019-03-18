@@ -27,7 +27,11 @@ class GamesController < ApplicationController
       end
     end
   end
-    
+   
+  def show
+    @messages = Message.all
+  end
+
   private
     def set_admin
       @admin = current_admin

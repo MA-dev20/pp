@@ -12,5 +12,6 @@ class User < ApplicationRecord
   has_many :turn_ratings, dependent: :destroy
     
   mount_uploader :avatar, PicUploader
-
+  
+  enum status: [:accepted , :rejected , :pending ]
 end
