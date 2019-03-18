@@ -29,13 +29,6 @@ class Admin < ApplicationRecord
   # validates_format_of :city, format:{ with: /([- ,\/0-9a-zA-Z]+)/ },length: {maximum: 50} , allow_blank: true, on: :update 
   # validates_format_of :zipcode, format:{ with:  /[0-9_,+#-]/ },length: {maximum: 50} , allow_blank: true, on: :update 
 
-  #  validates_format_of :lname,  :with => /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ , on: :update 
-  #  validates_format_of :fname,  :with => /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ , on: :update 
-  #  validates_format_of :company_name,  :with => /\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/ , on: :update 
-  #  validates_format_of :street,  :with => /([- ,\/0-9a-zA-Z]+)/ , on: :update 
-  #  validates_format_of :city,  :with => /([- ,\/0-9a-zA-Z]+)/ , on: :update 
-  #  validates_format_of :zipcode,  :with => /[0-9_,+#-]/ , on: :update 
-
 
 
 
