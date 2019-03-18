@@ -11,7 +11,6 @@ class GameDesktopAdminController < ApplicationController
     if @game.state != 'wait'
         @game.update(state: 'wait')
     end
-    # debugger
     @count = @game.turns.count
   end
     

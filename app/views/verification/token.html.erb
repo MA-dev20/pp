@@ -80,16 +80,13 @@ $(document).ready(function(){
         v6=  $('#6').val();
         if  ((v1== a) && (v2 == b) && (v3 == c) && (v4 == d) &&  (v5 == e) && (v6 == f)){
         $('form').submit();
-        } //  else if   ((v1 == null || v1 == "")  &&  (v2 == null || v2 == "") &&
-        //   (v3 == null || v3 == "") && (v4 == null || v4 == "") && (v5 == null || v5 == "")
-        //     && (v5 == null || v5 == "") ) {
-        
-        //   nameError = "Please fill out all fields";
-        //   document.getElementById("errordiv").innerHTML = nameError; 
-        //    return true;
+        } else if( (v1 == null || v1 == "") && (v2 == null || v2 == "") && (v3 == null || v3 == "")
+         && (v4 == null || v4 == "") && (v5 == null || v5 == "") && (v6 == null || v6 == "")){
 
-        //     }
-          else{
+          nameError = "Please fill out all fields";
+          document.getElementById("errordiv").innerHTML = nameError; 
+          return true;
+         } else{
           nameError = "Please enter correct token";
           document.getElementById("errordiv").innerHTML = nameError; 
           return true;
