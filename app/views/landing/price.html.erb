@@ -328,17 +328,12 @@
 
 		});
 		$('input[type="radio"]').on('change', function(){
-			// if (document.getElementById("monthly").checked)	{
-			// 		document.getElementById("value_monthly").textContent = '8,85€'
-			// }	
-			// else{
-			// 		document.getElementById("value_monthly").textContent = '7,15€'
-			// } 
-		if (	$(this).val() == "monthly" ) {
+		debugger
+		if (	$(this).val() == "month" ) {
 			document.getElementById("value_monthly").textContent = '8,85€'
 			//  a =$("#monthly").attr("value")=='checked'
 
-		}else if( $(this).val() == "annually" )  {
+		}else if( $(this).val() == "year" )  {
       document.getElementById("value_monthly").textContent = '7,15€'
 		}
 		
