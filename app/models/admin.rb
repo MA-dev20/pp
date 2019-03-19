@@ -48,5 +48,46 @@ class Admin < ApplicationRecord
     created_at + 14.days
   end
 
+
+  def upgrade_subscription
+    if self.plan_type == 'month'
+      monthy_amount = 8.85*100
+      plan =(monthy_amount.to_i) * self.plan_users.to_i
+    else
+      year_amount = 7.17*100*12
+      plan =(year_amount.to_i) * self.plan_users.to_i
+    end
+    begin
+      @plan =Stripe::Plan.retrieve(self.plan_users.to_s + self.plan_type)
+    rescue => e
+      if (e.present?)
+        @plan = Stripe::Plan.create({
+                                        amount: plan,
+                                        interval: self.plan_type,
+                                        product: {
+                                            name: self.plan_users.to_s + self.plan_type
+                                        },
+                                        currency: 'eur',
+                                        id: self.plan_users.to_s + self.plan_type
+                                    })
+      end
+    end
+    self.plan_id = @plan.id
+    self.plan_users = self.plan_users
+    @subscription = Stripe::Subscription.create(
+        {
+            customer: self.stripe_id,
+            items: [
+                {
+                    plan:  @plan.id,
+                }
+            ]
+        })
+    self.subscription_id = @subscription.id
+    self.save
+
+  end
+
+
 end
 
