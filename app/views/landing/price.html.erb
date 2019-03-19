@@ -1,7 +1,7 @@
 <body>
 
 		<div class="off-canvas-container">
-
+			<% unless admin_signed_in? %>
 			<header class="header header-new">
 				<nav class="navbar navbar-expand-lg navbar-light bg-white pt-0 pb-0 pb-lg-4 pt-lg-4 px-0">
 					<div class="container">
@@ -27,9 +27,11 @@
 					</div>
 				</nav>
 			</header>
+			<% end %>
 			<div class="off-canvas">
 				<section class="offer-section">
 					<div class="container container-narrow">
+						<% unless admin_signed_in? %>
 						<div class="offer-top text-center">
 							<h1 class="section-heading mb-4">Teste <span class="text-green">Pro</span> 30 Tage <span class="text-blue">kostenlos</span></h1>
 							<p class="section-para mb-4"><span class="text-grey">Statistiken. Unbegrenzte Spieler. Über 1000 Catchwords.</span></p>
@@ -67,8 +69,9 @@
 								</div>
 							</div>
 						</div>
+						<% end %>
 						<%= form_for :admin, as: Admin, url: plans_path do |f|%>
-							<div class="d-flex flex-column flex-sm-row rdbtn-block">
+							<div class="d-flex flex-column flex-sm-row rdbtn-block justify-content-center">
 								<label class="radiobtn-box mt-3 mt-sm-0">jährliche Abrechnung
 								<%= f.radio_button :annually ,"annually",  :checked => 'checked' %>
 									<span class="checkmark"></span>
@@ -83,7 +86,8 @@
 	
 							<div class="offer-block mt-5 pt-1">
 								<div class="row">
-									<div class="col-12 col-md-6 pr-lg-5">
+									<% unless admin_signed_in? %>
+									<div class="col-12 col-md-6 pr-lg-5 ">
 										<div class="offer-box offer-free mb-4">
 											<div class="offer-box-head d-flex align-items-center justify-content-center">
 												<h2>Free</h2>
@@ -100,7 +104,8 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-12 col-md-6 pl-lg-5">
+									<% end %>
+									<div class="col-12 col-md-6 pl-lg-5 <%= admin_signed_in? ? 'offset-md-3' : '' %>">
 										<div class="offer-box offer-pro mb-4">
 											<div class="offer-box-head d-flex align-items-center justify-content-center">
 												<h2>Pro</h2>
@@ -128,7 +133,7 @@
 								<%= f.submit 'Paket auswählen', class: 'btn btn-green' %>
 							</div>
 						<%end%>
-
+						<% unless admin_signed_in? %>
 						<div class="price-signup-portion position-relative d-flex justify-content-center align-items-center">
 							<div class="decoration-set decoration-left mr-1 mr-sm-2">
 								<svg width="58" height="72" viewBox="0 0 61 77" xmlns="http://www.w3.org/2000/svg">
@@ -156,8 +161,10 @@
 								</svg>
 							</div>
 						</div>
+						<% end %>
 					</div>
 				</section>
+				<% unless admin_signed_in? %>
 				<section class="questions-section">
 					<div class="container">
 						<h1 class="section-heading text-center"><span class="text-grey">Häufige</span> Fragen</h1>
@@ -266,7 +273,9 @@
 						</div>
 					</div>
 				</section>
+				<% end %>
 			</div>
+			<% unless admin_signed_in? %>
 			<footer class="footer">
 				<div class="container">
 					<div class="row">
@@ -299,6 +308,7 @@
 					</div>
 				</div>
 			</footer>
+			<% end %>
 
 		</div>
 

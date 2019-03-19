@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_admin!, :set_vars
-  
+
   def destroy
     if @user.destroy
       flash[:success] = 'Spieler erfolgreich gelöscht!'

@@ -1,4 +1,7 @@
 class LandingController < ApplicationController
+
+  skip_before_action :check_expiration_date, only: :price
+
   layout 'main'
   respond_to :html, :json
 

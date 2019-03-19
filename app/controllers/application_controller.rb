@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   before_action :check_expiration_date
 
   def check_expiration_date
-    if current_admin
-       if !(current_admin.plans.blank?) && Time.now > current_admin.expiration 
+    if admin_signed_in?
+       if current_admin.plans.blank? && Time.now >= current_admin.expiry
         redirect_to price_path
        end
     end
