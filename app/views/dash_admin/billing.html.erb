@@ -96,6 +96,9 @@
                 <button class="btn btn-link collapsed px-0" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                 <%= image_tag ("plus.png")%>
                 </button>
+                <% if current_admin.plan_id.blank? %>
+                    <link class="btn btn-link collapsed px-0 float-right" href="landing/price" />
+                <% end %>
             </h2>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
