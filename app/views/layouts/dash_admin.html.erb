@@ -69,6 +69,11 @@
                 <%= link_to "Abrechnungsdaten", dash_admin_billing_path %>
             <% end %>
             </div>
+            <div class="link">
+            <% if current_admin.plans.blank? %>
+                <%= link_to "Select Package", price_path %>
+            <% end %>
+            </div>
         </div>
     </section>
     

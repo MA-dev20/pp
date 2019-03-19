@@ -74,13 +74,17 @@
         </button>
         </div>
         <div class="modal-body">
-            <% @game.turns.select{|turn| turn.user.pending?}.each do |user| %>
+            <% @game.turns.select{|turn| turn.user.pending?}.each do |turn| %>
                 <div class="mail-box">
-                <p class="email-add"><%= user.email %></p>
+                <div class="mail-box-main">
+                    <span><%= image_tag(turn.user.avatar.url ) %></span>
+                    <%= turn.user.fname %>
+                    <%= turn.user.lname%>
+                </div>
                 
                 <div class="mail-btn">
-                <%= link_to "Accept", accept_user_path(user_id: user.id), method: :patch, params: { status: 1 }, class: "btn btn-secondary btn-accept" %>
-                <%= link_to "Reject", reject_user_path(user_id: user.id), method: :patch, params: { status: 2 }, class: "btn btn-primary btn-reject" %>
+                <%= link_to "Accept", accept_user_path(user_id: turn.id), method: :patch, params: { status: 1 }, class: "btn btn-secondary btn-accept" %>
+                <%= link_to "Reject", reject_user_path(user_id: turn.id), method: :patch, params: { status: 2 }, class: "btn btn-primary btn-reject" %>
 
                   <!--- <button type="button" class="btn btn-secondary btn-accept">Accept</button>
                     <button type="button" class="btn btn-primary btn-reject">Reject</button>-->

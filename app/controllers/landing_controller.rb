@@ -5,6 +5,7 @@ class LandingController < ApplicationController
   layout 'main'
   respond_to :html, :json
 
+
   def index
   end
     
