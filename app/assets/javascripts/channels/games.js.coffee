@@ -18,3 +18,4 @@ jQuery(document).on 'turbolinks:load', ->
                 </div>
                 </div>'
       $('#myModal').show
+      
