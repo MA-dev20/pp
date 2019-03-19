@@ -27,7 +27,7 @@
         </div>
         <div class="modal-body">
             <% current_admin.users.where(status: "pending").each do |user| %>
-                        <div class="mail-box">
+                <div class="mail-box">
                 <p class="email-add"><%= user.email %></p>
                 
                 <div class="mail-btn">
