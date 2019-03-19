@@ -12,7 +12,7 @@ class PlansController < ApplicationController
       create_plan(plan_month,plan_type,number_of_users)
 
     else
-      year_amount = 7.17*100
+      year_amount = 7.17*100*12
       year_plan =(year_amount.to_i) * number_of_users.to_i
       create_plan(year_plan,plan_type,number_of_users)
     end
