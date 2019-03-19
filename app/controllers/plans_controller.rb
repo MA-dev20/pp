@@ -64,9 +64,9 @@ class PlansController < ApplicationController
   #   @admin.update_columns(annually: :annually)
   #   user= @admin.users.all.count
   #   a =8.85*100
-  #   month =(a.to_i) * user
+  #   month =(a.to_i) * user 
   #   b =7.17*100
-  #   year = (b.to_i )* user
+  #   year = (b.to_i )* user *12
   #     if !@admin.annually.eql?(true)
   #       @plan= Stripe::Plan.create({
   #         amount:year,
