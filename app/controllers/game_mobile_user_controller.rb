@@ -1,6 +1,6 @@
 class GameMobileUserController < ApplicationController
   before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended]
-  before_action :authenticate_user!, :set_user, except: [:new, :create,:update_status]
+  before_action :authenticate_user!, :set_user, except: [:new, :create,:reject_user ,:accept_user]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
   layout 'game_mobile'
@@ -35,6 +35,7 @@ class GameMobileUserController < ApplicationController
   def reject_user
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -42,21 +43,7 @@ class GameMobileUserController < ApplicationController
   def accept_user
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 0)
-    end
-  end
-
-  def set_action(user)
-    @user = user
-    if @user && @user.admin == @admin
-      if TeamUser.where(user_id: @user.id, team_id: @game.team_id).count == 0
-          TeamUser.create(user_id: @user.id, team_id: @game.team_id)
-      end
-      sign_in(@user)
-      redirect_to gmu_new_turn_path
-    else
-      TeamUser.create(user_id: @user.id, team_id: @game.team_id)
-      sign_in(@user)
-      redirect_to gmu_new_name_path
+      redirect_back(fallback_location: root_path)
     end
   end
 
