@@ -79,7 +79,7 @@ class Admin < ApplicationRecord
             customer: self.stripe_id,
             items: [
                 {
-                    plan:  @plan.id,
+                    plan:  @plan.id
                 }
             ]
         })
