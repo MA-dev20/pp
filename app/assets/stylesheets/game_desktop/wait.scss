@@ -21,6 +21,15 @@
     transform: scale(1.1);
   }
 }
+.img-circular{
+	width: 100px;
+	height: 100px;
+	background-size: cover;
+	display: block;
+	border-radius: 100px;
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+   }
 .ajax-loader{
 	position: absolute;
 	top: 0;
@@ -76,5 +85,23 @@
 	}
 	100%{
 		opacity: 0;
+	}
+}
+.mail-box-main {
+	position: relative;
+    padding-left: 44px;
+    min-height: 35px;
+	padding-top: 6px;
+	span {
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		left: 0;
+		top: 0;
+		overflow: hidden;
 	}
 }

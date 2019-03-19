@@ -31,11 +31,6 @@ class Admin < ApplicationRecord
 
 
 
-
-
-
-
-
   #########Call-Back for Stripe#########################
   after_create :create_stripe_customer
 

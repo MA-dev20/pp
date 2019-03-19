@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
        end
     end
   end
+
   protected
     
     def authenticate
@@ -26,5 +27,12 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.permit(:account_update, keys: [:male, :company_name, :fname, :lname, :street, :city, :avatar, :logo, :employees, :zipcode])
     end
 
+    def check_expiration_date
+      if current_admin
+         if current_admin.plans.blank && Time.now > current_admin.expiration 
+          redirect_to price_path
+         end
+      end
+    end
 
 end

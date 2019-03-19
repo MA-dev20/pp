@@ -15,12 +15,10 @@ class GameDesktopAdminController < ApplicationController
     @pending_count = @game.turns.select{|turn| turn.user.pending?}.count
   end
     
- 
-
   def choose
     @turns = @game.turns.playable.sample(100)
     if @game.state != 'choose' && @turns.count == 1
-      redirect_to gda_turns_path
+      redirect_to gda_turn_path
       return
     elsif @game.state != 'choose' && @turns.count == 0
       redirect_to gda_ended_path

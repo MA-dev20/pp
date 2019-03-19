@@ -96,7 +96,8 @@ class GameMobileUserController < ApplicationController
   end
     
   def wait
-    ActionCable.server.broadcast "game_channel", game_state: 'wait' , game_id: current_game.id, user_email: current_user.email, user_id: current_user.id
+    ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id, user_fname: current_user.fname, user_lname: current_user.lname,  user_avatar: current_user.avatar
+
 
   end
 
