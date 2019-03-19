@@ -16,10 +16,10 @@ class PlansController < ApplicationController
           amount:year,
           interval: 'year',
           product: {
-            name: 'Admin User_Plan' +SecureRandom.hex(1) +user.to_s ,
+            name: 'Admin'  +SecureRandom.hex(1) +'User_Plan'+user.to_s ,
           },
           currency: 'eur',
-          id: 'Admin User_Plan' +SecureRandom.hex(1) +user.to_s,
+          id: 'Admin'  +SecureRandom.hex(1) +'User_Plan'+user.to_s,
         })
         @plans= @admin.plans.create(admin_id: @admin.id, amount: @plan.amount,
           product_name: @plan.product,interval: @plan.interval  ,currency: @plan.currency,
@@ -55,10 +55,10 @@ class PlansController < ApplicationController
           amount: month,
           interval: 'month',
           product: {
-            name: 'Admin User_Plan' +SecureRandom.hex(1) +user.to_s,
+            name: 'Admin'  +SecureRandom.hex(1) +'User_Plan'+user.to_s,
           },
           currency: 'eur',
-          id: 'Admin User_Plan' +SecureRandom.hex(1) +user.to_s
+          id: 'Admin'  +SecureRandom.hex(1) +'User_Plan'+user.to_s,
         })
 
         @plans=@admin.plans.create(admin_id: @admin.id, amount: @plan.amount,
