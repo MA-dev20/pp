@@ -57,7 +57,15 @@ class DashAdminController < ApplicationController
   def billing
     @credit_cards= @admin.cards.all
 
-    @invoice =@admin.invoices.all
+    begin
+   @invoice = Stripe::Invoice.list({
+                                       customer: @admin.stripe_id
+                                   })
+    rescue => e
+      flash[:error] = "Error in fetching invoices"
+   end
+
+      # @invoice =@admin.invoices.all
     # @invoices= Stripe::InvoiceItem.retrieve(
     #    Invoice.where(stripe_invoice_id: @invoice.id)  
     # )
