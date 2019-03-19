@@ -72,12 +72,13 @@
 						<% end %>
 						<%= form_for :admin, as: Admin, url: plans_path do |f|%>
 							<div class="d-flex flex-column flex-sm-row rdbtn-block justify-content-center">
+                <%= f.text_field  :plan_users  %>
 								<label class="radiobtn-box mt-3 mt-sm-0">jährliche Abrechnung
-								<%= f.radio_button :annually ,"annually",  :checked => 'checked' %>
+								<%= f.radio_button :plan_type ,"year",  :checked => 'checked' %>
 									<span class="checkmark"></span>
 								</label>
 								<label class="radiobtn-box mt-3 mt-sm-0">monatliche Abrechnung
-								<%= f.radio_button :annually, "monthly" %>
+								<%= f.radio_button :plan_type, "month" %>
 
 									<span class="checkmark"></span>
 								</label>

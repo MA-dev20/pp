@@ -14,7 +14,7 @@ class Admin < ApplicationRecord
   has_many :plans, dependent: :destroy
   has_many :invoices, dependent: :destroy
 
-
+  enum plan_type: [:year , :month]
   
   
   mount_uploader :avatar, PicUploader
