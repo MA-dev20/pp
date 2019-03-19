@@ -1,5 +1,6 @@
 class PlansController < ApplicationController
   before_action :authenticate_admin!, :set_admin
+  skip_before_action :check_expiration_date
   layout 'main'
   
   def create
