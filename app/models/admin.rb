@@ -37,7 +37,7 @@ class Admin < ApplicationRecord
 
 
   #########Call-Back for Stripe#########################
-  before_create :create_stripe_customer, :set_expiration_date
+  after_create :create_stripe_customer
 
   #########Call-back for Sign-in Expiration Date###########
 
@@ -46,10 +46,11 @@ class Admin < ApplicationRecord
       :email => self.email,
     )
     self.stripe_id =  customer.id
+    self.save
   end
 
-  def set_expiration_date
-    self.expiration =  Date.today + 13.days
+  def expiry
+    created_at + 14.days
   end
 
 end
