@@ -17,5 +17,5 @@ jQuery(document).on 'turbolinks:load', ->
                 <a class="btn btn-primary btn-reject" rel="nofollow" data-method="patch" href="/game_mobile_user/reject_user/'+ data["user_id"]+'">Reject</a>
                 </div>
                 </div>'
-      $('#myModal').show
+      $('#myModal').show()
       
