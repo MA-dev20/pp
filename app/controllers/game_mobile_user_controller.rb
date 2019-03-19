@@ -36,15 +36,17 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
       redirect_back(fallback_location: root_path)
+      Turn.where(user_id: @user.id).first.delete
     end
   end
 
 
-  def accept_user
+  def accept_user    
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 0)
       redirect_back(fallback_location: root_path)
     end
+
   end
 
 
