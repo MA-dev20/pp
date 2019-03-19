@@ -23,6 +23,26 @@ class GameMobileUserController < ApplicationController
       else
         @user = @admin.users.create(email: params[:user][:email])
         TeamUser.create(user_id: @user.id, team_id: @game.team_id)
+        if @user.admin.plan_type.eql?("year")
+          a =8.85*100
+          month =a.to_i
+          b =7.17*100
+          year = (b.to_i)*12 
+          Stripe::Charge.create({
+            amount: year,
+            currency: 'eur',
+            description: 'Charge for PeterPitch #{@user.email}',
+          })
+        else
+          Stripe::Charge.create({
+            amount: month,
+            currency: 'eur',
+            description: 'Charge for PeterPitch #{@user.email}',
+          })
+
+        end
+        @user.admin.upgrade_subscription
+        
         sign_in(@user)
         redirect_to gmu_new_name_path
       end
