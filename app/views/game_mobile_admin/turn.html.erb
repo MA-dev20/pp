@@ -1,0 +1,15 @@
+<section id="content">
+    <div class="head">
+        <% if @admin == @cur_user %>
+        <div class="h100">Du bist dran!</div>
+        <% else %>
+        <div class="h100"><%= @cur_user.fname %> ist dran!</div>
+        <% end %>
+    </div>
+    <div class="middle">
+        <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green' %>
+    </div>
+    <div class="bottom">
+       <%= link_to 'Pitch starten!', gma_play_path %>
+    </div>
+</section>

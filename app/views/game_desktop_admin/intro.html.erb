@@ -1,0 +1,16 @@
+<%= video_tag 'gameintro.mp4', id: 'video-bg', autoplay: false, controls: false, onended: 'redir()' %>
+<section id="skip" style="color: black">
+   Skip mit Leertaste
+</section>
+<script>
+    document.getElementById('video-bg').play();
+    function redir() {
+        window.location.replace('<%= gda_wait_path %>');
+    }
+    $(window).keypress(function (e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            redir();
+        };
+    }) 
+
+</script>

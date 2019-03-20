@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  root: one
+  admin: one
+
+two:
+  root: two
+  admin: two

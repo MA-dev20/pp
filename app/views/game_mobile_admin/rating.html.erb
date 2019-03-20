@@ -1,0 +1,11 @@
+<section id="content">
+    <div class="head">
+        <div class="h100">Hier ist die Bewertung!</div>
+    </div>
+    <div class="middle">
+        <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
+    </div>
+    <div class="bottom">
+        <%= link_to 'weiter!', gma_after_rating_path %>
+    </div>
+</section>

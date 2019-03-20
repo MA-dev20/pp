@@ -1,0 +1,94 @@
+<section id="gd_rated">
+<section id="gd_rated_spontan">
+    <div class="text">
+        Spontanität
+    </div>
+    <div class="circle" id='spontan'>
+        <div class="bg_1">
+            <%= image_tag @user.avatar.quad.url, class: 'avatar' %>
+            <%= image_tag 'game/shield_lightning.png', class: 'shield' %>
+        </div>
+    </div>
+    <%= image_tag 'game/polygon.png', class: 'pol' %>
+    <div class="rate" id="spontan_text">?</div>
+</section>
+<section id="gd_rated_creativ">
+    <div class="text">
+        Kreativität
+    </div>
+    <div class="circle" id="creativ">
+        <div class="bg_1">
+            <%= image_tag @user.avatar.quad.url, class: 'avatar' %>
+            <%= image_tag 'game/shield_lamp.png', class: 'shield' %>
+        </div>
+    </div>
+    <%= image_tag 'game/polygon.png', class: 'pol' %>
+    <div class="rate" id='creativ_text'>?</div>
+</section>
+
+<section id="gd_rated_body">
+    <div class="text">
+        Körpersprache
+    </div>
+    <div class="circle" id='body'>
+        <div class="bg_2">
+            <%= image_tag @user.avatar.quad.url, class: 'avatar' %>
+            <%= image_tag 'game/shield_body.png', class: 'shield' %>
+        </div>
+    </div>
+    <%= image_tag 'game/polygon.png', class: 'pol' %>
+    <div class="rate" id='body_text'>?</div>
+</section>
+
+<section id="gd_rated_rhetoric">
+    <div class="text">
+        Rhetorik
+    </div>
+    <div class="circle" id="rhetoric">
+        <div class="bg_2">
+            <%= image_tag @user.avatar.quad.url, class: 'avatar' %>
+            <%= image_tag 'game/shield_mic.png', class: 'shield' %>
+        </div>
+    </div>
+    <%= image_tag 'game/polygon.png', class: 'pol' %>
+    <div class="rate" id='rhetoric_text'>?</div>
+</section>
+
+<section id="gd_rated_ges">
+    <div class="text">
+        Gesamt
+    </div>
+    <div class="circle" id="ges">
+        <%= image_tag @user.avatar.quad.url, class: 'avatar' %>
+    </div>
+    <%= image_tag 'game/polygon.png', class: 'pol' %>
+    <div class="rate" id='ges_text'>?</div>
+</section>
+
+<section id="skip">
+   Skip mit Leertaste
+</section>
+</section>
+
+<%= audio_tag('rated/einzeln.mp3', id: 'tag1') %>
+<script>
+    pick(1);
+    ratecircle('#spontan', 'spontan_text', <%= @rating.spontan / 100.0 %>);
+    setTimeout(function() {
+        ratecircle('#creativ', 'creativ_text', <%= @rating.creative / 100.0 %>);
+    }, 2000);
+    setTimeout(function() {
+        ratecircle('#body', 'body_text', <%= @rating.body / 100.0 %>);
+    }, 4000);
+    setTimeout(function() {
+        ratecircle('#rhetoric', 'rhetoric_text', <%= @rating.rhetoric / 100.0 %>);
+    }, 6000);
+    setTimeout(function() {
+        ratecircleg('#ges', 'ges_text', <%= @rating.ges / 100.0 %>);
+    }, 8000);
+    $(window).keypress(function (e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            window.location.replace('<%= gda_after_rating_path %>');
+        };
+    })
+</script>

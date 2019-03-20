@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  turn: one
+  user: one
+  admin: one
+  ges: 1
+  body: 1
+  creative: 1
+  rhetoric: 1
+  spontan: 1
+
+two:
+  turn: two
+  user: two
+  admin: two
+  ges: 1
+  body: 1
+  creative: 1
+  rhetoric: 1
+  spontan: 1

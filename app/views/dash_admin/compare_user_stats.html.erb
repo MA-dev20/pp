@@ -1,0 +1,244 @@
+<section id="dash_stats">
+    <div class="head">
+        <span><%= @user.fname %> <%= @user.lname %></span>, <%= @team.name %>
+    </div>
+    <div class="stats_overview">
+        <div class="gesamt active">
+            <button class="circle" id="chart_gesamt">
+            <span><%= @rating.ges / 10.0 %></span>
+            <%= image_tag @user.avatar.quad.url %>
+            </button>
+            <div class="text" id="t_gesamt">Gesamt</div>
+        </div>
+        <div class="spontan">
+            <button class="circle" id="chart_spontan"><%= @rating.spontan / 10.0 %></button>
+            <div class="text" id="t_spontan">Spontanität</div>
+        </div>
+        
+        <div class="kreativ">
+            <button class="circle" id="chart_kreativ"><%= @rating.creative / 10.0 %></button>
+            <div class="text" id="t_kreativ">Kreativität</div>
+        </div>
+        
+        <div class="body">
+            <button class="circle" id="chart_body"><%= @rating.body / 10.0 %></button>
+            <div class="text" id='t_body'>Körpersprache</div>
+        </div>
+        
+        <div class="rhetorik">
+            <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric / 10.0 %></button>
+            <div class="text" id="t_rhetorik">Rhetorik</div>
+        </div>
+        <div class="places">
+           <div class="first">
+               <%= image_tag 'defaults/cup.png' %>
+               <div class="txt"><%= @turns.where(place: 1).count %></div>
+           </div>
+           <div class="second">
+               <%= image_tag 'defaults/silver.png' %>
+               <div class="txt"><%= @turns.where(place: 2).count %></div>
+           </div>
+           <div class="third">
+               <%= image_tag 'defaults/bronze.png' %>
+               <div class="txt"><%= @turns.where(place: 3).count %></div>
+           </div>
+        </div>
+        <div class="compare">
+            
+        <select class="cs-select cs-skin-underline form-field">
+            <option value="" disabled selected><%= @user1.fname %> <%= @user1.lname %></option>
+            <% @users.each do |u| %>
+                    <% if u.id == @user1.id %>
+                        <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(@team.id, @user.id) %>" data-class="cs-selected"><%= u.fname %> <%= u.lname %></option>
+                    <% elsif @user.id != u.id %>
+                    <option value="<%= u.id %>" data-link="<%= dash_admin_compare_user_stats_path(@team.id, @user.id, u.id) %>">
+                         <%= u.fname %> <%= u.lname %>
+                    </option>
+                    <% end %>
+            <% end %>
+        </select>
+        
+        </div>
+    </div>
+    <div class="stats_chart">
+        <div class="chart-container">
+            <canvas id="Chart"></canvas>
+        </div>
+    </div>
+</section>
+<script>
+(function() {
+[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
+    function(el) {	
+	   new SelectFx(el);
+       newTab: false;
+    } );
+})();
+    
+var ctx = document.getElementById("Chart");
+var datapoints = [NaN, NaN, NaN, NaN, NaN, NaN, NaN ];
+var datapoints2 = [NaN, NaN, NaN, NaN, NaN, NaN, NaN ];
+var label = [NaN, NaN, NaN, NaN, NaN, NaN, NaN];
+var i = 0;
+<% @turns_rating.each do |g| %>
+    datapoints[i] = <%= g.ges / 10.0 %>;
+    <% if Turn.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
+        datapoints2[i] = <%= TurnRating.where(game_id: g.game_id, user_id: @user1.id).first.ges / 10.0 %>;
+    <% end %>
+    label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
+    i++;
+<% end %>
+var user1 = '<%= @user.fname %>';
+var user2 = '<%= @user1.fname %>';
+var gesamtChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: label,
+        datasets: [{
+            label: user1,
+            data: datapoints,
+            fill:false,
+            borderColor:"rgba(255,255,255,1.0)",
+            borderWidth: 5,
+            pointBorderColor:"rgba(255,255,255,1.0)",
+            pointBackgroundColor:"rgba(255,255,255,1.0)",
+            pointHoverBackgroundColor:"rgba(255,255,255,1.0)",
+            pointHoverBorderColor:"rgba(255,255,255,1.0)",
+            pointBorderWidth: 5,
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            lineTension:0,
+        }, {
+            label: user2,
+            data: datapoints2,
+            fill: false,
+            borderColor:"rgba(255,255,255,0.5)",
+            borderWidth: 5,
+            pointBorderColor:"rgba(255,255,255,0.5)",
+            pointBackgroundColor:"rgba(255,255,255,0.5)",
+            pointHoverBackgroundColor:"rgba(255,255,255,0.5)",
+            pointHoverBorderColor:"rgba(255,255,255,0.5)",
+            pointBorderWidth: 5,
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            lineTension:0,
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            display: false,
+            labels: {
+                usePointStyle: true,
+            },
+        },
+        title: {
+            display: false,
+        },
+        tooltips: {
+            mode: 'index',
+            multiKeyBackground:"rgba(255,255,255,0)",
+            intersect: false,
+        },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    display: true,
+                    color:"rgba(255,255,255,1.0)",
+                    lineWidth: 0.2,
+                    zeroLineColor: "rgba(255,255,255,0)",
+                },
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 10,
+                    stepSize: 1,
+                    fontColor:"rgba(255,255,255,1.0)",
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display: false,
+                    color:"rgba(255,255,255,1.0)",
+                    lineWidth: 0.2,
+                },
+                ticks: {
+                    fontColor:"rgba(255,255,255,1.0)",
+                }
+            }],
+        },
+    }
+});
+document.getElementById('chart_gesamt').addEventListener('click', function() {
+    $('.active').removeClass('active');
+    $('.gesamt').addClass('active');
+    var i = 0;
+    <% @turns_rating.each do |g| %>
+        datapoints[i] = <%= g.ges / 10.0 %>;
+        <% if Turn.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
+            datapoints2[i] = <%= TurnRating.where(game_id: g.game_id, user_id: @user1.id).first.ges / 10.0 %>
+        <% end %>
+        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
+        i++;
+    <% end %>
+    window.gesamtChart.update();
+});
+document.getElementById('chart_spontan').addEventListener('click', function() {
+    $('.active').removeClass('active');
+    $('.spontan').addClass('active');
+    var i = 0;
+    <% @turns_rating.each do |g| %>
+        datapoints[i] = <%= g.spontan / 10.0 %>;
+        <% if Turn.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
+            datapoints2[i] = <%= TurnRating.where(game_id: g.game_id, user_id: @user1.id).first.spontan / 10.0 %>
+        <% end %>
+        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
+        i++;
+    <% end %>
+    window.gesamtChart.update();
+});
+document.getElementById('chart_kreativ').addEventListener('click', function() {
+    $('.active').removeClass('active');
+    $('.kreativ').addClass('active');
+    var i = 0;
+    <% @turns_rating.each do |g| %>
+        datapoints[i] = <%= g.creative / 10.0 %>;
+        <% if Turn.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
+            datapoints2[i] = <%= TurnRating.where(game_id: g.game_id, user_id: @user1.id).first.creative / 10.0 %>
+        <% end %>
+        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
+        i++;
+    <% end %>
+    window.gesamtChart.update();
+});
+document.getElementById('chart_body').addEventListener('click', function() {
+    $('.active').removeClass('active');
+    $('.body').addClass('active');
+    var i = 0;
+    <% @turns_rating.each do |g| %>
+        datapoints[i] = <%= g.body / 10.0 %>;
+        <% if Turn.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
+            datapoints2[i] = <%= TurnRating.where(game_id: g.game_id, user_id: @user1.id).first.body / 10.0 %>
+        <% end %>
+        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
+        i++;
+    <% end %>
+    window.gesamtChart.update();
+});
+document.getElementById('chart_rhetorik').addEventListener('click', function() {
+    $('.active').removeClass('active');
+    $('.rhetorik').addClass('active');
+    var i = 0;
+    <% @turns_rating.each do |g| %>
+        datapoints[i] = <%= g.rhetoric / 10.0 %>;
+        <% if Turn.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
+            datapoints2[i] = <%= TurnRating.where(game_id: g.game_id, user_id: @user1.id).first.rhetoric / 10.0 %>
+        <% end %>
+        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
+        i++;
+    <% end %>
+    window.gesamtChart.update();
+});
+
+
+</script>

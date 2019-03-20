@@ -1,0 +1,127 @@
+/*
+ *= require perfect-scrollbar
+ */
+#gd_team #searchField {
+    position: absolute;
+    top: 5vh;
+    left: 5vw;
+    width: 20vw;
+    height: 6vh;
+    background-color: white;
+    padding-right: 3vh;
+    padding-left: 3vh;
+    color: black;
+    border-radius: 4vh;
+    border: 2px solid white;
+}
+#gd_team #searchField:focus {
+    border-color: rgba(29, 218, 175, 1);
+}
+#gd_team > img {
+    position: absolute;
+    top: 6.5vh;
+    left: calc(25vw - 5vh);
+    height: 3vh;
+    width: 3vh;
+}
+#teams-container {
+    position: absolute;
+    top: 15vh;
+    left: 3vw;
+    height: 70vh;
+    width: 84vw;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.add_team,
+.team_card {
+    float:left;
+    position: relative;
+    left: 0;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    width: 10vw;
+    top: 0;
+    height: 22vh;
+    margin-bottom: 2.5vh;
+    margin-top: 2.5vh;
+    background-color: white;
+    border-radius: 5vh;
+    text-align: center;
+    box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.1);
+}
+.add_team:hover,
+.team_card:hover {
+    top: -5px;
+    box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.2);
+}
+.add_team > a,
+.team_card > a {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 16vh;
+    width: 10vw;
+    cursor: pointer;
+    z-index: 1;
+    background-color: transparent;
+}
+.team_card > .bottom > a {
+    color: #1ddaaf;
+    position: relative;
+    width: 25%;
+    left: 0;
+}
+.add_team {
+    background-color: #1fb2f6;
+    color: white;
+    font-weight: bold;
+}
+.head {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 5vh;
+    width: 100%;
+    overflow:hidden;
+    line-height: 6vh;
+    font-size: 2vh;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    padding-left: 25px;
+    padding-right: 25px;
+    white-space: nowrap;
+}
+.head:hover {
+    overflow: visible;
+}
+.middle {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 12vh;
+    width: 100%;
+    background-color: #f1f1f1;
+    line-height: 12vh;
+    font-size: 3vh;
+}
+.middle > span {
+    font-weight: bold;
+}
+.bottom {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 5vh;
+    width: 100%;
+    line-height: 5vh;
+    font-size: 2vh;
+}
+.add_team .middle {
+    background-color: #187dc7;
+    color: white;
+    font-size: 4vh;
+}
+.modal-content {
+    z-index: 2000;
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>Peterpitch</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= action_cable_meta_tag %>
+
+    <%= stylesheet_link_tag    'game_mobile/main', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'game_mobile/main', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body id="game_channel" data-game-id="<%= @game.id %>">
+    <%= yield %>
+  </body>
+</html>

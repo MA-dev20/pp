@@ -1,0 +1,22 @@
+<section id="content">
+<% if @user == @cur_user %>
+    <div class="head">
+        <div class="h100">DU</div>
+    </div>
+    <div class="middle">
+        <%= image_tag @user.avatar.quad.url, class: 'mid-img green' %>
+    </div>
+    <div class="bottom">
+        wirst bewertet!
+    </div>
+<% else %>
+    <div class="head">
+        <div class="h100">Bewertung abgegeben!</div>
+    </div>
+    <div class="middle">
+        <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
+    </div>
+    <div class="bottom">
+    </div>
+<% end %>
+</section>

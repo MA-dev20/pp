@@ -1,0 +1,87 @@
+#gd_users .top .select-text{
+    position: absolute;
+    top: 4vh;
+    left: 5vw;
+    font-size: 3vh;
+    width: calc(20vw - 8vh);
+    color: #858585;
+}
+#gd_users .top .select{
+    position: absolute;
+    top: 6vh;
+    left: 5vw;
+    width: calc(20vw - 2.5vh);
+    height: 10vh;
+    border-radius: 5vh;
+    line-height: 10vh;
+}
+
+#gd_users .top #searchField {
+    position: absolute;
+    bottom: 74vh;
+    left: 25vw;
+    width: 20vw;
+    height: 6vh;
+    background-color: white;
+    padding-right: 3vh;
+    padding-left: 3vh;
+    color: black;
+    border-radius: 4vh;
+    border: 2px solid white;
+    
+}
+#gd_users .top #searchField:focus {
+    border-color: rgba(29, 218, 175, 1);
+}
+#gd_users .top > img {
+    position: absolute;
+    bottom: 75.5vh;
+    left: calc(45vw - 5vh);
+    height: 3vh;
+    width: 3vh;
+}
+#gd_users .users {
+    position: absolute;
+    left: 5vw;
+    width:  80vw;
+    top: 18vh;
+    height: 65vh;
+    background-color: white;
+    border-radius: 50px;
+    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.1);
+}
+#gd_users .users #table td img {
+    position: relative;
+    left: calc(50% - 4.5vh);
+    width: 4.5vh;
+    height: 4.5vh;
+    border-radius: 50%;
+}
+#gd_users .users #table {
+    top: 3vh;
+    position: absolute;
+    left: 0vw;
+    width: 78vw;
+    height: 59vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+#gd_users .users #table table {
+    top: 0;
+    left: 0;
+    width: 69vw;
+}
+#gd_users table > tbody > tr {
+    height: 6vh;
+    border-bottom: 1px solid #e9e9e9;
+}
+#gd_users table > tbody > tr > td > a {
+    font-size: 2vh;
+    color: #1ddaaf;
+}
+#gd_users table > tbody > tr:hover {
+    background-color: #f0f0f0;
+}
+.cs-options > ul > li:hover {
+    background-color: #f0f0f0;
+}

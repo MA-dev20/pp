@@ -1,0 +1,49 @@
+<%= form_for(:word, url: new_word_path) do |f| %>
+
+   <%= f.label :sound, class: 'custom-file-label' %>
+    <%= f.file_field :sound, class: 'custom-file-input', onchange: 'auto()' %>
+
+<% end %>
+<div id="table">
+<table id='word_table'>
+<thead>
+    <th scope="col">Word</th>
+    <th>Edit</th>
+    <th scope="col">Sound</th>
+    <th scope="col">Delete</th>
+</thead>
+<tbody>
+<% @words.each do |w| %>
+    <tr>
+        <%= form_for(:word, url: edit_word_path(w)) do |f| %>
+        <td><%= w.name %></td>
+        <td><%= f.text_field :name, value: w.name, class: 'form-control' %></td>
+        <td><%= audio_tag w.sound.url, controls: true %></td>
+        <td><%= link_to '', destroy_word_path(w.id), class: 'fas fa-trash-alt' %></td>
+        <% end %>
+    </tr>
+<% end %>
+</tbody>
+</table>
+</div>
+
+
+<script>
+function auto() {
+    $('form').submit();
+}
+$(document).ready( function () {
+    $('#word_table').DataTable( {
+        "paging":   false,
+        "info":     false,
+        'searching': false,
+        "order": [ 0, 'asc' ],
+        "columnDefs": [
+            { "orderable": false, "targets": 1 },
+            { "orderable": false, "targets": 2 },
+            { "orderable": false, "targets": 3 },
+        ]
+    } );
+} );
+new PerfectScrollbar('#table');
+</script>
