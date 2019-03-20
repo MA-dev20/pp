@@ -5,6 +5,7 @@ class GameMobileAdminController < ApplicationController
   layout 'game_mobile'
     
   def new
+    @game = Game.where(password: params[:password], active: true).first
   end
     
   def create
@@ -26,9 +27,11 @@ class GameMobileAdminController < ApplicationController
   end
     
   def new_avatar
+    @game = Game.find(session[:game_session_id])
   end
     
   def create_avatar
+    @game = Game.find(session[:game_session_id])
     @admin.update(avatar: params[:admin][:avatar])
     redirect_to gma_new_avatar_path
   end
