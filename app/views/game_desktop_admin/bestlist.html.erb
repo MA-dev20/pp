@@ -1,0 +1,187 @@
+<section id="gd_head_ended">
+    Die Bestenliste!
+</section>
+<section id="gd_ended">
+    <% if @turn_ratings.first %>
+    <div class="rate">
+        <div class="line" style="width: calc( <%= @turn_ratings.first.ges %>% - 200px ); animation-name: line1">
+           <div class="text" id="text1">
+            <%= @turn_ratings.first.findUser.fname %> <%= @turn_ratings.first.findUser.lname %>
+            </div>
+        </div>
+        <div class="rating" style="left: calc( <%= @turn_ratings.first.ges %>% - 200px ); animation-name: rat1">
+            <div class="circle">
+                <%= image_tag 'game/wolf_button.png', id: 'wolf1' %>
+                <%= image_tag @turn_ratings.first.findUser.avatar.quad.url, class: 'avatar', id: 'avatar1' %>
+            </div>
+            <%= image_tag 'game/crown1.png', class: 'crown1' %>
+            <%= image_tag 'game/polygon.png', class: 'pol', id: 'pol1' %>
+            <div class="rate_ges" id='rat1'>
+                <%= @turn_ratings.first.ges / 10.0 %>
+            </div>
+        </div>
+    </div>
+    <% end %>
+    <% if @turn_ratings.second %>
+    <div class="rate">
+        <div class="line" style="width: calc( <%= @turn_ratings.second.ges %>% - 200px ); animation-name: line2">
+           <div class="text" id="text2">
+            <%= @turn_ratings.second.findUser.fname %> <%= @turn_ratings.second.findUser.lname %>
+            </div>
+        </div>
+        <div class="rating" style="left: calc( <%= @turn_ratings.second.ges %>% - 200px ); animation-name: rat2">
+            <div class="circle">
+                <%= image_tag 'game/wolf_button.png', id: 'wolf2' %>
+                <%= image_tag @turn_ratings.second.findUser.avatar.quad.url, class: 'avatar', id: 'avatar2' %>
+            </div>
+            <%= image_tag 'game/crown2.png', class: 'crown2' %>
+            <%= image_tag 'game/polygon.png', class: 'pol', id: 'pol2' %>
+            <div class="rate_ges" id='rat2'>
+                <%= @turn_ratings.second.ges / 10.0 %>
+            </div>
+        </div>
+    </div>
+    <% end %>
+    <% if @turn_ratings.third %>
+    <div class="rate">
+        <div class="line" style="width: calc( <%= @turn_ratings.third.ges %>% - 200px ); animation-name: line3">
+           <div class="text" id="text3">
+            <%= @turn_ratings.third.findUser.fname %> <%= @turn_ratings.third.findUser.lname %>
+            </div>
+        </div>
+        <div class="rating" style="left: calc( <%= @turn_ratings.third.ges %>% - 200px ); animation-name: rat3">
+            <div class="circle">
+                <%= image_tag 'game/wolf_button.png', id: 'wolf3' %>
+                <%= image_tag @turn_ratings.third.findUser.avatar.quad.url, class: 'avatar', id: 'avatar3'%>
+            </div>
+            <%= image_tag 'game/crown3.png', class: 'crown3' %>
+            <%= image_tag 'game/polygon.png', class: 'pol', id: 'pol3' %>
+            <div class="rate_ges" id='rat3'>
+                <%= @turn_ratings.third.ges / 10.0 %>
+            </div>
+        </div>
+    </div>
+    <% end %>
+</section>
+<section id="skip">
+   Beenden mit Leertaste <br>
+   Neue Runde mit Enter
+</section>
+
+
+
+<%= audio_tag('ended/befoerderung.mp3', id: 'tag1') %>
+<%= audio_tag('ended/oscar.mp3', id: 'tag2') %>
+<%= audio_tag('ended/rennen.mp3', id: 'tag3') %>
+<%= audio_tag('ended/ueberzeugt.mp3', id: 'tag4') %>
+
+<script type='text/javascript'>
+<!--
+Amount=100; //Anzahl der Konfettis
+ 
+colors=new Array(4)
+colors[0]="#EDE275";
+colors[1]="#FFFFFF";
+colors[2]="#1ddaaf";
+colors[3]="#1a8ed6";
+ 
+Ypos=new Array();
+Xpos=new Array();
+Speed=new Array();
+Step=new Array();
+Cstep=new Array();
+ns=(document.layers)?1:0;
+if (ns){
+for (i = 0; i < Amount; i++){
+var P=Math.floor(Math.random()*5);
+rndCol=colors[P];
+var startTop=Math.round(Math.random()*$('.confetti').height());
+document.write("<layer name='sn"+i+"' left='0' top='0'><font size='24' color'" + rndCol + "'>.</font></layer>");
+}
+}
+else{
+document.write('<div class="confetti"><div style="position:relative">');
+for (i = 0; i < Amount; i++){
+var P=Math.floor(Math.random()*colors.length);
+rndCol=colors[P];
+document.write('<span style="position:absolute;top:'+startTop+';left:0px;color:' + rndCol + ';font-size:72px;font-family: \'Times New Roman\', Times, serif;" id="si'+i+'">.</span>');
+}
+document.write('</div></div>');
+}
+WinHeight=(document.layers)?window.innerHeight:window.document.body.clientHeight;
+WinWidth=(document.layers)?window.innerWidth:window.document.body.clientWidth;
+for (i=0; i < Amount; i++){
+ Ypos[i] = Math.round(Math.random()*WinHeight);
+ Xpos[i] = Math.round(Math.random()*WinWidth);
+ Speed[i]= Math.random()*5+2;
+ Cstep[i]=0;
+ Step[i]=Math.random()*0.1+0.05;
+}
+function fall(){
+var WinHeight=$('.confetti').height();
+var WinWidth=$('.confetti').width();
+var hscrll=(document.layers)?window.pageYOffset:document.body.scrollTop;
+var wscrll=(document.layers)?window.pageXOffset:document.body.scrollLeft;
+for (i=0; i < Amount; i++){
+sy = Speed[i]*Math.sin(90*Math.PI/180);
+sx = Speed[i]*Math.cos(Cstep[i]);
+Ypos[i]+=sy;
+Xpos[i]+=sx;
+if (Ypos[i] > WinHeight){
+Ypos[i]=-60;
+Xpos[i]=Math.round(Math.random()*WinWidth);
+Speed[i]=Math.random()*5+2;
+}
+if (ns){
+document.layers['sn'+i].left=Xpos[i];
+document.layers['sn'+i].top=Ypos[i]+hscrll;
+}
+else{
+document.getElementById('si'+i).style.left=Xpos[i]+"px";
+document.getElementById('si'+i).style.top=Ypos[i]+hscrll+"px";
+}
+Cstep[i]+=Step[i];
+}
+setTimeout('fall()',40);
+}
+//-->
+</script>
+<script type="text/javascript">
+    pick(4);
+    setTimeout(function() {
+        $('#avatar3').show();
+        $('#text3').show();
+        $('.crown3').show();
+        $('#pol3').show();
+        $('#rat3').show();
+        $('#wolf3').hide();
+    }, 4000);
+    setTimeout(function() {
+        $('#avatar2').show();
+        $('#text2').show();
+        $('.crown2').show();
+        $('#pol2').show();
+        $('#rat2').show();
+        $('#wolf2').hide();
+    }, 6000);
+    setTimeout(function() {
+        $('#avatar1').show();
+        $('#text1').show();
+        $('.crown1').show();
+        $('#pol1').show();
+        $('#rat1').show();
+        $('#wolf1').hide();
+        $('.confetti').show();
+        fall();
+    }, 8000);
+    
+    
+$(window).keypress(function (e) {
+  if (e.which == 32) {
+    window.location.replace('<%= gda_ended_path %>');
+  };
+  if (e.which == 13) {
+    window.location.replace('<%= gda_replay_path %>');
+   };
+}) 
+</script>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>Peterpitch</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'main/main', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'main/main', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+   <% flash.each do |name, msg| %>
+            <% if msg.is_a?(String) %>
+                <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+                    <%= content_tag :div, msg, :id => "flash_#{name}" %>
+                </div>
+            <% end %>
+        <% end %>
+    <%= yield %>
+
+  </body>
+<script>
+    $(document).ready(function() {
+        window.setTimeout(function() {
+           $('.alert').slideUp(500);
+        }, 4000);
+    })
+</script>
+</html>

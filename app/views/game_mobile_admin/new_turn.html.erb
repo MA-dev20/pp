@@ -1,0 +1,36 @@
+<section id="content">
+    <div class="head">
+        Hi, <%= @admin.fname %> <%= @admin.lname %>
+    </div>
+    <%= form_for(:turn, url: gma_new_turn_path) do |f| %>
+        <div class="middle">
+        <div class="row">
+            <%= f.radio_button :play, true, onchange: "myFunction()" %>
+            <div class="col-12">
+                <label for="turn_play_true" class="custom-text">Ich pitche und bewerte</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">-oder-</div>
+        </div>
+        <div class="row">
+            <%= f.radio_button :play, false, onchange: "myFunction()" %>
+            <div class="col-12">
+                <label for="turn_play_false" class="custom-text">Ich möchte nur bewerten</label>
+            </div>
+        </div>
+        </div>
+        <div class="bottom">
+            <%= link_to "Let's Play", '', class: 'link', id: 'fake' %>
+            <%= f.submit "Let's Play", class: 'link pulse', id: 'summit', style: 'display: none' %>
+        </div>
+    <% end %>
+</section>
+
+
+<script>
+    function myFunction() {
+        $('#fake').hide();
+        $('#summit').show();
+    }
+</script>

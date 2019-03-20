@@ -1,0 +1,85 @@
+<section id="content">
+    <div class="head">
+        Jetzt bewerten!
+    </div>
+    <%= form_for(:rating, url: new_rating_user_path(@turn)) do |f| %>
+    <div class="middle">
+        <div class="row">
+            <%= f.label 'Spontanität: ' %> <div class="output" id="val1"></div>
+            <%= f.range_field :spontan, min: 0, max: 100, id: 'slider1' %>
+        </div>
+        
+        <div class="row">
+            <%= f.label 'Kreativität: ' %> <div class="output" id="val2"></div>
+            <%= f.range_field :creative, min: 0, max: 100, id: 'slider2' %>
+        </div>
+        
+        <div class="row">
+            <%= f.label 'Körpersprache: ' %> <div class="output" id="val3"></div>
+            <%= f.range_field :body, min: 0, max: 100, id: 'slider3' %>
+        </div>
+        
+        <div class="row">
+            <%= f.label 'Rhetorik: ' %> <div class="output" id="val4"></div>
+            <%= f.range_field :rhetoric, min: 0, max: 100, id: 'slider4' %>
+        </div>
+    </div>
+    <div class="bottom">
+        <%= f.submit 'absenden', class: 'link' %>
+    </div>
+    <% end %>
+</section>
+
+
+<script>
+$('input[type="range"]').rangeslider({
+
+    // Feature detection the default is `true`.
+    // Set this to `false` if you want to use
+    // the polyfill also in Browsers which support
+    // the native <input type="range"> element.
+    polyfill: false,
+
+    // Default CSS classes
+    rangeClass: 'rangeslider',
+    disabledClass: 'rangeslider--disabled',
+    horizontalClass: 'rangeslider--horizontal',
+    verticalClass: 'rangeslider--vertical',
+    fillClass: 'rangeslider__fill',
+    handleClass: 'rangeslider__handle',
+
+    // Callback function
+    onInit: function() {},
+
+    // Callback function
+    onSlide: function(position, value) {},
+
+    // Callback function
+    onSlideEnd: function(position, value) {}
+});
+    var slider1 = document.getElementById("slider1");
+    var output1 = document.getElementById("val1");
+    output1.innerHTML = parseFloat(slider1.value / 10.0).toFixed(1);
+    var slider2 = document.getElementById("slider2");
+    var output2 = document.getElementById("val2");
+    output2.innerHTML = parseFloat(slider2.value / 10.0).toFixed(1);
+    var slider3 = document.getElementById("slider3");
+    var output3 = document.getElementById("val3");
+    output3.innerHTML = parseFloat(slider3.value / 10.0).toFixed(1);
+    var slider4 = document.getElementById("slider4");
+    var output4 = document.getElementById("val4");
+    output4.innerHTML = parseFloat(slider4.value / 10.0).toFixed(1);
+    
+    slider1.oninput = function() {
+        output1.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
+    }
+    slider2.oninput = function() {
+        output2.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
+    }
+    slider3.oninput = function() {
+        output3.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
+    }
+    slider4.oninput = function() {
+        output4.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
+    }
+</script>

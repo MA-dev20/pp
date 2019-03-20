@@ -1,0 +1,25 @@
+<section id="head">
+        Jetzt <%= @user.fname %> bewerten!
+</section>
+<section id="middle">
+    <div class="circle">
+        <%= image_tag @user.avatar.quad.url, class: 'buzz' %>
+    </div>
+</section>
+<section id="skip">
+   Skip mit Leertaste
+</section>
+
+
+<%= audio_tag('rate/haltemichraus.mp3', id: 'tag1') %>
+<%= audio_tag('rate/lehnezurueck.mp3', id: 'tag2') %>
+<%= audio_tag('rate/nichtschlecht.mp3', id: 'tag3') %>
+
+<script>
+    pick(3);
+    $(window).keypress(function (e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            window.location.replace('<%= gda_rating_path %>');
+        };
+    })
+</script>

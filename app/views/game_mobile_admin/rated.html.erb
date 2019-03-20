@@ -1,0 +1,24 @@
+<section id="content">
+    <div class="head">
+        <% if @admin == @cur_user %>
+            <div class="h100">Du wirst bewertet!</div>
+        <% else %>
+            <div class="h100">Bewertung abgegeben!</div>
+        <% end %>
+    </div>
+    <div class="middle" id="middle">
+        <%= render partial: 'rating_count' %>
+    </div>
+    <div class="bottom">
+      <%= link_to 'Bewertung beenden!', gma_rating_path %>
+    </div>
+</section>
+<script>
+$(document).ready(
+    function() {
+        setInterval(function() {
+            $('#middle').load('rated #middle');
+        }, 2000);
+    }
+);
+</script>

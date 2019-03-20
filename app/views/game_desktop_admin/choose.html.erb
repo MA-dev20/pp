@@ -1,0 +1,45 @@
+<section id="gd_head">
+    <div class="question" id="question">
+        <div class="q1">?</div>
+        <div class="q2">?</div>
+        <div class="q3">?</div>
+    </div>
+</section>
+<section id="gd_middle_slot">
+   <div class="circle">
+      <div class="pic_list" id="pic_lst">
+       <% i = 0 %>
+       <% while i < 100 %>
+        <% @turns.each do |t| %>
+            <% if t.user_id.nil? %>
+            <% if !@admin.avatar.nil? %>
+               <div class='pic' id="pic<%= i %>">
+                <%= image_tag @admin.avatar.quad.url %>
+                <% i = i + 1 %>
+                </div>
+            <% end %>
+            <% else %>
+            <% if !User.find_by(id: t.user_id).avatar.nil? %>
+               <div class='pic' id="pic<%= i %>">
+                <%= image_tag User.find_by(id: t.user_id).avatar.quad.url %>
+                <% i = i + 1 %>
+                </div>
+            <% end %>
+            <% end %>
+        <% end %>
+        <% end %>
+        </div>
+    </div>
+</section>
+
+<%= audio_tag("choose/slot.mp3", id: 'slot') %>
+
+<script>
+    document.getElementById('slot').play();
+    setTimeout(function() {
+        document.getElementById('slot').pause();
+        window.location.replace('<%= gda_turn_path %>');
+    }, 5000);
+    
+
+</script>

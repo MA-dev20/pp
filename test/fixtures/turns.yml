@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game: one
+  word: one
+  user: one
+  admin: one
+  place: 1
+  play: false
+  played: false
+
+two:
+  game: two
+  word: two
+  user: two
+  admin: two
+  place: 1
+  play: false
+  played: false

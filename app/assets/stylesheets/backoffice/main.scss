@@ -1,0 +1,115 @@
+/*
+ *= require perfect-scrollbar
+ *= require cs-select/cs-select
+ *= require cs-select/cs-skin-underline
+ *= require omnes
+ *= require dataTables/jquery.dataTables
+ */
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import 'font-awesome';
+
+
+body {
+    font-family: 'Omnes';
+    background-color: #ededed;
+}
+.alert {
+    position: fixed;
+    top: 71px;
+    left: 200px;
+    width: calc(100vw - 200px);
+    background-color: rgba(210, 240, 240, 0.8);
+    border: none;
+    color: #2887b7;
+    font-size: 2vh;
+    line-height: 4vh;
+}
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 200px;
+    height: 71px;
+    width: calc( 100% - 200px );
+    background-color: white;
+    box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.1);
+    z-index: 10;
+}
+.welcome {
+    position: relative;
+    left: 75px;
+    top: 0;
+    line-height: 71px;
+    font-size: 25px;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0vh;
+    left: 0vh;
+    height: 100%;
+    width: 200px;
+    background: linear-gradient(#1dacf1 0%, #1a8ed6 51%, #145daa 100%);
+    box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.5);
+    z-index: 10;
+}
+.logo-top {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 120px;
+    width: 120px;
+    margin: 40px;
+    border-radius: 50%;
+    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
+}
+.links {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 200px;
+}
+.links .link {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 200px;
+    line-height: 50px;
+    cursor: pointer;
+}
+.links .link a {
+    position: absolute;
+    text-align: left;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    text-align: center;
+}
+.links .link:hover,
+.links .link.active {
+    background-color: rgba(0,0,0,0.1);
+    font-weight: bold;
+}
+
+#content {
+    position: fixed;
+    top: 121px;
+    left: 273px;
+    width: calc( 100% - 323px );
+    height: calc( 100% - 171px );
+}
+
+#table {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 90%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}

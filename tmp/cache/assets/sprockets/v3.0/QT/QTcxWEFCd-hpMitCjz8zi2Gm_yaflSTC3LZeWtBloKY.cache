@@ -1,0 +1,24 @@
+I"T(function() {
+  jQuery(document).on('turbolinks:load', function() {
+    var games;
+    games = $('#game_channel');
+    if ($('#game_channel').length > 0) {
+      return App.games = App.cable.subscriptions.create({
+        channel: "GamesChannel",
+        game_id: games.data('game-id')
+      }, {
+        connected: function() {
+          return log("connected");
+        },
+        disconnected: function() {
+          return log('disconected');
+        },
+        received: function(data) {
+          return location.replace(data['game_state']);
+        }
+      });
+    }
+  });
+
+}).call(this);
+:ET

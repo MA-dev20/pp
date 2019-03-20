@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>Peterpitch</title>
+    <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
+    <%= stylesheet_link_tag    'backoffice/main', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'dash/main', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+
+<section id="navbar">
+    <div class="welcome">Wilkommen im Backoffice!</div> 
+</section>
+
+<section id="sidebar">
+    <a href="<%= root_path %>" ><%= image_tag 'defaults/wolf.jpg', class: 'logo-top' %></a>
+    <div class="links">
+    
+    <% if current_page?(backoffice_admins_path) %>
+        <div class="link active">
+            <%= link_to 'Admins', backoffice_admins_path %>
+        </div>
+    <% else %>
+        <div class="link">
+            <%= link_to 'Admins', backoffice_admins_path %>
+        </div>
+    <% end %>
+ 
+    <% if current_page?(backoffice_words_path) %>
+        <div class="link active">
+            <%= link_to 'Spielbegriffe', backoffice_words_path %>
+        </div>
+    <% else %>
+        <div class="link">
+            <%= link_to 'Spielbegriffe', backoffice_words_path %>
+        </div>
+    <% end %>
+
+    </div>
+</section>
+
+<section id="content">
+    <% flash.each do |name, msg| %>
+        <% if msg.is_a?(String) %>
+            <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+                <%= content_tag :div, msg, :id => "flash_#{name}" %>
+            </div>
+        <% end %>
+    <% end %>
+    
+    <%= yield %>
+</section>
+
+</body>
+
+<script>
+    $(document).ready(function() {
+        window.setTimeout(function() {
+           $('.alert').slideUp(500);
+        }, 4000);
+    })
+</script>
+
+</html>
