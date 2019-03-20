@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_14_100819) do
+ActiveRecord::Schema.define(version: 2019_03_20_122359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,10 +45,36 @@ ActiveRecord::Schema.define(version: 2019_02_14_100819) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
+    t.integer "token"
+    t.string "vid_token"
+    t.integer "members"
+    t.string "stripe_id"
+    t.date "expiration"
+    t.boolean "annually"
+    t.boolean "monthy"
+    t.string "password_confirm"
+    t.string "plan_id"
+    t.integer "plan_type"
+    t.string "subscription_id"
+    t.integer "plan_users"
     t.index ["confirmation_token"], name: "index_admins_on_confirmation_token", unique: true
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_admins_on_unlock_token", unique: true
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "set_default_card"
+    t.string "stripe_card_id"
+    t.integer "last_4_cards_digit"
+    t.integer "expiry_month"
+    t.integer "expiry_year"
+    t.string "card_brand"
+    t.string "stripe_custommer_id"
+    t.index ["admin_id"], name: "index_cards_on_admin_id"
   end
 
   create_table "game_ratings", force: :cascade do |t|
@@ -76,6 +102,32 @@ ActiveRecord::Schema.define(version: 2019_02_14_100819) do
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_games_on_admin_id"
     t.index ["team_id"], name: "index_games_on_team_id"
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer "amount_paid"
+    t.string "plan_id"
+    t.string "card_number"
+    t.string "invoice_interval"
+    t.boolean "invoice_paid"
+    t.string "invoice_currency"
+    t.string "stripe_invoice_id"
+    t.bigint "admin_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_invoices_on_admin_id"
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.integer "amount"
+    t.string "product_name"
+    t.string "interval"
+    t.string "currency"
+    t.string "stripe_plan_id"
+    t.bigint "admin_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_plans_on_admin_id"
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -109,6 +161,14 @@ ActiveRecord::Schema.define(version: 2019_02_14_100819) do
     t.boolean "edit_root"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.string "stripe_subscription_id"
+    t.bigint "plan_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
   end
 
   create_table "team_ratings", force: :cascade do |t|
@@ -198,6 +258,7 @@ ActiveRecord::Schema.define(version: 2019_02_14_100819) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.integer "status", default: 2
     t.index ["admin_id"], name: "index_users_on_admin_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
@@ -207,6 +268,7 @@ ActiveRecord::Schema.define(version: 2019_02_14_100819) do
     t.string "sound"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "free"
   end
 
   add_foreign_key "game_ratings", "games"
