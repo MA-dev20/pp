@@ -256,3 +256,55 @@ input[type='radio'] {
     font-size: 3vh;
     line-height: 5vh;
 }
+.mail-box-main {
+	position: relative;
+    padding-left: 44px;
+    min-height: 35px;
+	padding-top: 6px;
+	span {
+		width: 35px;
+		height: 35px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		left: 0;
+		top: 0;
+		overflow: hidden;
+		border: 1px solid #ccc;
+		img {
+			max-width: 100%;
+		}
+	}
+}
+
+.modal-body {
+    .mail-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+      .email-add {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+      }
+      .mail-btn {
+        min-width: 140px;
+        .btn-accept {
+          background-color: #1ddaaf;
+          border-color: #1ddaaf;
+          font-size: 0.87rem;
+          padding: 0.25rem 0.75rem 0.45rem 0.75rem;
+        }
+        .btn-reject {
+          background-color: #ff0000;
+          border-color: #ff0000;
+          font-size: 0.87rem;
+          padding: 0.25rem 0.75rem 0.45rem 0.75rem;
+        }
+      }
+    }
+  }
