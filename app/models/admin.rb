@@ -50,28 +50,30 @@ class Admin < ApplicationRecord
   end
   ##########################Update Subscription for year################
   def upgrade_subscription_year(user)
+    debugger
     if self.plan_type == 'year'
-      year_amount = 7.17*100*12
-      plan =(year_amount.to_i) * user.to_i
+      year_amount = (7.17*100)*12
+      plan =(year_amount.to_i)
    
     end
     begin
-      @plan =Stripe::Plan.retrieve(user +  self.plan_type)
+      debugger
+      @plan =Stripe::Plan.retrieve(1.to_s +  self.plan_type)
     rescue => e
       if (e.present?)
         @plan = Stripe::Plan.create({
                                         amount: plan,
                                         interval: self.plan_type,
                                         product: {
-                                            name: user + self.plan_type
+                                            name: 1.to_s + self.plan_type
                                         },
                                         currency: 'eur',
-                                        id: user + self.plan_type 
+                                        id: 1.to_s + self.plan_type 
                                     })
       end
     end
     self.plan_id = @plan.id
-    self.plan_users = user
+    self.plan_users = 1
     self.save
     begin
     Stripe::Subscription.retrieve(@admin.admin_subscription_id)
@@ -83,8 +85,9 @@ class Admin < ApplicationRecord
                                               plan:  self.plan_id
                                             }
                                                 ]
+                                        billing_cycle_anchor=now
                                       })
-    self.subscriptions.create(admin_id: self.id, plan_id: self.plan_id,subscription_id:@subscription.id, user_id:user.id)
+    self.subscriptions.create(admin_id: self.id, plan_id: self.plan_id, subscription_id:@subscription.id, user_id:user.id)
     rescue => e
       if (e.present?)
       @subscription = Stripe::Subscription.create({ 
@@ -94,6 +97,7 @@ class Admin < ApplicationRecord
                                               plan:  @plan.id
                                             }
                                                 ]
+                                        billing_cycle_anchor=now
                                       })
       self.subscriptions.create(admin_id: self.id, plan_id: self.plan_id,subscription_id:@subscription.id, user_id:user.id)
       end
@@ -136,8 +140,10 @@ class Admin < ApplicationRecord
                                         items: [  
                                             { 
                                               plan:  @plan.id
+                                              
                                             }
                                                 ]
+                                        billing_cycle_anchor: 1554383082,
                                       })
       self.admin_subscription_id = @subscription.id
       self.save
@@ -151,6 +157,7 @@ class Admin < ApplicationRecord
                                               plan:  @plan.id
                                             }
                                                 ]
+                                        billing_cycle_anchor: 1554383082,
                                       })
         self.admin_subscription_id = @subscription.id
         self.save
