@@ -13,6 +13,7 @@ class Admin < ApplicationRecord
   has_many :cards, dependent: :destroy
   has_many :plans, dependent: :destroy
   has_many :invoices, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   enum plan_type: [:year , :month]
   
@@ -47,43 +48,114 @@ class Admin < ApplicationRecord
   def expiry
     created_at + 14.days
   end
-
-
-  def upgrade_subscription
-    if self.plan_type == 'month'
-      monthy_amount = 8.85*100
-      plan =(monthy_amount.to_i) * self.plan_users.to_i
-    else
+  ##########################Update Subscription for year################
+  def upgrade_subscription_year(user)
+    if self.plan_type == 'year'
       year_amount = 7.17*100*12
-      plan =(year_amount.to_i) * self.plan_users.to_i
+      plan =(year_amount.to_i) * user.to_i
+   
     end
     begin
-      @plan =Stripe::Plan.retrieve(self.plan_users.to_s + self.plan_type)
+      @plan =Stripe::Plan.retrieve(user +  self.plan_type)
     rescue => e
       if (e.present?)
         @plan = Stripe::Plan.create({
                                         amount: plan,
                                         interval: self.plan_type,
                                         product: {
-                                            name: self.plan_users.to_s + self.plan_type
+                                            name: user + self.plan_type
                                         },
                                         currency: 'eur',
-                                        id: self.plan_users.to_s + self.plan_type
+                                        id: user + self.plan_type 
+                                    })
+      end
+    end
+    self.plan_id = @plan.id
+    self.plan_users = user
+    self.save
+    begin
+    Stripe::Subscription.retrieve(@admin.admin_subscription_id)
+    @subscription = Stripe::Subscription.create(
+                                        @admin.admin_subscription_id,{ 
+                                        
+                                        items: [  
+                                            { 
+                                              plan:  self.plan_id
+                                            }
+                                                ]
+                                      })
+    self.subscriptions.create(admin_id: self.id, plan_id: self.plan_id,subscription_id:@subscription.id, user_id:user.id)
+    rescue => e
+      if (e.present?)
+      @subscription = Stripe::Subscription.create({ 
+                                        customer: self.stripe_id,
+                                        items: [  
+                                            { 
+                                              plan:  @plan.id
+                                            }
+                                                ]
+                                      })
+      self.subscriptions.create(admin_id: self.id, plan_id: self.plan_id,subscription_id:@subscription.id, user_id:user.id)
+      end
+    end
+
+  end
+
+  ########################## Update Subscription for Month######################
+  def upgrade_subscription
+    if self.plan_type == 'month'
+      monthy_amount = 8.85*100
+      plan =(monthy_amount.to_i) * self.plan_users.to_i
+    # else
+    #   year_amount = 7.17*100
+    #   plan =(year_amount.to_i) * self.plan_users.to_i
+    end
+    begin
+      @plan =Stripe::Plan.retrieve(self.plan_users +  self.plan_type)
+    rescue => e
+      if (e.present?)
+        @plan = Stripe::Plan.create({
+                                        amount: plan,
+                                        interval: self.plan_type,
+                                        product: {
+                                            name: self.plan_users + self.plan_type
+                                        },
+                                        currency: 'eur',
+                                        id: self.plan_users + self.plan_type 
                                     })
       end
     end
     self.plan_id = @plan.id
     self.plan_users = self.plan_users
-    @subscription = Stripe::Subscription.create({ 
-                                      customer: self.stripe_id,
-                                      items: [  
-                                          { 
-                                            plan:  @plan.id
-                                          }
-                                              ]
-                                    })
-    self.subscription_id = @subscription.id
     self.save
+    begin
+    Stripe::Subscription.retrieve(@admin.admin_subscription_id)
+    @subscription = Stripe::Subscription.update(
+                                        @admin.admin_subscription_id,{ 
+                                        
+                                        items: [  
+                                            { 
+                                              plan:  @plan.id
+                                            }
+                                                ]
+                                      })
+      self.admin_subscription_id = @subscription.id
+      self.save
+
+    rescue => e
+      if (e.present?)
+      @subscription = Stripe::Subscription.create({ 
+                                        customer: self.stripe_id,
+                                        items: [  
+                                            { 
+                                              plan:  @plan.id
+                                            }
+                                                ]
+                                      })
+        self.admin_subscription_id = @subscription.id
+        self.save
+      end
+    end
 
   end
 

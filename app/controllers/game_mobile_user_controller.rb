@@ -68,100 +68,36 @@ class GameMobileUserController < ApplicationController
 
   def accept_user    
     @user = User.where(id: params[:user_id]).first
+    @admin = Admin.find(@game.admin_id)
     if @user.update_attributes(status: 0)
-      redirect_back(fallback_location: root_path)
+      # redirect_back(fallback_location: root_path)
         a =8.85*100
         month =a.to_i
-        b =7.17*100
-        year = (b.to_i)*12 
-        if ((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) == plan_users ) and @user.admin.plan_type.eql?("year") and @admin and !@admin.cards.blank?
-          Stripe::Charge.create({
-            customer:@admin.stripe_id ,
-            amount: year,
-            currency: 'eur',
-            description: 'Charge for PeterPitch' + @user.email,
-          })
-          @plan =Stripe::Plan.retrieve(plan_users.to_s + "_" + @admin.plan_type)
-
-            if @plan
-              Stripe::Plan.update(plan_users.to_s + "_" +plan_type,)
-              Stripe::Subscription.update(
-                @admin.subscription_id,
-                {
-                  items: [
-                    {
-                      plan: plan_users.to_s + "_" +plan_type,
-                    }
-                  ],
-                }
-              )
-            else 
-              @plan = Stripe::Plan.create({
-                amount: year,
-                interval: plan_type,
-                product: {
-                    name: plan_users.to_s + "_" +plan_type
-                },
-                currency: 'eur',
-                id: plan_users.to_s + "_" +plan_type
-            })
-            @admin.update_attributes(plan_type: plan_type , plan_id: @plan.id, plan_users: plan_users)
-           
-            Stripe::Subscription.update(
-              @admin.subscription_id,
-              {
-                items: [
-                  {
-                    plan: @admin.plan_id,
-                  }
-                ],
-              }
-            )
-            @admin.update_attributes(subscription_id:  @subscription.id )
-            end  
-        elsif ((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) == plan_users ) and @user.admin.plan_type.eql?("month") and @admin and !@admin.cards.blank?
-
-          Stripe::Charge.create({
-            customer:@admin.stripe_id ,
-            amount: month,
-            currency: 'eur',
-            description: 'Charge for PeterPitch' + @user.email,
-          })
-
-          @plan =Stripe::Plan.retrieve(plan_users.to_s + "_" + @admin.plan_type)
-
-            if @plan
-              Stripe::Plan.update(plan_users.to_s + "_" +plan_type,)
-            else 
-              @plan = Stripe::Plan.create({
-                amount: month,
-                interval: plan_type,
-                product: {
-                    name: plan_users.to_s + "_" +plan_type
-                },
-                currency: 'eur',
-                id: plan_users.to_s + "_" +plan_type
-            })
-            @admin.update_attributes(plan_type: plan_type , plan_id: @plan.id, plan_users: plan_users)
-           
-            Stripe::Subscription.update(
-              @admin.subscription_id,
-              {
-                items: [
-                  {
-                    plan: @admin.plan_id,
-                  }
-                ],
-              }
-            )
-            @admin.update_attributes(subscription_id:  @subscription.id )
-
-            end 
-         
+        b =7.17*100*12
+        year = b.to_i
        
+       if ((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) <=  @admin.plan_users )  and @admin and !@admin.cards.blank?
+          
+        if @user.admin.plan_type.eql?("year")
+            # Stripe::Charge.create({
+            #     customer:@admin.stripe_id ,
+            #     amount: year,
+            #     currency: 'eur',
+            #     description: 'Charge for PeterPitch' + @user.email,
+            #   })
+            @user.admin.upgrade_subscription_year(@user)  
 
+          elsif @user.admin.plan_type.eql?("year")
+            Stripe::Charge.create({
+                customer:@admin.stripe_id ,
+                amount: month,
+                currency: 'eur',
+                description: 'Charge for PeterPitch' + @user.email,
+              })
+            @user.admin.upgrade_subscription  
+          end
         end
-      @user.admin.upgrade_subscription   
+        
     end
 
   end
