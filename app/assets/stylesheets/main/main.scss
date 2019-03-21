@@ -2,12 +2,12 @@
  *= require main/media
  *= require acumin
  *= require barack
- *= require main/landing_style
-
  */
 @import 'bootstrap';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+@import 'landing_style';
+
 
 .alert {
     z-index: 1000;

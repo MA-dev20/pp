@@ -10,4 +10,9 @@ module DashAdminHelper
     def display_popup
         return @pending_count > 0 ? 'block;' : 'none;'
     end
+
+    def display_modal
+        return @count > 0 ? 'block;' : 'none;'
+    end
+
 end

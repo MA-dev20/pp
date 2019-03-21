@@ -9,6 +9,7 @@ class GamesController < ApplicationController
     if @game && @game.admin_id == @admin.id
       sign_in(@game)
       redirect_to gda_intro_path
+
     elsif @game && !@admin.admin_id == @admin.id
         flash[:danger] = 'Bitte wähle ein anderes Passwort'
         redirect_to dash_admin_games_path(params[:game][:team_id])

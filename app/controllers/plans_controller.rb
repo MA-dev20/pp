@@ -19,7 +19,7 @@ class PlansController < ApplicationController
   end
 
 
-  def create_plan(plan,plan_type,number_of_users)
+  def create_plan(plan,plan_type,number_of_users)x
     begin
       @plan =Stripe::Plan.retrieve(number_of_users.to_s + plan_type)
     rescue => e
@@ -28,10 +28,10 @@ class PlansController < ApplicationController
                                      amount: plan,
                                      interval: plan_type,
                                      product: {
-                                         name: number_of_users.to_s + plan_type
+                                         name: number_of_users.to_s + "_" +plan_type
                                      },
                                      currency: 'eur',
-                                     id: number_of_users.to_s + plan_type
+                                     id: number_of_users.to_s + "_" +plan_type
                                  })
       end
     end
@@ -68,15 +68,7 @@ class PlansController < ApplicationController
   #   b =7.17*100
   #   year = (b.to_i )* user *12
   #     if !@admin.annually.eql?(true)
-  #       @plan= Stripe::Plan.create({
-  #         amount:year,
-  #         interval: 'year',
-  #         product: {
-  #           name: 'Admin'+  +SecureRandom.hex(1)+  'User_Plan' +user.to_s ,
-  #         },
-  #         currency: 'eur',
-  #         id: 'Admin'+  +SecureRandom.hex(1)+  'User_Plan' +user.to_s ,
-  #       })
+  #       @plan= Stripe::Plan.create({amount:year, interval: 'year',product: { name: 'Admin'+  +SecureRandom.hex(1)+  'User_Plan' +user.to_s , },    currency: 'eur',id: 'Admin'+  +SecureRandom.hex(1)+  'User_Plan' +user.to_s ,})
   #       @plans= @admin.plans.create(admin_id: @admin.id, amount: @plan.amount,
   #         product_name: @plan.product,interval: @plan.interval  ,currency: @plan.currency,
   #         stripe_plan_id: @plan.id)
