@@ -9,12 +9,12 @@ class PlansController < ApplicationController
     plan_type = params[:admin]['plan_type']
     if plan_type == 'monthly'
       monthy_amount = 8.85*100
-      plan_month =(monthy_amount.to_i) * number_of_users.to_i
+      plan_month =(monthy_amount) * number_of_users.to_i
       create_plan(plan_month,plan_type,number_of_users)
 
     else
       year_amount = 7.17*100*12
-      year_plan =(year_amount.to_i) * number_of_users.to_i
+      year_plan =(year_amount) * number_of_users.to_i
       create_plan(year_plan,plan_type,number_of_users)
     end
   end
