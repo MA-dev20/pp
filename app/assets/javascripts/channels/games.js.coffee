@@ -26,3 +26,4 @@ jQuery(document).on 'turbolinks:load', ->
       else
         $.get('/mobile/user/game/wait/'+data["status"])
 
+
