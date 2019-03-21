@@ -1,0 +1,17 @@
+I"Š(function() {
+  jQuery(document).on('turbolinks:load', function() {
+    return App.games = App.cable.subscriptions.create({
+      channel: "GamesChannel"
+    }, {
+      connected: function() {
+        return log("connected");
+      },
+      disconnected: function() {},
+      received: function(data) {
+        return location.replace(data['game_state']);
+      }
+    });
+  });
+
+}).call(this);
+:ET
