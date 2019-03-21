@@ -3,7 +3,6 @@ class Admin < ApplicationRecord
   # :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable, :lockable, :recoverable, :rememberable, :validatable, :trackable
     
-  #########Associations##################
   has_many :games, dependent: :destroy
   has_many :ratings, dependent: :destroy
   has_many :teams, dependent: :destroy
@@ -167,4 +166,3 @@ class Admin < ApplicationRecord
 
 
 end
-

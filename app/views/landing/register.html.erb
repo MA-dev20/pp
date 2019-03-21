@@ -65,51 +65,51 @@
                                   </div>
                               </div>
                           </div>
-                          
+
                           <div class="form-group">
                               <label for=""> Vorname*</label>
                               <%= f.text_field :fname, class: 'form-control' %>
                           </div>
-                          
+
                           <div class="form-group">
                               <label for=""> Nachname*</label>
                               <%= f.text_field :lname, class: 'form-control' %>
                           </div>
-                          
+
                           <div class="form-group">
                               <label for=""> Straße und Hausnummer*</label>
                               <%= f.text_field :street, class: 'form-control' %>
                           </div>
-                          
+
                           <div class="form-group">
                               <label for=""> PLZ*</label>
                               <%= f.number_field :zipcode, class: 'form-control' %>
                           </div>
-                          
+
                           <div class="form-group">
                               <label for=""> Stadt*</label>
                               <%= f.text_field :city, class: 'form-control' %>
                           </div>
-                          
+
                           <div class="form-group">
                               <label for=""> E-Mail*</label>
                               <%= f.email_field :email, class: 'form-control' %>
                           </div>
-                          
+
                           <div class="form-group">
                               <label for=""> Passwort*</label>
                               <%= f.password_field :password, class: 'form-control' %>
                           </div>
-                          
+
                           <div class="form-group">
                               <label for=""> Wie viele Unternehmen<br>schulst du pro Jahr?</label>
                               <%= f.number_field :employees, class: 'form-control' %>
                           </div>
-                          
+
                           <div class="form-group text-center">
                               <%= f.submit 'Jetzt anmelden', class: 'btn btn-green' %>
                           </div>
-                          
+
                       </div>
                   <% end %>
               </div>

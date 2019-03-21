@@ -4,7 +4,7 @@ class GameMobileUserController < ApplicationController
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
   layout 'game_mobile'
-    
+
   def new
   end
     
@@ -26,8 +26,8 @@ class GameMobileUserController < ApplicationController
         #   a =8.85*100
         #   month =a.to_i
         #   b =7.17*100
-        #   year = (b.to_i)*12 
-          
+        #   year = (b.to_i)*12
+
         #   if @user.admin.plan_type.eql?("year") and !@admin.cards.blank?
         #     Stripe::Charge.create({
         #       customer:@admin.stripe_id ,
@@ -45,7 +45,7 @@ class GameMobileUserController < ApplicationController
 
         #   end
         # @user.admin.upgrade_subscription
-        
+
         sign_in(@user)
         redirect_to gmu_new_name_path
       end
@@ -54,7 +54,7 @@ class GameMobileUserController < ApplicationController
       redirect_to root_path
     end
   end
-  
+
   def reject_user
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
@@ -66,7 +66,7 @@ class GameMobileUserController < ApplicationController
   end
 
 
-  def accept_user    
+  def accept_user
     @user = User.where(id: params[:user_id]).first
     @admin = Admin.find(@game.admin_id)
     if @user.update_attributes(status: 0)
@@ -75,9 +75,9 @@ class GameMobileUserController < ApplicationController
         month =a.to_i
         b =7.17*100*12
         year = b.to_i
-       
+
        if ((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) <=  @admin.plan_users )  and @admin and !@admin.cards.blank?
-          
+
         if @user.admin.plan_type.eql?("year")
             # Stripe::Charge.create({
             #     customer:@admin.stripe_id ,
@@ -85,7 +85,7 @@ class GameMobileUserController < ApplicationController
             #     currency: 'eur',
             #     description: 'Charge for PeterPitch' + @user.email,
             #   })
-            @user.admin.upgrade_subscription_year(@user)  
+            @user.admin.upgrade_subscription_year(@user)
 
           elsif @user.admin.plan_type.eql?("year")
             Stripe::Charge.create({
@@ -94,35 +94,45 @@ class GameMobileUserController < ApplicationController
                 currency: 'eur',
                 description: 'Charge for PeterPitch' + @user.email,
               })
-            @user.admin.upgrade_subscription  
+            @user.admin.upgrade_subscription
           end
         end
-        
+
     end
 
   end
 
 
   def new_name
+    @game = Game.find(session[:game_session_id])
   end
-    
+
   def create_name
     @user.update(user_params)
     redirect_to gmu_new_company_path
   end
     
   def new_company
+    @game = Game.find(session[:game_session_id])
   end
      
+  def create_company
+    @game = Game.find(session[:game_session_id])
+    @user.update(user_params)
+    redirect_to gmu_new_avatar_path
+  end
+    
   def create_company
     @user.update(user_params)
     redirect_to gmu_new_avatar_path
   end
     
   def new_avatar
+    @game = Game.find(session[:game_session_id])
   end
-    
+
   def create_avatar
+    @game = Game.find(session[:game_session_id])
     @user.update(user_params)
     redirect_to gmu_new_avatar_path
   end
@@ -143,7 +153,7 @@ class GameMobileUserController < ApplicationController
       session.delete(:game_session_id)
       sign_in(@game)
       redirect_to gmu_wait_path
-      # if @user.status_changed? &&  @user.status == "rejected" 
+      # if @user.status_changed? &&  @user.status == "rejected"
       #   redirect_to gmu_start_path(@game.password)
       # elsif @user.status == "accepted"
       #   session.delete(:game_session_id)
@@ -157,9 +167,9 @@ class GameMobileUserController < ApplicationController
     
   def wait
     ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id,
-     user_fname: current_user.fname, user_lname: current_user.lname,  
+     user_fname: current_user.fname, user_lname: current_user.lname,
      user_avatar: current_user.avatar.url , user_id: current_user.id
- 
+
 
   end
 
@@ -219,7 +229,7 @@ class GameMobileUserController < ApplicationController
     def user_params
       params.require(:user).permit(:avatar, :company, :fname, :lname)
     end
-    
- 
+
+
 
 end
