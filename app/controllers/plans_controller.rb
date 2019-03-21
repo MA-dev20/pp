@@ -1,5 +1,6 @@
 class PlansController < ApplicationController
   before_action :authenticate_admin!, :set_admin
+  before_action :card_check, only: [:create]
   skip_before_action :check_expiration_date
   layout 'main'
   
@@ -60,6 +61,12 @@ class PlansController < ApplicationController
     @admin = current_admin
   end
 
+  def card_check
+    if !@admin.cards.exists? 
+      redirect_to dash_admin_billing_path
+      flash[:notice] ="Please enter your card first"
+    end
+  end
 
   
 end
