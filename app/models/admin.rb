@@ -74,15 +74,14 @@ class Admin < ApplicationRecord
     end
     self.plan_id = @plan.id
     self.plan_users = self.plan_users
-    @subscription = Stripe::Subscription.create(
-        {
-            customer: self.stripe_id,
-            items: [
-                {
-                    plan:  @plan.id
-                }
-            ]
-        })
+    @subscription = Stripe::Subscription.create({ 
+                                      customer: self.stripe_id,
+                                      items: [  
+                                          { 
+                                            plan:  @plan.id
+                                          }
+                                              ]
+                                    })
     self.subscription_id = @subscription.id
     self.save
 

@@ -321,13 +321,13 @@ header
   .trial-block .trial-block-detail {
 	  padding: 22px 25px;
   }
-  .trial-block .btn-green {
+  .trialblock-btns {
 	  position: absolute;
 	  left: 0;
 	  right: 0;
 	  bottom: -20px;
 	  margin: 0 auto;
-	  max-width: 220px;
+	  text-align: center;
   }
   .trial-block h4 {
 	  color: #232323;
@@ -359,11 +359,15 @@ header
 	  content: '';
 	  height: 2px;
 	  width: 100%;
-	  background-color: #bebebe;
-	  display: inline-block;
+	background-color: #bebebe;
+	display: inline-block;
+	background: #ffffff;
+	background: -moz-linear-gradient(left, #ffffff 0%, #e6e6e6 7%, #e6e6e6 47%, #e6e6e6 92%, #ffffff 100%);
+	background: -webkit-linear-gradient(left, #ffffff 0%,#e6e6e6 7%,#e6e6e6 47%,#e6e6e6 92%,#ffffff 100%);
+	background: linear-gradient(to right, #ffffff 0%,#e6e6e6 7%,#e6e6e6 47%,#e6e6e6 92%,#ffffff 100%);
   }
   .pitchit-intro {
-	  padding: 80px 0;
+	  padding: 68px 0px 80px 0;
   }
   .img-box {
 	  background-color: #fff;
@@ -398,7 +402,7 @@ header
   }
   .paw-col.paw-col-1:after {
 	  left: -59px;
-	  bottom: -73px;
+	  bottom: -80px;
   }
   .paw-col.paw-col-2:after {
 	  right: -35px;
@@ -422,7 +426,7 @@ header
 	  color: #8f9091;
   }
   .customer-section {
-	  padding-top: 10px;
+	  padding-top: 24px;
 	  padding-bottom: 80px;
   }
   .customer-container {
@@ -1243,7 +1247,106 @@ price
 
 
   
-  
+  /*
+=====================================================
+product
+=====================================================
+*/
+
+
+.product-content .product-block:nth-of-type(even) {
+	padding-right: 60px;
+	padding-left: 0px;
+ }
+ .product-content .product-block:nth-of-type(odd) {
+	padding-left: 60px;
+	padding-right: 0px;
+ }
+ .product-content .product-block:first-child,
+ .product-content .product-block:last-child {
+	 padding: 0 60px;
+ }
+.product-block .product-detail {
+    max-width: 76%;
+    margin: 0 auto;
+}
+.product-block .product-detail p,
+.fleischKissen-block .section-heading {
+    font-family: 'Barack-Medium';
+}
+.product-block-starten .decoration-left {
+    position: absolute;
+    top: -33px;
+    left: -22px;
+    -ms-transform: rotate(48deg);
+    -webkit-transform: rotate(48deg);
+    transform: rotate(48deg);
+}
+.product-block-beit .decoration-right {
+    position: absolute;
+    top: -35px;
+    right: -25px;
+    -ms-transform: rotate(-42deg);
+    -webkit-transform: rotate(-42deg);
+    transform: rotate(-42deg);
+}
+.product-block-akku .decoration-left {
+    position: absolute;
+    bottom: 16px;
+    left: -25px;
+    -ms-transform: rotate(-42deg);
+    -webkit-transform: rotate(-42deg);
+    transform: rotate(-42deg);
+}
+.product-block .product-img:after {
+	content: '';
+	background: image_url('paw.png') no-repeat;
+    width: 136px;
+    height: 136px;
+    background-size: 136px;
+    position: absolute;
+}
+.product-block-starten .product-img:after {
+    bottom: -140px;
+    right: 18px;
+}
+.product-block-beit .product-img:after {
+    bottom: -140px;
+    left: 24px;
+    -ms-transform: rotate(-76deg);
+    -webkit-transform: rotate(-76deg);
+    transform: rotate(-76deg);
+}
+.product-block-akku .product-img:after {
+    bottom: -148px;
+    right: 214px;
+}
+.pb-beit-s .product-img:after {
+	left: 98px;
+	bottom: -140px;
+	-ms-transform: rotate(-76deg);
+    -webkit-transform: rotate(-76deg);
+    transform: rotate(-76deg);
+}
+.pb-starten-s .product-img:after {
+    content: none;
+}
+.fleischKissen-block {
+    margin-bottom: 100px;
+}
+
+
+
+
+
+
+
+
+/*
+=====================================================
+product
+=====================================================
+*/
   
   
   
@@ -1368,32 +1471,13 @@ price
 	.offer-section {
 		padding-top: 160px;
 	}
-	.product-block-starten .product-img {
-		padding-left: 15px;
-	}
-	.product-block-starten .decoration-left {
-		left: -12px;
-	}
-	.product-block-beit .product-img {
-		padding-right: 15px;
-	}
-	.product-block-beit .decoration-right {
-		right: -12px;
-	}
-	.product-block-akku .product-img:after {
-		bottom: -150px;
-		right: 0;
-	}
-	.product-block-akku .product-img {
-		padding-left: 15px;
-	}
-	.product-block-akku .decoration-left {
-		left: -12px;
-		bottom: 7px;
-	}
 	.product-content {
 		overflow-x: hidden;
 	}
+	.product-block-akku .product-img:after {
+        bottom: -170px;
+        right: 0px;
+    }
 }
 @media only screen and (max-width: 767px) {
 	.app-banner{
@@ -1554,6 +1638,41 @@ price
 	.form-main .row [class*="col-"] {
 		padding: 0 15px;
 	}
+	.product-content .product-block:first-child,
+    .product-content .product-block:last-child {
+        padding-right: 0;
+        padding-left: 20px;
+    }
+    .product-content .product-block:nth-of-type(even) {
+        padding-right: 20px;
+    }
+    .product-content .product-block:nth-of-type(odd) {
+        padding-left: 20px;
+    }
+    .product-block-starten .decoration-left {
+        top: -34px;
+        left: -26px;
+    }
+    .product-block-beit .decoration-right {
+        top: -38px;
+        right: -28px;
+    }
+    .product-block-akku .decoration-left {
+        bottom: 6px;
+        left: -27px;
+	}
+	.pricing-signup .form-group>font {
+		margin-top: 1rem;
+		width: 100%;
+	}
+	.pricing-signup .form-group .btn-green {
+		width: 100%;
+	}
+	.pricing-signup .form-control {
+		height: auto;
+		font-size: 1rem;
+		padding: 0.375rem 0.75rem;
+	}
 }
 @media only screen and (max-width: 575px) {
 	.customer-section .customer-block-l .customer-review {
@@ -1575,16 +1694,16 @@ price
 		height: 54px;
 		font-size: 1rem;
 	}
-	.product-block-akku .decoration-left {
-		bottom: -12px;
-	}
-	.product-block-beit .decoration-right {
-		right: -15px;
-		top: -37px;
-	}
-	.product-block-akku .decoration-left {
-		left: -15px;
-	}
+	// .product-block-akku .decoration-left {
+	// 	bottom: -12px;
+	// }
+	// .product-block-beit .decoration-right {
+	// 	right: -15px;
+	// 	top: -37px;
+	// }
+	// .product-block-akku .decoration-left {
+	// 	left: -15px;
+	// }
 	.trial-block {
 		flex-direction: column;
 		align-items: flex-start;
@@ -1593,7 +1712,7 @@ price
 	.trial-block .trial-block-detail {
 		padding: 22px 0px 6px 0px;
 	}
-	.trial-block .btn-green {
+	.trialblock-btns {
 		bottom: -46px;
 	}
 	.form-main-login {
@@ -1614,6 +1733,10 @@ price
 	.why_peter {
 		padding: 25px 12px 40px 25px;
 	}
+	.product-block-akku .decoration-left {
+        bottom: -8px;
+        left: -31px;
+    }
 }
 @media only screen and (max-width: 400px) {
 	.product-block-akku .decoration-left {

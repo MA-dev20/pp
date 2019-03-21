@@ -31,6 +31,7 @@ class LandingController < ApplicationController
         redirect_to  edit_admin_path  
       end
   end
+  
   def update_admin_details
     @admin = Admin.where(vid_token: params[:v_id]).first
 

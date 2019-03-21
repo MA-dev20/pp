@@ -29,7 +29,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def create_avatar
-    @admin.update(avatar: params[:admin][:avatar])
+    @admin.update(avatar: params[:user][:avatar])
     redirect_to gma_new_avatar_path
   end
     
@@ -63,7 +63,8 @@ class GameMobileAdminController < ApplicationController
   def wait
     if @game.state == 'intro' || @game.state == 'replay'
       @game.update(state: 'wait')
-    end
+    end    
+    @count = @game.turns.select{|turn| turn if !turn.user.nil? && turn.user.pending?}.count
   end
     
   def choose

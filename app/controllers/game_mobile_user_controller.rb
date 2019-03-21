@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended]
+  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user]
   before_action :authenticate_user!, :set_user, except: [:new, :create,:reject_user ,:accept_user]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
@@ -23,25 +23,28 @@ class GameMobileUserController < ApplicationController
       else
         @user = @admin.users.create(email: params[:user][:email])
         TeamUser.create(user_id: @user.id, team_id: @game.team_id)
-        if @user.admin.plan_type.eql?("year")
-          a =8.85*100
-          month =a.to_i
-          b =7.17*100
-          year = (b.to_i)*12 
-          Stripe::Charge.create({
-            amount: year,
-            currency: 'eur',
-            description: 'Charge for PeterPitch #{@user.email}',
-          })
-        else
-          Stripe::Charge.create({
-            amount: month,
-            currency: 'eur',
-            description: 'Charge for PeterPitch #{@user.email}',
-          })
+        #   a =8.85*100
+        #   month =a.to_i
+        #   b =7.17*100
+        #   year = (b.to_i)*12 
+          
+        #   if @user.admin.plan_type.eql?("year") and !@admin.cards.blank?
+        #     Stripe::Charge.create({
+        #       customer:@admin.stripe_id ,
+        #       amount: year,
+        #       currency: 'eur',
+        #       description: 'Charge for PeterPitch #{@user.email}',
+        #     })
+        #   else
+        #     Stripe::Charge.create({
+        #       customer:@admin.stripe_id ,
+        #       amount: month,
+        #       currency: 'eur',
+        #       description: 'Charge for PeterPitch #{@user.email}',
+        #     })
 
-        end
-        @user.admin.upgrade_subscription
+        #   end
+        # @user.admin.upgrade_subscription
         
         sign_in(@user)
         redirect_to gmu_new_name_path
@@ -56,7 +59,9 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
       redirect_back(fallback_location: root_path)
-      Turn.where(user_id: @user.id).first.delete
+      # Turn.where(user_id: @user.id).first.delete
+      ActionCable.server.broadcast "game_channel", game_state: 'ended' ,game_id: current_game.id,
+      user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
     end
   end
 
@@ -65,6 +70,98 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 0)
       redirect_back(fallback_location: root_path)
+        a =8.85*100
+        month =a.to_i
+        b =7.17*100
+        year = (b.to_i)*12 
+        if ((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) == plan_users ) and @user.admin.plan_type.eql?("year") and @admin and !@admin.cards.blank?
+          Stripe::Charge.create({
+            customer:@admin.stripe_id ,
+            amount: year,
+            currency: 'eur',
+            description: 'Charge for PeterPitch' + @user.email,
+          })
+          @plan =Stripe::Plan.retrieve(plan_users.to_s + "_" + @admin.plan_type)
+
+            if @plan
+              Stripe::Plan.update(plan_users.to_s + "_" +plan_type,)
+              Stripe::Subscription.update(
+                @admin.subscription_id,
+                {
+                  items: [
+                    {
+                      plan: plan_users.to_s + "_" +plan_type,
+                    }
+                  ],
+                }
+              )
+            else 
+              @plan = Stripe::Plan.create({
+                amount: year,
+                interval: plan_type,
+                product: {
+                    name: plan_users.to_s + "_" +plan_type
+                },
+                currency: 'eur',
+                id: plan_users.to_s + "_" +plan_type
+            })
+            @admin.update_attributes(plan_type: plan_type , plan_id: @plan.id, plan_users: plan_users)
+           
+            Stripe::Subscription.update(
+              @admin.subscription_id,
+              {
+                items: [
+                  {
+                    plan: @admin.plan_id,
+                  }
+                ],
+              }
+            )
+            @admin.update_attributes(subscription_id:  @subscription.id )
+            end  
+        elsif ((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) == plan_users ) and @user.admin.plan_type.eql?("month") and @admin and !@admin.cards.blank?
+
+          Stripe::Charge.create({
+            customer:@admin.stripe_id ,
+            amount: month,
+            currency: 'eur',
+            description: 'Charge for PeterPitch' + @user.email,
+          })
+
+          @plan =Stripe::Plan.retrieve(plan_users.to_s + "_" + @admin.plan_type)
+
+            if @plan
+              Stripe::Plan.update(plan_users.to_s + "_" +plan_type,)
+            else 
+              @plan = Stripe::Plan.create({
+                amount: month,
+                interval: plan_type,
+                product: {
+                    name: plan_users.to_s + "_" +plan_type
+                },
+                currency: 'eur',
+                id: plan_users.to_s + "_" +plan_type
+            })
+            @admin.update_attributes(plan_type: plan_type , plan_id: @plan.id, plan_users: plan_users)
+           
+            Stripe::Subscription.update(
+              @admin.subscription_id,
+              {
+                items: [
+                  {
+                    plan: @admin.plan_id,
+                  }
+                ],
+              }
+            )
+            @admin.update_attributes(subscription_id:  @subscription.id )
+
+            end 
+         
+       
+
+        end
+      @user.admin.upgrade_subscription   
     end
 
   end
@@ -110,14 +207,23 @@ class GameMobileUserController < ApplicationController
       session.delete(:game_session_id)
       sign_in(@game)
       redirect_to gmu_wait_path
+      # if @user.status_changed? &&  @user.status == "rejected" 
+      #   redirect_to gmu_start_path(@game.password)
+      # elsif @user.status == "accepted"
+      #   session.delete(:game_session_id)
+      #   sign_in(@game)
+      #   redirect_to gmu_wait_path
+      # end
     else
       redirect_to gmu_new_turn_path
     end
   end
     
   def wait
-    ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id, user_fname: current_user.fname, user_lname: current_user.lname,  user_avatar: current_user.avatar
-
+    ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id,
+     user_fname: current_user.fname, user_lname: current_user.lname,  
+     user_avatar: current_user.avatar.url , user_id: current_user.id
+ 
 
   end
 
@@ -178,12 +284,6 @@ class GameMobileUserController < ApplicationController
       params.require(:user).permit(:avatar, :company, :fname, :lname)
     end
     
-    # def pop_up
-    #   render(
-    #     html: "<script>alert('No users!')</script>".html_safe,
-    #     layout: 'application'
-    #   )
-    # end
-
+ 
 
 end
