@@ -23,29 +23,6 @@ class GameMobileUserController < ApplicationController
       else
         @user = @admin.users.create(email: params[:user][:email])
         TeamUser.create(user_id: @user.id, team_id: @game.team_id)
-        #   a =8.85*100
-        #   month =a.to_i
-        #   b =7.17*100
-        #   year = (b.to_i)*12
-
-        #   if @user.admin.plan_type.eql?("year") and !@admin.cards.blank?
-        #     Stripe::Charge.create({
-        #       customer:@admin.stripe_id ,
-        #       amount: year,
-        #       currency: 'eur',
-        #       description: 'Charge for PeterPitch #{@user.email}',
-        #     })
-        #   else
-        #     Stripe::Charge.create({
-        #       customer:@admin.stripe_id ,
-        #       amount: month,
-        #       currency: 'eur',
-        #       description: 'Charge for PeterPitch #{@user.email}',
-        #     })
-
-        #   end
-        # @user.admin.upgrade_subscription
-
         sign_in(@user)
         redirect_to gmu_new_name_path
       end
@@ -70,34 +47,50 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     @admin = Admin.find(@game.admin_id)
     if @user.update_attributes(status: 0)
-      # redirect_back(fallback_location: root_path)
         a =8.85*100
         month =a.to_i
         b =7.17*100*12
         year = b.to_i
 
-       if ((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) <=  @admin.plan_users )  and @admin and !@admin.cards.blank?
+        if @admin.plan_type.eql?('trial')
+          redirect_back(fallback_location: root_path)
+        elsif @admin.plan_users?  
+          if(@admin.plan_users <= (@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) ) and @admin and !@admin.cards.blank?
+            if @user.admin.plan_type.eql?("year")
+               @user.admin.upgrade_subscription_year(@user)
+               redirect_back(fallback_location: root_path)
+            elsif @user.admin.plan_type.eql?("month")
+                Stripe::Charge.create({
+                    customer:@admin.stripe_id ,
+                    amount: month,
+                    currency: 'eur',
+                    description: 'Charge for PeterPitch' + @user.email,
+                  })
+                @user.admin.upgrade_subscription
+                redirect_back(fallback_location: root_path)
 
-        if @user.admin.plan_type.eql?("year")
-            # Stripe::Charge.create({
-            #     customer:@admin.stripe_id ,
-            #     amount: year,
-            #     currency: 'eur',
-            #     description: 'Charge for PeterPitch' + @user.email,
-            #   })
-            @user.admin.upgrade_subscription_year(@user)
-
-          elsif @user.admin.plan_type.eql?("year")
-            Stripe::Charge.create({
-                customer:@admin.stripe_id ,
-                amount: month,
-                currency: 'eur',
-                description: 'Charge for PeterPitch' + @user.email,
-              })
-            @user.admin.upgrade_subscription
+            end
           end
-        end
+        else
+          if @admin and !@admin.cards.blank?
+            if @user.admin.plan_type.eql?("year")
+               @user.admin.upgrade_subscription_year(@user)
+               redirect_back(fallback_location: root_path)
 
+            elsif @user.admin.plan_type.eql?("month")
+                Stripe::Charge.create({
+                    customer:@admin.stripe_id ,
+                    amount: month,
+                    currency: 'eur',
+                    description: 'Charge for PeterPitch' + @user.email,
+                  })
+                @user.admin.upgrade_subscription
+                redirect_back(fallback_location: root_path)
+
+            end
+          end
+
+        end
     end
 
   end
@@ -166,10 +159,12 @@ class GameMobileUserController < ApplicationController
   end
     
   def wait
-    ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id,
-     user_fname: current_user.fname, user_lname: current_user.lname,
-     user_avatar: current_user.avatar.url , user_id: current_user.id
-
+    @admin = Admin.find(@game.admin_id)
+    if (current_user && current_user.admin == @admin )&& (current_user.status== "pending" || current_user.status== "rejected" )
+      ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id,
+      user_fname: current_user.fname, user_lname: current_user.lname,
+      user_avatar: current_user.avatar.url , user_id: current_user.id
+    end
 
   end
 
