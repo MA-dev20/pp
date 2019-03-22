@@ -1,7 +1,7 @@
 class AdminsController < ApplicationController
   skip_before_action :check_expiration_date
   before_action :require_root, :set_vars
-  skip_before_action :check_expiration_date
+ # skip_before_action :check_expiration_date
   
   def destroy
     if @admin.destroy
@@ -12,6 +12,11 @@ class AdminsController < ApplicationController
       redirect_to backoffice_admins_path
     end
   end
+
+
+
+
+
     
   private
     def set_vars

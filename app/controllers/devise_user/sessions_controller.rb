@@ -56,7 +56,7 @@ class DeviseUser::SessionsController < Devise::SessionsController
         @admin.skip_confirmation!
         @admin.save
 
-        AdminMailer.offer_to_mail(@admin).deliver if 
+         AdminMailer.offer_to_mail(@admin).deliver if 
         redirect_to verification_token_url(@admin.vid_token)
         # redirect_to root_path , notice: 'Signup Information Sent to your Email Successfully.'
         puts "Offer sent."
