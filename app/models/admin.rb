@@ -3,6 +3,7 @@ class Admin < ApplicationRecord
   # :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable, :lockable, :recoverable, :rememberable, :validatable, :trackable
     
+  #########Associations##################
   has_many :games, dependent: :destroy
   has_many :ratings, dependent: :destroy
   has_many :teams, dependent: :destroy
@@ -14,7 +15,7 @@ class Admin < ApplicationRecord
   has_many :invoices, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
 
-  enum plan_type: [:year , :month]
+  enum plan_type: [:year , :month, :trial]
   
   
   mount_uploader :avatar, PicUploader
@@ -41,6 +42,7 @@ class Admin < ApplicationRecord
       :email => self.email,
     )
     self.stripe_id =  customer.id
+    self.plan_type= "trial"
     self.save
   end
 
@@ -70,7 +72,7 @@ class Admin < ApplicationRecord
       end
     end
    
-    self.plans.create(admin_id: self.id, stripe_plan_id: @plan.id , amount:@plan.id.amount, user_id:user.id)
+    self.plans.create(admin_id: self.id, stripe_plan_id: @plan.id , amount:@plan.amount, user_id:user.id)
 
     # self.plan_id = @plan.id
     # self.plan_users = 1
@@ -113,17 +115,17 @@ class Admin < ApplicationRecord
     #   plan =(year_amount.to_i) * self.plan_users.to_i
     end
     begin
-      @plan =Stripe::Plan.retrieve(self.plan_users +  self.plan_type)
+      @plan =Stripe::Plan.retrieve(self.plan_users.to_s  + self.plan_type)
     rescue => e
       if (e.present?)
         @plan = Stripe::Plan.create({
                                         amount: plan,
                                         interval: self.plan_type,
                                         product: {
-                                            name: self.plan_users + self.plan_type
+                                            name: self.plan_users.to_s + self.plan_type
                                         },
                                         currency: 'eur',
-                                        id: self.plan_users + self.plan_type 
+                                        id: self.plan_users.to_s  + self.plan_type 
                                     })
       end
     end
@@ -166,3 +168,4 @@ class Admin < ApplicationRecord
 
 
 end
+
