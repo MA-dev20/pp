@@ -1,5 +1,5 @@
 class AdminMailer < ApplicationMailer
-    default from: 'support@gmail.com'
+   #default from: 'noreply@peterpitch.de'
   
     def offer_to_mail(admin)
         @admin = admin
