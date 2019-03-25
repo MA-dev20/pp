@@ -38,25 +38,28 @@
 
 			<div class="off-canvas">
 				<section class="app-banner">
+				    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'position: absolute; top: 0; left: 0; width: 100%; height: 750px; z-index: -10000; object-fit: fill;' %>
 					<div class="container">
-						<div class="row align-items-center flex-column-reverse flex-md-row">
-							<div class="col-12 col-md-4 mt-3 mt-md-0">
-								<div class="app-banner-img text-center">
-                <%= image_tag ("iphoneX-mockup.png") ,alt:"IMG" , height:"400"%>
-             </div>
-							</div>
-							<div class="col-12 col-md-8 col-xl-5">
-								<div class="app-banner-main text-center">
-									<h1 class="banner-heading">Peter Pitch</h1>
-									<p class="banner-paragraph pb-1">Das erste digitale Trainingstool für Kommunikation und Vertrieb.</p>
-									<div class="mb-3 pb-1">
-										<a href="#" class="d-inline-block">
-                    <%= image_tag ("video-icon.png"), width:"44"%>
-                    </a>
-									</div>
-                  <a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Kostenlos spielen!</a>
+						<div class="row flex-column-reverse flex-md-row">
+								<div class="app-banner-img text-center" style="z-index: 100">
+                                    <%= image_tag ("iphoneX-mockup.png") ,alt:"IMG" , height:"400"%>
+                                </div>
+				            <div class="app-banner-main text-center">
+							    <div id="typed-strings">
+                                    <span>PETER PITCH</span>
+                                    <p>ZurückBlitzer</p>
+                                    <p>ChefTrampolin</p>
+                                    <p>NotrufSocke</p>
+                                </div>
+                                <h1 style="color: white"><span id="typed"></span></h1>
+								<p class="banner-paragraph pb-1">Das erste digitale Trainingstool für <br>Kommunikation und Vertrieb.</p>
+								<div class="mb-3 pb-1">
+									<a href="#" class="d-inline-block">
+                                        <%= image_tag ("video-icon.png"), width:"44"%>
+                                    </a>
 								</div>
-							</div>
+                                <a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Kostenlos spielen!</a>
+				            </div>
 						</div>
 					</div>
 				</section>
@@ -64,7 +67,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-								<div class="trial-block d-flex">
+								<div class="trial-block d-flex wow fadeInUp" data-wow-duration="1.5s">
 									<div class="trial-block-img">
                   <%= image_tag ("user-1.png")%>
                   </div>
@@ -72,7 +75,7 @@
 										<h4>"Wie geil ist das denn?"</h4>
 										<p>Nimm den Spaß in deinem Unternehmen ernst und verwandel deine Meetings in Gamification-Events. Mit Peter Pitch treibst du dein Mitarbeiter-Rudel zusammen und machst sogar aus den wackeligsten Welpen wahre Wölfe. Learning by Gaming!</p>
                     <div class="trialblock-btns">
-											<a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">robemonat starten</a>
+											<a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Probemonat starten</a>
                   	</div>
 									</div>
 								</div>
@@ -82,10 +85,10 @@
 				</section>
 				<section class="customerLove-section text-center">
 					<div class="container">
-						<h6 class="customerLove-heading mt-3 mb-1">
+						<h6 class="customerLove-heading mt-3 mb-1 wow add-anim fadeIn" data-wow-duration="1.5s">
 							<span>Kunden die Peter Pitch lieben</span>
 						</h6>
-						<ul class="customerLove-list d-flex align-items-center justify-content-around flex-wrap flex-md-nowrap">
+						<ul class="customerLove-list d-flex align-items-center justify-content-around flex-wrap flex-md-nowrap wow add-anim fadeIn" data-wow-duration="1.5s">
 							<li class="px-2"><%= image_tag ("instafreight.png") , alt:"IMG" %>
               </li>
 							<li class="px-2"><%= image_tag ("ergo.png") , alt:"IMG" %>
@@ -102,15 +105,15 @@
 						<div class="row align-items-center">
 							<div class="col-12 col-md-6">
 								<div class="text-sm-center text-md-right box-pitch">
-									<div class="pitchit-img img-box"></div>
+									<div class="pitchit-img img-box wow fadeInLeft" data-wow-duration="1.5s"></div>
 								</div>
 							</div>
 							<div class="col-12 col-md-6 paw-col paw-col-1 paw-rtl">
 								<div class="text-sm-center text-md-left box-pitch">
 									<div class="pitchit-text pb-md-3 pb-lg-5 pr-md-3 pr-lg-5">
-										<h6 class="d-inline-block w-100 text-blue">stage is yours</h6>
-										<h2 class="pitchit-heading mb-3 pb-1"><span class="text-green">Gamifcation</span> - Pitch it! </h2>
-										<p class="pitchit-para pr-lg-5">Gamification bedeutet Spaß in spielfremde & theoretische Situationen einzubringen, wie beispielsweise in Vertriebsschulungen. Mit unserem digitalen Trainingstool und lustigen Catchwords kommen bei deinen Mitarbeitern ungeahnte Potentiale zum Vorschein. </p>
+										<h6 class="d-inline-block w-100 text-blue wow add-anim fadeInUp" data-wow-duration="1.5s">stage is yours</h6>
+										<h2 class="pitchit-heading mb-3 pb-1 wow add-anim fadeInUp" data-wow-duration="1.5s"><span class="text-green">Gamifcation</span> - Pitch it! </h2>
+										<p class="pitchit-para pr-lg-5 wow add-anim fadeInUp" data-wow-duration="1.5s">Gamification bedeutet Spaß in spielfremde & theoretische Situationen einzubringen, wie beispielsweise in Vertriebsschulungen. Mit unserem digitalen Trainingstool und lustigen Catchwords kommen bei deinen Mitarbeitern ungeahnte Potentiale zum Vorschein. </p>
 									</div>
 								</div>
 							</div>
@@ -119,32 +122,31 @@
 							<div class="col-12 col-md-6 paw-col paw-col-2 paw-ltr">
 								<div class="text-sm-center text-md-right box-pitch">
 									<div class="pitchit-text pb-md-3 pb-lg-5 pl-md-3 pl-lg-5">
-										<h6 class="d-inline-block w-100 text-blue">rate now</h6>
-										<h2 class="pitchit-heading mb-3 pb-1"><span class="text-green">Interaktion</span> - par excellence </h2>
-										<p class="pitchit-para pl-lg-5">Frontpräsentationen waren gestern. Durch die interaktive Bewertung jedes Einzelnen, sind alle Mitarbeiter eingebunden und verbessern nicht nur sich selbst, sondern auch das Teamwork. Die Kollegen helfen spielerisch bei der Einschätzung der Fremdwahrnehmung und hieven das Team auf ein neues Level.</p>
+										<h6 class="d-inline-block w-100 text-blue wow add-anim fadeInUp" data-wow-duration="1.5s">rate now</h6>
+										<h2 class="pitchit-heading mb-3 pb-1 wow add-anim fadeInUp" data-wow-duration="1.5s"><span class="text-green">Interaktion</span> - par excellence </h2>
+										<p class="pitchit-para pl-lg-5 wow add-anim fadeInUp" data-wow-duration="1.5s">Frontpräsentationen waren gestern. Durch die interaktive Bewertung jedes Einzelnen, sind alle Mitarbeiter eingebunden und verbessern nicht nur sich selbst, sondern auch das Teamwork. Die Kollegen helfen spielerisch bei der Einschätzung der Fremdwahrnehmung und hieven das Team auf ein neues Level.</p>
 									</div>
 								</div>
 							</div>
 							<div class="col-12 col-md-6">
 								<div class="text-sm-center text-md-left box-pitch">
-									<div class="pitchit-img"> <%= image_tag ("iphoneX-mockup.png") , alt:"IMG" %>
+									<div class="pitchit-img wow fadeInRight" data-wow-duration="1.5s"> <%= image_tag ("iphoneX-mockup.png") , alt:"IMG" %>
                 </div>
 								</div>
 							</div>
 						</div>
 						<div class="row align-items-center">
 							<div class="col-12 col-md-6">
-								<div class="text-sm-center text-md-right box-pitch">
-									<div class="pitchit-img"> <%= image_tag ("laptop.png") , alt:"IMG" %>
-                  </div>
+								<div class="text-sm-center text-md-right box-pitch wow fadeInLeft" data-wow-duration="1.5s">
+								    <%= image_tag ("laptop.png") , alt:"IMG" %>
 								</div>
 							</div>
 							<div class="col-12 col-md-6 paw-col paw-col-3 paw-rtl pr-3">
 								<div class="text-sm-center text-md-left box-pitch">
 									<div class="pitchit-text pb-md-3 pb-lg-5">
-										<h6 class="d-inline-block w-100 text-blue">performance-boost!</h6>
-										<h2 class="pitchit-heading mb-3 pb-1"><span class="text-green">Controlling</span> - maximale Transparenz! </h2>
-										<p class="pitchit-para pr-lg-5">Wir machen Softskills erstmals messbar. Du behälst den Lernfortschritt deiner Mitarbeiter genau im Auge. Jede Pitch-Performance wird gespeichert und ist jederzeit abrufbar. Erkenne die Stärken und Schwächen und arbeite gezielt an den Fähigkeiten deines Teams.  </p>
+										<h6 class="d-inline-block w-100 text-blue wow add-anim fadeInUp" data-wow-duration="1.5s">performance-boost!</h6>
+										<h2 class="pitchit-heading mb-3 pb-1 wow add-anim fadeInUp" data-wow-duration="1.5s"><span class="text-green">Controlling</span> - maximale Transparenz! </h2>
+										<p class="pitchit-para pr-lg-5 wow add-anim fadeInUp" data-wow-duration="1.5s">Wir machen Softskills erstmals messbar. Du behälst den Lernfortschritt deiner Mitarbeiter genau im Auge. Jede Pitch-Performance wird gespeichert und ist jederzeit abrufbar. Erkenne die Stärken und Schwächen und arbeite gezielt an den Fähigkeiten deines Teams.  </p>
 									</div>
 								</div>
 							</div>
@@ -153,9 +155,9 @@
 				</section>
 				<section class="customer-section">
 					<div class="container">
-						<h1 class="section-heading text-center"><span class="text-grey">Das sagen unsere</span> Kunden</h1>
+						<h1 class="section-heading text-center wow add-anim fadeIn" data-wow-duration="1.5s"><span class="text-grey">Das sagen unsere</span> Kunden</h1>
 						<div class="customer-container">
-							<div class="customer-block customer-block-l d-flex flex-column flex-sm-row justify-content-sm-start">
+							<div class="customer-block customer-block-l d-flex flex-column flex-sm-row justify-content-sm-start wow add-anim fadeIn" data-wow-duration="1.5s" data-wow-offset="0">
 								<div class="customer-holder mt-sm-3 mb-5 mb-sm-0 mx-auto mx-sm-0">
 									<div class="customer-img d-flex align-items-center justify-content-center">
                   <%= image_tag ("customer-1.png"), alt:"IMG"  %>
@@ -174,7 +176,7 @@
                   </div>
 								</div>
 							</div>
-							<div class="customer-block customer-block-r d-flex flex-column-reverse flex-sm-row justify-content-sm-end">
+							<div class="customer-block customer-block-r d-flex flex-column-reverse flex-sm-row justify-content-sm-end wow add-anim fadeIn" data-wow-duration="1.5s">
 								<div class="customer-review">
 									<h3 class="text-center text-sm-right">Marc Seebener, Coach</h3>
 									<div class="review-box d-flex align-items-center justify-content-center text-center position-relative">
@@ -192,7 +194,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="customer-block customer-block-l d-flex flex-column flex-sm-row justify-content-sm-start">
+							<div class="customer-block customer-block-l d-flex flex-column flex-sm-row justify-content-sm-start wow add-anim fadeIn" data-wow-duration="1.5s">
 								<div class="customer-holder mt-sm-3 mb-5 mb-sm-0 mx-auto mx-sm-0">
 									<div class="customer-img"><%= image_tag ("customer-3.png"),alt:"IMG"%>
                   </div>
@@ -212,15 +214,15 @@
 							</div>
 						</div>
 						<div class="dot-vertical d-flex justify-content-center flex-column align-items-center">
-							<div class="dot-box dot-box-green"></div>
-							<div class="dot-box dot-box-blue"></div>
-							<div class="dot-box dot-box-green"></div>
+							<div class="dot-box dot-box-green wow add-anim bounceIn" data-wow-duration="4s"></div>
+							<div class="dot-box dot-box-blue wow add-anim bounceIn" data-wow-duration="8s" data-wow-offset="1"></div>
+							<div class="dot-box dot-box-green wow add-anim bounceIn" data-wow-duration="16s" data-wow-offset="2"></div>
 						</div>
 					</div>
 				</section>
 				<section class="training-section">
 					<div class="container">
-						<div class="training-block d-flex flex-column flex-lg-row align-items-md-center justify-content-lg-between">
+						<div class="training-block d-flex flex-column flex-lg-row align-items-md-center justify-content-lg-between wow add-anim zoomIn" data-wow-duration="1.5s">
 							<div class="training-text pr-lg-5 mr-lg-3">
 								<h2>Schulungs-Teilnehmer haben mehr verdient als langweilige Powerpoints, oder?!</h2>
 								<p>Jetzt theoretische Trainingsinhalte direkt in die Praxis umsetzen. Individuelle Coachings mit Lern- UND Spaßfaktor.</p>
@@ -228,44 +230,13 @@
 							<div class="training-btns text-center mt-4 mt-lg-0">
 								<a href="javascript:void(0)" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Los geht's</a>
                 <!-- Modal -->
-                <div class="modal modal-peterpitch fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                      <div class="modal-body">
-                        <h1>Beginnen Sie mit peterpitch.com</h1>
-															<!--<p>Simple, visual collaboration</p>-->
-
-                        <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2'}) do |f| %>
-                            <div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
-                          <%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Enter your work email", required: true  %>
-                          <%= f.submit 'Loslegen!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
-                            </div>
-                          <% end %>
-														<!--<form class="modal-form mt-2">-->
-														<!-- <div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">-->
-														<!-- <input type="email" class="form-control mr-sm-3" placeholder="Enter your work email">-->
-														<!-- <button type="button" class="btn btn-green mt-3 mt-md-0 w-100">Get Started</button>-->
-														<!-- </div>-->
-														<!-- </form>-->
-                        <div class="trail-para d-flex align-items-center justify-content-center">
-                            <span class="trail-text-line"></span>
-                            <span class="trail-text">Starten Sie Ihre kostenlose Testversion</span>
-                            <span class="trail-text-line"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 							</div>
 						</div>
 					</div>
 				</section>
 				<section class="questions-section">
 					<div class="container">
-						<h1 class="section-heading text-center"><span class="text-grey">Häufige</span> Fragen</h1>
+						<h1 class="section-heading text-center wow add-anim fadeIn" data-wow-duration="1.5s"><span class="text-grey">Häufige</span> Fragen</h1>
 						<div class="accordion questions-accordian" id="accordionExample">
 						  <div class="card card-questions">
 						    <div class="card-header" id="headingOne">
@@ -403,6 +374,42 @@
 <!-- Modal -->
 
 
+   <div class="modal modal-peterpitch fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+              <h1>Beginnen Sie mit peterpitch.com</h1>
+              <!--<p>Simple, visual collaboration</p>-->
+
+              <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2'}) do |f| %>
+                <div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
+                  <%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Enter your work email", required: true  %>
+                  <%= f.submit 'Loslegen!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
+                </div>
+              <% end %>
+              <!--<form class="modal-form mt-2">-->
+              <!-- <div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">-->
+              <!-- <input type="email" class="form-control mr-sm-3" placeholder="Enter your work email">-->
+              <!-- <button type="button" class="btn btn-green mt-3 mt-md-0 w-100">Get Started</button>-->
+              <!-- </div>-->
+              <!-- </form>-->
+              <div class="trail-para d-flex align-items-center justify-content-center">
+                <span class="trail-text-line"></span>
+                <span class="trail-text">Starten Sie Ihre kostenlose Testversion</span>
+                <span class="trail-text-line"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
 <script>
   $(document).ready(function(){
     $(window).scroll(function(){
@@ -415,4 +422,34 @@
     })
 
   });
+document.addEventListener('DOMContentLoaded', function() {
+            var typed = new Typed('#typed', {
+                contentType: 'html',
+                stringsElement: '#typed-strings',
+                startDelay: 300,
+                typeSpeed: 100,
+                backSpeed: 20,
+                backDelay: 700,
+                loop: true,
+                loopCount: Infinity,
+
+            })
+
+            WOW.prototype.addBox = function(element) {
+                this.boxes.push(element);
+            };
+
+            // Init WOW.js and get instance
+            var wow = new WOW();
+            wow.init();
+
+            $('.wow.add-anim').on('scrollSpy:exit', function() {
+                $(this).css({
+                    'visibility': 'hidden',
+                    'animation-name': 'none'
+                }).removeClass('animated');
+                wow.addBox(this);
+            }).scrollSpy();
+
+        })
 </script>

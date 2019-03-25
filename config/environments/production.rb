@@ -72,10 +72,10 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              'smtp.strato.de',
-    port:                 465,
+    port:                 587,
     domain:               'peterpitch.de',
-    user_name:            'support@peterpitch.de',
-    password:             'ABuPwMScWZgyYs9y',
+    user_name:            'resing@peterpitch.de',
+    password:             't42Pz5RhzfFWYwqX',
     authentication:       'plain',
     enable_starttls_auto: true }
 
