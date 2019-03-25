@@ -382,4 +382,53 @@ body {
         left:50%;
         top:100px;
         margin-left:-150px;
-    }
+    }   
+
+
+.register-page {
+	background-image: linear-gradient(to right, rgba(29, 164, 236, 0.57), rgba(21, 121, 196, 0.57));
+}
+.form-heading {
+	text-align: center;
+	color: #fff;
+	font-family: 'Barack-Medium';
+}
+.form-main-canvas label {
+	font-size: 1.25rem;
+	color: #fff;
+	font-family: 'Barack-Medium';
+	padding: 0 10px;
+}
+.form-main-canvas .form-control {
+	height: 60px;
+	background-color: transparent;
+	font-size: 1.25rem;
+	border: 2px solid #cdcdcd;
+	color: #fff;
+	font-family: 'Barack-Medium';
+	border-radius: 26px;
+	padding: 1rem 1.5rem;
+}
+.form-main-canvas .form-group {
+	margin-bottom: 1.75rem;
+}
+.form-main-canvas .btn-green {
+	min-height: 60px;
+	border-radius: 26px !important;
+	font-size: 1.15rem;
+	font-family: 'Barack-Medium';
+	padding: 0.75rem 1rem;
+}
+.register-page .register-container {
+	max-width: 520px;
+}
+
+
+  
+  
+  
+  
+  
+
+
+
