@@ -10,6 +10,8 @@ jQuery(document).on 'turbolinks:load', ->
 
     received: (data) ->
      # location.replace(data['game_state']);
+     debugger;
+    
      if data['game_state'] == 'wait'
        $('#myModalAction .modal-body').append ' <div class="mail-box">
                  <div class="mail-box-main">
@@ -23,6 +25,7 @@ jQuery(document).on 'turbolinks:load', ->
                  </div>
                  </div>'
        $('#myModalAction').show()
+       console.log('received', data[user_fname]); 
      else
        $.get('/mobile/user/game/wait/'+data["status"])
 

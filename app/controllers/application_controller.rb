@@ -2,7 +2,7 @@
   include DatabaseHelper
   include RootSessionHelper
     
-  before_action :authenticate
+  # before_action :authenticate
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :check_expiration_date
 

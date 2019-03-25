@@ -74,9 +74,6 @@ class Admin < ApplicationRecord
    
     self.plans.create(admin_id: self.id, stripe_plan_id: @plan.id , amount:@plan.amount, user_id:user.id)
 
-    # self.plan_id = @plan.id
-    # self.plan_users = 1
-    # self.save
     begin
     Stripe::Subscription.retrieve(@admin.admin_subscription_id)
     @subscription = Stripe::Subscription.create(
@@ -131,11 +128,10 @@ class Admin < ApplicationRecord
     end
     self.plan_id = @plan.id
     self.plan_users = self.plan_users
-    self.save
     begin
-    Stripe::Subscription.retrieve(@admin.admin_subscription_id)
+    @subscription=Stripe::Subscription.retrieve(@admin.admin_subscription_id)
     @subscription = Stripe::Subscription.update(
-                                        @admin.admin_subscription_id,{ 
+                                        @subscription.id,{ 
                                         
                                         items: [  
                                             { 
@@ -143,7 +139,7 @@ class Admin < ApplicationRecord
                                               
                                             }
                                                 ],
-                                        billing_cycle_anchor: 1554383082
+                                        # billing_cycle_anchor: 1554383082
                                       })
       self.admin_subscription_id = @subscription.id
       self.save
@@ -157,7 +153,7 @@ class Admin < ApplicationRecord
                                               plan:  @plan.id,
                                             }
                                                 ],
-                                        billing_cycle_anchor: 1554383082
+                                        # billing_cycle_anchor: 1554383082
                                       })
         self.admin_subscription_id = @subscription.id
         self.save

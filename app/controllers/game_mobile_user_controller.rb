@@ -19,6 +19,7 @@ class GameMobileUserController < ApplicationController
           TeamUser.create(user_id: @user.id, team_id: @game.team_id)
         end
         sign_in(@user)
+        ActionCable.server.broadcast "count_channel", game_state: 'wait'
         redirect_to gmu_new_turn_path
       else
         @user = @admin.users.create(email: params[:user][:email])
@@ -36,7 +37,7 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
       redirect_back(fallback_location: root_path)
-      # Turn.where(user_id: @user.id).first.delete
+      Turn.where(user_id: @user.id).first.delete
       ActionCable.server.broadcast "game_channel", game_state: 'ended' ,game_id: current_game.id,
       user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
     end
@@ -46,17 +47,18 @@ class GameMobileUserController < ApplicationController
   def accept_user
     @user = User.where(id: params[:user_id]).first
     @admin = Admin.find(@game.admin_id)
-    if @user.update_attributes(status: 0)
         a =8.85*100
         month =a.to_i
         b =7.17*100*12
         year = b.to_i
         if @admin.plan_type.eql?('trial')
+          @user.update_attributes(status: 0)
           redirect_back(fallback_location: root_path)
         elsif @admin.plan_users?  
           if( (@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count)  <= @admin.plan_users ) and @admin and !@admin.cards.blank?
             if @user.admin.plan_type.eql?("year")
                @user.admin.upgrade_subscription_year(@user)
+               @user.update_attributes(status: 0)
                redirect_back(fallback_location: root_path)
             elsif @user.admin.plan_type.eql?("month")
                 Stripe::Charge.create({
@@ -66,32 +68,33 @@ class GameMobileUserController < ApplicationController
                     description: 'Charge for PeterPitch' + @user.email,
                   })
                 @user.admin.upgrade_subscription
+                @user.update_attributes(status: 0)
                 redirect_back(fallback_location: root_path)
 
             end
+          # elsif @admin and !@admin.cards.blank?
+          #   if @user.admin.plan_type.eql?("year")
+          #     @user.admin.upgrade_subscription_year(@user)
+          #     @user.update_attributes(status: 0)
+          #     redirect_back(fallback_location: root_path)
+          #  elsif @user.admin.plan_type.eql?("month")
+          #      Stripe::Charge.create({
+          #          customer:@admin.stripe_id ,
+          #          amount: month,
+          #          currency: 'eur',
+          #          description: 'Charge for PeterPitch' + @user.email,
+          #        })
+          #      @user.admin.upgrade_subscription
+          #      @user.update_attributes(status: 0)
+          #      redirect_back(fallback_location: root_path)
+          #  end
+          else
+            @user.update_attributes(status: 1)
+            redirect_back(fallback_location: root_path)
+
           end
-        else
-          if @admin and !@admin.cards.blank?
-            if @user.admin.plan_type.eql?("year")
-               @user.admin.upgrade_subscription_year(@user)
-               redirect_back(fallback_location: root_path)
-
-            elsif @user.admin.plan_type.eql?("month")
-                Stripe::Charge.create({
-                    customer:@admin.stripe_id ,
-                    amount: month,
-                    currency: 'eur',
-                    description: 'Charge for PeterPitch' + @user.email,
-                  })
-                @user.admin.upgrade_subscription
-                redirect_back(fallback_location: root_path)
-
-            end
-          end
-
+       
         end
-    end
-
   end
 
 
