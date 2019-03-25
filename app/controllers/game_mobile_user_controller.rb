@@ -51,11 +51,10 @@ class GameMobileUserController < ApplicationController
         month =a.to_i
         b =7.17*100*12
         year = b.to_i
-
         if @admin.plan_type.eql?('trial')
           redirect_back(fallback_location: root_path)
         elsif @admin.plan_users?  
-          if(@admin.plan_users <= (@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) ) and @admin and !@admin.cards.blank?
+          if( (@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count)  <= @admin.plan_users ) and @admin and !@admin.cards.blank?
             if @user.admin.plan_type.eql?("year")
                @user.admin.upgrade_subscription_year(@user)
                redirect_back(fallback_location: root_path)

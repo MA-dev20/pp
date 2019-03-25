@@ -53,21 +53,21 @@ class Admin < ApplicationRecord
   def upgrade_subscription_year(user)
     if self.plan_type == 'year'
       year_amount = (7.17*100)*12
-      plan =(year_amount.to_i)
+      plan =(year_amount.to_i)*1
    
     end
     begin
-      @plan =Stripe::Plan.retrieve(1.to_s +  self.plan_type)
+      @plan =Stripe::Plan.retrieve(1.to_s+ "_" + self.plan_type)
     rescue => e
       if (e.present?)
         @plan = Stripe::Plan.create({
                                         amount: plan,
                                         interval: self.plan_type,
                                         product: {
-                                            name: 1.to_s + self.plan_type
+                                            name: 1.to_s + "_" + self.plan_type
                                         },
                                         currency: 'eur',
-                                        id: 1.to_s + self.plan_type 
+                                        id: 1.to_s + "_" + self.plan_type 
                                     })
       end
     end
@@ -115,17 +115,17 @@ class Admin < ApplicationRecord
     #   plan =(year_amount.to_i) * self.plan_users.to_i
     end
     begin
-      @plan =Stripe::Plan.retrieve(self.plan_users.to_s  + self.plan_type)
+      @plan =Stripe::Plan.retrieve(self.plan_users.to_s  + "_" + self.plan_type)
     rescue => e
       if (e.present?)
         @plan = Stripe::Plan.create({
                                         amount: plan,
                                         interval: self.plan_type,
                                         product: {
-                                            name: self.plan_users.to_s + self.plan_type
+                                            name: self.plan_users.to_s + "_" + self.plan_type
                                         },
                                         currency: 'eur',
-                                        id: self.plan_users.to_s  + self.plan_type 
+                                        id: self.plan_users.to_s  + "_" + self.plan_type 
                                     })
       end
     end
@@ -147,7 +147,7 @@ class Admin < ApplicationRecord
                                       })
       self.admin_subscription_id = @subscription.id
       self.save
-
+    
     rescue => e
       if (e.present?)
       @subscription = Stripe::Subscription.create({ 

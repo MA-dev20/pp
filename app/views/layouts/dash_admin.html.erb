@@ -71,7 +71,7 @@
             </div>
             <div class="link">
             <% if current_page?(dash_admin_account_path) || dash_admin_users_path || current_admin.plans.blank?  || current_page?( dash_admin_teams_path )%>
-                <%= link_to "Select Package", price_path %>
+                <%= link_to "Select Package", dash_admin_price_path %>
             <% end %>
             </div>
             <div class="link">

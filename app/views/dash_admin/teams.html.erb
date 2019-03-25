@@ -26,17 +26,26 @@
             <span><%= t.users.count %></span> User
         </div>
         <div class="bottom">
-            <%= link_to '', dash_admin_team_stats_path(t.id), class: 'fas fa-chart-line' %>
+            <%= link_to '', dash_admin_team_stats_path(t.id), class: 'fas fa-chart-line' , id:"users_stats"  %>   
             <%= link_to '', destroy_team_path(t.id), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie das Team unwiederuflich löschen möchten?" }%>
         </div>
     </div>
     <% end %>
+    <div class="overlay" id="pop_up">
+        <div class="popup">
+        Select your Plan first in order to see users statistics
+        </div>
+    </div>
 </section>
 
 
 
 
 <script>
+
+$(document).ready( function () {
+   document.getElementById("pop_up").style.display = "none";
+} );
 var $rows = $('.team_card');
 $('#searchField').keyup(function() {
     
@@ -56,4 +65,17 @@ team_hide = function() {
     $('.add_team').hide();
 }
 new PerfectScrollbar('#teams-container');
+
+
+// window.onload = setTimeout(function(){
+//     alert('This is an alert');
+//     window.location = 'http://www.example.com';
+// }, 5000);
+
+$( "#users_stats" ).click(function() {
+    setTimeout(function(){ 
+            $('#pop_up').toggle();
+            }, 5000);
+   
+});
 </script>
