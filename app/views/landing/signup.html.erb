@@ -7,33 +7,34 @@
     <div class="row">
       <div class="col-12">
           <!-------<h1 class="form-heading mb-5 pb-2">registrieren</h1> ------->
-      <%= form_for(@admin, url: update_admin_details_path(v_id: @admin.vid_token)) do |f| %>
+        <%= form_for(@admin, url: update_admin_details_path(v_id: @admin.vid_token)) do |f| %>
 
-          <div class="form-main-canvas">
-            <div class="form-group">
-              <label for=""> Unternehmensname</label>
-              <%= f.text_field :company_name, class: 'form-control', autocomplete: "off",required: true %>
+            <div class="form-main-canvas">
+              <div class="form-group">
+                <label for=""> Unternehmensname</label>
+                <%= f.text_field :company_name, class: 'form-control', autocomplete: "off",required: true ,  :maxlength => 30%>
+              </div>
+
+              <div class="form-group">
+                <label for=""> Straße</label>
+
+                <%= f.text_field :street, class: 'form-control', autocomplete: "off",required: true,  :maxlength => 40 %>
+              </div>  
+              <div class="form-group form-group-postal">
+                <label for=""> PLZ</label>
+                <%= f.text_field :zipcode, class: 'form-control', autocomplete: "off",required: true ,  :maxlength => 40%>
+              </div>
+
+              <div class="form-group">
+                <label for=""> Stadt</label>
+                <%= f.text_field :city, class: 'form-control', autocomplete: "off",required: true ,  :maxlength => 40%>
+              </div>
+
+              <div class="form-group text-center pt-2 px-md-5">
+                <%= f.submit 'Registrieren', class: 'btn btn-green' %>
+              </div>
             </div>
-
-            <div class="form-group">
-              <label for=""> Straße</label>
-
-              <%= f.text_field :street, class: 'form-control', autocomplete: "off",required: true %>
-            </div>  
-            <div class="form-group form-group-postal">
-              <label for=""> PLZ</label>
-              <%= f.text_field :zipcode, class: 'form-control', autocomplete: "off",required: true %>
-            </div>
-
-            <div class="form-group">
-              <label for=""> Stadt</label>
-              <%= f.text_field :city, class: 'form-control', autocomplete: "off",required: true %>
-            </div>
-
-             <div class="form-group text-center pt-2 px-md-5">
-              <%= f.submit 'Registrieren', class: 'btn btn-green' %>
-            </div>
-      <%end%>  
+        <%end%>  
             
           </div>   
       </div>

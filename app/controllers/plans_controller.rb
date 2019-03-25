@@ -7,11 +7,10 @@ class PlansController < ApplicationController
   def create
     number_of_users= params[:admin]['plan_users']
     plan_type = params[:admin]['plan_type']
-    if plan_type == 'monthly'
+    if plan_type == 'month'
       monthy_amount = 8.85*100
       plan_month =(monthy_amount.to_i) * number_of_users.to_i
       create_plan(plan_month,plan_type,number_of_users)
-
     else
       year_amount = 7.17*100*12
       year_plan =(year_amount.to_i) * number_of_users.to_i
@@ -22,7 +21,7 @@ class PlansController < ApplicationController
 
   def create_plan(plan,plan_type,number_of_users)
     begin
-      @plan =Stripe::Plan.retrieve(number_of_users.to_s + plan_type)
+      @plan =Stripe::Plan.retrieve(number_of_users.to_s + "_" + plan_type)
     rescue => e
       if (e.present?)
       @plan = Stripe::Plan.create({

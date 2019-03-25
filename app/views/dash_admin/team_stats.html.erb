@@ -5,7 +5,6 @@
     </div>
     
     <div class="stats_overview">
-        
         <div class="gesamt active">
             <button class="circle" id="chart_gesamt"><span><%= @rating.ges / 10.0 %></span></button>
             <div class="text" id="t_gesamt">Gesamt</div>
@@ -35,6 +34,11 @@
     <div class="stats_chart">
         <div class="chart-container">
             <canvas id="Chart"></canvas>
+        </div>
+    </div>
+     <div class="overlay" id="pop_up"  >
+        <div class="popup">
+        Select your Plan first in order to see users statistics
         </div>
     </div>
 </section>
@@ -163,6 +167,17 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     <% end %>
     window.gesamtChart.update();
 });
+$(document).ready( function () {
+   document.getElementById("pop_up").style.display = "none";
+} );
+
+<%if @admin.plan_id.nil? %>
+
+    setTimeout(function(){ 
+            $('#pop_up').toggle();
+            }, 2000);
+
+<%end%>  
 
 
 </script>
