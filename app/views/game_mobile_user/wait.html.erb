@@ -4,7 +4,7 @@
     </div>
     <div class="middle">
     <%if @user.avatar.quad.url%>
-       <%= image_tag @user.avatar.url  class: 'mid-img green' %>
+       <%= image_tag @user.avatar.url, class: 'mid-img green' %>
       <%else%>
        <%= image_tag 'logo.png', class: 'mid-img green' %>
       <%end%>

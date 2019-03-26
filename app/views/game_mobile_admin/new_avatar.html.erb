@@ -10,17 +10,17 @@
         <div class="h50">Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</div>
     </div>
     <% end %>
-    <%= form_for(:user, url: gma_new_avatar_path) do |f| %>
+    <%= form_for(:admin, url: gma_new_avatar_path) do |f| %>
     <div class="middle">
         <% if @admin.avatar? %>
-            <label for="user_avatar" id="user_pic">
+            <label for="admin_avatar" id="admin_pic">
                 <%= image_tag @admin.avatar.quad.url, class: 'mid-img blue' %>
             </label>
             <div class="add">
                 <i class="fas fa-check-circle"></i>
             </div>
         <% else %>
-            <label for="user_avatar" id='user_pic'>
+            <label for="admin_avatar" id='admin_pic'>
                 <%= image_tag 'game/plus.png', class: 'mid-img pulse' %>
             </label>
         <% end %>
