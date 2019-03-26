@@ -58,11 +58,11 @@ Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
     @admin = self
     if self.plan_type == 'year'
       year_amount = (7.17*100)*12
-      plan =(year_amount.to_i)*1
+      plan =(year_amount.to_i)
    
     end
     begin
-      @plan =Stripe::Plan.retrieve(1.to_s+ "_" + self.plan_type)
+      @plan =Stripe::Plan.retrieve(1.to_s +  self.plan_type)
     rescue => e
       if (e.present?)
         @plan = Stripe::Plan.create({
@@ -72,134 +72,70 @@ Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
                                             name: 1.to_s + "_" + self.plan_type
                                         },
                                         currency: 'eur',
-<<<<<<< HEAD
                                         id: 1.to_s + "_" + self.plan_type
-=======
-                                        id: 1.to_s + "_" + self.plan_type 
->>>>>>> 21aa027250d336448549efcbd7a2129b721693cb
                                     })
       end
     end
-   
-<<<<<<< HEAD
-    self.plans.create(admin_id: self.id, stripe_plan_id: @plan.id , amount:@plan.id.amount, user_id:user.id)
-=======
-    self.plans.create(admin_id: self.id, stripe_plan_id: @plan.id , amount:@plan.amount, user_id:user.id)
 
->>>>>>> 21aa027250d336448549efcbd7a2129b721693cb
+    self.plans.create(admin_id: self.id, stripe_plan_id: @plan.id , amount:@plan.id.amount, user_id:user.id)
     begin
-    Stripe::Subscription.retrieve(@admin.admin_subscription_id)
-    @subscription = Stripe::Subscription.create(
-                                        @admin.admin_subscription_id,{ 
-                                        
-                                        items: [  
-                                            { 
-                                              plan:  self.plan_id
-                                            }
-                                                ]
-                                      })
+    @subscription = Stripe::Subscription.create({
+                                                    customer: self.stripe_id,
+                                                    items: [
+                                                        {
+                                                            plan:  @plan.id
+                                                        }
+                                                    ]
+                                                })
     self.subscriptions.create(admin_id: self.id, plan_id: self.plan_id, subscription_id:@subscription.id, user_id:user.id)
     rescue => e
       if (e.present?)
-      @subscription = Stripe::Subscription.create({ 
-                                        customer: self.stripe_id,
-                                        items: [  
-                                            { 
-                                              plan:  @plan.id
-                                            }
-                                                ]
-                                      })
-      self.subscriptions.create(admin_id: self.id, plan_id: self.plan_id,subscription_id:@subscription.id, user_id:user.id)
+        Rails.logger.info  "Stripe Error: #{e.message}"
       end
     end
 
   end
 
-  ########################## Update Subscription for Month######################
-def upgrade_subscription
-	@admin = self
-
+  ########################## Update Subscription for Month ######################
+  def upgrade_subscription
+    @admin = self
     if self.plan_type == 'month'
       monthy_amount = 8.85*100
       plan =(monthy_amount.to_i) * self.plan_users.to_i
     end
     begin
-<<<<<<< HEAD
       @plan =Stripe::Plan.retrieve( self.plan_users.to_s+ "_" + self.plan_type.to_s )
-=======
-      @plan =Stripe::Plan.retrieve(self.plan_users.to_s  + "_" + self.plan_type)
->>>>>>> 21aa027250d336448549efcbd7a2129b721693cb
     rescue => e
       if (e.present?)
         @plan = Stripe::Plan.create({
                                         amount: plan,
                                         interval: self.plan_type,
                                         product: {
-<<<<<<< HEAD
                                             name: self.plan_users.to_s+ "_" + self.plan_type.to_s
                                         },
                                         currency: 'eur',
                                         id: self.plan_users.to_s+ "_" + self.plan_type.to_s
-=======
-                                            name: self.plan_users.to_s + "_" + self.plan_type
-                                        },
-                                        currency: 'eur',
-                                        id: self.plan_users.to_s  + "_" + self.plan_type 
->>>>>>> 21aa027250d336448549efcbd7a2129b721693cb
                                     })
       end
     end
     self.plan_id = @plan.id
-<<<<<<< HEAD
     self.save
 
     begin
-      Rails.logger.info "=========================111111==================="
       d = Time.now.end_of_month + 1.day
       @subscription = Stripe::Subscription.update(
                                           @admin.admin_subscription_id,{
 
                                                 plan:  @plan.id
                                         })
-      Rails.logger.info "=========================2222222========================="
-=======
-    self.plan_users = self.plan_users
-    begin
-    @subscription=Stripe::Subscription.retrieve(@admin.admin_subscription_id)
-    @subscription = Stripe::Subscription.update(
-                                        @subscription.id,{ 
-                                        
-                                        items: [  
-                                            { 
-                                              plan:  @plan.id,
-                                              
-                                            }
-                                                ],
-                                        # billing_cycle_anchor: 1554383082
-                                      })
->>>>>>> 21aa027250d336448549efcbd7a2129b721693cb
       self.admin_subscription_id = @subscription.id
       self.save
-    
+
     rescue => e
-<<<<<<< HEAD
-      Rails.logger.info  "Stripe Errpr: #{e.message}"
-=======
-      if (e.present?)
-      @subscription = Stripe::Subscription.create({ 
-                                        customer: self.stripe_id,
-                                        items: [  
-                                            { 
-                                              plan:  @plan.id,
-                                            }
-                                                ],
-                                        # billing_cycle_anchor: 1554383082
-                                      })
-        self.admin_subscription_id = @subscription.id
-        self.save
->>>>>>> 21aa027250d336448549efcbd7a2129b721693cb
+      Rails.logger.info  "Stripe Error: #{e.message}"
       end
   end
 
-end
+
+  end
 
