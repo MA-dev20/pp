@@ -74,6 +74,10 @@ class GameMobileUserController < ApplicationController
           @user.admin.upgrade_subscription
           redirect_back(fallback_location: root_path)  and return
         end
+      elsif((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) == @admin.plan_users)
+        @admin.update_attributes(plan_users: @admin.plan_users + 1 )
+        redirect_back(fallback_location: root_path) and return
+
       end
       redirect_back(fallback_location: root_path) and return
 
