@@ -4,7 +4,9 @@ class CardsController < ApplicationController
   layout 'main'
   respond_to :html, :json
 
-  def create  
+  def create 
+	Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
+ 
     if !@admin.cards.exists?
       @card =  Stripe::Customer.create_source(@admin.stripe_id,
         {  source: params[:payment_gateway_token] }

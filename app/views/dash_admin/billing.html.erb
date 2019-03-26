@@ -17,7 +17,7 @@
 
                  <div class="payment-exm">
                     <span>Amount Paid:</span>
-                     <span><%= ((invoice.amount_paid/100).to_f).round(3)%> </span>
+                     <span>€ <%= ((invoice.amount_paid.to_f/100)).round(3)%> </span>
                 </div>
 
               <div class="payment-exm">

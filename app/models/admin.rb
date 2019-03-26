@@ -3,6 +3,7 @@ class Admin < ApplicationRecord
   # :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable, :lockable, :recoverable, :rememberable, :validatable, :trackable
     
+  #########Associations##################
   has_many :games, dependent: :destroy
   has_many :ratings, dependent: :destroy
   has_many :teams, dependent: :destroy
@@ -14,7 +15,7 @@ class Admin < ApplicationRecord
   has_many :invoices, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
 
-  enum plan_type: [:year , :month]
+  enum plan_type: [:year , :month, :trial]
   
   
   mount_uploader :avatar, PicUploader
@@ -37,18 +38,24 @@ class Admin < ApplicationRecord
   #########Call-back for Sign-in Expiration Date###########
 
   def create_stripe_customer
+Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
+
     customer = Stripe::Customer.create(
       :email => self.email,
     )
     self.stripe_id =  customer.id
+    self.plan_type= "trial"
     self.save
   end
 
   def expiry
     created_at + 14.days
   end
+
   ##########################Update Subscription for year################
+
   def upgrade_subscription_year(user)
+    @admin = self
     if self.plan_type == 'year'
       year_amount = (7.17*100)*12
       plan =(year_amount.to_i)
@@ -62,19 +69,15 @@ class Admin < ApplicationRecord
                                         amount: plan,
                                         interval: self.plan_type,
                                         product: {
-                                            name: 1.to_s + self.plan_type
+                                            name: 1.to_s + "_" + self.plan_type
                                         },
                                         currency: 'eur',
-                                        id: 1.to_s + self.plan_type 
+                                        id: 1.to_s + "_" + self.plan_type
                                     })
       end
     end
    
     self.plans.create(admin_id: self.id, stripe_plan_id: @plan.id , amount:@plan.id.amount, user_id:user.id)
-
-    # self.plan_id = @plan.id
-    # self.plan_users = 1
-    # self.save
     begin
     Stripe::Subscription.retrieve(@admin.admin_subscription_id)
     @subscription = Stripe::Subscription.create(
@@ -104,65 +107,47 @@ class Admin < ApplicationRecord
   end
 
   ########################## Update Subscription for Month######################
-  def upgrade_subscription
+def upgrade_subscription
+	@admin = self
+
     if self.plan_type == 'month'
       monthy_amount = 8.85*100
       plan =(monthy_amount.to_i) * self.plan_users.to_i
-    # else
-    #   year_amount = 7.17*100
-    #   plan =(year_amount.to_i) * self.plan_users.to_i
     end
     begin
-      @plan =Stripe::Plan.retrieve(self.plan_users +  self.plan_type)
+      @plan =Stripe::Plan.retrieve( self.plan_users.to_s+ "_" + self.plan_type.to_s )
     rescue => e
       if (e.present?)
         @plan = Stripe::Plan.create({
                                         amount: plan,
                                         interval: self.plan_type,
                                         product: {
-                                            name: self.plan_users + self.plan_type
+                                            name: self.plan_users.to_s+ "_" + self.plan_type.to_s
                                         },
                                         currency: 'eur',
-                                        id: self.plan_users + self.plan_type 
+                                        id: self.plan_users.to_s+ "_" + self.plan_type.to_s
                                     })
       end
     end
     self.plan_id = @plan.id
-    self.plan_users = self.plan_users
     self.save
+
     begin
-    Stripe::Subscription.retrieve(@admin.admin_subscription_id)
-    @subscription = Stripe::Subscription.update(
-                                        @admin.admin_subscription_id,{ 
-                                        
-                                        items: [  
-                                            { 
-                                              plan:  @plan.id,
-                                              
-                                            }
-                                                ],
-                                        billing_cycle_anchor: 1554383082
-                                      })
+      Rails.logger.info "=========================111111==================="
+      d = Time.now.end_of_month + 1.day
+      @subscription = Stripe::Subscription.update(
+                                          @admin.admin_subscription_id,{
+
+                                                plan:  @plan.id
+                                        })
+      Rails.logger.info "=========================2222222========================="
       self.admin_subscription_id = @subscription.id
       self.save
 
     rescue => e
-      if (e.present?)
-      @subscription = Stripe::Subscription.create({ 
-                                        customer: self.stripe_id,
-                                        items: [  
-                                            { 
-                                              plan:  @plan.id,
-                                            }
-                                                ],
-                                        billing_cycle_anchor: 1554383082
-                                      })
-        self.admin_subscription_id = @subscription.id
-        self.save
+      Rails.logger.info  "Stripe Errpr: #{e.message}"
       end
-    end
-
   end
 
-
 end
+
