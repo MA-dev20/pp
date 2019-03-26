@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get 'landing/index'
   get 'landing/price', to: 'landing#price', as: 'price'
+  get 'dash_admin/dash_admin_price', to: 'dash_admin#dash_admin_price', as: 'dash_admin_price'
   get 'landing/product', to: 'landing#product', as: 'product'
   root 'landing#index'
   patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'

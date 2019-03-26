@@ -19,33 +19,11 @@ class GameMobileUserController < ApplicationController
           TeamUser.create(user_id: @user.id, team_id: @game.team_id)
         end
         sign_in(@user)
+        ActionCable.server.broadcast "count_channel", game_state: 'wait'
         redirect_to gmu_new_turn_path
       else
         @user = @admin.users.create(email: params[:user][:email])
         TeamUser.create(user_id: @user.id, team_id: @game.team_id)
-        #   a =8.85*100
-        #   month =a.to_i
-        #   b =7.17*100
-        #   year = (b.to_i)*12
-
-        #   if @user.admin.plan_type.eql?("year") and !@admin.cards.blank?
-        #     Stripe::Charge.create({
-        #       customer:@admin.stripe_id ,
-        #       amount: year,
-        #       currency: 'eur',
-        #       description: 'Charge for PeterPitch #{@user.email}',
-        #     })
-        #   else
-        #     Stripe::Charge.create({
-        #       customer:@admin.stripe_id ,
-        #       amount: month,
-        #       currency: 'eur',
-        #       description: 'Charge for PeterPitch #{@user.email}',
-        #     })
-
-        #   end
-        # @user.admin.upgrade_subscription
-
         sign_in(@user)
         redirect_to gmu_new_name_path
       end
@@ -59,7 +37,7 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
       redirect_back(fallback_location: root_path)
-      # Turn.where(user_id: @user.id).first.delete
+      Turn.where(user_id: @user.id).first.delete
       ActionCable.server.broadcast "game_channel", game_state: 'ended' ,game_id: current_game.id,
       user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
     end
@@ -100,7 +78,6 @@ class GameMobileUserController < ApplicationController
       redirect_back(fallback_location: root_path) and return
 
     end
-  end
 
   def new_name
     @game = Game.find(session[:game_session_id])
@@ -163,8 +140,13 @@ class GameMobileUserController < ApplicationController
       redirect_to gmu_new_turn_path
     end
   end
+<<<<<<< HEAD
 
 def wait
+=======
+    
+  def wait
+>>>>>>> 21aa027250d336448549efcbd7a2129b721693cb
     @admin = Admin.find(@game.admin_id)
     if (current_user && current_user.admin == @admin )&& (current_user.status== "pending" || current_user.status== "rejected" )
       ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id,
