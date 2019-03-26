@@ -78,6 +78,8 @@ class GameMobileUserController < ApplicationController
       redirect_back(fallback_location: root_path) and return
 
     end
+  end
+
 
   def new_name
     @game = Game.find(session[:game_session_id])
@@ -140,13 +142,10 @@ class GameMobileUserController < ApplicationController
       redirect_to gmu_new_turn_path
     end
   end
-<<<<<<< HEAD
 
-def wait
-=======
+
     
   def wait
->>>>>>> 21aa027250d336448549efcbd7a2129b721693cb
     @admin = Admin.find(@game.admin_id)
     if (current_user && current_user.admin == @admin )&& (current_user.status== "pending" || current_user.status== "rejected" )
       ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id,
@@ -213,7 +212,6 @@ def wait
     def user_params
       params.require(:user).permit(:avatar, :company, :fname, :lname)
     end
-
 
 
 end
