@@ -64,20 +64,16 @@ class GameMobileUserController < ApplicationController
           @user.admin.upgrade_subscription_year(@user)
           redirect_back(fallback_location: root_path)  and return
         elsif @user.admin.plan_type.eql?("month")
+          @admin.update_attributes(plan_users: @admin.plan_users + 1 )
           Stripe::Charge.create({
                                     customer:@admin.stripe_id ,
                                     amount: month,
                                     currency: 'eur',
                                     description: 'Charge for PeterPitch  ' + @user.email,
                                 })
-          @admin.update_attributes(plan_users: @admin.plan_users + 1 )
           @user.admin.upgrade_subscription
           redirect_back(fallback_location: root_path)  and return
         end
-      elsif((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) == @admin.plan_users)
-        @admin.update_attributes(plan_users: @admin.plan_users + 1 )
-        redirect_back(fallback_location: root_path) and return
-
       end
       redirect_back(fallback_location: root_path) and return
 
