@@ -55,6 +55,9 @@ class DashAdminController < ApplicationController
   end
 
   def billing
+
+ Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
+
     @credit_cards= @admin.cards.all
 
     begin

@@ -67,41 +67,40 @@ class GameMobileUserController < ApplicationController
 
 
   def accept_user
+    Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
+
     @user = User.where(id: params[:user_id]).first
     @admin = Admin.find(@game.admin_id)
-    if @user.update_attributes(status: 0)
-      # redirect_back(fallback_location: root_path)
-        a =8.85*100
-        month =a.to_i
-        b =7.17*100*12
-        year = b.to_i
 
-       if ((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) <=  @admin.plan_users )  and @admin and !@admin.cards.blank?
+    a =8.85*100
+    month =a.to_i
 
+    if @admin.plan_type.eql?('trial')
+      @user.update_attributes(status: 0)
+      redirect_back(fallback_location: root_path)  and return
+    elsif @admin.plan_users?
+      @user.update_attributes(status: 'accepted')
+      if((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) > @admin.plan_users )
         if @user.admin.plan_type.eql?("year")
-            # Stripe::Charge.create({
-            #     customer:@admin.stripe_id ,
-            #     amount: year,
-            #     currency: 'eur',
-            #     description: 'Charge for PeterPitch' + @user.email,
-            #   })
-            @user.admin.upgrade_subscription_year(@user)
-
-          elsif @user.admin.plan_type.eql?("year")
-            Stripe::Charge.create({
-                customer:@admin.stripe_id ,
-                amount: month,
-                currency: 'eur',
-                description: 'Charge for PeterPitch' + @user.email,
-              })
-            @user.admin.upgrade_subscription
-          end
+          @admin.update_attributes(plan_users: @admin.plan_users + 1 )
+          @user.admin.upgrade_subscription_year(@user)
+          redirect_back(fallback_location: root_path)  and return
+        elsif @user.admin.plan_type.eql?("month")
+          Stripe::Charge.create({
+                                    customer:@admin.stripe_id ,
+                                    amount: month,
+                                    currency: 'eur',
+                                    description: 'Charge for PeterPitch  ' + @user.email,
+                                })
+          @admin.update_attributes(plan_users: @admin.plan_users + 1 )
+          @user.admin.upgrade_subscription
+          redirect_back(fallback_location: root_path)  and return
         end
+      end
+      redirect_back(fallback_location: root_path) and return
 
     end
-
   end
-
 
   def new_name
     @game = Game.find(session[:game_session_id])
@@ -164,14 +163,17 @@ class GameMobileUserController < ApplicationController
       redirect_to gmu_new_turn_path
     end
   end
-    
-  def wait
-    ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id,
-     user_fname: current_user.fname, user_lname: current_user.lname,
-     user_avatar: current_user.avatar.url , user_id: current_user.id
 
+def wait
+    @admin = Admin.find(@game.admin_id)
+    if (current_user && current_user.admin == @admin )&& (current_user.status== "pending" || current_user.status== "rejected" )
+      ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id,
+      user_fname: current_user.fname, user_lname: current_user.lname,
+      user_avatar: current_user.avatar.url , user_id: current_user.id
+    end
 
   end
+    
 
   def choose
   end

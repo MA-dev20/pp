@@ -5,6 +5,7 @@ class PlansController < ApplicationController
   layout 'main'
   
   def create
+	Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
     number_of_users= params[:admin]['plan_users']
     plan_type = params[:admin]['plan_type']
     if plan_type == 'monthly'
@@ -22,7 +23,7 @@ class PlansController < ApplicationController
 
   def create_plan(plan,plan_type,number_of_users)
     begin
-      @plan =Stripe::Plan.retrieve(number_of_users.to_s + plan_type)
+      @plan =Stripe::Plan.retrieve( number_of_users.to_s + "_" +plan_type)
     rescue => e
       if (e.present?)
       @plan = Stripe::Plan.create({

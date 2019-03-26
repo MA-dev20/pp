@@ -13,9 +13,9 @@ jQuery(document).on 'turbolinks:load', ->
       if data['game_state'] == 'wait'
         $('#myModalAction .modal-body').append ' <div class="mail-box">
                   <div class="mail-box-main">
-                  <span><img src=' + data["user_avatar"] + '/></span>'+
+                  <span><img src= '+ data["user_avatar"] + '/></span>'+
                   data["user_fname"] + ' ' + 
-                  data["user_lname"]
+                  data["user_lname"] +
                   '</div>
                   <div class="mail-btn">
                   <a class="btn btn-secondary btn-accept" rel="nofollow" data-method="patch" href="/game_mobile_user/accept_user/'+ data["user_id"]+'">Accept</a>
