@@ -109,7 +109,7 @@ Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
       if (e.present?)
         @plan = Stripe::Plan.create({
                                         amount: plan,
-                                        interval: self.plan_type,
+                                        interval:  self.plan_type,
                                         product: {
                                             name: self.plan_users.to_s+ "_" + self.plan_type.to_s
                                         },

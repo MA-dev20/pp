@@ -71,7 +71,7 @@ class GameMobileUserController < ApplicationController
                                     currency: 'eur',
                                     description: 'Charge for PeterPitch  ' + @user.email,
                                 })
-          @user.admin.upgrade_subscription
+          @admin.upgrade_subscription
           redirect_back(fallback_location: root_path)  and return
         end
       end
