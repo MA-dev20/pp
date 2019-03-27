@@ -1,12 +1,12 @@
 <section id="content">
     <div class="head">
-        <div class="h100">Das war eine tolle Runde!</div>
+        Tolle Runde!
     </div>
     <div class="middle">
         <%= image_tag @admin.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
     </div>
     <div class="bottom">
-       <%= link_to 'neue Runde!', gma_replay_path, class: 'link' %>
-       <%= link_to 'beenden!', gma_ended_path, class: 'link' %>
+       <a href="<%= gma_replay_path %>" class="pol-bg"><i class="fas fa-redo"></i></a>
+       <a href="<%= gma_ended_path %>" class="pol-bg" data-confirm="Bist du sicher, dass du keine neue Runde starten möchtest?"><i class="fas fa-times"></i></a>
     </div>
 </section>

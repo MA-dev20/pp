@@ -1,6 +1,5 @@
 class CreateSubscriptions < ActiveRecord::Migration[5.2]
   def change
-   drop_table :subscriptions
     create_table :subscriptions do |t|
       t.string :plan_id
       t.string :subscription_id

@@ -8,9 +8,21 @@
 
     <%= stylesheet_link_tag    'game_mobile/main', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'game_mobile/main', 'data-turbolinks-track': 'reload' %>
+    <meta property="og:url"           content="http://www.peterpitch.com" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Peterpitch" />
+    <meta property="og:description"   content="Das erste Gamification Tool" />
+    <meta property="og:image"         content="<%= image_url('defaults/wolf.jpg') %>" />
+    <meta property="og:site_name"     content="Peterpitch" >
+    <meta property="og:locale"        content="de_DE" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@peterpitch" />
   </head>
 
   <body>
-    <%= yield %>
+    <div id='game_channel' data-game-id="<%= @game.id %>">
+        <%= yield %>
+    </div>
   </body>
 </html>

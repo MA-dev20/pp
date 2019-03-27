@@ -1,11 +1,39 @@
 <section id="content">
     <div class="head">
-        Das war
+        Tolle Runde!
     </div>
     <div class="middle">
-        <%= image_tag @user.avatar.quad330.url, class: 'mid-img green' %>
+        <div class="circle" id="ges">
+            <%= image_tag @user.avatar.quad.url, class: 'mid-img' %>
+        </div>
+        <%= image_tag 'game/polygon.png', class: 'pol' %>
+        <div class="rating" id='ges_text'>?</div>
     </div>
-    <div class="bottom">
-        eine tolle Runde!
+    <div class="bottom links">
+        <a href="<%= gmu_ended_path %>" class="pol-bg" data-confirm="Bist du sicher, dass du nicht weiterspielen möchtest?"><i class="fas fa-times"></i></a>
+        <a type="button" class="pol-bg" onclick="showModal()"><i class="fas fa-share-alt"></i></a>
     </div>
+<!-- Modal -->
+<div id="shareModal">
+    <button type="button" id="close" onclick="closeModal()"><i class="far fa-times-circle"></i></button>
+    <div class="header">
+        - Teile dein Ergebnis -
+    </div>
+    <div class="links1">
+        <%= social_share_button_tag('Ich habe ' + (@turn_rating.ges/10.0).to_s + ' erspielt! Was schaffst du?', :url => "http://www.peterpitch.com", desc: 'Ich habe ' + (@turn_rating.ges/ 10.0).to_s + ' erspielt! Was schaffst du?', :allow_sites => %w(twitter linkedin Xing)) %>
+    </div>
+    <div class="links2">
+        <%= social_share_button_tag('Ich habe ' + (@turn_rating.ges/10.0).to_s + ' erspielt! Was schaffst du?', :url => "http://www.peterpitch.com", desc: 'Ich habe ' + (@turn_rating.ges/ 10.0).to_s + ' erspielt! Was schaffst du?', :allow_sites => %w(whatsapp_app facebook)) %>
+    </div>
+</div>
 </section>
+
+<script>
+ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);
+function showModal() {
+    $('#shareModal').show();
+}
+function closeModal() {
+    $('#shareModal').hide();
+}
+</script>
