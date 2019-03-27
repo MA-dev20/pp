@@ -6,6 +6,7 @@ class GameMobileUserController < ApplicationController
   layout 'game_mobile'
 
   def new
+    @game = Game.where(password: params[:password], active: true).first
   end
     
   def create
@@ -13,14 +14,18 @@ class GameMobileUserController < ApplicationController
     if @game
       session[:game_session_id] = @game.id
       @admin = Admin.find(@game.admin_id)
+      if @admin.email == params[:user][:email].downcase
+        redirect_to gma_start_path(params[:password])
+        return
+      end
       @user = User.find_by(email: params[:user][:email])
       if @user && @user.admin == @admin
         if TeamUser.where(user_id: @user.id, team_id: @game.team_id).count == 0
           TeamUser.create(user_id: @user.id, team_id: @game.team_id)
         end
         sign_in(@user)
-        ActionCable.server.broadcast "count_channel", game_state: 'wait'
-        redirect_to gmu_new_turn_path
+        touch @game
+        redirect_to gmu_new_avatar_path
       else
         @user = @admin.users.create(email: params[:user][:email])
         TeamUser.create(user_id: @user.id, team_id: @game.team_id)
@@ -86,6 +91,7 @@ class GameMobileUserController < ApplicationController
   end
 
   def create_name
+    @game = Game.find(session[:game_session_id])
     @user.update(user_params)
     redirect_to gmu_new_company_path
   end
@@ -96,11 +102,6 @@ class GameMobileUserController < ApplicationController
      
   def create_company
     @game = Game.find(session[:game_session_id])
-    @user.update(user_params)
-    redirect_to gmu_new_avatar_path
-  end
-    
-  def create_company
     @user.update(user_params)
     redirect_to gmu_new_avatar_path
   end
@@ -178,6 +179,7 @@ class GameMobileUserController < ApplicationController
   end
     
   def bestlist
+    @turn_rating = @game.turn_ratings.where(user_id: @user.id).first
   end
     
   def replay

@@ -1,7 +1,10 @@
 jQuery(document).on 'turbolinks:load', ->
-  App.games = App.cable.subscriptions.create {
-    channel: "GamesChannel"
-  },
+  game = $('#game_channel')
+  if $('#game_channel').length > 0
+    App.games = App.cable.subscriptions.create {
+      channel: "GamesChannel"
+      game_id: game.data('game-id')
+    },
     connected: ->
 # Called when the subscription is ready for use on the server
 
@@ -9,8 +12,7 @@ jQuery(document).on 'turbolinks:load', ->
 # Called when the subscription has been terminated by the server
 
     received: (data) ->
-      # location.replace(data['game_state']);
-      if data['game_state'] == 'wait'
+      if data['game_state'] == 'wait' && current_page?(action: 'wait')
         $('#myModalAction .modal-body').append ' <div class="mail-box">
                   <div class="mail-box-main">
                   <span><img src= '+ data["user_avatar"] + '/></span>'+
@@ -24,6 +26,6 @@ jQuery(document).on 'turbolinks:load', ->
                   </div>'
         $('#myModalAction').show()
       else
-        $.get('/mobile/user/game/wait/'+data["status"])
+        window.location.replace(data['game_state'])
 
 

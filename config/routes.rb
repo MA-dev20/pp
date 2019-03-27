@@ -74,8 +74,6 @@ Rails.application.routes.draw do
 # User Mobile #
 ###############
     
-  get 'mobile/users/:password', to: 'game_mobile_user#new', as: 'gmu_start'
-  post 'mobile/users/:password', to: 'game_mobile_user#create'
   get 'mobile/user/name', to: 'game_mobile_user#new_name', as: 'gmu_new_name'
   post 'mobile/user/name', to: 'game_mobile_user#create_name'
     
@@ -205,5 +203,11 @@ Rails.application.routes.draw do
     
   get 'words/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
   mount ActionCable.server => '/cable'
+    
+##############
+# Enter Game #
+##############
+  get '/:password', to: 'game_mobile_user#new', as: 'gmu_start'
+  post '/:password', to: 'game_mobile_user#create'
 
 end
