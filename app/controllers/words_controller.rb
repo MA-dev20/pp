@@ -7,6 +7,7 @@ class WordsController < ApplicationController
   def create
     @word = Word.create(word_params)
     @word.name = @word.sound_identifier.remove('.mp3')
+    @word.free = false
     if @word.save
       flash[:success] = 'Wort gespeichert!'
       redirect_to backoffice_words_path

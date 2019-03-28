@@ -13,6 +13,7 @@
     <th>Free</th>
     <th>Premium</th>
     <th scope="col">Delete</th>
+    <th scope="col">Submit</th>
 </thead>
 <tbody>
 <% @words.each do |w| %>
@@ -22,13 +23,14 @@
         <td><%= f.text_field :name, value: w.name, class: 'form-control' %></td>
         <td><%= audio_tag w.sound.url, controls: true %></td>
         <% if w.free %>
-        <td><%= f.radio_button :free, true, checked: true, onchange: 'auto()', class: 'form-control' %></td>
-        <td><%= f.radio_button :free, false, onchange: 'auto()', class: 'form-control' %></td>
+        <td><%= f.radio_button :free, true, checked: true, class: 'form-control' %></td>
+        <td><%= f.radio_button :free, false, class: 'form-control' %></td>
         <% else %>
-        <td><%= f.radio_button :free, true, onchange: 'auto()', class: 'form-control' %></td>
-        <td><%= f.radio_button :free, false, checked: true, onchange: 'auto()', class: 'form-control' %></td>
+        <td><%= f.radio_button :free, true, class: 'form-control' %></td>
+        <td><%= f.radio_button :free, false, checked: true, class: 'form-control' %></td>
         <% end %>
         <td><%= link_to '', destroy_word_path(w.id), class: 'fas fa-trash-alt' %></td>
+        <td><%= f.submit 'Save', class: 'far fa-save' %></td>
         <% end %>
     </tr>
 <% end %>
