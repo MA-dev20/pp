@@ -21,8 +21,8 @@ jQuery(document).on 'turbolinks:load', ->
                     <span><img src= '+ data["user_avatar"] + '/></span>'+ data["user_fname"] + ' ' + data["user_lname"] +'
                 </div>
                 <div class="mail-btn">
-                    <a class="btn btn-secondary btn-accept" rel="nofollow" data-method="patch" href="/game_mobile_user/accept_user/'+ data["user_id"]+'">Accept</a>
-                    <a class="btn btn-primary btn-reject" rel="nofollow" data-method="patch" href="/game_mobile_user/reject_user/'+ data["user_id"]+'">Reject</a>
+                    <%= link_to "Accept", accept_user_path(user_id: turn.user.id), method: :patch, params: { status: 1 }, class: "btn btn-secondary btn-accept" %>
+                    <%= link_to "Reject", reject_user_path(user_id: turn.user.id), method: :patch, params: { status: 2 }, class: "btn btn-primary btn-reject" %>
                 </div>
             </div>'
             $('#myModalAction').show()

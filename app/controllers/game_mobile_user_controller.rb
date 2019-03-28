@@ -42,7 +42,13 @@ class GameMobileUserController < ApplicationController
     if @user.update_attributes(status: 1)
       redirect_back(fallback_location: root_path)
       Turn.where(user_id: @user.id).first.delete
-      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false' , game_id: current_game.id, user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
+      @user.destroy
+      @user = User.where(status: 'pending').first
+      if @user
+        ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false' , game_id: current_game.id, user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
+      else
+        ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false' , game_id: current_game.id
+      end
     end
   end
 
