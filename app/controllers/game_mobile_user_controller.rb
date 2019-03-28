@@ -24,7 +24,6 @@ class GameMobileUserController < ApplicationController
           TeamUser.create(user_id: @user.id, team_id: @game.team_id)
         end
         sign_in(@user)
-        touch @game
         redirect_to gmu_new_avatar_path
       else
         @user = @admin.users.create(email: params[:user][:email])
@@ -43,8 +42,7 @@ class GameMobileUserController < ApplicationController
     if @user.update_attributes(status: 1)
       redirect_back(fallback_location: root_path)
       Turn.where(user_id: @user.id).first.delete
-      ActionCable.server.broadcast "game_channel", game_state: 'ended' ,game_id: current_game.id,
-      user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
+      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false' , game_id: current_game.id, user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
     end
   end
 
@@ -131,14 +129,8 @@ class GameMobileUserController < ApplicationController
     if @turn.save
       session.delete(:game_session_id)
       sign_in(@game)
+      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s
       redirect_to gmu_wait_path
-      # if @user.status_changed? &&  @user.status == "rejected"
-      #   redirect_to gmu_start_path(@game.password)
-      # elsif @user.status == "accepted"
-      #   session.delete(:game_session_id)
-      #   sign_in(@game)
-      #   redirect_to gmu_wait_path
-      # end
     else
       redirect_to gmu_new_turn_path
     end
@@ -149,7 +141,7 @@ class GameMobileUserController < ApplicationController
   def wait
     @admin = Admin.find(@game.admin_id)
     if (current_user && current_user.admin == @admin )&& (current_user.status== "pending" || current_user.status== "rejected" )
-      ActionCable.server.broadcast "game_channel", game_state: 'wait' ,game_id: current_game.id,
+      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false', game_state: 'wait' ,game_id: current_game.id, counter: @game.turns.count.to_s, 
       user_fname: current_user.fname, user_lname: current_user.lname,
       user_avatar: current_user.avatar.url , user_id: current_user.id
     end

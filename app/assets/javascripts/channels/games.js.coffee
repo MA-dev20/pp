@@ -12,20 +12,6 @@ jQuery(document).on 'turbolinks:load', ->
 # Called when the subscription has been terminated by the server
 
     received: (data) ->
-      if data['game_state'] == 'wait' && current_page?(action: 'wait')
-        $('#myModalAction .modal-body').append ' <div class="mail-box">
-                  <div class="mail-box-main">
-                  <span><img src= '+ data["user_avatar"] + '/></span>'+
-                  data["user_fname"] + ' ' + 
-                  data["user_lname"] +
-                  '</div>
-                  <div class="mail-btn">
-                  <a class="btn btn-secondary btn-accept" rel="nofollow" data-method="patch" href="/game_mobile_user/accept_user/'+ data["user_id"]+'">Accept</a>
-                  <a class="btn btn-primary btn-reject" rel="nofollow" data-method="patch" href="/game_mobile_user/reject_user/'+ data["user_id"]+'">Reject</a>
-                  </div>
-                  </div>'
-        $('#myModalAction').show()
-      else
         window.location.replace(data['game_state'])
 
 

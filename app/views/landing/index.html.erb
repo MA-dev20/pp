@@ -1,158 +1,154 @@
+<header class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent pb-0 pb-sm-2 pt-0 px-0">
+	    <div class="container">
+		    <div class="polygon">
+			    <span class="polygon-img"><%= image_tag ("polygon.png")%></span>
+				<a class="navbar-brand p-0" href="#"><%= image_tag ("logo.png") , alt:"IMG"%></a>
+				<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				    <span class="navbar-toggler-line"></span>
+					<span class="navbar-toggler-line"></span>
+					<span class="navbar-toggler-line"></span>
+				</button>
+            </div>
+			<div class="collapse navbar-collapse flex-column align-items-start" id="navbarSupportedContent">
+			    <ul class="navbar-nav navbar-links flex-row justify-content-between d-none">
+				    <li class="nav-item">
+					    <a class="nav-link" href="#">Login Coaches</a>
+				    </li>
+					<li class="nav-item">
+					    <a class="nav-link" href="#">Login Unternehmen</a>
+				    </li>
+				</ul>
+				<ul class="navbar-nav navbar-list mx-auto">
+				    <li class="nav-item">
+					    <a class="nav-link" href="/landing/product">Produkt</a>
+					</li>
+				    <li class="nav-item">
+					    <a class="nav-link" href="/landing/price">Pricing</a>
+					</li>
+					<li class="nav-item">
+					    <a class="nav-link active" href="/admins/register">Login</a>
+					</li>
+				</ul>
+            </div>
+        </div>
+    </nav>
+</header>
 
-			<header class="header">
-				<nav class="navbar navbar-expand-lg navbar-light bg-transparent pb-0 pb-sm-2 pt-0 px-0">
-					<div class="container">
-						<div class="polygon">
-							<span class="polygon-img"><%= image_tag ("polygon.png")%></span>
-					  	<a class="navbar-brand p-0" href="#"><%= image_tag ("logo.png") , alt:"IMG"%></a>
-					  	<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						    <span class="navbar-toggler-line"></span>
-						    <span class="navbar-toggler-line"></span>
-						    <span class="navbar-toggler-line"></span>
-						  </button>
-					  </div>
-					  <div class="collapse navbar-collapse flex-column align-items-start" id="navbarSupportedContent">
-					  	<ul class="navbar-nav navbar-links flex-row justify-content-between d-none">
-					      <li class="nav-item">
-					        <a class="nav-link" href="#">Login Coaches</a>
-					      </li>
-					      <li class="nav-item">
-					        <a class="nav-link" href="#">Login Unternehmen</a>
-					      </li>
-					    </ul>
-					    <ul class="navbar-nav navbar-list mx-auto">
-					      <li class="nav-item">
-					        <a class="nav-link" href="/landing/product">Produkt</a>
-					      </li>
-					      <li class="nav-item">
-					        <a class="nav-link" href="/landing/price">Pricing</a>
-					      </li>
-					      <li class="nav-item">
-					        <a class="nav-link active" href="/admins/register">Login</a>
-					      </li>
-					    </ul>
-					  </div>
-					</div>
-				</nav>
-			</header>
-
-			<div class="off-canvas">
-				<section class="app-banner">
-				    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'position: absolute; top: 0; left: 0; width: 100%; height: 750px; z-index: -10000; object-fit: fill;' %>
-					<div class="container">
-						<div class="row flex-column-reverse flex-md-row">
-								<div class="app-banner-img text-center" style="z-index: 100">
-                                    <%= image_tag ("iphoneX-mockup.png") ,alt:"IMG" , height:"400"%>
-                                </div>
-				            <div class="app-banner-main text-center">
-							    <div id="typed-strings">
-                                    <span>PETER PITCH</span>
-                                    <p>ZurückBlitzer</p>
-                                    <p>ChefTrampolin</p>
-                                    <p>NotrufSocke</p>
-                                </div>
-                                <h1 style="color: white"><span id="typed"></span></h1>
-								<p class="banner-paragraph pb-1">Das erste digitale Trainingstool für <br>Kommunikation und Vertrieb.</p>
-								<div class="mb-3 pb-1">
-									<a href="#" class="d-inline-block">
-                                        <%= image_tag ("video-icon.png"), width:"44"%>
-                                    </a>
-								</div>
-                                <a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Kostenlos spielen!</a>
-				            </div>
-						</div>
-					</div>
-				</section>
-				<section class="peter-trial">
-					<div class="container">
-						<div class="row">
-							<div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-								<div class="trial-block d-flex wow fadeInUp" data-wow-duration="1.5s">
-									<div class="trial-block-img">
-                  <%= image_tag ("user-1.png")%>
-                  </div>
-									<div class="trial-block-detail position-relative">
-										<h4>"Wie geil ist das denn?"</h4>
-										<p>Nimm den Spaß in deinem Unternehmen ernst und verwandel deine Meetings in Gamification-Events. Mit Peter Pitch treibst du dein Mitarbeiter-Rudel zusammen und machst sogar aus den wackeligsten Welpen wahre Wölfe. Learning by Gaming!</p>
-                    <div class="trialblock-btns">
-											<a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Probemonat starten</a>
-                  	</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
-				<section class="customerLove-section text-center">
-					<div class="container">
-						<h6 class="customerLove-heading mt-3 mb-1 wow add-anim fadeIn" data-wow-duration="1.5s">
-							<span>Kunden die Peter Pitch lieben</span>
-						</h6>
-						<ul class="customerLove-list d-flex align-items-center justify-content-around flex-wrap flex-md-nowrap wow add-anim fadeIn" data-wow-duration="1.5s">
-							<li class="px-2"><%= image_tag ("instafreight.png") , alt:"IMG" %>
-              </li>
-							<li class="px-2"><%= image_tag ("ergo.png") , alt:"IMG" %>
-              </li>
-							<li class="px-2"><%= image_tag ("tm.png") , alt:"IMG" %>
-              </li>
-							<li class="px-2"><%= image_tag ("masterplan.png") , alt:"IMG" %>
-              </li>
-						</ul>
-					</div>
-				</section>
-				<section class="pitchit-intro">
-					<div class="container">
-						<div class="row align-items-center">
-							<div class="col-12 col-md-6">
-								<div class="text-sm-center text-md-right box-pitch">
-									<div class="pitchit-img img-box wow fadeInLeft" data-wow-duration="1.5s"></div>
-								</div>
-							</div>
-							<div class="col-12 col-md-6 paw-col paw-col-1 paw-rtl">
-								<div class="text-sm-center text-md-left box-pitch">
-									<div class="pitchit-text pb-md-3 pb-lg-5 pr-md-3 pr-lg-5">
-										<h6 class="d-inline-block w-100 text-blue wow add-anim fadeInUp" data-wow-duration="1.5s">stage is yours</h6>
-										<h2 class="pitchit-heading mb-3 pb-1 wow add-anim fadeInUp" data-wow-duration="1.5s"><span class="text-green">Gamifcation</span> - Pitch it! </h2>
-										<p class="pitchit-para pr-lg-5 wow add-anim fadeInUp" data-wow-duration="1.5s">Gamification bedeutet Spaß in spielfremde & theoretische Situationen einzubringen, wie beispielsweise in Vertriebsschulungen. Mit unserem digitalen Trainingstool und lustigen Catchwords kommen bei deinen Mitarbeitern ungeahnte Potentiale zum Vorschein. </p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row align-items-center flex-column-reverse flex-md-row">
-							<div class="col-12 col-md-6 paw-col paw-col-2 paw-ltr">
-								<div class="text-sm-center text-md-right box-pitch">
-									<div class="pitchit-text pb-md-3 pb-lg-5 pl-md-3 pl-lg-5">
-										<h6 class="d-inline-block w-100 text-blue wow add-anim fadeInUp" data-wow-duration="1.5s">rate now</h6>
-										<h2 class="pitchit-heading mb-3 pb-1 wow add-anim fadeInUp" data-wow-duration="1.5s"><span class="text-green">Interaktion</span> - par excellence </h2>
-										<p class="pitchit-para pl-lg-5 wow add-anim fadeInUp" data-wow-duration="1.5s">Frontpräsentationen waren gestern. Durch die interaktive Bewertung jedes Einzelnen, sind alle Mitarbeiter eingebunden und verbessern nicht nur sich selbst, sondern auch das Teamwork. Die Kollegen helfen spielerisch bei der Einschätzung der Fremdwahrnehmung und hieven das Team auf ein neues Level.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-12 col-md-6">
-								<div class="text-sm-center text-md-left box-pitch">
-									<div class="pitchit-img wow fadeInRight" data-wow-duration="1.5s"> <%= image_tag ("iphoneX-mockup.png") , alt:"IMG" %>
+<div class="off-canvas">
+    <section class="app-banner">
+	    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'position: absolute; top: 0; left: 0; width: 100%; height: 750px; z-index: -10000; object-fit: fill;' %>
+		<div class="container">
+		    <div class="row flex-column-reverse flex-md-row">
+			    <div class="app-banner-img text-center" style="z-index: 100">
+                    <%= image_tag ("iphoneX-mockup.png") ,alt:"IMG" , height:"400"%>
                 </div>
-								</div>
-							</div>
-						</div>
-						<div class="row align-items-center">
-							<div class="col-12 col-md-6">
-								<div class="text-sm-center text-md-right box-pitch wow fadeInLeft" data-wow-duration="1.5s">
-								    <%= image_tag ("laptop.png") , alt:"IMG" %>
-								</div>
-							</div>
-							<div class="col-12 col-md-6 paw-col paw-col-3 paw-rtl pr-3">
-								<div class="text-sm-center text-md-left box-pitch">
-									<div class="pitchit-text pb-md-3 pb-lg-5">
-										<h6 class="d-inline-block w-100 text-blue wow add-anim fadeInUp" data-wow-duration="1.5s">performance-boost!</h6>
-										<h2 class="pitchit-heading mb-3 pb-1 wow add-anim fadeInUp" data-wow-duration="1.5s"><span class="text-green">Controlling</span> - maximale Transparenz! </h2>
-										<p class="pitchit-para pr-lg-5 wow add-anim fadeInUp" data-wow-duration="1.5s">Wir machen Softskills erstmals messbar. Du behälst den Lernfortschritt deiner Mitarbeiter genau im Auge. Jede Pitch-Performance wird gespeichert und ist jederzeit abrufbar. Erkenne die Stärken und Schwächen und arbeite gezielt an den Fähigkeiten deines Teams.  </p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
+				<div class="app-banner-main text-center">
+				    <div id="typed-strings">
+                        <span>PETER PITCH</span>
+                        <p>ZurückBlitzer</p>
+                        <p>ChefTrampolin</p>
+                        <p>NotrufSocke</p>
+                    </div>
+                    <h1 style="color: white"><span id="typed"></span></h1>
+					<p class="banner-paragraph pb-1">Das erste digitale Trainingstool für <br>Kommunikation und Vertrieb.</p>
+					<div class="mb-3 pb-1">
+					    <a href="#" class="d-inline-block">
+                            <%= image_tag ("video-icon.png"), width:"44"%>
+                        </a>
+				    </div>
+                    <a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Kostenlos spielen!</a>
+				</div>
+            </div>
+        </div>
+    </section>
+	<section class="peter-trial">
+	    <div class="container">
+		    <div class="row">
+			    <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+				    <div class="trial-block d-flex wow fadeInUp" data-wow-duration="1.5s">
+					    <div class="trial-block-img">
+                            <%= image_tag ("user-1.png")%>
+                        </div>
+						<div class="trial-block-detail position-relative">
+						    <h4>"Wie geil ist das denn?"</h4>
+							<p>Nimm den Spaß in deinem Unternehmen ernst und verwandel deine Meetings in Gamification-Events. Mit Peter Pitch treibst du dein Mitarbeiter-Rudel zusammen und machst sogar aus den wackeligsten Welpen wahre Wölfe. Learning by Gaming!</p>
+                            <div class="trialblock-btns">
+							    <a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Probemonat starten</a>
+                  	        </div>
+				        </div>
+				    </div>
+				</div>
+            </div>
+        </div>
+    </section>
+	<section class="customerLove-section text-center">
+        <div class="container">
+		    <h6 class="customerLove-heading mt-3 mb-1 wow add-anim fadeIn" data-wow-duration="1.5s">
+			    <span>Kunden die Peter Pitch lieben</span>
+			</h6>
+            <ul class="customerLove-list d-flex align-items-center justify-content-around flex-wrap flex-md-nowrap wow add-anim fadeIn" data-wow-duration="1.5s">
+			    <li class="px-2"><%= image_tag ("instafreight.png") , alt:"IMG" %></li>
+				<li class="px-2"><%= image_tag ("ergo.png") , alt:"IMG" %></li>
+				<li class="px-2"><%= image_tag ("tm.png") , alt:"IMG" %></li>
+				<li class="px-2"><%= image_tag ("masterplan.png") , alt:"IMG" %></li>
+            </ul>
+        </div>
+    </section>
+	<section class="pitchit-intro">
+	    <div class="container">
+	        <div class="row align-items-center">
+	            <div class="col-12 col-md-6">
+	                <div class="text-sm-center text-md-right box-pitch">
+	                    <div class="pitchit-img img-box wow fadeInLeft" data-wow-duration="1.5s"></div>
+	                </div>
+                </div>
+                <div class="col-12 col-md-6 paw-col paw-col-1 paw-rtl">
+                    <div class="text-sm-center text-md-left box-pitch">
+	                    <div class="pitchit-text pb-md-3 pb-lg-5 pr-md-3 pr-lg-5">
+	                        <h6 class="d-inline-block w-100 text-blue wow add-anim fadeInUp" data-wow-duration="1.5s">stage is yours</h6>
+	                        <h2 class="pitchit-heading mb-3 pb-1 wow add-anim fadeInUp" data-wow-duration="1.5s"><span class="text-green">Gamifcation</span> - Pitch it! </h2>
+	                        <p class="pitchit-para pr-lg-5 wow add-anim fadeInUp" data-wow-duration="1.5s">Gamification bedeutet Spaß in spielfremde & theoretische Situationen einzubringen, wie beispielsweise in Vertriebsschulungen. Mit unserem digitalen Trainingstool und lustigen Catchwords kommen bei deinen Mitarbeitern ungeahnte Potentiale zum Vorschein. </p>
+	                    </div>
+	                </div>
+	            </div>
+            </div>
+	        <div class="row align-items-center flex-column-reverse flex-md-row">
+	            <div class="col-12 col-md-6 paw-col paw-col-2 paw-ltr">
+	                <div class="text-sm-center text-md-right box-pitch">
+	                    <div class="pitchit-text pb-md-3 pb-lg-5 pl-md-3 pl-lg-5">
+	                        <h6 class="d-inline-block w-100 text-blue wow add-anim fadeInUp" data-wow-duration="1.5s">rate now</h6>
+	                        <h2 class="pitchit-heading mb-3 pb-1 wow add-anim fadeInUp" data-wow-duration="1.5s"><span class="text-green">Interaktion</span> - par excellence </h2>
+	                        <p class="pitchit-para pl-lg-5 wow add-anim fadeInUp" data-wow-duration="1.5s">Frontpräsentationen waren gestern. Durch die interaktive Bewertung jedes Einzelnen, sind alle Mitarbeiter eingebunden und verbessern nicht nur sich selbst, sondern auch das Teamwork. Die Kollegen helfen spielerisch bei der Einschätzung der Fremdwahrnehmung und hieven das Team auf ein neues Level.</p>
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="col-12 col-md-6">
+	<div class="text-sm-center text-md-left box-pitch">
+	<div class="pitchit-img wow fadeInRight" data-wow-duration="1.5s">
+    <%= image_tag ("iphoneX-mockup.png") , alt:"IMG" %>
+    </div>
+	</div>
+	</div>
+	</div>
+	<div class="row align-items-center">
+	<div class="col-12 col-md-6">
+	<div class="text-sm-center text-md-right box-pitch wow fadeInLeft" data-wow-duration="1.5s">
+	<%= image_tag ("laptop.png") , alt:"IMG" %>
+	</div>
+	</div>
+	<div class="col-12 col-md-6 paw-col paw-col-3 paw-rtl pr-3">
+	<div class="text-sm-center text-md-left box-pitch">
+	<div class="pitchit-text pb-md-3 pb-lg-5">
+	<h6 class="d-inline-block w-100 text-blue wow add-anim fadeInUp" data-wow-duration="1.5s">performance-boost!</h6>
+	<h2 class="pitchit-heading mb-3 pb-1 wow add-anim fadeInUp" data-wow-duration="1.5s"><span class="text-green">Controlling</span> - maximale Transparenz! </h2>
+	<p class="pitchit-para pr-lg-5 wow add-anim fadeInUp" data-wow-duration="1.5s">Wir machen Softskills erstmals messbar. Du behälst den Lernfortschritt deiner Mitarbeiter genau im Auge. Jede Pitch-Performance wird gespeichert und ist jederzeit abrufbar. Erkenne die Stärken und Schwächen und arbeite gezielt an den Fähigkeiten deines Teams.  </p>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
 				<section class="customer-section">
 					<div class="container">
 						<h1 class="section-heading text-center wow add-anim fadeIn" data-wow-duration="1.5s"><span class="text-grey">Das sagen unsere</span> Kunden</h1>

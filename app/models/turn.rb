@@ -8,7 +8,7 @@ class Turn < ApplicationRecord
   has_many :ratings, dependent: :destroy
     
   scope :playable, -> { where(play:true, played: false) }
-
+    
   def findUser
     if user_id
       User.find(user_id)

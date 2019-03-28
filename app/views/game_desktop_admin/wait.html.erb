@@ -7,13 +7,13 @@
     <path d="M4006 5069 c-151 -20 -304 -72 -436 -149 -92 -54 -128 -86 -205 -184 -145 -188 -242 -365 -399 -733 -101 -238 -136 -298 -242 -412 -147 -158 -319 -269 -499 -321 -302 -86 -634 -262 -803 -424 -123 -117 -256 -325 -317 -494 -173 -480 -63 -1027 279 -1389 143 -152 273 -236 527 -342 137 -57 209 -73 319 -73 111 1 152 9 320 63 168 55 241 90 416 200 419 263 733 369 1094 369 385 0 757 -124 1195 -396 77 -48 175 -109 218 -135 302 -185 695 -182 1072 9 543 274 818 944 640 1557 -67 230 -170 403 -344 575 -152 152 -206 181 -450 252 -330 95 -509 194 -681 375 -160 167 -196 235 -386 718 -164 415 -177 439 -328 590 -264 264 -628 390 -990 344z"/>
 </g>
 </svg>
-
+<section id="count_channel" data-game-id="<%= @game.id %>">
 <section id="head">
     Jetzt Spiel beitreten!
 </section>
-<div id="count" class="count">
-    <%= render partial: 'count' %>
-</div>
+<section id="count" class="count">
+    <%= @count %>
+</section>
 <section id="bottom">
     <div class="ajax-loader">
 	    <div class="paw"><svg class="icon" viewBox="0 0 840.000000 1119.000000" preserveAspectRatio="xMidYMid meet"><use xlink:href="#paw" /></svg></div>
@@ -42,6 +42,7 @@
 <%= audio_tag('wait/bereit.mp3', id: 'tag2') %>
 <%= audio_tag('wait/kommando.mp3', id: 'tag3') %>
 <%= audio_tag('wait/truppe.mp3', id: 'tag4') %>
+</section>
 <script>
     pick(4);
     $(window).keypress(function (e) {
