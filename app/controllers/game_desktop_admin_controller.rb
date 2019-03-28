@@ -1,5 +1,5 @@
 class GameDesktopAdminController < ApplicationController
-  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :ended]
+  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay]
   before_action :set_turn, only: [:turn, :play, :rate, :rating]
     
   layout 'game_desktop'
@@ -12,7 +12,7 @@ class GameDesktopAdminController < ApplicationController
         @game.update(state: 'wait')
     end
     
-    @count = @game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count
+    @count = @game.turns.count
     @pending_count = @game.turns.select{|turn| turn if !turn.user.nil? && turn.user.pending?}.count
   end
     
@@ -94,7 +94,6 @@ class GameDesktopAdminController < ApplicationController
   end
 
   def ended
-    @game = current_game
     if @game.state != 'ended'
       @game.update(state: 'ended', active: false)
     end

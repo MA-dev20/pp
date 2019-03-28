@@ -1,4 +1,5 @@
-<section id="content">
+<section id='content'>
+   <div id="count_channel" data-game-id="<%= @game.id %>" >
     <div class="head">
         <% if @admin == @cur_user %>
             <div class="h100">Du wirst bewertet!</div>
@@ -7,18 +8,10 @@
         <% end %>
     </div>
     <div class="middle" id="middle">
-        <%= render partial: 'rating_count' %>
+        <%= @count %>
     </div>
     <div class="bottom">
       <%= link_to 'Bewertung beenden!', gma_rating_path %>
     </div>
+    </div>
 </section>
-<script>
-$(document).ready(
-    function() {
-        setInterval(function() {
-            $('#middle').load('rated #middle');
-        }, 2000);
-    }
-);
-</script>

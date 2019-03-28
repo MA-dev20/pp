@@ -14,4 +14,5 @@ class User < ApplicationRecord
   mount_uploader :avatar, PicUploader
   
   enum status: [:accepted , :rejected , :pending ]
+
 end

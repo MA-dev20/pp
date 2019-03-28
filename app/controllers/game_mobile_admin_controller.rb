@@ -53,6 +53,7 @@ class GameMobileAdminController < ApplicationController
     if @turn.save
       session.delete(:game_session_id)
       sign_in(@game)
+      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s
       redirect_to gma_intro_path
     else
       redirect_to gma_new_turn_path
@@ -112,8 +113,10 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rated
-    @ratings_count = @turn.ratings.count
-    @player_count = @game.turns.count-1
+    @count = @turn.ratings.count.to_s + '/' + (@game.turns.count - 1).to_s + ' haben bewertet!'
+    if @turn.ratings.count == @game.turns.count - 1
+      redirect_to gma_rating_path
+    end
   end
     
   def rating

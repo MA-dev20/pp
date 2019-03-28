@@ -6,10 +6,15 @@ class RatingsController < ApplicationController
     
   def create
     @admin = current_admin
+    @game = @turn.game
     @rating = @turn.ratings.new(rating_params)
     @rating.ges = (@rating.body + @rating.creative + @rating.rhetoric + @rating.spontan) / 4
     @rating.admin_id = @admin.id
-    if @rating.save
+    if @rating.save && @turn.ratings.count == (@game.turns.count - 1)
+      @game.update(state: 'rating')
+      return
+    elsif @rating.save
+      ActionCable.server.broadcast "count_#{@game.id}_channel", game_state: 'rate', counter: @turn.ratings.count.to_s + '/' + (@game.turns.count - 1).to_s + ' haben bewertet!'
       redirect_to gma_rated_path
     else
       redirect_to gma_rate_path
@@ -21,10 +26,15 @@ class RatingsController < ApplicationController
     
   def create_user
     @user = current_user
+    @game = @turn.game
     @rating = @turn.ratings.new(rating_params)
     @rating.ges = (@rating.body + @rating.creative + @rating.rhetoric + @rating.spontan) / 4
     @rating.user_id = @user.id
-    if @rating.save
+    if @rating.save && @turn.ratings.count == (@game.turns.count - 1)
+      @game.update(state: 'rating')
+      return
+    elsif @rating.save
+      ActionCable.server.broadcast "count_#{@game.id}_channel", game_state: 'rate', counter: @turn.ratings.count.to_s + '/' + (@game.turns.count - 1).to_s + ' haben bewertet!'
       redirect_to gmu_rated_path
       return
     else
