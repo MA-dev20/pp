@@ -16,8 +16,8 @@ jQuery(document).on 'turbolinks:load', ->
             $('#count').text(data["counter"])
             document.getElementById('ping').play()
         if data['game_state'] == 'wait'
-            $('.mail-box-main').text('<span><img src= '+ data["user_avatar"] + '/></span>'+ data["user_fname"] + ' ' + data["user_lname"])
-            $('.mail-btn').text('<a class="btn btn-secondary btn-accept" rel="nofollow" data-method="patch" href="/game_mobile_user/accept_user/'+ data["user_id"]+'">Accept</a>
+            $('.mail-box-main').html('<span><img src= '+ data["user_avatar"] + '/></span>'+ data["user_fname"] + ' ' + data["user_lname"])
+            $('.mail-btn').html('<a class="btn btn-secondary btn-accept" rel="nofollow" data-method="patch" href="/game_mobile_user/accept_user/'+ data["user_id"]+'">Accept</a>
             <a class="btn btn-primary btn-reject" rel="nofollow" data-method="patch" href="/game_mobile_user/reject_user/'+ data["user_id"]+'">Reject</a>')
             $('#myModalAction').show()
             $('#count').text(data['counter'])
