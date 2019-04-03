@@ -512,30 +512,21 @@ header
 	  align-items: center;
 	  justify-content: center;
   }
-  .customer-block-l .review-box:after {
-	  content: '';
-	  position: absolute;
-	  right: -42px;
-	  top: -43px;
-	  background: image_url('loud-1.png') center no-repeat;
-	  width: 46px;
-	  height: 46px;
-	  display: inline-block;
-	  background-size: 46px;
+  .customer-block-l .review-box .decoration-right {
+    position: absolute;
+    right: -42px;
+    top: -54px;
+    -ms-transform: rotate(-46deg);
+    -webkit-transform: rotate(-46deg);
+    transform: rotate(-46deg);
   }
-  .customer-block-r .review-box:before {
-	  content: '';
-	  position: absolute;
-	  left: -42px;
-	  top: -43px;
-	  background: image_url('loud-1.png') center no-repeat;
-	  width: 46px;
-	  height: 46px;
-	  display: inline-block;
-	  background-size: 46px;
-	  -ms-transform: rotate(-90deg);
-	  -webkit-transform: rotate(-90deg);
-	  transform: rotate(-90deg);
+  .customer-block-r .review-box .decoration-left {
+    position: absolute;
+    left: -42px;
+    top: -54px;
+    -ms-transform: rotate(46deg);
+    -webkit-transform: rotate(46deg);
+    transform: rotate(46deg);
   }
   .dot-box {
 	  width: 12px;
@@ -1141,7 +1132,7 @@ product
 		min-height: 557px;
 	}
 	.offer-top-btn:after {
-		right: -4px;
+		right: -40px;
 		-ms-transform: rotate(-75deg);
 		-webkit-transform: rotate(-75deg);
 		transform: rotate(-75deg);
@@ -1251,7 +1242,7 @@ product
 }
 @media only screen and (max-width: 767px) {
 	.app-banner{
-		padding-top: 160px;
+		padding-top: 110px;
 	}
 	.banner-paragraph {
 		font-size: 1.25rem;
@@ -1442,6 +1433,19 @@ product
 		height: auto;
 		font-size: 1rem;
 		padding: 0.375rem 0.75rem;
+	}
+	.app-banner-img,
+	.app-banner-main {
+		position: static;
+		width: 100%;
+	}
+	.app-banner-img {
+		height: 300px;
+		margin-top: 16px;
+	}
+	.app-banner-img img {
+		max-height: 100%;
+		height: auto;
 	}
 }
 @media only screen and (max-width: 575px) {
