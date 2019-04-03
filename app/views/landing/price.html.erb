@@ -1,7 +1,7 @@
 <body>
 
 		<div class="off-canvas-container">
-			<% unless admin_signed_in? %>
+			<%# unless admin_signed_in? %>
 			<header class="header header-new">
 				<nav class="navbar navbar-expand-lg navbar-light bg-white pt-0 pb-0 pb-lg-4 pt-lg-4 px-0">
 					<div class="container">
@@ -27,11 +27,11 @@
 					</div>
 				</nav>
 			</header>
-			<% end %>
+			<%# end %>
 			<div class="off-canvas">
 				<section class="offer-section">
 					<div class="container container-narrow">
-						<% unless admin_signed_in? %>
+						<%# unless admin_signed_in? %>
 						<div class="offer-top text-center">
 							<h1 class="section-heading mb-4">Teste <span class="text-green">Pro</span> 30 Tage <span class="text-blue">kostenlos</span></h1>
 							<p class="section-para mb-4"><span class="text-grey">Statistiken. Unbegrenzte Spieler. Über 1000 Catchwords.</span></p>
@@ -69,33 +69,32 @@
 								</div>
 							</div>
 						</div>
-						<% end %>
+						<%# end %>
 						<%= form_for :admin, as: Admin, url: plans_path do |f|%>
-							<% if admin_signed_in? %>
+							<%# if admin_signed_in? %>
 							<div class="row">
 								<div class="col-12 col-md-6 pl-lg-5 offset-md-3">
 									<div class="d-flex flex-column flex-sm-row justify-content-center mb-4">
-											<%= f.number_field  :plan_users, class: 'team-form-control w-100', placeholder: 'Enter No of Team Members'%>
-									</div>
-									<div class="d-flex flex-column flex-sm-row justify-content-center">
-										<label class="radiobtn-box mt-3 mt-sm-0">jährliche Abrechnung
-										<%= f.radio_button :plan_type ,"year",  :checked => 'checked' %>
-											<span class="checkmark"></span>
-										</label>
-										<label class="radiobtn-box mt-3 mt-sm-0">monatliche Abrechnung
-										<%= f.radio_button :plan_type, "month" %>
-
-											<span class="checkmark"></span>
-										</label>
+											<%#= f.number_field  :plan_users, class: 'team-form-control w-100', placeholder: 'Enter No of Team Members'%>
 									</div>
 								</div>
 							</div>
-							<% end %>
-	
-							<div class="offer-block mt-5 pt-1">
+							<%# end %>
+							<div class="d-flex flex-column flex-sm-row rdbtn-block">
+								<label class="radiobtn-box mt-3 mt-sm-0">jährliche Abrechnung
+								<%= f.radio_button :plan_type ,"year",  :checked => 'checked' %>
+									<span class="checkmark"></span>
+								</label>
+								<label class="radiobtn-box mt-3 mt-sm-0">monatliche Abrechnung
+								<%= f.radio_button :plan_type, "month" %>
+
+									<span class="checkmark"></span>
+								</label>
+							</div>
+							<div class="offer-block mt-5">
 								<div class="row">
-									<% unless admin_signed_in? %>
-									<div class="col-12 col-md-6 pr-lg-5 ">
+									<%# unless admin_signed_in? %>
+									<div class="col-12 col-md-6">
 										<div class="offer-box offer-free mb-4">
 											<div class="offer-box-head d-flex align-items-center justify-content-center">
 												<h2>Free</h2>
@@ -112,9 +111,17 @@
 											</div>
 										</div>
 									</div>
-									<% end %>
-									<div class="col-12 col-md-6 pl-lg-5 <%= admin_signed_in? ? 'offset-md-3' : '' %>">
+									<%# end %>
+									<div class="col-12 col-md-6 <%= admin_signed_in? ? 'offset-md-3' : '' %>">
 										<div class="offer-box offer-pro mb-4">
+											<div class="decoration-set decoration-right ml-1 ml-sm-2">
+												<svg width="58" height="72" viewBox="0 0 61 77" xmlns="http://www.w3.org/2000/svg">
+													<title>signup decoration - right</title>
+													<g transform="matrix(-1 0 0 1 47 9)" fill="#1ddaaf" fill-rule="evenodd"><rect transform="rotate(-55 23.731 8.932)" x="20.731" y="-2.068" width="6" height="22" rx="3"></rect><rect transform="rotate(-88 11.098 29.547)" x="8.098" y="18.547" width="6" height="22" rx="3"></rect><rect transform="rotate(-122 23.766 51.068)" x="20.766" y="39.068" width="6" height="24" rx="3"></rect></g>
+												</svg>
+												<span class="dot-pin dot-pin-t"></span>
+												<span class="dot-pin dot-pin-b"></span>
+											</div>
 											<div class="offer-box-head d-flex align-items-center justify-content-center">
 												<h2>Pro</h2>
 											</div>
@@ -137,7 +144,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="text-center mt-4 pb-4">
+							<div class="text-center">
 							<% if admin_signed_in? %>
 								<a href="/admins/dash/billing" class="btn btn-green">Go back</a>
 							<% end %>
@@ -145,7 +152,7 @@
 							<!--	<%= f.submit 'Paket auswählen', class: 'btn btn-green' %> -->
 							</div>
 						<%end%>
-						<% unless admin_signed_in? %>
+						<%# unless admin_signed_in? %>
 						<div class="price-signup-portion position-relative d-flex justify-content-center align-items-center">
 							<div class="decoration-set decoration-left mr-1 mr-sm-2">
 								<svg width="58" height="72" viewBox="0 0 61 77" xmlns="http://www.w3.org/2000/svg">
@@ -159,7 +166,7 @@
 								<div class="pricing-signup po d-flex flex-column flex-md-row align-items-md-center">
 									
 										<div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
-											<%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Business E-mail Address", required: true  %>
+											<%= f.email_field :email, class: 'form-control mb-3 mb-md-0 mr-md-3',placeholder:"Business E-mail Address", required: true  %>
 											<%= f.submit 'Jetzt Anmelden!', class: 'btn btn-green' %>
 										</div>
 								</div>
@@ -173,7 +180,7 @@
 								</svg>
 							</div>
 						</div>
-						<% end %>
+						<%# end %>
 					</div>
 				</section>
 				<% unless admin_signed_in? %>

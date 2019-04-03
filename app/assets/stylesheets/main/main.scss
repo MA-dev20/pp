@@ -5,10 +5,11 @@
  *= require barack
  */
 @import 'bootstrap';
+
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import 'landing_style';
-
+@import 'custom';
 
 .alert {
     z-index: 1000;

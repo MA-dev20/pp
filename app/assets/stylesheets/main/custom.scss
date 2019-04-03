@@ -1,0 +1,310 @@
+
+
+
+/*
+=====================================================
+header new
+=====================================================
+*/
+
+
+.header-new {
+    position: fixed;
+}
+.header-new .navbar-list .nav-item .nav-link {
+    color: #114e9c;
+}
+.header-new .polygon {
+    left: 0;
+    right: inherit;
+}
+.header-new .polygon .navbar-brand {
+    right: inherit;
+    left: 0;
+}
+
+
+
+/*
+=====================================================
+header new
+=====================================================
+*/
+
+
+
+
+
+/*
+=====================================================
+price
+=====================================================
+*/
+
+
+.container-narrow {
+	max-width: 960px;
+	width: 100%;
+}
+.offer-section {
+    padding: 200px 0px 50px 0px;
+}
+.offer-top .section-heading {
+	font-family: 'Barack-Medium';
+}
+.section-para {
+    font-size: 1.5rem;
+    font-family: 'Barack-Medium';
+}
+.offer-top-btn:after {
+    content: '';
+    background: image-url('paw.png') no-repeat;
+    position: absolute;
+    width: 136px;
+    height: 136px;
+    background-size: 136px;
+    right: 0;
+    bottom: -140px;
+}
+.radiobtn-box {
+ display: block;
+ position: relative;
+ padding-left: 26px;
+ margin-right: 30px;
+ margin-bottom: 4px;
+ cursor: pointer;
+ color: #8f9091;
+ font-size: 0.875rem;
+    font-family: 'Barack-Medium';
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.radiobtn-box input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.radiobtn-box .checkmark {
+ position: absolute;
+ top: 2px;
+ left: 0;
+ height: 18px;
+ width: 18px;
+ min-width: 18px;
+ border: 1px solid #1ddaaf;
+ border-radius: 50%;
+}
+.radiobtn-box .checkmark:after {
+ content: "";
+ position: absolute;
+ display: none;
+}
+.radiobtn-box input:checked ~ .checkmark:after {
+ display: block;
+}
+.radiobtn-box .checkmark:after {
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #1ddaaf;
+}
+.rdbtn-block {
+    margin-top: 72px;
+}
+.offer-box {
+    box-shadow: 0 0 24px rgba(0,0,0,0.17);
+    border: 1px solid transparent;
+    position: relative;
+}
+.offer-box .offer-box-head {
+    padding: 24px 16px;
+}
+.offer-box .offer-box-head h2 {
+    font-size: 1.875rem;
+    color: #fff;
+    margin: 0;
+}
+.offer-box .offer-box-detail {
+    padding: 2.5rem 2.4rem;
+}
+.offer-box .price-content {
+    min-height: 104px;
+}
+.offer-box .price-content h2 {
+    font-size: 1.875rem;
+    font-family: 'Barack-Medium';
+}
+.offer-box .price-content p {
+    font-size: 0.8125rem;
+    font-family: 'Barack-Medium';
+    color: #d4d4d4;
+    margin: 0;
+}
+.offer-free {
+    border-color: #1fb5f9;
+}
+.offer-free .offer-box-head {
+    background-color: #1fb5f9;    
+}
+.offer-free .price-content h2 {
+    color: #1fb5f9;
+}
+.offer-pro {
+    border-color: #1ddaaf;
+}
+.offer-pro .offer-box-head {
+    background-color: #1ddaaf;    
+}
+.offer-pro .price-content h2 {
+    color: #1ddaaf;
+}
+.offer-list li {
+ padding-left: 34px;
+ font-size: 0.8125rem;
+ font-family: 'Barack-Medium';
+ color: #8f9091;
+ position: relative;
+ margin-bottom: 24px;
+}
+.offer-list li:last-child {
+    margin-bottom: 8px;
+}
+.offer-list li:before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 20px;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 4px;
+}
+.blue-list li:before {
+    background-color: #1fb5f9;
+}
+.green-list li:before {
+    background-color: #1ddaaf;
+}
+.container-narrow {
+    max-width: 960px;
+    width: 100%;
+}
+.pricing-signup .form-control {
+    min-height: 56px;
+    background-color: #f1f1f1;
+    border: 1px solid #a7a7a7;
+    border-radius: 0;
+    color: #a7a7a7;
+    font-family: 'Barack-Medium';
+}
+.pricing-signup .btn-green {
+    min-height: 56px;
+    border-radius: 50px;
+    font-family: 'Barack-Medium';
+    min-width: 200px;
+}
+.price-signup-portion {
+    margin-top: 140px;
+}
+.decoration-set {
+    width: 58px;
+    height: 72px;
+    position: relative;
+}
+.decoration-set .dot-pin {
+    width: 5px;
+    height: 5px;
+    border-radius: 10px;
+    background-color: #1ddaaf;
+    display: inline-block;
+    position: absolute;
+}
+.decoration-left .dot-pin-t {
+    left: 16px;
+    top: 19px;
+}
+.decoration-left .dot-pin-b {
+    left: 16px;
+    bottom: 18px;    
+}
+.decoration-right .dot-pin-t {
+    right: 18px;
+    top: 19px;
+}
+.decoration-right .dot-pin-b {
+    right: 18px;
+    bottom: 18px;
+}
+.offer-pro .decoration-right {
+		position: absolute;
+		top: -50px;
+		right: -42px;
+		-ms-transform: rotate(-42deg);
+		-webkit-transform: rotate(-42deg);
+		transform: rotate(-42deg);
+}
+.pricing-signup>.form-group {
+	margin-bottom: 0;
+}
+
+
+/*
+=====================================================
+price
+=====================================================
+*/
+
+
+@media only screen and (min-width: 992px) {
+	.offer-block .row .col-12:first-child {
+		padding-right: 4.5rem;
+	}
+	.offer-block .row .col-12:last-child {
+		padding-left: 4.5rem;
+	}
+}
+@media only screen and (min-width: 768px) {
+	.offer-box 	{
+		min-height: 557px;
+	}
+	.offer-top-btn:after {
+		right: -40px;
+		-ms-transform: rotate(-75deg);
+		-webkit-transform: rotate(-75deg);
+		transform: rotate(-75deg);
+	}
+}
+@media only screen and (max-width: 1200px) {
+	.offer-block {
+		padding: 0 1rem;
+	}
+}
+@media only screen and (max-width: 767px) {
+	.app-banner{
+		padding-top: 110px;
+	}
+	header .navbar-nav.navbar-list {
+		background-color: transparent;
+		padding: 0;
+	}
+	.customer-review h3 {
+		padding: 0 2px;
+	}
+	.offer-pro {
+		margin-top: 36px;
+	}
+	.price-signup-portion {
+		margin-top: 80px;
+	}
+	.price-signup-portion .decoration-set {
+		top: 38px;
+	}
+	.offer-block {
+		padding: 0 2rem;
+	}
+}
+
