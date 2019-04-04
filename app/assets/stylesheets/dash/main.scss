@@ -8,6 +8,7 @@
  *= require cs-select/cs-select
  *= require cs-select/cs-skin-underline
  *= require omnes
+ *= require barack
  *= require dataTables/jquery.dataTables
  */
 
@@ -48,11 +49,11 @@ body {
   -webkit-transition: all linear 0.5s 0;
 }
 
-.modal-open .section {
-  -webkit-filter: blur(3px);
-  -ms-filter: blur(3px);
-  -o-filter: blur(3px);
-  filter: blur(3px);
+.modal-open #content {
+  -webkit-filter: blur(2px);
+  -ms-filter: blur(2px);
+  -o-filter: blur(2px);
+  filter: blur(2px);
   
 }
 .alert {
@@ -514,6 +515,45 @@ body {
 #content {
   overflow-y: auto;
 }
+
+
+
+
+
+/*
+=====================================================
+modal
+=====================================================
+*/
+
+
+
+.modal-teams .modal-content {
+  background-color: #1dabf1;
+  background-image: linear-gradient(to right, rgba(29, 171, 241, 0.57), rgba(17, 82, 160, 0.57));
+  border: none;
+  border-radius: 2px;
+  min-height: 280px;
+}
+.modal-teams .modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-teams .modal-body h1 {
+    color: #fff;
+    font-size: 1.5rem;
+    font-family: Barack-Medium;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    text-align: center;
+}
+
+/*
+=====================================================
+modal
+=====================================================
+*/
 
   
   

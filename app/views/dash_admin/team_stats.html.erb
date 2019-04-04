@@ -37,14 +37,11 @@
         </div>
     </div>
       <%= content_for :modal do %>
-      <div class="modal pop_up1" id="pop_up1" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
-        <div class="modal-dialog">
+      <div class="modal pop_up1 modal-teams" id="pop_up1" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-body">
-              Select your Plan first in order to see users statistics
-            </div>
-            <div class="modal-footer">
-                <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-default" %>
+              <h1>Select your Plan first in order to see users statistics <br> <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-default" %> </h1>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
