@@ -36,11 +36,24 @@
             <canvas id="Chart"></canvas>
         </div>
     </div>
-     <div class="overlay" id="pop_up"  >
-        <div class="popup">
-        Select your Plan first in order to see users statistics
-        </div>
-    </div>
+      <%= content_for :modal do %>
+      <div class="modal pop_up1" id="pop_up1" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              Select your Plan first in order to see users statistics
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    <% end %>
+
 </section>
 <script>
     
@@ -112,6 +125,9 @@ var gesamtChart = new Chart(ctx, {
         },
     }
 });
+$( ".modal" ).on('shown', function(){
+    alert("I want this to appear after the modal has opened!");
+});
 document.getElementById('chart_gesamt').addEventListener('click', function() {
     $('.active').removeClass('active');
     $('.gesamt').addClass('active');
@@ -167,15 +183,14 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     <% end %>
     window.gesamtChart.update();
 });
-$(document).ready( function () {
-   document.getElementById("pop_up").style.display = "none";
-} );
 
 <%if @admin.plan_id.nil? %>
+        if(!$('body').hasClass('modal-open') && !$("#pop_up1").hasClass("show")){
 
-    setTimeout(function(){ 
-            $('#pop_up').toggle();
+         setTimeout(function(){ 
+            $('#pop_up1').modal({backdrop: 'static', keyboard: false});  
             }, 2000);
+        }
 
 <%end%>  
 
