@@ -31,11 +31,23 @@
         </div>
     </div>
     <% end %>
-    <div class="overlay" id="pop_up">
-        <div class="popup">
-        Select your Plan first in order to see users statistics
-        </div>
-    </div>
+    <%= content_for :modal do %>
+      <div class="modal pop_up" id="pop_up" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+              Select your Plan first in order to see users statistics
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    <% end %>
 </section>
 
 
@@ -44,7 +56,8 @@
 <script>
 
 $(document).ready( function () {
-   document.getElementById("pop_up").style.display = "none";
+    $('#pop_up').modal({backdrop: 'static', keyboard: false});      
+   // document.getElementById("pop_up").style.display = "none";
 } );
 var $rows = $('.team_card');
 $('#searchField').keyup(function() {

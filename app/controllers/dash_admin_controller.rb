@@ -17,6 +17,7 @@ class DashAdminController < ApplicationController
   def team_stats
     @rating = @team.team_rating
     @gameratings = @team.game_ratings.last(7)
+    @count = 1 
   end
     
   def users
