@@ -37,7 +37,7 @@
 
 <div class="off-canvas">
     <section class="app-banner">
-	    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'position: absolute; top: 0; left: 0; width: 100%; height: 750px; z-index: -10000; object-fit: fill;' %>
+	    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'position: absolute; top: 0; left: 0; width: 100%; height: 750px; z-index: -10000; object-fit: cover;' %>
 		<div class="container">
 		    <div class="row flex-column-reverse flex-md-row">
 			    <div class="app-banner-img text-center" style="z-index: 100">
@@ -258,7 +258,7 @@
 					<div class="container">
 						<h1 class="section-heading text-center wow add-anim fadeIn" data-wow-duration="1.5s"><span class="text-grey">Häufige</span> Fragen</h1>
 						<div class="accordion questions-accordian" id="accordionExample">
-						  <div class="card card-questions">
+						  <div class="card card-questions" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 						    <div class="card-header" id="headingOne">
 						      <h4 class="mb-0">
 						      	Wer steht hinter Peter Pitch?
@@ -274,7 +274,7 @@
 						      </div>
 						    </div>
 						  </div>
-						  <div class="card card-questions">
+						  <div class="card card-questions" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
 						    <div class="card-header" id="headingTwo">
 						      <h4 class="mb-0">
 						      	Wer steht hinter Peter Pitch?
@@ -290,7 +290,7 @@
 						      </div>
 						    </div>
 						  </div>
-						  <div class="card card-questions">
+						  <div class="card card-questions" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
 						    <div class="card-header" id="headingThree">
 						      <h4 class="mb-0">
 						      	Wer steht hinter Peter Pitch?
@@ -305,7 +305,7 @@
 						      </div>
 						    </div>
 						  </div>
-						  <div class="card card-questions">
+						  <div class="card card-questions" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
 						    <div class="card-header" id="headingFour">
 						      <h4 class="mb-0">
 						      	Wer steht hinter Peter Pitch?
@@ -320,7 +320,7 @@
 						      </div>
 						    </div>
 						  </div>
-						  <div class="card card-questions">
+						  <div class="card card-questions" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
 						    <div class="card-header" id="headingFive">
 						      <h4 class="mb-0">
 						      	Wer steht hinter Peter Pitch?
@@ -335,7 +335,7 @@
 						      </div>
 						    </div>
 						  </div>
-						  <div class="card card-questions">
+						  <div class="card card-questions" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
 						    <div class="card-header" id="headingSix">
 						      <h4 class="mb-0">
 						      	Wer steht hinter Peter Pitch?
@@ -398,7 +398,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+              <i class="fas fa-times"></i>
             </button>
             <div class="modal-body">
               <h1>Beginnen Sie mit peterpitch.com</h1>
