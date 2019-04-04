@@ -1,6 +1,7 @@
 class LandingController < ApplicationController
 
   skip_before_action :check_expiration_date, only: :price
+  before_action :check_sessions, only: [:index,:price, :product]
 
   layout 'main'
   respond_to :html, :json
@@ -58,6 +59,10 @@ class LandingController < ApplicationController
   end
   
   private 
+    def check_sessions   
+      redirect_to dash_admin_path if current_admin.present?   
+    end
+
     def admin_params
       params.require(:admin).permit( :id, :company_name, :fname, :lname, :street,
         :city, :employees, :zipcode, :male ,:members ,:vid_token, :password , 
