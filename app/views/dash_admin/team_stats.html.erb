@@ -40,14 +40,11 @@
       <div class="modal pop_up1" id="pop_up1" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
             <div class="modal-body">
               Select your Plan first in order to see users statistics
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-default" %>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -184,7 +181,7 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     window.gesamtChart.update();
 });
 
-<%if @admin.plan_id.nil? %>
+<%if @admin.admin_subscription_id.nil? %>
         if(!$('body').hasClass('modal-open') && !$("#pop_up1").hasClass("show")){
 
          setTimeout(function(){ 

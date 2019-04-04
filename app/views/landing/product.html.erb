@@ -2,7 +2,7 @@
 
 		<div class="off-canvas-container">
 
-			<header class="header header-new">
+			<!-- <header class="header header-new">
 				<nav class="navbar navbar-expand-lg navbar-light bg-white pt-0 pb-0 pb-lg-4 pt-lg-4 px-0">
 					<div class="container">
 						<div class="polygon">
@@ -26,6 +26,43 @@
 					  </div>
 					</div>
 				</nav>
+			</header> -->
+
+			<header class="header header-custom">
+			  <nav class="navbar navbar-expand-lg navbar-light bg-transparent pb-0 pb-md-2 pt-0 px-0">
+			    <div class="container">
+				    <div class="polygon">
+					    <span class="polygon-img"><%= image_tag ("polygon.png")%></span>
+						<a class="navbar-brand p-0" href="/"><%= image_tag ("logo.png") , alt:"IMG"%></a>
+						<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						    <span class="navbar-toggler-line"></span>
+							<span class="navbar-toggler-line"></span>
+							<span class="navbar-toggler-line"></span>
+						</button>
+			          </div>
+					<div class="collapse navbar-collapse flex-column align-items-start" id="navbarSupportedContent">
+					    <ul class="navbar-nav navbar-links flex-row justify-content-between d-none">
+						    <li class="nav-item">
+							    <a class="nav-link" href="#">Login Coaches</a>
+						    </li>
+							<li class="nav-item">
+							    <a class="nav-link" href="#">Login Unternehmen</a>
+						    </li>
+						</ul>
+						<ul class="navbar-nav navbar-list mx-auto">
+						    <li class="nav-item">
+							    <a class="nav-link active" href="/landing/product">Produkt</a>
+							</li>
+						    <li class="nav-item">
+							    <a class="nav-link" href="/landing/price">Pricing</a>
+							</li>
+							<li class="nav-item">
+							    <a class="nav-link " href="/admins/register">Login</a>
+							</li>
+						</ul>
+			          </div>
+			      </div>
+			  </nav>
 			</header>
 			<div class="off-canvas">
 				<section class="product-head offer-section">

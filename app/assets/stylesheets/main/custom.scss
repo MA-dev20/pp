@@ -203,7 +203,7 @@ price
 }
 .pricing-signup .btn-green {
     min-height: 56px;
-    border-radius: 50px;
+    border-radius: 50px !important;
     font-family: 'Barack-Medium';
     min-width: 200px;
 }
@@ -219,7 +219,7 @@ price
     width: 5px;
     height: 5px;
     border-radius: 10px;
-    background-color: #1ddaaf;
+    background-color: #1c9ee0;
     display: inline-block;
     position: absolute;
 }
@@ -250,6 +250,18 @@ price
 .pricing-signup>.form-group {
 	margin-bottom: 0;
 }
+.header-custom .navbar-list .nav-item .nav-link {
+    color: #1c9ee0;
+}
+.header-custom .navbar-list .nav-item .nav-link.active {
+    color: #1c9ee0;
+    border-color: #1c9ee0;
+}
+.offer-box .decoration-set .dot-pin {
+    background-color: #1ddaaf;
+}
+
+
 
 
 /*
@@ -304,7 +316,12 @@ price
 		top: 38px;
 	}
 	.offer-block {
-		padding: 0 2rem;
+		padding: 0 3rem;
 	}
+}
+@media only screen and (max-width: 575px) {
+    .offer-block {
+        padding: 0 2rem;
+    }
 }
 
