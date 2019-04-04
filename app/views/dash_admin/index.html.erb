@@ -10,7 +10,7 @@
       <%= f.label 'Spielgruppe', class: 'row1' %>
       
       <div class="row2">
-      <select id='game_team_id' name="game[team_id]" class="cs-select cs-skin-underline form-field">
+      <select id='game_team_id' name="game[team_id]" class="cs-select cs-skin-underline form-field" required>
           <option value=''>Spielgruppe wählen</option>
           <% @teams.each do |t| %>
               <option value="<%= t.id %>"><%= t.name %></option>
@@ -23,9 +23,12 @@
   </div>
   
   <div class="col2">
-  <%= f.label :password, 'Spielpasswort', class: 'row2' %>
+  <%= f.label :password, 'Spiel-URL', class: 'row2' %>
   <div class="row3">
-  <%= f.text_field :password, placeholder: 'Spielpasswort', class: 'form-field', onfocus: 'set_arrow()' %>
+  <div class="form-field-text">
+      peterpitch.com/
+      <%= f.text_field :password, class: 'field2', id: 'url-field', required: true, onchange: 'set_arrow()' %>
+  </div>
   </div>
   </div>
   
@@ -40,7 +43,7 @@
 
     <div class="col1">
         <div class="row4">
-        <%= f.text_field :name, placeholder: 'Spielgruppe erstellen', class: 'form-field' %>
+        <%= f.text_field :name, placeholder: 'Spielgruppe erstellen', class: 'form-field', autofocus: true, required: true %>
         </div>
         <%= f.submit '+' %>
     </div>
@@ -56,6 +59,7 @@
             new SelectFx(el, {
 						onChange: function(val){
 							$('#arrow-top').show();
+                            $('#url-field').focus();
 						}
 					});
 

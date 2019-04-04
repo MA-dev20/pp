@@ -87,7 +87,8 @@
     text-align: center;
 }
 
-.form-field {
+.form-field,
+.form-field-text {
     top: 2vh;
     left: 0;
     width: 100%;
@@ -100,6 +101,22 @@
     padding-left: 3vh;
     padding-right: 3vh;
 }
+.form-field-text {
+    margin-top: 2vh;
+    display: flex;
+    line-height: 6vh;
+    overflow: hidden;
+}
+.form-field-text input {
+    top: 0;
+    left: 0;
+    height: calc(6vh - 4px);
+    line-height: calc(6vh - 4px);
+    font-size: 2vh;
+    border: none;
+    padding-right: 3vh;
+}
+.form-field-text:focus-within,
 .form-field:focus {
     border: 2px solid #1ddaaf;
 }
