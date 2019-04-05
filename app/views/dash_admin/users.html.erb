@@ -43,7 +43,7 @@
             <td><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
             <td><%= link_to '', destroy_user_path(u), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie den User unwiederuflich löschen möchten?" } %></td>
             <td><% if u.teams.count > 0 %>
-                <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line" %>
+                <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line", id: "users_stats" %>
                 <% end %>
             </td>
         </tr>
@@ -52,6 +52,17 @@
 </table>
 </div>
 </div>
+<%= content_for :modal do %>
+  <div class="modal pop_up modal-teams" id="pop_up" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h1>Select your Plan first in order to see users statistics <br> <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-green mt-4 ml-0" %> </h1>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+<% end %>
 </section>
 
 
@@ -90,4 +101,19 @@ $('#searchField').keyup(function() {
 });
 new PerfectScrollbar('#table');
 new PerfectScrollbar('.cs-options');
+var id = "<%= current_admin.admin_subscription_id %>";
+$(document).ready(function(){
+    $("#users_stats").click(function(e) {
+        e.preventDefault()
+        var $this = $(this),
+            $href = $(this).attr("href");
+        if(id == ""){
+            setTimeout(function(){
+                $('#pop_up').modal({backdrop: 'static', keyboard: false});
+            }, 3000);
+        }else{
+            window.location.href = $href;
+        }
+    });
+})
 </script>
