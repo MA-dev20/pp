@@ -218,3 +218,9 @@ canvas {
 	-webkit-user-select: none;
 	-ms-user-select: none;
 }
+body.modal-open .modal-backdrop, body.modal-open #pop_up{
+    left: 10vw !important;
+}
+body.modal-open #pop_up .modal-dialog-centered{
+    left: -8vw !important; 
+}
