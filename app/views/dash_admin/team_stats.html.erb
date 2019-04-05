@@ -36,12 +36,12 @@
             <canvas id="Chart"></canvas>
         </div>
     </div>
-      <%= content_for :modal do %>
-      <div class="modal pop_up1 modal-teams" id="pop_up1" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+    <%= content_for :modal do %>
+      <div class="modal pop_up modal-teams" id="pop_up" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-body">
-              <h1>Select your Plan first in order to see users statistics <br> <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-default" %> </h1>
+              <h1>Select your Plan first in order to see users statistics <br> <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-green mt-4 ml-0" %> </h1>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -178,15 +178,14 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     window.gesamtChart.update();
 });
 
-<%if @admin.admin_subscription_id.nil? %>
-        if(!$('body').hasClass('modal-open') && !$("#pop_up1").hasClass("show")){
+ 
 
-         setTimeout(function(){ 
-            $('#pop_up1').modal({backdrop: 'static', keyboard: false});  
-            }, 2000);
-        }
+<%if current_admin.admin_subscription_id.nil? %>
+$(document).ready(function(){
 
-<%end%>  
-
-
+  setTimeout(function(){
+      $('#pop_up').modal({backdrop: 'static', keyboard: false});
+  }, 3000);
+});
+<% end %>
 </script>
