@@ -46,7 +46,7 @@
     <tbody>
         <% @users.each do |u| %>
         <tr class="user-row">
-           <td><%= image_tag u.avatar.quad.url %></td>
+           <td><%= image_tag u.avatar.quad.url || 'defaults/wolf.jpg' %></td>
             <td class="name"><%= u.fname %> <%= u.lname %></td>
             <td><%= u.email %></td>
             <td><%= u.company_name %></td>
