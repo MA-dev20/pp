@@ -294,7 +294,8 @@ header
 	  line-height: 32px;
 	  font-family: Barack-Medium;
   }
-  .btn-green {
+  .btn-green,
+  .btn-green-white {
 	  background-color: #1ddaaf !important;
 	  color: #fff !important;
 	  border: 1px solid #1ddaaf !important;
@@ -302,7 +303,6 @@ header
 	  min-width: 170px;
 	  color: #fff;
 	  font-size: 1.125rem;
-	  background-color: #1ddaaf !important;
 	  border-radius: 26px !important;
 	  font-family: Barack-Medium;
 	  padding: .55rem 1.5rem;
@@ -314,6 +314,11 @@ header
   .btn-green:focus {
 	  color: #37deb8 !important;
 	  background-color: transparent !important;
+  }
+  .btn-green-white:hover,
+  .btn-green-white:focus {
+      color: #37deb8 !important;
+	  background-color: white !important;
   }
   .trial-block {
 	  margin-top: -32px;
@@ -573,6 +578,7 @@ header
   .card-questions {
 	  border: none !important;
 	  border-bottom: 1px solid rgba(0, 0, 0, 0.125) !important;
+      -webkit-appearance: none;
   }
   .card-questions .card-header,
   .questions-accordian> .card .card-header {
@@ -984,7 +990,7 @@ verification
 	border: 2px solid #cdcdcd;
 	color: #fff;
 	font-family: 'Barack-Medium';
-	border-radius: 26px;
+	border-radius: 40px;
 	padding: 1rem 1.5rem;
 }
 .form-main-canvas .form-group {
@@ -992,7 +998,7 @@ verification
 }
 .form-main-canvas .btn-green {
 	min-height: 60px;
-	border-radius: 26px !important;
+	border-radius: 40px !important;
 	font-size: 1.15rem;
 	font-family: 'Barack-Medium';
 	padding: 0.75rem 1rem;

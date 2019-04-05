@@ -12,5 +12,21 @@
 @import 'custom';
 
 .alert {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    min-height: 48px;
+    min-width: 170px;
+    font-size: 1.125rem;
+    border-radius: 26px !important;
+    padding: .55rem 1.5rem;
+    -webkit-box-shadow: 0 9px 18px rgba(0,0,0,0.17);
+    -moz-box-shadow: 0 9px 18px rgba(0,0,0,0.17);
+    box-shadow: 0 9px 18px rgba(0,0,0,0.17);
     z-index: 1000;
+}
+.alert-success {
+    color: white;
+    background-color: #1ddaaf;
+    border-color: #1ddaaf;
 }

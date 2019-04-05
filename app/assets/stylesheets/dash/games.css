@@ -1,7 +1,13 @@
 /*
 
  */
-
+#game-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
 #game-container > h1 {
     position: absolute;
     top: 5vh;
@@ -104,7 +110,7 @@
 .form-field-text {
     margin-top: 2vh;
     display: flex;
-    line-height: 6vh;
+    line-height: calc(6vh - 4px);
     overflow: hidden;
 }
 .form-field-text input {
@@ -178,3 +184,4 @@
     background-color: darkgray;
     color: white;
 }
+
