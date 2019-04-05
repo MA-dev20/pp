@@ -125,3 +125,6 @@
 .modal-content {
     z-index: 2000;
 }
+body.modal-open .modal-backdrop{
+    left: 10vh !important;
+}
