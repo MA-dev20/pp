@@ -103,13 +103,13 @@ new PerfectScrollbar('#table');
 new PerfectScrollbar('.cs-options');
 var id = "<%= current_admin.admin_subscription_id %>";
 $(document).ready(function(){
-    $("#users_stats").click(function(e) {
+    $(".package_pop_up").click(function(e) {
         e.preventDefault()
         var $this = $(this),
             $href = $(this).attr("href");
         if(id == ""){
             setTimeout(function(){
-                $('.package_pop_up').modal({backdrop: 'static', keyboard: false});
+                $('#pop_up').modal({backdrop: 'static', keyboard: false});
             }, 3000);
         }else{
             window.location.href = $href;
