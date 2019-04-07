@@ -100,7 +100,6 @@ header
 .navbar-list .nav-item .nav-link.active:hover,
 .header.affix .navbar-list .nav-item .nav-link.active:hover{
 	color: #1ddaaf;
-    border-color: #1ddaaf;
 }
 .navbar-toggler {
 	border: none;
@@ -160,9 +159,7 @@ header
 .header.affix .navbar-links .nav-item .nav-link {
 	color: #fff;
 }
-.header.affix .navbar-list .nav-item .nav-link.active {
-    border-color: #1c9ee0;
-}
+
 .header.affix .navbar-list {
 	margin-top: 16px;
 	margin-bottom: 10px;
@@ -436,14 +433,87 @@ header
   .pitchit-text h6 {
 	  font-family: Barack-Medium;
   }
-  .paw-col:after {
-	  content: '';
-	  background: image_url('paw.png') no-repeat;
+  .paw-col {
+//	  background: image_url('paw.png') no-repeat;
+      display: flex;
 	  position: absolute;
+      top: calc(100% - 60px);
+      left: -80px;
 	  width: 136px;
 	  height: 136px;
 	  background-size: 136px;
+      padding: 0 !important;
   }
+  .paw-col1 {
+      display: flex;
+	  position: absolute;
+      top: calc(100% - 60px);
+      right: -80px;
+	  width: 136px;
+	  height: 136px;
+	  background-size: 136px;
+      padding: 0 !important;
+  }
+.paw-col > .paw1, .paw-col1 > .paw1,
+.paw-col > .paw2, .paw-col1 > .paw2,
+.paw-col > .paw3, .paw-col1 > .paw3,
+.paw-col > .paw4, .paw-col1 > .paw4, {
+    content: '';
+    position: absolute;
+    background: image_url('pas-black.png') no-repeat;
+    width: 34px;
+    height: 34px;
+    background-size: 34px;
+}
+.paw-col1 > .paw1 {
+    left: 0;
+    top: 0;
+    transform: rotate(130deg);
+    opacity: 0.5;
+}
+.paw-col1 > .paw2 {
+    left: 70px;
+    top: 30px;
+    transform: rotate(130deg);
+    opacity: 0.4;
+}
+.paw-col1 > .paw3 {
+    right: 70px;
+    bottom: 30px;
+    transform: rotate(130deg);
+    opacity: .3;
+}
+.paw-col1 > .paw4 {
+    right: 0;
+    bottom: 0;
+    transform: rotate(130deg);
+    opacity: .2;
+}
+.paw-col > .paw1 {
+    right: 0;
+    top: 0;
+    transform: rotate(-130deg);
+    opacity: 0.5;
+}
+.paw-col > .paw2 {
+    right: 70px;
+    top: 30px;
+    transform: rotate(-130deg);
+    opacity: 0.4;
+}
+.paw-col > .paw3 {
+    left: 70px;
+    bottom: 30px;
+    transform: rotate(-130deg);
+    opacity: 0.3;
+}
+.paw-col > .paw4 {
+    left: 0px;
+    bottom: 0px;
+    transform: rotate(-130deg);
+    opacity: 0.2;
+}
+
   .paw-col.paw-col-1:after {
 	  left: -59px;
 	  bottom: -80px;
@@ -1239,11 +1309,7 @@ product
 		color: #1c9ee0;
 		font-size: 0.875rem;
 	}
-	.header .navbar-list .nav-item .nav-link:hover,
-	.header .navbar-list .nav-item .nav-link:focus,
-	.header .navbar-list .nav-item .nav-link.active {
-		border-color: #1c9ee0;
-	}
+
 	.navbar-list {
 		margin-top: 16px;
 		margin-bottom: 16px;
