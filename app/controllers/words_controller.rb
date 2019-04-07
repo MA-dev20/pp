@@ -5,16 +5,26 @@ class WordsController < ApplicationController
   end
     
   def create
-    @word = Word.create(word_params)
-    @word.name = @word.sound_identifier.remove('.mp3')
-    @word.free = false
-    if @word.save
-      flash[:success] = 'Wort gespeichert!'
-      redirect_to backoffice_words_path
-    else
-      flash[:danger] = 'Konnte Wort nicht speichern!'
-      redirect_to backoffice_words_path
+    params[:word][:sounds].each do |sound|
+      @word = Word.create(sound: sound, free: false)
+      @word.name = @word.sound_identifier.remove('.mp3')
+      if @word.save
+        flash[:success] = 'Wort gespeichert!'
+      else
+        flash[:danger] = 'Konnte Wort nicht speichern!'
+      end
     end
+    redirect_to backoffice_words_path
+#    @word = Word.create(word_params)
+#    @word.name = @word.sound_identifier.remove('.mp3')
+#    @word.free = false
+#    if @word.save
+#      flash[:success] = 'Wort gespeichert!'
+#      redirect_to backoffice_words_path
+#    else
+#      flash[:danger] = 'Konnte Wort nicht speichern!'
+#      redirect_to backoffice_words_path
+#    end
   end
     
   def edit
