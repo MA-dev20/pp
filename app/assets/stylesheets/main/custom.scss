@@ -254,7 +254,16 @@ price
 .header-custom .navbar-list .nav-item .nav-link {
     color: #1c9ee0;
 }
-.header-custom .navbar-list .nav-item .nav-link.login {
+.navbar-list .nav-item .nav-link.login {
+    border-color: white;
+}
+.navbar-list .nav-item .nav-link.login:hover,
+.header.affix .navbar-list .nav-item .nav-link.login:hover{
+    color: #1ddaaf;
+    border-color: #1ddaaf;
+}
+.header-custom .navbar-list .nav-item .nav-link.login,
+.header.affix .navbar-list .nav-item .nav-link.login {
     color: #1c9ee0;
     border-color: #1c9ee0;
 }
