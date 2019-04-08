@@ -4,7 +4,7 @@
 
 <h1>Jetzt Spiel starten!</h1>
 
-<%= form_for(:game, url: new_game_path(@admin)) do |f| %>
+<%= form_for(:game, url: new_game_path(@admin), html: {id: 'game_form'}) do |f| %>
   
   <div class="col1">
       <%= f.label 'Team', class: 'row1' %>
@@ -50,7 +50,17 @@
 <% end %>
 
 </section>
-
+<%= content_for :modal do %>
+  <div class="modal pop_up2 modal-teams" id="pop_up2" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h1>You do not want to be bored. Upgrade to Pro and get unlimited Catchwords<br> <%= link_to "Continue", "#", class: "btn btn-green mt-4 ml-0", id: "continue" %> </h1>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+<% end %>
 
 <script>
 
@@ -66,6 +76,16 @@
 
         });
 })();
+<% if @admin.admin_subscription_id.nil? %>
+$("#anim_but").on("click", function(e){
+  e.preventDefault()
+  $('#pop_up2').modal({backdrop: 'static', keyboard: false});
+})
+<% end %>
+$("#continue").on("click", function(e){
+  e.preventDefault();
+  $("#game_form").submit();
+})
 function set_arrow(){
     $('#arrow-bottom').show();
     $('#anim_but').addClass( "anim" );
