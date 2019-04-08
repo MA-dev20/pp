@@ -1221,6 +1221,94 @@
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
 }
+@-webkit-keyframes fadeIn05 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: .5;
+    }
+}
+
+@keyframes fadeIn05 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: .5;
+    }
+}
+
+.fadeIn05 {
+    -webkit-animation-name: fadeIn05;
+    animation-name: fadeIn05;
+}
+@-webkit-keyframes fadeIn04 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: .4;
+    }
+}
+
+@keyframes fadeIn04 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: .4;
+    }
+}
+
+.fadeIn04 {
+    -webkit-animation-name: fadeIn04;
+    animation-name: fadeIn04;
+}
+@-webkit-keyframes fadeIn03 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.3;
+    }
+}
+
+@keyframes fadeIn03 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.3;
+    }
+}
+
+.fadeIn03 {
+    -webkit-animation-name: fadeIn03;
+    animation-name: fadeIn03;
+}
+@-webkit-keyframes fadeIn02 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.2;
+    }
+}
+
+@keyframes fadeIn02 {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.2;
+    }
+}
+
+.fadeIn02 {
+    -webkit-animation-name: fadeIn02;
+    animation-name: fadeIn02;
+}
 
 @-webkit-keyframes fadeInDown {
     from {
