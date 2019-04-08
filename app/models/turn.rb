@@ -1,6 +1,5 @@
 class Turn < ApplicationRecord
   belongs_to :game
-  belongs_to :word
   belongs_to :user, required: false
   belongs_to :admin, required: false
 

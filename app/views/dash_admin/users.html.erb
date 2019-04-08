@@ -43,7 +43,7 @@
             <td><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
             <td><%= link_to '', destroy_user_path(u), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie den User unwiederuflich löschen möchten?" } %></td>
             <td><% if u.teams.count > 0 %>
-                <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line" %>
+                <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line package_pop_up" %>
                 <% end %>
             </td>
         </tr>
@@ -90,4 +90,5 @@ $('#searchField').keyup(function() {
 });
 new PerfectScrollbar('#table');
 new PerfectScrollbar('.cs-options');
+
 </script>

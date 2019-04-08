@@ -110,7 +110,7 @@ price
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: #1ddaaf;
+    background: #1fb5f9;
 }
 .rdbtn-block {
     margin-top: 72px;
@@ -155,6 +155,7 @@ price
 }
 .offer-pro {
     border-color: #1ddaaf;
+    box-shadow: 0 0 24px rgba(0,0,0,0.3);
 }
 .offer-pro .offer-box-head {
     background-color: #1ddaaf;    
@@ -219,7 +220,7 @@ price
     width: 5px;
     height: 5px;
     border-radius: 10px;
-    background-color: #1c9ee0;
+    background-color: #1ddaaf;
     display: inline-block;
     position: absolute;
 }
@@ -253,9 +254,30 @@ price
 .header-custom .navbar-list .nav-item .nav-link {
     color: #1c9ee0;
 }
-.header-custom .navbar-list .nav-item .nav-link.active {
+.navbar-list .nav-item .nav-link.login {
+    border-color: white;
+}
+.navbar-list .nav-item .nav-link.login:hover,
+.header.affix .navbar-list .nav-item .nav-link.login:hover{
+    color: #1ddaaf;
+    border-color: #1ddaaf;
+}
+.header-custom .navbar-list .nav-item .nav-link.login,
+.header.affix .navbar-list .nav-item .nav-link.login {
     color: #1c9ee0;
     border-color: #1c9ee0;
+}
+.header-custom .navbar-list .nav-item .nav-link.active {
+    color: #1ddaaf;
+}
+.header-custom .navbar-list .nav-item .nav-link.login:hover {
+    color: #1ddaaf;
+    border-color: #1ddaaf;
+}
+.header-custom .navbar-list .nav-item .nav-link:hover,
+.header-custom .navbar-list .nav-item .nav-link.active:hover {
+    color: #1ddaaf;
+    border-color: transparent;
 }
 
 

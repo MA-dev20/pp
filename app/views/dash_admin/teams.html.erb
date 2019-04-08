@@ -31,17 +31,7 @@
         </div>
     </div>
     <% end %>
-    <%= content_for :modal do %>
-    <div class="modal pop_up modal-teams" id="pop_up" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-body">
-              <h1>Select your Plan first in order to see users statistics <br> <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-default" %> </h1>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-    <% end %>
+
 </section>
 
 
@@ -77,20 +67,5 @@ new PerfectScrollbar('#teams-container');
 //     alert('This is an alert');
 //     window.location = 'http://www.example.com';
 // }, 5000);
-
-var id = "<%= @admin.admin_subscription_id %>";
-$(document).ready(function(){
-    $("#users_stats").click(function(e) {
-        e.preventDefault()
-        var $this = $(this),
-            $href = $(this).attr("href");
-        if(id == ""){
-            $('#pop_up').modal({backdrop: 'static', keyboard: false});
-        }else{
-            window.location.href = $href;
-        }
-       
-    });
-})
 
 </script>
