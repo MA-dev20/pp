@@ -123,14 +123,15 @@ class GameMobileUserController < ApplicationController
   def new_turn
     @game = Game.find(session[:game_session_id])
     @turn = @game.turns.find_by(user_id: @user.id)
-    if @turn
-      redirect_to gmu_wait_path
-    end
+    # if @turn
+    #   redirect_to gmu_wait_path
+    # end
   end
     
   def create_turn
     @game = Game.find(session[:game_session_id])
-    @word = Word.all.sample(5).first
+    @word = Word.first(50).sample(5).first if @game.admin.admin_subscription_id.nil?
+    @word = Word.all.sample(5).first if @word.nil?
     @turn = Turn.new(user_id: @user.id, game_id: @game.id, word_id: @word.id, play: params[:turn][:play], played: false)
     if @turn.save
       session.delete(:game_session_id)
