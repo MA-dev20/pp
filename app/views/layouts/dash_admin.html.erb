@@ -65,16 +65,12 @@
               <% end %>
               </div>
               
-              <div class="link">
-              <% if current_page?(dash_admin_account_path) %>
-                  <%= link_to "Account", dash_admin_account_path %>
-              <% else %>
-                  <%= link_to "Account", dash_admin_account_path %>
-              <% end %>
-              </div>
+              
               <div class="link">
               <% if current_page?(dash_admin_account_path) || dash_admin_users_path || current_admin.plans.blank?  || current_page?( dash_admin_teams_path )%>
-                  <%= link_to "Select Package", dash_admin_price_path %>
+                <% if @admin.admin_subscription_id.nil? %>
+                  <%= link_to "Upgrade auf Pro", dash_admin_price_path %>
+                <% end %>
               <% end %>
               </div>
               <div class="link">
@@ -107,7 +103,14 @@
                 <% else %>
                   <%= link_to "Abrechnungsdaten", dash_admin_billing_path, class: 'dropdown-item'  %>
                 <% end %>
-                <%= link_to 'Account', dash_admin_account_path, class: 'dropdown-item' %>
+                <% if current_page?(dash_admin_account_path) %>
+                    <%= link_to "Account", dash_admin_account_path , class: 'dropdown-item'%>
+                <% else %>
+                    <%= link_to "Account", dash_admin_account_path ,class: 'dropdown-item' %>
+                <% end %>
+                <% if @admin.admin_subscription_id.present? %>
+                  <%= link_to "Select Package", dash_admin_price_path , class: 'dropdown-item'%>
+                <% end %>
                 <%= link_to 'Logout', destroy_admin_session_path, class: 'dropdown-item red' %>
               </div>
           </div>
