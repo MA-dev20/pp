@@ -709,7 +709,10 @@ header
   
   
   
-  
+  .xerror{
+      color: #821919;
+    display: none;
+  }
   
   
   .modal-backdrop.show {
@@ -719,6 +722,9 @@ header
   }
   .modal-peterpitch .modal-dialog {
 	  max-width: 100%;
+  }
+  .modal-peterpitch a{
+  	color: #0a3452;
   }
   .modal-peterpitch .modal-content {
 	  background-color: transparent;
