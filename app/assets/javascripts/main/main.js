@@ -7,5 +7,5 @@
  *= require main/bootstrap.bundle.min
  *= require main/script
  *= require cable
- *= require main/jquery.autotab
+ *= require main/jquery.autotab.min
  */
