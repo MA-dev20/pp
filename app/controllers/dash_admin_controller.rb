@@ -6,9 +6,9 @@ class DashAdminController < ApplicationController
   layout 'dash_admin'
     
   def index
-  end
-    
-  def games
+    if params[:team_id]
+      @team = Team.find(params[:team_id])
+    end
   end
     
   def teams
@@ -17,15 +17,20 @@ class DashAdminController < ApplicationController
   def team_stats
     @rating = @team.team_rating
     @gameratings = @team.game_ratings.last(7)
-    @count = 1 
+    @count = 1
+    if !@rating
+      flash[:pop_up] = "Ups, für dieses Team liegen noch keine Statistiken vor.;- Da müsst ihr wohl erst noch eine Runde spielen. -;Let's Play"
+      redirect_to dash_admin_teams_path
+    end
   end
     
   def users
-    @users = @admin.users
-  end
-    
-  def team_users
-    @users = @team.users
+    if params[:team_id]
+      @team = Team.find(params[:team_id])
+      @users = @team.users
+    else
+      @users = @admin.users
+    end
   end
     
   def user_stats

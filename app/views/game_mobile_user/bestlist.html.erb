@@ -14,6 +14,8 @@
         <a type="button" class="pol-bg" onclick="showModal()"><i class="fas fa-share-alt"></i></a>
     </div>
 <!-- Modal -->
+</section>
+<% if @turn_rating %>
 <div id="shareModal">
     <button type="button" id="close" onclick="closeModal()"><i class="far fa-times-circle"></i></button>
     <div class="header">
@@ -26,7 +28,6 @@
         <%= social_share_button_tag('Ich habe ' + (@turn_rating.ges/10.0).to_s + ' erspielt! Was schaffst du?', :url => "http://www.peterpitch.com", desc: 'Ich habe ' + (@turn_rating.ges/ 10.0).to_s + ' erspielt! Was schaffst du?', :allow_sites => %w(whatsapp_app facebook)) %>
     </div>
 </div>
-</section>
 
 <script>
 ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);
@@ -37,3 +38,4 @@ function closeModal() {
     $('#shareModal').hide();
 }
 </script>
+<% end %>

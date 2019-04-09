@@ -12,6 +12,7 @@ class RatingsController < ApplicationController
     @rating.admin_id = @admin.id
     if @rating.save && @turn.ratings.count == (@game.turns.count - 1)
       @game.update(state: 'rating')
+      redirect_to gma_rating_path
       return
     elsif @rating.save
       ActionCable.server.broadcast "count_#{@game.id}_channel", game_state: 'rate', counter: @turn.ratings.count.to_s + '/' + (@game.turns.count - 1).to_s + ' haben bewertet!'

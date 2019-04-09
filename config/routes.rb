@@ -74,6 +74,9 @@ Rails.application.routes.draw do
 # User Mobile #
 ###############
     
+  get 'mobile/user/game', to: 'game_mobile_user#new', as: 'gmu_password'
+  post 'mobile/user/game', to: 'game_mobile_user#create'
+
   get 'mobile/user/name', to: 'game_mobile_user#new_name', as: 'gmu_new_name'
   post 'mobile/user/name', to: 'game_mobile_user#create_name'
     
@@ -117,20 +120,20 @@ Rails.application.routes.draw do
 
     get 'admin/verification/:token', to: 'dash_admin#verification', as: 'dash_admin_verfication'
     
-    get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
-    get 'admin/dash/teams/:team_id/games', to: 'dash_admin#games', as: 'dash_admin_games'
-    
     get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
     get 'admin/dash/teams/:team_id/stats', to: 'dash_admin#team_stats', as: 'dash_admin_team_stats'
     
     get 'admin/dash/users', to: 'dash_admin#users', as: 'dash_admin_users'
-    get 'admin/dash/teams/:team_id/users', to: 'dash_admin#team_users', as: 'dash_admin_team_users'
+    get 'admin/dash/users/:team_id', to: 'dash_admin#users', as: 'dash_admin_team_users'
+    
     get 'admins/dash/teams/:team_id/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_user_stats'
     get 'admins/teams/:team_id/users/:user_id/compare/:compare_user_id', to: 'dash_admin#compare_user_stats', as: 'dash_admin_compare_user_stats'
     
     get 'admins/dash/account', to: 'dash_admin#account', as: 'dash_admin_account'
     get 'admins/dash/billing', to: 'dash_admin#billing', as: 'dash_admin_billing'
     
+    get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
+    get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_games'
     
 
 ############
@@ -207,7 +210,6 @@ Rails.application.routes.draw do
 ##############
 # Enter Game #
 ##############
-  get '/:password', to: 'game_mobile_user#new', as: 'gmu_start'
-  post '/:password', to: 'game_mobile_user#create'
+  get '/:password', to: 'game_mobile_user#welcome', as: 'gmu_start'
 
 end

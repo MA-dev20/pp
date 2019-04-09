@@ -11,7 +11,7 @@ class GamesController < ApplicationController
       redirect_to gda_intro_path
 
     elsif @game && @game.admin_id != @admin.id
-        flash[:wrong_password] = 'Bitte wähle ein anderes Passwort'
+        flash[:pop_up] = "Ups, diese URL ist schon vergeben!;- Sei kreativ und wähle eine ander aus. -"
         redirect_to dash_admin_games_path(params[:game][:team_id])
     else
       if params[:game][:team_id].present?
