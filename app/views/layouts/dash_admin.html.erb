@@ -79,16 +79,39 @@
           </div>
       </section>
       
-      <section id="content">
-          <% flash.each do |name, msg| %>
-              <% if msg.is_a?(String) && name.to_s != 'wrong_password' %>
-                  <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
-                      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-                  </div>
-              <% end %>
-          <% end %>
-          <%= yield %>
-      </section>
+    <section id="content" onclick="closeModal()">
+        <% flash.each do |name, msg| %>
+        <% if msg.is_a?(String) && name.to_s != 'pop_up' %>
+        <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        </div>
+        <% end %>
+        <% end %>
+        <%= yield %>
+    </section>
+     <% flash.each do |name, msg| %>
+            <% if msg.is_a?(String) && name.to_s == 'pop_up' %>
+                <div class="modal-games" id="pop_up_flash" tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <button type="button" class="close modal-close" onclick="closeModal()" aria-label="Close">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <div class="modal-body" id="pop_up-body">
+                                <h1>
+                                <span><%= msg.split(';')[0].to_s %></span><br><br><br>
+                                <%= msg.split(';')[1].to_s %>
+                                <% if msg.split(';')[2] %>
+                                  <br> <br> <br>
+                                  <%= link_to msg.split(';')[2].to_s, dash_admin_path, class: 'btn btn-green' %>
+                                <% end %>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        <% end %>
       <div class="dropdown">
               <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <% if @admin.avatar? %>
@@ -149,6 +172,16 @@
            $('.alert').slideUp(500);
         }, 4000);
     })
+    $(document).ready( function () {
+        if ($('#pop_up_flash').length != 0){
+            $('#pop_up_flash').show();
+            $('#content').addClass('backgroundblur');
+        }
+    } );
+    function closeModal() {
+        $('#pop_up_flash').hide();
+        $('#content').removeClass('backgroundblur');
+    }
 </script>
 
 </html>
