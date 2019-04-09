@@ -424,7 +424,7 @@
               <h1>Beginnen Sie mit peterpitch.com</h1>
               <!--<p>Simple, visual collaboration</p>-->
 
-              <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2'}) do |f| %>
+              <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2'}, remote: true, authenticity_token:  true) do |f| %>
                 <div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">
                   <%= f.email_field :email, class: 'form-control mr-sm-3',placeholder:"Enter your work email", required: true  %>
                   <%= f.submit 'Loslegen!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
@@ -452,6 +452,10 @@
   	$("#exampleModalCenter").on("shown.bs.modal", function(e){
   		e.preventDefault()
   		$("#exampleModalCenterLogin").modal("hide");
+  	})
+  	$("#exampleModalCenterLogin").on("shown.bs.modal", function(e){
+  		e.preventDefault()
+  		$("#exampleModalCenter").modal("hide");
   	})
     $(window).scroll(function(){
       if ($(document).scrollTop()>50) {
@@ -493,30 +497,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }).scrollSpy();
 
         })
-$("#loginForm").on("submit", function(e){
-  e.preventDefault()
-  var email = $("#loginEmail").val(),
-  password = $("#loginPassword").val();
-  ajaxLogin(email, password)
-})
-function ajaxLogin(email, password){
-  $(".email-error").hide()
-  $(".password-error").hide()
-  $.ajax({
-    url: '/admins/sign_in',
-      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-    data: {admin: {email: email, password: password}},
-    type: "POST", 
-    success: function(res){
-      if(res.response == "error"){
-        if(res.errors.email)
-         $(".email-error").show()
-        if(res.errors.password)
-         $(".password-error").show()
-      }else{
-      	window.location.href = "/admin/dash"
-      }
-    }
-  });
-}
+
 </script>

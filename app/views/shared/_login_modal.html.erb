@@ -8,7 +8,7 @@
               <h1>Einloggen in peterpitch.com</h1>
               <!--<p>Simple, visual collaboration</p>-->
               <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2', id: 'loginForm'}) do |f| %>
-                <label class="xerror password-error email-error">Email and Password Not match!</label>
+                <label class="xerror password-error email-error w-100 text-center">Email and Password Not match!</label>
 
                 <div class="form-group ">
                   <%= f.email_field :email, class: 'form-control mr-sm-3', id: 'loginEmail',placeholder:"Enter your work email", required: true  %>

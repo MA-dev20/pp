@@ -49,7 +49,10 @@ class DeviseUser::SessionsController < Devise::SessionsController
     elsif !params[:admin][:email].nil? && params[:admin][:password].nil?
       @admin = Admin.where(email: params[:admin][:email]).first
       if @admin
-        redirect_to landing_index_path(login: true)
+        respond_to do |format|
+          format.html {redirect_to landing_index_path(login: true)}
+          format.js {render js: "$('#exampleModalCenterLogin').modal('show')"}
+        end
 
       elsif !@admin
         email = params.dig(:admin, :email)
