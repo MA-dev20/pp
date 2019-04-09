@@ -8,7 +8,7 @@
               <h1>Einloggen in peterpitch.com</h1>
               <!--<p>Simple, visual collaboration</p>-->
 
-              <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2', id: 'loginForm'},  :remote => true, :authenticity_token => true) do |f| %>
+              <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2', id: 'loginForm'}) do |f| %>
                 <div class="form-group ">
                   <%= f.email_field :email, class: 'form-control mr-sm-3', id: 'loginEmail',placeholder:"Enter your work email", required: true  %>
                   <br>
@@ -39,9 +39,3 @@
           </div>
         </div>
       </div>
-
-
-
-<script type="text/javascript">
- 
-</script>
