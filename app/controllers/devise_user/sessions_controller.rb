@@ -49,9 +49,16 @@ class DeviseUser::SessionsController < Devise::SessionsController
     elsif !params[:admin][:email].nil? && params[:admin][:password].nil?
       @admin = Admin.where(email: params[:admin][:email]).first
       if @admin
-        respond_to do |format|
-          format.html {redirect_to landing_index_path(login: true)}
-          format.js {render js: "$('#exampleModalCenterLogin').modal('show')"}
+        if @admin.verification_code_confirm == false
+          respond_to do |format|
+            format.js {render js: "window.location = '#{verification_token_path(@admin.vid_token)}'"}
+            format.html{ redirect_to verification_token_path(@admin.vid_token)}
+          end
+        else
+          respond_to do |format|
+            format.html {redirect_to landing_index_path(login: true)}
+            format.js {render js: "$('#exampleModalCenterLogin').modal('show')"}
+          end
         end
 
       elsif !@admin
@@ -63,9 +70,12 @@ class DeviseUser::SessionsController < Devise::SessionsController
         @admin.vid_token= SecureRandom.hex(15)
         @admin.skip_confirmation!
         @admin.save
-
-         AdminMailer.offer_to_mail(@admin).deliver if 
-        redirect_to verification_token_url(@admin.vid_token)
+        AdminMailer.offer_to_mail(@admin).deliver  if
+        
+        respond_to do |format|
+          format.js {render js: "window.location= '#{verification_token_path(@admin.vid_token)}'"}
+          format.html{ redirect_to verification_token_path(@admin.vid_token)}
+        end
         # redirect_to root_path , notice: 'Signup Information Sent to your Email Successfully.'
         puts "Offer sent."
       end

@@ -22,6 +22,7 @@ class LandingController < ApplicationController
       if @admin.update(admin_params)
         if @admin.password.eql?(@admin.password_confirm)
           # sign_in @admin
+          @admin.update(verification_code_confirm: true)
           redirect_to edit_next_admin_path( @admin.vid_token)
         else
           flash[:notice] = "Password Doesnot match"
