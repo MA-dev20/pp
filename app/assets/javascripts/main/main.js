@@ -1,5 +1,7 @@
 /*
  *= require jquery3
+ 
+//= require jquery_ujs
  *= require main/typed.min
  *= require main/wow
  *= require main/scrollspy
