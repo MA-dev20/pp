@@ -1,0 +1,47 @@
+   <div class="modal modal-peterpitch fade" id="exampleModalCenterLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+              <h1>Einloggen in peterpitch.com</h1>
+              <!--<p>Simple, visual collaboration</p>-->
+
+              <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2', id: 'loginForm'},  :remote => true, :authenticity_token => true) do |f| %>
+                <div class="form-group ">
+                  <%= f.email_field :email, class: 'form-control mr-sm-3', id: 'loginEmail',placeholder:"Enter your work email", required: true  %>
+                  <br>
+                  <label class="xerror email-error">Email Not found!</label>
+                  <%= f.password_field :password, class: 'form-control mr-sm-3',id: 'loginPassword',placeholder:"Enter your password", required: true  %>
+
+                  <br>
+                  <label class="xerror password-error"> Password Not match!</label>
+                  <%= f.submit 'Loslegen!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
+                  <br>
+
+                </div>
+              <% end %>
+              <!--<form class="modal-form mt-2">-->
+              <!-- <div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">-->
+              <!-- <input type="email" class="form-control mr-sm-3" placeholder="Enter your work email">-->
+              <!-- <button type="button" class="btn btn-green mt-3 mt-md-0 w-100">Get Started</button>-->
+              <!-- </div>-->
+              <!-- </form>-->
+              <div class="trail-para d-flex align-items-center justify-content-center">
+                <span class="trail-text-line"></span>
+                <span class="trail-text">
+                  <a href="#"  data-toggle="modal" data-target="#exampleModalCenter">Don't have an account?</a>
+                </span>
+                <span class="trail-text-line"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+<script type="text/javascript">
+ 
+</script>
