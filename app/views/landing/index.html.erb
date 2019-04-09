@@ -27,7 +27,7 @@
 					    <a class="nav-link" href="/landing/price">Pricing</a>
 					</li>
 					<li class="nav-item">
-					    <a class="nav-link login" href="/admins/register">Login</a>
+                    	<a href="#" class="nav-link login" data-toggle="modal" data-target="#exampleModalCenterLogin">Login</a>
 					</li>
 				</ul>
             </div>
@@ -445,13 +445,14 @@
           </div>
         </div>
       </div>
-
-
-
-
+<%= render partial: 'shared/login_modal' %>
 
 <script>
   $(document).ready(function(){
+  	$("#exampleModalCenter").on("shown.bs.modal", function(e){
+  		e.preventDefault()
+  		$("#exampleModalCenterLogin").modal("hide");
+  	})
     $(window).scroll(function(){
       if ($(document).scrollTop()>50) {
         $("header").addClass("affix")
@@ -492,4 +493,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }).scrollSpy();
 
         })
+
 </script>

@@ -18,13 +18,18 @@ class DeviseUser::SessionsController < Devise::SessionsController
           set_flash_message!(:notice, :signed_in)
           sign_in(resource_name, resource)
           yield resource if block_given?
+          return  render json: {response: "ok"} if request.xhr?
           respond_with resource, location: after_sign_in_path_for(resource) 
-
         else
           redirect_to price_path
         end
       
       else
+        email = Admin.find_by_email(params[:admin][:email])
+        errors = {}
+        errors.merge!({email: true}) if !email.present?
+        errors.merge!({password:  true}) if email.present? && !email.valid_password?(params[:admin][:password])
+        return render json: {response: "error", errors: errors}
         redirect_to landing_index_path
       #   email = params.dig(:admin, :email)
       #   # password = params.dig(:admin, :password)
