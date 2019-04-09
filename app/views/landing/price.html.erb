@@ -56,7 +56,7 @@
 							    <a class="nav-link active" href="/landing/price">Pricing</a>
 							</li>
 							<li class="nav-item">
-							    <a class="nav-link login " href="/admins/register">Login</a>
+								<a href="#" class="nav-link login" data-toggle="modal" data-target="#exampleModalCenterLogin">Login</a>
 							</li>
 						</ul>
 			          </div>
@@ -368,6 +368,7 @@
 		</div>
 
 	</body>
+<%= render partial: 'shared/login_modal' %>
 
 <script>
     $(document).ready(function(){

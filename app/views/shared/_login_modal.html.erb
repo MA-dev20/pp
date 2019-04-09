@@ -7,16 +7,15 @@
             <div class="modal-body">
               <h1>Einloggen in peterpitch.com</h1>
               <!--<p>Simple, visual collaboration</p>-->
-
               <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2', id: 'loginForm'}) do |f| %>
+                <label class="xerror password-error email-error">Email and Password Not match!</label>
+
                 <div class="form-group ">
                   <%= f.email_field :email, class: 'form-control mr-sm-3', id: 'loginEmail',placeholder:"Enter your work email", required: true  %>
                   <br>
-                  <label class="xerror email-error">Email Not found!</label>
                   <%= f.password_field :password, class: 'form-control mr-sm-3',id: 'loginPassword',placeholder:"Enter your password", required: true  %>
 
                   <br>
-                  <label class="xerror password-error"> Password Not match!</label>
                   <%= f.submit 'Login', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
                   <br>
 
@@ -39,3 +38,39 @@
           </div>
         </div>
       </div>
+
+<script type="text/javascript">
+  $("#exampleModalCenter").on("shown.bs.modal", function(e){
+      e.preventDefault()
+      $("#exampleModalCenterLogin").modal("hide");
+    })
+  <% if params[:login] %>
+   $("#exampleModalCenterLogin").modal("show")
+  <% end %>
+  $("#loginForm").on("submit", function(e){
+    e.preventDefault()
+    var email = $("#loginEmail").val(),
+    password = $("#loginPassword").val();
+    ajaxLogin(email, password)
+  })
+  function ajaxLogin(email, password){
+    $(".email-error").hide()
+    $(".password-error").hide()
+    $.ajax({
+      url: '/admins/sign_in',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      data: {admin: {email: email, password: password}},
+      type: "POST", 
+      success: function(res){
+        if(res.response == "error"){
+          if(res.errors.email)
+           $(".email-error").show()
+          if(res.errors.password)
+           $(".password-error").show()
+        }else{
+          window.location.href = "/admin/dash"
+        }
+      }
+    });
+  }
+</script>
