@@ -29,7 +29,7 @@ class GameMobileUserController < ApplicationController
     if @game1
       @admin = Admin.find(@game1.admin_id)
       if @admin.email == params[:user][:email].downcase
-        redirect_to gma_start_path(params[:password])
+        redirect_to gma_start_path(@game1.password)
         return
       end
       @user = User.find_by(email: params[:user][:email])

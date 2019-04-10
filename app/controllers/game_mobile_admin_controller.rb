@@ -87,9 +87,8 @@ class GameMobileAdminController < ApplicationController
   end
     
   def turn
-    @turns = @game.turns.playable.sample(100)
-    if @game.state != 'turn' && @turns.count == 1
-      @game.update(state: 'turn', active: false, current_turn: @turns.first.id)
+    if @game.state != 'turn' && @game.turns.playable.count == 1
+      @game.update(active: false, current_turn: @game.turns.playable.first.id)
     elsif @game.state != 'turn'
       @game.update(state: 'turn')
     end
