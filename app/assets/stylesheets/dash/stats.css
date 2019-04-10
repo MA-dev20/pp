@@ -118,7 +118,7 @@
 #dash_stats .body:hover .circle,
 #dash_stats .rhetorik:hover .circle {
     background-color: rgba(28, 161, 222, 1);
-    border-color: #00e38b;
+    border-color: #1ddaaf;
     font-weight: bold;
 }
 #dash_stats .text {

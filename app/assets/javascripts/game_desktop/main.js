@@ -164,18 +164,9 @@ resolver.resolve(options, callback);
 //Color in Circles
 function myColor(val) {
     if (val < 0.5 ) {
-        if(val*510 <= 16)
-            return '#ff0'+(Math.round(val*510)).toString(16)+'00';
-        else {
-            return '#ff'+(Math.round(val*510)).toString(16)+'00';
-        }
+        return '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
     } else {
-        if((1-val)*510 <= 16) {
-            return '#0'+(Math.round((1-val)*510)).toString(16)+'ff'+'00';
-        }
-        else {
-            return '#'+(Math.round((1-val)*510)).toString(16)+'ff'+'00';
-        }
+        return '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
     }
 }
 /* Animated Circle on game_desktop/rating */
