@@ -1,0 +1,16 @@
+<section id="content">
+    <div class="head">
+        Hi, <%= @user.fname %> <%= @user.lname %>
+    </div>
+        <div class="bottom">
+            <%= link_to "Play again", gmu_new_turn_path, class: 'link pulse' %>
+            <%= link_to "Leave Game", logout_root_path , class: 'link', id: 'fake' %>
+        </div>
+</section>
+
+
+<script>
+    function myFunction() {
+        $('#summit').show();
+    }
+</script>
