@@ -19,14 +19,22 @@ class GameDesktopAdminController < ApplicationController
   def choose
     @turns = @game.turns.playable.sample(100)
     if @game.state != 'choose' && @turns.count == 1
-      redirect_to gda_turn_path
+      redirect_to gea_turn_path
       return
     elsif @game.state != 'choose' && @turns.count == 0
-      redirect_to gda_ended_path
+      redirect_to gea_turn_path
       return
     elsif @game.state != 'choose'
-      @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
+      if @game.turns.count > 1
+        @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
+      else
+        redirect_to gea_turn_path
+      end
     end
+  end
+
+  def error
+    
   end
 
   def turn

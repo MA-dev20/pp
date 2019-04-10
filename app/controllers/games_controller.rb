@@ -7,6 +7,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.where(active: true, password: params[:game][:password]).first
     if @game && @game.admin_id == @admin.id
+      session[:game_session_id] = @game.id
       sign_in(@game)
       redirect_to gda_intro_path
 
@@ -18,6 +19,7 @@ class GamesController < ApplicationController
         @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
         if @game.save
           sign_in(@game)
+          session[:game_session_id] = @game.id
           redirect_to gda_intro_path
         else
           flash[:danger] = 'Konnte Spiel nicht speichern'
