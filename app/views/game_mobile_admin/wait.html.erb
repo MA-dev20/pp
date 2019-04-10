@@ -1,10 +1,16 @@
 <div id="count_channel" date-game-id="<%= @game.id %>">
 <section id="content">
     <div class="head">
-        Alle online?
+        Alle beigetreten?
     </div>
     <div class="middle">
-        <%= image_tag 'game/wolf_button.png', class: 'mid-img green' %>
+      <% if @admin.avatar? %>
+          <%= image_tag @admin.avatar.quad.url, class: 'mid-img green' %>
+      <% else %>
+       <div class="mid-img green">
+           <%= image_tag 'game/wolf_button.png', class: 'wolf' %>
+       </div>
+       <% end %>
     </div>
     <div class="bottom">
        <%= link_to 'starten!', gma_choose_path %>

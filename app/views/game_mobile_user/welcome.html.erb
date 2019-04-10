@@ -1,6 +1,6 @@
 <div id="content">
     <div class="head">
-        <%= image_tag 'defaults/logo.png', id: 'logo'%>
+        <%= image_tag 'defaults/logo-no_shadow.png', id: 'logo'%>
         <h3>- Wilkommen im Spielraum -</h3>
         <h1><%= @game1.team.name %></h1>
     </div>
@@ -8,6 +8,6 @@
         <%= image_tag 'defaults/wolf-white.png', class: 'mid-img' %>
     </div>
     <div class="bottom">
-        <%= link_to "Auf geht's!", gmu_password_path %>
+        <%= link_to "Auf geht's!", gmu_password_path, class: 'link' %>
     </div>
 </div>
