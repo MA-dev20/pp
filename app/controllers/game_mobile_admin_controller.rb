@@ -76,10 +76,10 @@ class GameMobileAdminController < ApplicationController
   def choose
     @turns = @game.turns.playable.sample(100)
     if @turns.count == 1
-      redirect_to gda_turns_path
+      redirect_to gma_turns_path
       return
     elsif @turns.count == 0
-      redirect_to gda_ended_path
+      redirect_to gma_ended_path
       return
     elsif @game.state != 'choose'
       @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
@@ -88,7 +88,7 @@ class GameMobileAdminController < ApplicationController
     
   def turn
     if @game.state != 'turn' && @game.turns.playable.count == 1
-      @game.update(active: false, current_turn: @game.turns.playable.first.id)
+      @game.update(state: 'turn', active: false, current_turn: @game.turns.playable.first.id)
     elsif @game.state != 'turn'
       @game.update(state: 'turn')
     end
