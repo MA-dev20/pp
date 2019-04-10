@@ -1,0 +1,12 @@
+<div id="content">
+    <div class="head">
+        <h5>- Wilkommen im Spielraum -</h5>
+        <h1><%= @game1.team.name %></h1>
+    </div>
+    <div class="middle">
+        <%= image_tag 'game/wolf_button.png', class: 'mid-img' %>
+    </div>
+    <div class="bottom">
+        <%= link_to "Auf geht's!", gmu_password_path %>
+    </div>
+</div>

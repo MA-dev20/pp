@@ -307,13 +307,11 @@ header
 	  -moz-box-shadow: 0 9px 18px rgba(0,0,0,0.17);
 	  box-shadow: 0 9px 18px rgba(0,0,0,0.17);
   }
-  .btn-green:hover,
-  .btn-green:focus {
+  .btn-green:hover, {
 	  color: #37deb8 !important;
 	  background-color: transparent !important;
   }
-  .btn-green-white:hover,
-  .btn-green-white:focus {
+  .btn-green-white:hover {
       color: #37deb8 !important;
 	  background-color: white !important;
   }
@@ -736,7 +734,7 @@ header
 	  font-size: 2.75rem;
 	  font-family: Barack-Medium;
 	  text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
-	  margin-bottom: 1rem;
+	  margin-bottom: 2rem;
 	  text-align: center;
   }
   .modal-peterpitch .modal-body p {

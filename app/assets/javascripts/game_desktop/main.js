@@ -7,7 +7,6 @@
  *= require game_desktop/typed.min
  *= require game_desktop/progressbar.min
  *= require cable
-
  */
 
 

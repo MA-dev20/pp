@@ -21,7 +21,7 @@ class GameMobileAdminController < ApplicationController
         redirect_to root_path
       end
     else
-      flash[:danger] = "Konnte kein passende Siel finden"
+      flash[:danger] = "Konnte kein passende Spiel finden"
       redirect_to root_path
     end
   end
