@@ -1,33 +1,47 @@
 class GameMobileUserController < ApplicationController
   before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user]
-  before_action :authenticate_user!, :set_user, except: [:new, :create,:reject_user ,:accept_user]
+  before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
   layout 'game_mobile'
 
+    
+  def welcome
+    @game1 = Game.where(password: params[:password], active: true).first
+    if @game1
+      session[:game_session_id] = @game1.id
+    else
+      flash[:danger] = 'Konnte kein passendes Spiel finden!'
+      redirect_to root_path
+    end
+  end
+    
   def new
-    @game = Game.where(password: params[:password], active: true).first
+    @game1 = Game.find(session[:game_session_id])
+    if !@game1
+      flash[:danger] = 'Konnte kein passendes Spiel finden!'
+      redirect_to root_path
+    end
   end
     
   def create
-    @game = Game.where(password: params[:password], active: true).first
-    if @game
-      session[:game_session_id] = @game.id
-      @admin = Admin.find(@game.admin_id)
+    @game1 = Game.find(session[:game_session_id])
+    if @game1
+      @admin = Admin.find(@game1.admin_id)
       if @admin.email == params[:user][:email].downcase
         redirect_to gma_start_path(params[:password])
         return
       end
       @user = User.find_by(email: params[:user][:email])
       if @user && @user.admin == @admin
-        if TeamUser.where(user_id: @user.id, team_id: @game.team_id).count == 0
-          TeamUser.create(user_id: @user.id, team_id: @game.team_id)
+        if TeamUser.where(user_id: @user.id, team_id: @game1.team_id).count == 0
+          TeamUser.create(user_id: @user.id, team_id: @game1.team_id)
         end
         sign_in(@user)
         redirect_to gmu_new_avatar_path
       else
         @user = @admin.users.create(email: params[:user][:email])
-        TeamUser.create(user_id: @user.id, team_id: @game.team_id)
+        TeamUser.create(user_id: @user.id, team_id: @game1.team_id)
         sign_in(@user)
         redirect_to gmu_new_name_path
       end
@@ -91,55 +105,61 @@ class GameMobileUserController < ApplicationController
 
 
   def new_name
-    @game = Game.find(session[:game_session_id])
+    @game1 = Game.find(session[:game_session_id])
   end
 
   def create_name
-    @game = Game.find(session[:game_session_id])
+    @game1 = Game.find(session[:game_session_id])
     @user.update(user_params)
     redirect_to gmu_new_company_path
   end
     
   def new_company
-    @game = Game.find(session[:game_session_id])
+    @game1 = Game.find(session[:game_session_id])
   end
      
   def create_company
-    @game = Game.find(session[:game_session_id])
+    @game1 = Game.find(session[:game_session_id])
     @user.update(user_params)
     redirect_to gmu_new_avatar_path
   end
     
   def new_avatar
-    @game = Game.find(session[:game_session_id])
+    @game1 = Game.find(session[:game_session_id])
   end
 
   def create_avatar
-    @game = Game.find(session[:game_session_id])
+    @game1 = Game.find(session[:game_session_id])
     @user.update(user_params)
     redirect_to gmu_new_avatar_path
   end
     
   def new_turn
-    @game = Game.find(session[:game_session_id])
-    @turn = @game.turns.find_by(user_id: @user.id)
-    # if @turn
-    #   redirect_to gmu_wait_path
-    # end
+    @game1 = Game.find(session[:game_session_id])
+    @turn = @game1.turns.find_by(user_id: @user.id)
+    if @turn
+       sign_in(@game1)
+       redirect_to gmu_+@game1.state+_path
+    end
   end
     
   def create_turn
-    @game = Game.find(session[:game_session_id])
-    @word = Word.first(50).sample(5).first if @game.admin.admin_subscription_id.nil?
+    @game1 = Game.find(session[:game_session_id])
+    @word = Word.first(50).sample(5).first if @game1.admin.admin_subscription_id.nil?
     @word = Word.all.sample(5).first if @word.nil?
-    @turn = Turn.new(user_id: @user.id, game_id: @game.id, word_id: @word.id, play: params[:turn][:play], played: false)
+    @turn = Turn.new(user_id: @user.id, game_id: @game1.id, word_id: @word.id, play: params[:turn][:play], played: false)
+    if @game1.active
     if @turn.save
       session.delete(:game_session_id)
-      sign_in(@game)
-      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s
+      sign_in(@game1)
+      ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s
       redirect_to gmu_wait_path
     else
       redirect_to gmu_new_turn_path
+    end
+    else
+      flash[:danger] = 'Das Spiel ist schon beendet!'
+      redirect_to root_path
     end
   end
 

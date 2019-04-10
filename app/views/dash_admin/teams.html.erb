@@ -1,3 +1,4 @@
+<div id="pop_up_container" onclick="closeModal()">
 <section id="gd_team">
     <input type="text" id="searchField" placeholder="suchen" onfocus='team_hide()' onblur="team_show()">
     <%= image_tag 'dash/search.png' %>
@@ -33,15 +34,14 @@
     <% end %>
 
 </section>
+</div>
 
 
 
 
 <script>
 
-$(document).ready( function () {
-   // document.getElementById("pop_up").style.display = "none";
-} );
+
 var $rows = $('.team_card');
 $('#searchField').keyup(function() {
     

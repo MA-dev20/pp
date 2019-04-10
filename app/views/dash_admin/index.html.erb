@@ -1,5 +1,9 @@
 <section id="game-container">
+<% if @team %>
+<%= image_tag 'dash/game-arrow-top.png', id: 'arrow-top' %>
+<% else %>
 <%= image_tag 'dash/game-arrow-top.png', id: 'arrow-top', style: 'display: none'%>
+<% end %>
 <%= image_tag 'dash/game-arrow-bottom.png', id: 'arrow-bottom', style: 'display: none'%>
 
 <h1>Jetzt Spiel starten!</h1>
@@ -11,9 +15,13 @@
       
       <div class="row2">
       <select id='game_team_id' name="game[team_id]" class="cs-select cs-skin-underline form-field" required>
-          <option value=''>Team wählen</option>
+          <option value='' disabled>Team wählen</option>
           <% @teams.each do |t| %>
+              <% if @team && t == @team %>
+              <option value="<%= t.id %>" selected data-class='cs-selected'><%= t.name %></option>
+              <% else %>
               <option value="<%= t.id %>"><%= t.name %></option>
+              <% end %>
           <% end %>
       </select>
       </div>
@@ -27,7 +35,12 @@
   <div class="row3">
   <div class="form-field-text">
       peterpitch.com/
+      <% if @team %>
+      <%= f.text_field :password, class: 'field2', id: 'url-field', autofocus: true, required: true, onchange: 'set_arrow()' %>
+      <% else %>
       <%= f.text_field :password, class: 'field2', id: 'url-field', required: true, onchange: 'set_arrow()' %>
+      <% end %>
+      
   </div>
   </div>
   </div>
@@ -43,7 +56,11 @@
 
     <div class="col1">
         <div class="row4">
+        <% if @team %>
+        <%= f.text_field :name, placeholder: 'Team erstellen', class: 'form-field', required: true %>
+        <% else %>
         <%= f.text_field :name, placeholder: 'Team erstellen', class: 'form-field', autofocus: true, required: true %>
+        <% end %>
         </div>
         <%= f.submit '+' %>
     </div>

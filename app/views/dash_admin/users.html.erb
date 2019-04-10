@@ -5,12 +5,19 @@
     <div class="select-text">Spielgruppe wählen</div>
     <div class="select">
         <select class="cs-select cs-skin-underline form-field">
-            <option value="" disabled selected>Alle Teams</option>
-            <option value="" data-link="<%= dash_admin_users_path %>" data-class="cs-selected">Alle Teams</option>
+            <% if @team %>
+                <option value="" disabled selected><%= @team.name %></option>
+                <option value="" data-link="<%= dash_admin_users_path %>">Alle Teams</option>
+            <% else %>
+                <option value="" disabled selected>Alle Teams</option>
+                <option value="" data-link="<%= dash_admin_users_path %>" data-class="cs-selected">Alle Teams</option>
+            <% end %>
             <% @teams.each do |t| %>
-                    <option value="<%= t.id %>" data-link="<%= dash_admin_team_users_path(t.id) %>">
-                         <%= t.name %>
-                    </option>
+                <% if @team && t.id == @team.id %>
+                   <option value="<%= t.id %>" data-class="cs-selected"><%= t.name %></option>
+                <% else %>
+                    <option value="<%= t.id %>" data-link="<%= dash_admin_team_users_path(t.id) %>"><%= t.name %></option>
+                <% end %>
             <% end %>
         </select>
     </div>
@@ -41,7 +48,7 @@
             <td><%= u.email %></td>
             <td><%= u.company_name %></td>
             <td><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
-            <td><%= link_to '', destroy_user_path(u), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie den User unwiederuflich löschen möchten?" } %></td>
+            <td><%= link_to '', destroy_user_path(u), class: 'fas fa-trash-alt', data: { confirm: "Alles Spiele und Statistiken des Nutzers gehen verloren. Bist du sicher, dass du den Nutzer unwideruflich löschen möchtest?" } %></td>
             <td><% if u.teams.count > 0 %>
                 <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line package_pop_up" %>
                 <% end %>
