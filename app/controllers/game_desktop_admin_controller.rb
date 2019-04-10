@@ -1,5 +1,5 @@
 class GameDesktopAdminController < ApplicationController
-  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay]
+  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :ended]
   before_action :set_turn, only: [:turn, :play, :rate, :rating]
     
   layout 'game_desktop'
@@ -19,7 +19,6 @@ class GameDesktopAdminController < ApplicationController
   def choose
     @turns = @game.turns.playable.sample(100)
     if @game.state != 'choose' && @turns.count == 1
-      @game.update(active: false, current_turn: @turns.first.id)
       redirect_to gda_turn_path
       return
     elsif @game.state != 'choose' && @turns.count == 0
@@ -31,7 +30,9 @@ class GameDesktopAdminController < ApplicationController
   end
 
   def turn
-    if @game.state != 'turn'
+    if @game.state != 'turn' && @game.turns.playable.count == 1
+      @game.update(active: false, current_turn: @game.turns.playable.first.id)
+    elsif @game.state != 'turn'
       @game.update(state: 'turn')
     end
   end
@@ -92,10 +93,14 @@ class GameDesktopAdminController < ApplicationController
   end
 
   def ended
+    @game = current_game
     if @game.state != 'ended'
       @game.update(state: 'ended', active: false)
     end
     sign_out(@game)
+    if @game.turns.count == 0
+      @game.destroy
+    end
     redirect_to dash_admin_path
   end
     
