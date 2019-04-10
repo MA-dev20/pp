@@ -55,9 +55,9 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
       redirect_back(fallback_location: root_path)
-      Turn.where(user_id: @user.id).first.delete
+      @turn = Turn.where(user_id: @user.id).first
+      @turn.destroy if @turn.present?
       @user.destroy
-      @user = User.where(status: 'pending').first
       if @user
         ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false' , game_id: current_game.id, user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
       else
@@ -78,9 +78,13 @@ class GameMobileUserController < ApplicationController
 
     if @admin.plan_type.eql?('trial')
       @user.update_attributes(status: 0)
-      redirect_back(fallback_location: root_path)  and return
+      create_turn(@user, @admin)
+      return
+      # redirect_back(fallback_location: root_path)  and return
     elsif @admin.plan_users?
       @user.update_attributes(status: 'accepted')
+      create_turn_against_user(@user, @admin)
+
       if((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) > @admin.plan_users )
         if @user.admin.plan_type.eql?("year")
           @admin.update_attributes(plan_users: @admin.plan_users + 1 )
@@ -139,7 +143,7 @@ class GameMobileUserController < ApplicationController
     @turn = @game1.turns.find_by(user_id: @user.id)
     if @turn
        sign_in(@game1)
-       redirect_to gmu_+@game1.state+_path
+       redirect_to send("gmu_"+@game1.state+"_path")
     end
   end
     
@@ -147,16 +151,11 @@ class GameMobileUserController < ApplicationController
     @game1 = Game.find(session[:game_session_id])
     @word = Word.first(50).sample(5).first if @game1.admin.admin_subscription_id.nil?
     @word = Word.all.sample(5).first if @word.nil?
-    @turn = Turn.new(user_id: @user.id, game_id: @game1.id, word_id: @word.id, play: params[:turn][:play], played: false)
     if @game1.active
-    if @turn.save
       session.delete(:game_session_id)
       sign_in(@game1)
       ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s
       redirect_to gmu_wait_path
-    else
-      redirect_to gmu_new_turn_path
-    end
     else
       flash[:danger] = 'Das Spiel ist schon beendet!'
       redirect_to root_path
@@ -167,8 +166,8 @@ class GameMobileUserController < ApplicationController
     
   def wait
     @admin = Admin.find(@game.admin_id)
-    if (current_user && current_user.admin == @admin )&& (current_user.status== "pending" || current_user.status== "rejected" )
-      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false', game_state: 'wait' ,game_id: current_game.id, counter: @game.turns.count.to_s, 
+    if (current_user)&& (current_user.status== "pending" || current_user.status== "rejected" )
+      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'wait-user', game_state: 'wait' ,game_id: current_game.id, counter: @game.turns.count.to_s, 
       user_fname: current_user.fname, user_lname: current_user.lname,
       user_avatar: current_user.avatar.url , user_id: current_user.id
     end
@@ -232,6 +231,14 @@ class GameMobileUserController < ApplicationController
     
     def user_params
       params.require(:user).permit(:avatar, :company, :fname, :lname)
+    end
+
+    def create_turn_against_user(user, admin)
+      @game1 = Game.find(session[:game_session_id])
+      @word = Word.first(50).sample(5).first if @game1.admin.admin_subscription_id.nil?
+      @word = Word.all.sample(5).first if @word.nil?
+      @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: true, played: false, admin_id: admin.id)
+      @turn.save!
     end
 
 

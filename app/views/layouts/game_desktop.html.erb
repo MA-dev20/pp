@@ -28,5 +28,32 @@
         <%= yield %>
         </div>
     </section>
+    <%= render partial: 'shared/user_accept_modal' %>
 </body>
 </html>
+<script type="text/javascript">
+    function runModalJS(){
+        $("#btn-accept").on("click", function(e){
+            e.preventDefault();
+            var $href = $(this).attr("href")
+            $.ajax({
+                url: $href,
+                done: function(){
+                    $("#myModalAction").hide()
+                }
+            })
+        })
+        $("#btn-reject").on("click", function(e){
+            e.preventDefault();
+            var $href = $(this).attr("href")
+
+            $.ajax({
+                url: $href,
+                done: function(){
+                    $("#myModalAction").hide()
+                }
+            })
+        })
+    }
+    
+</script>
