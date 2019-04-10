@@ -187,7 +187,7 @@ class GameMobileUserController < ApplicationController
     @game1 = @admin.games.where(password: @game.password, active: true).first
     sign_out(@game)
     session[:game_session_id] = @game1.id
-    redirect_to gmu_new_turn_path
+    # redirect_to gmu_new_turn_path
   end
     
   def ended
