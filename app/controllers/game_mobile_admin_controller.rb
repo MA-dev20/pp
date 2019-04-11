@@ -16,7 +16,6 @@ class GameMobileAdminController < ApplicationController
       session[:game_session_id] = @game.id
       sign_in(@game)
       @admin = Admin.where(id: @game.admin_id, email: params[:admin][:email].downcase).first
-      debugger
       if @admin && @admin.valid_password?(params[:admin][:password])
         sign_in(@admin)
         redirect_to gma_new_avatar_path
