@@ -80,7 +80,7 @@ class GameMobileUserController < ApplicationController
       @user.update_attributes(status: 0)
       create_turn_against_user(@user, @admin)
       # return
-      # redirect_back(fallback_location: root_path)  and return
+      redirect_back(fallback_location: root_path)  and return
     elsif @admin.plan_users?
       @user.update_attributes(status: 'accepted')
       create_turn_against_user(@user, @admin)
