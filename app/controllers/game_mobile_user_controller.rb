@@ -166,12 +166,11 @@ class GameMobileUserController < ApplicationController
     
   def wait
     @admin = Admin.find(@game.admin_id)
-    if (current_user)&& (current_user.status== "pending" || current_user.status== "rejected" )
+    if (current_user) 
       ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'wait-user', game_state: 'wait' ,game_id: current_game.id, counter: @game.turns.count.to_s, 
       user_fname: current_user.fname, user_lname: current_user.lname,
       user_avatar: current_user.avatar.url , user_id: current_user.id
     end
-
   end
     
 
@@ -237,8 +236,9 @@ class GameMobileUserController < ApplicationController
       @game1 = Game.find(session[:game_session_id])
       @word = Word.first(50).sample(5).first if @game1.admin.admin_subscription_id.nil?
       @word = Word.all.sample(5).first if @word.nil?
+      turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).first
       @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: true, played: false, admin_id: admin.id)
-      @turn.save!
+      @turn.save! if turn.nil?
     end
 
 
