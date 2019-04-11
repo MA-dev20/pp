@@ -59,6 +59,7 @@ Rails.application.routes.draw do
     
   get 'mobile/admin/intro', to: 'game_mobile_admin#intro', as: 'gma_intro'
   get 'mobile/admin/wait', to: 'game_mobile_admin#wait', as: 'gma_wait'
+  get 'mobile/admin/error', to: 'game_mobile_admin#error', as: 'gea_mobile'
   get 'mobile/admin/choose', to: 'game_mobile_admin#choose', as: 'gma_choose'
   get 'mobile/admin/turn', to: 'game_mobile_admin#turn', as: 'gma_turn'
   get 'mobile/admin/play', to: 'game_mobile_admin#play', as: 'gma_play'

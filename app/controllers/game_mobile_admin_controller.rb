@@ -6,13 +6,17 @@ class GameMobileAdminController < ApplicationController
     
   def new
     @game = Game.where(password: params[:password], active: true).first
+    session[:game_session_id] = @game.id
+    sign_in(@game)
   end
     
   def create
     @game = Game.where(password: params[:password], active: true).first
     if @game
       session[:game_session_id] = @game.id
+      sign_in(@game)
       @admin = Admin.where(id: @game.admin_id, email: params[:admin][:email].downcase).first
+      debugger
       if @admin && @admin.valid_password?(params[:admin][:password])
         sign_in(@admin)
         redirect_to gma_new_avatar_path
@@ -41,9 +45,10 @@ class GameMobileAdminController < ApplicationController
   def new_turn
     @game = Game.find(session[:game_session_id])
     @turn = @game.turns.find_by(admin_id: @admin.id)
-    if @turn
-      redirect_to gma_intro_path
-    end
+    @turn.destroy if @turn.present?
+    # if @turn
+    #   redirect_to gma_intro_path
+    # end
   end
     
   def create_turn
@@ -51,7 +56,6 @@ class GameMobileAdminController < ApplicationController
     @word = Word.all.sample(5).first
     @turn = Turn.new(play: params[:turn][:play], admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false)
     if @turn.save
-      session.delete(:game_session_id)
       sign_in(@game)
       ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s
       redirect_to gma_intro_path
@@ -75,14 +79,18 @@ class GameMobileAdminController < ApplicationController
     
   def choose
     @turns = @game.turns.playable.sample(100)
-    if @turns.count == 1
-      redirect_to gma_turns_path
+    if @game.state != 'choose' && @turns.count == 1
+      redirect_to gea_mobile_path
       return
-    elsif @turns.count == 0
-      redirect_to gma_ended_path
+    elsif  @game.state != 'choose' && @turns.count == 0
+      redirect_to gea_mobile_path
       return
     elsif @game.state != 'choose'
-      @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
+      if @game.turns.count > 1
+        @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
+      else
+        redirect_to gea_mobile_path
+      end
     end
   end
     
@@ -163,12 +171,12 @@ class GameMobileAdminController < ApplicationController
   def replay
     @admin = current_admin
     if @game.state != 'replay'
-      @game.update(state: 'replay')
-      @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
+      @game.update(state: 'replay', active: true)
+      @game.turns.destroy_all
     else
-      @game1 = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
+      @game = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
     end
-    session[:game_session_id] = @game1.id
+    session[:game_session_id] = @game.id
     redirect_to gma_new_turn_path
   end
     
@@ -184,7 +192,7 @@ class GameMobileAdminController < ApplicationController
     
     def set_turn
       @turn = Turn.find_by(id: @game.current_turn)
-      @cur_user = @turn.findUser
+      @cur_user = @turn.findUser if @turn
     end
     
     def turn_params
