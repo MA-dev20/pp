@@ -78,8 +78,8 @@ class GameMobileUserController < ApplicationController
 
     if @admin.plan_type.eql?('trial')
       @user.update_attributes(status: 0)
-      create_turn(@user, @admin)
-      return
+      create_turn_against_user(@user, @admin)
+      # return
       # redirect_back(fallback_location: root_path)  and return
     elsif @admin.plan_users?
       @user.update_attributes(status: 'accepted')
