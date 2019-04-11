@@ -55,8 +55,9 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
       redirect_back(fallback_location: root_path)
-      @turn = Turn.where(user_id: @user.id).first
-      @turn.destroy if @turn.present?
+      @turn = Turn.where(user_id: @user.id).destroy_all
+      TurnRating.where(user_id:  @user.id).destroy_all
+      TeamUser.where(user_id: @user.id).destroy_all
       @user.destroy
       if @user
         ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false' , game_id: current_game.id, user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
@@ -166,7 +167,8 @@ class GameMobileUserController < ApplicationController
     
   def wait
     @admin = Admin.find(@game.admin_id)
-    if (current_user) 
+    turn =  Turn.where(user_id:  current_user.id, game_id:  @game.id, admin_id: @admin.id).first
+    if (turn.nil?) 
       ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'wait-user', game_state: 'wait' ,game_id: current_game.id, counter: @game.turns.count.to_s, 
       user_fname: current_user.fname, user_lname: current_user.lname,
       user_avatar: current_user.avatar.url , user_id: current_user.id
@@ -202,9 +204,7 @@ class GameMobileUserController < ApplicationController
   def replay
     @game = current_game
     @admin = Admin.find(@game.admin_id)
-    @game1 = @admin.games.where(password: @game.password, active: true).first
-    sign_out(@game)
-    session[:game_session_id] = @game1.id
+    session[:game_session_id] = @game.id
     # redirect_to gmu_new_turn_path
   end
     
@@ -233,7 +233,7 @@ class GameMobileUserController < ApplicationController
     end
 
     def create_turn_against_user(user, admin)
-      @game1 = Game.find(session[:game_session_id])
+      @game1 = current_game
       @word = Word.first(50).sample(5).first if @game1.admin.admin_subscription_id.nil?
       @word = Word.all.sample(5).first if @word.nil?
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).first

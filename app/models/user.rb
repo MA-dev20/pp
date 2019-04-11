@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_one :user_rating, dependent: :destroy
   has_many :ratings, dependent: :destroy
   has_many :team_users, dependent: :destroy
-  has_many :teams, through: :team_users
+  has_many :teams, through: :team_users, dependent: :destroy
   has_many :turns, dependent: :destroy
   has_many :turn_ratings, dependent: :destroy
     

@@ -10,8 +10,7 @@ class GameDesktopAdminController < ApplicationController
   def wait
     if @game.state != 'wait'
         @game.update(state: 'wait')
-    end
-    
+    end 
     @count = @game.turns.count
     @pending_count = @game.turns.select{|turn| turn if !turn.user.nil? && turn.user.pending?}.count
   end
@@ -117,13 +116,12 @@ class GameDesktopAdminController < ApplicationController
     @game = current_game
     @admin = current_admin
     if @game.state != 'replay'
-      @game.update(state: 'replay')
-      @game1 = @admin.games.create(team_id: @game.team_id, state: 'wait', password: @game.password, active: true)
+      @game.update(state: 'replay', active: true)
+      @game.turns.destroy_all
     else
       @game1 = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
     end
-    sign_out(@game)
-    sign_in(@game1)
+    sign_in(@game)
     redirect_to gda_wait_path
   end
     
