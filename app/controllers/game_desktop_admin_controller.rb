@@ -39,6 +39,7 @@ class GameDesktopAdminController < ApplicationController
 
   def turn
     if @game.state != 'turn' && @game.turns.playable.count == 1
+      @turn = @game.turns.playable.first
       @game.update(state: 'turn', active: false, current_turn: @game.turns.playable.first.id)
     elsif @game.state != 'turn'
       @game.update(state: 'turn')

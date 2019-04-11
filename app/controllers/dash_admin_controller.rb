@@ -18,6 +18,10 @@ class DashAdminController < ApplicationController
     @rating = @team.team_rating
     @gameratings = @team.game_ratings.last(7)
     @count = 1
+    if params[:team2_id]
+      @team2 = Team.find(params[:team2_id])
+      @gameratings2 = @team2.game_ratings.last(7)
+    end
     if !@rating
       flash[:pop_up] = "Ups, für dieses Team liegen noch keine Statistiken vor.;- Da müsst ihr wohl erst noch eine Runde spielen. -;Let's Play"
       redirect_to dash_admin_teams_path

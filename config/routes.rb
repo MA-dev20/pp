@@ -123,6 +123,7 @@ Rails.application.routes.draw do
     
     get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
     get 'admin/dash/teams/:team_id/stats', to: 'dash_admin#team_stats', as: 'dash_admin_team_stats'
+    get 'admin/dash/teams/:team_id/stats/:team2_id', to: 'dash_admin#team_stats', as: 'dash_admin_compare_team_stats'
     
     get 'admin/dash/users', to: 'dash_admin#users', as: 'dash_admin_users'
     get 'admin/dash/users/:team_id', to: 'dash_admin#users', as: 'dash_admin_team_users'
