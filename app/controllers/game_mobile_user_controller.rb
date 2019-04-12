@@ -59,9 +59,9 @@ class GameMobileUserController < ApplicationController
       TeamUser.where(user_id: @user.id).destroy_all
       @user.destroy
       if @user
-        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s, modal: false
+        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s, modal: false,  user_id: params[:user_id]
       else
-        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s, modal: false
+        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s, modal: false,  user_id: params[:user_id]
       end
       respond_to do |format|
         format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
@@ -84,7 +84,7 @@ class GameMobileUserController < ApplicationController
       @user.update_attributes(status: 0)
       create_turn_against_user(@user, @admin)
       # return
-      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s, modal: false
+      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s, modal: false, user_id: params[:user_id]
       respond_to do |format|
         format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
         format.html {redirect_back(fallback_location: root_path) and return}
@@ -93,7 +93,7 @@ class GameMobileUserController < ApplicationController
     elsif @admin.plan_users?
       @user.update_attributes(status: 'accepted')
       create_turn_against_user(@user, @admin)
-      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s, modal: false
+      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s, modal: false, user_id: params[:user_id]
       if((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) > @admin.plan_users )
         if @user.admin.plan_type.eql?("year")
           @admin.update_attributes(plan_users: @admin.plan_users + 1 )
