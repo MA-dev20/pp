@@ -1,0 +1,37 @@
+.objection-modal{
+	background: transparent;
+}
+.objection-modal .modal-content{
+	border: 0 !important;
+	background: transparent;
+	color: white
+}
+.objection-modal .modal-dialog {
+	max-width: 600px;
+}
+#objection-text{
+    font-size: 66px;
+    margin-bottom: 24px;
+}
+.countdown .progress {
+	height: 2.5rem;
+	overflow: hidden;
+	font-size: .75rem;
+	background-color: #fff;
+	border-radius: 30px;
+	padding: 2px;
+	box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.3);
+}
+.countdown .progress .progress-bar {
+	background-image: none;
+	background-color: #bb303c;
+	border-radius: 22px;
+}
+
+.blur {
+	-webkit-filter: blur(6px);
+	-moz-filter: blur(6px);
+	-ms-filter: blur(6px);
+	-o-filter: blur(6px);
+	filter: blur(6px);
+}

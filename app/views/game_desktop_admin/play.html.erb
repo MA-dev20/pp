@@ -29,16 +29,17 @@
     document.getElementById("word_sound").volume = 1.0;
     
     function callback() {
-        startTimer('80', document.getElementById('timerall'));
         document.getElementById('video-bg').currentTime = 9;
         document.getElementById('intro').pause();
         document.getElementById('word_sound').play();
         document.getElementById('theme').play();
     };
+    var IntervalTimer = startTimer('80', document.getElementById('timerall'));
+
     
     function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
+         var timer = duration, minutes, seconds;
+        var setTimer = setInterval(function () {
             minutes = parseInt(timer / 60, 10);
             seconds = parseInt(timer % 60, 10);
         
@@ -48,10 +49,82 @@
             display.textContent = minutes + ":" + seconds;
         
             if (timer < 0) {
-                window.location.replace('<%= gda_rate_path %>');
+                window.location = "<%= gda_rate_path%> "
             }
             timer--;
         }, 1000);
+        var pause = function(){
+            clearInterval(setTimer);
+        }
+        var resume = function(){
+            setTimer = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+            
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+            
+                if (timer < 0) {
+                }
+                timer--;
+            }, 1000);
+
+        }
+        return {pause: pause , resume: resume }
+    };
+
+    function startTimerModal(duration, display) {
+        $(function() {
+          var current_progress = 0;
+          var interval = setInterval(function() {
+              current_progress += 10;
+              $("#dynamic")
+              .css("width", current_progress + "%")
+              .attr("aria-valuenow", current_progress);
+              if (current_progress >= 100){
+                $("#content").removeClass("blur")
+                clearInterval(interval);
+                $("#myModal").hide()
+              }
+          }, 1000);
+        });
+        IntervalTimer.pause()
+        var timer = duration, minutes, seconds;
+        var executed = false;
+        var interval =  duration;
+        var t = parseInt(duration);
+        var setTimeri = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+        
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            // if(minutes == "00"){
+            //     display.textContent = seconds;
+            // }else{
+            //     display.textContent = minutes + ":" + seconds;
+            // }
+
+            if (timer <= 0) {
+                if(executed == false){
+                    IntervalTimer.resume()
+                    // $("#myModal").hide()
+                    clearInterval(setTimeri);
+                    interval = false
+                    executed = true
+                }
+            } 
+            t -- ;
+            timer--;
+        }, 1000);
+        var pause = function(){
+            clearInterval(setTimer);
+        }
+        return {pause: pause, time: t}
+
     };
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {

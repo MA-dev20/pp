@@ -461,3 +461,85 @@ input[type='radio'] {
 .ssb-facebook {
     background-image: image-url('social_share/facebook.png') !important;
 }
+.modal-choice .modal-dialog {
+    max-width: 750px;
+}
+.modal-choice .modal-content {
+    border-radius: 0;
+    border: none;
+}
+.modal-choice .modal-body {
+    padding: 100px 44px 70px 24px;
+}
+.modal-choice .close {
+    width: 44px;
+    height: 44px;
+    border: 2px solid #1ddaaf;
+    border-radius: 50%;
+    opacity: 1;
+    color: #1ddaaf;
+    font-size: 2.5rem;
+    font-weight: 500;
+    padding: 0px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+.modal-choice .close span {
+    position: relative;
+    top: -3px;
+}
+.modal-choice .close:hover,
+.modal-choice .close:focus {
+    color: #10b791;
+    opacity: 1 !important;
+    border-color: #10b791;
+}
+.modal-choice ul {
+    padding: 0;
+    margin: 0;
+}
+.modal-choice ul li {
+    list-style: none;
+    border-bottom: 1px solid #1ddaaf;
+    padding: 4px 0;
+}
+.modal-choice ul li:last-child {
+    border-bottom: 0;
+}
+.modal-choice ul li a,
+.modal-choice ul li a:not([href]):not([tabindex]) {
+    font-size: 24px;
+    color: #24dbb2;
+    font-weight: 700;
+    cursor: pointer;
+}
+.modal-choice ul li a:hover,
+.modal-choice ul li a:focus {
+    color: #10b791 !important;
+}
+
+
+.progress-bar {
+    width: calc(100% - 6px);
+    height: 5px;
+    background: #e0e0e0;
+    padding: 3px;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+}
+.progress {
+  margin: 10px;
+  width: 700px;
+}
+.progress-bar-fill {
+    display: block;
+    height: 5px;
+    background: #659cef;
+    border-radius: 3px;
+    /*transition: width 250ms ease-in-out;*/
+    transition: width 5s ease-in-out;
+}
+
+
+

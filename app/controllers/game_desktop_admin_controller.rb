@@ -111,6 +111,12 @@ class GameDesktopAdminController < ApplicationController
     end
     redirect_to dash_admin_path
   end
+
+  def objection
+    params[:objection]
+    @current_admin = current_game.admin
+    ActionCable.server.broadcast "admin_#{@current_admin.id}_channel", type: 'objection', text: params[:objection]
+  end
     
   def replay
     @game = current_game
