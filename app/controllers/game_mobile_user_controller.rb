@@ -64,7 +64,7 @@ class GameMobileUserController < ApplicationController
         ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s, modal: false
       end
       respond_to do |format|
-        format.js {render :js => "$('#myModalAction').hide()"}
+        format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
         format.html {redirect_back(fallback_location: root_path) and return}
       end
     end
@@ -86,7 +86,7 @@ class GameMobileUserController < ApplicationController
       # return
       ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s, modal: false
       respond_to do |format|
-        format.js {render :js => "$('#myModalAction').hide()"}
+        format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
         format.html {redirect_back(fallback_location: root_path) and return}
       end
       return
@@ -99,7 +99,7 @@ class GameMobileUserController < ApplicationController
           @admin.update_attributes(plan_users: @admin.plan_users + 1 )
           @user.admin.upgrade_subscription_year(@user)
           respond_to do |format|
-            format.js {render :js => "$('#myModalAction').hide()"}
+            format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
             format.html {redirect_back(fallback_location: root_path) and return}
           end
           return
@@ -113,14 +113,14 @@ class GameMobileUserController < ApplicationController
                                 })
           @admin.upgrade_subscription
            respond_to do |format|
-            format.js {render :js => "$('#myModalAction').hide()"}
+            format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
             format.html {redirect_back(fallback_location: root_path) and return}
           end
           return
         end
       end
       respond_to do |format|
-        format.js {render :js => "$('#myModalAction').hide()"}
+        format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
         format.html {redirect_back(fallback_location: root_path) and return}
       end
       return

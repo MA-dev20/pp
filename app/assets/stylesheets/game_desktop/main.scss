@@ -277,6 +277,9 @@ body {
     z-index: 1000;
 }
 .modal-email {
+  position: relative;
+}
+.modal-email {
   font-family: 'Open Sans', sans-serif;
   .modal-dialog {
     width: 100%;
