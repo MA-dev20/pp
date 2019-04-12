@@ -49,7 +49,7 @@
 
             display.textContent = minutes + ":" + seconds;
             
-            if (timer < 0) {
+            if (timer <= 0) {
                window.location = "<%= gda_rate_path%> "
             }
             timer--;
@@ -67,7 +67,7 @@
 
                 display.textContent = minutes + ":" + seconds;
             
-                if (timer < 0) {
+                if (timer <= 0) {
                     window.location = "<%= gda_rate_path%> "
                 }
                 timer--;
