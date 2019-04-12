@@ -34,6 +34,7 @@
         document.getElementById('word_sound').play();
         document.getElementById('theme').play();
     };
+    
     var IntervalTimer = startTimer('80', document.getElementById('timerall'));
 
     
@@ -79,9 +80,9 @@
     function startTimerModal(duration, display) {
         $(function() {
             
-              document.getElementById('video-bg').pause()
-              document.getElementById('word_sound').pause();
-              document.getElementById('theme').pause();
+          document.getElementById('video-bg').pause()
+          document.getElementById('word_sound').pause();
+          document.getElementById('theme').pause();
           var current_progress = 0;
           var interval = setInterval(function() {
               current_progress += 10;
