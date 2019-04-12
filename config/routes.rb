@@ -213,6 +213,8 @@ Rails.application.routes.draw do
 ##############
 # Enter Game #
 ##############
+
+  post 'objection', to: 'game_desktop_admin#', as: 'gda_objection'
   get '/:password', to: 'game_mobile_user#welcome', as: 'gmu_start'
 
 end

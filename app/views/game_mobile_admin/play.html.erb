@@ -6,6 +6,108 @@
         <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
     </div>
     <div class="bottom">
+			<button type="button" id="list" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  			Einwände
+			</button>
       <%= link_to 'beenden!', gma_rate_path %>
     </div>
 </section>
+
+<div class="modal modal-choice" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <!-- Modal body -->
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+
+        	<ul>
+        		<li>
+        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+  							Kein Zeit
+							</a>
+						</li>
+        		<li>
+        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+  							Bei der Konkurrenz
+							</a>
+						</li>
+        		<li>
+        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+  							Auf den Punkt kommen
+							</a>
+						</li>
+        		<li>
+        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+  						  Kein Budget
+							</a>
+						</li>
+        		<li>
+        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+  							Schick mir eini Mail
+							</a>
+						</li>
+        		<li>
+        			<a type="a" class="  objection -primary" data-toggle="modal" data-target="#myModal">
+  							Kein Interesse
+							</a>
+						</li>
+        		<li>
+        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+  							Muss ich den Chef Fragen
+							</a>
+						</li>
+        		<li>
+        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+  							Referenzen
+							</a>
+						</li>
+        		<li>
+        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+  							Ist Quatsch
+							</a>
+						</li>
+        		<!-- <li>
+        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+  							Einwände 10
+							</a>
+						</li> -->
+        	</ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<script type="text/javascript">
+	$("#list").on("click", function(e){
+    if(objectionTime == true){
+      $("#myModal").show()      
+    }
+	})
+  $(".close").on("click", function(){
+      $("#myModal").hide()     
+  })
+  var objectionTime = true;
+
+	$(".objection").on("click", function(e){
+		e.preventDefault()
+		var objection = $(this).text()
+
+    $.ajax({
+			url: "<%= gda_objection_path %>",
+			type: 'post',
+			beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+			data: {objection:  objection},
+			success: function(res){
+        objectionTime = false
+        document.getElementById("list").disabled = true;
+        setTimeout(function(){
+          objectionTime = true;
+          $("#list").removeAttr("disabled");
+        }, 10000)
+				$("#myModal").hide()
+
+			}
+		})
+	})
+</script>

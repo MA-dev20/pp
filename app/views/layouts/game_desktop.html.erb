@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+a<!DOCTYPE html>
 <html lang="de">
 <head>
     <title>Peterpitch</title>
@@ -25,6 +25,7 @@
 <body>
     <section id="content">
         <div id='game_channel' data-game-id="<%= @game.id %>">
+        <div id='admin' data-admin-id="<%= current_admin.id %>"></div>
         <%= yield %>
         </div>
     </section>
