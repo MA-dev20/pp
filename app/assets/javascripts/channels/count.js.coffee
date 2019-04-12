@@ -14,7 +14,8 @@ jQuery(document).on 'turbolinks:load', ->
     received: (data) ->
         if data['count'] == 'true'
             $('#count').text(data["counter"])
-            document.getElementById('ping').play()
+            if($('#ping').length != 0)
+                $('#ping').play()
             if data['modal'] == false
                 $("#myModalAction"+data["user_id"]).hide()
         if data['count'] == 'wait-user'
