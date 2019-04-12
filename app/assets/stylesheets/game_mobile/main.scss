@@ -337,7 +337,7 @@ input[type='radio'] {
     padding-left: 44px;
     min-height: 35px;
 	padding-top: 6px;
-	span {
+	.req-img {
 		width: 35px;
 		height: 35px;
 		border-radius: 50%;
@@ -471,6 +471,17 @@ input[type='radio'] {
 .modal-choice .modal-body {
     padding: 100px 44px 70px 24px;
 }
+
+.modal-choice .modal-dialog {
+    max-width: 100%;
+    margin: 0;
+    min-height: 100vh;
+    height: 100%;
+}
+.modal-choice .modal-content {
+    height: 100%;
+    overflow-y: auto;
+}
 .modal-choice .close {
     width: 44px;
     height: 44px;
@@ -540,6 +551,45 @@ input[type='radio'] {
     /*transition: width 250ms ease-in-out;*/
     transition: width 5s ease-in-out;
 }
+.menu-position {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1040;
+}
+.btn-menu {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border: 2px solid #1cdaae;
+    padding: 4px;
+}
+.btn-menu span {
+    height: 4px;
+    width: 32px;
+    display: inline-block;
+    background-color: #1cdaae;
+    border-radius: 6px;
+    margin: 2px 0;
+}
+.btn-menu {
+    background-color: #fff;
+}
 
+
+@media (max-width: 767px) {
+    .mail-box-main {
+        padding-left: 0;
+    }
+    .mail-box-main .req-img {
+        position: static;
+        magin: 0 auto;
+    }
+}
 
 

@@ -1,14 +1,18 @@
 <section id="content">
     <div class="head">
+      <div class="menu menu-position">
+        <button type="button" id="list" class="btn btn-primary btn-menu" data-toggle="modal" data-target="#myModal">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
         <%= @cur_user.fname %> Pitcht!
     </div>
     <div class="middle">
         <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
     </div>
     <div class="bottom">
-			<button type="button" id="list" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  			Einwände
-			</button>
       <%= link_to 'beenden!', gma_rate_path %>
     </div>
 </section>

@@ -54,15 +54,18 @@ class GameMobileUserController < ApplicationController
   def reject_user
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
-      redirect_back(fallback_location: root_path)
       @turn = Turn.where(user_id: @user.id).destroy_all
       TurnRating.where(user_id:  @user.id).destroy_all
       TeamUser.where(user_id: @user.id).destroy_all
       @user.destroy
       if @user
-        ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false' , game_id: current_game.id, user_fname: @user.lname, user_lname: @user.fname, user_password: @game.password, status: @user.status
+        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s, modal: false
       else
-        ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'false' , game_id: current_game.id
+        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s, modal: false
+      end
+      respond_to do |format|
+        format.js {render :js => "$('#myModalAction').hide()"}
+        format.html {redirect_back(fallback_location: root_path) and return}
       end
     end
   end
@@ -81,16 +84,25 @@ class GameMobileUserController < ApplicationController
       @user.update_attributes(status: 0)
       create_turn_against_user(@user, @admin)
       # return
-      redirect_back(fallback_location: root_path)  and return
+      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s, modal: false
+      respond_to do |format|
+        format.js {render :js => "$('#myModalAction').hide()"}
+        format.html {redirect_back(fallback_location: root_path) and return}
+      end
+      return
     elsif @admin.plan_users?
       @user.update_attributes(status: 'accepted')
       create_turn_against_user(@user, @admin)
-
+      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s, modal: false
       if((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) > @admin.plan_users )
         if @user.admin.plan_type.eql?("year")
           @admin.update_attributes(plan_users: @admin.plan_users + 1 )
           @user.admin.upgrade_subscription_year(@user)
-          redirect_back(fallback_location: root_path)  and return
+          respond_to do |format|
+            format.js {render :js => "$('#myModalAction').hide()"}
+            format.html {redirect_back(fallback_location: root_path) and return}
+          end
+          return
         elsif @user.admin.plan_type.eql?("month")
           @admin.update_attributes(plan_users: @admin.plan_users + 1 )
           Stripe::Charge.create({
@@ -100,10 +112,18 @@ class GameMobileUserController < ApplicationController
                                     description: 'Charge for PeterPitch  ' + @user.email,
                                 })
           @admin.upgrade_subscription
-          redirect_back(fallback_location: root_path)  and return
+           respond_to do |format|
+            format.js {render :js => "$('#myModalAction').hide()"}
+            format.html {redirect_back(fallback_location: root_path) and return}
+          end
+          return
         end
       end
-      redirect_back(fallback_location: root_path) and return
+      respond_to do |format|
+        format.js {render :js => "$('#myModalAction').hide()"}
+        format.html {redirect_back(fallback_location: root_path) and return}
+      end
+      return
 
     end
   end
