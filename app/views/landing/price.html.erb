@@ -74,6 +74,12 @@
 							<div class="row">
 								<div class="col-12 col-md-6 offset-md-3">
 									<div class="position-relative offer-top-btn">
+									    <div class="paw-col1 paw-col-3 paw-rtl">
+	                                        <div class="paw1 wow add-anim fadeIn" data-wow-duration="1.5s"></div>
+                                            <div class="paw2 wow add-anim fadeIn08" data-wow-duration="1.5s" data-wow-delay="0.2s"></div>
+                                            <div class="paw3 wow add-anim fadeIn06" data-wow-duration="1.5s" data-wow-delay="0.4s"></div>
+                                            <div class="paw4 wow add-anim fadeIn04" data-wow-duration="1.5s" data-wow-delay="0.6s"></div>
+	                                    </div>
 										<a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Jetzt Starten</a>
 									 <!-- Modal -->
 										<div class="modal modal-peterpitch fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -131,7 +137,7 @@
 								<div class="row">
 									<%# unless admin_signed_in? %>
 									<div class="col-12 col-md-6">
-										<div class="offer-box offer-free mb-4">
+										<div class="offer-box offer-free mb-4 wow add-anim zoomIn" data-wow-duration="1.5s">
 											<div class="offer-box-head d-flex align-items-center justify-content-center">
 												<h2>Free</h2>
 											</div>
@@ -149,7 +155,7 @@
 									</div>
 									<%# end %>
 									<div class="col-12 col-md-6 <%= admin_signed_in? ? '' : '' %>">
-										<div class="offer-box offer-pro mb-4">
+										<div class="offer-box offer-pro mb-4 wow add-anim zoomIn" data-wow-duration="1.5s">
 											<div class="decoration-set decoration-right ml-1 ml-sm-2">
 												<svg width="58" height="72" viewBox="0 0 61 77" xmlns="http://www.w3.org/2000/svg">
 													<title>signup decoration - right</title>
@@ -189,7 +195,7 @@
 							</div>
 						<%end%>
 						<%# unless admin_signed_in? %>
-						<div class="price-signup-portion position-relative d-flex justify-content-center align-items-center">
+						<div class="price-signup-portion position-relative d-flex justify-content-center align-items-center wow add-anim zoomIn" data-wow-duration="1.5s">
 							<div class="decoration-set decoration-left mr-1 mr-sm-2">
 								<svg width="58" height="72" viewBox="0 0 61 77" xmlns="http://www.w3.org/2000/svg">
 									<title>signup decoration - left</title>
@@ -319,7 +325,7 @@
 					</div>
 				</section>
 				<section class="training-section my-4 my-md-5 pt-md-3 pb-md-3">
-					<div class="container pb-5">
+					<div class="container pb-5 wow add-anim zoomIn" data-wow-duration="1.5s">
 						<div class="training-block d-flex flex-column flex-lg-row align-items-md-center justify-content-lg-between">
 							<div class="training-text pr-lg-5 mr-lg-3">
 								<h2>Starte heute mit Peter Pitch</h2>
@@ -421,4 +427,23 @@
 		}
 		
     });
+    document.addEventListener('DOMContentLoaded', function() {
+
+            WOW.prototype.addBox = function(element) {
+                this.boxes.push(element);
+            };
+
+            // Init WOW.js and get instance
+            var wow = new WOW();
+            wow.init();
+
+            $('.wow.add-anim').on('scrollSpy:exit', function() {
+                $(this).css({
+                    'visibility': 'hidden',
+                    'animation-name': 'none'
+                }).removeClass('animated');
+                wow.addBox(this);
+            }).scrollSpy();
+
+        })
 </script>
