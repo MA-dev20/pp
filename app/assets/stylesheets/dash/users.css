@@ -61,7 +61,7 @@
     top: 3vh;
     position: absolute;
     left: 0vw;
-    width: 78vw;
+    width: 80vw;
     height: 59vh;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -69,7 +69,7 @@
 #gd_users .users #table table {
     top: 0;
     left: 0;
-    width: 69vw;
+    width: 80vw;
 }
 #gd_users table > tbody > tr {
     height: 6vh;
