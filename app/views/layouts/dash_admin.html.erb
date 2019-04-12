@@ -169,14 +169,17 @@
     function openTeam() {
         $('#new_team').show();
         $('#content').addClass('backgroundblur');
+        $('#team_name').focus();
     };
     function closeTeam() {
         $('#new_team').hide();
         $('#content').removeClass('backgroundblur');
     }
     function closeModal() {
+        if($('#pop_up_flash').is(':visible')) {
         $('#pop_up_flash').hide();
         $('#content').removeClass('backgroundblur');
+        }
     }
 </script>
 
