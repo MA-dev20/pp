@@ -43,12 +43,21 @@
     <tbody>
         <% @users.each do |u| %>
         <tr class="user-row">
-           <td><%= image_tag(u.avatar.quad.url) if u.avatar? %></td>
-            <td class="name"><%= u.fname %> <%= u.lname %></td>
-            <td><%= u.email %></td>
-            <td><%= u.company_name %></td>
-            <td><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
-            <td><%= link_to '', destroy_user_path(u), class: 'fas fa-trash-alt', data: { confirm: "Alles Spiele und Statistiken des Nutzers gehen verloren. Bist du sicher, dass du den Nutzer unwideruflich löschen möchtest?" } %></td>
+           <td onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><%= image_tag(u.avatar.quad.url) if u.avatar? %></td>
+            <td class="name" onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
+            <td onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><%= u.email %></td>
+            <td onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><%= u.company_name %></td>
+            <td onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
+            <td>
+  <div class="btn-group dropleft">
+  <a type="button" id="dropdownMenu<%= u.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 3vh">
+    ...
+  </a>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu<%= u.id %>">
+    <%= link_to 'Löschen!', destroy_user_path(u), class: 'dropdown-item', style: 'border-bottom: none', type: "button", data: { confirm: "Alles Spiele und Statistiken des Nutzers gehen verloren. Bist du sicher, dass du den Nutzer unwideruflich löschen möchtest?" } %>
+  </div>
+</div>
+           </td>
             <td><% if u.teams.count > 0 %>
                 <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line package_pop_up" %>
                 <% end %>
@@ -63,6 +72,13 @@
 
 
 <script>
+    function redirect_stats(team, user) {
+        <% if @team %>
+        window.location.href = "/admins/dash/teams/<%= @team.id %>/users/"+ user +"/stats";
+        <% else %>
+        window.location.href = "/admins/dash/teams/"+ team +"/users/"+ user +"/stats";
+        <% end %>
+    }
     $(document).ready( function () {
     $('#myTable').DataTable( {
         "paging":   false,
@@ -75,6 +91,7 @@
             { "orderable": false, "targets": 6 },
         ]
     } );
+    
 } );
 (function() {
 				[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	

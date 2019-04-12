@@ -94,11 +94,12 @@ body {
     padding: 0;
 }
 .dropdown-menu > a {
-    height: 10vh;
+    height: 6vh;
+    line-height: 6vh;
     width: 100%;
     z-index: 1000;
     text-align: center;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 .dropdown img {
     position: relative;
@@ -114,6 +115,11 @@ body {
     text-transform: uppercase;
     font-weight: bold;
     border-bottom: none;
+}
+.dropdown-item:active,
+.dropdown-item:hover {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+    color: black;
 }
 
 #sidebar {
