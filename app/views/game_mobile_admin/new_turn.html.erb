@@ -27,6 +27,9 @@
     <% end %>
 </section>
 
+<% if @game %>
+    <div id='game_channel' data-game-id="<%= @game.id %>" data-turn="new-turn"></div>
+<% end %>
 
 <script>
     function myFunction() {
