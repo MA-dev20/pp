@@ -23,9 +23,7 @@
 
   <body>
     <% if @game %>
-    <div id='game_channel' data-game-id="<%= @game.id %>">
         <%= yield %>
-    </div>
     <% else %>
         <%= yield %>
     <% end %>
