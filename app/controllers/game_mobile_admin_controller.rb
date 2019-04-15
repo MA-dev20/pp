@@ -169,11 +169,10 @@ class GameMobileAdminController < ApplicationController
     
   def replay
     @admin = current_admin
+    @game = current_game
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
       @game.turns.destroy_all
-    else
-      @game = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
     end
     session[:game_session_id] = @game.id
     redirect_to gma_new_turn_path
