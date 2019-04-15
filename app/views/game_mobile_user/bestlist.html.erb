@@ -28,9 +28,6 @@
         <%= social_share_button_tag('Ich habe ' + (@turn_rating.ges/10.0).to_s + ' erspielt! Was schaffst du?', :url => "http://www.peterpitch.com", desc: 'Ich habe ' + (@turn_rating.ges/ 10.0).to_s + ' erspielt! Was schaffst du?', :allow_sites => %w(whatsapp_app facebook)) %>
     </div>
 </div>
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
 <script>
 ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);
 function showModal() {
