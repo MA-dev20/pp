@@ -79,6 +79,7 @@ class GameMobileUserController < ApplicationController
 
     @user = User.where(id: params[:user_id]).first
     @admin = Admin.find(@game.admin_id)
+    session[:user_already] = true
 
     a =8.85*100
     month =a.to_i
@@ -86,7 +87,6 @@ class GameMobileUserController < ApplicationController
       @user.update_attributes(status: 0)
       create_turn_against_user(@user, @admin)
       # return
-      session[:user_already] = true
       ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.users.where.not(status: "pending").count.to_s, modal: false, user_id: params[:user_id]
       respond_to do |format|
         format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
@@ -96,7 +96,6 @@ class GameMobileUserController < ApplicationController
     elsif @admin.plan_users?
       @user.update_attributes(status: 'accepted')
       create_turn_against_user(@user, @admin)
-      session[:user_already] = true
       ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.users.where.not(status: "pending").count.to_s, modal: false, user_id: params[:user_id]
       if((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) > @admin.plan_users )
         if @user.admin.plan_type.eql?("year")
@@ -201,7 +200,7 @@ class GameMobileUserController < ApplicationController
     @admin = Admin.find(@game.admin_id)
     turn =  Turn.where(user_id:  current_user.id, game_id:  @game.id, admin_id: @admin.id).first
     if (!turn.nil?) 
-      if !session[:user_already]
+      if session[:user_already].nil?
         ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'wait-user', game_state: 'wait' ,game_id: current_game.id, counter: @game.users.where.not(status: "pending").count.to_s, 
         user_fname: current_user.fname, user_lname: current_user.lname,
         user_avatar: current_user.avatar.url , user_id: current_user.id
