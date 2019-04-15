@@ -12,6 +12,7 @@ jQuery(document).on 'turbolinks:load', ->
 # Called when the subscription has been terminated by the server
 
     received: (data) ->
-        window.location.replace(data['game_state'])
+        if($("#game_channel").data("turn") != "new-turn")
+            window.location.replace(data['game_state'])
 
 
