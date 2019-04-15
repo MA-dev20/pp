@@ -42,6 +42,8 @@ class GameMobileUserController < ApplicationController
         sign_in(@user)
         redirect_to gmu_new_avatar_path
       else
+        session[:user_already] = nil
+
         @user = @admin.users.create(email: params[:user][:email])
         TeamUser.create(user_id: @user.id, team_id: @game1.team_id)
         sign_in(@user)
@@ -86,6 +88,7 @@ class GameMobileUserController < ApplicationController
       @user.update_attributes(status: 0)
       create_turn_against_user(@user, @admin)
       # return
+      session[:user_already] = true
       ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s, modal: false, user_id: params[:user_id]
       respond_to do |format|
         format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
@@ -95,6 +98,7 @@ class GameMobileUserController < ApplicationController
     elsif @admin.plan_users?
       @user.update_attributes(status: 'accepted')
       create_turn_against_user(@user, @admin)
+      session[:user_already] = true
       ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.count.to_s, modal: false, user_id: params[:user_id]
       if((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) > @admin.plan_users )
         if @user.admin.plan_type.eql?("year")
