@@ -17,4 +17,7 @@
     <% end %>
   </div>
 </section>
-<div id='game_channel' data-game-id="<%= @game.id %>"></div>
+
+<% if @game %>
+  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
+<% end %>
