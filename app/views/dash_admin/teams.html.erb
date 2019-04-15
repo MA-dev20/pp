@@ -1,12 +1,11 @@
-<div id="pop_up_container" onclick="closeModal()">
 <section id="gd_team">
     <input type="text" id="searchField" placeholder="suchen" onfocus='team_hide()' onblur="team_show()">
     <%= image_tag 'dash/search.png' %>
 </section>
 
 <section id="teams-container">
-    <div class="add_team">
-       <a href="" data-toggle="modal" data-target="#new_team"></a>
+    <div class="add_team" onclick="openTeam()">
+       <a onclick="openTeam()"></a>
         <div class="head">
             Team
         </div>
@@ -34,7 +33,6 @@
     <% end %>
 
 </section>
-</div>
 
 
 

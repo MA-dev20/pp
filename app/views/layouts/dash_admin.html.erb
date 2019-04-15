@@ -89,6 +89,23 @@
         <% end %>
         <%= yield %>
     </section>
+    <div class="modal-games" id="new_team">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="close modal-close" onclick="closeTeam()" aria-label="Close"><i class="fas fa-times"></i></button>
+                <div class="modal-body" id="pop_up-body">
+                    <h1>
+                        <span>Team hinzufügen</span><br><br><br>
+                        <%= form_for(:team, url: new_team_path(@admin)) do |f| %>
+                            <%= f.text_field :name, placeholder: 'Teamname', class: 'form-control' %><br><br><br>
+                            <%= f.submit 'Erstellen', class: 'btn btn-green' %>
+                        <% end %>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
      <% flash.each do |name, msg| %>
             <% if msg.is_a?(String) && name.to_s == 'pop_up' %>
                 <div class="modal-games" id="pop_up_flash" tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
@@ -112,6 +129,7 @@
                 </div>
             <% end %>
         <% end %>
+         
       <div class="dropdown">
               <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <% if @admin.avatar? %>
@@ -129,33 +147,10 @@
                 <%= link_to 'Logout', destroy_admin_session_path, class: 'dropdown-item red' %>
               </div>
           </div>
-
+         
   </div>
-  <div class="modal" id="new_team" tabindex="-1" role="dialog" aria-labelledby="new_teamLabel" aria-hidden="true">
+  
 
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="new_teamLabel">Team hinzufügen</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
-              </div>
-              <%= form_for(:team, url: new_team_path(@admin)) do |f| %>
-              <div class="modal-body">
-                  <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Teamname:</label>
-                      <%= f.text_field :name, placeholder: 'Team erstellen', class: 'form-control' %>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <%= f.submit 'Erstellen', class: 'btn btn-primary' %>
-              </div>
-              <% end %>
-          </div>
-      </div>
-      
-  </div>
   <%= yield :modal %>
 </body>
 <script>
@@ -163,16 +158,28 @@
         window.setTimeout(function() {
            $('.alert').slideUp(500);
         }, 4000);
-    })
+    });
+    
     $(document).ready( function () {
         if ($('#pop_up_flash').length != 0){
             $('#pop_up_flash').show();
             $('#content').addClass('backgroundblur');
         }
     } );
+    function openTeam() {
+        $('#new_team').show();
+        $('#content').addClass('backgroundblur');
+        $('#team_name').focus();
+    };
+    function closeTeam() {
+        $('#new_team').hide();
+        $('#content').removeClass('backgroundblur');
+    }
     function closeModal() {
+        if($('#pop_up_flash').is(':visible')) {
         $('#pop_up_flash').hide();
         $('#content').removeClass('backgroundblur');
+        }
     }
 </script>
 
