@@ -29,7 +29,7 @@
     </div>
 </div>
 <% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>" data-turn="new-turn"></div>
+  <div id='game_channel' data-game-id="<%= @game.id %>" ></div>
 <% end %>
 <script>
 ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);
