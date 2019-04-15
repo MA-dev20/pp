@@ -9,7 +9,7 @@
  *= require cable
  */
 
-
+var MyApp = {}; 
 // Background Animation
 var colors = new Array(
   [29,172,241],
@@ -128,10 +128,10 @@ const resolver = {
           doResolverEffect(nextOptions, callback);
         } else if (typeof callback === "function") {
           callback();
+          MyApp.timer = startTimer('80', document.getElementById('timerall'));
         }
       });
     };
-
     doResolverEffect(combinedOptions, callback);
   } 
 };
