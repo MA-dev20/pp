@@ -11,8 +11,9 @@ class GameDesktopAdminController < ApplicationController
     if @game.state != 'wait'
         @game.update(state: 'wait')
     end 
-    @count = @game.turns.count
-    @pending_count = @game.turns.select{|turn| turn if !turn.user.nil? && turn.user.pending?}.count
+    @users = @game.users
+    @count = @users.select{|user| user if user.status!="pending"}.count    
+    @pending_users = @users.select{|user| user if user.status=="pending"}
   end
     
   def choose

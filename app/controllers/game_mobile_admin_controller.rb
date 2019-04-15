@@ -56,7 +56,7 @@ class GameMobileAdminController < ApplicationController
     @turn = Turn.new(play: params[:turn][:play], admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false)
     if @turn.save
       sign_in(@game)
-      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s
+      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.users.where.not(status: "pending").count.to_s
       redirect_to gma_intro_path
     else
       redirect_to gma_new_turn_path
@@ -73,7 +73,9 @@ class GameMobileAdminController < ApplicationController
     if @game.state == 'intro' || @game.state == 'replay'
       @game.update(state: 'wait')
     end    
-    @count = @game.turns.select{|turn| turn if !turn.user.nil? && turn.user.pending?}.count
+    @users = @game.users
+    @count = @users.select{|user| user if user.status!="pending"}.count    
+    @pending_users = @users.select{|user| user if user.status=="pending"}
   end
     
   def choose
