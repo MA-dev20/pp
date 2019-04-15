@@ -20,7 +20,11 @@
   <%= render partial: 'shared/user_accept_modal' %>
   </div>
 </div>
-<div id='game_channel' data-game-id="<%= @game.id %>"></div>
-
+<% if @game %>
+  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
+<% end %>
 <%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>
 
+<%= content_for :meta do %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<% end %>
