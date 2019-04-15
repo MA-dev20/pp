@@ -29,11 +29,11 @@
 }
 
 .blur {
-	-webkit-filter: blur(6px);
-	-moz-filter: blur(6px);
-	-ms-filter: blur(6px);
-	-o-filter: blur(6px);
-	filter: blur(6px);
+	-webkit-filter: blur(10px);
+	-moz-filter: blur(10px);
+	-ms-filter: blur(10px);
+	-o-filter: blur(10px);
+	filter: blur(10px);
 }
 
 

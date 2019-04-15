@@ -332,27 +332,29 @@ input[type='radio'] {
     font-size: 3vh;
     line-height: 5vh;
 }
-.mail-box-main {
-	position: relative;
-    padding-left: 44px;
-    min-height: 35px;
-	padding-top: 6px;
-	.req-img {
-		width: 35px;
-		height: 35px;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: absolute;
-		left: 0;
-		top: 0;
-		overflow: hidden;
-		border: 1px solid #ccc;
-		img {
-			max-width: 100%;
-		}
-	}
+.modal-email {
+    .mail-box-main {
+        position: relative;
+        padding-left: 44px;
+        min-height: 35px;
+        padding-top: 6px;
+        .req-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            img {
+                max-width: 100%;
+            }
+        }
+    }
 }
 
 .modal-body {
@@ -586,10 +588,32 @@ input[type='radio'] {
     .mail-box-main {
         padding-left: 0;
     }
-    .mail-box-main .req-img {
+    .modal-email .mail-box-main .req-img {
         position: static;
-        magin: 0 auto;
+        magin-left: auto;
+        margin-right: auto;
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+    .mail-box-main span {
+        font-size: 1.25rem;
+    }
+    .modal-email .modal-dialog {
+        max-width: 100%;
+    }
+    .modal-body .mail-box .mail-btn {
+        width: 100%;
+    }
+    .modal-body .mail-box .mail-btn a {
+        font-size: 1rem !important;
+        padding: 0.65rem 0.75rem 0.65rem 0.75rem !important;
+        width: 100%;
+    }
+    .modal-body .mail-box .mail-btn .btn-accept {
+        margin-bottom: 10px;
     }
 }
+
 
 

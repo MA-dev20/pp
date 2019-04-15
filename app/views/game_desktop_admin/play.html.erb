@@ -34,11 +34,10 @@
         document.getElementById('theme').play();
     };
     
-    var IntervalTimer = startTimer('80', document.getElementById('timerall'));
 
     
     function startTimer(duration, display) {
-         var timer = duration, minutes, seconds;
+        var timer = duration, minutes, seconds;
         var setTimer = setInterval(function () {
             minutes = parseInt(timer / 60, 10);
             seconds = parseInt(timer % 60, 10);
@@ -75,13 +74,29 @@
         }
         return {pause: pause , resume: resume }
     };
+    function stopAnimation(element){
+        $(element).css("-webkit-animation-name", "none");
+        $(element).css("animation-name", "none");
+        $(element).css("-webkit-animation-duration", "none");
+        $(element).css("animation-duration", "none");
+        $(element).css("-webkit-animation-iteration-count", "none");
+        $(element).css("animation-iteration-count", "none");
+    }
+    function startAnimation(element){
+        $(element).css("-webkit-animation-name", "pulse");
+        $(element).css("animation-name", "pulse");
+        $(element).css("-webkit-animation-duration", "1.5s");
+        $(element).css("animation-duration", "1.5s");
+        $(element).css("-webkit-animation-iteration-count", "infinite");
+        $(element).css("animation-iteration-count", "infinite");
+    }
 
     function startTimerModal(duration, display) {
         $(function() {
             
           document.getElementById('video-bg').pause()
-          document.getElementById('word_sound').pause();
           document.getElementById('theme').pause();
+          stopAnimation($("#avatar"))
           var current_progress = 0;
           var interval = setInterval(function() {
               current_progress += 10;
@@ -92,13 +107,13 @@
                 $("#content").removeClass("blur")
                 clearInterval(interval);
                 $("#myModal").hide()
+                startAnimation($("#avatar"))
                 document.getElementById('video-bg').play()
-                document.getElementById('word_sound').play();
                 document.getElementById('theme').play();
               }
           }, 1000);
         });
-        IntervalTimer.pause()
+        MyApp.timer.pause()
         var timer = duration, minutes, seconds;
         var executed = false;
         var interval =  duration;
@@ -118,7 +133,7 @@
 
             if (timer <= 0) {
                 if(executed == false){
-                    IntervalTimer.resume()
+                    MyApp.timer.resume()
                     // $("#myModal").hide()
                     clearInterval(setTimeri);
                     interval = false
