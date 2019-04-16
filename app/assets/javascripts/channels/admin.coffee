@@ -1,4 +1,4 @@
-jQuery(document).on 'turbolinks:load', ->
+jQuery(document).ready ->
   admin = $('#admin')
   if $('#admin').length > 0
     App.admin = App.cable.subscriptions.create {

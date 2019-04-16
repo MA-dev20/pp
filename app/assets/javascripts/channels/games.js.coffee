@@ -1,4 +1,4 @@
-jQuery(document).on 'turbolinks:load', ->
+jQuery(document).ready ->
   game = $('#game_channel')
   if $('#game_channel').length > 0
     App.games = App.cable.subscriptions.create {
