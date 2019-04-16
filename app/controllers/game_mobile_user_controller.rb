@@ -84,9 +84,9 @@ class GameMobileUserController < ApplicationController
     month =a.to_i
     if @admin.plan_type.eql?('trial')
       @user.update_attributes(status: 0)
-      create_turn_against_user(@user, @admin)
+      create_turn_against_user(@user, @admin, "accepted")
       # return
-      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.users.where.not(status: "pending").count.to_s, modal: false, user_id: params[:user_id]
+      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.turns.where.not(status: "pending").count.to_s, modal: false, user_id: params[:user_id]
       respond_to do |format|
         format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
         format.html {redirect_back(fallback_location: root_path) and return}
@@ -94,8 +94,8 @@ class GameMobileUserController < ApplicationController
       return
     elsif @admin.plan_users?
       @user.update_attributes(status: 'accepted')
-      create_turn_against_user(@user, @admin)
-      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.users.where.not(status: "pending").count.to_s, modal: false, user_id: params[:user_id]
+      create_turn_against_user(@user, @admin, "accepted")
+      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.turns.where.not(status: "pending").count.to_s, modal: false, user_id: params[:user_id]
       if((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) > @admin.plan_users )
         if @user.admin.plan_type.eql?("year")
           @admin.update_attributes(plan_users: @admin.plan_users + 1 )
@@ -180,11 +180,11 @@ class GameMobileUserController < ApplicationController
       session.delete(:game_session_id)
       sign_in(@game1)
       if session[:user_already]
-        create_turn_against_user(current_user, @admin)
-        ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.users.where.not(status: "pending").count.to_s
+        create_turn_against_user(current_user, @admin,"accepted")
+        ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where.not(status: "pending").count.to_s
       else
-        create_turn_against_user(current_user, @admin)
-        ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.users.where.not(status: "pending").count.to_s
+        create_turn_against_user(current_user, @admin, "pending")
+        ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where.not(status: "pending").count.to_s
       end
       redirect_to gmu_wait_path
     else
@@ -200,7 +200,7 @@ class GameMobileUserController < ApplicationController
     turn =  Turn.where(user_id:  current_user.id, game_id:  @game.id, admin_id: @admin.id).first
     if (!turn.nil?) 
       if current_user.status == "pending"
-        ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'wait-user', game_state: 'wait' ,game_id: current_game.id, counter: @game.users.where.not(status: "pending").count.to_s, 
+        ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'wait-user', game_state: 'wait' ,game_id: current_game.id, counter: @game.turns.where.not(status: "pending").count.to_s, 
         user_fname: current_user.fname, user_lname: current_user.lname,
         user_avatar: current_user.avatar.url , user_id: current_user.id
       end
@@ -264,12 +264,14 @@ class GameMobileUserController < ApplicationController
       params.require(:user).permit(:avatar, :company, :fname, :lname)
     end
 
-    def create_turn_against_user(user, admin)
+    def create_turn_against_user(user, admin, status)
       @game1 = current_game
       @word = Word.first(50).sample(5).first if @game1.admin.admin_subscription_id.nil?
       @word = Word.all.sample(5).first if @word.nil?
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).first
       @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: true, played: false, admin_id: admin.id)
+      @turn.status = status
+      turn.update(status: "accepted") if !turn.nil?
       @turn.save! if turn.nil?
     end
 

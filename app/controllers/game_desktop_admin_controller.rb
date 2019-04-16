@@ -12,7 +12,7 @@ class GameDesktopAdminController < ApplicationController
         @game.update(state: 'wait')
     end 
     @users = @game.users
-    @count = @users.select{|user| user if user.status!="pending"}.count    
+    @count = @game.turns.where.not(status: "pending").count 
     @pending_users = @users.select{|user| user if user.status=="pending"}
   end
     
