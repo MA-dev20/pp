@@ -80,7 +80,6 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     @admin = Admin.find(@game.admin_id)
     session[:user_already] = true
-
     a =8.85*100
     month =a.to_i
     if @admin.plan_type.eql?('trial')
@@ -200,7 +199,7 @@ class GameMobileUserController < ApplicationController
     @admin = Admin.find(@game.admin_id)
     turn =  Turn.where(user_id:  current_user.id, game_id:  @game.id, admin_id: @admin.id).first
     if (!turn.nil?) 
-      if session[:user_already].nil?
+      if current_user.status == "pending"
         ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'wait-user', game_state: 'wait' ,game_id: current_game.id, counter: @game.users.where.not(status: "pending").count.to_s, 
         user_fname: current_user.fname, user_lname: current_user.lname,
         user_avatar: current_user.avatar.url , user_id: current_user.id
