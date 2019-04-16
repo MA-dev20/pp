@@ -53,10 +53,10 @@ class GameMobileAdminController < ApplicationController
   def create_turn
     @game = Game.find(session[:game_session_id])
     @word = Word.all.sample(5).first
-    @turn = Turn.new(play: params[:turn][:play], admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false)
+    @turn = Turn.new(play: params[:turn][:play], admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted")
     if @turn.save
       sign_in(@game)
-      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.users.where.not(status: "pending").count.to_s
+      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where.not(status: "pending").count.to_s
       redirect_to gma_intro_path
     else
       redirect_to gma_new_turn_path
