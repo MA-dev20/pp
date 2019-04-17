@@ -41,6 +41,9 @@ class GameMobileUserController < ApplicationController
         session[:user_already] = true
         sign_in(@user)
         redirect_to gmu_new_avatar_path
+      elsif @user
+        flash[:danger] = 'Konnte kein passendes Spiel finden!'
+        redirect_to root_path
       else
         session[:user_already] = nil
         @user = @admin.users.create(email: params[:user][:email])
