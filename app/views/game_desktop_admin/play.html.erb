@@ -65,7 +65,7 @@
                 seconds = seconds < 10 ? "0" + seconds : seconds;
                 if(executed== false){
                     $("#content").removeClass("blur")
-                    $("#myModal").hide()
+                    $("#myModal").remove()
                     startAnimation($("#avatar"))
                     document.getElementById('video-bg').play()
                     document.getElementById('theme').play();
