@@ -7,15 +7,15 @@
 	color: white
 }
 .objection-modal .modal-dialog {
-	max-width: 600px;
+	max-width: 690px;
 }
 #objection-text{
-    font-size: 66px;
+    font-size: 102px;
     margin-bottom: 24px;
     text-shadow: 3px 3px 8px rgba(0,0,0,0.4);
 }
 .countdown .progress {
-	height: 2.5rem;
+	height: 2.75rem;
 	overflow: hidden;
 	font-size: .75rem;
 	background-color: #fff;
@@ -30,11 +30,11 @@
 }
 
 .blur {
-	-webkit-filter: blur(10px);
-	-moz-filter: blur(10px);
-	-ms-filter: blur(10px);
-	-o-filter: blur(10px);
-	filter: blur(10px);
+	-webkit-filter: blur(15px);
+	-moz-filter: blur(15px);
+	-ms-filter: blur(15px);
+	-o-filter: blur(15px);
+	filter: blur(15px);
 }
 
 
