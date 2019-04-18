@@ -56,15 +56,23 @@
             clearInterval(setTimer);
         }
         var resume = function(){
+            var executed = false;
             setTimer = setInterval(function () {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
             
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
-
+                if(executed== false){
+                    $("#content").removeClass("blur")
+                    $("#myModal").hide()
+                    startAnimation($("#avatar"))
+                    document.getElementById('video-bg').play()
+                    document.getElementById('theme').play();
+                    executed = true;
+                }
                 display.textContent = minutes + ":" + seconds;
-            
+                
                 if (timer <= 0) {
                     window.location = "<%= gda_rate_path%> "
                 }
@@ -102,12 +110,7 @@
               current_progress += 10;
               $("#dynamic").addClass("in")
               if (current_progress >= 100){
-                $("#content").removeClass("blur")
                 clearInterval(interval);
-                $("#myModal").hide()
-                startAnimation($("#avatar"))
-                document.getElementById('video-bg').play()
-                document.getElementById('theme').play();
               }
           }, 1000);
         });
