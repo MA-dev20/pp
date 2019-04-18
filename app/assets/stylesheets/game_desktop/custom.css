@@ -12,6 +12,7 @@
 #objection-text{
     font-size: 66px;
     margin-bottom: 24px;
+    text-shadow: 3px 3px 8px rgba(0,0,0,0.4);
 }
 .countdown .progress {
 	height: 2.5rem;
@@ -24,7 +25,7 @@
 }
 .countdown .progress .progress-bar {
 	background-image: none;
-	background-color: #bb303c;
+	background-color: #ff6b6c;
 	border-radius: 22px;
 }
 
