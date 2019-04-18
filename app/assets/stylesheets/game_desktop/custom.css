@@ -18,6 +18,8 @@
 	height: 2.75rem;
 	overflow: hidden;
 	font-size: .75rem;
+	max-width: 690px;
+	width: 690px;
 	background-color: #fff;
 	border-radius: 30px;
 	padding: 2px;
@@ -35,6 +37,23 @@
 	-ms-filter: blur(15px);
 	-o-filter: blur(15px);
 	filter: blur(15px);
+}
+
+
+@media (max-width: 767px) {
+	.countdown .progress {
+		width: 500px;
+	}
+
+}
+
+
+
+@media (max-width: 500px) {
+	.countdown .progress {
+		width: 300px;
+	}
+
 }
 
 
