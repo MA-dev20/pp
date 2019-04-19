@@ -79,7 +79,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def choose
-    @turns = @game.turns.playable.sample(100)
+    @turns = @game.turns.where.not(status: "pending").playable.sample(100)
     if @game.state != 'choose' && @turns.count == 1
       redirect_to gea_mobile_path
       return
@@ -96,8 +96,8 @@ class GameMobileAdminController < ApplicationController
   end
     
   def turn
-    if @game.state != 'turn' && @game.turns.playable.count == 1
-      @turn = @game.turns.playable.first
+    if @game.state != 'turn' && @game.turns.where.not(status: "pending").playable.count == 1
+      @turn = @game.turns.where.not(status: "pending").playable.first
       @game.update(state: 'turn', active: false, current_turn: @game.turns.playable.first.id)
     elsif @game.state != 'turn'
       @game.update(state: 'turn')
@@ -122,8 +122,8 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rated
-    @count = @turn.ratings.count.to_s + '/' + (@game.turns.count - 1).to_s + ' haben bewertet!'
-    if @turn.ratings.count == @game.turns.count - 1
+    @count = @turn.ratings.count.to_s + '/' + (@game.turns.where.not(status: "pending").count - 1).to_s + ' haben bewertet!'
+    if @turn.ratings.count == @game.turns.where.not(status: "pending").count - 1
       redirect_to gma_rating_path
     end
   end
@@ -140,7 +140,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def after_rating
-    @turns = @game.turns.playable.sample(100)
+    @turns = @game.turns.where.not(status: "pending").playable.sample(100)
     if @turns.count == 1
       redirect_to gma_turn_path
       return
