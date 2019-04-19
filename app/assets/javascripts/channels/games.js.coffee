@@ -15,7 +15,11 @@ jQuery(document).ready ->
 # Called when the subscription has been terminated by the server
 
     received: (data) ->
-        if($("#game_channel").data("turn") != "new-turn")
+        if($("#game_channel").data("turn") != "replay")
             window.location.replace(data['game_state'])
+        else
+            console.log("return to replay page")
+            window.location.replace("replay")
+
 
 
