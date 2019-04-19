@@ -65,9 +65,9 @@ class GameMobileUserController < ApplicationController
       TeamUser.where(user_id: @user.id).destroy_all
       @user.destroy
       if @user
-        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s, modal: false,  user_id: params[:user_id]
+        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where.not(status: "pending").count.to_s, modal: false,  user_id: params[:user_id]
       else
-        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.count.to_s, modal: false,  user_id: params[:user_id]
+        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where.not(status: "pending").count.to_s, modal: false,  user_id: params[:user_id]
       end
       respond_to do |format|
         format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
@@ -182,7 +182,7 @@ class GameMobileUserController < ApplicationController
     if @game1.active
       session.delete(:game_session_id)
       sign_in(@game1)
-      if session[:user_already]
+      if current_user.status != "pending"
         create_turn_against_user(current_user, @admin,"accepted")
         ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where.not(status: "pending").count.to_s
       else
