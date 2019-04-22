@@ -36,7 +36,9 @@ class Admin < ApplicationRecord
   after_create :create_stripe_customer
 
   #########Call-back for Sign-in Expiration Date###########
-
+  def devise_mailer
+    AdminsDeviseMailer
+  end
   def create_stripe_customer
 Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
 
@@ -134,6 +136,13 @@ Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
     rescue => e
       Rails.logger.info  "Stripe Error: #{e.message}"
       end
+  end
+
+  def reset_pw
+    self.reset_pw_token = loop do
+      random_token = SecureRandom.urlsafe_base64(nil, false)
+      break random_token unless self.class.where(reset_pw_token: random_token).exists?
+    end
   end
 
 
