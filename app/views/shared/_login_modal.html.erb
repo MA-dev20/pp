@@ -16,7 +16,7 @@
                   <%= f.password_field :password, class: 'form-control mr-sm-3',id: 'loginPassword',placeholder:"Enter your password", required: true  %>
 
                   <br>
-                  <%= f.submit 'Login', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
+                  <%= f.submit 'Login', class: 'btn btn-green mt-3 mt-md-0 w-100', id: "loginButton" %>
                   <br>
 
                 </div>
@@ -31,6 +31,13 @@
                 <span class="trail-text-line"></span>
                 <span class="trail-text">
                   <a href="#"  data-toggle="modal" data-target="#exampleModalCenter">Don't have an account?</a>
+                </span>
+                <span class="trail-text-line"></span>
+              </div>
+              <div class="trail-para d-flex align-items-center justify-content-center">
+                <span class="trail-text-line"></span>
+                <span class="trail-text">
+                  <a href="<%= new_admin_password_path %>" id="forget-password">Forgot password ?</a>
                 </span>
                 <span class="trail-text-line"></span>
               </div>
@@ -62,6 +69,7 @@
       data: {admin: {email: email, password: password}},
       type: "POST", 
       success: function(res){
+        $("#loginButton").removeAttr("disabled")
         if(res.response == "error"){
           if(res.errors.email)
            $(".email-error").show()
@@ -73,4 +81,9 @@
       }
     });
   }
+
+  // $("#forget-password").click(function(e){
+  //   e.preventDefault()
+
+  // })
 </script>
