@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :games
   devise_for :users
-  devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'devise_user/sessions' }
+  devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'devise_user/sessions', passwords: 'admins/passwords' }
   resource :cards
   resource :plans
 
@@ -214,6 +214,8 @@ Rails.application.routes.draw do
 # Enter Game #
 ##############
 
+  get 'mobile/admins/:password/password', to: 'game_mobile_admin#password', as: 'gma_pw'
+  post 'mobile/admins/:password/password', to: 'game_mobile_admin#check_email', as: 'gma_email_check'
   post 'objection', to: 'game_desktop_admin#', as: 'gda_objection'
   get '/:password', to: 'game_mobile_user#welcome', as: 'gmu_start'
 
