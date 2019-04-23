@@ -1,29 +1,40 @@
 class GameMobileAdminController < ApplicationController
   before_action :authenticate_game!, :set_game, only: [:intro, :wait, :choose, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay]
-  before_action :authenticate_admin!, :set_admin, except: [:new, :create]
+  before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   layout 'game_mobile'
     
   def new
+    session[:admin_email] = nil
     @game = Game.where(password: params[:password], active: true).first
     session[:game_session_id] = @game.id
     sign_in(@game)
   end
-    
+
+  def password
+  end
+
+  def check_email
+    session[:admin_email] = params[:admin][:email]
+    redirect_to gma_pw_path
+  end
+
   def create
     @game = Game.where(password: params[:password], active: true).first
     if @game
       session[:game_session_id] = @game.id
       sign_in(@game)
-      @admin = Admin.where(id: @game.admin_id, email: params[:admin][:email].downcase).first
+      @admin = Admin.where(id: @game.admin_id, email: session[:admin_email].downcase).first
       if @admin && @admin.valid_password?(params[:admin][:password])
         sign_in(@admin)
         redirect_to gma_new_avatar_path
       else
+        session[:admin_email] = nil
         flash[:danger] = "Unbekannte E-Mail / Password Kombination"
         redirect_to root_path
       end
     else
+      session[:admin_email] = nil
       flash[:danger] = "Konnte kein passende Spiel finden"
       redirect_to root_path
     end
