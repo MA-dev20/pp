@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-gem 'wkhtmltoimage-binary'
+gem 'wkhtmltoimage-binary', '0.12.4'
 gem 'imgkit'
 gem 'social-share-button'
 gem 'devise'
