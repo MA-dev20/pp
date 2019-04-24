@@ -121,9 +121,10 @@ Rails.application.routes.draw do
 #########
 
     get 'admin/verification/:token', to: 'dash_admin#verification', as: 'dash_admin_verfication'
-    
+    post 'admin/dash/teams/:team_id/generate_img_from_html', to: 'dash_admin#generate_img_from_html', as: 'dash_admin_generate_img_from_html'
     get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
     get 'admin/dash/teams/:team_id/stats', to: 'dash_admin#team_stats', as: 'dash_admin_team_stats'
+    get 'admin/dash/teams/:team_id/stats/share', to: 'dash_admin#team_stats_share', as: 'dash_admin_team_stats_share'
     get 'admin/dash/teams/:team_id/stats/:team2_id', to: 'dash_admin#team_stats', as: 'dash_admin_compare_team_stats'
     
     get 'admin/dash/users', to: 'dash_admin#users', as: 'dash_admin_users'

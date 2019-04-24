@@ -1,16 +1,28 @@
 class DashAdminController < ApplicationController
   before_action :authenticate_admin!, :set_admin , unless: :skip_action?
-  before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats]
+  before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats,:team_stats_share]
   before_action :set_user, only: [:user_stats, :compare_user_stats]
   skip_before_action :check_expiration_date, only: :billing
-  layout 'dash_admin'
-    
+  layout :resolve_layout
   def index
     if params[:team_id]
       @team = Team.find(params[:team_id])
     end
   end
-    
+  
+  def generate_img_from_html
+    kit = html_to_jpg(params[:html], params[:team_id])
+    respond_to do |format| 
+      url = to_file(kit, params[:team_id])
+      format.js do
+        render json: {url: "#{url}"}
+      end
+      # format.png do
+      #   send_data(kit.to_png, :type => "image/png", :disposition => 'inline')
+      # end
+    end
+  end
+
   def teams
   end
     
@@ -18,6 +30,14 @@ class DashAdminController < ApplicationController
     @rating = @team.team_rating
     @gameratings = @team.game_ratings.last(7)
     @count = 1
+
+    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
+    raw_result = users_ratings userss
+    @result = raw_result.sort_by {|u| -u[:rating][:average]}
+    @three_records = find_index_and_siblings(@result) if @result.present?
+    @length = raw_result.length
+
+    @turns = current_admin.turns
     if params[:team2_id]
       @team2 = Team.find(params[:team2_id])
       @gameratings2 = @team2.game_ratings.last(7)
@@ -26,6 +46,12 @@ class DashAdminController < ApplicationController
       flash[:pop_up] = "Ups, für dieses Team liegen noch keine Statistiken vor.;- Da müsst ihr wohl erst noch eine Runde spielen. -;Let's Play"
       redirect_to dash_admin_teams_path
     end
+  end
+
+  def team_stats_share
+    userss = @team.users.includes(:turn_ratings).distinct
+    raw_result = users_ratings userss
+    @result = raw_result.sort_by {|u| -u[:rating][:average]}
   end
     
   def users
@@ -65,18 +91,15 @@ class DashAdminController < ApplicationController
   end
 
   def billing
-
- Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
-
+    Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
     @credit_cards= @admin.cards.all
-
     begin
-   @invoice = Stripe::Invoice.list({
+     @invoice = Stripe::Invoice.list({
                                        customer: @admin.stripe_id
                                    })
     rescue => e
       flash[:error] = "Error in fetching invoices"
-   end
+    end
 
       # @invoice =@admin.invoices.all
     # @invoices= Stripe::InvoiceItem.retrieve(
@@ -95,6 +118,35 @@ class DashAdminController < ApplicationController
       @admin = current_admin
       @teams = @admin.teams
     end
+
+    def users_ratings(users)
+      result = []
+      users.map do |user|
+        hash = {user: user,rating: {ges: 0,body: 0, spontan: 0, creative: 0, rhetoric: 0}, places: {gold: user.gold_count, silver: user.silver_count, bronze: user.bronze_count}}
+        ratings = user.turn_ratings
+        length = ratings.length
+        hash[:rating][:ges] = (ratings.pluck(:ges).compact.inject(:+).to_f / length ) if length > 0
+        hash[:rating][:spontan] = (ratings.pluck(:spontan).compact.inject(:+).to_f / length ) if length > 0
+        hash[:rating][:creative] = (ratings.pluck(:creative).compact.inject(:+).to_f / length ) if length > 0
+        hash[:rating][:rhetoric] = (ratings.pluck(:rhetoric).compact.inject(:+).to_f / length ) if length > 0
+        hash[:rating][:body] = (ratings.pluck(:body).compact.inject(:+).to_f / length ) if length > 0
+        hash[:rating][:average] =  (hash[:rating][:ges] + hash[:rating][:spontan] + hash[:rating][:creative] + hash[:rating][:rhetoric] + hash[:rating][:body]) / 5
+        result.push(hash)
+      end
+      return result
+    end
+
+    def find_index_and_siblings(result)
+      index = result.index{|record| record if record[:user].id == current_admin.id}
+      if index == 0
+        three_records = {"#{1}": result[0],"#{2}": result[1], "#{3}": result[3]}
+      elsif index == result.length 
+        three_records = {"#{index-2}": result[index-2],"#{index-1}": result[index-1], "#{index}": result[index]}
+      else
+        three_records = {"#{index-1}": result[index-1],"#{index}": result[index], "#{index+1}": result[index+1]}
+      end
+      three_records
+    end
     
     def set_team
       @team = Team.find(params[:team_id])
@@ -104,8 +156,34 @@ class DashAdminController < ApplicationController
       @user = User.find(params[:user_id])
     end
 
-   def skip_action?
-    (params[:token]) ? true : false  
-   end
+    def html_to_jpg html_content, team_id
+      kit = IMGKit.new(html_content)
+      kit.stylesheets << "#{Rails.root}/public/css/png.css"
+      dirname = File.dirname(Rails.root + "public/pngs/teams/#{team_id}/image")
+      unless File.directory?(dirname)
+        FileUtils.mkdir_p(dirname)
+      end
+      kit
+    end
+
+    def to_file(kit, team_id)
+      title = SecureRandom.urlsafe_base64(nil, false)
+      url = Rails.root + "public/pngs/teams/#{team_id}/" + "#{title}.png"
+      file = kit.to_file(url)
+      url = "/pngs/teams/#{team_id}/" + "#{title}.png"
+      url
+    end
+
+    def skip_action?
+      (params[:token]) ? true : false  
+    end
+    def resolve_layout
+      case action_name
+      when "team_stats_share"
+        "share"
+      else
+        "dash_admin"
+      end
+    end
 
 end

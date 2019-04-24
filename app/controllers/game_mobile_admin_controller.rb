@@ -42,7 +42,6 @@ class GameMobileAdminController < ApplicationController
     
   def new_avatar
     @game = Game.find(session[:game_session_id])
-
   end
     
 
@@ -55,7 +54,7 @@ class GameMobileAdminController < ApplicationController
   def new_turn
     @game = Game.find(session[:game_session_id])
     @turn = @game.turns.find_by(admin_id: @admin.id, admin_turn: true)
-    @turn.destroy if @turn.present?
+    @turn.update(status: 'ended') if @turn.present?
     # if @turn
     #   redirect_to gma_intro_path
     # end
@@ -67,7 +66,7 @@ class GameMobileAdminController < ApplicationController
     @turn = Turn.new(play: params[:turn][:play], admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true)
     if @turn.save
       sign_in(@game)
-      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where.not(status: "pending").count.to_s
+      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s
       redirect_to gma_intro_path
     else
       redirect_to gma_new_turn_path
@@ -90,7 +89,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def choose
-    @turns = @game.turns.where.not(status: "pending").playable.sample(100)
+    @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @game.state != 'choose' && @turns.count == 1
       redirect_to gea_mobile_path
       return
@@ -107,8 +106,8 @@ class GameMobileAdminController < ApplicationController
   end
     
   def turn
-    if @game.state != 'turn' && @game.turns.where.not(status: "pending").playable.count == 1
-      @turn = @game.turns.where.not(status: "pending").playable.first
+    if @game.state != 'turn' && @game.turns.where(status: "accepted").playable.count == 1
+      @turn = @game.turns.where(status: "accepted").playable.first
       @game.update(state: 'turn', active: false, current_turn: @game.turns.playable.first.id)
     elsif @game.state != 'turn'
       @game.update(state: 'turn')
@@ -133,15 +132,15 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rated
-    @count = @turn.ratings.count.to_s + '/' + (@game.turns.where.not(status: "pending").count - 1).to_s + ' haben bewertet!'
-    if @turn.ratings.count == @game.turns.where.not(status: "pending").count - 1
+    @count = @turn.ratings.count.to_s + '/' + (@game.turns.where(status: "accepted").playable.count - 1).to_s + ' haben bewertet!'
+    if @turn.ratings.count == @game.turns.where(status: "accepted").playable.count - 1
       redirect_to gma_rating_path
     end
   end
     
   def rating
     if @game.state != 'rating' && @turn.ratings.count == 0
-      @turn.destroy
+      @turn.update(status: "ended")
       redirect_to gma_after_rating_path
       return
     elsif @game.state != 'rating'
@@ -151,7 +150,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def after_rating
-    @turns = @game.turns.where.not(status: "pending").playable.sample(100)
+    @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1
       redirect_to gma_turn_path
       return
@@ -185,7 +184,7 @@ class GameMobileAdminController < ApplicationController
     @game = current_game
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
-      @game.turns.destroy_all
+      @game.turns.update_all(status: "ended")
     end
     session[:game_session_id] = @game.id
     redirect_to gma_new_turn_path
