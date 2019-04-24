@@ -15,7 +15,21 @@
 @import "bootstrap";
 @import "font-awesome-sprockets";
 @import 'font-awesome';
-
+.bottom > .pol-bg {
+    background-color: transparent;
+    background-image: image-url('social_share/polygon.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-size: 99px 100px !important;
+    border-radius: 0;
+    font-size: 4vh;
+    padding: 50px 80px 50px 80px;
+    -webkit-appearance: none;
+}
+.bottom > .pol-bg > i {
+    color: #3e91da;
+}
 body {
     position: absolute;
     left: 0;
@@ -547,7 +561,29 @@ modal
     z-index: 100000;
     width: 500px;
 }
-.modal-games .modal-close {
+.blue{
+    position: fixed;
+    display: none;
+    top: calc((50vh - 250px) + 8vh);
+    left: calc(50vw - 250px);
+    z-index: 100000;
+    width: 800px;
+}
+.modal-games .modal-close{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  line-height: 37px;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 2px solid #1ddaaf;
+  color: #1ddaaf;
+  background-color: white;
+  opacity: 1;
+  z-index: 1000000;
+}
+.blue .modal-close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -561,12 +597,21 @@ modal
     opacity: 1;
     z-index: 1000000;
 }
-.modal-games .modal-close:hover {
+.modal-games .modal-close:hover{
     background-color: transparent;
     opacity: 1;
     z-index: 1000000;
 }
-.modal-games .modal-dialog {
+ .blue .modal-close:hover {
+    background-color: transparent;
+    opacity: 1;
+    z-index: 1000000;
+}
+.modal-games .modal-dialog{
+    margin: 0 !important;
+    align-content: center;
+}
+.blue .modal-dialog {
     margin: 0 !important;
     align-content: center;
 }
@@ -579,7 +624,20 @@ modal
   border-radius: 2px;
   min-height: 280px;
 }
-.modal-games .modal-body {
+.blue .modal-content{
+  background-color: #1dabf1;
+  background-image: linear-gradient(to right, rgba(29, 171, 241, 0.57), rgba(17, 82, 160, 0.57));
+  border: none;
+  width: 640px;
+  border-radius: 2px;
+  min-height: 280px;
+}
+.modal-games .modal-body{
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+} 
+.blue .modal-body{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -606,7 +664,19 @@ modal
     margin-bottom: 0;
     text-align: center;
 }
-.modal-games .modal-body h1 span {
+.blue .modal-body h1 {
+    padding-top: 50px;
+    color: #fff;
+    font-size: 1rem;
+    font-family: Barack-Medium;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    text-align: center;
+}
+.modal-games .modal-body h1 span{
+    font-size: 1.5rem;
+}
+.blue .modal-body h1 span {
     font-size: 1.5rem;
 }
 
@@ -617,10 +687,192 @@ modal
 */
 
   
+.blue .modal-content{
+  border-radius: 20px
+}
+.blue{
+  color: white;
+  text-align: center;
+}
   
   
   
-  
+
+
+#table{
+    height: 394px;
+    overflow: scroll;
+    background-color: #1dabf1;
+    font-size: 30px;
+    border-radius: 20px;
+    padding: 40px 64px;
+    position: relative;
+    h1 {
+      position: relative;
+      padding-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.7rem;
+      margin-bottom: 2rem;
+      &:before {
+        content: '';
+        background-color: rgba(255,255,255,0.5);
+        border-radius: 6px 6px 0px 0px;
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        bottom: 3px;
+        left: 0;
+        right: 0;
+      }
+      &:after {
+        content: '';
+        background-color: rgba(255,255,255,0.5);
+        border-radius: 0px 0px 6px 6px;
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+      }
+    }
+    .table-canvas {
+      table {
+      width: 100%;
+        tr {
+          th,
+          td {
+            padding: 3px 5px;
+            border-bottom: 1px solid #fff;
+            vertical-align: middle;
+            &:nth-of-type(1),
+            &:nth-of-type(2),
+            &:nth-of-type(3),
+            &:nth-of-type(4),
+            &:nth-of-type(5),
+            &:nth-of-type(6) {
+              min-width: 65px;
+            }
+            &:nth-of-type(7),
+            &:nth-of-type(8),
+            &:nth-of-type(9) {
+              min-width: 36px;
+            }
+          }
+        } 
+        tr {
+          th {
+            font-size: 2.5vh;
+            line-height: 3vh;
+            height: auto;
+            &:first-child {
+              border-bottom: 0;
+              min-width: 90px;
+            }
+          }
+        }
+        tr {
+          td {
+            font-size: 2.7vh;
+            line-height: 3vh;
+            font-weight: 700;
+            &:first-child {
+              text-align: left;
+              min-width: 90px;
+            }
+          }
+        }
+      }
+    }
+}
+.table-scroll {
+  max-height: 150px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 30px;
+  margin-right: -38px;
+}
+.table-scroll::-webkit-scrollbar {
+  width: 8px;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 8px;
+}
+.table-scroll::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #fff;
+  height: 40px;
+}
+.content-tm {
+  position: absolute;
+  bottom: 5vh;
+  right: 0;
+  left: 0;
+}
+.content-tm .bottom > .pol-bg {
+  background-size: 62px 62px !important;
+  font-size: 3.75vh;
+  padding: 16px 30px;
+}
+.places-ratings {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 12vh;
+    right: 0;
+    width: 29vh;
+    li {
+        color: #bdbdbd;
+        list-style: none;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2px solid #dcdcdc;
+        &:last-child {
+          border-bottom: 0;
+        }
+        div {
+          padding: 1px 4px;
+          line-height: 18px;
+        }
+        .rating-d {
+          border-left: 2px solid #dcdcdc;
+          min-width: 46px;
+          text-align: right;
+        }
+        img {
+          position: absolute;
+          left: -5vh;
+          top: 3vh;
+          width: 26px;
+          height: 26px;
+        }
+    }
+    li.current {
+      color: #1ddaaf;
+    }
+}
+#dash_stats {
+    .compare {
+        bottom: -2.5vh;
+    }
+}
+.blue-places {
+  top: calc((50vh - 217px) + 8vh);
+  left: calc(50vw - 298px);
+  .modal-dialog {
+    width: 100%;
+    max-width: 756px;
+    .modal-content {
+      width: 100%;
+    }
+  }
+}
+
+
+
+
+
 
 
 

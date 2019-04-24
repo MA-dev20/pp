@@ -43,11 +43,11 @@
     <tbody>
         <% @users.each do |u| %>
         <tr class="user-row">
-           <td onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><%= image_tag(u.avatar.quad.url) if u.avatar? %></td>
-            <td class="name" onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
-            <td onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><%= u.email %></td>
-            <td onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><%= u.company_name %></td>
-            <td onclick="redirect_stats(<%= u.teams.first.id %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
+           <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= image_tag(u.avatar.quad.url) if u.avatar? %></td>
+            <td class="name" onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
+            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.email %></td>
+            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.company_name %></td>
+            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
             <td>
   <div class="btn-group dropleft">
   <a type="button" id="dropdownMenu<%= u.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 3vh">

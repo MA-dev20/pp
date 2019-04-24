@@ -12,12 +12,12 @@ class GameDesktopAdminController < ApplicationController
         @game.update(state: 'wait')
     end 
     @users = @game.users
-    @count = @game.turns.where.not(status: "pending").count 
+    @count = @game.turns.where(status: "accepted").playable.count 
     @pending_users = @users.select{|user| user if user.status=="pending"}
   end
     
   def choose
-    @turns = @game.turns.where.not(status: "pending").playable.sample(100)
+    @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @game.state != 'choose' && @turns.count == 1
       redirect_to gea_turn_path
       return
@@ -25,7 +25,7 @@ class GameDesktopAdminController < ApplicationController
       redirect_to gea_turn_path
       return
     elsif @game.state != 'choose'
-      if @game.turns.where.not(status: "pending").count > 1
+      if @game.turns.where(status: "accepted").playable.count > 1
         @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
       else
         redirect_to gea_turn_path
@@ -38,9 +38,9 @@ class GameDesktopAdminController < ApplicationController
   end
 
   def turn
-    if @game.state != 'turn' && @game.turns.where.not(status: "pending").playable.count == 1
-      @turn = @game.turns.where.not(status: "pending").playable.first
-      @game.update(state: 'turn', active: false, current_turn: @game.turns.where.not(status: "pending").playable.first.id)
+    if @game.state != 'turn' && @game.turns.where(status: "accepted").playable.count == 1
+      @turn = @game.turns.where(status: "accepted").playable.first
+      @game.update(state: 'turn', active: false, current_turn: @game.turns.where(status: "accepted").playable.first.id)
     elsif @game.state != 'turn'
       @game.update(state: 'turn')
     end
@@ -60,7 +60,7 @@ class GameDesktopAdminController < ApplicationController
     
   def rating
     if @game.state != 'rating' && @turn.ratings.count == 0
-      @turn.destroy
+      @turn.update(status: 'ended')
       redirect_to gda_after_rating_path
       return
     elsif @game.state != 'rating'
@@ -73,7 +73,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def after_rating
-    @turns = @game.turns.where.not(status: "pending").playable.sample(100)
+    @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1
       redirect_to gda_turn_path
       return
@@ -107,8 +107,8 @@ class GameDesktopAdminController < ApplicationController
       @game.update(state: 'ended', active: false)
     end
     sign_out(@game)
-    if @game.turns.where.not(status: "pending").count == 0
-      @game.destroy
+    if @game.turns.where(status: "accepted").playable.count == 0
+      # @game.destroy
     end
     redirect_to dash_admin_path
   end
@@ -124,7 +124,7 @@ class GameDesktopAdminController < ApplicationController
     @admin = current_admin
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
-      @game.turns.destroy_all
+      @game.turns.update_all(status: "ended")
     else
       @game1 = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
     end

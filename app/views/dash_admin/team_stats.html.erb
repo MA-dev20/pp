@@ -11,25 +11,50 @@
         </div>
         
         <div class="spontan">
-            <button class="circle" id="chart_spontan"><%= @rating.spontan / 10.0 %></button>
+            <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
             <div class="text" id="t_spontan">Spontanität</div>
         </div>
         
         <div class="kreativ">
-            <button class="circle" id="chart_kreativ"><%= @rating.creative / 10.0 %></button>
+            <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
             <div class="text" id="t_kreativ">Kreativität</div>
         </div>
         
         <div class="body">
-            <button class="circle" id="chart_body"><%= @rating.body / 10.0 %></button>
+            <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
             <div class="text" id='t_body'>Körpersprache</div>
         </div>
         
         <div class="rhetorik">
-            <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric / 10.0 %></button>
+            <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
             <div class="text" id="t_rhetorik">Rhetorik</div>
         </div>
-        
+        <div class="places">
+           <div class="first">
+               <%= image_tag 'defaults/cup.png' %>
+               <div class="txt"><%= @turns.where(place: 1).count %></div>
+           </div>
+           <div class="second">
+               <%= image_tag 'defaults/silver.png' %>
+               <div class="txt"><%= @turns.where(place: 2).count %></div>
+           </div>
+           <div class="third">
+               <%= image_tag 'defaults/bronze.png' %>
+               <div class="txt"><%= @turns.where(place: 3).count %></div>
+           </div>
+        </div>
+        <ul class="places-ratings">
+           <% @three_records.first(3).each do |k, v| %>
+
+            <li class="<%= 'current' if v[:user].id == current_admin.id %>">  
+                <% if v[:user].id == current_admin.id %>
+                    <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
+                <% end %>
+                <div class="rating-c"><%= k %>. <%= v[:user].fname%></div>
+                <div class="rating-d"><%= number_with_precision(v[:rating][:average] / 10, precision: 1)  %></div>
+            </li>
+           <% end %> 
+        </ul>
     
     
     <div class="compare">
@@ -58,19 +83,125 @@
             <canvas id="Chart"></canvas>
         </div>
     </div>
-    <%= content_for :modal do %>
-      <div class="modal pop_up modal-teams" id="pop_up" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-body">
-              <h1>Select your Plan first in order to see users statistics <br> <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-green mt-4 ml-0" %> </h1>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-    <% end %>
-
+    
 </section>
+<%= content_for :modal do %>
+  <div class="modal pop_up modal-teams" id="pop_up" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h1>Select your Plan first in order to see users statistics <br> <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-green mt-4 ml-0" %> </h1>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+    <div class="blue_table">
+      
+      <div class="blue blue-place modal" id="new_team_pop" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button type="button" class="close modal-close" onclick="closeTeamPop()" aria-label="Close"><i class="fas fa-times"></i></button>
+                    <div id="table_wrapper">
+                        <div class="" id="table">
+                            <h1>
+                                <span>Team Vertrieb</span>
+                            </h1>
+                            <div class="table-canvas">
+                                <table>
+                                    <thead>
+                                        <tr class="head-row">
+                                          <th class="head" width="100"></th>
+                                          <th class="head" width="60">Ges</th>
+                                          <th class="head" width="60">Spon</th>
+                                          <th class="head" width="60">Korp</th>
+                                          <th class="head" width="60">Krea</th>
+                                          <th class="head" width="60">Rhet</th> 
+                                          <th class="head" width="26px">
+                                            <img src="<%= root_url %>/cup.png", width="20px">
+                                          </th>
+                                          <th class="head" width="26px">
+                                            <img src="<%= root_url %>/silver.png", width="20px">
+                                              
+                                          </th>
+                                          <th class="head" width="26px">
+                                            <img src="<%= root_url %>/bronze.png", width="20px">
+                                          </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="table-scroll">
+                                    <table>
+                                        <tbody>
+                                            <% @result.each.with_index(1) do |r,i| %>
+                                              <tr class="full-row">
+                                                <td class="row-data"><%=i%> . <%= r[:user].fname %></td>
+                                                <td class="row-data" width="60"><%=number_with_precision r[:rating][:ges] / 10, precision: 1 %></td> 
+                                                <td class="row-data" width="60"><%= number_with_precision r[:rating][:spontan] / 10, precision: 1 %></td> 
+                                                <td  class="row-data" width="60"><%= number_with_precision r[:rating][:rhetoric] / 10,precision: 1 %></td> 
+                                                <td class="row-data" width="60"><%= number_with_precision r[:rating][:creative] / 10,precision: 1 %></td> 
+                                                <td class="row-data" width="60"><%= number_with_precision r[:rating][:body] / 10 ,precision: 1%></td> 
+                                                <td class="row-data" width="26px"><%= r[:places][:gold] %></td>
+                                                <td class="row-data" width="26px"><%= r[:places][:silver] %></td>
+                                                <td class="row-data" width="26px"><%= r[:places][:bronze] %></td>
+                                              </tr>
+                                            <% end %>
+                                        </tbody>                        
+                                    </table>
+                                </div>
+                            </div>
+                            <section class="content-tm">
+                                <div class="bottom">
+                                    <a href=""  id="a_download" style="display: none;" download>
+                                    </a>
+                                    <%= link_to '<i class="fa fa-download"></i>'.html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'download' %>
+
+                                    <%= link_to '<i class="fas fa-share-alt"></i>'.html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'share' %>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div> 
+    <script type="text/javascript">
+        $("#download").on("click", function(e){
+            e.preventDefault()
+            var $href =  $(this).attr("href");
+            $.ajax({
+                url: $href,
+                type: 'post',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                data: {html: $("#table_wrapper").html()},
+                success: function(res){
+                    $("#a_download").attr("href", JSON.parse(res).url)
+                    document.getElementById("a_download").click()
+                }
+
+            })
+        })
+        $("#share").on("click", function(e){
+            e.preventDefault()
+            var $href =  $(this).attr("href");
+            $.ajax({
+                url: $href,
+                type: 'post',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                data: {html: $("#table_wrapper").html()},
+                success: function(res){
+                    window.location = JSON.parse(res).url
+                }
+
+            })
+        })
+    </script>
+<% end %>
+
+
 <script>
 (function() {
 [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
@@ -79,21 +210,28 @@
        newTab: false;
     } );
 })();
-    
+$("#open-team-scores").on("click", function(){
+    $('#new_team_pop').modal("show");
+
+})
+function closeTeamPop(){
+    $('#new_team_pop').modal("hide");
+
+}
 var ctx = document.getElementById("Chart");
 var datapoints = [0, NaN, NaN, NaN, NaN, NaN, NaN ];
 var datapoints2 = [0, NaN, NaN, NaN, NaN, NaN, NaN ];
 var label = [0, NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 1;
 <% @gameratings.each do |g| %>
-    datapoints[i] = <%= g.ges / 10.0 %>;
+    datapoints[i] = <%= g.ges.nil? ? 0 : g.ges/10.0 %> ;
     label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
     i++;
 <% end %>
 <% if @gameratings2 %>
   i = 1;
   <% @gameratings2.each do |g| %>
-    datapoints2[i] = <%= g.ges / 10.0 %>;
+    datapoints2[i] = <%= g.ges.nil? ? 0 : g.ges/10.0 %>;
     i++;
   <% end %>
 <% end %>
@@ -184,14 +322,14 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
     $('.gesamt').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.ges / 10.0 %>;
+        datapoints[i] = <%= g.ges.nil? ? 0 : g.ges/10.0 %>;
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
     <% if @gameratings2 %>
         i = 1;
         <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.ges / 10.0 %>;
+            datapoints2[i] = <%= g.ges.nil? ? 0 : g.ges/10.0 %>;
             i++;
         <% end %>
     <% end %>
@@ -202,14 +340,14 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
     $('.spontan').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.spontan / 10.0 %>;
+        datapoints[i] = <%= g.spontan.nil? ? 0 : g.spontan/10.0 %>;
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
     <% if @gameratings2 %>
         i = 1;
         <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.spontan / 10.0 %>;
+            datapoints2[i] = <%= g.spontan.nil? ? 0 : g.spontan/10.0 %>;
             i++;
         <% end %>
     <% end %>
@@ -220,14 +358,14 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
     $('.kreativ').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.creative / 10.0 %>;
+        datapoints[i] = <%= g.creative.nil? ? 0 : g.creative/10.0 %>;
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
     <% if @gameratings2 %>
         i = 1;
         <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.creative / 10.0 %>;
+            datapoints2[i] = <%= g.creative.nil? ? 0 : g.creative/10.0 %>;
             i++;
         <% end %>
     <% end %>
@@ -238,14 +376,14 @@ document.getElementById('chart_body').addEventListener('click', function() {
     $('.body').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.body / 10.0 %>;
+        datapoints[i] = <%= g.body.nil? ? 0 : g.body/10.0 %>;
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
     <% if @gameratings2 %>
         i = 1;
         <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.body / 10.0 %>;
+            datapoints2[i] = <%= g.body.nil? ? 0 : g.body/10.0 %>;
             i++;
         <% end %>
     <% end %>
@@ -256,14 +394,14 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     $('.rhetorik').addClass('active');
     var i = 1;
     <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.rhetoric / 10.0 %>;
+        datapoints[i] = <%= g.rhetoric.nil? ? 0 : g.rhetoric/10.0 %>;
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
     <% if @gameratings2 %>
         i = 1;
         <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.rhetoric / 10.0 %>;
+            datapoints2[i] = <%= g.rhetoric.nil? ? 0 : g.rhetoric/10.0 %>;
             i++;
         <% end %>
     <% end %>

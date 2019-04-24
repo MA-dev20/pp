@@ -128,6 +128,7 @@ GEM
     hiredis (0.6.3)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
+    imgkit (1.6.2)
     io-like (0.3.0)
     jbuilder (2.8.0)
       activesupport (>= 4.2.0)
@@ -292,6 +293,7 @@ GEM
     websocket-extensions (0.1.3)
     whenever (0.10.0)
       chronic (>= 0.6.3)
+    wkhtmltoimage-binary (0.12.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
@@ -316,6 +318,7 @@ DEPENDENCIES
   execjs
   font-awesome-sass (~> 5.6.1)
   hiredis
+  imgkit
   jbuilder (~> 2.5)
   jquery-datatables-rails (~> 3.4.0)
   jquery-rails
@@ -341,6 +344,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
   whenever
+  wkhtmltoimage-binary
 
 BUNDLED WITH
    1.16.6

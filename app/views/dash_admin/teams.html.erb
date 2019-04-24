@@ -23,7 +23,7 @@
             <%= t.name %>
         </div>
         <div class="middle">
-            <span><%= t.users.count %></span> User
+            <span><%= t.users.distinct.count %></span> User
         </div>
         <div class="bottom">
             <%= link_to '', dash_admin_team_stats_path(t.id), class: 'fas fa-chart-line' , id:"users_stats"  %>   
