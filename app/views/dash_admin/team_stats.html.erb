@@ -47,7 +47,7 @@
            <% @three_records.first(3).each do |k, v| %>
 
             <li class="<%= 'current' if v[:user].id == current_admin.id %>">  
-                <% if v[:user].id == current_admin.id %>
+                <% if v[:user].id == current_admin.id or k == 2 %>
                     <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
                 <% end %>
                 <div class="rating-c"><%= k %>. <%= v[:user].fname%></div>
