@@ -15,7 +15,7 @@ modal
 }
 
 /* line 703, app/assets/stylesheets/dash/main.scss */
-#table {
+#list-table {
   overflow: scroll;
   background-color: #1dabf1;
   font-size: 30px;
@@ -32,7 +32,7 @@ modal
 }
 
 /* line 711, app/assets/stylesheets/dash/main.scss */
-#table h1 {
+#list-table h1 {
   position: relative;
   padding-bottom: 1rem;
   font-weight: 700;
@@ -41,7 +41,7 @@ modal
 }
 
 /* line 717, app/assets/stylesheets/dash/main.scss */
-#table h1:before {
+#list-table h1:before {
   content: '';
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 6px 6px 0px 0px;
@@ -54,7 +54,7 @@ modal
 }
 
 /* line 728, app/assets/stylesheets/dash/main.scss */
-#table h1:after {
+#list-table h1:after {
   content: '';
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 0px 0px 6px 6px;
@@ -67,12 +67,12 @@ modal
 }
 
 /* line 740, app/assets/stylesheets/dash/main.scss */
-#table .table-canvas {
+#list-table .table-canvas {
   padding-right: 35px;
 }
 
 /* line 742, app/assets/stylesheets/dash/main.scss */
-#table .table-canvas table {
+#list-table .table-canvas table {
   width: 100%;
 }
 h1{
@@ -81,34 +81,34 @@ h1{
 }
 
 /* line 745, app/assets/stylesheets/dash/main.scss */
-#table .table-canvas table tr th,
-#table .table-canvas table tr td {
+#list-table .table-canvas table tr th,
+#list-table .table-canvas table tr td {
   padding: 3px 5px;
   border-bottom: 1px solid #fff;
   vertical-align: middle;
 }
 
 /* line 750, app/assets/stylesheets/dash/main.scss */
-#table .table-canvas table tr th:nth-of-type(1), #table .table-canvas table tr th:nth-of-type(2), #table .table-canvas table tr th:nth-of-type(3), #table .table-canvas table tr th:nth-of-type(4), #table .table-canvas table tr th:nth-of-type(5), #table .table-canvas table tr th:nth-of-type(6),
-#table .table-canvas table tr td:nth-of-type(1),
-#table .table-canvas table tr td:nth-of-type(2),
-#table .table-canvas table tr td:nth-of-type(3),
-#table .table-canvas table tr td:nth-of-type(4),
-#table .table-canvas table tr td:nth-of-type(5),
-#table .table-canvas table tr td:nth-of-type(6) {
+#list-table .table-canvas table tr th:nth-of-type(1), #list-table .table-canvas table tr th:nth-of-type(2), #list-table .table-canvas table tr th:nth-of-type(3), #list-table .table-canvas table tr th:nth-of-type(4), #list-table .table-canvas table tr th:nth-of-type(5), #list-table .table-canvas table tr th:nth-of-type(6),
+#list-table .table-canvas table tr td:nth-of-type(1),
+#list-table .table-canvas table tr td:nth-of-type(2),
+#list-table .table-canvas table tr td:nth-of-type(3),
+#list-table .table-canvas table tr td:nth-of-type(4),
+#list-table .table-canvas table tr td:nth-of-type(5),
+#list-table .table-canvas table tr td:nth-of-type(6) {
   min-width: 65px;
 }
 
 /* line 758, app/assets/stylesheets/dash/main.scss */
-#table .table-canvas table tr th:nth-of-type(7), #table .table-canvas table tr th:nth-of-type(8), #table .table-canvas table tr th:nth-of-type(9),
-#table .table-canvas table tr td:nth-of-type(7),
-#table .table-canvas table tr td:nth-of-type(8),
-#table .table-canvas table tr td:nth-of-type(9) {
+#list-table .table-canvas table tr th:nth-of-type(7), #list-table .table-canvas table tr th:nth-of-type(8), #list-table .table-canvas table tr th:nth-of-type(9),
+#list-table .table-canvas table tr td:nth-of-type(7),
+#list-table .table-canvas table tr td:nth-of-type(8),
+#list-table .table-canvas table tr td:nth-of-type(9) {
   min-width: 36px;
 }
 
 /* line 766, app/assets/stylesheets/dash/main.scss */
-#table .table-canvas table tr th {
+#list-table .table-canvas table tr th {
   font-size: 2.5vh;
   color: white;
   
@@ -117,12 +117,12 @@ h1{
 }
 
 /* line 770, app/assets/stylesheets/dash/main.scss */
-#table .table-canvas table tr th:first-child {
+#list-table .table-canvas table tr th:first-child {
   border-bottom: 0;
 }
 
 /* line 777, app/assets/stylesheets/dash/main.scss */
-#table .table-canvas table tr td {
+#list-table .table-canvas table tr td {
   font-size: 2.7vh;
   line-height: 3vh;
   color: white;
@@ -130,7 +130,7 @@ h1{
 }
 
 /* line 781, app/assets/stylesheets/dash/main.scss */
-#table .table-canvas table tr td:first-child {
+#list-table .table-canvas table tr td:first-child {
   text-align: left;
 }
 
@@ -861,14 +861,14 @@ input[type=file] {
     border-radius: 50px;
     box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.1);
 }
-#gd_users .users #table td img {
+#gd_users .users #list-table td img {
     position: relative;
     left: calc(50% - 4.5vh);
     width: 4.5vh;
     height: 4.5vh;
     border-radius: 50%;
 }
-#gd_users .users #table {
+#gd_users .users #list-table {
     top: 3vh;
     position: absolute;
     left: 0vw;
@@ -877,7 +877,7 @@ input[type=file] {
     overflow-x: hidden;
     overflow-y: hidden;
 }
-#gd_users .users #table table {
+#gd_users .users #list-table table {
     top: 0;
     left: 0;
     width: 80vw;
