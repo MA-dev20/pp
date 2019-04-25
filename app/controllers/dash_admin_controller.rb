@@ -30,7 +30,10 @@ class DashAdminController < ApplicationController
     @rating = @team.team_rating
     @gameratings = @team.game_ratings.last(7)
     @count = 1
-
+    if !@rating
+      flash[:pop_up] = "Ups, für dieses Team liegen noch keine Statistiken vor.;- Da müsst ihr wohl erst noch eine Runde spielen. -;Let's Play"
+      redirect_to dash_admin_teams_path
+    end
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
@@ -41,10 +44,6 @@ class DashAdminController < ApplicationController
     if params[:team2_id]
       @team2 = Team.find(params[:team2_id])
       @gameratings2 = @team2.game_ratings.last(7)
-    end
-    if !@rating
-      flash[:pop_up] = "Ups, für dieses Team liegen noch keine Statistiken vor.;- Da müsst ihr wohl erst noch eine Runde spielen. -;Let's Play"
-      redirect_to dash_admin_teams_path
     end
   end
 
@@ -143,7 +142,7 @@ class DashAdminController < ApplicationController
 
     def find_index_and_siblings(result, user_id)
       index = result.index{|record| record if record[:user].id == user_id.to_i}
-      if index == 0
+      if index == 0 or index.nil?
         three_records = {"#{1}": result[0],"#{2}": result[1], "#{3}": result[3]}
       elsif index == result.length 
         three_records = {"#{index-2}": result[index-2],"#{index-1}": result[index-1], "#{index}": result[index]}
