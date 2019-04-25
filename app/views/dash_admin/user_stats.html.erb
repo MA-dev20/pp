@@ -43,6 +43,18 @@
                <div class="txt"><%= @turns.where(place: 3).count %></div>
            </div>
         </div>
+        <ul class="places-ratings">
+           <% @three_records.first(3).each do |k, v| %>
+
+            <li class="<%= 'current' if v[:user].id == params[:user_id].to_i %>">  
+                <% if v[:user].id == params[:user_id].to_i %>
+                    <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
+                <% end %>
+                <div class="rating-c"><%= k %>. <%= v[:user].fname%></div>
+                <div class="rating-d"><%= number_with_precision(v[:rating][:average] / 10, precision: 1)  %></div>
+            </li>
+           <% end %> 
+        </ul>
         <div class="compare">
         
         <select class="cs-select cs-skin-underline form-field">
@@ -74,6 +86,118 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+  <div class="blue_table">
+      
+      <div class="blue blue-place modal" id="new_team_pop" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button type="button" class="close modal-close" onclick="closeTeamPop()" aria-label="Close"><i class="fas fa-times"></i></button>
+                    <div id="table_wrapper">
+                        <div class="" id="list-table">
+                            <h1>
+                                <span>Team Vertrieb</span>
+                            </h1>
+                            <div class="table-canvas">
+                                <table>
+                                    <thead>
+                                        <tr class="head-row">
+                                          <th class="head" width="100"></th>
+                                          <th class="head" width="60">Ges</th>
+                                          <th class="head" width="60">Spon</th>
+                                          <th class="head" width="60">Korp</th>
+                                          <th class="head" width="60">Krea</th>
+                                          <th class="head" width="60">Rhet</th> 
+                                          <th class="head" width="26px">
+                                            <img src="<%= root_url %>/cup.png", width="20px">
+                                          </th>
+                                          <th class="head" width="26px">
+                                            <img src="<%= root_url %>/silver.png", width="20px">
+                                              
+                                          </th>
+                                          <th class="head" width="26px">
+                                            <img src="<%= root_url %>/bronze.png", width="20px">
+                                          </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="table-scroll">
+                                    <table>
+                                        <tbody>
+                                            <% @result.each.with_index(1) do |r,i| %>
+                                              <tr class="full-row">
+                                                <td class="row-data"><%=i%> . <%= r[:user].fname %></td>
+                                                <td class="row-data" width="60"><%=number_with_precision r[:rating][:ges] / 10, precision: 1 %></td> 
+                                                <td class="row-data" width="60"><%= number_with_precision r[:rating][:spontan] / 10, precision: 1 %></td> 
+                                                <td  class="row-data" width="60"><%= number_with_precision r[:rating][:rhetoric] / 10,precision: 1 %></td> 
+                                                <td class="row-data" width="60"><%= number_with_precision r[:rating][:creative] / 10,precision: 1 %></td> 
+                                                <td class="row-data" width="60"><%= number_with_precision r[:rating][:body] / 10 ,precision: 1%></td> 
+                                                <td class="row-data" width="26px"><%= r[:places][:gold] %></td>
+                                                <td class="row-data" width="26px"><%= r[:places][:silver] %></td>
+                                                <td class="row-data" width="26px"><%= r[:places][:bronze] %></td>
+                                              </tr>
+                                            <% end %>
+                                        </tbody>                        
+                                    </table>
+                                </div>
+                            </div>
+                            <section class="content-tm">
+                                <div class="bottom">
+                                    <a href=""  id="a_download" style="display: none;" download>
+                                    </a>
+                                    <%= link_to '<i class="fa fa-download"></i>'.html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'download' %>
+
+                                    <%= link_to '<i class="fas fa-share-alt"></i>'.html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'share' %>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div> 
+    <script type="text/javascript">
+        $("#download").on("click", function(e){
+            e.preventDefault()
+            var $href =  $(this).attr("href");
+            $.ajax({
+                url: $href,
+                type: 'post',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                data: {html: $("#table_wrapper").html()},
+                success: function(res){
+                    $("#a_download").attr("href", JSON.parse(res).url)
+                    document.getElementById("a_download").click()
+                }
+
+            })
+        })
+        $("#share").on("click", function(e){
+            e.preventDefault()
+            var $href =  $(this).attr("href");
+            $.ajax({
+                url: $href,
+                type: 'post',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                data: {html: $("#table_wrapper").html()},
+                success: function(res){
+                    window.location = JSON.parse(res).url
+                }
+
+            })
+        })
+                
+        $("#open-team-scores").on("click", function(){
+            $('#new_team_pop').modal("show");
+
+        })
+        function closeTeamPop(){
+            $('#new_team_pop').modal("hide");
+
+        }
+    </script>
 <% end %>
 <script>
 (function() {
