@@ -145,9 +145,9 @@ class DashAdminController < ApplicationController
       if index == 0 or index.nil?
         three_records = {"#{1}": result[0],"#{2}": result[1], "#{3}": result[3]}
       elsif index == result.length 
-        three_records = {"#{index-2}": result[index-2],"#{index-1}": result[index-1], "#{index}": result[index]}
+        three_records = {"#{index-1}": result[index-2],"#{index}": result[index], "#{index+1}": result[index]}
       else
-        three_records = {"#{index-1}": result[index-1],"#{index}": result[index], "#{index+1}": result[index+1]}
+        three_records = {"#{index}": result[index-1],"#{index+1}": result[index], "#{index+2}": result[index+1]}
       end
       three_records
     end
