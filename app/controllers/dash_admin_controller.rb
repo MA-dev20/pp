@@ -37,7 +37,7 @@ class DashAdminController < ApplicationController
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
-    @three_records = find_index_and_siblings(@result, current_admin.id) if @result.present?
+    @three_records, current_rating = find_index_and_siblings(@result, current_admin.id) if @result.present?
     @length = raw_result.length
 
     @turns = current_admin.turns
@@ -74,7 +74,7 @@ class DashAdminController < ApplicationController
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
-    @three_records = find_index_and_siblings(@result, params[:user_id]) if @result.present?
+    @three_records , @current_rating = find_index_and_siblings(@result, params[:user_id]) if @result.present?
     @length = raw_result.length
     @turns_rating = rating
   end
@@ -143,6 +143,7 @@ class DashAdminController < ApplicationController
 
     def find_index_and_siblings(result, user_id)
       index = result.index{|record| record if record[:user].id == user_id.to_i}
+      current_user = result[index]
       if index == 0 or index.nil?
         three_records = {"#{1}": result[0],"#{2}": result[1], "#{3}": result[3]}
       elsif index == result.length 
@@ -150,7 +151,7 @@ class DashAdminController < ApplicationController
       else
         three_records = {"#{index}": result[index-1],"#{index+1}": result[index], "#{index+2}": result[index+1]}
       end
-      three_records
+      [three_records, current_user]
     end
     
     def set_team

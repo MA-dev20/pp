@@ -5,28 +5,28 @@
     <div class="stats_overview">
         <div class="gesamt active">
             <button class="circle" id="chart_gesamt">
-            <span><%= @rating.ges.to_f / 10.0 %></span>
+            <span><%= number_with_precision(@current_rating[:rating][:ges].to_f / 10.0, precision: 1) %></span>
             <%= image_tag @user.avatar.quad.url %>
             </button>
             <div class="text" id="t_gesamt">Gesamt</div>
         </div>
         <div class="spontan">
-            <button class="circle" id="chart_spontan"><%= @rating.spontan.to_f / 10.0 %></button>
+            <button class="circle" id="chart_spontan"><%= number_with_precision( @current_rating[:rating][:spontan].to_f / 10.0, precision:1) %></button>
             <div class="text" id="t_spontan">Spontanität</div>
         </div>
         
         <div class="kreativ">
-            <button class="circle" id="chart_kreativ"><%= @rating.creative.to_f / 10.0 %></button>
+            <button class="circle" id="chart_kreativ"><%= number_with_precision(@current_rating[:rating][:creative].to_f / 10.0, precision:1) %></button>
             <div class="text" id="t_kreativ">Kreativität</div>
         </div>
         
         <div class="body">
-            <button class="circle" id="chart_body"><%= @rating.body.to_f / 10.0 %></button>
+            <button class="circle" id="chart_body"><%= number_with_precision(@current_rating[:rating][:body].to_f / 10.0, precision:1) %></button>
             <div class="text" id='t_body'>Körpersprache</div>
         </div>
         
         <div class="rhetorik">
-            <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.to_f / 10.0 %></button>
+            <button class="circle" id="chart_rhetorik"><%= number_with_precision(@current_rating[:rating][:rhetoric].to_f / 10.0, precision:1) %></button>
             <div class="text" id="t_rhetorik">Rhetorik</div>
         </div>
         <div class="places">
@@ -177,7 +177,7 @@
     </div> 
     <script type="text/javascript">
         new ClipboardJS("#btn-copy")
-        
+
         $("#download").on("click", function(e){
             e.preventDefault()
             var $href =  $(this).attr("href");
