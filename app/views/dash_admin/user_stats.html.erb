@@ -158,7 +158,26 @@
             </div>
         </div>
     </div> 
+    <div class="blue_table">
+      <div class="blue blue-place modal" id="share-modal" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="row">
+                     <div class="col-md-9">
+                        <input type="" name="" id="share_link" class="form-control mr-sm-3">
+                     </div>   
+                     <div class="col-md-3">
+                        <button class="btn" id="btn-copy" data-clipboard-target="#share_link" style="color: white;">Copy</button>
+                     </div>   
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div> 
     <script type="text/javascript">
+        new ClipboardJS("#btn-copy")
+        
         $("#download").on("click", function(e){
             e.preventDefault()
             var $href =  $(this).attr("href");
@@ -183,7 +202,12 @@
                 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
                 data: {html: $("#table_wrapper").html()},
                 success: function(res){
-                    window.location = JSON.parse(res).url
+                    //window.location = JSON.parse(res).url
+                    $("#share-modal").modal("show")
+                    $('#new_team_pop').modal("hide");
+
+                    //window.location = JSON.parse(res).url
+                    $("#share_link").val("<%= root_url %>" +JSON.parse(res).url)
                 }
 
             })
