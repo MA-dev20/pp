@@ -700,9 +700,11 @@ modal
 
 
 .table-scroll {
-  max-height: 22vh;
+  height: 22vh;
   overflow-x: hidden;
   overflow-y: auto;
+}
+.table-scroll-live {
   padding-right: 23px;
   margin-right: -30px;
 }

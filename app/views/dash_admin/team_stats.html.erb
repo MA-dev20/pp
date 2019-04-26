@@ -132,7 +132,7 @@
                                         </thead>
                                     </table>
                                 </div>
-                                <div class="table-scroll">
+                                <div class="table-scroll <%='table-scroll-live' if @result.length > 6 %> ">
                                     <table>
                                         <tbody>
                                             <% @result.each.with_index(1) do |r,i| %>
