@@ -9,6 +9,7 @@
  *= require cs-select/cs-skin-underline
  *= require omnes
  *= require barack
+ *= require bootstrap-tagsinput.css
  *= require dataTables/jquery.dataTables
  */
 
@@ -818,9 +819,12 @@ modal
   width: 5vh;
   font-size: 3vh;
   font-weight: 300;
-  top: 12px;
-  right: 12px;
+  top: 2vh;
+  right: 2vh;
   border: 1px solid #1ddaaf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .t-overflow {
   overflow-x: auto;
@@ -912,7 +916,189 @@ modal
       }
     }
 }
-
+.userEdit-modal.modal {
+  top: 0;
+  .modal-dialog {
+    max-width: 100vh;
+    min-height: calc(100% - 3.2rem);
+    #list-table {
+      height: auto;
+      padding: 3vh 16vh;
+      h1 {
+        margin-bottom: 2.5vh;
+      }
+    }
+  }
+}
+.user-profile {
+  .user-profile-img {
+    width: 15vh;
+    height: 15vh;
+    position: relative;
+    margin: 0 auto;
+    .up-img {
+      width: 15vh;
+      height: 15vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 50%;
+      margin: 0 auto;
+      img {
+        max-width: 100%;
+      }
+    }
+    .user-profile-up {
+      position: absolute;
+      right: 0;
+      bottom: 1vh;
+      input {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 4vh;
+        height: 4vh;
+        opacity: 0;
+        cursor: pointer;
+        display: flex;
+      }
+    }
+  }
+}
+.plus-p {
+  height: 4vh;
+  width: 4vh;
+  font-size: 5vh;
+  font-weight: 300;
+  top: 2vh;
+  right: 2vh;
+  border: 1px solid #1ddaaf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 50%;
+  color: #1ddaaf;
+  padding-left: 1px;
+  padding-top: 2px;
+}
+.form-block {
+  margin-top: 2vh;
+  .form-group {
+    margin-bottom: 0;
+    line-height: 2vh;
+    label {
+      font-size: 2vh;
+      text-align: left;
+      width: 100%;
+      padding-left: 3vh;
+      font-weight: 600;
+      margin-bottom: 0.5vh;
+    }
+    input {
+      padding: 1vh 3vh;
+      border-radius: 40px;
+      color: #000;
+      font-weight: 600;
+      height: 6.36vh;
+      font-size: 2.4vh; 
+    }
+  }
+}
+.teams-block {
+  margin-top: 2.6vh;
+  margin-bottom: 6vh;
+  display: inline-block;
+  width: 100%;
+  .bootstrapTag-group {
+    margin-bottom: 0;
+    line-height: 3vh;
+    label {
+      font-size: 2.4vh;
+      text-align: left;
+      width: 100%;
+      padding-left: 3vh;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+    .bootstrap-tagsinput {
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+      width: auto;
+      float: left;
+      text-align: left;
+      padding: 0vh 1vh;
+      line-height: 5vh;
+      input {
+        height: 4vh;
+        width: 4vh;
+        font-size: 4.4vh;
+        font-weight: 700;
+        top: 0.6vh;
+        right: 0;
+        position: relative;
+        border: 1px solid #1ddaaf;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 50%;
+        color: #1ddaaf;
+        padding: 3px;
+        text-align: center;
+        line-height: 1vh;
+      }
+    }
+    .tag {
+      margin-right: 2px;
+      color: white;
+      background-color: #1ddaaf;
+      border-radius: 8px;
+      padding: 1vh 2vh;
+      line-height: 1vh;
+      font-size: 2.4vh;
+      font-weight: 700;
+      span {
+        color: #0f64af;
+        font-size: 3vh;
+        font-weight: 700;
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+}
+.bootstrap-tagsinput input::-webkit-input-placeholder { /* Edge */
+  color: #1ddaaf;
+}
+.bootstrap-tagsinput input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #1ddaaf;
+}
+.bootstrap-tagsinput input::placeholder {
+  color: #1ddaaf;
+}
+.btn-green.user-p-btn {
+  padding: 1vh 1.4vh;
+  border-radius: 40px !important;
+  font-weight: 700;
+  height: 5.36vh;
+  font-size: 2.4vh;
+  min-height: 1vh;
+  min-width: 2vh;
+}
+.user-opt-det {
+  position: absolute;
+  bottom: 2vh;
+  right: 2vh;
+  cursor: pointer;
+  img {
+    width: 10vh;
+  }
+}
 @media (max-width: 991px) {
   .teamV-modal.modal {
     left: 0vh;

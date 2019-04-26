@@ -11,4 +11,6 @@
  *= require dash/classie.min
  *= require dash/selectFx.min
  *= require cable
+ *= require bootstrap-tagsinput.js
+ *= require typeahead.bundle.js
  */
