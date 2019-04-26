@@ -88,7 +88,7 @@
   </div><!-- /.modal -->
   <div class="blue_table">
       
-      <div class="blue blue-place modal" id="new_team_pop" style="display: none;">
+      <div class="blue blue-place modal teamV-modal" id="new_team_pop" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <button type="button" class="close modal-close" onclick="closeTeamPop()" aria-label="Close"><i class="fas fa-times"></i></button>
@@ -98,28 +98,30 @@
                                 <span>Team Vertrieb</span>
                             </h1>
                             <div class="table-canvas">
-                                <table>
-                                    <thead>
-                                        <tr class="head-row">
-                                          <th class="head" width="100"></th>
-                                          <th class="head" width="60">Ges</th>
-                                          <th class="head" width="60">Spon</th>
-                                          <th class="head" width="60">Korp</th>
-                                          <th class="head" width="60">Krea</th>
-                                          <th class="head" width="60">Rhet</th> 
-                                          <th class="head" width="26px">
-                                            <img src="<%= root_url %>/cup.png", width="20px">
-                                          </th>
-                                          <th class="head" width="26px">
-                                            <img src="<%= root_url %>/silver.png", width="20px">
-                                              
-                                          </th>
-                                          <th class="head" width="26px">
-                                            <img src="<%= root_url %>/bronze.png", width="20px">
-                                          </th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <div class="t-overflow">
+                                    <table>
+                                        <thead>
+                                            <tr class="head-row">
+                                              <th class="head" width="100"></th>
+                                              <th class="head" width="60">Ges</th>
+                                              <th class="head" width="60">Spon</th>
+                                              <th class="head" width="60">Korp</th>
+                                              <th class="head" width="60">Krea</th>
+                                              <th class="head" width="60">Rhet</th> 
+                                              <th class="head" width="26px">
+                                                <img src="<%= root_url %>/cup.png", width="16px">
+                                              </th>
+                                              <th class="head" width="26px">
+                                                <img src="<%= root_url %>/silver.png", width="16px">
+                                                  
+                                              </th>
+                                              <th class="head" width="26px">
+                                                <img src="<%= root_url %>/bronze.png", width="16px">
+                                              </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                                 <div class="table-scroll">
                                     <table>
                                         <tbody>
@@ -144,9 +146,9 @@
                                 <div class="bottom">
                                     <a href=""  id="a_download" style="display: none;" download>
                                     </a>
-                                    <%= link_to '<i class="fa fa-download"></i>'.html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'download' %>
+                                    <%= link_to "<img src=#{image_path('download-m.png')}>".html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'download' %>
 
-                                    <%= link_to '<i class="fas fa-share-alt"></i>'.html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'share' %>
+                                    <%= link_to "<img src=#{asset_path('share-m.png')}>".html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'share' %>
                                 </div>
                             </section>
                         </div>
