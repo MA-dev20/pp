@@ -262,10 +262,7 @@
                     }
                 })[0].selectize
                 $(".selectize-control").addClass("bootstrap-tagsinput")
-                $(".selectize-input.items input").click(function(){
-                    $(this).attr("value","a")
-                    $(this).attr("value","")
-                })
+                $(".selectize-input.items input").attr("readonly", true);
                 // $("").tagsinput()
             })
 
@@ -277,10 +274,6 @@
         <% end %>
     }
     $(document).ready( function () {
-                    $(" .selectize-input span input").on("click", function(){
-                debugger
-                var $this = $(this).val(" ")
-            })
 
     $('#myTable').DataTable( {
         "paging":   false,
