@@ -81,7 +81,7 @@
                             <h1>
                                 <span>Nutzer bearbeiten</span>
                             </h1>
-                            <%= form_for u, url: "/users/#{u.id}/update", remote: true,method: 'put' do |f| %>
+                            <%= form_for u, url: "/users/#{u.id}/update",method: 'put' do |f| %>
                             <div class="user-profile">
                                 <div class="user-profile-img">
                                     <div class="up-img">
@@ -219,57 +219,7 @@
 
     })
    
-    
-
-    function redirect_stats(team, user) {
-        <% if @team %>
-        window.location.href = "/admins/dash/teams/<%= @team.id %>/users/"+ user +"/stats";
-        <% else %>
-        window.location.href = "/admins/dash/teams/"+ team +"/users/"+ user +"/stats";
-        <% end %>
-    }
-    $(document).ready( function () {
-                    $(" .selectize-input span input").on("click", function(){
-                debugger
-                var $this = $(this).val(" ")
-            })
-
-    $('#myTable').DataTable( {
-        "paging":   false,
-        "info":     false,
-        'searching': false,
-        "order": [ 1, 'asc' ],
-        "columnDefs": [
-            { "orderable": false, "targets": 0 },
-            { "orderable": false, "targets": 5 },
-            { "orderable": false, "targets": 6 },
-        ]
-    } );
-    
-} );
-(function() {
-				[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
-					new SelectFx(el);
-                    newTab: false;
-				} );
-			})();
-    
-var $rows = $('.user-row');
-$('#searchField').keyup(function() {
-    
-    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-        reg = RegExp(val, 'i'),
-        text;
-    
-    $rows.show().filter(function() {
-        text = $(this).text().replace(/\s+/g, ' ');
-        return !reg.test(text);
-    }).hide();
-});
-new PerfectScrollbar('#table');
-new PerfectScrollbar('.cs-options');
-
-            $(document).ready(function(){
+    $(document).ready(function(){
 
                 $('.InputTags').selectize({
                     valueField: 'id',
@@ -319,6 +269,56 @@ new PerfectScrollbar('.cs-options');
                 })
                 // $("").tagsinput()
             })
+
+    function redirect_stats(team, user) {
+        <% if @team %>
+        window.location.href = "/admins/dash/teams/<%= @team.id %>/users/"+ user +"/stats";
+        <% else %>
+        window.location.href = "/admins/dash/teams/"+ team +"/users/"+ user +"/stats";
+        <% end %>
+    }
+    $(document).ready( function () {
+                    $(" .selectize-input span input").on("click", function(){
+                debugger
+                var $this = $(this).val(" ")
+            })
+
+    $('#myTable').DataTable( {
+        "paging":   false,
+        "info":     false,
+        'searching': false,
+        "order": [ 1, 'asc' ],
+        "columnDefs": [
+            { "orderable": false, "targets": 0 },
+            { "orderable": false, "targets": 5 },
+            { "orderable": false, "targets": 6 },
+        ]
+    } );
+    
+} );
+(function() {
+				[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
+					new SelectFx(el);
+                    newTab: false;
+				} );
+			})();
+    
+var $rows = $('.user-row');
+$('#searchField').keyup(function() {
+    
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val, 'i'),
+        text;
+    
+    $rows.show().filter(function() {
+        text = $(this).text().replace(/\s+/g, ' ');
+        return !reg.test(text);
+    }).hide();
+});
+new PerfectScrollbar('#table');
+new PerfectScrollbar('.cs-options');
+
+            
 
 
 </script>
