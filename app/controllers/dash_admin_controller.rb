@@ -37,7 +37,13 @@ class DashAdminController < ApplicationController
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
-    @three_records, current_rating = find_index_and_siblings(@result, current_admin.id) if @result.present?
+    # if @result.present?
+    #   if @result.count >= 3
+    #     @three_records = @result
+    #   else
+    #     @three_records, current_rating = find_index_and_siblings(@result, current_admin.id) if @result.present?
+    #   end
+    # end
     @length = raw_result.length
 
     @turns = current_admin.turns
@@ -74,7 +80,14 @@ class DashAdminController < ApplicationController
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
-    @three_records , @current_rating = find_index_and_siblings(@result, params[:user_id]) if @result.present?
+    # if @result.present?
+    #   if @result.count >= 3
+    #     @three_records = @result
+    #   else
+        @three_records, @current_rating = find_index_and_siblings(@result, current_admin.id) if @result.present?
+    #   end
+    # end
+
     @length = raw_result.length
     @turns_rating = rating
   end
