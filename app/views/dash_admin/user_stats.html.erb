@@ -46,13 +46,15 @@
         <ul class="places-ratings">
            <% @three_records.first(3).each do |k, v| %>
 
-            <li class="<%= 'current' if v[:user].id == params[:user_id].to_i %>">  
-                <% if v[:user].id == params[:user_id].to_i %>
-                    <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
+            <% if v.present? %>
+                    <li class="<%= 'current' if v[:user].id == params[:user_id] %>">  
+                        <% if v[:user].id == params[:user_id] or k.to_s == "2" %>
+                            <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
+                        <% end %>
+                        <div class="rating-c"><%= k %>. <%= v[:user].fname%></div>
+                        <div class="rating-d"><%= number_with_precision(v[:rating][:average] / 10, precision: 1)  %></div>
+                    </li>
                 <% end %>
-                <div class="rating-c"><%= k %>. <%= v[:user].fname%></div>
-                <div class="rating-d"><%= number_with_precision(v[:rating][:average] / 10, precision: 1)  %></div>
-            </li>
            <% end %> 
         </ul>
         <div class="compare">
@@ -161,19 +163,18 @@
         </div>
     </div> 
     
-                    <div id="shareModal">
-                        <button type="button" id="close" onclick="closeShare()"><i class="far fa-times-circle"></i></button>
-                        <div class="header">
-                            - Teile dein Ergebnis -
-                        </div>
-                        <div class="links1">
-                            <%= social_share_button_tag('Ich habe  <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div>  erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(twitter linkedin Xing)) %>
-                        </div>
-                        <div class="links2">
-                            <%= social_share_button_tag('Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(whatsapp_app facebook)) %>
-                        </div>
-                    </div>
-                </div>
+    <div id="shareModal">
+        <button type="button" id="close" onclick="closeShare()"><i class="far fa-times-circle"></i></button>
+        <div class="header">
+            - Teile dein Ergebnis -
+        </div>
+        <div class="links1">
+            <%= social_share_button_tag('Ich habe  <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div>  erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(twitter linkedin Xing)) %>
+        </div>
+        <div class="links2">
+            <%= social_share_button_tag('Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(whatsapp_app facebook)) %>
+        </div>
+    </div>
               
     <script type="text/javascript">
         new ClipboardJS("#btn-copy")
