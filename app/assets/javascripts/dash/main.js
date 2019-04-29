@@ -13,7 +13,6 @@
  *= require cable
  *= require bootstrap-tagsinput.js
  *= require typeahead.bundle.js
- *= require jpreview.js
  *= require social-share-button
  
  */
