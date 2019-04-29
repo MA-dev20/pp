@@ -1146,16 +1146,17 @@ modal
       color: white;
       background-color: #1ddaaf;
       border-radius: 8px;
-      padding: 1vh 2vh;
+      padding: 0.8vh 0.8vh;
       line-height: 1vh;
       font-size: 2.4vh;
       font-weight: 700;
       span {
         color: #0f64af;
-        font-size: 3vh;
+        font-size: 2.5vh;
         font-weight: 700;
         position: relative;
-        top: 1px;
+        top: 0px;
+        margin-left: 3px;
       }
     }
   }
@@ -1187,24 +1188,36 @@ modal
     width: 10vh;
   }
 }
+
 .selectize-dropdown {
   font-weight: 700;
   color: rgb(255, 255, 255);
-  width: 100%;
+  width: auto !important;
+  display: inline-block;
   .selectize-dropdown-content {
     option {
       border: 1px solid #fff;
       border-radius: 8px;
       padding: 0 1.5vh;
-      margin-top: 2vh;
+      margin-top: 1.8vh;
       font-size: 2.4vh;
       min-height: 5.3vh;
+      display: inline-block;
+      margin-right: 0.3vh;
       &:hover {
         background-color: #1ddaaf;
         border-color: #1ddaaf;
         color: #fff;
       }
     }
+  }
+}
+.selectize-input.items{
+  input{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;      
   }
 }
 @media (max-width: 991px) {
