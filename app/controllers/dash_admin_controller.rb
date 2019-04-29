@@ -143,7 +143,12 @@ class DashAdminController < ApplicationController
 
     def find_index_and_siblings(result, user_id)
       index = result.index{|record| record if record[:user].id == user_id.to_i}
-      current_user = result[index]
+      index = result.index{|record| record if record[:user].admin_id == user_id.to_i} if index.nil?
+      if index.nil?
+        current_user = result.first 
+      else
+        current_user = result[index]
+      end
       if index == 0 or index.nil?
         three_records = {"#{1}": result[0],"#{2}": result[1], "#{3}": result[3]}
       elsif index == result.length 

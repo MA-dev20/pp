@@ -160,26 +160,23 @@
             </div>
         </div>
     </div> 
-    <div class="blue_table">
-      <div class="blue blue-place modal" id="share-modal" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="row">
-                     <div class="col-md-9">
-                        <input type="" name="" id="share_link" class="form-control mr-sm-3">
-                     </div>   
-                     <div class="col-md-3">
-                        <button class="btn" id="btn-copy" data-clipboard-target="#share_link" style="color: white;">Copy</button>
-                     </div>   
+    
+                    <div id="shareModal">
+                        <button type="button" id="close" onclick="closeShare()"><i class="far fa-times-circle"></i></button>
+                        <div class="header">
+                            - Teile dein Ergebnis -
+                        </div>
+                        <div class="links1">
+                            <%= social_share_button_tag('Ich habe  <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div>  erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(twitter linkedin Xing)) %>
+                        </div>
+                        <div class="links2">
+                            <%= social_share_button_tag('Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(whatsapp_app facebook)) %>
+                        </div>
                     </div>
                 </div>
-                </div>
-            </div>
-        </div>
-    </div> 
+              
     <script type="text/javascript">
         new ClipboardJS("#btn-copy")
-
         $("#download").on("click", function(e){
             e.preventDefault()
             var $href =  $(this).attr("href");
@@ -204,12 +201,10 @@
                 beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
                 data: {html: $("#table_wrapper").html()},
                 success: function(res){
-                    //window.location = JSON.parse(res).url
-                    $("#share-modal").modal("show")
                     $('#new_team_pop').modal("hide");
-
-                    //window.location = JSON.parse(res).url
-                    $("#share_link").val("<%= root_url %>" +JSON.parse(res).url)
+                    $(".social-share-button").data("title","<%= root_url %>" +JSON.parse(res).url )
+                    $("#shareModal").modal("show")
+                    $(".share_link").val("<%= root_url %>" +JSON.parse(res).url)
                 }
 
             })
@@ -219,6 +214,11 @@
             $('#new_team_pop').modal("show");
 
         })
+
+        function closeShare(){
+            $("#shareModal").modal("hide")
+
+        }
         function closeTeamPop(){
             $('#new_team_pop').modal("hide");
 
