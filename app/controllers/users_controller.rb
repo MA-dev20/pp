@@ -10,10 +10,19 @@ class UsersController < ApplicationController
       redirect_to dash_admin_users_path
     end
   end
-    
+  
+  def update
+    @user = User.find(params[:user_id])
+    @user.update(user_params)
+    redirect_to dash_admin_users_path
+  end
   private
     def set_vars
       @admin = current_admin
       @user = User.find(params[:user_id])
+    end
+
+    def user_params
+      params.require(:user).permit(:fname,:lname, :company_nmae, :email, :avatar )
     end
 end

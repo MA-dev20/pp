@@ -10,12 +10,96 @@
  *= require omnes
  *= require barack
  *= require bootstrap-tagsinput.css
+ *= require jpreview.css
+
  *= require dataTables/jquery.dataTables
  */
 
 @import "bootstrap";
 @import "font-awesome-sprockets";
 @import 'font-awesome';
+@import "social-share-button";
+
+#shareModal {
+    position: fixed;
+    display: none;
+    top: 25%;
+    left: 10%;
+    height: 70%;
+    width: 60%;
+    background-color: white;
+    color: #3e91da;
+    margin-left: 200px;
+    border-radius: 50px;
+    border: 3px solid #17a1e0;
+    padding: 30px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+}
+#shareModal .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10vh;
+    width: 100%;
+    line-height: 10vh;
+    font-size: 2.5vh;
+    text-align: center;
+    font-family: 'BarackPro-Solid';
+}
+#shareModal #close {
+    position: absolute;
+    top: 1vh;
+    right: 1vh;
+    font-size: 5vh;
+    background-color: transparent;
+    border: none;
+    box-shadow: 0 0 0 white;
+    padding: none;
+    cursor: pointer;
+    z-index: 10000;
+    color: #3e91da;
+}
+#shareModal{
+  z-index: 10392093;
+}
+#shareModal .links1 {
+    position: absolute;
+    top: 10vh;
+    left: 5vw;
+    width: 50vw;
+    height: 20vh;
+    line-height: 20vh;
+    text-align: center;
+}
+#shareModal .links2 {
+    position: absolute;
+    top: 30vh;
+    left: 5vw;
+    width: 50vw;
+    height: 20vh;
+    line-height: 20vh;
+    text-align: center;
+}
+#shareModal .ssb-icon {
+    height: 10vw;
+    width: 10vw;
+    background-size: 10vw 10vw;
+}
+.ssb-twitter {
+    background-image: image-url('social_share/twitter.png') !important;
+}
+.ssb-linkedin {
+    background-image: image-url('social_share/linkedin.png') !important;
+}
+.ssb-Xing {
+    background-image: image-url('social_share/xing.png') !important;
+}
+.ssb-whatsapp_app {
+    background-image: image-url('social_share/whatsapp.png') !important;
+}
+.ssb-facebook {
+    background-image: image-url('social_share/facebook.png') !important;
+}
 .bottom > .pol-bg {
     background-color: transparent;
     background-image: image-url('social_share/polygon.png');
