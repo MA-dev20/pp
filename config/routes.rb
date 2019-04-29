@@ -215,7 +215,7 @@ Rails.application.routes.draw do
 ##############
 # Enter Game #
 ##############
-
+  get '/team_list', to: 'dash_admin#get_teams'
   get 'mobile/admins/:password/password', to: 'game_mobile_admin#password', as: 'gma_pw'
   post 'mobile/admins/:password/password', to: 'game_mobile_admin#check_email', as: 'gma_email_check'
   post 'objection', to: 'game_desktop_admin#', as: 'gda_objection'

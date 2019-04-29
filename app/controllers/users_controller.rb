@@ -14,8 +14,15 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:user_id])
     @user.update(user_params)
+    team_ids = @user.team_ids.map(&:to_s)
+    if params[:user][:teams].present?
+      @user.team_ids = params[:user][:teams] 
+    else
+      @user.teams.destroy_all
+    end
     redirect_to dash_admin_users_path
   end
+  
   private
     def set_vars
       @admin = current_admin
@@ -23,6 +30,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:fname,:lname, :company_nmae, :email, :avatar )
+      params.require(:user).permit(:fname,:lname, :company_name, :email, :avatar )
     end
 end
