@@ -1,5 +1,6 @@
 <section id="gd_users">
-    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.js"></script>
 <div class="top">
 
     <div class="select-text">Spielgruppe wählen</div>
@@ -80,7 +81,7 @@
                             <h1>
                                 <span>Nutzer bearbeiten</span>
                             </h1>
-                            <%= form_for u, url: "/users/#{u.id}/update", method: 'put' do |f| %>
+                            <%= form_for u, url: "/users/#{u.id}/update", remote: true,method: 'put' do |f| %>
                             <div class="user-profile">
                                 <div class="user-profile-img">
                                     <div class="up-img">
@@ -128,9 +129,9 @@
                             <div class="teams-block">
                                 <div class="form-group bootstrapTag-group">
                                     <label>Teams</label>
-                                    <select class="form-control InputTags" placeholder="+" multiple="true" id="inputtags<%= u.id %>" data-role="tagsinput-typeahead">
+                                    <select class="InputTags" name='user[teams][]' multiple="true" id="inputtags<%= u.id %>" data-role="tagsinput-typeahead" readonly class="rdonly"/>
                                         <% u.teams.each do |t| %>
-                                            <option value="<%= t.id %>"><%= t.name %></option>
+                                            <option value="<%= t.id %>" selected><%= t.name %></option>
                                         <% end %>
                                     </select>
                                 </div>
@@ -163,39 +164,8 @@
             function  closeTeamPop(){
                 $(".blue").modal("hide");
             }
-            $(document).ready(function(){
-                $(".InputTags").tagsinput()
-            })
-var $div2 = $('[data-role="tagsinput-typeahead"]');
-var suggestionOptions = {
-  tagClass: 'prot-pill-default',
-  itemValue: 'key',
-  itemText: 'value',
-  typeahead: {
-    source: [
-      {
-        key: 'key-amsterdam',
-        value: 'value-amsterdam'
-      },
-      {
-        key: 'key-westernhagen',
-        value: 'value-westernhagen'
-      },
-      {
-        key: 'key-hund',
-        value: 'value-hund'
-      }
-    ],
-    afterSelect: function (val) {
-      this.$element.val('');
-    },
-    minLength: 0,
-    items: 'all',
-    showHintOnFocus: true
-  }
-};
+            
 
-$div2.tagsinput(suggestionOptions);
             
 
   
@@ -259,6 +229,11 @@ $div2.tagsinput(suggestionOptions);
         <% end %>
     }
     $(document).ready( function () {
+                    $(" .selectize-input span input").on("click", function(){
+                debugger
+                var $this = $(this).val(" ")
+            })
+
     $('#myTable').DataTable( {
         "paging":   false,
         "info":     false,
@@ -293,5 +268,57 @@ $('#searchField').keyup(function() {
 });
 new PerfectScrollbar('#table');
 new PerfectScrollbar('.cs-options');
+
+            $(document).ready(function(){
+
+                $('.InputTags').selectize({
+                    valueField: 'id',
+                    plugins: [ 'remove_button'
+                    ],
+                    labelField: 'name',
+                    persist: false,
+                    preload: true,
+                    create: false,
+                    allowEmptyOption: true,
+                    render: {
+                        option: function(data, escape) {
+                            return '<option>' +
+                                    '<span class="url">' + escape(data.name) + '</span>' +
+                                '</option>';
+                        },
+                        item: function(data, escape) {
+                            return '<span class="tag label label-info">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
+                        }
+                    },
+                    load: function(query, callback) {
+                        $.get({
+                            url: '/team_list',
+                            dataType: 'json',
+                            data: {
+                                name: query,
+                                additionalDataIfRequired: 'Additional Data'
+                            },
+                            error: function() {
+                                callback();
+                            },
+                            success: function(res) {
+                                // you can apply any modification to data before passing it to selectize
+                                callback(res);
+                                // res is json response from server
+                                // it contains array of objects. Each object has two properties. In this case 'id' and 'Name'
+                                // if array is inside some other property of res like 'response' or something. than use this
+                                //callback(res.response);
+                            }
+                        });
+                    }
+                })[0].selectize
+                $(".selectize-control").addClass("bootstrap-tagsinput")
+                $(".selectize-input.items input").click(function(){
+                    $(this).attr("value","a")
+                    $(this).attr("value","")
+                })
+                // $("").tagsinput()
+            })
+
 
 </script>

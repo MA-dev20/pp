@@ -18,6 +18,10 @@
 @import "font-awesome-sprockets";
 @import 'font-awesome';
 @import "social-share-button";
+a.remove{
+  display: none;
+}
+
 
 #shareModal {
     position: fixed;
@@ -1117,18 +1121,19 @@ modal
       padding: 0vh 1vh;
       line-height: 5vh;
       input {
-        height: 4vh;
-        width: 4vh;
+        background: asset-url('add.png');
+        background-size: 4vh;
+        cursor: pointer;
+        height: 4vh !important;
+        width: 4vh !important;
         font-size: 4.4vh;
         font-weight: 700;
         top: 0.6vh;
         right: 0;
         position: relative;
-        border: 1px solid #1ddaaf;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background-color: #fff;
         border-radius: 50%;
         color: #1ddaaf;
         padding: 3px;
@@ -1180,6 +1185,26 @@ modal
   cursor: pointer;
   img {
     width: 10vh;
+  }
+}
+.selectize-dropdown {
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+  width: 100%;
+  .selectize-dropdown-content {
+    option {
+      border: 1px solid #fff;
+      border-radius: 8px;
+      padding: 0 1.5vh;
+      margin-top: 2vh;
+      font-size: 2.4vh;
+      min-height: 5.3vh;
+      &:hover {
+        background-color: #1ddaaf;
+        border-color: #1ddaaf;
+        color: #fff;
+      }
+    }
   }
 }
 @media (max-width: 991px) {

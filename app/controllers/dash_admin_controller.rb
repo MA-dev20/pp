@@ -87,6 +87,10 @@ class DashAdminController < ApplicationController
       
     @user1 = User.find(params[:compare_user_id])
   end
+
+  def get_teams
+    render json: current_admin.teams.map{|t| {id: t.id, name: t.name}}.to_json
+  end
     
   def account
   end
@@ -158,6 +162,8 @@ class DashAdminController < ApplicationController
       end
       [three_records, current_user]
     end
+
+    
     
     def set_team
       @team = Team.find(params[:team_id])
