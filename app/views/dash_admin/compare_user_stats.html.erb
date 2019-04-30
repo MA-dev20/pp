@@ -5,28 +5,28 @@
     <div class="stats_overview">
         <div class="gesamt active">
             <button class="circle" id="chart_gesamt">
-            <span><%= @rating.ges / 10.0 %></span>
+            <span><%= number_with_precision(@current_rating[:rating][:ges].to_f / 10.0, precision: 1) %></span>
             <%= image_tag @user.avatar.quad.url %>
             </button>
             <div class="text" id="t_gesamt">Gesamt</div>
         </div>
         <div class="spontan">
-            <button class="circle" id="chart_spontan"><%= @rating.spontan / 10.0 %></button>
+            <button class="circle" id="chart_spontan"><%= number_with_precision( @current_rating[:rating][:spontan].to_f / 10.0, precision:1) %></button>
             <div class="text" id="t_spontan">Spontanität</div>
         </div>
         
         <div class="kreativ">
-            <button class="circle" id="chart_kreativ"><%= @rating.creative / 10.0 %></button>
+            <button class="circle" id="chart_kreativ"><%= number_with_precision(@current_rating[:rating][:creative].to_f / 10.0, precision:1) %></button>
             <div class="text" id="t_kreativ">Kreativität</div>
         </div>
         
         <div class="body">
-            <button class="circle" id="chart_body"><%= @rating.body / 10.0 %></button>
+            <button class="circle" id="chart_body"><%= number_with_precision(@current_rating[:rating][:body].to_f / 10.0, precision:1) %></button>
             <div class="text" id='t_body'>Körpersprache</div>
         </div>
         
         <div class="rhetorik">
-            <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric / 10.0 %></button>
+            <button class="circle" id="chart_rhetorik"><%= number_with_precision(@current_rating[:rating][:rhetoric].to_f / 10.0, precision:1) %></button>
             <div class="text" id="t_rhetorik">Rhetorik</div>
         </div>
         <div class="places">
@@ -35,7 +35,8 @@
                <div class="txt"><%= @turns.where(place: 1).count %></div>
            </div>
            <div class="second">
-               <%= image_tag 'defaults/silver.png' %>
+               <%= image_tag 'defaults/silver.png' %>ƒ
+
                <div class="txt"><%= @turns.where(place: 2).count %></div>
            </div>
            <div class="third">
@@ -43,6 +44,21 @@
                <div class="txt"><%= @turns.where(place: 3).count %></div>
            </div>
         </div>
+        <ul class="places-ratings">
+           <% @result.first(3).each.with_index(1) do |v, k| %>
+
+            <% if v.present? %>
+                    <li class="<%= 'current' if v[:user].id == params[:user_id] %>">  
+                        <% if v[:user].id == params[:user_id] or k.to_s == "2" %>
+                            <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
+                        <% end %>
+                        <div class="rating-c"><%= k %>. <%= v[:user].fname%></div>
+                        <div class="rating-d"><%= number_with_precision(v[:rating][:average] / 10, precision: 1)  %></div>
+                    </li>
+                <% end %>
+           <% end %> 
+        </ul>
+        
         <div class="compare">
             
         <select class="cs-select cs-skin-underline form-field">
@@ -66,6 +82,8 @@
         </div>
     </div>
 </section>
+<%= render partial: 'statistics_table', locals: {result: @result} %>
+
 <script>
 (function() {
 [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(

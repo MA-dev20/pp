@@ -26,10 +26,10 @@ a.remove{
 #shareModal {
     position: fixed;
     display: none;
-    top: 25%;
-    left: 10%;
-    height: 70%;
-    width: 60%;
+    top: 22vh;
+    left: 32vh;
+    height: 58%;
+    width: 46%;
     background-color: white;
     color: #3e91da;
     margin-left: 200px;
@@ -51,8 +51,8 @@ a.remove{
 }
 #shareModal #close {
     position: absolute;
-    top: 1vh;
-    right: 1vh;
+    top: 2vh;
+    right: 1.5vh;
     font-size: 5vh;
     background-color: transparent;
     border: none;
@@ -68,8 +68,8 @@ a.remove{
 #shareModal .links1 {
     position: absolute;
     top: 10vh;
-    left: 5vw;
-    width: 50vw;
+    left: 0;
+    width: 100%;
     height: 20vh;
     line-height: 20vh;
     text-align: center;
@@ -77,8 +77,8 @@ a.remove{
 #shareModal .links2 {
     position: absolute;
     top: 30vh;
-    left: 5vw;
-    width: 50vw;
+    left: 0;
+    width: 100%;
     height: 20vh;
     line-height: 20vh;
     text-align: center;
@@ -842,7 +842,6 @@ modal
         font-weight: bold;
         display: flex;
         align-items: center;
-        justify-content: space-between;
         border-bottom: 2px solid #dcdcdc;
         min-height: 3.5vh;
         &:last-child {
@@ -855,8 +854,16 @@ modal
         }
         .rating-d {
           border-left: 2px solid #dcdcdc;
+          width: 6vh;
           min-width: 6vh;
           text-align: right;
+        }
+        .rating-c {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          width: 100%;
+          max-width: 22vh;
         }
         img {
           position: absolute;
@@ -975,6 +982,11 @@ modal
               width: 28px;
               padding-left: 1px;
               padding-right: 1px;
+            }
+            span {
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
             }
           }
         } 

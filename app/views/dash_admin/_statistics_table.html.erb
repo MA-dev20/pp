@@ -1,0 +1,147 @@
+<%= content_for :modal do %>
+  <div class="modal pop_up modal-teams" id="pop_up" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h1>Select your Plan first in order to see users statistics <br> <%= link_to "Select Package", dash_admin_price_path, class: "btn btn-green mt-4 ml-0" %> </h1>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  <div class="blue_table">
+      
+      <div class="blue blue-place modal teamV-modal" id="new_team_pop" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button type="button" class="close modal-close" onclick="closeTeamPop()" aria-label="Close"><i class="fas fa-times"></i></button>
+                    <div id="table_wrapper">
+                        <div class="" id="list-table">
+                            <h1>
+                                <span>Team Vertrieb</span>
+                            </h1>
+                            <div class="table-canvas">
+                                <div class="t-overflow">
+                                    <table>
+                                        <thead>
+                                            <tr class="head-row">
+                                              <th class="head" width="100"><span></span></th>
+                                              <th class="head" width="60"><span>Ges</span></th>
+                                              <th class="head" width="60"><span>Spon</span></th>
+                                              <th class="head" width="60"><span>Korp</span></th>
+                                              <th class="head" width="60"><span>Krea</span></th>
+                                              <th class="head" width="60"><span>Rhet</span></th> 
+                                              <th class="head" width="26px">
+                                                <span><img src="<%= root_url %>/cup.png", width="16px"></span>
+                                              </th>
+                                              <th class="head" width="26px">
+                                                <span><img src="<%= root_url %>/silver.png", width="16px"></span>
+                                              </th>
+                                              <th class="head" width="26px">
+                                                <span><img src="<%= root_url %>/bronze.png", width="16px"></span>
+                                              </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="table-scroll <%='table-scroll-live' if @result.length > 6 %> ">
+                                    <table>
+                                        <tbody>
+                                            <% result.each.with_index(1) do |r,i| %>
+                                              <tr class="full-row">
+                                                <td class="row-data"><span><%=i%> . <%= "#{r[:user].fname} #{r[:user].lname}".length > 9 ? "#{r[:user].fname} #{r[:user].lname}".first(8)+ '...' : "#{r[:user].fname} #{r[:user].lname}" %> </span></td>
+                                                <td class="row-data" width="60"><span><%=number_with_precision r[:rating][:ges] / 10, precision: 1 %></span></td> 
+                                                <td class="row-data" width="60"><span><%= number_with_precision r[:rating][:spontan] / 10, precision: 1 %></span></td> 
+                                                <td  class="row-data" width="60"><span><%= number_with_precision r[:rating][:rhetoric] / 10,precision: 1 %></span></td> 
+                                                <td class="row-data" width="60"><span><%= number_with_precision r[:rating][:creative] / 10,precision: 1 %></span></td> 
+                                                <td class="row-data" width="60"><span><%= number_with_precision r[:rating][:body] / 10 ,precision: 1%></span></td> 
+                                                <td class="row-data" width="26px"><span><%= r[:places][:gold] %></span></td>
+                                                <td class="row-data" width="26px"><span><%= r[:places][:silver] %></span></td>
+                                                <td class="row-data" width="26px"><span><%= r[:places][:bronze] %></span></td>
+                                              </tr>
+                                            <% end %>
+                                        </tbody>                        
+                                    </table>
+                                </div>
+                            </div>
+                            <section class="content-tm">
+                                <div class="bottom">
+                                    <a href=""  id="a_download" style="display: none;" download>
+                                    </a>
+                                    <%= link_to "<img src=#{image_path('download-m.png')}>".html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'download' %>
+
+                                    <%= link_to "<img src=#{asset_path('share-m.png')}>".html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'share' %>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+    <div id="shareModal">
+        <button type="button" id="close" onclick="closeShare()"><i class="far fa-times-circle"></i></button>
+        <div class="header">
+            - Teile dein Ergebnis -
+        </div>
+        <div class="links1">
+            <%= social_share_button_tag('Ich habe  <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div>  erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(twitter linkedin Xing)) %>
+        </div>
+        <div class="links2">
+            <%= social_share_button_tag('Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(whatsapp_app facebook)) %>
+        </div>
+    </div>
+              
+    <script type="text/javascript">
+        new ClipboardJS("#btn-copy")
+        $("#download").on("click", function(e){
+            e.preventDefault()
+            var $href =  $(this).attr("href");
+            $.ajax({
+                url: $href,
+                type: 'post',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                data: {html: $("#table_wrapper").html()},
+                success: function(res){
+                    $("#a_download").attr("href", JSON.parse(res).url)
+                    document.getElementById("a_download").click()
+                }
+
+            })
+        })
+        $("#share").on("click", function(e){
+            e.preventDefault()
+            var $href =  $(this).attr("href");
+            $.ajax({
+                url: $href,
+                type: 'post',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                data: {html: $("#table_wrapper").html()},
+                success: function(res){
+                    $('#new_team_pop').modal("hide");
+                    $(".social-share-button").data("title","<%= root_url %>" +JSON.parse(res).url )
+                    $("#shareModal").modal("show")
+                    $(".share_link").val("<%= root_url %>" +JSON.parse(res).url)
+                }
+
+            })
+        })
+                
+        $("#open-team-scores").on("click", function(){
+            $('#new_team_pop').modal("show");
+
+        })
+
+        function closeShare(){
+            $("#shareModal").modal("hide")
+
+        }
+        function closeTeamPop(){
+            $('#new_team_pop').modal("hide");
+
+        }
+    </script>
+<% end %>
