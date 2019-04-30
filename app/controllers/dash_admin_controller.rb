@@ -96,8 +96,24 @@ class DashAdminController < ApplicationController
     @users = @admin.users
     @turns = @user.turns
     @turns_rating = @user.turn_ratings.last(7)
-    @rating = @user.user_rating
-      
+    rating = @user.turn_ratings
+    if !rating.present?
+      flash[:danger] = 'Noch keine bewerteten Spiele!'
+      return redirect_to dash_admin_users_path
+    end
+    @rating = rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
+    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
+    raw_result = users_ratings userss
+    @result = raw_result.sort_by {|u| -u[:rating][:average]}
+    # if @result.present?
+    #   if @result.count >= 3
+    #     @three_records = @result
+    #   else
+        @three_records, @current_rating = find_index_and_siblings(@result,params[:user_id]) if @result.present?
+    #   end
+    # end
+
+    @length = raw_result.length
     @user1 = User.find(params[:compare_user_id])
   end
 
