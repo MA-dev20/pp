@@ -1,4 +1,5 @@
 <section id="dash_stats">
+
     <div class="head">
         <span><%= @user.fname %> <%= @user.lname %></span>, <%= @team.name %>
     </div>
@@ -35,7 +36,8 @@
                <div class="txt"><%= @turns.where(place: 1).count %></div>
            </div>
            <div class="second">
-               <%= image_tag 'defaults/silver.png' %>
+               <%= image_tag 'defaults/silver.png' %>ƒ
+
                <div class="txt"><%= @turns.where(place: 2).count %></div>
            </div>
            <div class="third">
@@ -129,7 +131,7 @@
                                         <tbody>
                                             <% @result.each.with_index(1) do |r,i| %>
                                               <tr class="full-row">
-                                                <td class="row-data"><%=i%> . <%= r[:user].fname %></td>
+                                                <td class="row-data"><%=i%> . <%= "#{r[:user].fname} #{r[:user].lname}" %> </td>
                                                 <td class="row-data" width="60"><%=number_with_precision r[:rating][:ges] / 10, precision: 1 %></td> 
                                                 <td class="row-data" width="60"><%= number_with_precision r[:rating][:spontan] / 10, precision: 1 %></td> 
                                                 <td  class="row-data" width="60"><%= number_with_precision r[:rating][:rhetoric] / 10,precision: 1 %></td> 

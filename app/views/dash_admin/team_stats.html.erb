@@ -138,7 +138,7 @@
                                         <tbody>
                                             <% @result.each.with_index(1) do |r,i| %>
                                               <tr class="full-row">
-                                                <td class="row-data"><%=i%> . <%= r[:user].fname %></td>
+                                                <td class="row-data"><%=i%> . <%= "#{r[:user].fname} #{r[:user].lname}"  %></td>
                                                 <td class="row-data" width="60"><%=number_with_precision r[:rating][:ges] / 10, precision: 1 %></td> 
                                                 <td class="row-data" width="60"><%= number_with_precision r[:rating][:spontan] / 10, precision: 1 %></td> 
                                                 <td  class="row-data" width="60"><%= number_with_precision r[:rating][:rhetoric] / 10,precision: 1 %></td> 
