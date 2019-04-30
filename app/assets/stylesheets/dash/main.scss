@@ -788,7 +788,7 @@ modal
 
 
 .table-scroll {
-  height: 22vh;
+  height: 21vh;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -823,11 +823,11 @@ modal
   line-height: 4vh;
 }
 .content-tm .bottom > .pol-bg {
-  padding: 0 12px;
+  padding: 0 10px;
   background-image: none;
 }
 .content-tm .bottom > .pol-bg img {
-  width: 9vh;
+  width: 8vh;
 }
 .places-ratings {
     padding: 0;
@@ -893,7 +893,7 @@ modal
 }
 .teamV-modal.modal .modal-dialog {
   margin: 1.75rem auto !important;
-  max-width: 116vh;
+  max-width: 96vh;
   display: flex;
   align-items: center;
 }
@@ -902,8 +902,8 @@ modal
 }
 .teamV-modal.modal .modal-close {
   line-height: 5.8vh;
-  height: 5vh;
-  width: 5vh;
+  height: 4vh;
+  width: 4vh;
   font-size: 3vh;
   font-weight: 300;
   top: 2vh;
@@ -918,16 +918,16 @@ modal
   overflow-y: hidden;
 }
 #list-table{
-    height: 59vh;
+    height: 58vh;
     font-size: 30px;
     border-radius: 20px;
-    padding: 40px 100px 40px 65px;
+    padding: 6vh 14vh 6vh 9.5vh;
     position: relative;
     h1 {
       position: relative;
       padding-bottom: 0.75rem;
       font-weight: 700;
-      font-size: 3.7vh;
+      font-size: 3.4vh;
       margin-bottom: 2rem;
       &:before {
         content: '';
