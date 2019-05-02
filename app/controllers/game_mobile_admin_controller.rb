@@ -26,12 +26,12 @@ class GameMobileAdminController < ApplicationController
       sign_in(@game)
       @admin = Admin.where(id: @game.admin_id, email: session[:admin_email].downcase).first
       if @admin && @admin.valid_password?(params[:admin][:password])
+        flash[:success] = "Successfully signed In"
         sign_in(@admin)
         redirect_to gma_new_avatar_path
       else
-        session[:admin_email] = nil
         flash[:danger] = "Unbekannte E-Mail / Password Kombination"
-        redirect_to root_path
+        render :forget_pw
       end
     else
       session[:admin_email] = nil
