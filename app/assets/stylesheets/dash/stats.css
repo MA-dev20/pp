@@ -135,12 +135,25 @@
     top: 21vh;
     font-size: 4vh;
 }
+#dash_stats .compare-selects{
+    position: absolute;
+    bottom: 0;
+    height: 5vh;
+    width: 21vh;
+}
 #dash_stats .compare {
     position: absolute;
     bottom: 0;
     right: 0;
     height: 5vh;
     width: 21vh;
+}
+#dash_stats .compare-selects .cs-select{
+    height: 4vh;
+    border-radius: 2vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    line-height: 4vh;
 }
 #dash_stats .compare .cs-select {
     height: 4vh;

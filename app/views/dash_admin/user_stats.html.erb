@@ -1,7 +1,7 @@
-<section id="dash_stats">
+<section id="dash_stats" class="dash_stats-head">
 
     <div class="head">
-        <span><%= @user.fname %> <%= @user.lname %></span>, <%= @team.name %>
+           <%= render partial: 'select_team_user_dropdown', locals: {users: @users, teams: @teams, user: @user} %>
     </div>
     <div class="stats_overview">
         <div class="gesamt active">
@@ -79,8 +79,21 @@
             <canvas id="Chart"></canvas>
         </div>
     </div>
+    <style type="text/css">
+    
+        .tooltipi {
+            display:none;
+            position:absolute;
+            border: 1px solid #ccc;
+            background-color:#e2c452;
+            border-radius:2px;
+            padding:10px;
+            font-size:12px Arial;
+        }
+    </style>
 </section>
-<%= render partial: 'statistics_table', locals: {result: @result} %>
+<%= render partial: 'statistics_table',locals: {result: @result} %>
+
 <script>
 (function() {
 [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
@@ -96,21 +109,110 @@ var datapoints2 = [NaN, NaN, NaN, NaN, NaN, NaN, NaN ];
 var label = [NaN, NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
 <% @turns_rating.each do |g| %>
-    datapoints[i] = <%= g.ges / 10.0 %>;
+    var json_data = <%= g.to_json.html_safe %>
+    json_data["word"] = "<%= g.turn.word.name %>";
+    json_data["average_team_ratings"] = <%= @average_team_rating %>;
+    <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+    <% if admin_rating.present? %>
+        var admin_ges = <%= admin_rating.ges %>;
+    <% else %>
+        var admin_ges = 0;
+    <% end %> 
+    json_data["admin_ges"] = admin_ges
+    datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
+
     <% if GameRating.where(game_id: g.game_id).first %>
-    datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.ges / 10.0 %>;
+        <% rating = GameRating.where(game_id: g.game_id).first %>
+        var json_data2 = <%= rating.to_json.html_safe %>
+        datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
     <% end %>
     label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
     i++;
 <% end %>
+
+var data2 = datapoints2.map(el => {
+                return el.value
+            });
+var data1 = datapoints.map(el => {
+                return el.value
+            });
+        function customTooltips(tooltipModel) {
+                // Tooltip Element
+                var tooltipEl = document.getElementById('chartjs-tooltip');
+
+                // Create element on first render
+                if (!tooltipEl) {
+                    tooltipEl = document.createElement('div');
+                    tooltipEl.id = 'chartjs-tooltip';
+                    tooltipEl.innerHTML = `<div class='tooltips'></div>`;
+                    document.body.appendChild(tooltipEl);
+                }
+
+                // Hide if no tooltip
+                if (tooltipModel.opacity === 0) {
+                    tooltipEl.style.opacity = 0;
+                    return;
+                }
+
+                // Set caret Position
+                tooltipEl.classList.remove('above', 'below', 'no-transform');
+                if (tooltipModel.yAlign) {
+                    tooltipEl.classList.add(tooltipModel.yAlign);
+                } else {
+                    tooltipEl.classList.add('no-transform');
+                }
+
+                function getBody(bodyItem) {
+                    return bodyItem.lines;
+                }
+
+                // Set Text
+                if (tooltipModel.body) {
+                    var titleLines = tooltipModel.title || [];
+                    var bodyLines = tooltipModel.body.map(getBody);
+
+                    var innerHtml = '<div>';
+
+                    titleLines.forEach(function(title) {
+                        innerHtml += '<div><div>' + title + '</div></div>';
+                    });
+                    innerHtml += '</div><div>';
+
+                    bodyLines.forEach(function(body, i) {
+                        var colors = tooltipModel.labelColors[i];
+                        var style = 'background:' + colors.backgroundColor;
+                        style += '; border-color:' + colors.borderColor;
+                        style += '; border-width: 2px';
+                        var span = '<span style="' + style + '"></span>';
+                        innerHtml += '<div><div>' + span + body + '</div></div>';
+                    });
+                    innerHtml += '</div>';
+
+                    var tableRoot = tooltipEl.querySelector('div');
+                    tableRoot.innerHTML = innerHtml;
+                }
+                var position = this._chart.canvas.getBoundingClientRect();
+
+                // Display, position, and set styles for font
+                tooltipEl.style.opacity = 1;
+                tooltipEl.style.position = 'absolute';
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX-142 + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-335 + 'px';
+                tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
+                tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
+                tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
+                tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+                tooltipEl.style.pointerEvents = 'none';
+            }
 var user1 = '<%= @user.fname %>';
 var gesamtChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: label,
+
         datasets: [{
             label: user1,
-            data: datapoints,
+            data: data1,
             fill:false,
             borderColor:"rgba(255,255,255,1.0)",
             borderWidth: 5,
@@ -120,11 +222,13 @@ var gesamtChart = new Chart(ctx, {
             pointHoverBorderColor:"rgba(255,255,255,1.0)",
             pointBorderWidth: 5,
             pointRadius: 5,
+            datapoints: datapoints,
             pointHoverRadius: 8,
             lineTension:0,
+            extra: datapoints
         }, {
             label: 'Team',
-            data: datapoints2,
+            data: data2,
             fill: false,
             borderColor:"rgba(255,255,255,0.30)",
             borderWidth: 5,
@@ -134,8 +238,10 @@ var gesamtChart = new Chart(ctx, {
             pointHoverBorderColor:"rgba(255,255,255,0.30)",
             pointBorderWidth: 5,
             pointRadius: 1,
+            datapoints: datapoints2,
             pointHoverRadius: 1,
             lineTension:0,
+            extra: datapoints2
         }]
     },
     options: {
@@ -149,8 +255,170 @@ var gesamtChart = new Chart(ctx, {
         },
         tooltips: {
             mode: 'index',
+            enabled: false,
             multiKeyBackground:"rgba(255,255,255,0)",
             intersect: false,
+            dataPoints: datapoints,
+            custom: customTooltips,
+
+            callbacks: {
+                title: function(tooltipItem, data) {
+                  if(data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]){
+
+                    var creative1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
+                    var team_Average = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["average_team_ratings"]
+
+                    var admin_ratings = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["admin_ges"]  /10
+                    var spontan1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["spontan"] / 10
+                    var body1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["body"] / 10
+                    var rhetorik1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["rhetoric"] / 10
+                  }else{
+                    var creative1 = 0,
+                      spontan1=0,
+                      admin_ratings= 0,
+                      team_Average= 0,
+                      body1=0,
+                      rhetorik1=0;
+                  }
+                  if(data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]){
+                    var creative2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
+                    var ges = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["ges"] / 10
+
+                    var spontan2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["spontan"] / 10
+                    var body2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["body"] / 10
+                    var rhetorik2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["rhetoric"] / 10
+                  }else{
+                    var creative2 = 0,
+                        ges=0,
+                      spontan2=0,
+                      body2=0,
+                      rhetorik2=0;
+                  }
+                  var val =` 
+                    <div class="progress-block">
+                        <div class="progress-top">
+                            <h6>`+tooltipItem[0]["xLabel"]+`</h6>
+                            <h3>`+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word"]+`</h3>
+                            <div id="dash_stats">
+                                <div class="rhetorik rhetorik-ge">
+                                    <button class="circle" id="chart_rhetorik">`+ges+`</button>
+                                    <div class="text" id="t_rhetorik">Gesamt</div>
+                                </div>
+                                <div class="rhetorik rhetorik-ts">
+                                    <button class="circle" id="chart_rhetorik">`+team_Average+`</button>
+                                    <div class="text" id="t_rhetorik">Teamschnitt</div>
+                                </div>
+                                <div class="rhetorik rhetorik-mb">
+                                    <button class="circle" id="chart_rhetorik">`+admin_ratings+`</button>
+                                    <div class="text" id="t_rhetorik">Meine Bewertung</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-main">
+                          <div class="progressBar">
+                            <div class="progress-bar-text">Spontanitat</div>
+                            <div class="progress-bar-pop">
+                              <div class="progress-bar-con progress-con-t">
+                                <div class="progressbar-view">
+                                  <div class="progressbar-fill" style="width: `+spontan1/10*100+`% !important;"></div>
+                                </div>
+                                <div class="progress-bar-value">`+spontan1+`</div>
+                              </div>`;
+                              if(data["datasets"][1]){
+                                val+=`
+                                  <div class="progress-bar-con progress-con-b">
+                                    <div class="progressbar-view">
+                                      <div class="progressbar-fill" style="width: `+spontan2/10*100+`% !important;"></div>
+                                    </div>
+                                    <div class="progress-bar-value">`+spontan2+`</div>
+                                  </div>` ;     
+                              }
+                              val+=`
+                            </div>
+                          </div>
+                          <div class="progressBar">
+                            <div class="progress-bar-text">Kreativitat</div>
+                            <div class="progress-bar-pop">
+                              <div class="progress-bar-con progress-con-t">
+                                <div class="progressbar-view">
+                                  <div class="progressbar-fill" style="width: `+creative1/10*100+`% !important;"></div>
+                                </div>
+                                <div class="progress-bar-value">`+creative1+`</div>
+                              </div>
+                              `;
+                              if(data["datasets"][1]){
+                                val+=`
+                                  <div class="progress-bar-con progress-con-b">
+                                    <div class="progressbar-view">
+                                      <div class="progressbar-fill" style="width: `+creative2/10*100+`% !important;"></div>
+                                    </div>
+                                    <div class="progress-bar-value">`+creative2+`</div>
+                                  </div>`
+                              }
+                              
+                              val+=`
+                            </div>
+                          </div>
+                          <div class="progressBar">
+                            <div class="progress-bar-text">Korpersprache</div>
+                            <div class="progress-bar-pop">
+                              <div class="progress-bar-con progress-con-t">
+                                <div class="progressbar-view">
+                                  <div class="progressbar-fill" style="width: `+body1/10*100+`% !important;"></div>
+                                </div>
+                                <div class="progress-bar-value">`+body2+`</div>
+                              </div>`;
+                              if(data["datasets"][1]){
+                                val+=` <div class="progress-bar-con progress-con-b">
+                                    <div class="progressbar-view">
+                                      <div class="progressbar-fill" style="width: `+body2/10*100+`% !important;"></div>
+                                    </div>
+                                    <div class="progress-bar-value">`+body2+`</div>
+                                  </div>`;
+                              }
+
+                              
+                              val+=`
+                            </div>
+                          </div>
+                          <div class="progressBar">
+                            <div class="progress-bar-text">Rhetorik</div>
+                            <div class="progress-bar-pop">
+                              <div class="progress-bar-con progress-con-t">
+                                <div class="progressbar-view">
+                                  <div class="progressbar-fill" style="width: `+rhetorik1/10*100+`% !important;"></div>
+                                </div>
+                                <div class="progress-bar-value">`+rhetorik1+`</div>
+                              </div>
+                              `;
+                              if(data["datasets"][1]){
+                                 val+=`
+                                  <div class="progress-bar-con progress-con-b">
+                                    <div class="progressbar-view">
+                                      <div class="progressbar-fill" style="width: `+rhetorik2/10*100+`% !important;"></div>
+                                    </div>
+                                    <div class="progress-bar-value">`+rhetorik2+`</div>
+                                  </div>
+                                  `;
+                              }
+                              val+=`
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    ` 
+                            return val
+                },
+                label: function(tooltipItem, data) {
+                  // return data['datasets'][0]['data'][tooltipItem['index']];
+                },
+                afterLabel: function(tooltipItem, data) {
+                  // var dataset = data['datasets'][0];
+                  // var percent = Math.round((dataset['data'][tooltipItem['index']] / dataset["_meta"][0]['total']) * 100)
+                  // return '(' + percent + '%)';
+                }
+            },
+
         },
         scales: {
             yAxes: [{
