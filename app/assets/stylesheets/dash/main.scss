@@ -1237,6 +1237,178 @@ modal
     left: 0vh;
   }
 }
+#chartjs-tooltip {
+  background-color: rgb(255, 255, 255);
+  width: 45vh;
+  height: 46.8vh;
+  border-radius: 24px;
+  padding: 1.8vh 2.2vh !important;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.22);
+  &:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 2.8vh solid transparent;
+  border-right: 2.8vh solid transparent;
+  border-top: 2.8vh solid #fff;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2.8vh;
+  margin: 0 auto;
+  }
+  .progress-block {
+    .progress-top {
+      text-align: center;
+      border-bottom: 0.5vh solid #f1f1f1;
+      h6 {
+        color: #d0d0d0;
+        font-size: 1.6vh;
+        margin-bottom: 0.5vh;
+        font-weight: 700;
+      }
+      h3 {
+        font-size: 3.5vh;
+        color: #1ddaaf;
+        font-weight: 700;
+        margin-bottom: 0.5vh;
+      }
+    }
+    #dash_stats {
+      position: static;
+      width: auto;
+      height: auto;
+      display: flex;
+      justify-content: space-between;
+      .rhetorik {
+        position: static;
+        height: auto;
+        width: 33.33%;
+        button {
+          position: static;
+          width: 8vh;
+          height: 8vh;
+          font-size: 3.4vh;
+          border: 0.5vh solid rgba(28, 161, 222, 0.5);
+          box-shadow: none;
+        }
+        .text {
+          position: static;
+          font-size: 1.4vh;
+          width: auto;
+          color: #bebebe;
+          font-weight: 700;
+          height: auto;
+          line-height: 2vh;
+          margin: 1vh 0vh 2vh 0vh;
+        }
+      }
+      .rhetorik-ge {
+        button {
+          border: 0.5vh solid #77e9cf;
+          background-color: #bcddef;
+        }
+      }
+      .rhetorik-ts {
+        button {
+          border: 0.5vh solid #c2ff66;
+          background-color: #bcddef;
+        }
+      }
+      .rhetorik-mb {
+        button {
+          border: 0.5vh solid #a6ff7f;
+          background-color: #c7e3f2;
+        }
+      }
+    }
+  }
+  .progress-main {
+    margin-top: 1.8vh;
+  }
+  .progressBar {
+    display: flex;
+    margin-bottom: 1vh;
+    .progress-bar-text {
+      color: #bebebe;
+      font-size: 2vh;
+      font-weight: 700;
+      margin-right: 2vh;
+      min-width: 17.2vh;
+      line-height: 2.6vh;
+    }
+    .progress-bar-pop {
+      width: 100%;
+      .progress-bar-con {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.6vh;
+        .progress-bar-value {
+          font-size: 1.7vh;
+          margin-bottom: 0;
+          font-weight: 700;
+          min-width: 4vh;
+          text-align: right;
+          line-height: 1.8vh;
+        }
+        .progressbar-view {
+          height: 1.6vh;
+          width: 100%;
+          display: inline-block;
+          position: relative;
+          border-radius: 10px;
+          background-color: #f1f1f1;
+          .progressbar-fill {
+            display: inline-block;
+            height: 1.6vh;
+            border-radius: 10px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+          }
+        }
+      }
+      .progress-con-t {
+        .progressbar-view {
+          .progressbar-fill {
+            background-color: #8fc7e5;
+          }
+        }
+        .progress-bar-value {
+          color: #d0d0d0;
+        }
+      }
+      .progress-con-b {
+        .progressbar-view {
+          .progressbar-fill {
+            background-color: #c0dceb;
+          }
+        }
+        .progress-bar-value {
+          color: #d9d9d9;
+        }
+      }
+    }
+  }
+}
+.dash_stats-head {
+  .head {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .compare-selects {
+      position: static;
+      width: auto;
+      width: auto;
+      .cs-select {
+        width: 21vh;
+        top: 0;
+        margin: 0 0.5vh;
+      }
+    }
+  }
+}
 
 
 

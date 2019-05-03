@@ -1,0 +1,15 @@
+ <div class="compare-selects">
+    <select class="cs-select cs-skin-underline form-field">
+        <option value="" disabled selected>Vergleiche mit</option>
+        <% users.each do |u| %>
+                <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(@team.id, u.id) %>">                                 <%= u.fname %> <%= u.lname %>
+                </option>
+                
+        <% end %>
+    </select>
+    <select class="cs-select cs-skin-underline form-field">
+        <% teams.each do |t| %>
+                <option value="<%= t.id %>" data-link="<%= dash_admin_team_stats_path(t.id) %>"><%= t.name %></option>
+        <% end %>
+    </select>
+</div>

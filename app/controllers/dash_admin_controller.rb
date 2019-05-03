@@ -23,10 +23,12 @@ class DashAdminController < ApplicationController
     end
   end
 
+
   def teams
   end
     
   def team_stats
+    @users = @admin.users
     @rating = @team.team_rating
     @gameratings = @team.game_ratings.last(7)
     @count = 1
@@ -34,6 +36,7 @@ class DashAdminController < ApplicationController
       flash[:pop_up] = "Ups, für dieses Team liegen noch keine Statistiken vor.;- Da müsst ihr wohl erst noch eine Runde spielen. -;Let's Play"
       redirect_to dash_admin_teams_path
     end
+
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
@@ -45,7 +48,6 @@ class DashAdminController < ApplicationController
     #   end
     # end
     @length = raw_result.length
-
     @turns = current_admin.turns
     if params[:team2_id]
       @team2 = Team.find(params[:team2_id])
@@ -80,6 +82,8 @@ class DashAdminController < ApplicationController
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
+    @ratings = @team.team_rating
+    @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.inject(:+) / 40
     # if @result.present?
     #   if @result.count >= 3
     #     @three_records = @result
@@ -96,13 +100,16 @@ class DashAdminController < ApplicationController
     @users = @admin.users
     @turns = @user.turns
     @turns_rating = @user.turn_ratings.last(7)
+    @user1 = User.find(params[:compare_user_id])
+    @turns_rating2 = @user1.turn_ratings.last(7)
     rating = @user.turn_ratings
-    if !rating.present?
+    rating2 = @user1.turn_ratings
+    if !rating.present? && !rating2.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
     end
     @rating = rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
-    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
+    @userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     # if @result.present?
@@ -114,7 +121,6 @@ class DashAdminController < ApplicationController
     # end
 
     @length = raw_result.length
-    @user1 = User.find(params[:compare_user_id])
   end
 
   def get_teams
