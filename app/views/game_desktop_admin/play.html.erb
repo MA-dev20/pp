@@ -13,13 +13,9 @@
    Skip mit Leertaste
 </section>
 
-
 <%= audio_tag("play/intro.mp3", autoplay: false, loop: true, id: 'intro') %>
 <%= audio_tag(@word.sound, id: "word_sound") %>
 <%= audio_tag('play/theme.mp3', id: 'theme') %>
-
-
-
 <script type="text/javascript">
     textanim();
     document.getElementById('intro').play();
@@ -32,6 +28,7 @@
         document.getElementById('intro').pause();
         document.getElementById('word_sound').play();
         document.getElementById('theme').play();
+        MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
     };
     
 

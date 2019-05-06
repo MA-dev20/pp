@@ -54,7 +54,9 @@
                   <%= link_to "Teams", dash_admin_teams_path %>
               <% end %>
               </div>
-              
+              <div class="link">
+                <%= link_to "Catchwords", dash_admin_catchwords_path %>
+              </div>
               <div class="link">
               <% if current_page?(dash_admin_users_path) %>
                   <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
@@ -175,8 +177,19 @@
         $('#content').addClass('backgroundblur');
         $('#team_name').focus();
     };
+
+    function openCatchword() {
+        $('#new_catchword').show();
+        $('#content').addClass('backgroundblur');
+        $('#catchword_name').focus();
+    };
     function closeTeam() {
         $('#new_team').hide();
+        $('#content').removeClass('backgroundblur');
+    }
+
+    function closeCatchword() {
+        $('#new_catchword').hide();
         $('#content').removeClass('backgroundblur');
     }
     function closeModal() {

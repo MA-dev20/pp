@@ -128,7 +128,6 @@ const resolver = {
           doResolverEffect(nextOptions, callback);
         } else if (typeof callback === "function") {
           callback();
-          MyApp.timer = startTimer('80', document.getElementById('timerall'));
         }
       });
     };

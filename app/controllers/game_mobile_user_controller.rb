@@ -177,8 +177,16 @@ class GameMobileUserController < ApplicationController
     @game1 = Game.find(session[:game_session_id])
     @admin = @game1.admin
     @game = @game1
-    @word = Word.first(50).sample(5).first if @game1.admin.admin_subscription_id.nil?
-    @word = Word.all.sample(5).first if @word.nil?
+    if @game1.admin.admin_subscription_id.nil?
+      @word = Word.first(50).sample(5).first     
+      @word = Word.all.sample(50).first if @word.nil?
+    end
+    if @game.own_words
+      @word = @game.has_or_create_basket_for_words.words.sample(50).first
+      @word = Word.all.sample(50).first if @word.nil?
+    else
+      @word = Word.all.sample(50).first
+    end
     if @game1.active
       session.delete(:game_session_id)
       sign_in(@game1)
@@ -274,6 +282,7 @@ class GameMobileUserController < ApplicationController
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).playable.first
       @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: true, played: false, admin_id: admin.id)
       @turn.status = status
+      @game.catchword_basket.words.delete(@word) if @game.catchword_basket.words.include?(@word)
       turn.update(status: "accepted") if !turn.nil?
       @turn.save! if turn.nil?
     end
@@ -281,6 +290,4 @@ class GameMobileUserController < ApplicationController
     def reset_session_of_already_user
       session[:user_already] = nil
     end
-
-
 end

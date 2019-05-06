@@ -1,0 +1,8 @@
+<% if @already %>
+	$("#input_name").addClass("error")
+<% else %>
+	$("#input_name").val('');
+	$("#input_name").removeClass("error")
+	var template = "<li> <%= @word.name %> <span class='rounded-minus-linear'><i class='fas fa-minus remove-word'></i></span></li>";
+	$(".catchword-list").append(template);
+<% end %>

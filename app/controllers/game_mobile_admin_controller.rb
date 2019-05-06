@@ -43,7 +43,12 @@ class GameMobileAdminController < ApplicationController
   def new_avatar
     @game = Game.find(session[:game_session_id])
   end
-    
+
+  def update_game_seconds
+    @game = Game.find(session[:game_session_id])
+    @game.update(wait_seconds: params[:seconds])
+    redirect_to gma_choose_path
+  end
 
   def create_avatar
     @game = Game.find(session[:game_session_id])
@@ -62,7 +67,12 @@ class GameMobileAdminController < ApplicationController
     
   def create_turn
     @game = Game.find(session[:game_session_id])
-    @word = Word.all.sample(5).first
+    if @game.own_words
+      @word = @game.has_or_create_basket_for_words.words.sample(5).first
+      @word = Word.all.sample(5).first if @word.nil?
+    else
+      @word = Word.all.sample(5).first
+    end
     @turn = Turn.new(play: params[:turn][:play], admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true)
     if @turn.save
       sign_in(@game)
@@ -97,7 +107,7 @@ class GameMobileAdminController < ApplicationController
       redirect_to gea_mobile_path
       return
     elsif @game.state != 'choose'
-      if @game.turns.count > 1
+      if @game.turns.where(status: "accepted").count > 1
         @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
       else
         redirect_to gea_mobile_path

@@ -137,9 +137,11 @@ Rails.application.routes.draw do
     get 'admins/dash/billing', to: 'dash_admin#billing', as: 'dash_admin_billing'
     
     get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
+    get 'admin/dash/catchwords', to: 'dash_admin#catchwords', as: 'dash_admin_catchwords'
+    post 'admin/dash/catchwords/add', to: 'dash_admin#add_word', as: "dash_admin_add_word"
+    delete 'admin/dash/catchwords/:word_id', to: 'dash_admin#remove_word', as: "dash_admin_remove_word"
     get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_games'
     
-
 ############
 # Sessions #
 ############
@@ -216,6 +218,8 @@ Rails.application.routes.draw do
 # Enter Game #
 ##############
   get '/team_list', to: 'dash_admin#get_teams'
+  get '/words_list', to: 'dash_admin#get_words'
+  post '/update_seconds', to: 'game_mobile_admin#update_game_seconds', as: 'gma_update_seconds'
   get 'mobile/admins/:password/password', to: 'game_mobile_admin#password', as: 'gma_pw'
   post 'mobile/admins/:password/password', to: 'game_mobile_admin#check_email', as: 'gma_email_check'
   post 'objection', to: 'game_desktop_admin#', as: 'gda_objection'
