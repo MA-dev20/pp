@@ -1,0 +1,102 @@
+<div class="blue_table">
+      
+      <div class="blue blue-place modal teamV-modal userEdit-modal rule-modal" id="own-rules-modal" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button type="button" class="close modal-close" onclick="closeTeamPop()" aria-label="Close"><i class="fas fa-times"></i></button>
+                    <div id="table_wrapper">
+                        <div class="" id="list-table">
+          
+                            <h1>
+                                <span>Spiele nach deinen RegeIn</span>
+                            </h1>
+                            <%= form_with url: "/games/new",method: 'post', id: 'form_for_game_start' do |f| %>
+                            
+                            <div class="form-block">
+                                <div class="form-group">
+                                    <label>Deine Zeite</label>
+                                    <div class="radioBtn-canvas">
+                                        <label><input type="radio" name="game[seconds]" checked value=80/><span class="unchecked">1:20</span></label>
+                                        <label><input type="radio" name="game[seconds]" value=150/><span  class="unchecked">2:30</span></label>
+                                        <label><input type="radio" name="game[seconds]" value=300 /><span  class="unchecked">5:00</span></label>
+                                    </div>
+                                </div>
+                              </div>
+                            <div class="teams-block">
+                                <div class="form-group bootstrapTag-group">
+                                    <label>Deiene Catchwords</label>
+                                    <select class="InputTags" name='game[words][]' multiple="true" id="inputtags" data-role="tagsinput-typeahead" readonly class="rdonly"/>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" name="game[own_rules]" id="own_rules">
+                            <div class="text-center">
+                                <%= f.submit "So wird gosip", class: "btn btn-green user-p-btn" %>
+                            </div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+  $("input[type=radio]:checked").siblings("span").addClass("checked")
+  $("input[type=radio]").on("click", function(){
+    $(".unchecked").removeClass("checked");
+    $(this).siblings("span").addClass("checked");
+  })
+  $('.InputTags').selectize({
+    valueField: 'id',
+    plugins: [ 'remove_button'
+    ],
+    labelField: 'name',
+    persist: false,
+    preload: true,
+    create: false,
+    allowEmptyOption: true,
+    render: {
+        option: function(data, escape) {
+            return '<option>' +
+                    '<span class="url">' + escape(data.name) + '</span>' +
+                '</option>';
+        },
+        item: function(data, escape) {
+            return '<span class="tag label label-info">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
+        }
+    },
+    load: function(query, callback) {
+        $.get({
+            url: '/words_list',
+            dataType: 'json',
+            data: {
+                name: query,
+                additionalDataIfRequired: 'Additional Data'
+            },
+            error: function() {
+                callback();
+            },
+            success: function(res) {
+                callback(res);
+            }
+        });
+    }
+  })[0].selectize
+  $("#form_for_game_start").on("submit", function(e){
+    e.preventDefault()
+    $("#own_rules").val(true);
+    var fields = $( ":input" ).serializeArray();
+    var seconds = $("input[name='game[seconds]']:checked").val()
+    fields << {seconds: seconds}
+    fields << {own_rules: true}
+    $.ajax({
+      url: '/games/new',
+      type: 'post',
+      data: fields
+    })
+  })
+  $(".selectize-control").addClass("bootstrap-tagsinput")
+  $(".selectize-input.items input").attr("readonly", true);
+              // $("#own-rules-modal").modal("show")
+</script>

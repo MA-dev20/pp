@@ -5,9 +5,7 @@
 <%= image_tag 'dash/game-arrow-top.png', id: 'arrow-top', style: 'display: none'%>
 <% end %>
 <%= image_tag 'dash/game-arrow-bottom.png', id: 'arrow-bottom', style: 'display: none'%>
-
 <h1>Jetzt Spiel starten!</h1>
-
 <%= form_for(:game, url: new_game_path(@admin), html: {id: 'game_form'}) do |f| %>
   
   <div class="col1">
@@ -33,16 +31,23 @@
   <div class="col2">
   <%= f.label :password, 'Spiel-URL', class: 'row2' %>
   <div class="row3">
-  <div class="form-field-text">
-      peterpitch.com/
-      <% if @team %>
-      <%= f.text_field :password, class: 'field2', id: 'url-field', autofocus: true, required: true, onchange: 'set_arrow()' %>
-      <% else %>
-      <%= f.text_field :password, class: 'field2', id: 'url-field', required: true, onchange: 'set_arrow()' %>
-      <% end %>
-      
-  </div>
-  </div>
+    <div class="form-field-text">
+        peterpitch.com/
+        <% if @team %>
+        <%= f.text_field :password, class: 'field2', id: 'url-field', autofocus: true, required: true, onchange: 'set_arrow()' %>
+        <% else %>
+        <%= f.text_field :password, class: 'field2', id: 'url-field', required: true, onchange: 'set_arrow()' %>
+        <% end %>
+        
+    </div>
+    <div class="switch-box">
+      <label class="switch">
+        <input type="checkbox" id="own_rules_check" value="is" checked>
+        <span class="slider round"></span>
+      </label>
+      <p>Nach eignenen Regein spielen</p>
+    </div>
+    </div>
   </div>
   
   <div class="col3">
@@ -77,6 +82,8 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
+</div>
+    <%= render partial: 'popup_for_own_rules' %>
 <% end %>
 
 <script>
@@ -98,16 +105,29 @@ $("#continue").click(function(e){
         });
 })();
 <% if @admin.admin_subscription_id.nil? %>
-$("#anim_but").on("click", function(e){
-  e.preventDefault()
-  if(($("#url-field").val() != "") && $("#game_team_id").val() != ""){
-    $('#pop_up').modal({backdrop: 'static', keyboard: false});
-  }
-  $("#continue").click(function(e){
-    e.preventDefault();
-    $("#game_form").submit();
-  });
-})
+  $("#anim_but").on("click", function(e){
+    e.preventDefault()
+    if(($("#url-field").val() != "") && $("#game_team_id").val() != ""){
+      $('#pop_up').modal({backdrop: 'static', keyboard: false});
+    }
+    $("#continue").click(function(e){
+      e.preventDefault();
+      if($("#own_rules_check").is(":checked")){
+        $("#own-rules-modal").modal("show")
+      }else{
+        $("#game_form").submit();
+      }
+    });
+  })
+<% else %>
+  $("#anim_but").on("click", function(e){
+    e.preventDefault()
+    if($("#own_rules_check").is(":checked")){
+      $("#own-rules-modal").modal("show")
+    }else{
+      $("#game_form").submit();
+    }
+  })
 <% end %>
 function set_arrow(){
     $('#arrow-bottom').show();

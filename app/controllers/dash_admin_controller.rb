@@ -4,6 +4,7 @@ class DashAdminController < ApplicationController
   before_action :set_user, only: [:user_stats, :compare_user_stats]
   skip_before_action :check_expiration_date, only: :billing
   layout :resolve_layout
+  
   def index
     if params[:team_id]
       @team = Team.find(params[:team_id])
@@ -23,8 +24,39 @@ class DashAdminController < ApplicationController
     end
   end
 
+  def get_words
+    render json: current_admin.has_or_create_basket_for_words.words.map{|t| {id: t.id, name: t.name}}.to_json
+  end
+
+  def add_word
+    @word = Word.find_by_name(params[:name])
+    @already = false
+    if @word.present?
+      if @admin.catchword_basket.words.include?(@word)
+        @already = true        
+      else
+        @admin.catchword_basket.words << @word 
+      end
+    else
+      @word = @admin.catchword_basket.words.create(name: params[:name])
+    end
+    respond_to do |format|
+      format.js do
+        render :add_word
+      end
+    end
+  end
+
+  def remove_word
+    @admin.catchword_basket.words.delete(Word.find(params[:word_id]))
+  end
 
   def teams
+  end
+
+  def catchwords
+    @basket = @admin.has_or_create_basket_for_words 
+    @words = @basket.words
   end
     
   def team_stats

@@ -68,7 +68,7 @@
         </tr>
 
 <% content_for :modal do%>
- <div class="blue_table">
+    <div class="blue_table">
       
       <div class="blue blue-place modal teamV-modal userEdit-modal" id="edit-user-modal<%= u.id %>" style="display: none;">
             <div class="modal-dialog">
@@ -145,6 +145,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <script type="text/javascript">
             var teams;
             teams = JSON.parse('<%= u.teams.map{|team| {itemValue: team.id, itemText: "#{team.name}"}}.to_json.to_s.html_safe %>')

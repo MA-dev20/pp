@@ -5,4 +5,10 @@ module ApplicationHelper
 		kit.javascripts << js_path
 		file = kit.to_file('file.jpg')
 	end
+
+	def send_invitation_emails_to_team_members(team, game)
+		team.users.each do |user|
+			SendEmailJob.perform_later(user, game)
+		end
+	end
 end

@@ -1,0 +1,57 @@
+
+<%= content_for :modal do %>
+  <div class="blue_table">
+      
+      <div class="blue blue-place modal catchword-modal userEdit-modal" id="new_catchword" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button type="button" class="close modal-close" onclick="closeCatchword()" aria-label="Close"><i class="fas fa-times"></i></button>
+                    <div id="table_wrapper">
+                        <div class="" id="list-table">
+          
+                            <h1>
+                                <span>catchword hinzufugen</span>
+                            </h1>
+                            <%= form_with url: dash_admin_add_word_path ,method: 'post', remote: true do |f| %>
+                            <div class="catchword-profile ">
+                                <div class="form-group position-relative">  
+                                  <%= f.text_field :name, class: "form-control", required: true, id: 'input_name' %>
+                                  <button type="submit" class="btn-green-plus"> 
+                                    <i class='fas fa-plus'></i>
+                                  </button>
+                                </div>
+                            </div>
+                            <div class="catchword-block">
+                                <h5>Versicherung</h5>
+                                <div class="catchword-block-inner">
+                                    <ul class="catchword-list">
+                                      <% @words.each do |word| %>
+                                        <li id="word-id-<%=word.id%>"> <%= word.name %> <span class="remove-word rounded-minus-linear" onclick="removeWord(<%=word.id %>)"><i class="fas fa-minus remove-word"></i></span></li>
+                                      <% end %>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button onclick="closeCatchword()" class="btn btn-green user-p-btn">speichern</button>
+                            </div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<% end %>
+<script>
+
+function removeWord(id){
+  var $this = $(this);
+  $.ajax({
+    url: "/admin/dash/catchwords/"+id,
+    type: 'delete',
+    beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+    success: function(){
+      $("#word-id-"+id).remove()
+    }
+  })
+}
+</script>

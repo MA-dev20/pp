@@ -1,4 +1,5 @@
 class Admin < ApplicationRecord
+  include Basket
   # Include default devise modules. Others available are:
   # :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable, :lockable, :recoverable, :rememberable, :validatable, :trackable
@@ -14,6 +15,8 @@ class Admin < ApplicationRecord
   has_many :plans, dependent: :destroy
   has_many :invoices, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
+  has_one :catchword_basket , class_name: "CatchwordsBasket", dependent: :destroy
+
 
   enum plan_type: [:year , :month, :trial]
   
