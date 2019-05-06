@@ -10,7 +10,7 @@
                             <h1>
                                 <span>Spiele nach deinen RegeIn</span>
                             </h1>
-                            <%= form_with url: "/games/new",method: 'post', id: 'form_for_game_start' do |f| %>
+                            <%= form_for :a, url: "/games/new",method: 'post', id: 'form_for_game_start' do |f| %>
                             
                             <div class="form-block">
                                 <div class="form-group">
@@ -31,7 +31,7 @@
                             </div>
                             <input type="hidden" name="game[own_rules]" id="own_rules">
                             <div class="text-center">
-                                <%= f.submit "So wird gosip", class: "btn btn-green user-p-btn" %>
+                                <%= f.submit "So wird gosip", class: "btn btn-green add" %>
                             </div>
                             <% end %>
                         </div>
@@ -83,7 +83,7 @@
         });
     }
   })[0].selectize
-  $("#form_for_game_start").on("submit", function(e){
+  $(".add").on("click", function(e){
     e.preventDefault()
     $("#own_rules").val(true);
     var fields = $( ":input" ).serializeArray();
