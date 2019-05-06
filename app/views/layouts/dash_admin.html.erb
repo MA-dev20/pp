@@ -192,6 +192,10 @@
         $('#new_catchword').hide();
         $('#content').removeClass('backgroundblur');
     }
+    function closeOwnRule() {
+        $('#own-rules-modal').modal("hide");
+        $('#content').removeClass('backgroundblur');
+    }
     function closeModal() {
         if($('#pop_up_flash').is(':visible')) {
         $('#pop_up_flash').hide();

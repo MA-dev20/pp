@@ -29,6 +29,7 @@ class GamesController < ApplicationController
           redirect_to dash_admin_games_path(params[:game][:team_id])
         end
       else
+        puts "location back"
         redirect_back fallback_location: root_path
       end
     end
