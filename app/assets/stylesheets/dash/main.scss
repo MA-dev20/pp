@@ -1554,7 +1554,9 @@ modal
         padding: 0;
         span.tag {
           border-radius: 10px;
-          padding: 0.8vh 1.2vh;
+          padding: 1.3vh 1.2vh;
+          margin-bottom: 4px;
+          display: inline-block;
           &:hover,
           &:focus,
           &:active {
@@ -1620,6 +1622,13 @@ modal
         color: #fff;
       }
     }
+  }
+  .btn-green {
+    min-height: 28px;
+    min-width: 10px;
+    font-size: 2.2vh;
+    padding: 0.6vh 1.5vh;
+    line-height: 16px;
   }
 }
 .error{
@@ -1740,5 +1749,9 @@ input:checked + .slider:before {
   }
 }
 
-
+.orange{  
+  background-color: #1ddaaf;
+  border-color: #1ddaaf;
+  color: #fff;
+}
 
