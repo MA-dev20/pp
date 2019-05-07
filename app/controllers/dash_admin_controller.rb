@@ -25,21 +25,23 @@ class DashAdminController < ApplicationController
   end
 
   def get_words
-    render json: current_admin.has_or_create_basket_for_words.words.map{|t| {id: t.id, name: t.name}}.to_json
+    render json: current_admin.has_or_create_basket_for_words.map{|t| {id: t.id, name: t.name.nil? ? " " : t.name}}.to_json
   end
 
   def add_word
     @word = Word.find_by_name(params[:name])
     @already = false
     if @word.present?
-      if @admin.catchword_basket.words.include?(@word)
+      if @admin.catchword_baskets.find(params[:basket_id]).words.include?(@word)
         @already = true        
       else
-        @admin.catchword_basket.words << @word 
+        @admin.catchword_baskets.find(params[:basket_id]).words << @word 
       end
     else
-      @word = @admin.catchword_basket.words.create(name: params[:name])
+      @word = @admin.catchword_baskets.find(params[:basket_id]).words.create(name: params[:name])
     end
+    @count = @admin.catchword_baskets.find(params[:basket_id]).words.count
+    @id = params[:basket_id]
     respond_to do |format|
       format.js do
         render :add_word
@@ -48,15 +50,15 @@ class DashAdminController < ApplicationController
   end
 
   def remove_word
-    @admin.catchword_basket.words.delete(Word.find(params[:word_id]))
+    @admin.catchword_baskets.find(params[:basket_id]).words.delete(Word.find(params[:word_id]))
+    render json: {count: @admin.catchword_baskets.find(params[:basket_id]).words.count }
   end
 
   def teams
   end
 
   def catchwords
-    @basket = @admin.has_or_create_basket_for_words 
-    @words = @basket.words
+    @baskets = @admin.catchword_baskets 
   end
     
   def team_stats
@@ -164,6 +166,16 @@ class DashAdminController < ApplicationController
     
   def verification
     @token = params[:token]     
+  end
+
+  def create_basket
+    current_admin.catchword_baskets.new(name: params[:basket][:name]).save
+    redirect_to dash_admin_catchwords_path
+  end
+
+  def delete_basket
+    CatchwordsBasket.find(params[:basket_id]).destroy
+    redirect_to dash_admin_catchwords_path
   end
 
   def billing

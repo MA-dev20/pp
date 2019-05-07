@@ -95,6 +95,23 @@
         <% end %>
         <%= yield %>
     </section>
+
+    <div class="modal-games" id="new_basket">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="close modal-close" onclick="closeBakset()" aria-label="Close"><i class="fas fa-times"></i></button>
+                <div class="modal-body" id="pop_up-body">
+                    <h1>
+                        <span>List of words hinzufügen</span><br><br><br>
+                        <%= form_for(:basket, url: dash_admin_new_basket_path) do |f| %>
+                            <%= f.text_field :name, placeholder: 'Listname', class: 'form-control' , required: true%><br><br><br>
+                            <%= f.submit 'Erstellen', class: 'btn btn-green' %>
+                        <% end %>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal-games" id="new_team">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -177,6 +194,11 @@
         $('#content').addClass('backgroundblur');
         $('#team_name').focus();
     };
+    function openBasket() {
+        $('#new_basket').show();
+        $('#content').addClass('backgroundblur');
+        $('#basket_name').focus();
+    };
 
     function openCatchword() {
         $('#new_catchword').show();
@@ -187,10 +209,13 @@
         $('#new_team').hide();
         $('#content').removeClass('backgroundblur');
     }
-
-    function closeCatchword() {
-        $('#new_catchword').hide();
+    function closeBakset() {
+        $('#new_basket').hide();
         $('#content').removeClass('backgroundblur');
+    }
+
+    function closeCatchword(id) {
+        $('#catchword'+id).modal("hide");
     }
     function closeOwnRule() {
         $('#own-rules-modal').modal("hide");
