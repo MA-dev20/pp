@@ -282,7 +282,7 @@ class GameMobileUserController < ApplicationController
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).playable.first
       @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: true, played: false, admin_id: admin.id)
       @turn.status = status
-      @game.catchword_basket.words.delete(@word) if @game.catchword_basket.words.include?(@word)
+      @game.catchword_basket.words.delete(@word) if @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
       turn.update(status: "accepted") if !turn.nil?
       @turn.save! if turn.nil?
     end
