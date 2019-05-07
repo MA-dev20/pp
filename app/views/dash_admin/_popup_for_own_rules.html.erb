@@ -26,6 +26,11 @@
                                 <div class="form-group bootstrapTag-group">
                                     <label>Deiene Catchwords</label>
                                     <select class="InputTags" name='game[baskets][]' multiple="true" id="inputtags" data-role="tagsinput-typeahead" readonly class="rdonly"/>
+                                        <option value="" selected class="orange">PeterWords</option>
+
+                                        <% current_admin.catchword_baskets.each do |basket|%>
+                                            <option value="<%= basket.id %>" selected><%= basket.name %></option>
+                                        <% end %>
                                     </select>
                                 </div>
                             </div>

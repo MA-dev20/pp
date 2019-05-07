@@ -43,7 +43,11 @@ class GamesController < ApplicationController
 
     def set_words_for_game(game, own_rules, baskets, seconds)
       if own_rules == "true"
-        game.update(wait_seconds: seconds, own_words: true)
+        game.wait_seconds = seconds
+        game.own_words = true
+        game.uses_peterwords = true if baskets.include?("")
+        game.save!
+        baskets-= [""]
         words = CatchwordsBasket.includes(:words).where('id IN (?)', baskets).map(&:words).flatten!
         game.build_catchword_basket.save! if game.catchword_basket.nil?
         game.catchword_basket.words.destroy_all
