@@ -47,6 +47,7 @@
   $("#add_rule").on("click", function(e){
     e.preventDefault()
     ruleAdded = true;
+    $("#own_rules").val(true);
     $("#own-rules-modal").modal("hide");
   })
   $("input[type=radio]:checked").siblings("span").addClass("checked")
