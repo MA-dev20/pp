@@ -271,7 +271,7 @@ header
   }
   .app-banner-main {
        position: absolute;
-       top: 250px;
+       top: 41vh;
        left: 25vw;
       width: 50vw;
   }
@@ -461,7 +461,7 @@ header
 	  height: 136px;
 	  background-size: 136px;
       padding: 0 !important;
-      z-index: 10000;
+      z-index: 5;
   }
   .paw-col3 {
       display: flex;
@@ -1132,7 +1132,9 @@ verification
 .register-page .register-container {
 	max-width: 520px;
 }
-
+.app-banner video {
+	min-height: 750px !important;
+}
 
   
   
@@ -1263,6 +1265,9 @@ product
 		left: 76px;
 		bottom: -33px;
 	}
+	.app-banner video {
+		min-height: 100% !important;
+	}
 }
 @media only screen and (max-width: 991px) {
 	.container {
@@ -1337,13 +1342,23 @@ product
         bottom: -170px;
         right: 0px;
     }
+    .app-banner .app-banner-main {
+		top: 145px;
+		left: 32vw;
+    }
+    .app-banner .app-banner-img {
+		top: 110px;
+    }
+    .offer-block {
+    	padding: 0 2rem;
+    }
 }
 @media only screen and (max-width: 767px) {
 	.app-banner{
 		padding-top: 110px;
 	}
 	.banner-paragraph {
-		font-size: 1.25rem;
+		font-size: 1.15rem;
 	}
 	.banner-heading {
 		font-size: 2rem;
@@ -1368,8 +1383,20 @@ product
 		width: 80px;
 		height: 80px;
 		min-width: 80px;
+		position: relative;
 	}
-    
+	.trial-block .trial-block-img img {
+		right: 0;
+		bottom: 0;
+		margin: auto;
+	}
+    .trial-block .trial-block-img .overlay {
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		font-size: 40px;
+		margin: auto;
+    }
 	.trial-block p {
 		margin-bottom: 1rem;
 	}
@@ -1546,6 +1573,38 @@ product
 		max-height: 100%;
 		height: auto;
 	}
+	.paw-col.paw-col-1,
+	.paw-col1.paw-col-2,
+	.paw-col.paw-col-3 {
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		top: calc(74% - 60px);
+	}
+	.paw-col.paw-col-3 {
+		top: calc(90% - 60px);
+	}
+	.peter-trial .trial-container {
+		padding-left: 15px;
+	}
+    .app-banner video {
+    	top: 90px !important;
+    }
+    .app-banner .app-banner-main {
+    	padding: 10px 15px;
+    }
+    .product-content .product-block-akku .paw-col2 {
+    	right: 15px !important;
+    }
+    .offer-section .offer-top-btn .paw-col1 {
+		right: 0;
+		left: 0;
+		margin: 0 auto;
+    }
+	.modal-peterpitch .modal-close {
+		right: 0;
+		top: 0;
+	}
 }
 @media only screen and (max-width: 575px) {
 	.customer-section .customer-block-l .customer-review {
@@ -1610,6 +1669,9 @@ product
         bottom: -8px;
         left: -31px;
     }
+    .banner-paragraph {
+		margin-bottom: 0.4rem;
+	}
 }
 @media only screen and (max-width: 400px) {
 	.product-block-akku .decoration-left {

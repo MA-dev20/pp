@@ -1,7 +1,7 @@
 <section id="dash_stats" class="dash_stats-head">
 
     <div class="head">
-           <%= render partial: 'select_team_user_dropdown', locals: {users: @users, teams: @teams, user: @user} %>
+           <%= render partial: 'select_team_user_dropdown', locals: {users: @users, teams: @teams, user: @user, team: @team} %>
     </div>
     <div class="stats_overview">
         <div class="gesamt active">
@@ -196,8 +196,8 @@ var data1 = datapoints.map(el => {
                 // Display, position, and set styles for font
                 tooltipEl.style.opacity = 1;
                 tooltipEl.style.position = 'absolute';
-                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX-142 + 'px';
-                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-335 + 'px';
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX-88 + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-208 + 'px';
                 tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
                 tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
                 tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
