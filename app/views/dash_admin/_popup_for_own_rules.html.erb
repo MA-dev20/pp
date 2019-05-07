@@ -31,7 +31,8 @@
                             </div>
                             <input type="hidden" name="game[own_rules]" id="own_rules">
                             <div class="text-center">
-                                <%= f.submit "So wird gosip", class: "btn btn-green add" %>
+                                <button class="btn btn-green add" id="add_rule">So wird gosip</button>
+                                <%#= f.submit "So wird gosip", class: "" %>
                             </div>
                             <% end %>
                         </div>
@@ -42,6 +43,12 @@
     </div>
 
 <script type="text/javascript">
+  var ruleAdded = false;
+  $("#add_rule").on("click", function(e){
+    e.preventDefault()
+    ruleAdded = true;
+    $("#own-rules-modal").modal("hide");
+  })
   $("input[type=radio]:checked").siblings("span").addClass("checked")
   $("input[type=radio]").on("click", function(){
     $(".unchecked").removeClass("checked");
@@ -83,19 +90,7 @@
         });
     }
   })[0].selectize
-  $(".add").on("click", function(e){
-    e.preventDefault()
-    $("#own_rules").val(true);
-    var fields = $( ":input" ).serializeArray();
-    var seconds = $("input[name='game[seconds]']:checked").val()
-    fields << {seconds: seconds}
-    fields << {own_rules: true}
-    $.ajax({
-      url: '/games/new',
-      type: 'post',
-      data: fields
-    })
-  })
+
   $(".selectize-control").addClass("bootstrap-tagsinput")
   $(".selectize-input.items input").attr("readonly", true);
               // $("#own-rules-modal").modal("show")

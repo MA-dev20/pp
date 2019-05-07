@@ -42,7 +42,7 @@
     </div>
     <div class="switch-box">
       <label class="switch">
-        <input type="checkbox" id="own_rules_check" value="is" checked>
+        <input type="checkbox" id="own_rules_check" value="is" >
         <span class="slider round"></span>
       </label>
       <p>Nach eignenen Regein spielen</p>
@@ -104,6 +104,24 @@ $("#continue").click(function(e){
 
         });
 })();
+
+$("#own_rules_check").on("change", function(e){
+  var that = $(this);
+  if(that.is(":checked")){
+    $("#own-rules-modal").modal({backdrop: 'static', keyboard: false})
+  }
+})
+function createNewGame(){
+  var fields = $( ":input" ).serializeArray();
+  var seconds = $("input[name='game[seconds]']:checked").val()
+  fields << {seconds: seconds}
+  fields << {own_rules: true}
+  $.ajax({
+    url: '/games/new',
+    type: 'post',
+    data: fields
+  })
+}
 <% if @admin.admin_subscription_id.nil? %>
   $("#anim_but").on("click", function(e){
     e.preventDefault()
@@ -112,21 +130,14 @@ $("#continue").click(function(e){
     }
     $("#continue").click(function(e){
       e.preventDefault();
-      if($("#own_rules_check").is(":checked")){
-        $("#own-rules-modal").modal("show")
-      }else{
-        $("#game_form").submit();
-      }
+        $("#own_rules").val(true);
+        createNewGame()
     });
   })
 <% else %>
   $("#anim_but").on("click", function(e){
     e.preventDefault()
-    if($("#own_rules_check").is(":checked")){
-      $("#own-rules-modal").modal("show")
-    }else{
-      $("#game_form").submit();
-    }
+    createNewGame()
   })
 <% end %>
 function set_arrow(){
