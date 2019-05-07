@@ -139,6 +139,8 @@ Rails.application.routes.draw do
     get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
     get 'admin/dash/catchwords', to: 'dash_admin#catchwords', as: 'dash_admin_catchwords'
     post 'admin/dash/catchwords/add', to: 'dash_admin#add_word', as: "dash_admin_add_word"
+    post 'admin/dash/baskets', to: 'dash_admin#create_basket', as: "dash_admin_new_basket"
+    post 'admin/dash/baskets/:basket_id', to: 'dash_admin#delete_basket', as: "dash_admin_delete_basket"
     delete 'admin/dash/catchwords/:word_id', to: 'dash_admin#remove_word', as: "dash_admin_remove_word"
     get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_games'
     

@@ -1,8 +1,8 @@
 module Basket
   def has_or_create_basket_for_words
-	  if self.catchword_basket.nil?
-	    self.build_catchword_basket.save!
+	  if self.catchword_baskets.nil?
+	    self.catchword_baskets.build.save!
 	  end
-	  return self.catchword_basket
+	  return self.catchword_baskets
 	end
 end

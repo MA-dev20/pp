@@ -1,8 +1,13 @@
-<section id="catchword-container">
-    <div class="add_team" onclick="openCatchword()">
-       <a onclick="openCatchword()"></a>
+<section id="gd_team">
+    <input type="text" id="searchField" placeholder="suchen" onfocus='team_hide()' onblur="team_show()">
+    <%= image_tag 'dash/search.png' %>
+</section>
+
+<section id="teams-container">
+    <div class="add_team" onclick="openBasket()">
+       <a onclick="openBasket()"></a>
         <div class="head">
-            Catchwords
+            Catchword List
         </div>
         <div class="middle">
             +
@@ -11,8 +16,56 @@
             hinzufügen
         </div>
     </div>
+    <% @baskets.each do |b| %>
+    <div class="team_card">
+    <%= render partial: 'catchwords_modal', locals: {id: b.id, words: b.words} %>
+
+       <%= link_to '', "", class: "lists", data: {id: b.id} %>
+
+        <div class="head">
+            <%= b.name %>
+        </div>
+        <div class="middle">
+            <span id="count<%= b.id %>"><%= b.words.distinct.count %></span> words
+        </div>
+        <div class="bottom">
+            <%= link_to '', dash_admin_delete_basket_path(b.id), method: :post,class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie das List unwiederuflich löschen möchten?" }%>
+        </div>
+    </div>
+    <% end %>
 
 </section>
 
+<script>
+$(".lists").on("click", function(e){
+    e.preventDefault()
+    $("#catchword"+$(this).data("id")).modal("show")
+})
 
-<%= render partial: "catchwords_modal"%>
+var $rows = $('.team_card');
+$('#searchField').keyup(function() {
+    
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val, 'i'),
+        text;
+    
+    $rows.show().filter(function() {
+        text = $(this).text().replace(/\s+/g, ' ');
+        return !reg.test(text);
+    }).hide();
+});
+team_show = function() {
+    $('.add_team').show();
+}
+team_hide = function() {
+    $('.add_team').hide();
+}
+new PerfectScrollbar('#teams-container');
+
+
+// window.onload = setTimeout(function(){
+//     alert('This is an alert');
+//     window.location = 'http://www.example.com';
+// }, 5000);
+
+</script>
