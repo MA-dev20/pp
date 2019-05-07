@@ -144,7 +144,7 @@ class DashAdminController < ApplicationController
     end
     @rating = rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
     @userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
-    raw_result = users_ratings userss
+    raw_result = users_ratings @userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     # if @result.present?
     #   if @result.count >= 3

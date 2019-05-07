@@ -1,15 +1,25 @@
  <div class="compare-selects">
-    <select class="cs-select cs-skin-underline form-field">
-        <option value="" disabled selected>Vergleiche mit</option>
+    <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-left">
         <% users.each do |u| %>
-                <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(@team.id, u.id) %>">                                 <%= u.fname %> <%= u.lname %>
-                </option>
+                <% if user && u.id == user.id %>
+                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(@team.id, u.id) %>"  data-class="cs-selected">
+                        <%= u.fname %> <%= u.lname %>
+                    </option>
+                <% else %>
+                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(@team.id, u.id) %>">
+                        <%= u.fname %> <%= u.lname %>
+                    </option>
+                <% end %>
                 
         <% end %>
     </select>
-    <select class="cs-select cs-skin-underline form-field">
+    <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right">
         <% teams.each do |t| %>
-                <option value="<%= t.id %>" data-link="<%= dash_admin_team_stats_path(t.id) %>"><%= t.name %></option>
+            <% if team.present? && t.id == team.id %>
+                <option value="<%= t.id %>" data-link="<%= dash_admin_team_stats_path(t.id) %>" data-class="cs-selected"><%= t.name %></option>
+            <%else %>
+                <option value="<%= t.id %>" data-link="<%= dash_admin_team_stats_path(t.id) %>" ><%= t.name %></option>
+            <% end %>
         <% end %>
     </select>
 </div>
