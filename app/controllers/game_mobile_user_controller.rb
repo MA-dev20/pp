@@ -182,7 +182,7 @@ class GameMobileUserController < ApplicationController
       @word = Word.all.sample(50).first if @word.nil?
     end
     if @game.own_words
-      @word = @game.has_or_create_basket_for_words.words.sample(50).first
+      @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
       @word = Word.all.sample(50).first if @word.nil?
     else
       @word = Word.all.sample(50).first

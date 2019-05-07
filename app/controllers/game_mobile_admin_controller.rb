@@ -68,7 +68,7 @@ class GameMobileAdminController < ApplicationController
   def create_turn
     @game = Game.find(session[:game_session_id])
     if @game.own_words
-      @word = @game.has_or_create_basket_for_words.words.sample(5).first
+      @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
       @word = Word.all.sample(5).first if @word.nil?
     else
       @word = Word.all.sample(5).first
