@@ -267,18 +267,28 @@ header
   .app-banner {
 	  min-height: 750px;
 	  padding: 220px 0px 50px 0px;
-	  background-position: 40px;
+	  position: relative;
+	  overflow: hidden;
   }
+  .app-banner video {
+	min-height: 750px !important;
+	max-height: 100%;
+	left: 0;
+	margin: 0 auto;
+}
   .app-banner-main {
        position: absolute;
-       top: 41vh;
-       left: 25vw;
-      width: 50vw;
+       top: 240px;
+       left: 0;
+       right: 0;
+      width: 100%;
+      max-width: 830px;
+      margin: 0 auto;
   }
 .app-banner-img {
     position: absolute;
-    top: 180px;
-    right: 70vw;
+    top: -80px;
+    left: -40px;
 }
   .banner-heading {
 	  font-size: 3.75rem;
@@ -314,6 +324,9 @@ header
   .btn-green-white:hover {
       color: #37deb8 !important;
 	  background-color: white !important;
+  }
+  .peter-trial {
+  	margin-top: -40px;
   }
   .trial-block {
 	  margin: 0;
@@ -1132,9 +1145,7 @@ verification
 .register-page .register-container {
 	max-width: 520px;
 }
-.app-banner video {
-	min-height: 750px !important;
-}
+
 
   
   
@@ -1342,21 +1353,28 @@ product
         bottom: -170px;
         right: 0px;
     }
-    .app-banner .app-banner-main {
-		top: 145px;
-		left: 32vw;
-    }
     .app-banner .app-banner-img {
-		top: 110px;
+		position: static;
     }
     .offer-block {
     	padding: 0 2rem;
     }
-}
-@media only screen and (max-width: 767px) {
-	.app-banner{
+    .app-banner{
 		padding-top: 110px;
 	}
+	.app-banner-main {
+		top: 140px;
+	}
+	.app-banner-img {
+		height: 300px;
+		margin-top: 16px;
+	}
+	.app-banner-img img {
+		max-height: 100%;
+		height: auto;
+	}
+}
+@media only screen and (max-width: 767px) {
 	.banner-paragraph {
 		font-size: 1.15rem;
 	}
@@ -1564,14 +1582,6 @@ product
 	.app-banner-main {
 		position: static;
 		width: 100%;
-	}
-	.app-banner-img {
-		height: 300px;
-		margin-top: 16px;
-	}
-	.app-banner-img img {
-		max-height: 100%;
-		height: auto;
 	}
 	.paw-col.paw-col-1,
 	.paw-col1.paw-col-2,
