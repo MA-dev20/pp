@@ -1557,7 +1557,6 @@ modal
           padding: 1.3vh 1.2vh;
           margin-bottom: 4px;
           display: inline-block;
-          &:hover,
           &:focus,
           &:active {
             background-color: #d4af36;
@@ -1633,6 +1632,10 @@ modal
 }
 .error{
   color: red !important; 
+  border-color: red !important;
+}
+
+.error-border{
   border-color: red !important;
 }
 
@@ -1750,8 +1753,7 @@ input:checked + .slider:before {
 }
 
 .orange{  
-  background-color: #1ddaaf;
-  border-color: #1ddaaf;
+  background-color: #d4af36 !important;
   color: #fff;
 }
 

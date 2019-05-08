@@ -27,10 +27,6 @@
                                     <label>Deiene Catchwords</label>
                                     <select class="InputTags" name='game[baskets][]' multiple="true" id="inputtags" data-role="tagsinput-typeahead" readonly class="rdonly"/>
                                         <option value="" selected class="orange">PeterWords</option>
-
-                                        <% current_admin.catchword_baskets.each do |basket|%>
-                                            <option value="<%= basket.id %>" selected><%= basket.name %></option>
-                                        <% end %>
                                     </select>
                                 </div>
                             </div>
@@ -76,6 +72,9 @@
                 '</option>';
         },
         item: function(data, escape) {
+            if(data.name == "PeterWords"){
+                return '<span class="tag label label-info orange">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
+            }
             return '<span class="tag label label-info">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
         }
     },
