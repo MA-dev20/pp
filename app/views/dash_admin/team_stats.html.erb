@@ -6,7 +6,7 @@
     
     <div class="stats_overview">
         <div class="gesamt active">
-            <button class="circle" id="chart_gesamt"><span><%= @rating.ges / 10.0 %></span></button>
+            <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
             <div class="text" id="t_gesamt">Gesamt</div>
         </div>
         
