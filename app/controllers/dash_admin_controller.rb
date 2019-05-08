@@ -117,7 +117,7 @@ class DashAdminController < ApplicationController
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     @ratings = @team.team_rating
-    @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.inject(:+) / 40
+    @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40
     # if @result.present?
     #   if @result.count >= 3
     #     @three_records = @result
