@@ -2,11 +2,11 @@
     <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-left">
         <% users.each do |u| %>
                 <% if user && u.id == user.id %>
-                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(@team.id, u.id) %>"  data-class="cs-selected">
+                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first, u) %>"  data-class="cs-selected">
                         <%= u.fname %> <%= u.lname %>
                     </option>
                 <% else %>
-                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(@team.id, u.id) %>">
+                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first, u) %>">
                         <%= u.fname %> <%= u.lname %>
                     </option>
                 <% end %>
