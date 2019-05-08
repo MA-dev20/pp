@@ -40,9 +40,6 @@
 	    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'width: 100%; top: 0;position: absolute; bottom: 0; right: 0; min-width: 100%; min-height: 100%; z-index: -10000; object-fit: cover;' %>
 		<div class="container">
 		    <div class="row flex-column-reverse flex-md-row">
-			    <div class="app-banner-img text-center" style="z-index: 100">
-                    <%= image_tag ("iphoneX-mockup.png") ,alt:"IMG" , height:"400"%>
-                </div>
 				<div class="app-banner-main text-center">
 				    <div id="typed-strings">
                         <span>PETER PITCH</span>
@@ -58,6 +55,9 @@
                         </a>
 				    </div>
                     <a href="#" class="btn btn-green" data-toggle="modal" data-target="#exampleModalCenter">Kostenlos spielen!</a>
+                    <div class="app-banner-img text-center" style="z-index: 100">
+	                    <%= image_tag ("iphoneX-mockup.png") ,alt:"IMG" , height:"400"%>
+	                </div>
 				</div>
             </div>
         </div>
