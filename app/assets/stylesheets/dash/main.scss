@@ -1249,13 +1249,13 @@ modal
   content: '';
   width: 0;
   height: 0;
-  border-left: 2.8vh solid transparent;
-  border-right: 2.8vh solid transparent;
-  border-top: 2.8vh solid #fff;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-top: 18px solid #fff;
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -2.8vh;
+  bottom: -18px;
   margin: 0 auto;
   }
   .progress-block {
