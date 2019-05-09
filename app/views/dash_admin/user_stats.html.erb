@@ -194,12 +194,11 @@ var data1 = datapoints.map(el => {
                     tableRoot.innerHTML = innerHtml;
                 }
                 var position = this._chart.canvas.getBoundingClientRect();
-
                 // Display, position, and set styles for font
                 tooltipEl.style.opacity = 1;
                 tooltipEl.style.position = 'relative';
-                tooltipEl.style.left = ((position.left + tooltipModel.caretX)) + 'px';
-                tooltipEl.style.top = position.top + tooltipModel.caretY + 'px';
+                tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()/2))+ 'px';
+                tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight())) - 18 + 'px';
                 // tooltipEl.style.left = (position.left + window.pageXOffset + tooltipModel.caretX+100)/window.devicePixelRatio + 'px';
                 // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-330 + 'px';
                 // tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
@@ -258,9 +257,11 @@ var gesamtChart = new Chart(ctx, {
             display: false,
         },
         tooltips: {
+            yAlign: 'left',
             mode: 'index',
             enabled: false,
             position: 'nearest',
+            yPadding: '100px',
             multiKeyBackground:"rgba(255,255,255,0)",
             intersect: false,
             dataPoints: datapoints,
