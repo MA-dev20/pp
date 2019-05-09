@@ -1,22 +1,26 @@
  <div class="compare-selects">
-    <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-left">
-        <% users.each do |u| %>
-                <% if user && u.id == user.id %>
-                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first.present? ? u.teams.first : @team, u) %>"  data-class="cs-selected">
-                        <%= u.fname %> <%= u.lname %>
-                    </option>
-                <% else %>
-                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first.present? ? u.teams.first : @team, u) %>">
-                        <%= u.fname %> <%= u.lname %>
-                    </option>
-                <% end %>
-                
-        <% end %>
-    </select>
+    <% if teams_page %>
+        <div class="cs-select cs-skin-underline form-field cs-select-set cs-select-left">Team</div>
+    <% else %>
+        <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-left">
+            <% users.each do |u| %>
+                    <% if user && u.id == user.id %>
+                        <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first.present? ? u.teams.first : @team, u) %>"  data-class="cs-selected" selected>
+                            <%= u.fname %> <%= u.lname %>
+                        </option>
+                    <% else %>
+                        <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first.present? ? u.teams.first : @team, u) %>">
+                            <%= u.fname %> <%= u.lname %>
+                        </option>
+                    <% end %>
+                    
+            <% end %>
+        </select>
+    <% end %>
     <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right">
         <% teams.each do |t| %>
             <% if team.present? && t.id == team.id %>
-                <option value="<%= t.id %>" data-link="<%= dash_admin_team_stats_path(t.id) %>" data-class="cs-selected"><%= t.name %></option>
+                <option value="<%= t.id %>" data-link="<%= dash_admin_team_stats_path(t.id) %>" data-class="cs-selected" selected><%= t.name %></option>
             <%else %>
                 <option value="<%= t.id %>" data-link="<%= dash_admin_team_stats_path(t.id) %>" ><%= t.name %></option>
             <% end %>
