@@ -198,7 +198,7 @@ var data1 = datapoints.map(el => {
                 // Display, position, and set styles for font
                 tooltipEl.style.opacity = 1;
                 tooltipEl.style.position = 'relative';
-                tooltipEl.style.left = ((position.left + tooltipModel.caretX)*document.documentElement.clientWidth/100) + 'vw';
+                tooltipEl.style.left = ((position.left + tooltipModel.caretX)) + 'vw';
                 tooltipEl.style.top = position.top + tooltipModel.caretY + 'px';
                 // tooltipEl.style.left = (position.left + window.pageXOffset + tooltipModel.caretX+100)/window.devicePixelRatio + 'px';
                 // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-330 + 'px';
