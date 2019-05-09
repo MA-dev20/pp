@@ -111,6 +111,9 @@ $("#own_rules_check").on("change", function(e){
   var that = $(this);
   if(that.is(":checked")){
     $("#own-rules-modal").modal({backdrop: 'static', keyboard: false})
+    $(".text-for-switch").addClass("green")
+  }else{
+    $(".text-for-switch").removeClass("green")
   }
 })
 function createNewGame(){
