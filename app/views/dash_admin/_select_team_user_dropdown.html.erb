@@ -1,23 +1,26 @@
  <div class="compare-selects">
-    <% if teams_page %>
-        <div class="cs-select cs-skin-underline form-field cs-select-set cs-select-left">Team</div>
-    <% else %>
         <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-left">
+            <% if teams_page %>
+                <option value="<%= team.id %>" data-link="<%= dash_admin_team_stats_path(team.id) %>" data-class="cs-selected" selected>Team</option>
+            <% else %>
+                <option value="<%= team.id %>" data-link="<%= dash_admin_team_stats_path(team.id) %>">Team</option>
+            <% end %>
             <% users.each do |u| %>
-                    <% if user && u.id == user.id %>
-                        <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first.present? ? u.teams.first : @team, u) %>"  data-class="cs-selected" selected>
-                            <%= u.fname %> <%= u.lname %>
-                        </option>
-                    <% else %>
-                        <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first.present? ? u.teams.first : @team, u) %>">
-                            <%= u.fname %> <%= u.lname %>
-                        </option>
-                    <% end %>
-                    
+
+                <% if user && u.id == user.id %>
+                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first.present? ? u.teams.first : @team, u) %>"  data-class="cs-selected" selected>
+                        <%= u.fname %> <%= u.lname %>
+                    </option>
+                <% else %>
+                    <option value="<%= u.id %>" data-link="<%= dash_admin_user_stats_path(u.teams.first.present? ? u.teams.first : @team, u) %>">
+                        <%= u.fname %> <%= u.lname %>
+                    </option>
+                <% end %>
+                
             <% end %>
         </select>
-    <% end %>
     <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right">
+
         <% teams.each do |t| %>
             <% if team.present? && t.id == team.id %>
                 <option value="<%= t.id %>" data-link="<%= dash_admin_team_stats_path(t.id) %>" data-class="cs-selected" selected><%= t.name %></option>
