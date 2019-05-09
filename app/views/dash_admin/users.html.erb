@@ -1,35 +1,38 @@
 <section id="gd_users">
-    
+  <%= content_for :modal do %>
+    <%= render partial: 'form', locals: {u: User.new } %>
+  <% end %>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.js"></script>
 <div class="top">
 
-    <div class="select-text">Spielgruppe wählen</div>
+  <div class="select-text">Spielgruppe wählen</div>
     <div class="select">
-        <select class="cs-select cs-skin-underline form-field">
-            <% if @team %>
-                <option value="" disabled selected><%= @team.name %></option>
-                <option value="" data-link="<%= dash_admin_users_path %>">Alle Teams</option>
-            <% else %>
-                <option value="" disabled selected>Alle Teams</option>
-                <option value="" data-link="<%= dash_admin_users_path %>" data-class="cs-selected">Alle Teams</option>
-            <% end %>
-            <% @teams.each do |t| %>
-                <% if @team && t.id == @team.id %>
-                   <option value="<%= t.id %>" data-class="cs-selected"><%= t.name %></option>
-                <% else %>
-                    <option value="<%= t.id %>" data-link="<%= dash_admin_team_users_path(t.id) %>"><%= t.name %></option>
-                <% end %>
-            <% end %>
-        </select>
-    </div>
-    
-        <input type="text" id="searchField" placeholder="Spieler suchen">
-        <%= image_tag 'dash/search.png' %>
+      <select class="cs-select cs-skin-underline form-field">
+        <% if @team %>
+          <option value="" disabled selected><%= @team.name %></option>
+          <option value="" data-link="<%= dash_admin_users_path %>">Alle Teams</option>
+        <% else %>
+          <option value="" disabled selected>Alle Teams</option>
+          <option value="" data-link="<%= dash_admin_users_path %>" data-class="cs-selected">Alle Teams</option>
+        <% end %>
+        <% @teams.each do |t| %>
+          <% if @team && t.id == @team.id %>
+             <option value="<%= t.id %>" data-class="cs-selected"><%= t.name %></option>
+          <% else %>
+              <option value="<%= t.id %>" data-link="<%= dash_admin_team_users_path(t.id) %>"><%= t.name %></option>
+          <% end %>
+        <% end %>
+    </select>
+  </div>
+  <input type="text" id="searchField" placeholder="Spieler suchen">
+  <%= image_tag 'dash/search.png' %>
 </div>
    
 <div class="users" id="users">
    <div id="table">
     <table id="myTable">
-    <thead>
+      <thead>
         <tr>
             <th></th>
             <th>Name</th>
@@ -39,25 +42,25 @@
             <th></th>
             <th></th>
         </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
         <% @users.each do |u| %>
         <tr class="user-row">
-           <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= image_tag(u.avatar.quad.url) if u.avatar? %></td>
+           <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.avatar? ? image_tag(u.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
             <td class="name" onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.email %></td>
             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.company_name %></td>
             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
             <td>
-  <div class="btn-group dropleft">
-  <a type="button" id="dropdownMenu<%= u.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 3vh">
-    ...
-  </a>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenu<%= u.id %>">
-    <%= link_to 'Löschen!', destroy_user_path(u), class: 'dropdown-item', style: 'border-bottom: none', type: "button", data: { confirm: "Alles Spiele und Statistiken des Nutzers gehen verloren. Bist du sicher, dass du den Nutzer unwideruflich löschen möchtest?" } %>
-  </div>
-</div>
-           </td>
+              <div class="btn-group dropleft">
+              <a type="button" id="dropdownMenu<%= u.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 3vh">
+                ...
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu<%= u.id %>">
+                <%= link_to 'Löschen!', destroy_user_path(u), class: 'dropdown-item', style: 'border-bottom: none', type: "button", data: { confirm: "Alles Spiele und Statistiken des Nutzers gehen verloren. Bist du sicher, dass du den Nutzer unwideruflich löschen möchtest?" } %>
+              </div>
+              </div>
+            </td>
             <td><% if u.teams.count > 0 %>
                 <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line package_pop_up" %>
                 <% end %>
@@ -65,207 +68,69 @@
             <td>
                 <a href="#" class="edit-user" data-id="<%=u.id %>"> Edit</a>
             </td>
-        </tr>
+          </tr>
 
-<% content_for :modal do%>
-    <div class="blue_table">
-      
-      <div class="blue blue-place modal teamV-modal userEdit-modal" id="edit-user-modal<%= u.id %>" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <button type="button" class="close modal-close" onclick="closeTeamPop()" aria-label="Close"><i class="fas fa-times"></i></button>
-                    <div id="table_wrapper">
-                        <div class="" id="list-table">
-          
-                            <h1>
-                                <span>Nutzer bearbeiten</span>
-                            </h1>
-                            <%= form_for u, url: "/users/#{u.id}/update",method: 'put' do |f| %>
-                            <div class="user-profile">
-                                <div class="user-profile-img">
-                                    <div class="up-img">
-                                        <img src="<%= u.avatar %>" id="imgPrev<%=u.id%>">
-                                    </div>
-                                    <div class="user-profile-up">
-                                        <%= f.file_field :avatar, onChange: "readURL(this,$('#imgPrev'+#{u.id}));"%>
-                                        <span class="plus-p">+</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-block">
-                                <div class="row">
-                                    <div class="col-12 col-md-6 pr-md-4">
-                                        <div class="form-group">
-                                            <label>Unternehmen</label>
-                                            <%= f.text_field :company_name, class: "form-control" %>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 pl-md-4">
-                                        <div class="form-group">
-                                            <label>E-Mail</label>
-                                            <%= f.email_field :email, class: "form-control" %>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-md-6 pr-md-4">
-                                        <div class="form-group">
-                                            <label>Vorname</label>
-                                            <%= f.text_field :fname, class: "form-control" %>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 pl-md-4">
-                                        <div class="form-group">
-                                            <label>Nachname</label>
-                                            <%= f.text_field :lname, class: "form-control" %>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="teams-block">
-                                <div class="form-group bootstrapTag-group">
-                                    <label>Teams</label>
-                                    <select class="InputTags" name='user[teams][]' multiple="true" id="inputtags<%= u.id %>" data-role="tagsinput-typeahead" readonly class="rdonly"/>
-                                        <% u.teams.each do |t| %>
-                                            <option value="<%= t.id %>" selected><%= t.name %></option>
-                                        <% end %>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <%= f.submit "Anderungen speichern", class: "btn btn-green user-p-btn" %>
-                            </div>
-                            <a href="/users/<%=u.id %>/destroy"><span class="user-opt-det"><img src="<%= asset_path('delete-m.png') %>"></span></a>
-                            <% end %>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <% content_for :modal do%>
+                <%= render partial: 'form',locals: { u: u} %>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
-        <script type="text/javascript">
-            var teams;
-            teams = JSON.parse('<%= u.teams.map{|team| {itemValue: team.id, itemText: "#{team.name}"}}.to_json.to_s.html_safe %>')
-            var data = ["asa","AS"]
-            function readURL(input, img) {
-              if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                  img.attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-              }
-            }
-            function  closeTeamPop(){
-                $(".blue").modal("hide");
-            }
-            
-
-            
-
-  
-// var $div2 = $('[data-role="tagsinput"]');
-// var suggestionOptions = {
-//   tagClass: 'prot-pill-default',
-//   itemValue: 'key',
-//   itemText: 'value',
-//   typeahead: {
-//     source: [
-//       {
-//         key: 'key-amsterdam',
-//         value: 'value-amsterdam'
-//       },
-//       {
-//         key: 'key-westernhagen',
-//         value: 'value-westernhagen'
-//       },
-//       {
-//         key: 'key-hund',
-//         value: 'value-hund'
-//       }
-//     ],
-//     afterSelect: function (val) {
-//       this.$element.val('');
-//     },
-//     minLength: 0,
-//     items: 'all',
-//     showHintOnFocus: true
-//   }
-// };
-
-// $div2.tagsinput(suggestionOptions);
-
-        </script>
-<% end %>
-        <% end %>
-    </tbody>
-</table>
-</div>
-</div>
+  </div>
 </section>
 
-
-
 <script>
-    $(".edit-user").on("click", function(e){
-        e.preventDefault()
-        var $id = $(this).data("id")
-        $("#edit-user-modal"+$id).modal("show")
+  $(".edit-user").on("click", function(e){
+    e.preventDefault()
+    var $id = $(this).data("id")
+    $("#edit-user-modal"+$id).modal("show")
 
-    })
-   
-    $(document).ready(function(){
+  })
 
-                $('.InputTags').selectize({
-                    valueField: 'id',
-                    plugins: [ 'remove_button'
-                    ],
-                    labelField: 'name',
-                    persist: false,
-                    preload: true,
-                    create: false,
-                    allowEmptyOption: true,
-                    render: {
-                        option: function(data, escape) {
-                            return '<option>' +
-                                    '<span class="url">' + escape(data.name) + '</span>' +
-                                '</option>';
-                        },
-                        item: function(data, escape) {
-                            return '<span class="tag label label-info">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
-                        }
-                    },
-                    load: function(query, callback) {
-                        $.get({
-                            url: '/team_list',
-                            dataType: 'json',
-                            data: {
-                                name: query,
-                                additionalDataIfRequired: 'Additional Data'
-                            },
-                            error: function() {
-                                callback();
-                            },
-                            success: function(res) {
-                                // you can apply any modification to data before passing it to selectize
-                                callback(res);
-                                // res is json response from server
-                                // it contains array of objects. Each object has two properties. In this case 'id' and 'Name'
-                                // if array is inside some other property of res like 'response' or something. than use this
-                                //callback(res.response);
-                            }
-                        });
-                    }
-                })[0].selectize
-                $(".selectize-control").addClass("bootstrap-tagsinput")
-                $(".selectize-input.items input").attr("readonly", true);
-                // $("").tagsinput()
-            })
+  $(document).ready(function(){
+
+    $('.InputTags').selectize({
+      valueField: 'id',
+      plugins: [ 'remove_button'
+      ],
+      labelField: 'name',
+      preload: true,
+      create: false,
+      allowEmptyOption: true,
+      render: {
+        option: function(data, escape) {
+            return '<option>' +
+                    '<span class="url">' + escape(data.name) + '</span>' +
+                '</option>';
+        },
+        item: function(data, escape) {
+            return '<span class="tag label label-info">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
+        }
+      },
+      load: function(query, callback) {
+        $.get({
+            url: '/team_list',
+            dataType: 'json',
+            data: {
+                name: query,
+                additionalDataIfRequired: 'Additional Data'
+            },
+            error: function() {
+                callback();
+            },
+            success: function(res) {
+                // you can apply any modification to data before passing it to selectize
+                callback(res);
+                
+            }
+          });
+        }
+      })[0].selectize
+      $(".selectize-control").addClass("bootstrap-tagsinput")
+      $(".selectize-input.items input").attr("readonly", true);
+      // $("").tagsinput()
+  })
 
     function redirect_stats(team, user) {
         <% if @team %>
