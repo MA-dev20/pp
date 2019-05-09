@@ -195,10 +195,12 @@ var data1 = datapoints.map(el => {
 
                 // Display, position, and set styles for font
                 tooltipEl.style.opacity = 1;
-                tooltipEl.style.position = 'absolute';
-                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX-142 + 'px';
-                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-330 + 'px';
-                tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
+                tooltipEl.style.position = 'relative';
+                tooltipEl.style.left = position.left + tooltipModel.caretX-284/window.devicePixelRatio + 'px';
+                tooltipEl.style.top = position.top + tooltipModel.caretY-640/window.devicePixelRatio + 'px';
+                // tooltipEl.style.left = (position.left + window.pageXOffset + tooltipModel.caretX+100)/window.devicePixelRatio + 'px';
+                // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-330 + 'px';
+                // tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
                 tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
                 tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
                 tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
@@ -256,6 +258,7 @@ var gesamtChart = new Chart(ctx, {
         tooltips: {
             mode: 'index',
             enabled: false,
+            position: 'nearest',
             multiKeyBackground:"rgba(255,255,255,0)",
             intersect: false,
             dataPoints: datapoints,
@@ -453,27 +456,89 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
     $('.gesamt').addClass('active');
     var i = 0;
     <% @turns_rating.each do |g| %>
-        datapoints[i] = <%= g.ges / 10.0 %>;
+        var json_data = <%= g.to_json.html_safe %>
+        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+        <% if admin_rating.present? %>
+            var admin_ges = <%= admin_rating.ges %>;
+        <% else %>
+            var admin_ges = 0;
+        <% end %>
+        json_data["admin_ges"] = admin_ges
+        datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
-        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.ges / 10.0 %>;
+            <% rating = GameRating.where(game_id: g.game_id).first %>
+            var json_data2 = <%= rating.to_json.html_safe %>
+            datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
+    var i = 0
+    datapoints2.forEach(function(el){
+        if(el.value == undefined){
+            data2[i] = el
+        }else{
+            data2[i] = el.value
+        } 
+        i++;
+    })
+    var i = 0
+    datapoints.forEach(function(el){
+        if(el.value == undefined){
+            data1[i] = el
+        }else{
+            data1[i] = el.value
+        }
+        i++;
+        
+    })
     window.gesamtChart.update();
 });
 document.getElementById('chart_spontan').addEventListener('click', function() {
     $('.active').removeClass('active');
     $('.spontan').addClass('active');
     var i = 0;
-    <% @turns_rating.each do |g| %>
-        datapoints[i] = <%= g.spontan / 10.0 %>;
+    <% @turns_rating.each do |g| %>  
+        var json_data = <%= g.to_json.html_safe %>
+        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+        <% if admin_rating.present? %>
+            var admin_spontan = <%= admin_rating.spontan %>;
+        <% else %>
+            var admin_spontan = 0;
+        <% end %>
+        json_data["admin_ges"] = admin_spontan
+        datapoints[i] = {value: <%= g.spontan / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
-        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.spontan / 10.0 %>;
+            <% rating = GameRating.where(game_id: g.game_id).first %>
+            var json_data2 = <%= rating.to_json.html_safe %>
+            datapoints2[i] = {value: <%= rating.spontan / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
+    var i = 0
+    datapoints2.forEach(function(el){
+        if(el.value == undefined){
+            data2[i] = el
+        }else{
+            data2[i] = el.value
+        } 
+        i++;
+    })
+    var i = 0
+    datapoints.forEach(function(el){
+        if(el.value == undefined){
+            data1[i] = el
+        }else{
+            data1[i] = el.value
+        }
+        i++;
+        
+    })
     window.gesamtChart.update();
 });
 document.getElementById('chart_kreativ').addEventListener('click', function() {
@@ -481,13 +546,44 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
     $('.kreativ').addClass('active');
     var i = 0;
     <% @turns_rating.each do |g| %>
-        datapoints[i] = <%= g.creative / 10.0 %>;
+        var json_data = <%= g.to_json.html_safe %>
+        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+        <% if admin_rating.present? %>
+            var admin_creative = <%= admin_rating.creative %>;
+        <% else %>
+            var admin_creative = 0;
+        <% end %>
+        json_data["admin_ges"] = admin_creative
+        datapoints[i] = {value: <%= g.creative / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
-        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.creative / 10.0 %>;
+            <% rating = GameRating.where(game_id: g.game_id).first %>
+            var json_data2 = <%= rating.to_json.html_safe %>
+            datapoints2[i] = {value: <%= rating.creative / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
+    var i = 0
+    datapoints2.forEach(function(el){
+        if(el.value == undefined){
+            data2[i] = el
+        }else{
+            data2[i] = el.value
+        } 
+        i++;
+    })
+    var i = 0
+    datapoints.forEach(function(el){
+        if(el.value == undefined){
+            data1[i] = el
+        }else{
+            data1[i] = el.value
+        }
+        i++;
+        
+    })
     window.gesamtChart.update();
 });
 document.getElementById('chart_body').addEventListener('click', function() {
@@ -495,13 +591,45 @@ document.getElementById('chart_body').addEventListener('click', function() {
     $('.body').addClass('active');
     var i = 0;
     <% @turns_rating.each do |g| %>
-        datapoints[i] = <%= g.body / 10.0 %>;
+        var json_data = <%= g.to_json.html_safe %>
+        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+        <% if admin_rating.present? %>
+            var admin_body = <%= admin_rating.body %>;
+        <% else %>
+            var admin_body = 0;
+        <% end %>
+        json_data["admin_ges"] = admin_body
+        datapoints[i] = {value: <%= g.body / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
-        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.body / 10.0 %>;
+            <% rating = GameRating.where(game_id: g.game_id).first %>
+            var json_data2 = <%= rating.to_json.html_safe %>
+            datapoints2[i] = {value: <%= rating.body / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
+
+    var i = 0
+    datapoints2.forEach(function(el){
+        if(el.value == undefined){
+            data2[i] = el
+        }else{
+            data2[i] = el.value
+        } 
+        i++;
+    })
+    var i = 0
+    datapoints.forEach(function(el){
+        if(el.value == undefined){
+            data1[i] = el
+        }else{
+            data1[i] = el.value
+        }
+        i++;
+        
+    })
     window.gesamtChart.update();
 });
 document.getElementById('chart_rhetorik').addEventListener('click', function() {
@@ -509,13 +637,44 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     $('.rhetorik').addClass('active');
     var i = 0;
     <% @turns_rating.each do |g| %>
-        datapoints[i] = <%= g.rhetoric / 10.0 %>;
+        var json_data = <%= g.to_json.html_safe %>
+        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+        <% if admin_rating.present? %>
+            var admin_rhetoric = <%= admin_rating.rhetoric %>;
+        <% else %>
+            var admin_rhetoric = 0;
+        <% end %>
+        json_data["admin_ges"] = admin_rhetoric
+        datapoints[i] = {value: <%= g.rhetoric / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
-        datapoints2[i] = <%= GameRating.where(game_id: g.game_id).first.rhetoric / 10.0 %>;
+            <% rating = GameRating.where(game_id: g.game_id).first %>
+            var json_data2 = <%= rating.to_json.html_safe %>
+            datapoints2[i] = {value: <%= rating.rhetoric / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
+    var i = 0
+    datapoints2.forEach(function(el){
+        if(el.value == undefined){
+            data2[i] = el
+        }else{
+            data2[i] = el.value
+        } 
+        i++;
+    })
+    var i = 0
+    datapoints.forEach(function(el){
+        if(el.value == undefined){
+            data1[i] = el
+        }else{
+            data1[i] = el.value
+        }
+        i++;
+        
+    })
     window.gesamtChart.update();
 });
 
