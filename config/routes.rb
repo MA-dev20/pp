@@ -192,6 +192,7 @@ Rails.application.routes.draw do
     
   get 'users/:user_id/destroy', to: 'users#destroy', as: 'destroy_user'
   put 'users/:user_id/update', to: 'users#update', as: 'update_user'
+  post 'users/create', to: 'users#create', as: 'create_user'
 
 ##########
 # Rating #
