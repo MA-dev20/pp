@@ -119,6 +119,8 @@ var i = 0;
         var admin_ges = 0;
     <% end %> 
     json_data["admin_ges"] = admin_ges
+    json_data["type"] = "ges"
+    json_data["type_text"] = "Gesment"
     datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
 
     <% if GameRating.where(game_id: g.game_id).first %>
@@ -273,6 +275,8 @@ var gesamtChart = new Chart(ctx, {
 
                     var admin_ratings = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["admin_ges"]  /10
                     var spontan1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["spontan"] / 10
+                    var type = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["type"]
+                    var type_text = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["type_text"]
                     var body1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["body"] / 10
                     var rhetorik1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["rhetoric"] / 10
                   }else{
@@ -286,7 +290,6 @@ var gesamtChart = new Chart(ctx, {
                   if(data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]){
                     var creative2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
                     var ges = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["ges"] / 10
-
                     var spontan2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["spontan"] / 10
                     var body2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["body"] / 10
                     var rhetorik2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["rhetoric"] / 10
@@ -303,10 +306,10 @@ var gesamtChart = new Chart(ctx, {
                             <h6>`+tooltipItem[0]["xLabel"]+`</h6>
                             <h3>`+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word"]+`</h3>
                             <div id="dash_stats">
-                                <div class="rhetorik rhetorik-ge">
-                                    <button class="circle" id="chart_rhetorik">`+ges+`</button>
-                                    <div class="text" id="t_rhetorik">Gesamt</div>
-                                </div>
+                                <div class="rhetorik rhetorik-ge">`
+                                    val += `<button class="circle" id="chart_rhetorik">`+eval(type)+`</button>`
+                                    val += `<div class="text" id="t_rhetorik">`+type_text+`</div>`
+                                val+=`</div>
                                 <div class="rhetorik rhetorik-ts">
                                     <button class="circle" id="chart_rhetorik">`+team_Average+`</button>
                                     <div class="text" id="t_rhetorik">Teamschnitt</div>
@@ -465,6 +468,9 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
         <% else %>
             var admin_ges = 0;
         <% end %>
+        json_data["type"] = "ges"
+        json_data["type_text"] = "Gesment"
+
         json_data["admin_ges"] = admin_ges
         datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
@@ -510,6 +516,9 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
         <% else %>
             var admin_spontan = 0;
         <% end %>
+        json_data["type"] = "spontan2"
+        json_data["type_text"] = "Spontan"
+
         json_data["admin_ges"] = admin_spontan
         datapoints[i] = {value: <%= g.spontan / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
@@ -555,6 +564,9 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
         <% else %>
             var admin_creative = 0;
         <% end %>
+        json_data["type"] = "creative2"
+        json_data["type_text"] = "Creative"
+
         json_data["admin_ges"] = admin_creative
         datapoints[i] = {value: <%= g.creative / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
@@ -600,6 +612,9 @@ document.getElementById('chart_body').addEventListener('click', function() {
         <% else %>
             var admin_body = 0;
         <% end %>
+        json_data["type"] = "body2"
+        json_data["type_text"] = "Body"
+
         json_data["admin_ges"] = admin_body
         datapoints[i] = {value: <%= g.body / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
@@ -646,6 +661,9 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
         <% else %>
             var admin_rhetoric = 0;
         <% end %>
+        json_data["type"] = "rhetorik2"
+        json_data["type_text"] = "Rhetoric"
+
         json_data["admin_ges"] = admin_rhetoric
         datapoints[i] = {value: <%= g.rhetoric / 10.0 %>, data: json_data};
         <% if GameRating.where(game_id: g.game_id).first %>
