@@ -1756,4 +1756,18 @@ input:checked + .slider:before {
   background-color: #d4af36 !important;
   color: #fff;
 }
-
+button.btn-green-plus.green-plus-se {
+  position: absolute;
+  bottom: 74.6vh;
+  left: 45.8vw;
+  height: 4.8vh;
+  width: 4.8vh;
+  border-radius: 50%;
+  border: 2px solid #1ddaaf;
+  color: #fff;
+  background-color: #1ddaaf;
+  font-size: 2.6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
