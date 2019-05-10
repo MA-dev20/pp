@@ -86,6 +86,13 @@
 </section>
 
 <script>
+  $(document).ready(function(){
+    $(".email-field").keyup(function(){
+      var id = $(this).data("id");
+      $("#email-error-"+id).html('')
+    })
+  })
+  
   $(".edit-user").on("click", function(e){
     e.preventDefault()
     var $id = $(this).data("id")
