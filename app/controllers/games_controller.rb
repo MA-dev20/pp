@@ -51,7 +51,7 @@ class GamesController < ApplicationController
         words = CatchwordsBasket.includes(:words).where('id IN (?)', baskets).map(&:words).flatten!
         game.build_catchword_basket.save! if game.catchword_basket.nil?
         game.catchword_basket.words.destroy_all
-        game.catchword_basket.words << words
+        game.catchword_basket.words << words if words.present?
       end
     end
 
