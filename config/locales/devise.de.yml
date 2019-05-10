@@ -12,6 +12,10 @@ de:
             password: 
               too_short: "too short"
               blank: "is blank"
+        user:
+          attributes:
+            email:
+              taken: "has been already taken"      
   devise:
     confirmations:
       confirmed: "Vielen Dank für Deine Registrierung. Bitte melde dich jetzt an."

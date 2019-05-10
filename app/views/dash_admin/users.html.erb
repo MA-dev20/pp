@@ -25,8 +25,13 @@
         <% end %>
     </select>
   </div>
+
+  <button  class="btn-green-plus green-plus-se" id="newUserModal"> 
+    <i class='fas fa-plus'></i>
+  </button>
   <input type="text" id="searchField" placeholder="Spieler suchen">
   <%= image_tag 'dash/search.png' %>
+
 </div>
    
 <div class="users" id="users">
@@ -87,7 +92,10 @@
     $("#edit-user-modal"+$id).modal("show")
 
   })
-
+  $("#newUserModal").on("click", function(event){
+    event.preventDefault();
+    $("#new_user").modal("show");
+  });
   $(document).ready(function(){
 
     $('.InputTags').selectize({
