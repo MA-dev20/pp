@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_admin!, :set_vars
+  before_action :authenticate_admin!, :set_vars, except: [:create]
 
   def destroy
     if @user.destroy
@@ -21,6 +21,25 @@ class UsersController < ApplicationController
       @user.teams.destroy_all
     end
     redirect_to dash_admin_users_path
+  end
+
+  def create
+    @user = User.new(user_params)
+    @user.admin_id = current_admin.id
+    if @user.save
+      if params[:user][:teams].present?
+        @user.team_ids = params[:user][:teams] 
+      else
+        @user.teams.destroy_all
+      end
+      redirect_to dash_admin_users_path
+    else
+      respond_to do |format|
+        format.js do
+          render :create
+        end
+      end
+    end
   end
   
   private
