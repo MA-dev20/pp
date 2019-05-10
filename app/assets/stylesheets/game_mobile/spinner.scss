@@ -1,0 +1,110 @@
+// TYPOGRAPHY
+@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro');
+$font-family: 'Source Serif Pro', serif;
+
+// COLORS
+$white: #fff;
+$black: #000;
+$back: dodgerblue; // Change the color if you want
+
+// GENERAL
+*, *::before, *::after{
+  box-sizing: border-box;
+}
+
+
+// SPINNERS STYLES
+.spinner{
+  // Common styles
+  margin-top: 200px !important;
+  width: 25rem;
+  height: 25rem;
+  margin: 0 auto;
+  // Individual styles
+  &.spinner1{
+    border: 3px solid rgba($white, .25);
+    border-top-color: rgba($black, .5);
+    border-radius: 50%;
+    animation: rotation .8s ease infinite;
+  }
+}
+
+
+// ANIMATIONS
+@keyframes rotation{
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes flip{
+  0%{
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50%{
+    transform: perspective(120px) rotateX(-180deg) rotateY(0deg);
+  }
+  100%{
+    transform: perspective(120px) rotateX(-180deg) rotateY(-180deg);
+  }
+}
+
+@keyframes progress{
+  0%{
+    left: -130%;
+    background: rgba($black, .5);
+  }
+  50%{
+    left: 130%;
+    background: rgba($black, .5);
+  }
+  51%{
+    background: rgba($white, .5);
+  }
+  100%{
+    background: rgba($white, .5);
+  }
+}
+
+@keyframes pulse{
+  0%{
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100%{
+    transform: translate(-50%, -50%) scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse2{
+  0%, 100%{
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  50%{
+    transform: translate(-50%, -50%) scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes flipWalker{
+  0%{
+    transform: translate(0, 0) rotateX(0) rotateY(0);
+  }
+  25%{
+    transform: translate(100%, 0) rotateX(0) rotateY(180deg);
+  }
+  50%{
+    transform: translate(100%, 100%) rotateX(-180deg) rotateY(180deg);
+  }
+  75%{
+    transform: translate(0, 100%) rotateX(-180deg) rotateY(360deg);
+  }
+  100%{
+    transform:  translate(0, 0) rotateX(0) rotateY(360deg);
+  }
+}

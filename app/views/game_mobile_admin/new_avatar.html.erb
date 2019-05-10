@@ -1,17 +1,17 @@
 <section id="content">
-    <% if @admin.avatar? %>
-    <div class="head">
-        <div class="h100">Wow!</div>
-        <div class="h50">Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</div>
-    </div>
-    <% else %>
-    <div class="head">
-        <div class="h100">Bild hinzufügen!</div>
-        <div class="h50">Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</div>
-    </div>
-    <% end %>
-    <%= form_for(:admin, url: gma_new_avatar_path) do |f| %>
-    <div class="middle">
+  <% if @admin.avatar? %>
+  <div class="head">
+      <div class="h100">Wow!</div>
+      <div class="h50">Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</div>
+  </div>
+  <% else %>
+  <div class="head">
+      <div class="h100">Bild hinzufügen!</div>
+      <div class="h50">Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</div>
+  </div>
+  <% end %>
+  <div class="middle">
+      <%= form_for(:admin, url: gma_new_avatar_path) do |f| %>
         <% if @admin.avatar? %>
             <label for="admin_avatar" id="admin_pic">
                 <%= image_tag @admin.avatar.quad.url, class: 'mid-img blue' %>
@@ -26,18 +26,19 @@
         <% end %>
         <%= f.file_field :avatar, onchange: 'auto()' %>
         <%= f.submit '', style: 'display:none'%>
-    </div>
-    <% end %>
-    <% if @admin.avatar? %>
+      <% end %>
+  </div>
+  <% if @admin.avatar? %>
     <div class="bottom">
        <%= link_to 'weiter!', gma_new_turn_path, class: 'link pulse' %>
     </div>
-    <% end %>
+  <% end %>
 </section>
 
 <script>
 function auto() {
     $('form').submit();
     $('.bottom').show();
+    $("form").replaceWith("<div class='spinner spinner1'></div>")
 }
 </script>
