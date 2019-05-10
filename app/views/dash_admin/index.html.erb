@@ -14,11 +14,12 @@
       <%= f.label 'Team', class: 'row1' %>
       
       <div class="row2">
-      <select id='game_team_id' name="game[team_id]" class="cs-select cs-skin-underline form-field" required>
-          <option value='' disabled>Team wählen</option>
+      <%= f.label "Bitte Team wählen",id: 'team_error', class: 'error', style: "display: none; margin-bottom: 0;"  %>
+      <select id='game_team_id' name="game[team_id]" class="cs-select cs-skin-underline team-select form-field" required>
+          <option value='' disabled selected>Team wählen</option>
           <% @teams.each do |t| %>
               <% if @team && t == @team %>
-              <option value="<%= t.id %>" selected data-class='cs-selected'><%= t.name %></option>
+              <option value="<%= t.id %>" ><%= t.name %></option>
               <% else %>
               <option value="<%= t.id %>"><%= t.name %></option>
               <% end %>
@@ -100,7 +101,9 @@ $("#continue").click(function(e){
             new SelectFx(el, {
 						onChange: function(val){
 							$('#arrow-top').show();
-                            $('#url-field').focus();
+              $('#url-field').focus();
+              $(".team-select").removeClass("error-border")
+              $("#team_error").hide()
 						}
 					});
 
@@ -117,7 +120,8 @@ $("#own_rules_check").on("change", function(e){
   }
 })
 function createNewGame(){
-  if($("#url-field").val() != ""){
+
+  if($("#url-field").val() != "" && document.getElementById("game_team_id").value !=""){
     var fields = $( ":input" ).serializeArray();
     var seconds = $("input[name='game[seconds]']:checked").val()
     fields << {seconds: seconds}
@@ -127,9 +131,24 @@ function createNewGame(){
       type: 'post',
       data: fields
     })
+  }else{
+    if(document.getElementById("game_team_id").value == ""){
+      $(".team-select").addClass("error-border")
+      $("#team_error").show()
+    }
+    if($("#url-field").val() == ""){
+      $("#url-field").parent().addClass("error-border")
+    } 
   }
-  
 }
+$("#url-field").on("change", function(e){
+  var $this = $(this);
+  if($this.val != ""){
+    $this.parent().removeClass("error-border")
+  }else{
+    $this.parent().addClass("error-border")
+  }
+})
 <% if @admin.admin_subscription_id.nil? %>
   $("#anim_but").on("click", function(e){
     e.preventDefault()
