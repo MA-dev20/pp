@@ -46,8 +46,9 @@
                         <div class="col-12 col-md-6 pl-md-4">
                             <div class="form-group">
                                 <label>E-Mail</label>
-                                <%= f.email_field :email, class: "form-control", required: true %>
-                                <label id="email-error" class="error"> </label>
+                                <%= f.email_field :email, class: "form-control email-field", required: true ,
+                                 data: {id: "#{u.new_record? ? 'new_user' : u.id}"} %>
+                                  <label id="email-error-<%= u.new_record? ? "new_user" : "#{u.id}" %>" class="error"> </label>
                             </div>
                         </div>
                     </div>
