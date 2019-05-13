@@ -1,5 +1,5 @@
 class DashAdminController < ApplicationController
-  before_action :authenticate_admin!, :set_admin , unless: :skip_action?
+  before_action :authenticate_admin!, :set_admin , unless: :skip_action?, except: [:testing_cam]
   before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats,:team_stats_share]
   before_action :set_user, only: [:user_stats, :compare_user_stats]
   skip_before_action :check_expiration_date, only: :billing
@@ -22,6 +22,10 @@ class DashAdminController < ApplicationController
       #   send_data(kit.to_png, :type => "image/png", :disposition => 'inline')
       # end
     end
+  end
+
+  def testing_cam
+    
   end
 
   def get_words
