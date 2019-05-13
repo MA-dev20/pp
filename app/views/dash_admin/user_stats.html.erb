@@ -258,8 +258,10 @@ var gesamtChart = new Chart(ctx, {
         },
         tooltips: {
             yAlign: 'left',
-            mode: 'index',
+            mode: 'single',
+            onlyShowForDatasetIndex: [0],
             enabled: false,
+
             position: 'nearest',
             yPadding: '100px',
             multiKeyBackground:"rgba(255,255,255,0)",
@@ -308,11 +310,11 @@ var gesamtChart = new Chart(ctx, {
                             <h3>`+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word"]+`</h3>
                             <div id="dash_stats">
                                 <div class="rhetorik rhetorik-ge">`
-                                    val += `<button class="circle" id="chart_rhetorik">`+eval(type)+`</button>`
+                                    val += `<button class="circle" id="chart_rhetorik">`+team_Average+`</button>`
                                     val += `<div class="text" id="t_rhetorik">`+type_text+`</div>`
                                 val+=`</div>
                                 <div class="rhetorik rhetorik-ts">
-                                    <button class="circle" id="chart_rhetorik">`+team_Average+`</button>
+                                    <button class="circle" id="chart_rhetorik">`+eval(type)+`</button>
                                     <div class="text" id="t_rhetorik">Teamschnitt</div>
                                 </div>
                                 <div class="rhetorik rhetorik-mb">
@@ -424,6 +426,9 @@ var gesamtChart = new Chart(ctx, {
                   // var percent = Math.round((dataset['data'][tooltipItem['index']] / dataset["_meta"][0]['total']) * 100)
                   // return '(' + percent + '%)';
                 }
+            },
+            filter: function (tooltipItem) {
+                return tooltipItem.datasetIndex === 0;
             },
 
         },
