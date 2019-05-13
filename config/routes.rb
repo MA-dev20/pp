@@ -226,6 +226,7 @@ Rails.application.routes.draw do
   get 'mobile/admins/:password/password', to: 'game_mobile_admin#password', as: 'gma_pw'
   post 'mobile/admins/:password/password', to: 'game_mobile_admin#check_email', as: 'gma_email_check'
   post 'objection', to: 'game_desktop_admin#', as: 'gda_objection'
+  get 'camera_testing', to: 'dash_admin#testing_cam'
   get '/:password', to: 'game_mobile_user#welcome', as: 'gmu_start'
 
 end
