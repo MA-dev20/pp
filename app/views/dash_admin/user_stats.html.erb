@@ -111,7 +111,8 @@ var i = 0;
 <% @turns_rating.each do |g| %>
     var json_data = <%= g.to_json.html_safe %>
     json_data["word"] = "<%= g.turn.word.name %>";
-    json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        json_data["id"] = "<%= g.turn.id %>";
+
     <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
     <% if admin_rating.present? %>
         var admin_ges = <%= admin_rating.ges %>;
@@ -120,12 +121,15 @@ var i = 0;
     <% end %> 
     json_data["admin_ges"] = admin_ges
     json_data["type"] = "ges"
+    json_data["type2"] = "ges2"
     json_data["type_text"] = "Gesment"
     datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
 
     <% if GameRating.where(game_id: g.game_id).first %>
         <% rating = GameRating.where(game_id: g.game_id).first %>
         var json_data2 = <%= rating.to_json.html_safe %>
+        json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
+
         datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
     <% end %>
     label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
@@ -273,32 +277,38 @@ var gesamtChart = new Chart(ctx, {
                 title: function(tooltipItem, data) {
                   if(data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]){
 
-                    var creative1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
-                    var team_Average = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["average_team_ratings"]
+                    var creative = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
+                    
 
                     var admin_ratings = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["admin_ges"]  /10
-                    var spontan1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["spontan"] / 10
+                    var ges = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["ges"] / 10
+
+                    var spontan = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["spontan"] / 10
                     var type = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["type"]
+                    var type2 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["type2"]
                     var type_text = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["type_text"]
-                    var body1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["body"] / 10
+                    var body = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["body"] / 10
                     var rhetorik1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["rhetoric"] / 10
                   }else{
-                    var creative1 = 0,
-                      spontan1=0,
+                    var creative = 0,
+                        ges=0,
+                      spontan=0,
                       admin_ratings= 0,
                       team_Average= 0,
-                      body1=0,
+                      body=0,
                       rhetorik1=0;
                   }
                   if(data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]){
                     var creative2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
-                    var ges = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["ges"] / 10
+                    var team_Average = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["average_team_ratings"] ? data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["average_team_ratings"] : 0 
                     var spontan2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["spontan"] / 10
                     var body2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["body"] / 10
+                    var ges2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["ges"] / 10
                     var rhetorik2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["rhetoric"] / 10
                   }else{
                     var creative2 = 0,
-                        ges=0,
+                        ges2=0,
+                        team_Average=0,
                       spontan2=0,
                       body2=0,
                       rhetorik2=0;
@@ -310,15 +320,15 @@ var gesamtChart = new Chart(ctx, {
                             <h3>`+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word"]+`</h3>
                             <div id="dash_stats">
                                 <div class="rhetorik rhetorik-ge">`
-                                    val += `<button class="circle" id="chart_rhetorik">`+team_Average+`</button>`
+                                    val += `<button class="circle" id="chart_rhetorik">`+eval(type)+`</button>`
                                     val += `<div class="text" id="t_rhetorik">`+type_text+`</div>`
                                 val+=`</div>
                                 <div class="rhetorik rhetorik-ts">
-                                    <button class="circle" id="chart_rhetorik">`+eval(type)+`</button>
+                                    <button class="circle" id="chart_rhetorik">`+eval(type2)+`</button>
                                     <div class="text" id="t_rhetorik">Teamschnitt</div>
                                 </div>
                                 <div class="rhetorik rhetorik-mb">
-                                    <button class="circle" id="chart_rhetorik">`+admin_ratings+`</button>
+                                    <button class="circle" id="chart_rhetorik">`+team_Average+`</button>
                                     <div class="text" id="t_rhetorik">Meine Bewertung</div>
                                 </div>
                             </div>
@@ -329,9 +339,9 @@ var gesamtChart = new Chart(ctx, {
                             <div class="progress-bar-pop">
                               <div class="progress-bar-con progress-con-t">
                                 <div class="progressbar-view">
-                                  <div class="progressbar-fill" style="width: `+spontan1/10*100+`% !important;"></div>
+                                  <div class="progressbar-fill" style="width: `+spontan/10*100+`% !important;"></div>
                                 </div>
-                                <div class="progress-bar-value">`+spontan1+`</div>
+                                <div class="progress-bar-value">`+spontan+`</div>
                               </div>`;
                               if(data["datasets"][1]){
                                 val+=`
@@ -350,9 +360,9 @@ var gesamtChart = new Chart(ctx, {
                             <div class="progress-bar-pop">
                               <div class="progress-bar-con progress-con-t">
                                 <div class="progressbar-view">
-                                  <div class="progressbar-fill" style="width: `+creative1/10*100+`% !important;"></div>
+                                  <div class="progressbar-fill" style="width: `+creative/10*100+`% !important;"></div>
                                 </div>
-                                <div class="progress-bar-value">`+creative1+`</div>
+                                <div class="progress-bar-value">`+creative+`</div>
                               </div>
                               `;
                               if(data["datasets"][1]){
@@ -373,7 +383,7 @@ var gesamtChart = new Chart(ctx, {
                             <div class="progress-bar-pop">
                               <div class="progress-bar-con progress-con-t">
                                 <div class="progressbar-view">
-                                  <div class="progressbar-fill" style="width: `+body1/10*100+`% !important;"></div>
+                                  <div class="progressbar-fill" style="width: `+body/10*100+`% !important;"></div>
                                 </div>
                                 <div class="progress-bar-value">`+body2+`</div>
                               </div>`;
@@ -460,6 +470,13 @@ var gesamtChart = new Chart(ctx, {
         },
     }
 });
+var canvas = document.getElementById('Chart')
+canvas.onclick = function (evt) {
+    var points = gesamtChart.getElementAtEvent(evt);
+    var current_point = datapoints[points[0]._index];
+    var game_id = current_point.data.game_id,
+    turn_id = current_point.data.turn_id;
+};
 document.getElementById('chart_gesamt').addEventListener('click', function() {
     $('.active').removeClass('active');
     $('.gesamt').addClass('active');
@@ -467,7 +484,8 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
-        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        json_data["id"] = "<%= g.turn.id %>";
+
         <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_ges = <%= admin_rating.ges %>;
@@ -475,6 +493,7 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
             var admin_ges = 0;
         <% end %>
         json_data["type"] = "ges"
+        json_data["type2"] = "ges"
         json_data["type_text"] = "Gesment"
 
         json_data["admin_ges"] = admin_ges
@@ -482,6 +501,7 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
+            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
@@ -515,14 +535,16 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
     <% @turns_rating.each do |g| %>  
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
-        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        json_data["id"] = "<%= g.turn.id %>";
+
         <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_spontan = <%= admin_rating.spontan %>;
         <% else %>
             var admin_spontan = 0;
         <% end %>
-        json_data["type"] = "spontan2"
+        json_data["type"] = "spontan"
+        json_data["type2"] = "spontan2"
         json_data["type_text"] = "Spontan"
 
         json_data["admin_ges"] = admin_spontan
@@ -530,6 +552,7 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
+            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.spontan / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
@@ -563,14 +586,15 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
-        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        json_data["id"] = "<%= g.turn.id %>";
         <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_creative = <%= admin_rating.creative %>;
         <% else %>
             var admin_creative = 0;
         <% end %>
-        json_data["type"] = "creative2"
+        json_data["type"] = "creative"
+        json_data["type2"] = "creative2"
         json_data["type_text"] = "Creative"
 
         json_data["admin_ges"] = admin_creative
@@ -578,6 +602,7 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
+            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.creative / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
@@ -611,14 +636,16 @@ document.getElementById('chart_body').addEventListener('click', function() {
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
-        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        json_data["id"] = "<%= g.turn.id %>";
+
         <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_body = <%= admin_rating.body %>;
         <% else %>
             var admin_body = 0;
         <% end %>
-        json_data["type"] = "body2"
+        json_data["type"] = "body"
+        json_data["type2"] = "body2"
         json_data["type_text"] = "Body"
 
         json_data["admin_ges"] = admin_body
@@ -626,6 +653,7 @@ document.getElementById('chart_body').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
+            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.body / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
@@ -660,14 +688,16 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
-        json_data["average_team_ratings"] = <%= @average_team_rating %>;
+        json_data["id"] = "<%= g.turn.id %>";
+
         <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_rhetoric = <%= admin_rating.rhetoric %>;
         <% else %>
             var admin_rhetoric = 0;
         <% end %>
-        json_data["type"] = "rhetorik2"
+        json_data["type"] = "rhetorik"
+        json_data["type2"] = "rhetorik2"
         json_data["type_text"] = "Rhetoric"
 
         json_data["admin_ges"] = admin_rhetoric
@@ -675,6 +705,7 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
+            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.rhetoric / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
