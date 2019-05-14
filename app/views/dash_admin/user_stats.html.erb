@@ -128,7 +128,7 @@ var i = 0;
     <% if GameRating.where(game_id: g.game_id).first %>
         <% rating = GameRating.where(game_id: g.game_id).first %>
         var json_data2 = <%= rating.to_json.html_safe %>
-        json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
+        json_data2["average_team_ratings"] = <%= rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
 
         datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
     <% end %>
@@ -501,7 +501,7 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
-            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
+            json_data2["average_team_ratings"] = <%= rating.slice( "creative","body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
@@ -552,7 +552,7 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
-            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
+            json_data2["average_team_ratings"] = <%= rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.spontan / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
@@ -602,7 +602,7 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
-            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
+            json_data2["average_team_ratings"] = <%= rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.creative / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
@@ -653,7 +653,7 @@ document.getElementById('chart_body').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
-            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
+            json_data2["average_team_ratings"] = <%= rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.body / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
@@ -705,7 +705,7 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
         <% if GameRating.where(game_id: g.game_id).first %>
             <% rating = GameRating.where(game_id: g.game_id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
-            json_data2["average_team_ratings"] = <%= rating.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
+            json_data2["average_team_ratings"] = <%= rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 %>;
             datapoints2[i] = {value: <%= rating.rhetoric / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
