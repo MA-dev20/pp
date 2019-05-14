@@ -291,7 +291,7 @@ var gesamtChart = new Chart(ctx, {
                     var type2 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["type2"]
                     var type_text = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["type_text"]
                     var body = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["body"] / 10
-                    var rhetorik1 = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["rhetoric"] / 10
+                    var rhetorik = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["rhetoric"] / 10
                   }else{
                     var creative = 0,
                         ges=0,
@@ -299,7 +299,7 @@ var gesamtChart = new Chart(ctx, {
                       admin_ratings= 0,
                       team_Average= 0,
                       body=0,
-                      rhetorik1=0;
+                      rhetorik=0;
                   }
                   if(data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]){
                     var creative2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
@@ -408,9 +408,9 @@ var gesamtChart = new Chart(ctx, {
                             <div class="progress-bar-pop">
                               <div class="progress-bar-con progress-con-t">
                                 <div class="progressbar-view">
-                                  <div class="progressbar-fill" style="width: `+rhetorik1/10*100+`% !important;"></div>
+                                  <div class="progressbar-fill" style="width: `+rhetorik/10*100+`% !important;"></div>
                                 </div>
-                                <div class="progress-bar-value">`+rhetorik1+`</div>
+                                <div class="progress-bar-value">`+rhetorik+`</div>
                               </div>
                               `;
                               if(data["datasets"][1]){
