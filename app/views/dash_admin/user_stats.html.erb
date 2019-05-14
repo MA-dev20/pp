@@ -7,7 +7,7 @@
         <div class="gesamt active">
             <button class="circle" id="chart_gesamt">
             <span><%= number_with_precision(@current_rating[:rating][:ges].to_f / 10.0, precision: 1) %></span>
-            <%= image_tag @user.avatar.quad.url %>
+            <%= image_tag @user.avatar.quad.url if @user.avatar.quad.url.present?%>
             </button>
             <div class="text" id="t_gesamt">Gesamt</div>
         </div>
@@ -46,14 +46,17 @@
            </div>
         </div>
         <ul class="places-ratings">
-           <% @result.first(3).each.with_index(1) do |v, k| %>
+            <%
+                @show_three = get_current_user_position(@result)
 
+            %> 
+           <% @show_three.each do |k,v| %>
             <% if v.present? %>
-                    <li class="<%= 'current' if v[:user].id == params[:user_id] %>">  
-                        <% if v[:user].id == params[:user_id] or k.to_s == "2" %>
+                    <li class="<%= 'current' if v[:user].id.to_s == params[:user_id] %>">  
+                        <% if v[:user].id.to_s == params[:user_id]  %>
                             <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
                         <% end %>
-                        <div class="rating-c"><%= k %>. <%= v[:user].fname%></div>
+                        <div class="rating-c"><%= k.to_i + 1 %>. <%= v[:user].fname%></div>
                         <div class="rating-d"><%= number_with_precision(v[:rating][:average] / 10, precision: 1)  %></div>
                     </li>
                 <% end %>

@@ -4,6 +4,7 @@ class DashAdminController < ApplicationController
   before_action :set_user, only: [:user_stats, :compare_user_stats]
   skip_before_action :check_expiration_date, only: :billing
   layout :resolve_layout
+
   
   def index
     if params[:team_id]
@@ -24,8 +25,10 @@ class DashAdminController < ApplicationController
     end
   end
 
-  def testing_cam
-    
+
+  def show_turn
+    @game = Game.find(params[:game_id])
+    @turn = @game.turns.find(params[:turn_id])
   end
 
   def get_words
@@ -121,7 +124,7 @@ class DashAdminController < ApplicationController
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     @ratings = @team.team_rating
-    @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40
+    @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 if @ratings.present?
     # if @result.present?
     #   if @result.count >= 3
     #     @three_records = @result
