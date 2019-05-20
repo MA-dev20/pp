@@ -6,6 +6,9 @@ class Turn < ApplicationRecord
   has_one :turn_rating, dependent: :destroy
   has_many :ratings, dependent: :destroy
   
+  mount_uploader :recorded_pitch, PitchUploader
+
+  
   TURN_QUERY = 'users.*,(select count(*) from turns t1 where t1.user_id=users.id and place=1) as gold_count, (select count(*) from turns t1 where t1.user_id=users.id and place=2) as silver_count, (select count(*) from turns t1 where t1.user_id=users.id and place=3) as bronze_count'
     
   scope :playable, -> { where(play:true, played: false) }

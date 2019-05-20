@@ -1,8 +1,10 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :wait, :choose, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay]
+  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email]
-  before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
+  before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
+  skip_before_action :verify_authenticity_token, only: [:save_video]
+
     
   def new
     session[:admin_email] = nil
@@ -17,6 +19,11 @@ class GameMobileAdminController < ApplicationController
   def check_email
     session[:admin_email] = params[:admin][:email]
     redirect_to gma_pw_path
+  end
+
+  def save_video
+    @turn.recorded_pitch = params[:file]
+    @turn.save!
   end
 
   def create
@@ -126,6 +133,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def play
+    @record =  params[:video] == "record" ? true : false
     if @game.state != 'play'
       @game.update(state: 'play')
     end

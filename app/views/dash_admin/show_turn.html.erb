@@ -1,0 +1,323 @@
+<div class="videotool-canvas d-flex">
+  <div class="videotool-content">
+    <div class="progress-block">
+        <div class="progress-top">
+            <h6><%= @turn.created_at %></h6>
+            <h3><%= @turn.word.name %></h3>
+            <div id="dash_stats">
+              <div class="gesamt rhetorik active">
+                <button class="circle" id="chart_gesamt">
+                  <span>7.7</span>
+                  <img src="/uploads/user/avatar/23/quad_Screenshot_2019-04-08_at_7.02.31_PM.png">
+                </button>
+                <div class="text" id="t_gesamt">Gesamt</div>
+              </div>
+              <div class="gesamt rhetorik">
+                <button class="circle" id="chart_gesamt">
+                  <span>7.7</span>
+                  <img src="/uploads/user/avatar/23/quad_Screenshot_2019-04-08_at_7.02.31_PM.png">
+                </button>
+                <div class="text" id="t_gesamt">Meine Bewertung</div>
+              </div>
+            </div>
+        </div>
+        <div class="progress-main">
+          <div class="progressBar">
+            <div class="progress-bar-text">Spontanitat</div>
+            <div class="progress-bar-pop">
+              <div class="progress-bar-con progress-con-t">
+                <div class="progressbar-view">
+                  <div class="progressbar-fill" style="width: 100% !important;"></div>
+                </div>
+                <div class="progress-bar-value">10</div>
+              </div>
+                  <div class="progress-bar-con progress-con-b">
+                    <div class="progressbar-view">
+                      <div class="progressbar-fill" style="width: 100% !important;"></div>
+                    </div>
+                    <div class="progress-bar-value">10</div>
+                  </div>
+            </div>
+          </div>
+          <div class="progressBar">
+            <div class="progress-bar-text">Kreativitat</div>
+            <div class="progress-bar-pop">
+              <div class="progress-bar-con progress-con-t">
+                <div class="progressbar-view">
+                  <div class="progressbar-fill" style="width: 93% !important;"></div>
+                </div>
+                <div class="progress-bar-value">9.3</div>
+              </div>
+              
+                  <div class="progress-bar-con progress-con-b">
+                    <div class="progressbar-view">
+                      <div class="progressbar-fill" style="width: 93% !important;"></div>
+                    </div>
+                    <div class="progress-bar-value">9.3</div>
+                  </div>
+            </div>
+          </div>
+          <div class="progressBar">
+            <div class="progress-bar-text">Korpersprache</div>
+            <div class="progress-bar-pop">
+              <div class="progress-bar-con progress-con-t">
+                <div class="progressbar-view">
+                  <div class="progressbar-fill" style="width: 67% !important;"></div>
+                </div>
+                <div class="progress-bar-value">6.7</div>
+              </div> <div class="progress-bar-con progress-con-b">
+                    <div class="progressbar-view">
+                      <div class="progressbar-fill" style="width: 67% !important;"></div>
+                    </div>
+                    <div class="progress-bar-value">6.7</div>
+                  </div>
+            </div>
+          </div>
+          <div class="progressBar">
+            <div class="progress-bar-text">Rhetorik</div>
+            <div class="progress-bar-pop">
+              <div class="progress-bar-con progress-con-t">
+                <div class="progressbar-view">
+                  <div class="progressbar-fill" style="width: 50% !important;"></div>
+                </div>
+                <div class="progress-bar-value">5</div>
+              </div>
+              
+                  <div class="progress-bar-con progress-con-b">
+                    <div class="progressbar-view">
+                      <div class="progressbar-fill" style="width: 50% !important;"></div>
+                    </div>
+                    <div class="progress-bar-value">5</div>
+                  </div>
+                  
+            </div>
+          </div>
+        </div>
+        <div class="switch-box switch-box-vt">
+          <label class="switch">
+            <input type="checkbox" id="show_video" value="is" >
+            <span class="slider round"></span>
+          </label>
+          <p class="text-for-switch">Betwertung einblenden</p>
+        </div>
+    </div>
+  </div>
+
+  <div class="videotool-content videotool-content-video" style="display: none;" id="video">
+    <div class="video-container">
+      <video  height="auto" width="100%" id="video-content"  preload="metadata">
+        <source src="http://localhost:3000/uploads/turn/recorded_pitch/398/video_May_20_2019_17_00_57_GMT.webm" type="video/webm">
+      </video>
+    </div>
+    <div class="player-bar">
+      <div class="player-bar-current">
+        <span class="player-cursor"></span>
+      </div>
+    </div>
+    <div class="video-time">
+      <span id="currentTime">0:00</span>
+      <span id="duration"></span>
+    </div>
+    <div class="video-options position-relative">
+      <a href="#" class="stop-video" id="stop">text</a>
+      <a href="#" class="play-video">text</a>
+      <a href="#" class="edit-video">text</a>
+      <a href="#" class="volume-on">text</a>
+    </div>
+  </div>
+  <div class="videotool-content">
+    <div class="progress-block">
+        <div class="progress-top">
+            <h6>03.05.2019</h6>
+            <h3>xxrr</h3>
+            <div id="dash_stats">
+                <div class="rhetorik rhetorik-ge"><button class="circle" id="chart_rhetorik">7.7</button><div class="text" id="t_rhetorik">Gesment</div></div>
+                <div class="rhetorik rhetorik-ts">
+                    <button class="circle" id="chart_rhetorik">7.7</button>
+                    <div class="text" id="t_rhetorik">Teamschnitt</div>
+                </div>
+                <div class="rhetorik rhetorik-mb">
+                    <button class="circle" id="chart_rhetorik">7.8</button>
+                    <div class="text" id="t_rhetorik">Meine Bewertung</div>
+                </div>
+            </div>
+        </div>
+        <div class="progress-main">
+          <div class="progressBar">
+            <div class="progress-bar-text">Spontanitat</div>
+            <div class="progress-bar-pop">
+              <div class="progress-bar-con progress-con-t">
+                <div class="progressbar-view">
+                  <div class="progressbar-fill" style="width: 100% !important;"></div>
+                </div>
+                <div class="progress-bar-value">10</div>
+              </div>
+                  <div class="progress-bar-con progress-con-b">
+                    <div class="progressbar-view">
+                      <div class="progressbar-fill" style="width: 100% !important;"></div>
+                    </div>
+                    <div class="progress-bar-value">10</div>
+                  </div>
+            </div>
+          </div>
+          <div class="progressBar">
+            <div class="progress-bar-text">Kreativitat</div>
+            <div class="progress-bar-pop">
+              <div class="progress-bar-con progress-con-t">
+                <div class="progressbar-view">
+                  <div class="progressbar-fill" style="width: 93% !important;"></div>
+                </div>
+                <div class="progress-bar-value">9.3</div>
+              </div>
+              
+                  <div class="progress-bar-con progress-con-b">
+                    <div class="progressbar-view">
+                      <div class="progressbar-fill" style="width: 93% !important;"></div>
+                    </div>
+                    <div class="progress-bar-value">9.3</div>
+                  </div>
+            </div>
+          </div>
+          <div class="progressBar">
+            <div class="progress-bar-text">Korpersprache</div>
+            <div class="progress-bar-pop">
+              <div class="progress-bar-con progress-con-t">
+                <div class="progressbar-view">
+                  <div class="progressbar-fill" style="width: 67% !important;"></div>
+                </div>
+                <div class="progress-bar-value">6.7</div>
+              </div> <div class="progress-bar-con progress-con-b">
+                    <div class="progressbar-view">
+                      <div class="progressbar-fill" style="width: 67% !important;"></div>
+                    </div>
+                    <div class="progress-bar-value">6.7</div>
+                  </div>
+            </div>
+          </div>
+          <div class="progressBar">
+            <div class="progress-bar-text">Rhetorik</div>
+            <div class="progress-bar-pop">
+              <div class="progress-bar-con progress-con-t">
+                <div class="progressbar-view">
+                  <div class="progressbar-fill" style="width: 50% !important;"></div>
+                </div>
+                <div class="progress-bar-value">5</div>
+              </div>
+              
+                  <div class="progress-bar-con progress-con-b">
+                    <div class="progressbar-view">
+                      <div class="progressbar-fill" style="width: 50% !important;"></div>
+                    </div>
+                    <div class="progress-bar-value">5</div>
+                  </div>
+                  
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+   
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    const player = document.querySelector('#video');
+    const progress = player.querySelector('.player-bar');
+    const progressBar = player.querySelector('.player-bar-current');
+    const skipButtons = player.querySelectorAll('[data-skip]');
+    const ranges = player.querySelectorAll('.player__slider');
+    const playbutton = document.querySelector(".play-video");
+    const video = document.getElementById('video-content');
+    const durationSpan =  $("span#durationn");
+    const currentTimeSpan = $("span#currentTime");
+    /* Build out functions */
+    function togglePlay() {
+      const method = video.paused ? 'play' : 'pause';
+      video[method]();
+
+    }
+
+    function updateButton() {
+      const icon = this.paused ? '►' : '❚ ❚';
+      console.log(icon);
+      if(this.paused){
+        $(".play-video").addClass("pause-video")
+      }else{
+        $(".play-video").removeClass("pause-video")
+      }
+    }
+
+    function skip() {
+     video.currentTime += parseFloat(this.dataset.skip);
+    }
+
+    function handleRangeUpdate() {
+      video[this.name] = this.value;
+    }
+
+    function handleProgress() {
+      const percent = (video.currentTime / video.duration) * 100;
+      progressBar.style.width = `${percent}%`;
+      if(video.duration != Infinity)
+        $("span#duration").html('/'+secondsToHms(Math.round(video.duration)))
+      $("span#currentTime").html(secondsToHms(Math.round(video.currentTime)))
+    }
+
+    function scrub(e) {
+      video.play()
+      const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+      video.currentTime = scrubTime;
+    }
+
+    function stopVideo(){
+      video.stop()
+      video.currentTime = 0;
+      $(".play-video").removeClass("pause-video");
+    }
+    /* Hook up the event listeners */
+    video.addEventListener('click', togglePlay);
+    playbutton.addEventListener('click', togglePlay);
+    video.addEventListener('play', updateButton);
+    video.addEventListener('pause', updateButton);
+    video.addEventListener('timeupdate', handleProgress);
+
+    skipButtons.forEach(button => button.addEventListener('click', skip));
+    ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
+    ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate));
+
+    let mousedown = false;
+    progress.addEventListener('click', scrub);
+    progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
+    progress.addEventListener('mousedown', () => mousedown = true);
+    progress.addEventListener('mouseup', () => mousedown = false);
+    var duration;
+    video.addEventListener('loadedmetadata', function () {
+      console.log(video.duration);
+    });
+
+    $(".stop-video").click(function(e){
+      stopVideo()
+    })
+    $(".switch").click(function(event){
+        var show = $("#show_video").prop("checked");
+        if(show){
+          $("#video").fadeIn()
+        }else{
+          $("#video").fadeOut()
+        }
+    })
+  })
+  function secondsToHms(d) {
+      d = Number(d);
+      var h = Math.floor(d / 3600);
+      var m = Math.floor(d % 3600 / 60);
+      var s = Math.floor(d % 3600 % 60);
+
+      var mDisplay = m > 0 ? (":") + m  : "0";
+      var sDisplay = s > 0 ? ":" + (s).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})  : ":00";
+      return   mDisplay + sDisplay; 
+  }
+
+ /* Get Our Elements */
+</script>
