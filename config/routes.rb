@@ -63,6 +63,7 @@ Rails.application.routes.draw do
   get 'mobile/admin/choose', to: 'game_mobile_admin#choose', as: 'gma_choose'
   get 'mobile/admin/turn', to: 'game_mobile_admin#turn', as: 'gma_turn'
   get 'mobile/admin/play', to: 'game_mobile_admin#play', as: 'gma_play'
+  post 'mobile/admin/upload', to: 'game_mobile_admin#save_video', as: 'gpitchsave_play'
   get 'mobile/admin/rate', to: 'game_mobile_admin#rate', as: 'gma_rate'
   get 'mobile/admin/rated', to: 'game_mobile_admin#rated', as: 'gma_rated'
   get 'mobile/admin/rating', to: 'game_mobile_admin#rating', as: 'gma_rating'
@@ -122,6 +123,8 @@ Rails.application.routes.draw do
 
     get 'admin/verification/:token', to: 'dash_admin#verification', as: 'dash_admin_verfication'
     post 'admin/dash/teams/:team_id/generate_img_from_html', to: 'dash_admin#generate_img_from_html', as: 'dash_admin_generate_img_from_html'
+    get 'admin/dash/games/:game_id/turns/:turn_id', to: 'dash_admin#turn_show', as: 'dash_admin_show_turn'
+    
     get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
     get 'admin/dash/teams/:team_id/stats', to: 'dash_admin#team_stats', as: 'dash_admin_team_stats'
     get 'admin/dash/teams/:team_id/stats/share', to: 'dash_admin#team_stats_share', as: 'dash_admin_team_stats_share'
@@ -226,7 +229,8 @@ Rails.application.routes.draw do
   get 'mobile/admins/:password/password', to: 'game_mobile_admin#password', as: 'gma_pw'
   post 'mobile/admins/:password/password', to: 'game_mobile_admin#check_email', as: 'gma_email_check'
   post 'objection', to: 'game_desktop_admin#', as: 'gda_objection'
-  get 'camera_testing', to: 'dash_admin#testing_cam'
+  get '/test', to: "dash_admin#testing_cam"
+
   get '/:password', to: 'game_mobile_user#welcome', as: 'gmu_start'
 
 end

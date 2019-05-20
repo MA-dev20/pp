@@ -26,9 +26,12 @@ class DashAdminController < ApplicationController
   end
 
 
-  def show_turn
+  def turn_show
     @game = Game.find(params[:game_id])
     @turn = @game.turns.find(params[:turn_id])
+    @rating = @turn.ratings.select("AVG(ratings.body) AS body, AVG(ratings.creative) AS creative, AVG(ratings.spontan) AS spontan, AVG(ratings.ges) AS ges, AVG(ratings.rhetoric) AS rhetoric")[0]
+
+    render :show_turn
   end
 
   def get_words
