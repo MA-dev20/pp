@@ -20,6 +20,7 @@
     background-color: #becee0;
     border-radius: 50%;
     box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
+    overflow: hidden;
 }
 .circle .bg_1 {
     position: absolute;
@@ -31,6 +32,15 @@
     border-radius: 50%;
     background-color: #156db9;
 }
+.circle .bg_1 .avatar,
+.circle .bg_2 .avatar {
+    top: -30px;
+    left: -30px;
+    width: calc(100% + 60px);
+    height: calc(100% + 60px);
+    border-radius: 50%;
+    opacity: 0.1;
+}
 .circle .avatar {
     position: absolute;
     top: 0;
@@ -38,7 +48,6 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    opacity: 0.4;
 }
 #gd_rated .pol,
 #gd_rated .rate {
@@ -51,7 +60,7 @@
 
 @media only screen and (min-height: 720px) and (min-width: 1280px) {
     #gd_rated {
-        left: calc( 50% - 640px );
+        left: calc( 50% - 630px );
         top: calc( 50% - 360px );
         width: 1280px;
         height: 720px;
@@ -80,8 +89,9 @@
         right: 100px;
     }
     .text {
-        height: 50px;
-        font-size: 30px;
+        margin-top: 10px;
+        height: 40px;
+        font-size: 25px;
     }
     .circle {
         top: 50px;
@@ -137,7 +147,8 @@
         width: 300px;
     }
     #gd_rated_ges .text {
-        height: 80px;
+        margin-top: 20px;
+        line-height: 50px;
         font-size: 50px;
     }
     #gd_rated_ges .circle {
@@ -182,11 +193,11 @@
         }
     }
 }
-@media only screen and (min-height: 900px) and (min-width: 1600px) {
+@media only screen and (min-height: 900px) and (min-width: 1800px) {
     #gd_rated {
-        left: calc( 50% - 800px );
+        left: calc( 50% - 900px );
         top: calc( 50% - 450px );
-        width: 1600px;
+        width: 1800px;
         height: 900px;
     }
     #gd_rated_spontan,
@@ -216,8 +227,9 @@
     animation-delay: 30s
 }
 .text {
-    height: 50px;
-    font-size: 50px;
+    margin-top: 10px;
+    height: 40px;
+    font-size: 40px;
 }
 .circle {
     top: 70px;
@@ -269,13 +281,13 @@
     }
     #gd_rated_ges {
         top: 150px;
-        left: 600px;
+        left: 700px;
         height: 500px;
         width: 400px;
     }
     #gd_rated_ges .text {
-        height: 80px;
-        font-size: 80px;
+        height: 70px;
+        font-size: 70px;
     }
     #gd_rated_ges .circle {
         top: 100px;

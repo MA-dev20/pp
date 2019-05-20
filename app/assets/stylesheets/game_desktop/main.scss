@@ -138,6 +138,17 @@ body {
     text-align: center;
     font-weight: bold;
 }
+#head h1 {
+    line-height: 10vh;
+    font-size: 10vh;
+    margin: 0;
+}
+#head h5 {
+    line-height: 8vh;
+    font-size: 3vh;
+    margin: 0;
+    opacity: 0.8;
+}
 #middle .circle img{
     position: absolute;
     top: 35vh;
@@ -268,15 +279,6 @@ body {
     50%{ opacity: 0.8; }
 }
 
-.confetti {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    z-index: 1000;
-}
 .modal-email {
   position: relative;
 }
