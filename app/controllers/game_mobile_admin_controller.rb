@@ -134,7 +134,8 @@ class GameMobileAdminController < ApplicationController
   end
     
   def play
-    @record =  params[:video] == "record" ? true : false
+    session[:video_record] = params[:video]  if params[:video].present?
+    @record = eval session[:video_record] 
     if @game.state != 'play'
       @game.update(state: 'play')
     end

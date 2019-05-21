@@ -27,13 +27,13 @@
 <% end %>
 
 <script type="text/javascript">
+        var redirect = false;
+  
     $("#play").click(function(event){
         event.preventDefault();
         var $this = $(this);
         var href = $this.attr("href"),
         video = $("#start").prop("checked");
-        if(video== true)
-            video = "record";
         window.location = href +"?video="+video;
     })
 </script>
