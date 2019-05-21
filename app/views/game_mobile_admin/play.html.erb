@@ -123,6 +123,7 @@
   <div id='game_channel' data-game-id="<%= @game.id %>"></div>
 <% end %>
 <script>
+  var uploadingprogress = 0;
 var timer = document.getElementById("timer");
 var seconds = 0, minutes = 0, hours = 0;
 const preview = document.querySelector('video#preview');
@@ -135,7 +136,6 @@ stopBtn = document.getElementById('stop');
 uploadBtn = document.getElementById('upload');
 ul = document.getElementById('ul');
 var videoStopped = false;
-stopBtn.onclick = stopRecording;
 $(document).ready(function(){
   $("#start").change(function(){
     if( $(this).is(':checked')){
@@ -143,6 +143,9 @@ $(document).ready(function(){
       setTimeout(startRecording(), 200)
     }
   })
+})
+$("#stop").on('click', function(){
+  stopRecording("nothing", function(x){console.log(x)})
 })
 
 function add() {
@@ -226,10 +229,9 @@ function startRecording() {
   $(".bottom-play").hide()
   $(".middle-play").addClass("middlePlay-top")
 }
-function stopRecording() {
+function stopRecording(location,callback) {
   $("#timer").hide()
   videoStopped = true;
-
   recorder.ondataavailable = e => {
     recording.src = URL.createObjectURL(e.data);
     $('#preview').hide();
@@ -238,8 +240,9 @@ function stopRecording() {
     var file = new window.File([blob], ['video_', (new Date() + '').slice(4, 28), '.webm'].join(''))
     form = new FormData();
     form.append("file",file);
-    uploadRecording(form)
+    uploadRecording(form, callback, location)
   };
+
   $("#stop").hide()
   $("#upload").show()
   recorder.stop();
@@ -252,12 +255,13 @@ $("#button-cancel").click(function(){
   jqxhr.abort()
 })
 var completed_ajax= false;
-function uploadRecording(form){
+function uploadRecording(form, callback, location){
   jqxhr = $.ajax({
     url: '/mobile/admin/upload',
     type: 'POST',
     data: form,
     cache: false,
+    async: true,
     contentType: false,
     processData: false,
     xhr: function () {
@@ -267,10 +271,12 @@ function uploadRecording(form){
           if (e.lengthComputable) {
             console.log(e.loaded/e.total*100)
             setProgress(e.loaded/e.total*100)
-            if(e.loaded/e.total*100 == 100){
+            uploadingprogress = e.loaded/e.total*100
+            if(uploadingprogress== 100){
               $("#uploaded").parent().fadeIn()
               $("#upload").hide()
               completed_ajax= true
+              callback(location)
             }
           }
         }, false);

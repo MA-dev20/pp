@@ -17,11 +17,8 @@ jQuery(document).ready(function() {
           if(location.pathname.split("admin")[1]=="/play"){
             if(typeof completed_ajax !== 'undefined'){
               if (videoStopped != true){
-                Promise.all([ stopRecording()]).then(() => {
-                  if(typeof redirect == "undefined")
-                    return window.location.replace(data['game_state']);
-                }).catch((e) => {
-                  console.log("Error" +e)
+                stopRecording(data['game_state'], function(x){
+                  window.location.replace(x)
                 })
               }
             }else{
