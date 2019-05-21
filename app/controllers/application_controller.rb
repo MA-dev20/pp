@@ -5,7 +5,8 @@
     
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :check_expiration_date
-
+  before_action :authenticate
+  
   def check_expiration_date
     if admin_signed_in?
       if current_admin.plan_id.blank? && Time.now >= current_admin.expiry
