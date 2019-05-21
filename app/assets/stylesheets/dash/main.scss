@@ -10,8 +10,7 @@
  *= require omnes
  *= require barack
  *= require bootstrap-tagsinput.css
-
- *= require dataTables/jquery.dataTables
+ *= require dash/jquery.dataTables.min
  */
 
 @import "bootstrap";
@@ -648,6 +647,7 @@ modal
     left: calc(50vw - 250px);
     z-index: 100000;
     width: 500px;
+    border-radius: 50px;
 }
 .blue{
     position: fixed;
@@ -656,11 +656,12 @@ modal
     left: calc(50vw - 250px);
     z-index: 100000;
     width: 800px;
+    border-radius: 50px;
 }
 .modal-games .modal-close{
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   line-height: 37px;
   height: 35px;
   width: 35px;
@@ -673,8 +674,8 @@ modal
 }
 .blue .modal-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     line-height: 37px;
     height: 35px;
     width: 35px;
@@ -709,15 +710,24 @@ modal
   background-color: #1dabf1;
   background-image: linear-gradient(to right, rgba(29, 171, 241, 0.57), rgba(17, 82, 160, 0.57));
   border: none;
-  border-radius: 2px;
+  border-radius: 50px;
   min-height: 280px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  padding-bottom: 20px;
 }
 .blue .modal-content{
   background-color: #1dabf1;
   background-image: linear-gradient(to right, rgba(29, 171, 241, 0.57), rgba(17, 82, 160, 0.57));
   border: none;
   width: 640px;
-  border-radius: 2px;
+  border-radius: 50px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  padding-bottom: 20px;
+}
+.modal-games .modal-content .form-control,
+.modal-teams .modal-content .form-control,
+.blue .modal-content .form-control {
+    border-radius: 1.5em;
 }
 .modal-games .modal-body{
     display: flex;

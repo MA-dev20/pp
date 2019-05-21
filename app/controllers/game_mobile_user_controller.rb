@@ -68,9 +68,9 @@ class GameMobileUserController < ApplicationController
       TeamUser.where(user_id: @user.id).destroy_all
       @user.destroy
       if @user
-        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, modal: false,  user_id: params[:user_id]
+        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, modal: false
       else
-        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, modal: false,  user_id: params[:user_id]
+        ActionCable.server.broadcast  "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, modal: false
       end
       respond_to do |format|
         format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
@@ -92,7 +92,7 @@ class GameMobileUserController < ApplicationController
       @user.update_attributes(status: 0)
       create_turn_against_user(@user, @admin, "accepted")
       # return
-      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, modal: false, user_id: params[:user_id], user_pic: @user.avatar.quad.url
+      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, modal: false, new: 'true', user_id: params[:user_id], user_pic: @user.avatar.quad.url
       respond_to do |format|
         format.js {render :js => "$('#myModalAction#{params[:user_id]}').hide()"}
         format.html {redirect_back(fallback_location: root_path) and return}
@@ -101,7 +101,7 @@ class GameMobileUserController < ApplicationController
     elsif @admin.plan_users?
       @user.update_attributes(status: 'accepted')
       create_turn_against_user(@user, @admin, "accepted")
-      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, modal: false, user_id: params[:user_id], user_pic: @user.avatar.quad.url
+      ActionCable.server.broadcast  "count_#{@game1.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, modal: false, user_id: params[:user_id], new: 'true', user_pic: @user.avatar.quad.url
       if((@game.turns.select{|turn| turn if !turn.user.nil? && turn.user.accepted?}.count) > @admin.plan_users )
         if @user.admin.plan_type.eql?("year")
           @admin.update_attributes(plan_users: @admin.plan_users + 1 )
@@ -195,7 +195,7 @@ class GameMobileUserController < ApplicationController
       sign_in(@game1)
       if current_user.status != "pending"
         create_turn_against_user(current_user, @admin,"accepted")
-        ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where(status: "accepted").playable.count.to_s
+        ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where(status: "accepted").playable.count.to_s, new: 'true', user_pic: @user.avatar.quad.url
       else
         create_turn_against_user(current_user, @admin, "pending")
         ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where(status: "accepted").playable.count.to_s

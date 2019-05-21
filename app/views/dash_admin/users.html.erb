@@ -46,6 +46,7 @@
             <th>Letztes Spiel</th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
       </thead>
       <tbody>
@@ -58,7 +59,7 @@
             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
             <td>
               <div class="btn-group dropleft">
-              <a type="button" id="dropdownMenu<%= u.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 3vh">
+              <a type="button" id="dropdownMenu<%= u.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 3vh; color: rgba(29, 218, 175, 1);">
                 ...
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu<%= u.id %>">
@@ -84,7 +85,7 @@
     </div>
   </div>
 </section>
-
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script>
   $(document).ready(function(){
     $(".email-field").keyup(function(){
@@ -165,6 +166,7 @@
             { "orderable": false, "targets": 0 },
             { "orderable": false, "targets": 5 },
             { "orderable": false, "targets": 6 },
+            { "orderable": false, "targets": 7 },
         ]
     } );
     
