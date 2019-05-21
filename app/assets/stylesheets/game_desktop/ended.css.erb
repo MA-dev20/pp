@@ -70,6 +70,7 @@
     color: white;
 }
 #gd_ended .rate .line .text {
+    margin-top: 0;
     position: absolute;
     display: none;
     top: 0;
@@ -95,7 +96,7 @@
     position: absolute;
     top: 0;
     height: 200px;
-    width: 160px;
+    width: 180px;
     animation-duration: 4s;
     
 }
@@ -113,8 +114,8 @@
 }
 #gd_ended .rating .circle {
     position: absolute;
-    top: 45px;
-    left: 0px;
+    top: 50px;
+    left: 30px;
     height: 140px;
     width: 140px;
     background-color: #00e38b;
@@ -131,6 +132,7 @@
     height: 136px;
     width: 136px;
     opacity: 1;
+    border-radius: 50%;
 }
 #gd_ended .rating .circle .avatar {
     position: absolute;
@@ -162,8 +164,8 @@
 #gd_ended .rating .crown1 {
     display: none;
     position: absolute;
-    top: 2px;
-    right: -15px;
+    top: 5px;
+    right: -20px;
     z-index: 0;
     animation: buzz-out;
     animation-duration: 1s;
@@ -171,8 +173,8 @@
 #gd_ended .rating .crown2 {
     display: none;
     position: absolute;
-    top: -12px;
-    right: 60px;
+    top: -5px;
+    right: 50px;
     z-index: 0;
     animation: buzz-out;
     animation-duration: 1s;
@@ -229,4 +231,57 @@
     -webkit-transform: translateX(-1px) rotate(0);
     transform: translateX(-1px) rotate(0);
   }
+}
+
+#confetti {
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: -160px;
+    z-index: 10000;
+}
+#confetti .ball {
+    animation-iteration-count :infinite !important;
+    cursor: default;
+    display: inline-block;
+    height: 15px;
+    user-select: none; 
+    width: 10px;
+}
+
+ 
+@keyframes falling-left {
+    0% { opacity: 1;}
+    10% { opacity: 0;}
+    20% { opacity: 1;}
+    30% { opacity: 0;}
+    40% { opacity: 1;}
+    50% { opacity: 0;}
+    60% { opacity: 1;}
+    70% { opacity: 0;}
+    80% { opacity: 1;}
+    90% { opacity: 0;}
+    100% {transform: translate3d(0,120vh,0) rotate3d(0, 1, 2, 180deg); opacity: 1;}
+}
+ 
+#confetti .ball:nth-child(2n) {
+    animation: falling-left linear ;
+}
+ 
+@keyframes falling-right {
+    0% {opacity: 1;}
+    10% { opacity: 0;}
+    20% { opacity: 1;}
+    30% { opacity: 0;}
+    40% { opacity: 1;}
+    50% { opacity: 0;}
+    60% { opacity: 1;}
+    70% { opacity: 0;}
+    80% { opacity: 1;}
+    90% { opacity: 0;}
+    100% {transform: translate3d(0,120vh,0) rotate3d(0, 1, 2, 180deg); opacity: 0;}  
+}
+ 
+#confetti .ball:nth-of-type(2n+1) {
+    animation: falling-right linear;
 }
