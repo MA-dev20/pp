@@ -20,10 +20,11 @@ class GameMobileAdminController < ApplicationController
     session[:admin_email] = params[:admin][:email]
     redirect_to gma_pw_path
   end
-
+ 
   def save_video
     @turn.recorded_pitch = params[:file]
-    @turn.save!
+    @turn.save
+    puts @turn.errors.messages
   end
 
   def create
