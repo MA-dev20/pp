@@ -1,7 +1,7 @@
 <section id="content">
     <div class="head">
       <%= render partial: 'header' %>
-      
+
         <% if @admin == @cur_user %>
         <div class="h100">Du bist dran!</div>
         <% else %>
@@ -29,8 +29,7 @@
 <% end %>
 
 <script type="text/javascript">
-        var redirect = false;
-  
+    var redirect = false;
     $("#play").click(function(event){
         event.preventDefault();
         var $this = $(this);
