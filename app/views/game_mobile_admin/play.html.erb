@@ -1,19 +1,13 @@
 <section id="content">
     <div class="head head-play">
-      <div class="menu menu-position">
-        <button type="button" id="list" class="btn btn-primary btn-menu" data-toggle="modal" data-target="#myModal">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
+      <%= render partial: 'header' %>
       <div style="display: none" id="current_user_id" data-id='<%= @turn.to_json.to_s.html_safe %>'></div>
       <div class="heading-text"><%= @cur_user.fname %> Pitcht!</div>
     </div>
     <div class="middle middle-play middlePlay-top">
       <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green', id: 'img-dp', style: "display: #{@record == true ? 'none' : 'block'}" %>
       <div class="middle-content">
-        <video id="preview" autoplay width="600" height="600" style="display: <%= @record == true ? 'block' : 'none' %>;"></video>
+        <video id="preview" autoplay width="600" height="600" style="display: <%= @record == true ? 'block' : 'none' %>;" muted></video>
         <video id="recording" width="600" height="600"  controls style="display: none;"></video>
       </div>
       <label id="timer" style="display: <%= @record == true ? 'block' : 'none' %>">00:00:00</label>
@@ -29,7 +23,7 @@
         </div>
         <div class="cancel play-cancel-time" id="upload" style="display: none">
           <button id="button-cancel" class="button-cancel">
-            <svg
+    <!--         <svg
              class="progress-ring"
              width="5vh"
              height="5vh">
@@ -38,11 +32,25 @@
               stroke="white"
               stroke-width="4"
               fill="transparent"
-              r="36"
-              cx="40"
-              cy="40"/>
+              r="38"
+              cx="50"
+              cy="50"/>
               <i class="fa fa-times"></i>
+          </svg> -->
+          <svg
+             class="progress-ring"
+             width="98"
+             height="98">
+            <circle
+              class="progress-ring__circle"
+              stroke="white"
+              stroke-width="4"
+              fill="transparent"
+              r="39"
+              cx="49"
+              cy="49"/>
           </svg>
+          <i class="fa fa-times"></i>
           </button>
           <p class="play-time-para" >Video wird gespiehert...</p>
         </div>
@@ -188,7 +196,7 @@ function requestVideo() {
     .then(stm => {
       stream = stm;
       preview.srcObject = stream;
-      preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+      preview.captureStream = preview.captureStream(5) || preview.mozCaptureStream(5);
     }).then(()=>{
       const options = {};
       setTimeout(function(){
