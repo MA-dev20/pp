@@ -14,6 +14,9 @@ jQuery(document).ready ->
     received: (data) ->
         if data['count'] == 'true'
             $('#count').text(data["counter"])
+            left1 = Math.random()*80 + 10
+            userRain = '<div style="left:' + left1+'%;"><img src="'+data['user_pic']+'"></div>'
+            $("#user-rain").append(userRain)
             if($('#ping').length != 0)
                 document.getElementById('ping').play()
             if data['modal'] == false

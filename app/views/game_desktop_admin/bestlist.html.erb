@@ -67,6 +67,7 @@
    Beenden mit Leertaste <br>
    Neue Runde mit Enter
 </section>
+<div class="confetti" id="confetti"></div>
 
 
 
@@ -76,6 +77,16 @@
 <%= audio_tag('ended/ueberzeugt.mp3', id: 'tag4') %>
 
 <script type="text/javascript">
+    function confetti(){
+    var flakes = '',
+        randomColor;
+    var colors=new Array(["#EDE275"],["#FFFFFF"],["#1ddaaf"],["#1a8ed6"]);
+    for(var i = 0, len = 400; i < len; i++) {
+        randomColor = colors[Math.floor(Math.random()*4)];
+        flakes += '<div class="ball" style="background: '+randomColor+'; animation-duration: '+(Math.random() * 9 + 2)+'s; animation-delay: '+(Math.random() * 2 + 0)+'s; transform: translate3d(0,0,0) rotate3d(0,'+Math.random()+',1,'+Math.floor(Math.random()*180)+'deg);"></div>';
+    }
+        document.getElementById('confetti').innerHTML = flakes;
+    };
     pick(4);
     setTimeout(function() {
         $('#avatar3').show();
@@ -100,7 +111,7 @@
         $('#pol1').show();
         $('#rat1').show();
         $('#wolf1').hide();
-        $('.confetti').show();
+        confetti();
     }, 8000);
     
     

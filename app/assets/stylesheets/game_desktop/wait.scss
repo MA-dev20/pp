@@ -1,19 +1,20 @@
 #content #count {
-    position: absolute;
-    top: 25vh;
-    height: 50vh;
-    left: 0;
-    width: 100vw;
-    line-height: 50vh;
-    font-size: 40vh;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    animation-name: pulse-grow;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    animation-direction: alternate;
+  position: absolute;
+  top: 25vh;
+  height: 50vh;
+  left: 0;
+  width: 100vw;
+  line-height: 50vh;
+  font-size: 40vh;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  animation-name: pulse-grow;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  text-shadow: 3px 3px 4px #777;
 }
 @keyframes pulse-grow {
   to {
@@ -108,4 +109,96 @@
 			max-width: 100%;
 		}
 	}
+}
+#content #user-rain div{
+    position: fixed;
+    bottom: 0;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    background-color: rgba(29, 218, 175, 1);
+    animation-name: rain;
+    animation-duration: 8s;
+    animation-iteration-count: 1;
+}
+@keyframes rain {
+    0% {
+        bottom: 100vh;
+        animation-timing-function: ease-in;
+    }
+    10% {
+        height: 110px;
+        width: 130px;
+        bottom: 0;
+        animation-timing-function: ease-out;
+    }
+    20% {
+        height: 120px;
+        width: 120px;
+        bottom: 40vh;
+        animation-timing-function: ease-in;
+    }
+    30% {
+        height: 110px;
+        width: 130px;
+        bottom: 0;
+        animation-timing-function: ease-out;
+    }
+    40% {
+        height: 120px;
+        width: 120px;
+        bottom: 25vh;
+        animation-timing-function: ease-in;
+    }
+    50% {
+        height: 115px;
+        width: 125px;
+        bottom: 0;
+        animation-timing-function: ease-out;
+    }
+    60% {
+        height: 120px;
+        width: 120px;
+        bottom: 5vh;
+        animation-timing-function: ease-in;
+    }
+    68% {
+        height: 115px;
+        width: 125px;
+        bottom: 0;
+        animation-timing-function: ease-out;
+    }
+    76% {
+        height: 120px;
+        width: 120px;
+        bottom: 2.5vh;
+        animation-timing-function: ease-in;
+    }
+    84% {
+        height: 115px;
+        width: 125px;
+        bottom: 0;
+        animation-timing-function: ease-out;
+    }
+    92% {
+        height: 120px;
+        width: 120px;
+        bottom: 1.5vh;
+        animation-timing-function: ease-in;
+    }
+    100% {
+        height: 118px;
+        width: 122px;
+        bottom: 0;
+        animation-timing-function: ease-out;
+    }
+  }
+
+#content #user-rain img {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    border-radius: 50%;
+    height: 90%;
+    width: 90%;
 }
