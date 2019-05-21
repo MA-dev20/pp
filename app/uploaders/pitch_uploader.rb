@@ -1,7 +1,7 @@
 class PitchUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include CarrierWave::Video
-  include CarrierWave::Video::Thumbnailer
+  # include CarrierWave::Video::Thumbnailer
   include CarrierWave::FFmpeg
 
   # Choose what kind of storage to use for this uploader:
@@ -17,19 +17,19 @@ class PitchUploader < CarrierWave::Uploader::Base
     process :encode
   end
 
-  version :thumb do
-    process thumbnail: [{format: 'jpg', quality: 8, size: 360, logger: Rails.logger}]
-    def full_filename for_file
-      jpg_name for_file, version_name
-    end
-  end
+  # version :thumb do
+  #   process thumbnail: [{format: 'jpg', quality: 8, size: 360, logger: Rails.logger}]
+  #   def full_filename for_file
+  #     jpg_name for_file, version_name
+  #   end
+  # end
 
-  version :medium do
-    process thumbnail: [{format: 'jpg', quality: 85, size: 300, logger: Rails.logger}]
-    def full_filename for_file
-      jpg_name for_file, version_name
-    end
-  end
+  # version :medium do
+  #   process thumbnail: [{format: 'jpg', quality: 85, size: 300, logger: Rails.logger}]
+  #   def full_filename for_file
+  #     jpg_name for_file, version_name
+  #   end
+  # end
 
   def encode
     video = FFMPEG::Movie.new(@file.path)
