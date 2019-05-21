@@ -17,16 +17,13 @@ jQuery(document).ready(function() {
           if(location.pathname.split("admin")[1]=="/play"){
             if(typeof completed_ajax !== 'undefined'){
               if (videoStopped != true){
-                stopRecording()
+                Promise.all([ stopRecording()]).then(() => {
+                  if(typeof redirect == "undefined")
+                    return window.location.replace(data['game_state']);
+                }).catch((e) => {
+                  console.log("Error" +e)
+                })
               }
-              console.log("checking promises")
-              Promise.all([jqxhr]).then(() => {
-                console.log("let it finish")
-                if(typeof redirect == "undefined")
-                  return window.location.replace(data['game_state']);
-              }).catch((e) => {
-                console.log("Error" +e)
-              })
             }else{
               if(typeof redirect == "undefined")
                 return window.location.replace(data['game_state']);
