@@ -29,6 +29,14 @@
 <% end %>
 
 <script type="text/javascript">
+    $("#start").on("change", function(e){
+      var that = $(this);
+      if(that.is(":checked")){
+        $(".text-for-switch").addClass("green-text")
+      }else{
+        $(".text-for-switch").removeClass("green-text")
+      }
+    })
     var redirect = false;
     $("#play").click(function(event){
         event.preventDefault();

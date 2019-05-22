@@ -1,6 +1,8 @@
 <section id="content">
     <div class="head">
-        Hi, <%= @admin.fname %> <%= @admin.lname %>
+        <%= render partial: 'header' %>
+
+        <div class="h100">Hi, <%= @admin.fname %> <%= @admin.lname %></div>
     </div>
     <%= form_for(:turn, url: gma_new_turn_path) do |f| %>
         <div class="middle">

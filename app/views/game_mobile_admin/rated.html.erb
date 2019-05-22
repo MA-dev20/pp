@@ -1,6 +1,8 @@
 <section id='content'>
    <div id="count_channel" data-game-id="<%= @game.id %>" >
     <div class="head">
+        <%= render partial: 'header' %>
+        
         <% if @admin == @cur_user %>
             <div class="h100">Du wirst bewertet!</div>
         <% else %>
