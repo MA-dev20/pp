@@ -1,8 +1,9 @@
 <section id="count_channel" data-game-id="<%= @game.id %>">
 <section id="content">
     <div class="head">
-      <%= render partial: 'header' %>
+      <%= render partial: 'header' , locals: {can: false}%>
       
+
         Alle beigetreten?
     </div>
     <div class="middle">

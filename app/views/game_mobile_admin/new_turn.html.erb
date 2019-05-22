@@ -1,6 +1,7 @@
 <section id="content">
     <div class="head">
-        <%= render partial: 'header' %>
+        <%= render partial: 'header' , locals: {can: false}%>
+
 
         <div class="h100">Hi, <%= @admin.fname %> <%= @admin.lname %></div>
     </div>

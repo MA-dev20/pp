@@ -1,6 +1,8 @@
 <section id="content">
   <div class="head">
-      Jetzt bewerten!
+      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+
+      <div>Jetzt bewerten!</div>
   </div>
     <%= form_for(:rating, url: new_rating_user_path(@turn)) do |f| %>
       <div class="middle">
