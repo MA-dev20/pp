@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :welcome, :new, :new_name, :new_company, :new_avatar, :new_turn, :bestlist]
+  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :new, :new_name, :new_company, :new_avatar, :new_turn, :bestlist]
   before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
@@ -11,6 +11,7 @@ class GameMobileUserController < ApplicationController
     @game1 = Game.where(password: params[:password], active: true).first
     if @game1
       session[:game_session_id] = @game1.id
+      @game = @game1
     else
       flash[:danger] = 'Konnte kein passendes Spiel finden!'
       redirect_to root_path
