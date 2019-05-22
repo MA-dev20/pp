@@ -186,10 +186,9 @@ function requestVideo() {
         Devices.push(mediaDevice)
       }
     })
-  const videoConstraints = { width: 1440, height: 2960 };
-  videoConstraints.deviceId = { exact: Devices[Devices.length-1].deviceId}
+  const videoConstraints = { width: 640, height: 480 };
   const constraints = {
-    video: videoConstraints,
+    video: { frameRate: { ideal: 60, max: 90 }, width: 640, height: 480,deviceId: { exact: Devices[Devices.length-1].deviceId} },
     audio: true
   };
   navigator.mediaDevices.getUserMedia(constraints)
