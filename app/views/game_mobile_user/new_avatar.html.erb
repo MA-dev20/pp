@@ -1,11 +1,15 @@
 <section id="content">
   <% if @user.avatar? %>
   <div class="head">
+      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+
       <div class="h100">Wow!</div>
       <div class="h50">Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</div>
   </div>
   <% else %>
   <div class="head">
+      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+    
       <div class="h100">Bild hinzufügen!</div>
       <div class="h50">Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</div>
   </div>

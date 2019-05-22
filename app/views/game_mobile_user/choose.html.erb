@@ -1,5 +1,10 @@
-<%= image_tag 'game/choose.png', class: 'bg-image' %>
-
+<section id="content">
+  <div class="head">
+      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+	</div>
+	<%= image_tag 'game/choose.png', class: 'bg-image' %>
+	
+</section>
 <% if @game %>
   <div id='game_channel' data-game-id="<%= @game.id %>"></div>
 <% end %>

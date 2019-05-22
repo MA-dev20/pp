@@ -1,7 +1,9 @@
 <section id="content" >
     <div class="not_needed"></div>
     <div class="head">
-        Hi, <%= @user.fname %> <%= @user.lname %>
+      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+
+        <div>Hi, <%= @user.fname %> <%= @user.lname %></div>
     </div>
     <%= form_for(:turn, url: gmu_new_turn_path) do |f| %>
         <div class="middle">

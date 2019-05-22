@@ -1,5 +1,7 @@
 <div id="content">
     <div class="head">
+      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+        
         <div class="h100">Wie heißt du?</div>
     </div>
     <%= form_for(:user, url: gmu_new_name_path, html: {autocomplete: 'off'}) do |f| %>

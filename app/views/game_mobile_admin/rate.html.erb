@@ -1,5 +1,8 @@
 <section id="content">
     <div class="head">
+        <%= render partial: 'header' , locals: {can: false}%>
+
+
         Jetzt bewerten!
     </div>
     <%= form_for(:rating, url: new_rating_path(@turn)) do |f| %>

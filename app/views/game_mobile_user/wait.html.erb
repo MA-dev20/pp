@@ -1,6 +1,8 @@
 <section id="content">
     <div class="head">
-        SPIEL BEIGETRETEN!
+      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+
+      <div>  SPIEL BEIGETRETEN! </div>
     </div>
     <div class="middle">
     <%if @user.avatar.quad.url%>

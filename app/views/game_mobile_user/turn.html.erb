@@ -1,10 +1,14 @@
 <section id="content">
   <div class="head">
+      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+    
+    <div>
     <% if @user == @cur_user %>
       <%= @user.fname %>
     <% else %>
       <%= @cur_user.fname %> <% @cur_user.lname %>
     <% end %>
+  </div>
   </div>
   <div class="middle">
     <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green' %>
