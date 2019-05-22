@@ -1,5 +1,7 @@
 <div id="content">
     <div class="head">
+        <%= render partial: 'header' %>
+
         <div class="h100">Bitte logge dich ein!</div>
     </div>
     <%= form_for(:admin, url: gma_email_check_path, html: {autocomplete: 'off'}) do |f| %>
