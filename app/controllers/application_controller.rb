@@ -5,7 +5,7 @@
     
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :check_expiration_date
-  before_action :authenticate
+  before_action :authenticate_request
   
   def check_expiration_date
     if admin_signed_in?
@@ -23,7 +23,7 @@
   
   protected
     
-    def authenticate
+    def authenticate_request
       authenticate_or_request_with_http_basic do |username, password|
         username == 'PeterPitch' && password == 'PP_2019_CDJM'
       end
