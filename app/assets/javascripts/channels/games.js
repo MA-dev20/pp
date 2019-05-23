@@ -10,7 +10,7 @@ jQuery(document).ready(function() {
         return console.log("conneted");
       },
       disconnected: function() {
-        return console.log("conneted");
+        return console.log("disconneted");
       },
       received: function(data) {
         if ($("#game_channel").data("turn") !== "replay") {
