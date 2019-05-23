@@ -85,7 +85,7 @@ class GameMobileAdminController < ApplicationController
     if @turn.save
       @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
       sign_in(@game)
-      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, new: 'true', user_pic: @admin.avatar.quad.url
+      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, user_pic: @admin.avatar.quad.url
       redirect_to gma_intro_path
     else
       redirect_to gma_new_turn_path
@@ -153,8 +153,8 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rated
-    @count = @turn.ratings.count.to_s + '/' + (@game.turns.where(status: "accepted").playable.count - 1).to_s + ' haben bewertet!'
-    if @turn.ratings.count == @game.turns.where(status: "accepted").playable.count - 1
+    @count = @turn.ratings.count.to_s + '/' + (@game.turns.where(status: "accepted").count - 1).to_s + ' haben bewertet!'
+    if @turn.ratings.count == @game.turns.where(status: "accepted").count - 1
       redirect_to gma_rating_path
     end
   end
@@ -205,14 +205,14 @@ class GameMobileAdminController < ApplicationController
     @game = current_game
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
+      @game.turn_ratings.destroy_all
+      @game.turns.each do |turn|
+        turn.ratings.destroy_all
+      end
       @game.turns.update_all(status: "ended")
     end
     session[:game_session_id] = @game.id
     redirect_to gma_new_turn_path
-  end
-
-  def welcome
-    
   end
     
   private

@@ -2,7 +2,7 @@ jQuery(document).ready(function() {
   var game;
   game = $('#game_channel');
   if ($('#game_channel').length > 0) {
-    return App.games = App.cable.subscriptions.create({
+    App.games = App.cable.subscriptions.create({
       channel: "GamesChannel",
       game_id: game.data('game-id')
     }, {
@@ -35,6 +35,9 @@ jQuery(document).ready(function() {
             return window.location.replace("replay");
         }
       }
+    });
+    $(window).bind('beforeunload', function(){
+      App.games.unsubscribe()
     });
   }
 });
