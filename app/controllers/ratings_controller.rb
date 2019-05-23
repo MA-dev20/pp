@@ -10,12 +10,12 @@ class RatingsController < ApplicationController
     @rating = @turn.ratings.new(rating_params)
     @rating.ges = (@rating.body + @rating.creative + @rating.rhetoric + @rating.spontan) / 4
     @rating.admin_id = @admin.id
-    if @rating.save && @turn.ratings.count == (@game.turns.count - 1)
+    if @rating.save && @turn.ratings.count == (@game.turns.where(status: 'accepted').count - 1)
       @game.update(state: 'rating')
       redirect_to gma_rating_path
       return
     elsif @rating.save
-      ActionCable.server.broadcast "count_#{@game.id}_channel", game_state: 'rate', counter: @turn.ratings.count.to_s + '/' + (@game.turns.count - 1).to_s + ' haben bewertet!'
+      ActionCable.server.broadcast "count_#{@game.id}_channel", game_state: 'rate', counter: @turn.ratings.count.to_s + '/' + (@game.turns.where(status: 'accepted').count - 1).to_s + ' haben bewertet!'
       redirect_to gma_rated_path
     else
       redirect_to gma_rate_path
@@ -31,11 +31,12 @@ class RatingsController < ApplicationController
     @rating = @turn.ratings.new(rating_params)
     @rating.ges = (@rating.body + @rating.creative + @rating.rhetoric + @rating.spontan) / 4
     @rating.user_id = @user.id
-    if @rating.save && @turn.ratings.count == (@game.turns.count - 1)
+    if @rating.save && @turn.ratings.count == (@game.turns.where(status: 'accepted').count - 1)
       @game.update(state: 'rating')
+      redirect_to gmu_rated_path
       return
     elsif @rating.save
-      ActionCable.server.broadcast "count_#{@game.id}_channel", game_state: 'rate', counter: @turn.ratings.count.to_s + '/' + (@game.turns.count - 1).to_s + ' haben bewertet!'
+      ActionCable.server.broadcast "count_#{@game.id}_channel", game_state: 'rate', counter: @turn.ratings.count.to_s + '/' + (@game.turns.where(status: 'accepted').count - 1).to_s + ' haben bewertet!'
       redirect_to gmu_rated_path
       return
     else
