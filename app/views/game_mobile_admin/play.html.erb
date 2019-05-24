@@ -260,7 +260,7 @@ function stopRecording(location,callback) {
 }
 $("#button-cancel").click(function(){
   jqxhr.abort()
-  showInSequence($(this))
+  showInSequence($(this).parent())
 })
 var completed_ajax= false;
 function uploadRecording(form, callback, location){
