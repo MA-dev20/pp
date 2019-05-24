@@ -13,8 +13,8 @@
     <div class="bottom">
         <%= link_to "Auf geht's!", gmu_password_path, class: 'link' %>
     </div>
+    <% if @game %>
+      <div id='game_channel' data-game-id="<%= @game.id %>"></div>
+    <% end %>
 </div>
 
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>

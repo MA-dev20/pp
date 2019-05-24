@@ -30,11 +30,12 @@
           <%= f.submit 'absenden', class: 'link' %>
       </div>
     <% end %>
+    
+    <% if @game %>
+      <div id='game_channel' data-game-id="<%= @game.id %>"></div>
+    <% end %>
 </section>
 
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
 
 <script>
 $('input[type="range"]').rangeslider({
