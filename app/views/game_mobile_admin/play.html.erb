@@ -260,6 +260,7 @@ function stopRecording(location,callback) {
 }
 $("#button-cancel").click(function(){
   jqxhr.abort()
+  showInSequence($(this))
 })
 var completed_ajax= false;
 function uploadRecording(form, callback, location){
@@ -281,7 +282,7 @@ function uploadRecording(form, callback, location){
             uploadingprogress = e.loaded/e.total*100
             if(uploadingprogress== 100){
               $("#uploaded").parent().fadeIn()
-              $(".bottom").show()
+              showInSequence($("#uploaded").parent());
               $("#upload").hide()
               completed_ajax= true
               callback(location)
@@ -292,6 +293,10 @@ function uploadRecording(form, callback, location){
       return myXhr;
     }
   });
+}
+function showInSequence(div){
+  div.fadeOut(1000)
+  setTimeout(function(){$(".bottom").fadeIn(1000)},1500)
 }
 </script>
 <% if @game %>
