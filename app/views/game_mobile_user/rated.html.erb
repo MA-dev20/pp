@@ -1,6 +1,8 @@
 <section id="content">
   <% if @user == @cur_user %>
     <div class="head">
+      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+
         <div class="h100">DU</div>
     </div>
     <div class="middle">
@@ -19,8 +21,8 @@
     <div class="bottom">
     </div>
   <% end %>
+    <% if @game %>
+      <div id='game_channel' data-game-id="<%= @game.id %>"></div>
+    <% end %>
 </section>
 
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
