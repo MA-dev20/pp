@@ -18,6 +18,8 @@ gem 'carrierwave-video-thumbnailer'
 gem 'carrierwave-ffmpeg'
 gem 'execjs'
 gem 'hiredis'
+gem "anycable-rails"
+
 gem 'em-synchrony'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
