@@ -12,7 +12,7 @@ gem 'chart-js-rails'
 gem 'bootstrap', '~> 4.2', '>= 4.2.1'
 gem 'jquery-rails'
 gem 'carrierwave'
-
+gem "anycable-rails"
 gem 'carrierwave-video'
 gem 'carrierwave-video-thumbnailer'
 gem 'carrierwave-ffmpeg'
