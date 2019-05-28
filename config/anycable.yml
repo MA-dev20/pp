@@ -14,3 +14,4 @@ production:
   redis_url: "redis://127.0.0.1:6379"
   # Redis channel name
   redis_channel: "anycable"
+  access_logs_disabled: false
