@@ -174,46 +174,20 @@ class GameMobileUserController < ApplicationController
     
   def new_turn
     @game1 = Game.find(session[:game_session_id])
-    @turn = @game1.turns.where(status: "accepted").playable.find_by(user_id: @user.id)
+    @turn = @game1.turns.where(status: "accepted").find_by(user_id: @user.id)
     if @turn
        sign_in(@game1)
        redirect_to send("gmu_"+@game1.state+"_path")
+     else
+      params[:play] = params[:play] == 'rate' ? false : true
+      create_turn_method(params[:play])
     end
   end
     
   def create_turn
-    @game1 = Game.find(session[:game_session_id])
-    @admin = @game1.admin
-    @game = @game1
-    if @game1.admin.admin_subscription_id.nil?
-      @word = Word.first(50).sample(5).first     
-      @word = Word.all.sample(50).first if @word.nil?
-    end
-    if @game.own_words
-      @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
-      @word = Word.all.sample(50).first if @word.nil?
-    else
-      @word = Word.all.sample(50).first
-    end
-    if @game1.active
-      session.delete(:game_session_id)
-      sign_in(@game1)
-      if current_user.status != "pending"
-        create_turn_against_user(current_user, @admin,"accepted")
-        ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where(status: "accepted").playable.count.to_s, new: 'true', user_pic: @user.avatar.quad.url
-      else
-        create_turn_against_user(current_user, @admin, "pending")
-        ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where(status: "accepted").playable.count.to_s
-      end
-      redirect_to gmu_wait_path
-    else
-      flash[:danger] = 'Das Spiel ist schon beendet!'
-      redirect_to root_path
-    end
+    create_turn_method(params[:play])
   end
 
-
-    
   def wait
     @admin = Admin.find(@game.admin_id)
     turn =  Turn.where(user_id:  current_user.id, game_id:  @game.id, admin_id: @admin.id).first
@@ -226,7 +200,6 @@ class GameMobileUserController < ApplicationController
     end
   end
     
-
   def choose
   end
     
@@ -283,16 +256,47 @@ class GameMobileUserController < ApplicationController
       params.require(:user).permit(:avatar, :company, :fname, :lname)
     end
 
-    def create_turn_against_user(user, admin, status)
+    def create_turn_against_user(user, admin, status, play=true)
       @game1 = current_game
       @word = Word.first(50).sample(5).first if @game1.admin.admin_subscription_id.nil?
       @word = Word.all.sample(5).first if @word.nil?
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).playable.first
-      @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: true, played: false, admin_id: admin.id)
+      @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: play, played: false, admin_id: admin.id)
       @turn.status = status
       @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
       turn.update(status: "accepted") if !turn.nil?
       @turn.save! if turn.nil?
+    end
+
+    def create_turn_method(play=false)
+      @game1 = Game.find(session[:game_session_id])
+      @admin = @game1.admin
+      @game = @game1
+      if @game1.admin.admin_subscription_id.nil?
+        @word = Word.first(50).sample(5).first     
+        @word = Word.all.sample(50).first if @word.nil?
+      end
+      if @game.own_words
+        @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
+        @word = Word.all.sample(50).first if @word.nil?
+      else
+        @word = Word.all.sample(50).first
+      end
+      if @game1.active
+        session.delete(:game_session_id)
+        sign_in(@game1)
+        if current_user.status != "pending"
+          create_turn_against_user(current_user, @admin,"accepted", play)
+          ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where(status: "accepted").playable.count.to_s, new: 'true', user_pic: @user.avatar.quad.url
+        else
+          create_turn_against_user(current_user, @admin, "pending", play)
+          ActionCable.server.broadcast "count_#{@game1.id}_channel", count: 'true', counter: @game1.turns.where(status: "accepted").playable.count.to_s
+        end
+        redirect_to gmu_wait_path
+      else
+        flash[:danger] = 'Das Spiel ist schon beendet!'
+        redirect_to root_path
+      end
     end
 
     def reset_session_of_already_user

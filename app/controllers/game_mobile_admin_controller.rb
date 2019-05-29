@@ -68,28 +68,15 @@ class GameMobileAdminController < ApplicationController
     @game = Game.find(session[:game_session_id])
     @turn = @game.turns.find_by(admin_id: @admin.id, admin_turn: true)
     @turn.update(status: 'ended') if @turn.present?
+    params[:play] = params[:play] == 'rate' ? false : true
+    create_turn_method(params[:play])
     # if @turn
     #   redirect_to gma_intro_path
     # end
   end
     
   def create_turn
-    @game = Game.find(session[:game_session_id])
-    if @game.own_words
-      @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
-      @word = Word.all.sample(5).first if @word.nil?
-    else
-      @word = Word.all.sample(5).first
-    end
-    @turn = Turn.new(play: params[:turn][:play], admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true)
-    if @turn.save
-      @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
-      sign_in(@game)
-      ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, user_pic: @admin.avatar.quad.url, new: 'true'
-      redirect_to gma_intro_path
-    else
-      redirect_to gma_new_turn_path
-    end
+    create_turn_method(params[:turn][:play])
   end
     
   def intro
@@ -232,5 +219,24 @@ class GameMobileAdminController < ApplicationController
     
     def turn_params
       params.require(:turn).permit[:play]
+    end
+
+    def create_turn_method(play=false)
+      @game = Game.find(session[:game_session_id])
+      if @game.own_words
+        @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
+        @word = Word.all.sample(5).first if @word.nil?
+      else
+        @word = Word.all.sample(5).first
+      end
+      @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true)
+      if @turn.save
+        @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
+        sign_in(@game)
+        ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, user_pic: @admin.avatar.quad.url, new: 'true'
+        redirect_to gma_intro_path
+      else
+        redirect_to gma_new_turn_path
+      end
     end
 end

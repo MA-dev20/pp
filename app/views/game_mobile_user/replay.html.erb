@@ -5,8 +5,11 @@
             Hi, <%= @user.fname %> <%= @user.lname %>
         </div>
     </div>
-        <div class="bottom">
-            <%= link_to "Play again", gmu_new_turn_path, class: 'link pulse' %>
+        <div class="bottom bottom-play">
+            <%= form_for(:user, url: gmu_new_turn_path, method: 'get') do |f| %>
+                <%= render partial: 'toggle_for_rate' %>
+                <%= f.submit "Play again", class: 'link pulse' %>
+            <% end %>
             <%= link_to "Leave Game", logout_root_path , class: 'link', id: 'fake' %>
         </div>
 </section>

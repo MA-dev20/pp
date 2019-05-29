@@ -32,8 +32,17 @@
       <% end %>
   </div>
   <% if @admin.avatar? %>
-    <div class="bottom">
-       <%= link_to 'weiter!', gma_new_turn_path, class: 'link pulse' %>
+    <div class="bottom bottom-play">
+      <%= form_for(:admin, url: gma_new_turn_path, method: 'get') do |f| %>
+        <div class="switch-box switch-box-vt" id="switch">
+          <label class="switch">
+            <input type="checkbox" id="start" value="rate" name="play" >
+            <span class="slider round"></span>
+          </label>
+          <p class="text-for-switch" id=''>Ich möchte selbst nicht pitchen, sondern nur bewerten</p>
+        </div>
+        <%= f.submit 'weiter!', class: 'link pulse' %>
+      <% end %>
     </div>
   <% end %>
 </section>
