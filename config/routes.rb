@@ -91,7 +91,7 @@ Rails.application.routes.draw do
     
   get 'mobile/user/game/new_turn', to: 'game_mobile_user#new_turn', as: 'gmu_new_turn'
   post 'mobile/user/game/new_turn', to: 'game_mobile_user#create_turn'
-
+  get 'mobile/user/game/vidoe_uploading', to: 'game_mobile_user#video_uploading', as: 'gmu_video_check'
   get 'mobile/user/game/wait', to: 'game_mobile_user#wait', as: 'gmu_wait'
   get 'mobile/user/game/choose', to: 'game_mobile_user#choose', as: 'gmu_choose'
   get 'mobile/user/game/turn', to: 'game_mobile_user#turn', as: 'gmu_turn'

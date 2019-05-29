@@ -13,26 +13,40 @@ jQuery(document).ready(function() {
         return console.log("disconneted");
       },
       received: function(data) {
-        if ($("#game_channel").data("turn") !== "replay") {
-          if(location.pathname.split("admin")[1]=="/play"){
-            if(typeof completed_ajax !== 'undefined'){
-              if (videoStopped != true){
-                stopRecording(data['game_state'], function(x){
-                  window.location.replace(x)
-                })
+        if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play")){
+          t = setInterval(function(){
+            $.ajax({
+              url: '/mobile/user/game/vidoe_uploading',
+              success: function(data1){
+                if(data1.redirect){
+                  clearInterval(t)
+                  window.location.replace(data['game_state'])
+                }
+              }
+            })
+          }, 1500)
+        }else{
+          if ($("#game_channel").data("turn") !== "replay") {
+            if(location.pathname.split("admin")[1]=="/play"){
+              if(typeof completed_ajax !== 'undefined'){
+                if (videoStopped != true){
+                  stopRecording(data['game_state'], function(x){
+                    window.location.replace(x)
+                  })
+                }
+              }else{
+                if(typeof redirect == "undefined")
+                  return window.location.replace(data['game_state']);
               }
             }else{
               if(typeof redirect == "undefined")
                 return window.location.replace(data['game_state']);
             }
-          }else{
+          } else {
+            console.log("return to replay page");
             if(typeof redirect == "undefined")
-              return window.location.replace(data['game_state']);
+              return window.location.replace("replay");
           }
-        } else {
-          console.log("return to replay page");
-          if(typeof redirect == "undefined")
-            return window.location.replace("replay");
         }
       }
     });
