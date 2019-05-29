@@ -133,8 +133,10 @@ class GameMobileAdminController < ApplicationController
     
   def rate
     if @game.state != 'rate'
-      @game.update(state: 'rate', video_uploading: false)
+      @game.state = 'rate'
     end
+    @game.video_uploading = false
+    @game.save
     if @turn.ratings.find_by(admin_id: @admin.id)
       redirect_to gma_rated_path
     elsif @admin == @cur_user
