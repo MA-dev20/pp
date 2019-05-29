@@ -22,6 +22,7 @@ class GameMobileAdminController < ApplicationController
   end
  
   def save_video
+    @game.update(video_uploading: false)
     @turn.recorded_pitch = params[:file]
     @turn.save
     puts @turn.errors.messages
@@ -123,14 +124,16 @@ class GameMobileAdminController < ApplicationController
   def play
     session[:video_record] = params[:video]  if params[:video].present?
     @record = eval session[:video_record] 
+    @game.video_uploading = true
     if @game.state != 'play'
-      @game.update(state: 'play')
+      @game.state ='play'
     end
+    @game.save!
   end
     
   def rate
     if @game.state != 'rate'
-      @game.update(state: 'rate')
+      @game.update(state: 'rate', video_uploading: false)
     end
     if @turn.ratings.find_by(admin_id: @admin.id)
       redirect_to gma_rated_path

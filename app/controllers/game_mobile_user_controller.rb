@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :new_name, :new_company, :new_avatar, :new_turn, :bestlist]
+  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :new_name, :new_company, :new_avatar, :new_turn, :bestlist, :video_uploading]
   before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
@@ -15,6 +15,14 @@ class GameMobileUserController < ApplicationController
     else
       flash[:danger] = 'Konnte kein passendes Spiel finden!'
       redirect_to root_path
+    end
+  end
+
+  def video_uploading
+    if @game.video_uploading
+      render json: {redirect: false}
+    else
+      render json: {redirect: true}
     end
   end
     
