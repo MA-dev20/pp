@@ -1917,7 +1917,7 @@ button.btn-green-plus.green-plus-se {
   &:before {
     content: '';
     background-color: #d9dcdb;
-    height: 0.32vh;
+    height: 0.323vh;
     width: 100%;
     position: absolute;
     left: 0;
@@ -1962,15 +1962,14 @@ button.btn-green-plus.green-plus-se {
     height: 4.4vh;
     display: inline-block;
     background: image-url('stop-video.png') center center no-repeat;
-    text-indent: -9999999vh;
     background-size: 4.4vh;
   }
   .play-video {
     width: 6.4vh;
     height: 6.4vh;
+    z-index: 1000000;
     display: inline-block;
     background: image-url('play-video.png') center center no-repeat;
-    text-indent: -9999999vh;
     background-size: 6.3vh;
   }
   .play-video.pause-video {
@@ -1982,7 +1981,6 @@ button.btn-green-plus.green-plus-se {
     height: 4.4vh;
     display: inline-block;
     background: image-url('edit-video.png') center center no-repeat;
-    text-indent: -9999999vh;
     background-size: 4.4vh;
   }
 }
@@ -2002,8 +2000,157 @@ button.btn-green-plus.green-plus-se {
   text-indent: -9999999vh;
   background-size: 3vh;
 }
-
-
+.videotool-comment {
+  padding: 3vh 2.6vh;
+  position: relative;
+}
+.videotool-comment .vc-top-scroll {
+  height: 46vh;
+  overflow-y: auto;
+}
+.vc-row {
+  margin-bottom: 2.6vh;
+}
+.vc-row h5 {
+  font-size: 2vh;
+  margin: 0;
+  font-weight: 500;
+}
+.vc-row p {
+  font-size: 2vh;
+  color: #a9a9a9;
+  margin: 0;
+  line-height: 2.6vh;
+}
+.vc-row.vcr-negative h5 {
+  color: #e39999;
+}
+.vc-row.vcr-positive h5 {
+  color: #1ddab0;
+}
+.vc-row.vcr-neutral h5 {
+  color: #e4e36b;
+}
+.radio-label {
+  display: block;
+  position: relative;
+  padding-left: 2.6vh;
+  margin-bottom: 0;
+  margin-left: 2.2vh;
+  line-height: 2.6vh;
+  cursor: pointer;
+  font-size: 2.1vh;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.radio-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.radio-label .checkmark {
+  position: absolute;
+  top: 0.3vh;
+  left: 0;
+  height: 1.772vh;
+  width: 1.772vh;
+  background-color: transparent;
+  border: 0.16vh solid transparent;
+  border-radius: 50%;
+}
+.radio-label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+.radio-positive {
+  color: #1ddab0;
+}
+.radio-neutral {
+  color: #e4e36b;
+}
+.radio-negative {
+  color: #e39999;
+}
+.radio-positive .checkmark {
+  border-color: #1ddab0;
+}
+.radio-neutral .checkmark {
+  border-color: #e4e36b;
+}
+.radio-negative .checkmark {
+  border-color: #e39999;
+}
+.radio-positive input:checked ~ .checkmark {
+  background-color: #1ddab0;
+}
+.radio-neutral input:checked ~ .checkmark {
+  background-color: #e4e36b;
+}
+.radio-negative input:checked ~ .checkmark {
+  background-color: #e39999;
+}
+.radio-label .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.radio-label input:checked ~ .checkmark:after {
+  display: block;
+}
+.radio-label .checkmark:after {
+  top: 0;
+  left: 0;
+  width: 1.772vh;
+  height: 1.772vh;
+  border-radius: 50%;
+}
+.vc-detail .vc-video-t {
+  font-size: 3.4vh;
+  color: #1ddab0;
+  line-height: 3.6vh;
+}
+.vc-detail p {
+  margin: 0;
+  font-size: 2.1vh;
+  color: #a9a9a9;
+}
+.vc-detail .com-plus-icon {
+  background: image-url('plus-fill.png') center center no-repeat;
+  background-size: 4.51vh;
+  width: 4.51vh;
+  height: 4.51vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2.2vh;
+  margin: 0 auto;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  outline: none;
+}
+.vc-detail .com-plus-icon img {
+  max-width: 100%;
+}
+.vc-detail {
+  border-top: 0.323vh solid #d9dcdb;
+  padding-top: 1.6vh;
+  height: 17vh;
+}
+.vc-detail-comment {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1vh;
+}
+.vc-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 
 
 

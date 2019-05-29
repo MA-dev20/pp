@@ -479,6 +479,7 @@ canvas.onclick = function (evt) {
     var current_point = datapoints[points[0]._index];
     var game_id = current_point.data.game_id,
     turn_id = current_point.data.turn_id;
+    window.location  = "/admin/dash/games/"+game_id+"/turns/"+turn_id
 };
 document.getElementById('chart_gesamt').addEventListener('click', function() {
     $('.active').removeClass('active');
