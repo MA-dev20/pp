@@ -20,9 +20,13 @@
         <label for="user_avatar" id="user_pic">
           <%= image_tag @user.avatar.quad.url, class: 'mid-img blue' %>
         </label>
+        
+       
         <div class="add">
           <i class="fas fa-check-circle"></i>
         </div>
+
+        
       <% else %>
         <label for="user_avatar" id='user_pic'>
           <%= image_tag 'game/plus.png', class: 'mid-img pulse' %>
@@ -33,8 +37,12 @@
     <% end %>
   </div>
   <% if @user.avatar? %>
-    <div class="bottom">
-      <%= link_to 'weiter!', gmu_new_turn_path, class: 'link pulse' %>
+    <%= form_for(:user, url: gmu_new_turn_path, method: 'get') do |f| %>
+
+    <div class="bottom bottom-play">
+      <%= render partial: 'toggle_for_rate' %>
+      <%= f.submit 'weiter!', class: 'link pulse' %>
+      <% end %>
     </div>
   <% end %>
 </section>
