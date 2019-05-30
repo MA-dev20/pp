@@ -3,7 +3,6 @@ require 'rails/all'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-
 module Peterpitch
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -12,7 +11,9 @@ module Peterpitch
     config.i18n.default_locale = :de
     config.action_mailer.delivery_method = :letter_opener
     config.action_mailer.perform_deliveries = true
-      
+    config.autoload_paths += %W(#{config.root}/lib)
+    require 'ext/integer'
+
     config.action_mailer.default_url_options = { host: 'peterpitch.de' }
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

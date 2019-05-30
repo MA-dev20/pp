@@ -8,14 +8,14 @@
             <div id="dash_stats">
               <div class="gesamt rhetorik active">
                 <button class="circle" id="chart_gesamt">
-                  <span>7.7</span>
+                  <span><%= number_with_precision(@turns_rating.ges / 10, precision: 1) %></span>
                   <img src="/uploads/user/avatar/23/quad_Screenshot_2019-04-08_at_7.02.31_PM.png">
                 </button>
                 <div class="text" id="t_gesamt">Gesamt</div>
               </div>
               <div class="gesamt rhetorik">
                 <button class="circle" id="chart_gesamt">
-                  <span>7.7</span>
+                  <span><%= number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
                   <img src="/uploads/user/avatar/23/quad_Screenshot_2019-04-08_at_7.02.31_PM.png">
                 </button>
                 <div class="text" id="t_gesamt">Meine Bewertung</div>
@@ -28,15 +28,15 @@
             <div class="progress-bar-pop">
               <div class="progress-bar-con progress-con-t">
                 <div class="progressbar-view">
-                  <div class="progressbar-fill" style="width: 100% !important;"></div>
+                  <div class="progressbar-fill" style="width: <%=@turns_rating.spontan%>% !important;"></div>
                 </div>
-                <div class="progress-bar-value">10</div>
+                <div class="progress-bar-value"><%=number_with_precision @turns_rating.spontan.to_f/10,precision: 1 %></div>
               </div>
                   <div class="progress-bar-con progress-con-b">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: 100% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@turns_rating.spontan%>% !important;"></div>
                     </div>
-                    <div class="progress-bar-value">10</div>
+                    <div class="progress-bar-value"><%=number_with_precision @gamerating.creative.to_f/10,precision: 1 %></div>
                   </div>
             </div>
           </div>
@@ -45,16 +45,16 @@
             <div class="progress-bar-pop">
               <div class="progress-bar-con progress-con-t">
                 <div class="progressbar-view">
-                  <div class="progressbar-fill" style="width: 93% !important;"></div>
+                  <div class="progressbar-fill" style="width: <%=@turns_rating.creative%>% !important;"></div>
                 </div>
-                <div class="progress-bar-value">9.3</div>
+                <div class="progress-bar-value"><%=number_with_precision @turns_rating.creative.to_f/10,precision: 1 %></div>
               </div>
               
                   <div class="progress-bar-con progress-con-b">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: 93% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@gamerating.creative%>% !important;"></div>
                     </div>
-                    <div class="progress-bar-value">9.3</div>
+                    <div class="progress-bar-value"><%=number_with_precision @gamerating.creative.to_f/10,precision: 1 %></div>
                   </div>
             </div>
           </div>
@@ -63,15 +63,18 @@
             <div class="progress-bar-pop">
               <div class="progress-bar-con progress-con-t">
                 <div class="progressbar-view">
-                  <div class="progressbar-fill" style="width: 67% !important;"></div>
+                  <div class="progressbar-fill" style="width: <%=@turns_rating.body%>% !important;"></div>
                 </div>
-                <div class="progress-bar-value">6.7</div>
-              </div> <div class="progress-bar-con progress-con-b">
-                    <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: 67% !important;"></div>
-                    </div>
-                    <div class="progress-bar-value">6.7</div>
+                <div class="progress-bar-value"><%=number_with_precision @turns_rating.body.to_f/10,precision: 1 %></div>
+              </div> 
+              <% if @gamerating.present? %>
+                <div class="progress-bar-con progress-con-b">
+                  <div class="progressbar-view">
+                    <div class="progressbar-fill" style="width: <%=@gamerating.body%>% !important;"></div>
                   </div>
+                  <div class="progress-bar-value"><%=number_with_precision @gamerating.body.to_f/10,precision: 1 %></div>
+                </div>
+              <% end %>
             </div>
           </div>
           <div class="progressBar">
@@ -79,16 +82,16 @@
             <div class="progress-bar-pop">
               <div class="progress-bar-con progress-con-t">
                 <div class="progressbar-view">
-                  <div class="progressbar-fill" style="width: 50% !important;"></div>
+                  <div class="progressbar-fill" style="width: <%=@turns_rating.rhetoric%>% !important;"></div>
                 </div>
-                <div class="progress-bar-value">5</div>
+                <div class="progress-bar-value"><%=number_with_precision @turns_rating.rhetoric.to_f/10,precision: 1 %></div>
               </div>
               
                   <div class="progress-bar-con progress-con-b">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: 50% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@gamerating.rhetoric%>% !important;"></div>
                     </div>
-                    <div class="progress-bar-value">5</div>
+                    <div class="progress-bar-value"><%=number_with_precision @gamerating.rhetoric.to_f/10,precision: 1 %></div>
                   </div>
                   
             </div>
@@ -103,11 +106,11 @@
         </div>
     </div>
   </div>
-
-  <div class="videotool-content videotool-content-video" id="video">
+  <% if @turn.recorded_pitch.url.present? %>
+  <div class="videotool-content videotool-content-video" id="video" style="display: none">
     <div class="video-container">
-      <video  height="auto" width="100%" id="video-content"  preload="metadata">
-        <source src="http://localhost:3000/uploads/turn/recorded_pitch/495/video_May_24_2019_10_03_27_GMT.webm" type="video/webm">
+      <video  height="auto" width="100%" id="pitch_video"  preload="metadata">
+        <source src="<%= @turn.recorded_pitch.url %>">
       </video>
     </div>
     <div class="player-bar">
@@ -122,84 +125,45 @@
     <div class="video-options position-relative">
       <a href="#" class="stop-video" id="stop"></a>
       <a href="#" class="play-video" id="play-video"></a>
-      <a href="#" class="edit-video"></a>
+      <a href="#" class="edit-video" id="edit-video"></a>
       <a href="#" class="volume-on"></a>
     </div>
   </div>
-  <div class="videotool-content videotool-comment">
+  <% end %>
+  <div class="videotool-content videotool-comment" id="comments" style="display: none;">
     <div class="progress-block">
       <div class="vc-top">
-        <div class="vc-top-scroll">
-          <div class="vc-row vcr-negative">
-            <h5>0:12</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-positive">
-            <h5>0:31</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-negative">
-            <h5>0:55</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-positive">
-            <h5>1:04</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-negative">
-            <h5>0:12</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-positive">
-            <h5>0:31</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-negative">
-            <h5>0:55</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-positive">
-            <h5>1:04</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-negative">
-            <h5>0:12</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-positive">
-            <h5>0:31</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-negative">
-            <h5>0:55</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
-          <div class="vc-row vcr-positive">
-            <h5>1:04</h5>
-            <p>zi hektisch, hier ruhiger starten</p>
-          </div>
+        <div class="vc-top-scroll" id="comment-box">
+          <% @turn.comments.each do |c| %>
+            <div class="vc-row vcr-positive <%= 'vcr-'+c.type_of_comment %>">
+              <h5><%= c.time_of_video  ? c.time_of_video.to_minutes : '0:00'%></h5>
+              <p><%= c.title %></p>
+            </div>
+          <% end %>
         </div>
       </div>
       <div class="vc-detail">
-        <div class="vc-detail-comment">
-          <div class="vc-video-t">0:31</div>
-          <div class="vc-options">
-            <label class="radio-label radio-positive">positive
-              <input type="radio" checked="checked" name="radio">
-              <span class="checkmark"></span>
-            </label>
-            <label class="radio-label radio-neutral">neutral
-              <input type="radio" name="radio">
-              <span class="checkmark"></span>
-            </label>
-            <label class="radio-label radio-negative">negative
-              <input type="radio" name="radio">
-              <span class="checkmark"></span>
-            </label>
+        <form class="" id="add-comment-form">
+          <div class="vc-detail-comment">
+            <div class="vc-video-t" id="time_of_video">0:31</div>
+            <div class="vc-options">
+              <label class="radio-label radio-positive">positive
+                <input type="radio" checked="checked" name="radio" value="vcr-positive">
+                <span class="checkmark"></span>
+              </label>
+              <label class="radio-label radio-neutral">neutral
+                <input type="radio" name="radio" value="vcr-neutral">
+                <span class="checkmark"></span>
+              </label>
+              <label class="radio-label radio-negative">negative
+                <input type="radio" name="radio" value="vcr-negative">
+                <span class="checkmark"></span>
+              </label>
+            </div>
           </div>
-        </div>
-        <p>Starker Ubergang in Produktprasentation</p>
-        <button class="com-plus-icon"></button>
+          <input type="text" name="field" placeholder="Starker Ubergang in Produktprasentation">
+          <button class="com-plus-icon" type="submit"></button>
+        </form>
       </div>
     </div>
   </div>
@@ -215,7 +179,8 @@
     const skipButtons = player.querySelectorAll('[data-skip]');
     const ranges = player.querySelectorAll('.player__slider');
     const playbutton = document.querySelector(".play-video");
-    const video = document.getElementById('video-content');
+    const video = document.getElementById('pitch_video');
+    const editButton = document.getElementById('edit-video');
     const durationSpan =  $("span#durationn");
     const currentTimeSpan = $("span#currentTime");
     /* Build out functions */
@@ -224,6 +189,48 @@
       const method = video.paused ? 'play' : 'pause';
       video[method]();
 
+    }
+    $("#add-comment-form").on('submit', function(e){
+      e.preventDefault()
+      var text = $("input[name=field]").val()
+      if(text.length > 0){
+        $("input[name=field]").val('')
+        var type = $("input[name=radio]:checked").val()
+        $("#comment-box").animate({ scrollTop: $('#comment-box').prop("scrollHeight")}, 300);
+        addCommentToCommentBox(text, type) 
+        sendToServer(text, type)
+      }
+    });
+
+
+    $(".volume-on").on('click', toggleMute)
+
+    function toggleMute(e){
+      e.preventDefault()
+      video.muted = video.muted == true ? false : true;
+      video.muted == true ? $(this).addClass('volume-off') : $(this).removeClass('volume-off') ;
+    }
+
+    function sendToServer(text, type){
+      $.ajax({
+        url: '<%= create_comment_path(@turn.id)%>',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: {title: text, type: type, current_time:  video.currentTime},
+        type: 'post'
+      })
+    }
+
+    function fancyTimeFormat(time){   
+        var hrs = ~~(time / 3600);
+        var mins = ~~((time % 3600) / 60);
+        var secs = ~~time % 60;
+        var ret = "";
+        if (hrs > 0) {
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        }
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+        return ret;
     }
 
     function updateButton() {
@@ -240,13 +247,50 @@
      video.currentTime += parseFloat(this.dataset.skip);
     }
 
+    function commentBox(e){
+      e.preventDefault()
+      var time = video.currentTime
+      video.pause()
+      fillTimeOfCommentBox(time)
+      $("#comments").fadeIn()
+    }
+
+    function fillTimeOfCommentBox(time){
+      var displayedTime = fancyTimeFormat(time)
+      $("#time_of_video").text(displayedTime)
+    }
+
+
+
+    function addCommentToCommentBox(text, type){
+      var template = `<div class="vc-row vcr-positive `+type+`" style="display: none;">
+            <h5>`+fancyTimeFormat(video.currentTime)+`</h5>
+            <p>`+text+`</p>
+          </div>`;
+      $("#comment-box").append(template)
+      $(".vcr-positive").slideDown()
+    }
+
     function handleRangeUpdate() {
       video[this.name] = this.value;
     }
 
     function handleProgress() {
-      const percent = (video.currentTime / video.duration) * 100;
+      var percent = (video.currentTime / video.duration) * 100;
       progressBar.style.width = `${percent}%`;
+      if(percent == 0 || percent == 100){
+        if(percent == 0){
+          $('.player-cursor').css('left','0px');
+          $('.player-cursor').css('right','');
+        }
+        if(percent == 100){
+          $('.player-cursor').css('right','0px');
+          $('.player-cursor').css('left','');
+        }
+      }else{
+        $('.player-cursor').css('right','');
+        $('.player-cursor').css('left','');
+      }
       if(video.duration != Infinity)
         $("span#duration").html('/'+secondsToHms(Math.round(video.duration)))
       $("span#currentTime").html(secondsToHms(Math.round(video.currentTime)))
@@ -259,8 +303,8 @@
     }
 
     function stopVideo(){
-      video.stop()
       video.currentTime = 0;
+      video.pause()
       $(".play-video").removeClass("pause-video");
     }
     /* Hook up the event listeners */
@@ -271,7 +315,7 @@
     video.addEventListener('play', updateButton);
     video.addEventListener('pause', updateButton);
     video.addEventListener('timeupdate', handleProgress);
-
+    editButton.addEventListener("click", commentBox)
     skipButtons.forEach(button => button.addEventListener('click', skip));
     ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
     ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate));
@@ -287,6 +331,7 @@
     });
 
     $(".stop-video").click(function(e){
+      e.preventDefault()
       stopVideo()
     })
     $(".switch").click(function(event){
@@ -295,6 +340,7 @@
           $("#video").fadeIn()
         }else{
           $("#video").fadeOut()
+          $("#comments").fadeOut()
         }
     })
   })

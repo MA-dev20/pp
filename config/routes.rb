@@ -123,7 +123,6 @@ Rails.application.routes.draw do
 
     get 'admin/verification/:token', to: 'dash_admin#verification', as: 'dash_admin_verfication'
     post 'admin/dash/teams/:team_id/generate_img_from_html', to: 'dash_admin#generate_img_from_html', as: 'dash_admin_generate_img_from_html'
-    get 'admin/dash/games/:game_id/turns/:turn_id', to: 'dash_admin#turn_show', as: 'dash_admin_show_turn'
     
     get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
     get 'admin/dash/teams/:team_id/stats', to: 'dash_admin#team_stats', as: 'dash_admin_team_stats'
@@ -134,6 +133,7 @@ Rails.application.routes.draw do
     get 'admin/dash/users/:team_id', to: 'dash_admin#users', as: 'dash_admin_team_users'
     
     get 'admins/dash/teams/:team_id/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_user_stats'
+    get 'admins/dash/teams/:team_id/users/:user_id/stats/turns/:turn_id', to: 'dash_admin#turn_show', as: 'dash_admin_show_turn'
     get 'admins/teams/:team_id/users/:user_id/compare/:compare_user_id', to: 'dash_admin#compare_user_stats', as: 'dash_admin_compare_user_stats'
     
     get 'admins/dash/account', to: 'dash_admin#account', as: 'dash_admin_account'
@@ -206,6 +206,7 @@ Rails.application.routes.draw do
     
   get 'turns/:turn_id/user/ratings/new', to: 'ratings#new_user', as: 'new_rating_user'
   post 'turns/:turn_id/user/ratings/new', to: 'ratings#create_user'
+  post 'turns/:turn_id/comment', to: 'ratings#comment', as: 'create_comment'
 
 ########
 # Word #

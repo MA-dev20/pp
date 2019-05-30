@@ -1,7 +1,7 @@
 class DashAdminController < ApplicationController
   before_action :authenticate_admin!, :set_admin , unless: :skip_action?
   before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats,:team_stats_share]
-  before_action :set_user, only: [:user_stats, :compare_user_stats]
+  before_action :set_user, only: [:turn_show,:user_stats, :compare_user_stats]
   skip_before_action :check_expiration_date, only: :billing
   layout :resolve_layout
 
@@ -27,10 +27,9 @@ class DashAdminController < ApplicationController
 
 
   def turn_show
-    @game = Game.find(params[:game_id])
-    @turn = @game.turns.find(params[:turn_id])
-    @rating = @turn.ratings.select("AVG(ratings.body) AS body, AVG(ratings.creative) AS creative, AVG(ratings.spontan) AS spontan, AVG(ratings.ges) AS ges, AVG(ratings.rhetoric) AS rhetoric")[0]
-
+    @turns_rating = @user.turn_ratings.find(params[:turn_id])
+    @turn = @turns_rating.turn
+    @gamerating = GameRating.where(game_id: @turns_rating.game_id).first
     render :show_turn
   end
 

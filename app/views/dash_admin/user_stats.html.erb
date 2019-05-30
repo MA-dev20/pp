@@ -115,8 +115,9 @@ var i = 0;
     var json_data = <%= g.to_json.html_safe %>
     json_data["word"] = "<%= g.turn.word.name %>";
         json_data["id"] = "<%= g.turn.id %>";
+        json_data["turn_rating_id"] = "<%= g.id %>";
 
-    <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+    <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
     <% if admin_rating.present? %>
         var admin_ges = <%= admin_rating.ges %>;
     <% else %>
@@ -478,8 +479,8 @@ canvas.onclick = function (evt) {
     var points = gesamtChart.getElementAtEvent(evt);
     var current_point = datapoints[points[0]._index];
     var game_id = current_point.data.game_id,
-    turn_id = current_point.data.turn_id;
-    window.location  = "/admin/dash/games/"+game_id+"/turns/"+turn_id
+    turn_id = current_point.data.turn_rating_id;
+    window.location  = window.location+"/turns/"+turn_id
 };
 document.getElementById('chart_gesamt').addEventListener('click', function() {
     $('.active').removeClass('active');
@@ -489,8 +490,9 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
         json_data["id"] = "<%= g.turn.id %>";
+        json_data["turn_rating_id"] = "<%= g.id %>";
 
-        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+        <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_ges = <%= admin_rating.ges %>;
         <% else %>
@@ -541,8 +543,10 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
         json_data["id"] = "<%= g.turn.id %>";
+        json_data["turn_rating_id"] = "<%= g.id %>";
 
-        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+
+        <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_spontan = <%= admin_rating.spontan %>;
         <% else %>
@@ -593,7 +597,9 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
         json_data["id"] = "<%= g.turn.id %>";
-        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+        json_data["turn_rating_id"] = "<%= g.id %>";
+
+        <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_creative = <%= admin_rating.creative %>;
         <% else %>
@@ -644,8 +650,10 @@ document.getElementById('chart_body').addEventListener('click', function() {
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
         json_data["id"] = "<%= g.turn.id %>";
+        json_data["turn_rating_id"] = "<%= g.id %>";
 
-        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+
+        <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_body = <%= admin_rating.body %>;
         <% else %>
@@ -697,8 +705,9 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
         var json_data = <%= g.to_json.html_safe %>
         json_data["word"] = "<%= g.turn.word.name %>";
         json_data["id"] = "<%= g.turn.id %>";
+        json_data["turn_rating_id"] = "<%= g.id %>";
 
-        <% admin_rating = Rating.where(turn_id: g.turn.id, admin_id: @admin.id).first %>
+        <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_rhetoric = <%= admin_rating.rhetoric %>;
         <% else %>
