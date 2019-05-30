@@ -21,6 +21,13 @@ class RatingsController < ApplicationController
       redirect_to gma_rate_path
     end
   end
+
+  def comment
+    @turn = Turn.find(params[:turn_id])
+    type = params[:type].split('vcr-').last
+    @turn.comments.build(title: params[:title], type_of_comment: type, time_of_video: params[:current_time]).save!
+    render json: {response: 'ok'}
+  end
     
   def new_user
   end

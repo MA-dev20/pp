@@ -5,7 +5,7 @@ class Turn < ApplicationRecord
   belongs_to :word, required: false
   has_one :turn_rating, dependent: :destroy
   has_many :ratings, dependent: :destroy
-  
+  has_many :comments, dependent: :destroy  
   mount_uploader :recorded_pitch, PitchUploader
 
   
