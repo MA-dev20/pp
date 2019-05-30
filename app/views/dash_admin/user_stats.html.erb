@@ -1,4 +1,4 @@
-<section id="dash_stats" class="dash_stats-head">
+<section id="dash_stats" class="dash_stats-head dash-stats-set">
 
     <div class="head">
            <%= render partial: 'select_team_user_dropdown', locals: {users: @users, teams: @teams, user: @user, team: @team, teams_page: false} %>
@@ -63,18 +63,36 @@
            <% end %> 
         </ul>
         <div class="compare">
-        
-        <select class="cs-select cs-skin-underline form-field">
-            <option value="" disabled selected>Vergleiche mit</option>
-            <% @users.each do |u| %>
-                   <% if @user.id != u.id %>
-                    <option value="<%= u.id %>" data-link="<%= dash_admin_compare_user_stats_path(@team.id, @user.id, u.id) %>">
-                         <%= u.fname %> <%= u.lname %>
-                    </option>
-                    <% end %>
-            <% end %>
-        </select>
-        
+            <select class="cs-select cs-skin-underline form-field">
+                <option value="" disabled selected>Vergleiche mit</option>
+                <% @users.each do |u| %>
+                       <% if @user.id != u.id %>
+                        <option value="<%= u.id %>" data-link="<%= dash_admin_compare_user_stats_path(@team.id, @user.id, u.id) %>">
+                             <%= u.fname %> <%= u.lname %>
+                        </option>
+                        <% end %>
+                <% end %>
+            </select>
+        </div>
+        <div class="video-content">
+            <h5>Willy's Aufnahmen</h5>
+            <p>Alle sechen</p>
+            <div class="overview-block overview-block-n">
+                <div class="overviewBlock-video">
+                    <img src="<%= image_path('overview-img.png')%>">
+                    <span class="overview-video-play"></span>
+                    <span class="overview-video-rating ov-span">9,6</span>
+                    <span class="overview-video-time ov-span">01:20</span>
+                </div>
+            </div>
+            <div class="overview-block overview-block-n">
+                <div class="overviewBlock-video">
+                    <img src="<%= image_path('overview-img.png')%>">
+                    <span class="overview-video-play"></span>
+                    <span class="overview-video-rating ov-span">9,6</span>
+                    <span class="overview-video-time ov-span">01:20</span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="stats_chart">

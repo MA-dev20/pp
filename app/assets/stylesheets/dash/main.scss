@@ -2237,7 +2237,58 @@ button.btn-green-plus.green-plus-se {
 .overview-block:hover .overviewBlock-detail p {
   font-weight: 600;
 }
-
+#dash_stats.dash-stats-set .stats_chart {
+  width: 48vw;
+  border-radius: 8.8vh 2.4vh 2.4vh 8.8vh;
+}
+#dash_stats.dash-stats-set  .compare {
+  bottom: -3.8vh;
+  right: inherit;
+  left: 77vh;
+}
+.video-content {
+  position: absolute;
+  right: 0;
+  top: 26vh;
+  text-align: center;
+  width: 23vh;
+  z-index: 5;
+}
+.video-content h5 {
+  line-height: 2.8vh;
+  font-size: 2.5vh;
+  font-weight: 500;
+  color: #232323;
+  margin-bottom: 0;
+}
+.video-content p {
+  line-height: 2.2vh;
+  font-size: 1.8vh;
+  font-weight: 500;
+  color: #b1b1b1;
+  margin-bottom: 2.2vh;
+}
+.overview-block-n {
+  margin-right: 0;
+  margin-bottom: 1.6vh;
+}
+.overview-block-n .overviewBlock-video {
+  width: 22vh;
+  height: 24vh;
+  margin: 0 auto;
+  border-radius: 1vh;
+}
+.overview-block-n .ov-span {
+  bottom: 1vh;
+  font-size: 2.4vh;
+  line-height: 2.6vh;
+}
+.overview-block-n .overview-video-rating {
+  left: 1vh;
+}
+.overview-block-n .overview-video-time {
+  right: 1vh;
+}
 
 
 
