@@ -124,6 +124,7 @@ Rails.application.routes.draw do
     get 'admin/verification/:token', to: 'dash_admin#verification', as: 'dash_admin_verfication'
     post 'admin/dash/teams/:team_id/generate_img_from_html', to: 'dash_admin#generate_img_from_html', as: 'dash_admin_generate_img_from_html'
     get 'admin/dash/games/:game_id/turns/:turn_id', to: 'dash_admin#turn_show', as: 'dash_admin_show_turn'
+    get 'admin/dash/games/:game_id/turns', to: 'dash_admin#turns', as: 'dash_admin_turns'
     
     get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
     get 'admin/dash/teams/:team_id/stats', to: 'dash_admin#team_stats', as: 'dash_admin_team_stats'
