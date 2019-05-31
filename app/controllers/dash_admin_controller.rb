@@ -305,7 +305,7 @@ class DashAdminController < ApplicationController
     def json_convert(turns)
       result = []
       turns.each do |t|
-        if t.turn_rating.present? 
+        if t.turn_rating.present? and t.recorded_pitch.present?
           turn = JSON.parse(t.to_json(include: [:turn_rating]))
           turn["rating"] = number_with_precision(t.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1).to_f if t.turn_rating.present?
           turn["word"] = t.word.name if t.word.present?
