@@ -13,7 +13,7 @@
                 </button>
                 <div class="text" id="t_gesamt">Gesamt</div>
               </div>
-              <% if gamerating.present?%>
+              <% if @gamerating.present?%>
               <div class="gesamt rhetorik">
                 <button class="circle" id="chart_gesamt">
                   <span><%= number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
