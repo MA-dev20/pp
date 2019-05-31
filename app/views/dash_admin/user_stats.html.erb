@@ -130,7 +130,7 @@ var i = 0;
     json_data["word"] = "<%= g.turn.word.name %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
-        <% if g.turn.recorded_pitch %>
+        <% if g.turn.recorded_pitch.url.present? %>
             json_data["turn_pitch"] = true;
         <% else %>
             json_data["turn_pitch"] = false;
