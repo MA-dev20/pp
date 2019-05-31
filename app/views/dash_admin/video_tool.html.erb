@@ -1,0 +1,162 @@
+<section id="dash_stats" class="dash_stats-head">
+  <div class="head">
+     <div class="compare-selects">
+        <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-left" id="select-user">
+            <option value=""   data-class="cs-selected" selected>Select User</option>
+            <% @users.each do |u| %>
+                <% if @user && u.id == @user.id %>
+                    <option value="<%= u.id %>"  data-class="cs-selected" selected>
+                        <%= u.fname %> <%= u.lname %>
+                    </option>
+                <% else %>
+                    <option value="<%= u.id %>">
+                        <%= u.fname %> <%= u.lname %>
+                    </option>
+                <% end %>
+                
+            <% end %>
+        </select>
+    <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right" id="select-team">
+        <option value=""   data-class="cs-selected" selected>Select Team</option>
+        <% @teams.each do |t| %>
+            <% if @team.present? && t.id == @team.id %>
+                <option value="<%= t.id %>"  data-class="cs-selected" selected><%= t.name %></option>
+            <%else %>
+                <option value="<%= t.id %>" ><%= t.name %></option>
+            <% end %>
+        <% end %>
+    </select>
+     <p class="cs-select-right">Sort by</p>
+    <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right" id="select-rating">
+        <option value="rating">Rating</option>
+        <option value="date">Date</option>
+    </select>
+  </div>
+
+  </div>
+  <div class="video-overview">
+      <% if @result.present? %>
+        <% @result.each do |t| %>
+          <% if t["turn_rating"].present? %>
+            <a href="<%= "/admins/dash/stats/turns/#{t["turn_rating"]["id"]}" if t["turn_rating"].present?%>">
+              <div class="overview-block" >
+                <h4 class="overview-block-heading"><%= t['word']  %></h4>
+                <div class="overviewBlock-video">
+                  <video src="<%= t["recorded_pitch_url"] %>"></video>
+                  <span class="overview-video-play"></span>
+                  <span class="overview-video-rating ov-span"><%= t["rating"]%></span>
+                  <span class="overview-video-time ov-span"><%=  t["duration"]%> </span>
+                </div>
+                <div class="overviewBlock-detail">
+                  <h5><%= t["name"]%></h5>
+                  <p><%= (t["created_at"]).to_datetime.strftime("%-d.%_m.%y") %></p>
+                </div>
+              </div>
+            </a>
+          <% end %>
+        <% end %>
+      <% end %>
+  </div>
+</section>
+
+
+
+<script type="text/javascript">
+
+(function() {
+[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
+    function(el) {
+       new SelectFx(el);
+       newTab: false;
+    } );
+})();
+    var userList = $(".cs-options")[0],
+    usersOption = $($(".cs-options")[0]).find("ul li");
+
+    usersOption.on('click', function(e){
+        $("#select-team").val('');
+        filterVideos()
+    })
+
+    var teamList = $(".cs-options")[1],
+    teamOption = $($(".cs-options")[1]).find("ul li");
+    teamOption.on('click', function(e){
+      e.preventDefault()
+      $("#select-user").val('');
+      filterVideos()
+    })
+
+
+    var sortBy = $(".cs-options")[2],
+    sortOption = $($(".cs-options")[2]).find("ul li");
+    sortOption.on('click', function(e){
+      var $val = $("#select-rating").val() 
+      sortAndRenderTurns($val)      
+    })
+    var turns = (<%= raw(@result.to_json) %>);
+    function filterVideos(){
+        var team_id = $("#select-team option:selected").val(),
+          user_id = $("#select-user option:selected").val(),
+          sort_by = "time";
+        $.ajax({
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            url: '/admins/dash/filter_videos',
+            type: 'post',
+            data: {user_id: user_id,team_id: team_id, sort_by: sort_by},
+            success: function(res){
+                $(".video-overview").empty()
+                $(".video-overview").html(res.turns_html)
+                turns = res.turns;
+            }
+        })
+    }
+
+    function dynamicSort(property) {
+      var sortOrder = 1;
+      if(property[0] === "-") {
+          sortOrder = -1;
+          property = property.substr(1);
+      }
+      return function (a,b) {
+          /* next line works with strings and numbers, 
+           * and you may want to customize it to your needs
+           */
+          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+          return result * sortOrder;
+      }
+    }
+    function sortAndRenderTurns(val){
+      if(val == "rating"){
+        turns.sort(dynamicSort("-rating"))
+      }
+      if(val == "date"){
+        turns.sort(dynamicSort("-created_at"))
+      }
+      renderTemplate()
+    }
+
+    function  renderTemplate(){      
+      $(".video-overview").empty()
+      turns.forEach(function(t){
+        var name = t["name"];
+        if(t["name"] == "undefined") 
+          name="";
+        template  = `<a href="/admins/dash/stats/turns/`+t["turn_rating"]["id"]+` ">
+                      <div class="overview-block" >
+                        <h4 class="overview-block-heading">`+t["word"]+`</h4>
+                        <div class="overviewBlock-video">
+                          <video src="`+t["recorded_pitch_url"]+`"></video>
+                          <span class="overview-video-play"></span>
+                          <span class="overview-video-rating ov-span">`+t["rating"]+`</span>
+                          <span class="overview-video-time ov-span">`+ t["duration"]+` </span>
+                        </div>
+                        <div class="overviewBlock-detail">
+                          <h5>`+name+`</h5>
+                          <p>`+ (t["created_at"])+`</p>
+                        </div>
+                      </div>
+                    </a>`;
+        $(".video-overview").append(template)
+      })
+    }
+</script>

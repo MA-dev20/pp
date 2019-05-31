@@ -75,24 +75,20 @@
             </select>
         </div>
         <div class="video-content">
-            <h5>Willy's Aufnahmen</h5>
+            <h5><%= @user.fname.to_s + "'s"%> Aufnahmen</h5>
             <p>Alle sechen</p>
-            <div class="overview-block overview-block-n">
-                <div class="overviewBlock-video">
-                    <img src="<%= image_path('overview-img.png')%>">
-                    <span class="overview-video-play"></span>
-                    <span class="overview-video-rating ov-span">9,6</span>
-                    <span class="overview-video-time ov-span">01:20</span>
-                </div>
-            </div>
-            <div class="overview-block overview-block-n">
-                <div class="overviewBlock-video">
-                    <img src="<%= image_path('overview-img.png')%>">
-                    <span class="overview-video-play"></span>
-                    <span class="overview-video-rating ov-span">9,6</span>
-                    <span class="overview-video-time ov-span">01:20</span>
-                </div>
-            </div>
+            <% @reviewed_videos.each do |video| %>
+                <a href="<%= "/admins/dash/stats/turns/#{video.turn_rating.id}" if video.turn_rating.present?%>">
+                    <div class="overview-block overview-block-n">
+                        <div class="overviewBlock-video">
+                            <video src="<%= video.recorded_pitch.url %>"></video>
+                            <span class="overview-video-play"></span>
+                            <span class="overview-video-rating ov-span"><%= number_with_precision(video.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) if video.turn_rating.present?%></span>
+                            <span class="overview-video-time ov-span"><%= video.recorded_pitch_duration.to_minutes if video.recorded_pitch_duration.present? %> </span>
+                        </div>
+                    </div>
+                </a>
+            <% end %>
         </div>
     </div>
     <div class="stats_chart">
@@ -134,7 +130,11 @@ var i = 0;
     json_data["word"] = "<%= g.turn.word.name %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
-
+        <% if g.turn.recorded_pitch %>
+            json_data["turn_pitch"] = true;
+        <% else %>
+            json_data["turn_pitch"] = false;
+        <% end %>
     <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
     <% if admin_rating.present? %>
         var admin_ges = <%= admin_rating.ges %>;
@@ -157,88 +157,108 @@ var i = 0;
     label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
     i++;
 <% end %>
+var data1 = [], data2=[], pointColors = [];
+var i = 0
+datapoints2.forEach(function(el){
+    if(el.value == undefined){
+        data2[i] = el
+    }else{
+        data2[i] = el.value
+    } 
+    i++;
+})
+var i = 0
+datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+        pointColors[i] = "rgba(255,255,255,1.0)"
 
-var data2 = datapoints2.map(el => {
-                return el.value
-            });
-var data1 = datapoints.map(el => {
-                return el.value
-            });
-        function customTooltips(tooltipModel) {
-                // Tooltip Element
-                var tooltipEl = document.getElementById('chartjs-tooltip');
+    }else{
+        data1[i] = el.value
 
-                // Create element on first render
-                if (!tooltipEl) {
-                    tooltipEl = document.createElement('div');
-                    tooltipEl.id = 'chartjs-tooltip';
-                    tooltipEl.innerHTML = `<div class='tooltips'></div>`;
-                    document.body.appendChild(tooltipEl);
-                }
+        if(el.data.turn_pitch){
+            pointColors[i] = "rgba(255,0,0,1.0)"
+        }else{
+            pointColors[i] = "rgba(255,255,255,1.0)"
+        }
+    }
+    i++;
+    
+})
+function customTooltips(tooltipModel) {
+    // Tooltip Element
+    var tooltipEl = document.getElementById('chartjs-tooltip');
 
-                // Hide if no tooltip
-                if (tooltipModel.opacity === 0) {
-                    tooltipEl.style.opacity = 0;
-                    return;
-                }
+    // Create element on first render
+    if (!tooltipEl) {
+        tooltipEl = document.createElement('div');
+        tooltipEl.id = 'chartjs-tooltip';
+        tooltipEl.innerHTML = `<div class='tooltips'></div>`;
+        document.body.appendChild(tooltipEl);
+    }
 
-                // Set caret Position
-                tooltipEl.classList.remove('above', 'below', 'no-transform');
-                if (tooltipModel.yAlign) {
-                    tooltipEl.classList.add(tooltipModel.yAlign);
-                } else {
-                    tooltipEl.classList.add('no-transform');
-                }
+    // Hide if no tooltip
+    if (tooltipModel.opacity === 0) {
+        tooltipEl.style.opacity = 0;
+        return;
+    }
 
-                function getBody(bodyItem) {
-                    return bodyItem.lines;
-                }
+    // Set caret Position
+    tooltipEl.classList.remove('above', 'below', 'no-transform');
+    if (tooltipModel.yAlign) {
+        tooltipEl.classList.add(tooltipModel.yAlign);
+    } else {
+        tooltipEl.classList.add('no-transform');
+    }
 
-                // Set Text
-                if (tooltipModel.body) {
-                    var titleLines = tooltipModel.title || [];
-                    var bodyLines = tooltipModel.body.map(getBody);
+    function getBody(bodyItem) {
+        return bodyItem.lines;
+    }
 
-                    var innerHtml = '<div>';
+    // Set Text
+    if (tooltipModel.body) {
+        var titleLines = tooltipModel.title || [];
+        var bodyLines = tooltipModel.body.map(getBody);
 
-                    titleLines.forEach(function(title) {
-                        innerHtml += '<div><div>' + title + '</div></div>';
-                    });
-                    innerHtml += '</div><div>';
+        var innerHtml = '<div>';
 
-                    bodyLines.forEach(function(body, i) {
-                        var colors = tooltipModel.labelColors[i];
-                        var style = 'background:' + colors.backgroundColor;
-                        style += '; border-color:' + colors.borderColor;
-                        style += '; border-width: 2px';
-                        var span = '<span style="' + style + '"></span>';
-                        innerHtml += '<div><div>' + span + body + '</div></div>';
-                    });
-                    innerHtml += '</div>';
+        titleLines.forEach(function(title) {
+            innerHtml += '<div><div>' + title + '</div></div>';
+        });
+        innerHtml += '</div><div>';
 
-                    var tableRoot = tooltipEl.querySelector('div');
-                    tableRoot.innerHTML = innerHtml;
-                }
-                var position = this._chart.canvas.getBoundingClientRect();
-                // Display, position, and set styles for font
-                tooltipEl.style.opacity = 1;
-                tooltipEl.style.position = 'relative';
-                tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()/2))+ 'px';
-                tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight())) - 18 + 'px';
-                // tooltipEl.style.left = (position.left + window.pageXOffset + tooltipModel.caretX+100)/window.devicePixelRatio + 'px';
-                // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-330 + 'px';
-                // tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
-                tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
-                tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
-                tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
-                tooltipEl.style.pointerEvents = 'none';
-            }
+        bodyLines.forEach(function(body, i) {
+            var colors = tooltipModel.labelColors[i];
+            var style = 'background:' + colors.backgroundColor;
+            style += '; border-color:' + colors.borderColor;
+            style += '; border-width: 2px';
+            var span = '<span style="' + style + '"></span>';
+            innerHtml += '<div><div>' + span + body + '</div></div>';
+        });
+        innerHtml += '</div>';
+
+        var tableRoot = tooltipEl.querySelector('div');
+        tableRoot.innerHTML = innerHtml;
+    }
+    var position = this._chart.canvas.getBoundingClientRect();
+    // Display, position, and set styles for font
+    tooltipEl.style.opacity = 1;
+    tooltipEl.style.position = 'relative';
+    tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()/2))+ 'px';
+    tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight())) - 18 + 'px';
+    // tooltipEl.style.left = (position.left + window.pageXOffset + tooltipModel.caretX+100)/window.devicePixelRatio + 'px';
+    // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-330 + 'px';
+    // tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
+    tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
+    tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
+    tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+    tooltipEl.style.pointerEvents = 'none';
+}
 var user1 = '<%= @user.fname %>';
 var gesamtChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: label,
-
         datasets: [{
             label: user1,
             data: data1,
@@ -246,11 +266,12 @@ var gesamtChart = new Chart(ctx, {
             borderColor:"rgba(255,255,255,1.0)",
             borderWidth: 5,
             pointBorderColor:"rgba(255,255,255,1.0)",
-            pointBackgroundColor:"rgba(255,255,255,1.0)",
-            pointHoverBackgroundColor:"rgba(255,255,255,1.0)",
+            pointBackgroundColor: pointColors,
+            pointHoverBackgroundColor: pointColors,
             pointHoverBorderColor:"rgba(255,255,255,1.0)",
-            pointBorderWidth: 5,
-            pointRadius: 5,
+            pointBorderWidth: 2,
+            pointRadius: 8,
+            pointColor: pointColors,
             datapoints: datapoints,
             pointHoverRadius: 8,
             lineTension:0,
@@ -497,8 +518,11 @@ canvas.onclick = function (evt) {
     var points = gesamtChart.getElementAtEvent(evt);
     var current_point = datapoints[points[0]._index];
     var game_id = current_point.data.game_id,
-    turn_id = current_point.data.turn_rating_id;
-    window.location  = window.location+"/turns/"+turn_id
+    turn_id = current_point.data.turn_rating_id,
+    recorded_pitch = current_point.data.turn_pitch;
+    if(recorded_pitch){
+        window.location  = "/admins/dash/stats/turns/"+turn_id;
+    }
 };
 document.getElementById('chart_gesamt').addEventListener('click', function() {
     $('.active').removeClass('active');
@@ -509,7 +533,7 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
         json_data["word"] = "<%= g.turn.word.name %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
-
+        json_data["turn_video"] = "<%= g.turn.recorded_pitch.present? ? true : false %>"
         <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
         <% if admin_rating.present? %>
             var admin_ges = <%= admin_rating.ges %>;

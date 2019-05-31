@@ -44,6 +44,7 @@
                   <%= link_to "Let's Play", dash_admin_path %>
               <% end %>
               </div>
+
               
               <div class="link">
               <% if current_page?( dash_admin_teams_path ) %>
@@ -57,6 +58,7 @@
               <div class="link">
                 <%= link_to "Catchwords", dash_admin_catchwords_path %>
               </div>
+              
               <div class="link">
               <% if current_page?(dash_admin_users_path) %>
                   <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
@@ -70,14 +72,8 @@
                   <%= link_to 'Nutzer', dash_admin_users_path %>
               <% end %>
               </div>
-              
-              
               <div class="link">
-              <% if current_page?(dash_admin_account_path) || dash_admin_users_path || current_admin.plans.blank?  || current_page?( dash_admin_teams_path )%>
-                <% if @admin.admin_subscription_id.nil? %>
-                  <%= link_to "Upgrade auf Pro", dash_admin_price_path %>
-                <% end %>
-              <% end %>
+                  <%= link_to "Video Tool", dash_admin_video_tool_path , class: "#{current_page?(dash_admin_video_tool_path) ? 'active' : ''} "%>
               </div>
               <div class="link">
 

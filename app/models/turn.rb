@@ -21,3 +21,10 @@ class Turn < ApplicationRecord
     end
   end
 end
+
+Turn.class_eval do
+  def review
+    self.click_time = DateTime.now
+    self.save
+  end
+end
