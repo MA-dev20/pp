@@ -13,6 +13,7 @@
                 </button>
                 <div class="text" id="t_gesamt">Gesamt</div>
               </div>
+              <% if gamerating.present?%>
               <div class="gesamt rhetorik">
                 <button class="circle" id="chart_gesamt">
                   <span><%= number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
@@ -20,6 +21,7 @@
                 </button>
                 <div class="text" id="t_gesamt">Meine Bewertung</div>
               </div>
+              <% end%>
             </div>
         </div>
         <div class="progress-main">
@@ -32,12 +34,15 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.spontan.to_f/10,precision: 1 %></div>
               </div>
+              <% if @gamerating.present? %>
+
                   <div class="progress-bar-con progress-con-b">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: <%=@turns_rating.spontan%>% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@gamerating.spontan%>% !important;"></div>
                     </div>
                     <div class="progress-bar-value"><%=number_with_precision @gamerating.creative.to_f/10,precision: 1 %></div>
                   </div>
+              <% end %>
             </div>
           </div>
           <div class="progressBar">
@@ -49,13 +54,15 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.creative.to_f/10,precision: 1 %></div>
               </div>
-              
-                  <div class="progress-bar-con progress-con-b">
-                    <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: <%=@gamerating.creative%>% !important;"></div>
-                    </div>
-                    <div class="progress-bar-value"><%=number_with_precision @gamerating.creative.to_f/10,precision: 1 %></div>
+              <% if @gamerating.present? %>
+            
+                <div class="progress-bar-con progress-con-b">
+                  <div class="progressbar-view">
+                    <div class="progressbar-fill" style="width: <%=@gamerating.creative%>% !important;"></div>
                   </div>
+                  <div class="progress-bar-value"><%=number_with_precision @gamerating.creative.to_f/10,precision: 1 %></div>
+                </div>
+              <% end %>
             </div>
           </div>
           <div class="progressBar">
@@ -86,6 +93,7 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.rhetoric.to_f/10,precision: 1 %></div>
               </div>
+              <% if @gamerating.present? %>
               
                   <div class="progress-bar-con progress-con-b">
                     <div class="progressbar-view">
@@ -93,7 +101,7 @@
                     </div>
                     <div class="progress-bar-value"><%=number_with_precision @gamerating.rhetoric.to_f/10,precision: 1 %></div>
                   </div>
-                  
+              <% end %>    
             </div>
           </div>
         </div>
