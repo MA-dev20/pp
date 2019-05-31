@@ -24,6 +24,7 @@ class GameMobileAdminController < ApplicationController
   def save_video
     @game.update(video_uploading: false)
     @turn.recorded_pitch = params[:file]
+    @turn.recorded_pitch_duration = params[:duration]
     @turn.save
     puts @turn.errors.messages
   end

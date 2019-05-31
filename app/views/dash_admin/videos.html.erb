@@ -1,0 +1,21 @@
+<% if @result.present? %>
+	<% @result.each do |t| %>
+	  <% if t["turn_rating"].present? %>
+	    <a href="<%= "/admins/dash/stats/turns/#{t["turn_rating"]["id"]}" if t["turn_rating"].present?%>">
+	    	<div class="overview-block" >
+	    		<h4 class="overview-block-heading"><%= t['word'] %></h4>
+	    		<div class="overviewBlock-video">
+	    			<video src="<%= t["recorded_pitch_url"] %>"></video>
+	    			<span class="overview-video-play"></span>
+	    			<span class="overview-video-rating ov-span"><%= t["rating"]%></span>
+	    			<span class="overview-video-time ov-span"><%=  t["duration"]%> </span>
+	    		</div>
+	    		<div class="overviewBlock-detail">
+	    			<h5><%= t["name"]%></h5>
+	    			<p><%= (t["created_at"]).to_datetime.strftime("%-d.%_m.%y") %></p>
+	    		</div>
+	    	</div>
+	    </a>
+	  <% end %>
+	<% end %>
+<% end %>

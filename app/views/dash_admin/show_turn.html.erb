@@ -119,7 +119,7 @@
       </div>
     </div>
     <div class="video-time">
-      <span id="currentTime">0:00</span>
+      <span id="currentTime">0:00/<%=  @turn.recorded_pitch_duration.to_minutes if @turn.recorded_pitch_duration.present?%></span>
       <span id="duration"></span>
     </div>
     <div class="video-options position-relative">
@@ -135,7 +135,7 @@
       <div class="vc-top">
         <div class="vc-top-scroll" id="comment-box">
           <% @turn.comments.each do |c| %>
-            <div class="vc-row vcr-positive <%= 'vcr-'+c.type_of_comment %>">
+            <div class="vc-row  <%= 'vcr-'+c.type_of_comment %>">
               <h5><%= c.time_of_video  ? c.time_of_video.to_minutes : '0:00'%></h5>
               <p><%= c.title %></p>
             </div>
@@ -161,7 +161,7 @@
               </label>
             </div>
           </div>
-          <input type="text" name="field" placeholder="Starker Ubergang in Produktprasentation">
+          <input type="text" name="field" placeholder="Starker Ubergang in Produktprasentation" autocomplete="off">
           <button class="com-plus-icon" type="submit"></button>
         </form>
       </div>
@@ -263,12 +263,12 @@
 
 
     function addCommentToCommentBox(text, type){
-      var template = `<div class="vc-row vcr-positive `+type+`" style="display: none;">
+      var template = `<div class="vc-row `+type+`" style="display: none;">
             <h5>`+fancyTimeFormat(video.currentTime)+`</h5>
             <p>`+text+`</p>
           </div>`;
       $("#comment-box").append(template)
-      $(".vcr-positive").slideDown()
+      $(".vc-row").slideDown()
     }
 
     function handleRangeUpdate() {
@@ -276,7 +276,8 @@
     }
 
     function handleProgress() {
-      var percent = (video.currentTime / video.duration) * 100;
+      var duration = video.duration != Infinity ? video.duration : <%=@turn.recorded_pitch_duration.present? ? @turn.recorded_pitch_duration : 0 %> ;
+      var percent = (video.currentTime / duration ) * 100;
       progressBar.style.width = `${percent}%`;
       if(percent == 0 || percent == 100){
         if(percent == 0){
@@ -291,8 +292,8 @@
         $('.player-cursor').css('right','');
         $('.player-cursor').css('left','');
       }
-      if(video.duration != Infinity)
-        $("span#duration").html('/'+secondsToHms(Math.round(video.duration)))
+      if(duration != Infinity)
+        $("span#duration").html('/'+secondsToHms(Math.round(duration)))
       $("span#currentTime").html(secondsToHms(Math.round(video.currentTime)))
     }
 
@@ -322,9 +323,9 @@
 
     let mousedown = false;
     progress.addEventListener('click', scrub);
-    progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
-    progress.addEventListener('mousedown', () => mousedown = true);
-    progress.addEventListener('mouseup', () => mousedown = false);
+    progress.addEventListener('click', (e) => mousedown && scrub(e));
+    progress.addEventListener('click', () => mousedown = true);
+    progress.addEventListener('click', () => mousedown = false);
     var duration;
     video.addEventListener('loadedmetadata', function () {
       console.log(video.duration);

@@ -13,7 +13,7 @@ jQuery(document).ready(function() {
         return console.log("disconneted");
       },
       received: function(data) {
-        if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play")){
+        if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
           t = setInterval(function(){
             $.ajax({
               url: '/mobile/user/game/vidoe_uploading',

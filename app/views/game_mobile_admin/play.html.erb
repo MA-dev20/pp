@@ -133,7 +133,7 @@
 <script>
   var uploadingprogress = 0;
 var timer = document.getElementById("timer");
-var seconds = 0, minutes = 0, hours = 0;
+var seconds = 0, minutes = 0, hours = 0, secondsCount = 0;
 const preview = document.querySelector('video#preview');
 const recording = document.querySelector('video#recording');
 var video, reqBtn, startBtn,jqxhr, stopBtn, ul, stream, recorder,form, uploadBtn, file;
@@ -143,6 +143,7 @@ startBtn = document.getElementById('start');
 stopBtn = document.getElementById('stop');
 uploadBtn = document.getElementById('upload');
 ul = document.getElementById('ul');
+var timertime;
 var videoStopped = false;
 $(document).ready(function(){
   $("#start").change(function(){
@@ -158,6 +159,7 @@ $("#stop").on('click', function(){
 
 function add() {
     seconds++;
+    secondsCount++;
     if (seconds >= 60) {
         seconds = 0;
         minutes++;
@@ -172,7 +174,7 @@ function add() {
     setTimer();
 }
 function setTimer() {
-    t = setTimeout(add, 1000);
+    timertime = setTimeout(add, 1000);
 }
 var Devices = []
 <% if @record == true  %>
@@ -242,11 +244,13 @@ function stopRecording(location,callback) {
   recorder.ondataavailable = e => {
     recording.src = URL.createObjectURL(e.data);
     $('#preview').hide();
+    clearTimeout(timertime);
     $('#recording').show();
     var blob = e.data;
     var file = new window.File([blob], ['video_', (new Date() + '').slice(4, 28), '.webm'].join(''))
     form = new FormData();
     form.append("file",file);
+    form.append("duration",secondsCount);
     uploadRecording(form, callback, location)
   };
 

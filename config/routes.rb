@@ -123,7 +123,6 @@ Rails.application.routes.draw do
 
     get 'admin/verification/:token', to: 'dash_admin#verification', as: 'dash_admin_verfication'
     post 'admin/dash/teams/:team_id/generate_img_from_html', to: 'dash_admin#generate_img_from_html', as: 'dash_admin_generate_img_from_html'
-    get 'admin/dash/games/:game_id/turns/:turn_id', to: 'dash_admin#turn_show', as: 'dash_admin_show_turn'
     get 'admin/dash/games/:game_id/turns', to: 'dash_admin#turns', as: 'dash_admin_turns'
     
     get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
@@ -133,11 +132,11 @@ Rails.application.routes.draw do
     
     get 'admin/dash/users', to: 'dash_admin#users', as: 'dash_admin_users'
     get 'admin/dash/users/:team_id', to: 'dash_admin#users', as: 'dash_admin_team_users'
-    
+    post 'admins/dash/filter_videos', to:  'dash_admin#filter_videos', as: 'admin_filter_videos'
     get 'admins/dash/teams/:team_id/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_user_stats'
-    get 'admins/dash/teams/:team_id/users/:user_id/stats/turns/:turn_id', to: 'dash_admin#turn_show', as: 'dash_admin_show_turn'
+    get 'admins/dash/stats/turns/:turn_id', to: 'dash_admin#turn_show', as: 'dash_admin_show_turn'
     get 'admins/teams/:team_id/users/:user_id/compare/:compare_user_id', to: 'dash_admin#compare_user_stats', as: 'dash_admin_compare_user_stats'
-    
+    get 'admins/dash/video_tool', to: 'dash_admin#video_tool', as: 'dash_admin_video_tool'
     get 'admins/dash/account', to: 'dash_admin#account', as: 'dash_admin_account'
     get 'admins/dash/billing', to: 'dash_admin#billing', as: 'dash_admin_billing'
     

@@ -5,7 +5,7 @@
     
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :check_expiration_date
-  before_action :authenticate_request
+  # before_action :authenticate_request
   
   def check_expiration_date
     if admin_signed_in?
@@ -33,6 +33,4 @@
       devise_parameter_sanitizer.permit(:sign_up, keys: [:male, :company_name, :fname, :lname, :street, :city, :employees, :zipcode])
       devise_parameter_sanitizer.permit(:account_update, keys: [:male, :company_name, :fname, :lname, :street, :city, :avatar, :logo, :employees, :zipcode])
     end
-
-
 end

@@ -1,10 +1,11 @@
 class DashAdminController < ApplicationController
   before_action :authenticate_admin!, :set_admin , unless: :skip_action?
   before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats,:team_stats_share]
-  before_action :set_user, only: [:turn_show,:user_stats, :compare_user_stats]
+  before_action :set_user, only: [:user_stats, :compare_user_stats]
   skip_before_action :check_expiration_date, only: :billing
-  layout :resolve_layout
 
+  include ActionView::Helpers::NumberHelper
+  layout :resolve_layout
   
   def index
     if params[:team_id]
@@ -25,10 +26,16 @@ class DashAdminController < ApplicationController
     end
   end
 
+  def video_tool
+    @users = @admin.users
+    @turns = Turn.where.not(recorded_pitch:  nil)
+    @result = json_convert(@turns)
+  end
 
   def turn_show
-    @turns_rating = @user.turn_ratings.find(params[:turn_id])
+    @turns_rating = TurnRating.find(params[:turn_id])
     @turn = @turns_rating.turn
+    @turn.review
     @gamerating = GameRating.where(game_id: @turns_rating.game_id).first
     render :show_turn
   end
@@ -116,6 +123,7 @@ class DashAdminController < ApplicationController
   def user_stats
     @users = @admin.users
     @turns = @user.turns
+    @reviewed_videos = @turns.where.not(recorded_pitch: nil, click_time: nil).order('click_time DESC').first(2)
     @turns_rating = @user.turn_ratings
     if !@turns_rating
       flash[:danger] = 'Noch keine bewerteten Spiele!'
@@ -136,8 +144,23 @@ class DashAdminController < ApplicationController
     # end
 
     @length = raw_result.length
+  end  
+
+  def filter_videos
+    if(params[:team_id].present?)
+      @team = Team.find(params[:team_id])
+      @turns = @team.users.map(&:turns).flatten!
+    elsif params[:user_id].present?
+      @user = User.find(params[:user_id])
+      @turns = @user.turns
+    else
+      @turns = @teams.map(&:users).flatten!.map(&:turns).flatten!
+    end
+    @result = json_convert(@turns)
+    response = render_to_string 'dash_admin/videos', layout: false
+    render json: {turns_html:  response, turns: @result}
   end
-    
+
   def compare_user_stats
     @users = @admin.users
     @turns = @user.turns
@@ -260,6 +283,7 @@ class DashAdminController < ApplicationController
       @user = User.find(params[:user_id])
     end
 
+
     def html_to_jpg html_content, team_id
       kit = IMGKit.new(html_content, quality: 5)
       kit.stylesheets << "#{Rails.root}/public/css/png.css"
@@ -276,6 +300,22 @@ class DashAdminController < ApplicationController
       file = kit.to_file(url)
       url = "/pngs/teams/#{team_id}/" + "#{title}.png"
       url
+    end
+
+    def json_convert(turns)
+      result = []
+      turns.each do |t|
+        if t.turn_rating.present? 
+          turn = JSON.parse(t.to_json(include: [:turn_rating]))
+          turn["rating"] = number_with_precision(t.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1).to_f if t.turn_rating.present?
+          turn["word"] = t.word.name
+          turn["name"] = t.user.fname + ' ' + t.user.lname if t.user.present?
+          turn["duration"] = t.recorded_pitch_duration.to_minutes if t.recorded_pitch_duration.present?
+          turn["recorded_pitch_url"] = t.recorded_pitch.url if t.recorded_pitch.present?
+          result.push(turn)
+        end
+      end
+      result
     end
 
     def skip_action?
