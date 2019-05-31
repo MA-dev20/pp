@@ -308,7 +308,7 @@ class DashAdminController < ApplicationController
         if t.turn_rating.present? 
           turn = JSON.parse(t.to_json(include: [:turn_rating]))
           turn["rating"] = number_with_precision(t.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1).to_f if t.turn_rating.present?
-          turn["word"] = t.word.name
+          turn["word"] = t.word.name if t.word.present?
           turn["name"] = t.user.fname + ' ' + t.user.lname if t.user.present?
           turn["duration"] = t.recorded_pitch_duration.to_minutes if t.recorded_pitch_duration.present?
           turn["recorded_pitch_url"] = t.recorded_pitch.url if t.recorded_pitch.present?
