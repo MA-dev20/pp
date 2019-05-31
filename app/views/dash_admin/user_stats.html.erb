@@ -530,7 +530,7 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
         json_data["turn_video"] = "<%= g.turn.recorded_pitch.present? ? true : false %>"
