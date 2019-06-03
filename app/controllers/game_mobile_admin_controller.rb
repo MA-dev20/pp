@@ -231,9 +231,9 @@ class GameMobileAdminController < ApplicationController
       @game = Game.find(session[:game_session_id])
       if @game.own_words
         @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
-        @word = Word.all.sample(5).first if @word.nil?
+        @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
       else
-        @word = Word.all.sample(5).first
+        @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first
       end
       @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true)
       if @turn.save
