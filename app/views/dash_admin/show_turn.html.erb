@@ -4,7 +4,7 @@
     <div class="progress-block">
         <div class="progress-top">
             <h6><%= @turn.created_at.strftime("%d.%m.%Y") %> <%= "- #{@turn.user.fname} #{@turn.user.lname}" if @turn.user.present?%> </h6>
-            <h3 class="marquee"><span><span><%= "Muhammad Raufasijasjisdji jd ihdi" %></span></span> </h3>
+            <h3 class="marquee"><span><span><%= @turn.word.name if @turn.word.present? %></span></span> </h3>
             <div id="dash_stats">
               <div class="gesamt rhetorik active">
                 <button class="circle" id="chart_gesamt">
