@@ -3,7 +3,7 @@
   <div class="videotool-content">
     <div class="progress-block">
         <div class="progress-top">
-            <h6><%= @turn.created_at %></h6>
+            <h6><%= @turn.created_at.strftime("%d.%m.%Y") %> <%= "- #{@turn.user.fname} #{@turn.user.lname}" if @turn.user.present?%> </h6>
             <h3><%= @turn.word.name %></h3>
             <div id="dash_stats">
               <div class="gesamt rhetorik active">
@@ -14,7 +14,7 @@
                 <div class="text" id="t_gesamt">Gesamt</div>
               </div>
               <% if @gamerating.present?%>
-              <div class="gesamt rhetorik">
+              <div class="gesamt rhetorik show_it" style="display: none;">
                 <button class="circle" id="chart_gesamt">
                   <span><%= number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
                   <img src="/uploads/user/avatar/23/quad_Screenshot_2019-04-08_at_7.02.31_PM.png">
@@ -36,7 +36,7 @@
               </div>
               <% if @gamerating.present? %>
 
-                  <div class="progress-bar-con progress-con-b">
+                  <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                     <div class="progressbar-view">
                       <div class="progressbar-fill" style="width: <%=@gamerating.spontan%>% !important;"></div>
                     </div>
@@ -56,7 +56,7 @@
               </div>
               <% if @gamerating.present? %>
             
-                <div class="progress-bar-con progress-con-b">
+                <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                   <div class="progressbar-view">
                     <div class="progressbar-fill" style="width: <%=@gamerating.creative%>% !important;"></div>
                   </div>
@@ -75,7 +75,7 @@
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.body.to_f/10,precision: 1 %></div>
               </div> 
               <% if @gamerating.present? %>
-                <div class="progress-bar-con progress-con-b">
+                <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                   <div class="progressbar-view">
                     <div class="progressbar-fill" style="width: <%=@gamerating.body%>% !important;"></div>
                   </div>
@@ -95,7 +95,7 @@
               </div>
               <% if @gamerating.present? %>
               
-                  <div class="progress-bar-con progress-con-b">
+                  <div class="progress-bar-con progress-con-b show_it"  style="display: none" style="display: none">
                     <div class="progressbar-view">
                       <div class="progressbar-fill" style="width: <%=@gamerating.rhetoric%>% !important;"></div>
                     </div>
@@ -115,7 +115,7 @@
     </div>
   </div>
   <% if @turn.recorded_pitch.url.present? %>
-  <div class="videotool-content videotool-content-video" id="video" style="display: none">
+  <div class="videotool-content videotool-content-video" id="video" >
     <div class="video-container">
       <video  height="auto" width="100%" id="pitch_video"  preload="metadata">
         <source src="<%= @turn.recorded_pitch.url %>">
@@ -138,11 +138,11 @@
     </div>
   </div>
   <% end %>
-  <div class="videotool-content videotool-comment" id="comments" style="display: none;">
+  <div class="videotool-content videotool-comment" id="comments" >
     <div class="progress-block">
       <div class="vc-top">
         <div class="vc-top-scroll" id="comment-box">
-          <% @turn.comments.each do |c| %>
+          <% @turn.comments.order('created_at DESC').each do |c| %>
             <div class="vc-row  <%= 'vcr-'+c.type_of_comment %>">
               <h5><%= c.time_of_video  ? c.time_of_video.to_minutes : '0:00'%></h5>
               <p><%= c.title %></p>
@@ -153,7 +153,7 @@
       <div class="vc-detail">
         <form class="" id="add-comment-form">
           <div class="vc-detail-comment">
-            <div class="vc-video-t" id="time_of_video">0:31</div>
+            <div class="vc-video-t vcr-positive" id="time_of_video">0:31</div>
             <div class="vc-options">
               <label class="radio-label radio-positive">positive
                 <input type="radio" checked="checked" name="radio" value="vcr-positive">
@@ -169,7 +169,7 @@
               </label>
             </div>
           </div>
-          <input type="text" name="field" placeholder="Starker Ubergang in Produktprasentation" autocomplete="off">
+          <input type="text" name="field" placeholder="Kommentar hinzufügen" autocomplete="off">
           <button class="com-plus-icon" type="submit"></button>
         </form>
       </div>
@@ -191,12 +191,22 @@
     const editButton = document.getElementById('edit-video');
     const durationSpan =  $("span#durationn");
     const currentTimeSpan = $("span#currentTime");
+
+    $("input[name=radio]").on('change', function(){
+      $("#time_of_video").removeClass()
+      $("#time_of_video").addClass('vc-video-t')
+      $('#time_of_video').addClass($(this).val())
+    })
     /* Build out functions */
     function togglePlay(e) {
       e.preventDefault()
       const method = video.paused ? 'play' : 'pause';
+      if(method == 'play'){
+        $(".play-video").addClass("pause-video")
+      }else{
+        $(".play-video").removeClass("pause-video")
+      }
       video[method]();
-
     }
     $("#add-comment-form").on('submit', function(e){
       e.preventDefault()
@@ -204,7 +214,7 @@
       if(text.length > 0){
         $("input[name=field]").val('')
         var type = $("input[name=radio]:checked").val()
-        $("#comment-box").animate({ scrollTop: $('#comment-box').prop("scrollHeight")}, 300);
+        // $("#comment-box").animate({ scrollTop: $('#comment-box').prop("scrollHeight")}, 300);
         addCommentToCommentBox(text, type) 
         sendToServer(text, type)
       }
@@ -244,11 +254,6 @@
     function updateButton() {
       const icon = this.paused ? '►' : '❚ ❚';
       console.log(icon);
-      if(this.paused){
-        $(".play-video").addClass("pause-video")
-      }else{
-        $(".play-video").removeClass("pause-video")
-      }
     }
 
     function skip() {
@@ -268,14 +273,12 @@
       $("#time_of_video").text(displayedTime)
     }
 
-
-
     function addCommentToCommentBox(text, type){
       var template = `<div class="vc-row `+type+`" style="display: none;">
             <h5>`+fancyTimeFormat(video.currentTime)+`</h5>
             <p>`+text+`</p>
           </div>`;
-      $("#comment-box").append(template)
+      $("#comment-box").prepend(template)
       $(".vc-row").slideDown()
     }
 
@@ -345,11 +348,11 @@
     })
     $(".switch").click(function(event){
         var show = $("#show_video").prop("checked");
-        if(show){
-          $("#video").fadeIn()
+        if(show==true){
+          $(".show_it").fadeIn()
+
         }else{
-          $("#video").fadeOut()
-          $("#comments").fadeOut()
+          $(".show_it").fadeOut()
         }
     })
   })
