@@ -1797,9 +1797,11 @@ button.btn-green-plus.green-plus-se {
   padding: 2.2vh;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.22);
   margin-right: 6.5vh;
+  min-width: 45vh;
   .progress-block {
     .progress-top {
       text-align: left;
+
       border-bottom: 0;
       h6 {
         font-size: 2.5vh;
@@ -1809,8 +1811,73 @@ button.btn-green-plus.green-plus-se {
         font-size: 5vh;
         color: #1ddab0;
         font-family: 'Barack-Medium';
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0;
+        display: inline-block;
+        width: 100%;
+        &:hover {
+          text-overflow: unset;
+          -webkit-transition: max-width linear .5s;
+          transition: max-width linear .5s;
+          position: relative;
+          z-index: 5;
+        }
+      }
+      .marquee {
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .marquee span {
+        display: inline-block;
+        width: 100%;
+      }
+      .marquee span span {
+        transition: left 3s linear;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        left: 0px;
+      }
+      .marquee:active span, .marquee:hover span {
+        width: auto;
+      }
+      .marquee:active span span, .marquee:hover span span {
+        left: calc(300px - 15px - 100%);
       }
     }
+    .bluebox, .stuff {
+  box-sizing: border-box;
+  padding: 5px;
+  width: 300px;
+  border: 1px blue solid;
+  background-color: rgba(0, 0, 255, 0.4);
+  margin-bottom: 5px;
+  float: left;
+}
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.marquee span {
+  display: inline-block;
+  width: 100%;
+}
+.marquee span span {
+  transition: left 4s linear;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  left: 0px;
+}
+.marquee:active span, .marquee:hover span {
+  width: auto;
+}
+.marquee:active span span, .marquee:hover span span {
+  left: calc(300px - 15px - 100%);
+}
+
     #dash_stats {
       text-align: center;
       justify-content: center;
