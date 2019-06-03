@@ -281,14 +281,16 @@ class GameMobileUserController < ApplicationController
       @admin = @game1.admin
       @game = @game1
       if @game1.admin.admin_subscription_id.nil?
-        @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first
-        @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(50).first if @word.nil?
+        @word = CatchwordsBasket.find_by(name: 'PetersFreeWords').words.all.sample(5).first
+        @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
+        @word = Word.all.sample(5).first if @word.nil?
       end
       if @game.own_words
         @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(50).first if @word.nil?
       else
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(50).first
+        @word = Word.all.sample(5).first if @word.nil?
       end
       if @game1.active
         session.delete(:game_session_id)
