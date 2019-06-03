@@ -223,13 +223,12 @@ Rails.application.routes.draw do
 # Word #
 ########
     
-  get 'words/new', to: 'words#new', as: 'new_word'
-  post 'words/new', to: 'words#create'
+  post 'words/:basket_id/new', to: 'words#create'
 
-  get 'words/:word_id/edit', to: 'words#edit', as: 'edit_word'
-  post 'words/:word_id/edit', to: 'words#update'
+  get 'words/:basket_id/:word_id/edit', to: 'words#edit', as: 'edit_word'
+  post 'words/:basket_id/:word_id/edit', to: 'words#update'
     
-  get 'words/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
+  get 'words/:basket_id/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
   mount ActionCable.server => '/cable'
     
 ##############
