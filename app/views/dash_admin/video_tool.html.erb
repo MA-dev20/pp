@@ -145,20 +145,30 @@
       $(".video-overview").empty()
       turns.forEach(function(t){
         var name = t["name"];
-        if(t["name"] == "undefined") 
-          name="";
+        var duration = t["duration"],
+          rating = t["rating"];
+          if(rating== undefined){
+            rating="";
+          }
+          if(duration==undefined){
+            duration = "";
+          }
+        if(t["name"] == undefined) {
+                  name=""
+                }
+
         template  = `<a href="/admins/dash/stats/turns/`+t["turn_rating"]["id"]+` ">
                       <div class="overview-block" >
                         <h4 class="overview-block-heading">`+t["word"]+`</h4>
                         <div class="overviewBlock-video">
                           <video src="`+t["recorded_pitch_url"]+`"></video>
                           <span class="overview-video-play"></span>
-                          <span class="overview-video-rating ov-span">`+t["rating"]+`</span>
-                          <span class="overview-video-time ov-span">`+ t["duration"]+` </span>
+                          <span class="overview-video-rating ov-span">`+rating+`</span>
+                          <span class="overview-video-time ov-span">`+ duration+` </span>
                         </div>
                         <div class="overviewBlock-detail">
                           <h5>`+name+`</h5>
-                          <p>`+ (t["created_at"])+`</p>
+                          <p>`+ (t["time"])+`</p>
                         </div>
                       </div>
                     </a>`;

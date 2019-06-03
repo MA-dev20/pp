@@ -4,12 +4,16 @@
     <div class="progress-block">
         <div class="progress-top">
             <h6><%= @turn.created_at.strftime("%d.%m.%Y") %> <%= "- #{@turn.user.fname} #{@turn.user.lname}" if @turn.user.present?%> </h6>
-            <h3 class="marquee"><span><span><%= @turn.word.name if @turn.word.present? %></span></span> </h3>
+            <h3 class="<%= @turn.word.name.length >= 15 ? 'marquee' : ''%>"><span><span><%= @turn.word.name if @turn.word.present? %></span></span> </h3>
             <div id="dash_stats">
               <div class="gesamt rhetorik active">
                 <button class="circle" id="chart_gesamt">
                   <span><%= number_with_precision(@turns_rating.ges / 10, precision: 1) %></span>
-                  <img src="/uploads/user/avatar/23/quad_Screenshot_2019-04-08_at_7.02.31_PM.png">
+                  <% if @user.present? && @user.avatar? %>
+                    <%= image_tag @user.avatar.quad.url %>
+                  <% else %>
+                      <%= image_tag 'defaults/wolf.jpg' %>
+                  <% end %>
                 </button>
                 <div class="text" id="t_gesamt">Gesamt</div>
               </div>
@@ -17,7 +21,11 @@
               <div class="gesamt rhetorik show_it" style="display: none;">
                 <button class="circle" id="chart_gesamt">
                   <span><%= number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
-                  <img src="/uploads/user/avatar/23/quad_Screenshot_2019-04-08_at_7.02.31_PM.png">
+                  <% if @user.present? && @user.avatar? %>
+                  <%= image_tag @user.avatar.quad.url %>
+                  <% else %>
+                      <%= image_tag 'defaults/wolf.jpg' %>
+                  <% end %>
                 </button>
                 <div class="text" id="t_gesamt">Meine Bewertung</div>
               </div>
@@ -154,7 +162,7 @@
       <div class="vc-detail">
         <form class="" id="add-comment-form">
           <div class="vc-detail-comment">
-            <div class="vc-video-t vcr-positive" id="time_of_video">0:31</div>
+            <div class="vc-video-t vcr-positive" id="time_of_video">0:00</div>
             <div class="vc-options">
               <label class="radio-label radio-positive">positive
                 <input type="radio" checked="checked" name="radio" value="vcr-positive">
@@ -268,7 +276,7 @@
       e.preventDefault()
       var time = video.currentTime
       video.pause()
-      fillTimeOfCommentBox(time)
+      fillTimeOfCommentBox(video.currentTime)
       $("#comments").fadeIn()
     }
 
@@ -282,6 +290,8 @@
             <h5>`+fancyTimeFormat(video.currentTime)+`</h5>
             <p>`+text+`</p>
           </div>`;
+      fillTimeOfCommentBox(video.currentTime)
+          
       $("#comment-box").prepend(template)
       $(".vc-row").slideDown()
     }
