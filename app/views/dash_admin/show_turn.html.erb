@@ -117,7 +117,8 @@
   <% if @turn.recorded_pitch.url.present? %>
   <div class="videotool-content videotool-content-video" id="video" >
     <div class="video-container">
-      <video  height="auto" width="100%" id="pitch_video"  preload="metadata">
+      <%= image_tag @turn.recorded_pitch.thumb.url, id: "pitch_thumb" %>
+      <video  height="auto" width="100%" id="pitch_video"  preload="metadata" style="display: none;">
         <source src="<%= @turn.recorded_pitch.url %>">
       </video>
     </div>
@@ -202,6 +203,8 @@
     function togglePlay(e) {
       e.preventDefault()
       const method = video.paused ? 'play' : 'pause';
+      $("#pitch_video").show()
+      $("#pitch_thumb").hide()
       if(method == 'play'){
         $(".play-video").addClass("pause-video")
       }else{
@@ -297,6 +300,9 @@
           $('.player-cursor').css('right','');
         }
         if(percent == 100){
+          $("#play-video").removeClass("pause-video")
+          $("#pitch_video").hide()
+          $("#pitch_thumb").show()
           $('.player-cursor').css('right','0px');
           $('.player-cursor').css('left','');
         }
@@ -319,6 +325,8 @@
       video.currentTime = 0;
       video.pause()
       $(".play-video").removeClass("pause-video");
+      $("#pitch_video").hide()
+      $("#pitch_thumb").show()
     }
     /* Hook up the event listeners */
     video.addEventListener('click', togglePlay);
