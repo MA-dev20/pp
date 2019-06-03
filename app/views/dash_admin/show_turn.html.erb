@@ -4,7 +4,7 @@
     <div class="progress-block">
         <div class="progress-top">
             <h6><%= @turn.created_at.strftime("%d.%m.%Y") %> <%= "- #{@turn.user.fname} #{@turn.user.lname}" if @turn.user.present?%> </h6>
-            <h3><%= @turn.word.name %></h3>
+            <h3 class="marquee"><span><span><%= "Muhammad Raufasijasjisdji jd ihdi" %></span></span> </h3>
             <div id="dash_stats">
               <div class="gesamt rhetorik active">
                 <button class="circle" id="chart_gesamt">
@@ -181,6 +181,7 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
+
     const player = document.querySelector('#video');
     const progress = player.querySelector('.player-bar');
     const progressBar = player.querySelector('.player-bar-current');
@@ -355,6 +356,9 @@
           $(".show_it").fadeOut()
         }
     })
+    $(".switch").click();
+    $(".show_it").fadeIn()
+
   })
   function secondsToHms(d) {
       d = Number(d);
