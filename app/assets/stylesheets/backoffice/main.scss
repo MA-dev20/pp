@@ -4,6 +4,7 @@
  *= require cs-select/cs-skin-underline
  *= require omnes
  *= require dash/jquery.dataTables.min
+ *= require dash/teams
  */
 @import "bootstrap";
 @import "font-awesome-sprockets";
@@ -112,4 +113,107 @@ body {
     width: 100%;
     overflow-x: hidden;
     overflow-y: hidden;
+}
+.btn-green {
+    margin-left: 20px;
+    background-color: #1ddaaf !important;
+    color: #fff !important;
+    border: 1px solid #1ddaaf !important;
+    min-height: 44px;
+    min-width: 170px;
+    color: #fff;
+    font-size: 1.125rem;
+    background-color: #1ddaaf !important;
+    border-radius: 22px !important;
+    padding: .55rem 1rem .25rem 1rem;
+    -webkit-box-shadow: 0 9px 18px rgba(0,0,0,0.17);
+    -moz-box-shadow: 0 9px 18px rgba(0,0,0,0.17);
+    box-shadow: 0 9px 18px rgba(0,0,0,0.17);
+}
+.btn-green:hover,
+.btn-green:focus {
+    color: #1ddaaf !important;
+    border-color: #1ddaaf !important;
+    background-color: transparent !important;
+}
+.backgroundblur {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+.modal-games {
+    position: fixed;
+    display: none;
+    top: calc((50vh - 250px) + 8vh);
+    left: calc(50vw - 250px);
+    z-index: 100000;
+    width: 500px;
+    border-radius: 50px;
+}
+.modal-games .modal-close{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  line-height: 37px;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  border: 2px solid #1ddaaf;
+  color: #1ddaaf;
+  background-color: white;
+  opacity: 1;
+  z-index: 1000000;
+}
+.modal-games .modal-close:hover{
+    background-color: transparent;
+    opacity: 1;
+    z-index: 1000000;
+}
+.modal-games .modal-dialog{
+    margin: 0 !important;
+    align-content: center;
+}
+.modal-games .modal-content {
+  background-color: #1dabf1;
+  background-image: linear-gradient(to right, rgba(29, 171, 241, 0.57), rgba(17, 82, 160, 0.57));
+  border: none;
+  border-radius: 50px;
+  min-height: 280px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  padding-bottom: 20px;
+}
+.modal-games .modal-content .form-control {
+    border-radius: 1.5em;
+}
+.modal-games .modal-body{
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+}
+.modal-teams .modal-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-teams .modal-body h1 {
+    color: #fff;
+    font-size: 1.5rem;
+    font-family: Barack-Medium;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    text-align: center;
+}
+.modal-games .modal-body h1 {
+    padding-top: 50px;
+    color: #fff;
+    font-size: 1rem;
+    font-family: Barack-Medium;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    margin-bottom: 0;
+    text-align: center;
+}
+.modal-games .modal-body h1 span{
+    font-size: 1.5rem;
 }

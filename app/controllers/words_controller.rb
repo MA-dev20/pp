@@ -5,8 +5,9 @@ class WordsController < ApplicationController
   end
     
   def create
+    @basket = CatchwordsBasket.find_by(id: params[:basket_id])
     params[:word][:sounds].each do |sound|
-      @word = Word.create(sound: sound, free: false)
+      @word = @basket.words.create(sound: sound)
       @word.name = @word.sound_identifier.remove('.mp3')
       if @word.save
         flash[:success] = 'Wort gespeichert!'
@@ -41,21 +42,26 @@ class WordsController < ApplicationController
   end
     
   def destroy
-    if @word.destroy
+    if @word.catchword_baskets.count > 1
+      @basket.words.delete(@word)
+      flash[:success] = 'Wort aus Liste gelöscht!'
+      redirect_to backoffice_words_path(@basket.id)
+    elsif @word.destroy
       flash[:success] = 'Wort gelöscht!'
-      redirect_to backoffice_words_path
+      redirect_to backoffice_words_path(@basket.id)
     else
       flash[:danger] = 'Konnte Wort NICHT löschen!'
-      redirect_to backoffice_words_path
+      redirect_to backoffice_words_path(@basket.id)
     end
   end
     
   private
     def set_word
       @word = Word.find(params[:word_id])
+      @basket = CatchwordsBasket.find(params[:basket_id])
     end
     
     def word_params
-      params.require(:word).permit(:name, :sound, :free)
+      params.require(:word).permit(:name, :sound)
     end
 end

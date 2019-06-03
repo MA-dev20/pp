@@ -115,7 +115,17 @@ Rails.application.routes.draw do
     
   get 'backoffice', to: 'backoffice#index', as: 'backoffice'
   get 'backoffice/admins', to: 'backoffice#admins', as: 'backoffice_admins'
-  get 'backoffice/words', to: 'backoffice#words', as: 'backoffice_words'
+  get 'backoffice/baskets/', to: 'backoffice#baskets', as: 'backoffice_baskets'
+  get 'backoffice/baskets/:admin_id', to: 'backoffice#baskets', as: 'backoffice_admin_baskets'
+  get 'backoffice/words/:basket_id', to: 'backoffice#words', as: 'backoffice_words'
+    
+  # Catchword Basket #
+    
+  get 'catchword_basket/new', to: 'catchwords_basket#new', as: 'new_basket'
+  post 'catchword_basket/new', to: 'catchwords_basket#create'
+  get 'catchword_basket/:basket_id/edit', to: 'catchwords_basket#edit', as: 'edit_basket'
+  post 'catchword_basket/:basket_id/update', to: 'catchwords_basket#update'
+  get 'catchword_basket/:basket_id/destroy', to: 'catchwords_basket#destroy', as: 'destroy_basket'
 
 #########
 # Admin #
