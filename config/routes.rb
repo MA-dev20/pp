@@ -223,6 +223,7 @@ Rails.application.routes.draw do
 # Word #
 ########
     
+  get 'words/:basket_id/new', to: 'words#new', as: 'new_word'
   post 'words/:basket_id/new', to: 'words#create'
 
   get 'words/:basket_id/:word_id/edit', to: 'words#edit', as: 'edit_word'
