@@ -1,4 +1,4 @@
-<%= form_for(:word, url: new_word_path) do |f| %>
+<%= form_for(:word, url: new_word_path(@basket.id)) do |f| %>
 
    <%= f.label :sound, class: 'custom-file-label' %>
     <%= f.file_field :sounds, multiple: true, class: 'custom-file-input', onchange: 'auto()' %>
@@ -10,26 +10,21 @@
     <th scope="col">Word</th>
     <th>Edit</th>
     <th scope="col">Sound</th>
-    <th>Free</th>
-    <th>Premium</th>
     <th scope="col">Delete</th>
     <th scope="col">Submit</th>
 </thead>
 <tbody>
 <% @words.each do |w| %>
     <tr>
-        <%= form_for(:word, url: edit_word_path(w)) do |f| %>
+        <%= form_for(:word, url: edit_word_path(@basket.id, w.id)) do |f| %>
         <td><%= w.name %></td>
         <td><%= f.text_field :name, value: w.name, class: 'form-control' %></td>
-        <td><%= audio_tag w.sound.url, controls: true %></td>
-        <% if w.free %>
-        <td><%= f.radio_button :free, true, checked: true, class: 'form-control' %></td>
-        <td><%= f.radio_button :free, false, class: 'form-control' %></td>
+        <% if w.sound.url == nil %>
+        <td>...</td>
         <% else %>
-        <td><%= f.radio_button :free, true, class: 'form-control' %></td>
-        <td><%= f.radio_button :free, false, checked: true, class: 'form-control' %></td>
+        <td><%= audio_tag w.sound.url, controls: true %></td>
         <% end %>
-        <td><%= link_to '', destroy_word_path(w.id), class: 'fas fa-trash-alt' %></td>
+        <td><%= link_to '', destroy_word_path(@basket.id, w.id), class: 'fas fa-trash-alt' %></td>
         <td><%= f.submit 'Save', class: 'far fa-save' %></td>
         <% end %>
     </tr>
@@ -38,7 +33,6 @@
 </table>
 </div>
 
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script>
 function auto() {
     $('form').submit();

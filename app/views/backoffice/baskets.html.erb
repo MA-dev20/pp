@@ -1,0 +1,62 @@
+<section id="gd_team">
+    <input type="text" id="searchField" placeholder="suchen" onfocus='team_hide()' onblur="team_show()">
+    <%= image_tag 'dash/search.png' %>
+</section>
+
+<section id="teams-container">
+   <div class="add_team" onclick="openTeam()">
+       <a onclick="openBasket()"></a>
+        <div class="head">
+            Liste
+        </div>
+        <div class="middle">
+            +
+        </div>
+        <div class="bottom">
+            hinzufügen
+        </div>
+    </div>
+    <% @baskets.each do |t| %>
+    <div class="team_card">
+       <%= link_to '', backoffice_words_path(t.id) %>
+        <div class="head">
+            <%= t.name %>
+        </div>
+        <div class="middle">
+            <span><%= t.words.count %></span> Wörter
+        </div>
+        <div class="bottom">
+            <%= link_to '', destroy_basket_path(t.id), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie die Liste unwiederuflich löschen möchten?" }%>
+        </div>
+    </div>
+    <% end %>
+
+</section>
+
+
+
+
+<script>
+
+
+var $rows = $('.team_card');
+$('#searchField').keyup(function() {
+    
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val, 'i'),
+        text;
+    
+    $rows.show().filter(function() {
+        text = $(this).text().replace(/\s+/g, ' ');
+        return !reg.test(text);
+    }).hide();
+});
+team_show = function() {
+    $('.add_team').show();
+}
+team_hide = function() {
+    $('.add_team').hide();
+}
+new PerfectScrollbar('#teams-container');
+
+</script>

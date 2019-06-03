@@ -11,9 +11,18 @@ class BackofficeController < ApplicationController
     @admins = Admin.all
   end
     
+  def baskets
+    if params[:admin_id]
+      @admin = Admin.find(params[:admin_id])
+      @baskets = @admin.catchword_baskets
+    else
+      @baskets = CatchwordsBasket.where(admin_id: nil).all
+    end
+  end
   #GET backoffice_words
   def words
-    @words = Word.all
+    @basket = CatchwordsBasket.find(params[:basket_id])
+    @words = @basket.words.all
   end
     
   private
