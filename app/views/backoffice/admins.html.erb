@@ -5,6 +5,7 @@
     <th scope='col'>E-mail</th>
     <th scope="col">Unternehmen</th>
     <th scope="col">User</th>
+    <th scope="col">Wort Listen</th>
     <th scope="col">Delete</th>
 </thead>
 <tbody>
@@ -14,6 +15,7 @@
         <td><%= c.email %></td>
         <td><%= c.company_name %></td>
         <td><%= c.users.all.count %></td>
+        <td><%= link_to c.catchword_baskets.count, backoffice_admin_baskets_path(c.id) %></td>
         <td><%= link_to '', destroy_admin_path(c.id), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie den Admin unwiederuflich löschen möchten?" } %></td>
     </tr>
 <% end %>
