@@ -152,7 +152,7 @@
       <div class="vc-top">
         <div class="vc-top-scroll" id="comment-box">
           <% @turn.comments.order('time_of_video DESC').each do |c| %>
-            <div class="vc-row  <%= 'vcr-'+c.type_of_comment %> comment-<%=c.time_of_video%>">
+            <div class="vc-row single-comment  <%= 'vcr-'+c.type_of_comment %> comment-<%=c.time_of_video%>" data-time="<%=c.time_of_video%>">
               <h5><%= c.time_of_video  ? c.time_of_video.to_minutes : '0:00'%></h5>
               <p><%= c.title %></p>
             </div>
@@ -188,7 +188,7 @@
    
 
 <script type="text/javascript">
-
+  var Comments = (<%= raw(@turn.comments.to_json) %>);
   $(document).ready(function(){
 
     const player = document.querySelector('#video');
@@ -231,7 +231,37 @@
         sendToServer(text, type)
       }
     });
+    function dynamicSort(property) {
+      var sortOrder = 1;
+      if(property[0] === "-") {
+          sortOrder = -1;
+          property = property.substr(1);
+      }
+      return function (a,b) {
+          /* next line works with strings and numbers, 
+           * and you may want to customize it to your needs
+           */
+          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+          return result * sortOrder;
+      }
+    }
 
+    function sortAndRenderComments(val){
+      Comments.push(val)
+      Comments.sort(dynamicSort("-time_of_video"))
+      $("#comment-box").empty()
+      renderTemplate()
+    }
+
+    function renderTemplate(){
+      Comments.forEach(function(t){
+        var template =`<div class="vc-row single-comment  vcr-`+t.type_of_comment+` comment-`+t.time_of_video+`" data-time="`+t.time_of_video+`">
+              <h5>`+fancyTimeFormat(t.time_of_video)+`</h5>
+              <p>`+t.title +`</p>
+            </div>`;
+        $("#comment-box").append(template)
+      })
+    }
 
     $(".volume-on").on('click', toggleMute)
 
@@ -287,16 +317,10 @@
 
     function addCommentToCommentBox(text, type){
       var time = (video.currentTime)
-      var template = `<div class="vc-row `+type+`" style="display: none;">
-            <h5>`+fancyTimeFormat(time)+`</h5>
-            <p>`+text+`</p>
-          </div>`;
       fillTimeOfCommentBox(time)
-      if($('.comment-'+Math.floor(time)).length > 0){
-        $(template).insertBefore('.comment-'+Math.floor(time))
-      }else{
-        $("#comment-box").prepend(template)
-      }
+      type = type.split("vcr-")
+      type = type[type.length-1]
+      sortAndRenderComments({title: text, time_of_video: time, type_of_comment: type })
       $(".vc-row").slideDown()
     }
 
