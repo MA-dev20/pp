@@ -16,6 +16,7 @@ jQuery(document).ready(function() {
         if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
           t = setInterval(function(){
             $.ajax({
+              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
               url: '/mobile/user/game/vidoe_uploading',
               success: function(data1){
                 if(data1.redirect){
