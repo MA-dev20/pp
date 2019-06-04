@@ -268,6 +268,7 @@ class GameMobileUserController < ApplicationController
       @game1 = current_game
       @word = CatchwordsBasket.find_by(name: 'PetersFreeWords').words.all.sample(5).first if CatchwordsBasket.find_by(name: 'PetersFreeWords').present? &&  @game1.admin.admin_subscription_id.nil?
       @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
+      @word = Word.all.sample(5).first if @word.nil?
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).playable.first
       @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: play, played: false, admin_id: admin.id)
       @turn.status = status
