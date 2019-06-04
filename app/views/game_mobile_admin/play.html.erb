@@ -264,8 +264,15 @@ function stopRecording(location,callback) {
 }
 $("#button-cancel").click(function(){
   jqxhr.abort()
+  requestServerForCanceling()
   showInSequence($(this).parent())
 })
+
+function requestServerForCanceling(){
+  $.ajax({
+    url: '/mobile/admin/video_cancel'
+  })
+}
 var completed_ajax= false;
 function uploadRecording(form, callback, location){
   jqxhr = $.ajax({
