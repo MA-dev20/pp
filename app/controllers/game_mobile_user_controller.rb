@@ -1,9 +1,10 @@
 class GameMobileUserController < ApplicationController
   before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :new_name, :new_company, :new_avatar, :new_turn, :bestlist, :video_uploading]
-  before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user]
+  before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user, :video_uploading]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
   before_action :reset_session_of_already_user, only: [:new, :welcome]
+  skip_before_action :authenticate_request, only: [:video_uploading]
   layout 'game_mobile'
 
     
@@ -266,7 +267,7 @@ class GameMobileUserController < ApplicationController
 
     def create_turn_against_user(user, admin, status, play=true)
       @game1 = current_game
-      @word = CatchwordsBasket.find_by(name: 'PetersFreeWords').words.all.sample(5).first if @game1.admin.admin_subscription_id.nil?
+      @word = CatchwordsBasket.find_by(name: 'PetersFreeWords').words.all.sample(5).first if CatchwordsBasket.find_by(name: 'PetersFreeWords').present? &&  @game1.admin.admin_subscription_id.nil?
       @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).playable.first
       @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: play, played: false, admin_id: admin.id)
@@ -289,7 +290,7 @@ class GameMobileUserController < ApplicationController
         @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(50).first if @word.nil?
       else
-        @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(50).first
+        @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(50).first if CatchwordsBasket.find_by(name: 'PetersWords').present?
         @word = Word.all.sample(5).first if @word.nil?
       end
       if @game1.active

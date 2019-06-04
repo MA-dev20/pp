@@ -13,9 +13,14 @@ class Game < ApplicationRecord
   has_one :catchword_basket , class_name: "CatchwordsBasket", dependent: :destroy
 
   has_many :users, through: :turns
-  after_update_commit do
-    NotificationBroadcastJob.perform_later(self)
+  
+  after_commit :callback, 
+  if: proc { |record| 
+    record.previous_changes.key?(:state) &&
+      record.previous_changes[:state].first != record.previous_changes[:state].last
+  }
+
+  def callback
+      NotificationBroadcastJob.perform_later(self)
   end
-
-
 end
