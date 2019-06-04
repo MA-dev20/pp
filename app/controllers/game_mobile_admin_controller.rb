@@ -19,6 +19,7 @@ class GameMobileAdminController < ApplicationController
   def video_cancel
     @game.video_uploading = false
     @game.save!
+    render json: {response: "ok"}
   end
 
   def check_email
@@ -239,7 +240,7 @@ class GameMobileAdminController < ApplicationController
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
         @word = Word.all.sample(5).first if @word.nil?
       else
-        @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first
+        @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if  CatchwordsBasket.find_by(name: 'PetersWords').present?
         @word = Word.all.sample(5).first if @word.nil?
       end
       @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true)
