@@ -4,7 +4,6 @@ class GameMobileUserController < ApplicationController
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
   before_action :reset_session_of_already_user, only: [:new, :welcome]
-  skip_before_action :authenticate_request, only: [:video_uploading]
   layout 'game_mobile'
 
     
