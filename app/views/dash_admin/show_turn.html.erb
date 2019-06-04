@@ -151,8 +151,8 @@
     <div class="progress-block">
       <div class="vc-top">
         <div class="vc-top-scroll" id="comment-box">
-          <% @turn.comments.order('created_at DESC').each do |c| %>
-            <div class="vc-row  <%= 'vcr-'+c.type_of_comment %>">
+          <% @turn.comments.order('time_of_video DESC').each do |c| %>
+            <div class="vc-row  <%= 'vcr-'+c.type_of_comment %> comment-<%=c.time_of_video%>">
               <h5><%= c.time_of_video  ? c.time_of_video.to_minutes : '0:00'%></h5>
               <p><%= c.title %></p>
             </div>
@@ -286,13 +286,17 @@
     }
 
     function addCommentToCommentBox(text, type){
+      var time = (video.currentTime)
       var template = `<div class="vc-row `+type+`" style="display: none;">
-            <h5>`+fancyTimeFormat(video.currentTime)+`</h5>
+            <h5>`+fancyTimeFormat(time)+`</h5>
             <p>`+text+`</p>
           </div>`;
-      fillTimeOfCommentBox(video.currentTime)
-          
-      $("#comment-box").prepend(template)
+      fillTimeOfCommentBox(time)
+      if($('.comment-'+Math.floor(time)).length > 0){
+        $(template).insertBefore('.comment-'+Math.floor(time))
+      }else{
+        $("#comment-box").prepend(template)
+      }
       $(".vc-row").slideDown()
     }
 
