@@ -75,15 +75,6 @@
 table.dataTable.no-footer {
     border-bottom: 0px solid black !important;
 }
-table.dataTable thead .sorting_asc {
-    background-image: image_url('table/arrow-down.png') !important;
-}
-table.dataTable thead .sorting_desc {
-    background-image: image_url('table/arrow-up.png') !important;
-}
-table.dataTable thead .sorting {
-    background-image: image_url('table/arrow-up-down.png') !important;
-}
 
 #gd_users .users #table table {
     top: 0;
