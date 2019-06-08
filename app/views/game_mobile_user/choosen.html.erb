@@ -1,15 +1,10 @@
-<section id="content">
-    <div class="head">
-        <%= render partial: 'game_mobile_admin/header' , locals: {can: false} %>
-        <div class="h100">Du hast für <%= @turn.findUser.fname %></div>
-    </div>
-    <div class="middle">
-        <%= image_tag @turn.findUser.avatar.quad.url, class: 'mid-img green' %>
-    </div>
-    <div class="bottom">
-      <p>gestimmt!</p>
-    </div>
-</section>
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"  data-turn="replay"></div>
-<% end %>
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false} %>
+    <h1>Du hast für <%= @turn.findUser.fname %></h1>
+</div>
+<div class="middle">
+    <%= image_tag @turn.findUser.avatar.quad.url, class: 'mid-img green pulse' %>
+</div>
+<div class="bottom">
+    <p>gestimmt!</p>
+</div>

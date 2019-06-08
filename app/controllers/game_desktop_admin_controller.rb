@@ -18,7 +18,7 @@ class GameDesktopAdminController < ApplicationController
     
   def choose
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
-    if @game.state != 'choose' && @turns.count <= 1
+    if @turns.count <= 1
       redirect_to gea_turn_path
       return
     elsif @game.state != 'choose'
@@ -50,6 +50,8 @@ class GameDesktopAdminController < ApplicationController
         @game.update(state: 'turn', current_turn: @turn2.id)
       end
     end
+    @turn1 = Turn.find_by(id: @game.turn1)
+    @turn2 = Turn.find_by(id: @game.turn2)
     @turn = Turn.find_by(id: @game.current_turn)
     @user = @turn.findUser
   end

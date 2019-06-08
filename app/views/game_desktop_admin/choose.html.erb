@@ -1,10 +1,15 @@
 <section id="count_channel" data-game-id="<%= @game.id %>">
+<div id="vote"></div>
 <section id="head">
     Wer ist als nächtes dran?
 </section>
 <section id="middle">
-   <div class="user1"><%= @turn1.findUser.fname %> <%= @turn1.findUser.lname %>: <span id="turn_<%= @turn1.id %>_counter"><%= @turn1.counter %></span></div>
-   <div class="user2"><%= @turn2.findUser.fname %> <%= @turn2.findUser.lname %>: <span id="turn_<%= @turn2.id %>_counter"><%= @turn2.counter %></span></div>
+  <div class="circle-left">
+      <%= image_tag @turn1.findUser.avatar.quad.url, class: 'pulse' %>
+  </div>
+  <div class="circle-right">
+      <%= image_tag @turn2.findUser.avatar.quad.url, class: 'pulse' %>
+  </div>
 </section>
 <section id="skip">
    Skip mit Leertaste
