@@ -1,24 +1,18 @@
-<section id='content'>
-   <div id="count_channel" data-game-id="<%= @game.id %>" >
-    <div class="head">
-      <%= render partial: 'header' , locals: {can: false}%>
-        
-
-        <% if @admin == @cur_user %>
-            <div class="h100">Du wirst bewertet!</div>
-        <% else %>
-            <div class="h100">Bewertung abgegeben!</div>
-        <% end %>
-    </div>
-    <div class="middle" id="middle">
-        <%= @count %>
-    </div>
-    <div class="bottom">
-      <%= link_to 'Bewertung beenden!', gma_rating_path %>
-    </div>
-    </div>
-</section>
-
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
+<div id="count_channel" data-game-id="<%= @game.id %>" >
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
+    <h1>
+    <% if @admin == @cur_user %>
+        Du wirst bewertet!
+    <% else %>
+        Bewertung abgegeben!
+    <% end %>
+    </h1>
+</div>
+<div class="middle" id="middle">
+    <%= @count %>
+</div>
+<div class="bottom">
+    <%= link_to 'Bewertung beenden!', gma_rating_path %>
+</div>
+</div>

@@ -1,27 +1,21 @@
-<section id="content">
-  <div class="head">
-      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-
-    <div>
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+    <h1>
     <% if @user == @cur_user %>
       <%= @user.fname %>
     <% else %>
       <%= @cur_user.fname %> <% @cur_user.lname %>
     <% end %>
-  </div>
-  </div>
-  <div class="middle">
-    <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green' %>
-  </div>
-  <div class="bottom">
+    </h1>
+</div>
+<div class="middle">
+    <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green pulse' %>
+</div>
+<div class="bottom">
     <% if @user == @cur_user %>
-      du bist dran!
+        <p>du bist dran!</p>
     <% else %>
-      ist dran!
+        <p>ist dran!</p>
     <% end %>
-  </div>
-  <% if @game %>
-    <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-  <% end %>
-</section>
+</div>
 

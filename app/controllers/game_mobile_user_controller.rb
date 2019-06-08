@@ -219,9 +219,13 @@ class GameMobileUserController < ApplicationController
       return
     end
     @turn = Turn.find_by(id: params[:turn_id])
+    @site = 'right'
+    if @turn.id == @game.turn1
+      @site = 'left'
+    end
     @counter = @turn.counter + 1
     @turn.update(counter: @counter)
-    ActionCable.server.broadcast 'count_#{@game.id}_channel', count: 'choosen', turn: @turn.id, counter: @counter
+    ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'choosen', turn: @site, user_pic: @user.avatar.quad.url
   end
     
   def turn

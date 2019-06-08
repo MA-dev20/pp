@@ -2,9 +2,21 @@
     <%= @user.fname %>, du bist dran!
 </section>
 <section id="middle">
-   <div class="circle">
-     <%= image_tag @user.avatar.quad.url, class: 'pulse' %>
-    </div>
+  <% if @turn1 == @turn %>
+  <div class="circle-left">
+      <%= image_tag @turn1.findUser.avatar.quad.url, class: 'middle' %>
+  </div>
+  <div class="circle-right">
+      <%= image_tag @turn2.findUser.avatar.quad.url, class: 'hide' %>
+  </div>
+  <% else %>
+  <div class="circle-left">
+      <%= image_tag @turn1.findUser.avatar.quad.url, class: 'middle' %>
+  </div>
+  <div class="circle-right">
+      <%= image_tag @turn2.findUser.avatar.quad.url, class: 'hide' %>
+  </div>
+  <% end %>
 </section>
 <section id="skip">
    Skip mit Leertaste

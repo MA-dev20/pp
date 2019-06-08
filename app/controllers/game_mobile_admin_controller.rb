@@ -110,7 +110,7 @@ class GameMobileAdminController < ApplicationController
     elsif @game.state != 'choose'
       @turn1 = @turns.first
       @turn2 = @turns.second
-      @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id)
+      @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
     else
       @turn1 = Turn.find_by(id: @game.turn1)
       @turn2 = Turn.find_by(id: @game.turn2)
@@ -123,9 +123,13 @@ class GameMobileAdminController < ApplicationController
       return
     end
     @turn = Turn.find_by(id: params[:turn_id])
+    @site = 'right'
+    if @turn.id == @game.turn1
+      @site = 'left'
+    end
     @counter = @turn.counter + 1
     @turn.update(counter: @counter)
-    ActionCable.server.broadcast 'count_#{@game.id}_channel', count: 'choosen', turn: @turn.id, counter: @counter
+    ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'choosen', turn: @site, user_pic: @admin.avatar.quad.url
   end
     
   def turn

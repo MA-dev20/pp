@@ -1,65 +1,35 @@
-<section id="content">
-    <div class="head head-play">
-      <%= render partial: 'header' , locals: {can: true}%>
-      <div style="display: none" id="current_user_id" data-id='<%= @turn.to_json.to_s.html_safe %>'></div>
-      <div class="heading-text"><%= @cur_user.fname %> Pitcht!</div>
-    </div>
-    <div class="middle middle-play middlePlay-top">
-      <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green', id: 'img-dp', style: "display: #{@record == true ? 'none' : 'block'}" %>
-      <div class="middle-content">
+<div class="head head-play">
+    <%= render partial: 'header' , locals: {can: true}%>
+    <div style="display: none" id="current_user_id" data-id='<%= @turn.to_json.to_s.html_safe %>'></div>
+    <h1><%= @cur_user.fname %> Pitcht!</h1>
+</div>
+<div class="middle middle-play middlePlay-top">
+    <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: #{@record == true ? 'none' : 'block'}" %>
+    <div class="middle-content">
         <video id="preview" autoplay width="600" height="600" style="display: <%= @record == true ? 'block' : 'none' %>;" muted></video>
         <video id="recording" width="600" height="600"  controls style="display: none;"></video>
-      </div>
-      <label id="timer" style="display: <%= @record == true ? 'block' : 'none' %>">00:00:00</label>
-      <div class="buttons buttons-play">
-        <button id='stop' class="button-stop" style="display: <%= @record == true ? 'block' : 'none' %>;">
-          <i class="fa fa-stop"></i>
-        </button>
+    </div>
+    <label id="timer" style="display: <%= @record == true ? 'block' : 'none' %>">00:00:00</label>
+    <div class="buttons buttons-play">
+        <button id='stop' class="button-stop" style="display: <%= @record == true ? 'block' : 'none' %>;"><i class="fa fa-stop"></i></button>
         <div class="play-check-time" style="display: none">
-          <button id='uploaded' class="button-check" >
-            <i class="fa fa-check"></i>
-          </button>
-          <p class="play-time-para">Video erfolgreich hochgeladen</p>
+            <button id='uploaded' class="button-check" ><i class="fa fa-check"></i></button>
+            <p class="play-time-para">Video erfolgreich hochgeladen</p>
         </div>
         <div class="cancel play-cancel-time" id="upload" style="display: none">
-          <button id="button-cancel" class="button-cancel">
-    <!--         <svg
-             class="progress-ring"
-             width="5vh"
-             height="5vh">
-            <circle
-              class="progress-ring__circle"
-              stroke="white"
-              stroke-width="4"
-              fill="transparent"
-              r="38"
-              cx="50"
-              cy="50"/>
-              <i class="fa fa-times"></i>
-          </svg> -->
-          <svg
-             class="progress-ring"
-             width="98"
-             height="98">
-            <circle
-              class="progress-ring__circle"
-              stroke="white"
-              stroke-width="4"
-              fill="transparent"
-              r="39"
-              cx="49"
-              cy="49"/>
-          </svg>
-          <i class="fa fa-times"></i>
-          </button>
-          <p class="play-time-para" >Video wird gespiehert...</p>
+            <button id="button-cancel" class="button-cancel">
+                <svg class="progress-ring" width="98" height="98">
+                    <circle class="progress-ring__circe" stroke="white" stroke-width="4" fill="transparent" r="39" cx="49" cy="49"/>
+                </svg>
+                <i class="fa fa-times"></i>
+            </button>
+            <p class="play-time-para" >Video wird gespiehert...</p>
         </div>
-      </div>
     </div>
-    <div class="bottom bottom-play" style="top: <%= @record ? '88% !important' : '66%'%>;">
-      <%= link_to 'beenden!', gma_rate_path %>
-    </div>
-</section>
+</div>
+<div class="bottom bottom-play" style="top: <%= @record ? '88% !important' : '66%'%>;">
+    <%= link_to 'beenden!', gma_rate_path %>
+</div>
 
 <div class="modal modal-choice" id="myModal">
     <div class="modal-dialog modal-dialog-centered">
@@ -114,22 +84,12 @@
   							Ist Quatsch
 							</a>
 						</li>
-        		<!-- <li>
-        			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-  							Einwände 10
-							</a>
-						</li> -->
         	</ul>
         </div>
       </div>
     </div>
   </div>
-  
-</div>
 
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
 <script>
   var uploadingprogress = 0;
 var timer = document.getElementById("timer");
