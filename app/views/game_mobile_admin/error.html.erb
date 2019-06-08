@@ -1,14 +1,8 @@
-<section id="content">
-    <div class="head">
-      <%= render partial: 'header' , locals: {can: false}%>
-
-    Nicht genug Spieler, um das Spiel zu starten!</div>
-    
-    <div class="bottom">
-        <%= link_to 'überspringen!', gma_wait_path %>
-    </div>
-</section>
-
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
+    <h1>Nicht genug Spieler,</h1>
+    <h3>um das Spiel zu starten!</h3>
+</div>
+<div class="bottom">
+    <%= link_to 'überspringen!', gma_wait_path %>
+</div>

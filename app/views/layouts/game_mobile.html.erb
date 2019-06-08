@@ -35,7 +35,7 @@
     <section id="content">
     <% if @game %>
         <%= yield %>
-        <div id='game_channel' data-game-id="<%= @game.id %>" data-turn="replay" ></div>
+        <div id='game_channel' data-game-id="<%= @game.id %>"></div>
     <% else %>
         <%= yield %>
     <% end %>
