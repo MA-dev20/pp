@@ -1,5 +1,5 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :password, :choose, :error, :welcome, :video_cancel]
+  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :password, :choose, :error, :welcome, :video_cancel]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email]
   before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
@@ -123,14 +123,13 @@ class GameMobileAdminController < ApplicationController
       return
     end
     @turn = Turn.find_by(id: params[:turn_id])
-    @counter = @turn.counter + 1 if !@turn.counter.nil?
-    @counter = 1 if @turn.counter.nil
+    @counter = @turn.counter + 1
     @turn.update(counter: @counter)
     ActionCable.server.broadcast 'count_#{@game.id}_channel', count: 'choosen', turn: @turn.id, counter: @counter
   end
     
   def turn
-    @turns = @game.turn.where(status: 'accepted').playable
+    @turns = @game.turns.where(status: 'accepted').playable
     if @game.state != 'turn' && @turns.count == 1
       @turn = @turns.first
       @game.update(state: 'turn', active: false, current_turn: @turn.id)
@@ -264,7 +263,7 @@ class GameMobileAdminController < ApplicationController
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if  CatchwordsBasket.find_by(name: 'PetersWords').present?
         @word = Word.all.sample(5).first if @word.nil?
       end
-      @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true)
+      @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true, counter: 0)
       if @turn.save
         @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
         sign_in(@game)
