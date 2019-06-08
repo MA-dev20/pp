@@ -7,9 +7,9 @@ class CatchwordsBasketController < ApplicationController
   def create
     @basket = CatchwordsBasket.new(basket_params)
     if @basket.save
-      flash[:success] = 'Wort gespeichert!'
+      flash[:success] = 'Liste gespeichert!'
     else
-      flash[:danger] = 'Konnte Wort nicht speichern!'
+      flash[:danger] = 'Konnte Liste nicht speichern!'
     end
     redirect_to backoffice_words_path(@basket.id)
 #    @word = Word.create(word_params)

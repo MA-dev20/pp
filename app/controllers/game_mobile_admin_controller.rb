@@ -1,7 +1,7 @@
 class GameMobileAdminController < ApplicationController
   before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :password, :choose, :error, :welcome, :video_cancel]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email]
-  before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating, :save_video]
+  before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
   skip_before_action :verify_authenticity_token, only: [:save_video]
 
@@ -103,28 +103,49 @@ class GameMobileAdminController < ApplicationController
   end
     
   def choose
-    @turns = @game.turns.where(status: "accepted").playable.sample(100)
-    if @game.state != 'choose' && @turns.count == 1
-      redirect_to gea_mobile_path
-      return
-    elsif  @game.state != 'choose' && @turns.count == 0
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    if @game.state != 'choose' && @turns.count <= 1
       redirect_to gea_mobile_path
       return
     elsif @game.state != 'choose'
-      if @game.turns.where(status: "accepted").count > 1
-        @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
-      else
-        redirect_to gea_mobile_path
-      end
+      @turn1 = @turns.first
+      @turn2 = @turns.second
+      @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id)
+    else
+      @turn1 = Turn.find_by(id: @game.turn1)
+      @turn2 = Turn.find_by(id: @game.turn2)
     end
   end
     
+  def choosen
+    if params[:turn_id] == 'turn'
+      redirect_to gma_turn_path
+      return
+    end
+    @turn = Turn.find_by(id: params[:turn_id])
+    @counter = @turn.counter + 1 if !@turn.counter.nil?
+    @counter = 1 if @turn.counter.nil
+    @turn.update(counter: @counter)
+    ActionCable.server.broadcast 'count_#{@game.id}_channel', count: 'choosen', turn: @turn.id, counter: @counter
+  end
+    
   def turn
-    if @game.state != 'turn' && @game.turns.where(status: "accepted").playable.count == 1
-      @turn = @game.turns.where(status: "accepted").playable.first
-      @game.update(state: 'turn', active: false, current_turn: @game.turns.playable.first.id)
+    @turns = @game.turn.where(status: 'accepted').playable
+    if @game.state != 'turn' && @turns.count == 1
+      @turn = @turns.first
+      @game.update(state: 'turn', active: false, current_turn: @turn.id)
     elsif @game.state != 'turn'
-      @game.update(state: 'turn')
+      @turn1 = Turn.find_by(id: @game.turn1)
+      @turn2 = Turn.find_by(id: @game.turn2)
+      if @turn1.counter > @turn2.counter
+        @cur_user = @turn1.findUser
+        @game.update(state: 'turn', current_turn: @turn1.id)
+      else
+        @cur_user = @turn2.findUser
+        @game.update(state: 'turn', current_turn: @turn2.id)
+      end
+    else
+      @cur_user = Turn.find_by(id: @game.current_turn).findUser
     end
   end
     

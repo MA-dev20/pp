@@ -1,9 +1,14 @@
 <section id="content">
-  <div class="head">
-      <%= render partial: 'header' , locals: {can: false}%>
-	</div>
-	<%= image_tag 'game/choose.png', class: 'bg-image' %>
-	
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
+    <div class="h100">Who is next?</div>
+</div>
+<div class="middle">
+    <%= link_to @turn1.findUser.fname, gma_choosen_path(@turn1) %>
+    <%= link_to @turn2.findUser.fname, gma_choosen_path(@turn2) %>
+</div>
+<div class="bottom">
+</div>
 </section>
 
 <% if @game %>
