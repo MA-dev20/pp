@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :new_name, :new_company, :new_avatar, :new_turn, :bestlist, :video_uploading]
+  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :new_name, :new_company, :new_avatar, :new_turn, :bestlist, :video_uploading]
   before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user, :video_uploading]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
@@ -219,8 +219,7 @@ class GameMobileUserController < ApplicationController
       return
     end
     @turn = Turn.find_by(id: params[:turn_id])
-    @counter = @turn.counter +1 if !@turn.counter.nil?
-    @counter = 1 if @turn.counter.nil?
+    @counter = @turn.counter + 1
     @turn.update(counter: @counter)
     ActionCable.server.broadcast 'count_#{@game.id}_channel', count: 'choosen', turn: @turn.id, counter: @counter
   end
@@ -284,7 +283,7 @@ class GameMobileUserController < ApplicationController
       @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
       @word = Word.all.sample(5).first if @word.nil?
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).playable.first
-      @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: play, played: false, admin_id: admin.id)
+      @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: play, played: false, admin_id: admin.id, counter: 0)
       @turn.status = status
       @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
       turn.update(status: "accepted") if !turn.nil?
