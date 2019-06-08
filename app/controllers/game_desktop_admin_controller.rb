@@ -45,16 +45,13 @@ class GameDesktopAdminController < ApplicationController
       @turn1 = Turn.find_by(id: @game.turn1)
       @turn2 = Turn.find_by(id: @game.turn2)
       if @turn1.counter > @turn2.counter
-        @user = @turn1.findUser
         @game.update(state: 'turn', current_turn: @turn1.id)
       else
-        @user = @turn2.findUser
         @game.update(state: 'turn', current_turn: @turn2.id)
       end
-    else
-      @turn = Turn.find_by(id: @game.current_turn)
-      @user = @turn.findUser
     end
+    @turn = Turn.find_by(id: @game.current_turn)
+    @user = @turn.findUser
   end
     
   def play
