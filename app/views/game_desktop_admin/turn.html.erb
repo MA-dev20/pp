@@ -2,19 +2,23 @@
     <%= @user.fname %>, du bist dran!
 </section>
 <section id="middle">
-  <% if @turn1 == @turn %>
+  <% if @turns.count == 1 %>
+      <div class="circle">
+          <%= image_tag @turn.findUser.avatar.quad.url, class: 'green pulse' %>    
+      </div>
+  <% elsif @turn1 == @turn %>
   <div class="circle-left">
-      <%= image_tag @turn1.findUser.avatar.quad.url, class: 'middle' %>
+      <%= image_tag @turn1.findUser.avatar.quad.url, class: 'blue middle', id: 'middle_img' %>
   </div>
   <div class="circle-right">
-      <%= image_tag @turn2.findUser.avatar.quad.url, class: 'hide' %>
+      <%= image_tag @turn2.findUser.avatar.quad.url, class: 'blue hide' %>
   </div>
   <% else %>
   <div class="circle-left">
-      <%= image_tag @turn1.findUser.avatar.quad.url, class: 'hide' %>
+      <%= image_tag @turn1.findUser.avatar.quad.url, class: 'blue hide' %>
   </div>
   <div class="circle-right">
-      <%= image_tag @turn2.findUser.avatar.quad.url, class: 'middle' %>
+      <%= image_tag @turn2.findUser.avatar.quad.url, class: 'blue middle', id: 'middle_img' %>
   </div>
   <% end %>
 </section>
@@ -34,6 +38,12 @@
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_play_path %>');
         };
+    })
+    var middle = document.getElementById('middle_img')
+    middle.addEventListener('animationend', function() {
+        $('#middle_img').removeClass('middle');
+        $('#middle_img').removeClass('blue');
+        $('#middle_img').addClass('pulse mid-img');
     })
                             
 </script>

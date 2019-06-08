@@ -1,15 +1,25 @@
 <section id="count_channel" data-game-id="<%= @game.id %>">
-<div id="vote"></div>
 <section id="head">
-    Wer ist als nächtes dran?
+    Wer soll pitchen?
 </section>
 <section id="middle">
-  <div class="circle-left">
-      <%= image_tag @turn1.findUser.avatar.quad.url, class: 'pulse' %>
-  </div>
-  <div class="circle-right">
-      <%= image_tag @turn2.findUser.avatar.quad.url, class: 'pulse' %>
-  </div>
+    <div id="vote"></div>
+    <div class="circle-left" animation>
+        <%= image_tag @turn1.findUser.avatar.quad.url, class: 'blue', id: 'left-img' %>
+    </div>
+    <div class="circle-right">
+        <%= image_tag @turn2.findUser.avatar.quad.url, class: 'blue', id: 'right-img' %>
+    </div>
+</section>
+<section id="bottom">
+    <div class="countdown animated flipInX d-flex align-items-center justify-content-center">
+        <div class="progress">
+            <div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                <span id="current-progress"></span>
+            </div>
+        </div>
+        <span class="timer" id="timeralli"></span>
+    </div>
 </section>
 <section id="skip">
    Skip mit Leertaste
@@ -18,11 +28,48 @@
 <%= audio_tag("choose/slot.mp3", id: 'slot') %>
 
 <script>
-    document.getElementById('slot').play(); 
+    document.getElementById('slot').play();
+    startTimerModal('15', document.getElementById('timeralli'))
      $(window).keypress(function (e) {
 
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_turn_path %>');
         };
     });
+    var left = document.getElementById('left-img');
+    var right = document.getElementById('right-img');
+    left.addEventListener('animationend', function() {$('#left-img').removeClass('pulse-single')});
+    right.addEventListener('animationend', function() {$('#right-img').removeClass('pulse-single')});
+       
+    function startTimerModal(duration, display) {
+        $(function() {
+          
+          var current_progress = 0;
+          var interval = setInterval(function() {
+              current_progress += 10;
+              $("#dynamic").addClass("in")
+              if (current_progress >= 100){
+                clearInterval(interval);
+              }
+          }, 1000);
+        });
+        var timer = duration, minutes, seconds;
+        var executed = false;
+        var interval =  duration;
+        var t = parseInt(duration);
+        var setTimeri = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+        
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            t -- ;
+            timer--;
+            if (timer <= 0) {
+  /*              window.location.replace('<%= gda_turn_path %>'); */
+            }
+        }, 1000);
+        return {time: t}
+
+    };
 </script>
