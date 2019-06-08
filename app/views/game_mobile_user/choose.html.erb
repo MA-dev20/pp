@@ -1,10 +1,16 @@
 <section id="content">
-  <div class="head">
-      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-	</div>
-	<%= image_tag 'game/choose.png', class: 'bg-image' %>
-		
-	<% if @game %>
-	  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-	<% end %>
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false} %>
+    <div class="h100">Who is next?</div>
+</div>
+<div class="middle">
+    <%= link_to @turn1.findUser.fname, gmu_choosen_path(@turn1) %>
+    <%= link_to @turn2.findUser.fname, gmu_choosen_path(@turn2) %>
+</div>
+<div class="bottom">
+</div>
 </section>
+
+<% if @game %>
+  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
+<% end %>

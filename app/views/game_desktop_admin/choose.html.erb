@@ -1,45 +1,23 @@
-<section id="gd_head">
-    <div class="question" id="question">
-        <div class="q1">?</div>
-        <div class="q2">?</div>
-        <div class="q3">?</div>
-    </div>
+<section id="count_channel" data-game-id="<%= @game.id %>">
+<section id="head">
+    Wer ist als nächtes dran?
 </section>
-<section id="gd_middle_slot">
-   <div class="circle">
-      <div class="pic_list" id="pic_lst">
-       <% i = 0 %>
-       <% while i < 100 %>
-        <% @turns.each do |t| %>
-            <% if t.user_id.nil? %>
-            <% if !@admin.avatar.nil? %>
-               <div class='pic' id="pic<%= i %>">
-                <%= image_tag @admin.avatar.quad.url %>
-                <% i = i + 1 %>
-                </div>
-            <% end %>
-            <% else %>
-            <% if !User.find_by(id: t.user_id).avatar.nil? %>
-               <div class='pic' id="pic<%= i %>">
-                <%= image_tag User.find_by(id: t.user_id).avatar.quad.url %>
-                <% i = i + 1 %>
-                </div>
-            <% end %>
-            <% end %>
-        <% end %>
-        <% end %>
-        </div>
-    </div>
+<section id="middle">
+   <div class="user1"><%= @turn1.findUser.fname %> <%= @turn1.findUser.lname %>: <span id="turn_<%= @turn1.id %>_counter"><%= @turn1.counter %></span></div>
+   <div class="user2"><%= @turn2.findUser.fname %> <%= @turn2.findUser.lname %>: <span id="turn_<%= @turn2.id %>_counter"><%= @turn2.counter %></span></div>
 </section>
-
+<section id="skip">
+   Skip mit Leertaste
+</section>
+</section>
 <%= audio_tag("choose/slot.mp3", id: 'slot') %>
 
 <script>
-    document.getElementById('slot').play();
-    setTimeout(function() {
-        document.getElementById('slot').pause();
-        window.location.replace('<%= gda_turn_path %>');
-    }, 5000);
-    
+    document.getElementById('slot').play(); 
+     $(window).keypress(function (e) {
 
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            window.location.replace('<%= gda_turn_path %>');
+        };
+    });
 </script>

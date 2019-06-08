@@ -209,6 +209,20 @@ class GameMobileUserController < ApplicationController
   end
     
   def choose
+    @turn1 = Turn.find_by(id: @game.turn1)
+    @turn2 = Turn.find_by(id: @game.turn2)
+  end
+    
+  def choosen
+    if params[:turn_id] == 'turn'
+      redirect_to gmu_turn_path
+      return
+    end
+    @turn = Turn.find_by(id: params[:turn_id])
+    @counter = @turn.counter +1 if !@turn.counter.nil?
+    @counter = 1 if @turn.counter.nil?
+    @turn.update(counter: @counter)
+    ActionCable.server.broadcast 'count_#{@game.id}_channel', count: 'choosen', turn: @turn.id, counter: @counter
   end
     
   def turn
