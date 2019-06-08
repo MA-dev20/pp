@@ -27,8 +27,8 @@ class GameMobileUserController < ApplicationController
   end
     
   def new
-    @game = Game.find(session[:game_session_id])
-    if !@game
+    @game1 = Game.find(session[:game_session_id])
+    if !@game1
       flash[:danger] = 'Konnte kein passendes Spiel finden!'
       redirect_to root_path
     end

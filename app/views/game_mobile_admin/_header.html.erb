@@ -1,6 +1,10 @@
 <div class="menu menu-position">
 	<span class="menu-logo"><img width="144" src="<%= image_url 'logo-m.png' %>"></span>
+	<% if @game %>
 	<p><%= @game.team.name %></p>
+	<% else %>
+	<p><%= @game1.team.name %></p>
+	<% end %>
 	<% if can %>
 		<button type="button" id="list" class="btn btn-primary btn-menu" data-toggle="modal" data-target="#myModal">
 		  <span></span>

@@ -1,25 +1,19 @@
-<section id="content">
-    <div class="head">
-      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-
-        Tolle Runde!
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+    <h1>Tolle Runde!</h1>
+</div>
+<div class="middle">
+    <div class="circle" id="ges">
+        <%= image_tag @user.avatar.quad.url, class: 'mid-img pulse' %>
     </div>
-    <div class="middle">
-        <div class="circle" id="ges">
-            <%= image_tag @user.avatar.quad.url, class: 'mid-img' %>
-        </div>
-        <%= image_tag 'game/polygon.png', class: 'pol' %>
-        <div class="rating" id='ges_text'>?</div>
-    </div>
-    <div class="bottom links">
-        <a href="<%= gmu_ended_path %>" class="pol-bg" data-confirm="Bist du sicher, dass du nicht weiterspielen möchtest?"><i class="fas fa-times"></i></a>
-        <a type="button" class="pol-bg" onclick="showModal()"><i class="fas fa-share-alt"></i></a>
-    </div>
+    <%= image_tag 'game/polygon.png', class: 'pol' %>
+    <div class="rating" id='ges_text'>?</div>
+</div>
+<div class="bottom links">
+    <a href="<%= gmu_ended_path %>" class="pol-bg" data-confirm="Bist du sicher, dass du nicht weiterspielen möchtest?"><i class="fas fa-times"></i></a>
+    <a type="button" class="pol-bg" onclick="showModal()"><i class="fas fa-share-alt"></i></a>
+</div>
 <!-- Modal -->
-
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"  data-turn="replay"></div>
-<% end %>
 <% if @turn_rating %>
     <div id="shareModal">
         <button type="button" id="close" onclick="closeModal()"><i class="far fa-times-circle"></i></button>
@@ -44,6 +38,3 @@
     }
     </script>
 <% end %>
-
-</section>
-

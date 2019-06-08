@@ -1,34 +1,30 @@
-<section id="content" >
-    <div class="not_needed"></div>
-    <div class="head">
-      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-
-        <div>Hi, <%= @user.fname %> <%= @user.lname %></div>
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+    <h1>Hi, <%= @user.fname %></h1>
+</div>
+<%= form_for(:turn, url: gmu_new_turn_path) do |f| %>
+<div class="middle">
+    <div class="row">
+        <%= f.radio_button :play, true, onchange: "myFunction()" %>
+        <div class="col-12">
+            <label for="turn_play_true" class="custom-text">Ich pitche und bewerte!</label>
+        </div>
     </div>
-    <%= form_for(:turn, url: gmu_new_turn_path) do |f| %>
-        <div class="middle">
-        <div class="row">
-            <%= f.radio_button :play, true, onchange: "myFunction()" %>
-            <div class="col-12">
-                <label for="turn_play_true" class="custom-text">Ich pitche und bewerte!</label>
-            </div>
+    <div class="row">
+        <div class="col-12">-oder-</div>
+    </div>
+    <div class="row">
+        <%= f.radio_button :play, false, onchange: "myFunction()" %>
+        <div class="col-12">
+            <label for="turn_play_false" class="custom-text">Ich möchte nur bewerten</label>
         </div>
-        <div class="row">
-            <div class="col-12">-oder-</div>
-        </div>
-        <div class="row">
-            <%= f.radio_button :play, false, onchange: "myFunction()" %>
-            <div class="col-12">
-                <label for="turn_play_false" class="custom-text">Ich möchte nur bewerten</label>
-            </div>
-        </div>
-        </div>
-        <div class="bottom">
-            <%= link_to "Let's Play", '', class: 'link', id: 'fake' %>
-            <%= f.submit "Let's Play", class: 'link pulse', id: 'summit', style: 'display: none' %>
-        </div>
-    <% end %>
-</section>
+    </div>
+</div>
+<div class="bottom">
+    <%= link_to "Let's Play", '', class: 'link', id: 'fake' %>
+    <%= f.submit "Let's Play", class: 'link pulse', id: 'summit', style: 'display: none' %>
+</div>
+<% end %>
 
 
 <script>
