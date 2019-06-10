@@ -15,6 +15,10 @@ class BackofficeController < ApplicationController
     if params[:admin_id]
       @admin = Admin.find(params[:admin_id])
       @baskets = @admin.catchword_baskets
+    elsif CatchwordsBasket.find_by(name: 'PetersWords').nil?
+      @basket = CatchwordsBasket.create(name: 'PetersWords')
+      @basket1 = CatchwordsBasket.create(name: 'PetersFreeWords')
+      @baskets = CatchwordsBasket.where(admin_id: nil).all
     else
       @baskets = CatchwordsBasket.where(admin_id: nil).all
     end

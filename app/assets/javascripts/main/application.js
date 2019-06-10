@@ -18,3 +18,4 @@
 //= require bootstrap
 //= require cable
 //= require bootstrap.bundle.min.js
+//= require dash/jquery.dataTables.min

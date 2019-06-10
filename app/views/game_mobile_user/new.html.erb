@@ -1,19 +1,16 @@
-<div id="content">
-    <div class="head">
-      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-        
-      <div class="h100">Wie ist deine E-Mail?</div>
-    </div>
-    <%= form_for(:user, url: gmu_password_path, html: {autocomplete: 'off'}) do |f| %>
-    <div class="middle">
-       <div class="row">
-        <div class="col-12">
-        <%= f.email_field :email, placeholder: 'E-Mail', class: 'form-field' %>
-        </div>
-        </div>
-    </div>
-    <div class="bottom">
-        <%= f.submit 'weiter!', class: 'link pulse' %>
-    </div>
-    <% end %>
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>    
+    <h1>Wie ist deine E-Mail?</h1>
 </div>
+<%= form_for(:user, url: gmu_password_path, html: {autocomplete: 'off'}) do |f| %>
+<div class="middle">
+    <div class="row">
+        <div class="col-12">
+            <%= f.email_field :email, placeholder: 'E-Mail', class: 'form-field' %>
+        </div>
+    </div>
+</div>
+<div class="bottom">
+    <%= f.submit 'weiter!', class: 'link pulse' %>
+</div>
+<% end %>

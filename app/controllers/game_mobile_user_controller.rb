@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :new_name, :new_company, :new_avatar, :new_turn, :bestlist, :video_uploading]
+  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :new_name, :new_company, :new_avatar, :new_turn, :bestlist, :video_uploading]
   before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user, :video_uploading]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
@@ -27,8 +27,8 @@ class GameMobileUserController < ApplicationController
   end
     
   def new
-    @game = Game.find(session[:game_session_id])
-    if !@game
+    @game1 = Game.find(session[:game_session_id])
+    if !@game1
       flash[:danger] = 'Konnte kein passendes Spiel finden!'
       redirect_to root_path
     end
@@ -209,6 +209,23 @@ class GameMobileUserController < ApplicationController
   end
     
   def choose
+    @turn1 = Turn.find_by(id: @game.turn1)
+    @turn2 = Turn.find_by(id: @game.turn2)
+  end
+    
+  def choosen
+    if params[:turn_id] == 'turn'
+      redirect_to gmu_turn_path
+      return
+    end
+    @turn = Turn.find_by(id: params[:turn_id])
+    @site = 'right'
+    if @turn.id == @game.turn1
+      @site = 'left'
+    end
+    @counter = @turn.counter + 1
+    @turn.update(counter: @counter)
+    ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'choosen', turn: @site, user_pic: @user.avatar.quad.url
   end
     
   def turn
@@ -270,7 +287,7 @@ class GameMobileUserController < ApplicationController
       @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
       @word = Word.all.sample(5).first if @word.nil?
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).playable.first
-      @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: play, played: false, admin_id: admin.id)
+      @turn = Turn.new(user_id: user.id, game_id: @game1.id, word_id: @word.id, play: play, played: false, admin_id: admin.id, counter: 0)
       @turn.status = status
       @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
       turn.update(status: "accepted") if !turn.nil?

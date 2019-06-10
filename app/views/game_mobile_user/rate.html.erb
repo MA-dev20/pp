@@ -1,41 +1,30 @@
-<section id="content">
-  <div class="head">
-      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-
-      <div>Jetzt bewerten!</div>
-  </div>
-    <%= form_for(:rating, url: new_rating_user_path(@turn)) do |f| %>
-      <div class="middle">
-        <div class="row">
-            <%= f.label 'Spontanität: ' %> <div class="output" id="val1"></div>
-            <%= f.range_field :spontan, min: 0, max: 100, id: 'slider1' %>
-        </div>
-        
-        <div class="row">
-            <%= f.label 'Kreativität: ' %> <div class="output" id="val2"></div>
-            <%= f.range_field :creative, min: 0, max: 100, id: 'slider2' %>
-        </div>
-        
-        <div class="row">
-            <%= f.label 'Körpersprache: ' %> <div class="output" id="val3"></div>
-            <%= f.range_field :body, min: 0, max: 100, id: 'slider3' %>
-        </div>
-        
-        <div class="row">
-            <%= f.label 'Rhetorik: ' %> <div class="output" id="val4"></div>
-            <%= f.range_field :rhetoric, min: 0, max: 100, id: 'slider4' %>
-        </div>
-      </div>
-      <div class="bottom">
-          <%= f.submit 'absenden', class: 'link' %>
-      </div>
-    <% end %>
-    
-    <% if @game %>
-      <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-    <% end %>
-</section>
-
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+    <h1>Jetzt bewerten!</h1>
+</div>
+<%= form_for(:rating, url: new_rating_user_path(@turn)) do |f| %>
+<div class="middle">
+    <div class="row">
+        <%= f.label 'Spontanität: ' %> <div class="output" id="val1"></div>
+        <%= f.range_field :spontan, min: 0, max: 100, id: 'slider1' %>
+    </div>
+    <div class="row">
+        <%= f.label 'Kreativität: ' %> <div class="output" id="val2"></div>
+        <%= f.range_field :creative, min: 0, max: 100, id: 'slider2' %>
+    </div>
+    <div class="row">
+        <%= f.label 'Körpersprache: ' %> <div class="output" id="val3"></div>
+        <%= f.range_field :body, min: 0, max: 100, id: 'slider3' %>
+    </div>
+    <div class="row">
+        <%= f.label 'Rhetorik: ' %> <div class="output" id="val4"></div>
+        <%= f.range_field :rhetoric, min: 0, max: 100, id: 'slider4' %>
+    </div>
+</div>
+<div class="bottom">
+    <%= f.submit 'absenden', class: 'link' %>
+</div>
+<% end %>
 
 <script>
 $('input[type="range"]').rangeslider({

@@ -1,19 +1,17 @@
-<section id="content">
-  <% if @admin.avatar? %>
-  <div class="head">
-      <%= render partial: 'header' , locals: {can: false}%>
+<% if @admin.avatar? %>
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
     
-
-      <div class="h100">Wow!</div>
-      <div class="h50">Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</div>
-  </div>
-  <% else %>
-  <div class="head">
-      <div class="h100">Bild hinzufügen!</div>
-      <div class="h50">Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</div>
-  </div>
-  <% end %>
-  <div class="middle">
+    <h1>Wow!</h1>
+    <h3>Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</h3>
+</div>
+<% else %>
+<div class="head">
+    <h1>Bild hinzufügen!</h1>
+    <h3>Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</h3>
+</div>
+<% end %>
+<div class="middle">
       <%= form_for(:admin, url: gma_new_avatar_path) do |f| %>
         <% if @admin.avatar? %>
             <label for="admin_avatar" id="admin_pic">
@@ -45,7 +43,6 @@
       <% end %>
     </div>
   <% end %>
-</section>
 
 <script>
 function auto() {

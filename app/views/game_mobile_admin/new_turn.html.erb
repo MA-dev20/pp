@@ -1,37 +1,29 @@
-<section id="content">
-    <div class="head">
-        <%= render partial: 'header' , locals: {can: false}%>
-
-
-        <div class="h100">Hi, <%= @admin.fname %> <%= @admin.lname %></div>
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
+    <h1>Hi, <%= @admin.fname %> <%= @admin.lname %></h1>
+</div>
+<%= form_for(:turn, url: gma_new_turn_path) do |f| %>
+<div class="middle">
+    <div class="row">
+        <%= f.radio_button :play, true, onchange: "myFunction()" %>
+        <div class="col-12">
+            <label for="turn_play_true" class="custom-text">Ich pitche und bewerte</label>
+        </div>
     </div>
-    <%= form_for(:turn, url: gma_new_turn_path) do |f| %>
-        <div class="middle">
-        <div class="row">
-            <%= f.radio_button :play, true, onchange: "myFunction()" %>
-            <div class="col-12">
-                <label for="turn_play_true" class="custom-text">Ich pitche und bewerte</label>
-            </div>
+    <div class="row">
+        <div class="col-12">-oder-</div>
+    </div>
+    <div class="row">
+        <%= f.radio_button :play, false, onchange: "myFunction()" %>
+        <div class="col-12">
+            <label for="turn_play_false" class="custom-text">Ich möchte nur bewerten</label>
         </div>
-        <div class="row">
-            <div class="col-12">-oder-</div>
-        </div>
-        <div class="row">
-            <%= f.radio_button :play, false, onchange: "myFunction()" %>
-            <div class="col-12">
-                <label for="turn_play_false" class="custom-text">Ich möchte nur bewerten</label>
-            </div>
-        </div>
-        </div>
-        <div class="bottom">
-            <%= link_to "Let's Play", '', class: 'link', id: 'fake' %>
-            <%= f.submit "Let's Play", class: 'link pulse', id: 'summit', style: 'display: none' %>
-        </div>
-    <% end %>
-</section>
-
-<% if @game %>
-    <div id='game_channel' data-game-id="<%= @game.id %>" data-turn="replay" ></div>
+    </div>
+</div>
+<div class="bottom">
+    <%= link_to "Let's Play", '', class: 'link', id: 'fake' %>
+    <%= f.submit "Let's Play", class: 'link pulse', id: 'summit', style: 'display: none' %>
+</div>
 <% end %>
 
 <script>

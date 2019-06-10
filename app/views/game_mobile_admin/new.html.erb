@@ -1,24 +1,20 @@
-<div id="content">
-    <div class="head">
+<div class="head">
       <%= render partial: 'header' , locals: {can: false}%>
-        <%= render partial: 'header' %>
-
-        <div class="h100">Bitte logge dich ein!</div>
-    </div>
-    <%= form_for(:admin, url: gma_email_check_path, html: {autocomplete: 'off'}) do |f| %>
-    <div class="middle">
-       <div class="row">
-        <div class="col-12">
-        <%= f.email_field :email, placeholder: 'E-mail', class: 'form-field', onchange: 'enterName()' %>
-        </div>
-        </div>
-    </div>
-    <div class="bottom">
-        <%= link_to "weiter!", '', class: 'link', id: 'fake' %>
-        <%= f.submit 'weiter!', class: 'link pulse', id: 'summit', style: 'display: none' %>
-    </div>
-    <% end %>
+    <h1>Bitte logge dich ein!</h1>
 </div>
+<%= form_for(:admin, url: gma_email_check_path, html: {autocomplete: 'off'}) do |f| %>
+<div class="middle">
+    <div class="row">
+        <div class="col-12">
+            <%= f.email_field :email, placeholder: 'E-mail', class: 'form-field', onchange: 'enterName()' %>
+        </div>
+    </div>
+</div>
+<div class="bottom">
+    <%= link_to "weiter!", '', class: 'link', id: 'fake' %>
+    <%= f.submit 'weiter!', class: 'link pulse', id: 'summit', style: 'display: none' %>
+</div>
+<% end %>
 
 
 <script>

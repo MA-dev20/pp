@@ -1,0 +1,11 @@
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
+    <h1>Du hast für <%= @turn.findUser.fname %></h1>
+</div>
+<div class="middle">
+    <%= image_tag @turn.findUser.avatar.quad.url, class: 'mid-img green pulse' %>
+</div>
+<div class="bottom">
+    <p>gestimmt!</p>
+    <%= link_to 'Pitch starten!', gma_turn_url , id: 'play'%>
+</div>
