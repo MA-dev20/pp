@@ -1,7 +1,7 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :password, :choose, :error, :welcome, :video_cancel]
+  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :password, :choose, :error, :welcome, :video_cancel]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email]
-  before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating, :save_video]
+  before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
   skip_before_action :verify_authenticity_token, only: [:save_video]
 
@@ -103,29 +103,50 @@ class GameMobileAdminController < ApplicationController
   end
     
   def choose
-    @turns = @game.turns.where(status: "accepted").playable.sample(100)
-    if @game.state != 'choose' && @turns.count == 1
-      redirect_to gea_mobile_path
-      return
-    elsif  @game.state != 'choose' && @turns.count == 0
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    if @game.state != 'choose' && @turns.count <= 1
       redirect_to gea_mobile_path
       return
     elsif @game.state != 'choose'
-      if @game.turns.where(status: "accepted").count > 1
-        @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
-      else
-        redirect_to gea_mobile_path
-      end
+      @turn1 = @turns.first
+      @turn2 = @turns.second
+      @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
+    else
+      @turn1 = Turn.find_by(id: @game.turn1)
+      @turn2 = Turn.find_by(id: @game.turn2)
     end
   end
     
-  def turn
-    if @game.state != 'turn' && @game.turns.where(status: "accepted").playable.count == 1
-      @turn = @game.turns.where(status: "accepted").playable.first
-      @game.update(state: 'turn', active: false, current_turn: @game.turns.playable.first.id)
-    elsif @game.state != 'turn'
-      @game.update(state: 'turn')
+  def choosen
+    if params[:turn_id] == 'turn'
+      redirect_to gma_turn_path
+      return
     end
+    @turn = Turn.find_by(id: params[:turn_id])
+    @site = 'right'
+    if @turn.id == @game.turn1
+      @site = 'left'
+    end
+    @counter = @turn.counter + 1
+    @turn.update(counter: @counter)
+    ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'choosen', turn: @site, user_pic: @admin.avatar.quad.url
+  end
+    
+  def turn
+    @turns = @game.turns.where(status: 'accepted').playable
+    if @game.state != 'turn' && @turns.count == 1
+      @turn = @turns.first
+      @game.update(state: 'turn', active: false, current_turn: @turn.id)
+    elsif @game.state != 'turn'
+      @turn1 = Turn.find_by(id: @game.turn1)
+      @turn2 = Turn.find_by(id: @game.turn2)
+      if @turn1.counter > @turn2.counter
+        @game.update(state: 'turn', current_turn: @turn1.id)
+      else
+        @game.update(state: 'turn', current_turn: @turn2.id)
+      end
+    end
+    @cur_user = Turn.find_by(id: @game.current_turn).findUser
   end
     
   def play
@@ -243,7 +264,7 @@ class GameMobileAdminController < ApplicationController
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if  CatchwordsBasket.find_by(name: 'PetersWords').present?
         @word = Word.all.sample(5).first if @word.nil?
       end
-      @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true)
+      @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true, counter: 0)
       if @turn.save
         @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
         sign_in(@game)

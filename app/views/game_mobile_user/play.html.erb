@@ -1,19 +1,13 @@
-<section id="content">
-  <div class="head">
-      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-      <div>
-      <% if @cur_user == @user %>
-          Du Pitcht!
-      <% else %>
-          <%= @cur_user.fname %> Pitcht!
-      <% end %>
-      </div>
-  </div>
-  <div class="middle">
-      <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
-  </div>
-  <% if @game %>
-    <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-  <% end %>
-</section>
-
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+    <h1>
+    <% if @cur_user == @user %>
+        Du Pitcht!
+    <% else %>
+        <%= @cur_user.fname %> Pitcht!
+    <% end %>
+    </h1>
+</div>
+<div class="middle">
+    <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse' %>
+</div>

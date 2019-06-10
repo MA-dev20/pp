@@ -1,28 +1,20 @@
-<section id="content">
-  <% if @user == @cur_user %>
-    <div class="head">
-      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-
-        <div class="h100">DU</div>
-    </div>
-    <div class="middle">
-        <%= image_tag @user.avatar.quad.url, class: 'mid-img green' %>
-    </div>
-    <div class="bottom">
-        wirst bewertet!
-    </div>
-  <% else %>
-    <div class="head">
-        <div class="h100">Bewertung abgegeben!</div>
-    </div>
-    <div class="middle">
-        <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
-    </div>
-    <div class="bottom">
-    </div>
-  <% end %>
-    <% if @game %>
-      <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-    <% end %>
-</section>
-
+<% if @user == @cur_user %>
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+    <h1>DU</h1>
+</div>
+<div class="middle">
+    <%= image_tag @user.avatar.quad.url, class: 'mid-img green pulse' %>
+</div>
+<div class="bottom">
+    <p>wirst bewertet!</p>
+</div>
+<% else %>
+<div class="head">
+    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+    <h1>Bewertung abgegeben!</h1>
+</div>
+<div class="middle">
+    <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse' %>
+</div>
+<% end %>

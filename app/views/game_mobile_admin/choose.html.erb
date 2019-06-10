@@ -1,11 +1,12 @@
-<section id="content">
-  <div class="head">
-      <%= render partial: 'header' , locals: {can: false}%>
-	</div>
-	<%= image_tag 'game/choose.png', class: 'bg-image' %>
-	
-</section>
-
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
+    <h1>Who's next?</h1>
+</div>
+<div class="middle">
+    <%= image_tag @turn1.findUser.avatar.quad.url, class: 'mid-img-left blue' %>
+    <%= image_tag @turn2.findUser.avatar.quad.url, class: 'mid-img-right blue' %>
+    <%= link_to '', gma_choosen_path(@turn1),class: 'mid-img-left' %>
+    <%= link_to '', gma_choosen_path(@turn2), class: 'mid-img-right' %>
+</div>
+<div class="bottom">
+</div>

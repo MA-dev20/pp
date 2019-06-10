@@ -1,17 +1,11 @@
-<section id="content">
-    <div class="head">
-      <%= render partial: 'header' , locals: {can: false}%>
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
         
-        <div class="h100">Hier ist die Bewertung!</div>
-    </div>
-    <div class="middle">
-        <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
-    </div>
-    <div class="bottom">
-        <%= link_to 'weiter!', gma_after_rating_path %>
-    </div>
-</section>
-
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
+    <h1>Hier ist die Bewertung!</h1>
+</div>
+<div class="middle">
+    <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
+</div>
+<div class="bottom">
+    <%= link_to 'weiter!', gma_after_rating_path %>
+</div>

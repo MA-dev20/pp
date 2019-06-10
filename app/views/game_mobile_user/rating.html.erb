@@ -1,14 +1,7 @@
-<section id="content">
-    <div class="head">
+<div class="head">
       <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-
-        <div class="h100">Hier ist die Bewertung!</div>
-    </div>
-    <div class="middle">
-       <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
-    </div>
-    <% if @game %>
-	  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-	<% end %>
-</section>
-
+    <h1>Hier ist die Bewertung!</h1>
+</div>
+<div class="middle">
+    <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
+</div>

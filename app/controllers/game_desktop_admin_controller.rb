@@ -1,6 +1,6 @@
 class GameDesktopAdminController < ApplicationController
   before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :ended]
-  before_action :set_turn, only: [:turn, :play, :rate, :rating]
+  before_action :set_turn, only: [:play, :rate, :rating]
     
   layout 'game_desktop'
 
@@ -17,19 +17,17 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def choose
-    @turns = @game.turns.where(status: "accepted").playable.sample(100)
-    if @game.state != 'choose' && @turns.count == 1
-      redirect_to gea_turn_path
-      return
-    elsif @game.state != 'choose' && @turns.count == 0
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    if @turns.count <= 1
       redirect_to gea_turn_path
       return
     elsif @game.state != 'choose'
-      if @game.turns.where(status: "accepted").playable.count > 1
-        @game.update(active: false, current_turn: @turns.first.id, state: 'choose')
-      else
-        redirect_to gea_turn_path
-      end
+      @turn1 = @turns.first
+      @turn2 = @turns.second
+      @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
+    else
+      @turn1 = Turn.find_by(id: @game.turn1)
+      @turn2 = Turn.find_by(id: @game.turn2)
     end
   end
 
@@ -38,12 +36,24 @@ class GameDesktopAdminController < ApplicationController
   end
 
   def turn
-    if @game.state != 'turn' && @game.turns.where(status: "accepted").playable.count == 1
-      @turn = @game.turns.where(status: "accepted").playable.first
+    @turns = @game.turns.where(status: 'accepted').playable
+    if @game.state != 'turn' && @turns.count == 1
+      @turn = @turns.first
+      @user = @turn.findUser
       @game.update(state: 'turn', active: false, current_turn: @game.turns.where(status: "accepted").playable.first.id)
     elsif @game.state != 'turn'
-      @game.update(state: 'turn')
+      @turn1 = Turn.find_by(id: @game.turn1)
+      @turn2 = Turn.find_by(id: @game.turn2)
+      if @turn1.counter > @turn2.counter
+        @game.update(state: 'turn', current_turn: @turn1.id)
+      else
+        @game.update(state: 'turn', current_turn: @turn2.id)
+      end
     end
+    @turn1 = Turn.find_by(id: @game.turn1)
+    @turn2 = Turn.find_by(id: @game.turn2)
+    @turn = Turn.find_by(id: @game.current_turn)
+    @user = @turn.findUser
   end
     
   def play

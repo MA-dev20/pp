@@ -1,31 +1,21 @@
 <section id="count_channel" data-game-id="<%= @game.id %>">
-<section id="content">
-    <div class="head">
-      <%= render partial: 'header' , locals: {can: false}%>
-      
-
-        Alle beigetreten?
-    </div>
-    <div class="middle">
-      <% if @admin.avatar? %>
-          <%= image_tag @admin.avatar.quad.url, class: 'mid-img green' %>
-      <% else %>
-       <div class="mid-img green">
-           <%= image_tag 'game/wolf_button.png', class: 'wolf' %>
-       </div>
-       <% end %>
-    </div>
-    <div class="bottom">
-       <%= link_to 'starten!', gma_choose_path %>
-    </div>
-</section>
-  <div id="modal">
-  <%= render partial: 'shared/user_accept_modal' %>
-  </div>
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
+    <h1>Alle beigetreten?</h1>
 </div>
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
+<div class="middle">
+    <% if @admin.avatar? %>
+        <%= image_tag @admin.avatar.quad.url, class: 'mid-img green pulse' %>
+    <% else %>
+        <div class="mid-img green">
+            <%= image_tag 'game/wolf_button.png', class: 'wolf' %>
+        </div>
+    <% end %>
+</div>
+<div class="bottom">
+    <%= link_to 'starten!', gma_choose_path %>
+</div>
+</section>
 <%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>
 
 <script type="text/javascript">

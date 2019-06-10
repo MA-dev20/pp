@@ -1,28 +1,22 @@
-<div id="content">
-    <div class="head">
-        <%= render partial: 'header' %>
-        
-        <div class="h100">Bitte logge dich ein!</div>
-    </div>
-    <%= form_for(:admin, url: gma_start_path, html: {autocomplete: 'off'}) do |f| %>
-    <div class="middle">
-       <div class="row">
-        <div class="col-12">
-        <%= f.password_field :password, placeholder: 'Passwort', class: 'form-field', onchange: 'enterName()' %>
-        <%= f.hidden_field :email, class: 'form-field',value: params[:email]  %>
-        </div>
-        </div>
-    </div>
-    <div class="bottom">
-        <%= f.submit 'weiter!', class: 'link pulse', id: 'summit'%>
-        <br>
-        <%= link_to "Forget Password?", new_admin_password_path, class: 'link' %>
-
-    </div>
-    <% end %>
-
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
+    <h1>Bitte logge dich ein!</h1>
 </div>
-
+<%= form_for(:admin, url: gma_start_path, html: {autocomplete: 'off'}) do |f| %>
+<div class="middle">
+    <div class="row">
+        <div class="col-12">
+            <%= f.password_field :password, placeholder: 'Passwort', class: 'form-field', onchange: 'enterName()' %>
+            <%= f.hidden_field :email, class: 'form-field',value: params[:email]  %>
+        </div>
+    </div>
+</div>
+<div class="bottom">
+    <%= f.submit 'weiter!', class: 'link pulse', id: 'summit'%>
+    <br>
+    <%= link_to "Forget Password?", new_admin_password_path, class: 'link' %>
+</div>
+<% end %>
 
 <script>
     function enterName() {

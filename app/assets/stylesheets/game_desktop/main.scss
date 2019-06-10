@@ -149,15 +149,88 @@ body {
     margin: 0;
     opacity: 0.8;
 }
-#middle .circle img{
+.vote {
+    position: fixed;
+    top: 40vh;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    background-color: rgba(29, 218, 175, 1);
+    animation-name: fall-in;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+.vote img {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    border-radius: 50%;
+    height: 90%;
+    width: 90%;
+}
+
+@keyframes fall-in {
+    0% {
+        top: -150px;
+    }
+    100% {
+        top: 35vh;
+    }
+}
+#middle .circle img,
+#middle .circle-left img,
+#middle .circle-right img{
     position: absolute;
     top: 35vh;
-    left: calc(50% - 15vh);
     height: 30vh;
     width: 30vh;
     border: 12px solid rgba(29, 218, 175, 1);
     border-radius: 50%;
     box-shadow: 0 0 0 0 rgba(29, 218, 175, 0.5);
+}
+#middle .blue {
+    border-color: #25aae2 !important;
+}
+#middle .circle img,
+#middle .circle-left .mid-img,
+#middle .circle-right .mid-img{
+    left: calc(50% - 15vh);
+}
+#middle .circle-left img {
+    left: calc(50% - 35vh);
+}
+#middle .circle-right img {
+    left: calc(50% + 5vh);
+}
+#middle .circle-right .middle,
+#middle .circle-left .middle {
+    animation-name: middle;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+#middle .circle-right .hide,
+#middle .circle-left .hide, {
+    animation-name: hide;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+.pulse-single {
+    animation-delay: 2s;
+    animation-name: pulse;
+    animation-duration: 1.5s;
+}
+@keyframes middle {
+    to {
+        left: calc(50% - 15vh);
+    }
+}
+@keyframes hide {
+    to {
+        opacity: 0;
+        display: none;
+    }
 }
 .pulse {
     animation-name: pulse;
@@ -261,6 +334,13 @@ body {
     background-color: transparent;
 }
 
+#bottom .progress {
+    height: 2rem;
+}
+#bottom .progress-bar {
+    animation-duration: 15s;
+    background-color: rgba(29, 218, 175, 1);
+}
 #skip {
     position: fixed;
     bottom: 50px;

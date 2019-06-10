@@ -1,18 +1,10 @@
-<section id="content">
-    <div class="head">
-      <%= render partial: 'header' , locals: {can: false}%>
-        
-
-    	Intro
-	</div>
-    <div class="middle">
-        <%= image_tag 'game/wolf_button.png', class: 'mid-img green' %>
-    </div>
-    <div class="bottom">
-        <%= link_to 'überspringen!', gma_wait_path %>
-    </div>
-</section>
-
-<% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
-<% end %>
+<div class="head">
+    <%= render partial: 'header' , locals: {can: false}%>
+    <h1>Intro</h1>
+</div>
+<div class="middle">
+    <%= image_tag 'game/wolf_button.png', class: 'mid-img green pulse' %>
+</div>
+<div class="bottom">
+    <%= link_to 'überspringen!', gma_wait_path %>
+</div>
