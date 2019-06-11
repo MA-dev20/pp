@@ -23,9 +23,6 @@
 }
 @media only screen
     and (orientation: landscape) {
-        #content {
-            display: none;
-        }
         .landscape {
             position: absolute;
             top: 0;
@@ -35,6 +32,7 @@
             background: linear-gradient(#1dacf1 0%, #1a8ed6 51%, #145daa 100%) !important;
             text-align: center;
             font-family: 'BarackPro-Solid';
+            z-index: 100000;
         }
         .landscape .text {
             position: relative;

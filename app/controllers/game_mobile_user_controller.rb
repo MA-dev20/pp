@@ -11,7 +11,6 @@ class GameMobileUserController < ApplicationController
     @game1 = Game.where(password: params[:password], active: true).first
     if @game1
       session[:game_session_id] = @game1.id
-      @game = @game1
     else
       flash[:danger] = 'Konnte kein passendes Spiel finden!'
       redirect_to root_path
