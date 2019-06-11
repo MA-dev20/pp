@@ -299,7 +299,6 @@
     }
 
     function skip() {
-     video.currentTime += parseFloat(this.dataset.skip);
     }
 
     function commentBox(e){
@@ -332,6 +331,7 @@
     function handleProgress() {
       var duration = video.duration != Infinity ? video.duration : <%=@turn.recorded_pitch_duration.present? ? @turn.recorded_pitch_duration : 0 %> ;
       var percent = (video.currentTime / duration ) * 100;
+      video.duration = <%=@turn.recorded_pitch_duration.present? ? @turn.recorded_pitch_duration : 0 %> ;
       progressBar.style.width = `${percent}%`;
       if(percent == 0 || percent == 100){
         if(percent == 0){
@@ -355,7 +355,8 @@
     }
 
     function scrub(e) {
-      video.play()
+      $("#pitch_video").show()
+      $("#pitch_thumb").hide()
       const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
       video.currentTime = scrubTime;
     }
