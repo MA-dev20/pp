@@ -1,4 +1,4 @@
-<section id="dash_stats" class="dash_stats-head">
+<section id="dash_stats" class="dash_stats-head dash-stats-set">
     <div class="head">
          <%= render partial: 'select_team_user_dropdown', locals: {users: @users, teams: @teams, user: @user, team: @team, teams_page: false} %>
     </div>
@@ -75,7 +75,27 @@
         </select>
         
         </div>
+        <div class="video-content">
+            <h5><%= @user1.fname.to_s + "'s"%> Aufnahmen</h5>
+            <p>Alle sechen</p>
+            <% @reviewed_videos.each do |video| %>
+                <% if video.turn_rating.present? %>
+                    <a href="<%= "/admins/dash/stats/turns/#{video.turn_rating.id}"%>">
+                        <div class="overview-block overview-block-n">
+                            <div class="overviewBlock-video">
+                                <img src="<%= video.recorded_pitch.thumb.url %>"/>
+                                <span class="overview-video-play"></span>
+                                <span class="overview-video-rating ov-span"><%= number_with_precision(video.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) if video.turn_rating.present?%></span>
+                                <span class="overview-video-time ov-span"><%= video.recorded_pitch_duration.to_minutes if video.recorded_pitch_duration.present? %> </span>
+                            </div>
+                        </div>
+                    </a>
+
+                <% end %>
+            <% end %>
+        </div>
     </div>
+
     <div class="stats_chart">
         <div class="chart-container">
             <canvas id="Chart"></canvas>
@@ -87,8 +107,8 @@
 <script>
 (function() {
 [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
-    function(el) {	
-	   new SelectFx(el);
+    function(el) {  
+     new SelectFx(el);
        newTab: false;
     } );
 })();
@@ -178,10 +198,12 @@ function customTooltips(tooltipModel) {
 
     // Display, position, and set styles for font
     tooltipEl.style.opacity = 1;
-    tooltipEl.style.position = 'absolute';
-    tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX-174 + 'px';
-    tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-415 + 'px';
-    tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
+    tooltipEl.style.position = 'relative';
+    tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()/2))+ 'px';
+    tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight())) - 18 + 'px';
+    // tooltipEl.style.left = (position.left + window.pageXOffset + tooltipModel.caretX+100)/window.devicePixelRatio + 'px';
+    // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY-330 + 'px';
+    // tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
     tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
     tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
     tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';

@@ -169,6 +169,7 @@ class DashAdminController < ApplicationController
     @turns = @user.turns
     @turns_rating = @user.turn_ratings.last(7)
     @user1 = User.find(params[:compare_user_id])
+    @reviewed_videos = @turns.where.not(recorded_pitch: nil, click_time: nil).order('click_time DESC').first(2)
     @turns_rating2 = @user1.turn_ratings.last(7)
     rating = @user.turn_ratings
     rating2 = @user1.turn_ratings
