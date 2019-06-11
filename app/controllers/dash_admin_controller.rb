@@ -43,7 +43,7 @@ class DashAdminController < ApplicationController
     @rhetoric = @ratings.average(:rhetoric).to_f
     @spontan = @ratings.average(:spontan).to_f
     @average = (@spontan + @rhetoric + @body + @creative)/4
-    @admin_ratings = TurnRating.where(game_id: @turns_rating.game_id, turn_id:  @turn.id,admin_id: @admin.id).first
+    @admin_ratings = Rating.where(turn_id:  @turn.id,admin_id: @admin.id).first
     render :show_turn
   end
 
