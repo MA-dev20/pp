@@ -37,7 +37,12 @@ class DashAdminController < ApplicationController
     @turn = @turns_rating.turn
     @user = @turn.user
     @turn.review
-    @gamerating = GameRating.where(game_id: @turns_rating.game_id).first
+    @ratings = @turn.ratings
+    @creative = @ratings.average(:creative).to_f
+    @body = @ratings.average(:body).to_f
+    @rhetoric = @ratings.average(:rhetoric).to_f
+    @spontan = @ratings.average(:spontan).to_f
+    @average = (@spontan + @rhetoric + @body + @creative)/4
     @admin_ratings = TurnRating.where(game_id: @turns_rating.game_id, turn_id:  @turn.id,admin_id: @admin.id).first
     render :show_turn
   end
@@ -311,7 +316,8 @@ class DashAdminController < ApplicationController
       turns.each do |t|
         if t.turn_rating.present? and t.recorded_pitch.present?
           turn = JSON.parse(t.to_json(include: [:turn_rating]))
-          turn["rating"] = number_with_precision(t.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1).to_f if t.turn_rating.present?
+          turn["rating"] = number_with_precision(t.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1).to_f if t.turn_rating.present?          
+          turn["rating"] = number_with_precision(t.ratings.pluck('avg(body), avg(creative), avg(spontan), avg(rhetoric)').first.inject(:+).to_f  / 40, precision: 1).to_f if t.ratings.present?
           turn["word"] = t.word.name if t.word.present?
           turn["name"] = t.user.fname + ' ' + t.user.lname if t.user.present?
           turn["name"] = t.admin.fname.to_s + ' ' + t.admin.lname.to_s if t.admin.present? and !turn["name"].present?
