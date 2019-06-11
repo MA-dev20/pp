@@ -130,7 +130,7 @@ var label = [NaN, NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
 <% @turns_rating.each do |g| %>
     var json_data = <%= g.to_json.html_safe %>
-    json_data["word"] = "<%= g.turn.word.name %>";
+    json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present? %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
         <% if g.turn.recorded_pitch.url.present? %>
@@ -586,7 +586,7 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>  
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present?  %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
 
@@ -640,7 +640,7 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present? %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
 
@@ -693,7 +693,7 @@ document.getElementById('chart_body').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present?  %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
 
@@ -748,7 +748,7 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present?  %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
 
