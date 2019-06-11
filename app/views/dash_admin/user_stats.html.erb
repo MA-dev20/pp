@@ -78,16 +78,19 @@
             <h5><%= @user.fname.to_s + "'s"%> Aufnahmen</h5>
             <p>Alle sechen</p>
             <% @reviewed_videos.each do |video| %>
-                <a href="<%= "/admins/dash/stats/turns/#{video.turn_rating.id}" if video.turn_rating.present?%>">
-                    <div class="overview-block overview-block-n">
-                        <div class="overviewBlock-video">
-                            <video src="<%= video.recorded_pitch.url %>"></video>
-                            <span class="overview-video-play"></span>
-                            <span class="overview-video-rating ov-span"><%= number_with_precision(video.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) if video.turn_rating.present?%></span>
-                            <span class="overview-video-time ov-span"><%= video.recorded_pitch_duration.to_minutes if video.recorded_pitch_duration.present? %> </span>
+                <% if video.turn_rating.present? %>
+                    <a href="<%= "/admins/dash/stats/turns/#{video.turn_rating.id}"%>">
+                        <div class="overview-block overview-block-n">
+                            <div class="overviewBlock-video">
+                                <video src="<%= video.recorded_pitch.url %>"></video>
+                                <span class="overview-video-play"></span>
+                                <span class="overview-video-rating ov-span"><%= number_with_precision(video.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) if video.turn_rating.present?%></span>
+                                <span class="overview-video-time ov-span"><%= video.recorded_pitch_duration.to_minutes if video.recorded_pitch_duration.present? %> </span>
+                            </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                    
+                <% end %>
             <% end %>
         </div>
     </div>
@@ -428,7 +431,7 @@ var gesamtChart = new Chart(ctx, {
                                 <div class="progressbar-view">
                                   <div class="progressbar-fill" style="width: `+body/10*100+`% !important;"></div>
                                 </div>
-                                <div class="progress-bar-value">`+body2+`</div>
+                                <div class="progress-bar-value">`+body+`</div>
                               </div>`;
                               if(data["datasets"][1]){
                                 val+=` <div class="progress-bar-con progress-con-b">
