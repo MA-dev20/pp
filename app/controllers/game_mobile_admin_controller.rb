@@ -8,9 +8,8 @@ class GameMobileAdminController < ApplicationController
     
   def new
     session[:admin_email] = nil
-    @game = Game.where(password: params[:password], active: true).first
-    session[:game_session_id] = @game.id
-    sign_in(@game)
+    @game1 = Game.where(password: params[:password], active: true).first
+    session[:game_session_id] = @game1.id
   end
 
   def password
@@ -36,11 +35,10 @@ class GameMobileAdminController < ApplicationController
   end
 
   def create
-    @game = Game.where(password: params[:password], active: true).first
-    if @game
-      session[:game_session_id] = @game.id
-      sign_in(@game)
-      @admin = Admin.where(id: @game.admin_id, email: session[:admin_email].downcase).first
+    @game1 = Game.where(password: params[:password], active: true).first
+    if @game1
+      session[:game_session_id] = @game1.id
+      @admin = Admin.where(id: @game1.admin_id, email: session[:admin_email].downcase).first
       if @admin && @admin.valid_password?(params[:admin][:password])
         flash[:success] = "Successfully signed In"
         sign_in(@admin)
@@ -57,7 +55,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def new_avatar
-    @game = Game.find(session[:game_session_id])
+    @game1 = Game.find(session[:game_session_id])
   end
 
   def update_game_seconds
@@ -67,14 +65,14 @@ class GameMobileAdminController < ApplicationController
   end
 
   def create_avatar
-    @game = Game.find(session[:game_session_id])
+    @game1 = Game.find(session[:game_session_id])
     @admin.update(avatar: params[:admin][:avatar])
     redirect_to gma_new_avatar_path
   end
     
   def new_turn
-    @game = Game.find(session[:game_session_id])
-    @turn = @game.turns.find_by(admin_id: @admin.id, admin_turn: true)
+    @game1 = Game.find(session[:game_session_id])
+    @turn = @game1.turns.find_by(admin_id: @admin.id, admin_turn: true)
     @turn.update(status: 'ended') if @turn.present?
     params[:play] = params[:play] == 'rate' ? false : true
     create_turn_method(params[:play])
@@ -256,6 +254,7 @@ class GameMobileAdminController < ApplicationController
 
     def create_turn_method(play=false)
       @game = Game.find(session[:game_session_id])
+      sign_in(@game)
       if @game.own_words
         @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?

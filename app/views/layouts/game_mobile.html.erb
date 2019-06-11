@@ -29,12 +29,12 @@
         </div>
     <% end %>
 <% end %>
-   <div class="landscape">
-       <div class="text"><i class="fas fa-redo"></i>  Please turn your Phone!</div>
-    </div>
     <section id="content">
     <% if @game %>
         <%= yield %>
+        <div class="landscape">
+            <div class="text"><i class="fas fa-redo"></i>  Please turn your Phone!</div>
+        </div>
         <div id='game_channel' data-game-id="<%= @game.id %>"></div>
     <% else %>
         <%= yield %>
