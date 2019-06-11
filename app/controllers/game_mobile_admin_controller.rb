@@ -1,5 +1,5 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :password, :choose, :error, :welcome, :video_cancel]
+  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email]
   before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
@@ -13,6 +13,7 @@ class GameMobileAdminController < ApplicationController
   end
 
   def password
+    @game1 = Game.find(session[:game_session_id])
   end
 
   def video_cancel
