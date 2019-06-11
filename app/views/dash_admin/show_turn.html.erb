@@ -8,7 +8,7 @@
             <div id="dash_stats">
               <div class="gesamt rhetorik active">
                 <button class="circle" id="chart_gesamt">
-                  <span><%= number_with_precision(@turns_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
+                  <span><%= number_with_precision(@average / 10, precision: 1) %></span>
                   <% if @user.present? && @user.avatar? %>
                     <%= image_tag @user.avatar.quad.url %>
                   <% else %>
@@ -42,12 +42,12 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.spontan.to_f/10,precision: 1 %></div>
               </div>
-              <% if @admin_ratings.present? %>
+              <% if @spontan.present? %>
                   <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: <%=@admin_ratings.spontan%>% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@spontan%>% !important;"></div>
                     </div>
-                    <div class="progress-bar-value"><%=number_with_precision @admin_ratings.spontan.to_f/10,precision: 1 %></div>
+                    <div class="progress-bar-value"><%=number_with_precision @spontan.to_f/10,precision: 1 %></div>
                   </div>
               <% end %>
             </div>
@@ -61,13 +61,13 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.creative.to_f/10,precision: 1 %></div>
               </div>
-              <% if @admin_ratings.present? %>
+              <% if @creative.present? %>
             
                 <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                   <div class="progressbar-view">
-                    <div class="progressbar-fill" style="width: <%=@admin_ratings.creative%>% !important;"></div>
+                    <div class="progressbar-fill" style="width: <%=@creative%>% !important;"></div>
                   </div>
-                  <div class="progress-bar-value"><%=number_with_precision @admin_ratings.creative.to_f/10,precision: 1 %></div>
+                  <div class="progress-bar-value"><%=number_with_precision @creative.to_f/10,precision: 1 %></div>
                 </div>
               <% end %>
             </div>
@@ -81,12 +81,12 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.body.to_f/10,precision: 1 %></div>
               </div> 
-              <% if @admin_ratings.present? %>
+              <% if @body.present? %>
                 <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                   <div class="progressbar-view">
-                    <div class="progressbar-fill" style="width: <%=@admin_ratings.body%>% !important;"></div>
+                    <div class="progressbar-fill" style="width: <%=@body%>% !important;"></div>
                   </div>
-                  <div class="progress-bar-value"><%=number_with_precision @admin_ratings.body.to_f/10,precision: 1 %></div>
+                  <div class="progress-bar-value"><%=number_with_precision @body.to_f/10,precision: 1 %></div>
                 </div>
               <% end %>
             </div>
@@ -100,13 +100,13 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.rhetoric.to_f/10,precision: 1 %></div>
               </div>
-              <% if @admin_ratings.present? %>
+              <% if @rhetoric.present? %>
               
                   <div class="progress-bar-con progress-con-b show_it"  style="display: none" style="display: none">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: <%=@admin_ratings.rhetoric%>% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@rhetoric%>% !important;"></div>
                     </div>
-                    <div class="progress-bar-value"><%=number_with_precision @admin_ratings.rhetoric.to_f/10,precision: 1 %></div>
+                    <div class="progress-bar-value"><%=number_with_precision @rhetoric.to_f/10,precision: 1 %></div>
                   </div>
               <% end %>    
             </div>
