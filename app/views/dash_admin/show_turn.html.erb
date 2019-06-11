@@ -8,7 +8,7 @@
             <div id="dash_stats">
               <div class="gesamt rhetorik active">
                 <button class="circle" id="chart_gesamt">
-                  <span><%= number_with_precision(@turns_rating.ges / 10, precision: 1) %></span>
+                  <span><%= number_with_precision(@turns_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
                   <% if @user.present? && @user.avatar? %>
                     <%= image_tag @user.avatar.quad.url %>
                   <% else %>
@@ -17,10 +17,10 @@
                 </button>
                 <div class="text" id="t_gesamt">Gesamt</div>
               </div>
-              <% if @gamerating.present?%>
+              <% if @admin_ratings.present?%>
               <div class="gesamt rhetorik show_it" style="display: none;">
                 <button class="circle" id="chart_gesamt">
-                  <span><%= @admin_ratings.present? ? number_with_precision(@admin_ratings.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) : number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
+                  <span><%=  number_with_precision(@admin_ratings.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
                   <% if @user.present? && @user.avatar? %>
                   <%= image_tag @user.avatar.quad.url %>
                   <% else %>
@@ -42,13 +42,12 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.spontan.to_f/10,precision: 1 %></div>
               </div>
-              <% if @gamerating.present? %>
-
+              <% if @admin_ratings.present? %>
                   <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: <%=@gamerating.spontan%>% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@admin_ratings.spontan%>% !important;"></div>
                     </div>
-                    <div class="progress-bar-value"><%=number_with_precision @gamerating.creative.to_f/10,precision: 1 %></div>
+                    <div class="progress-bar-value"><%=number_with_precision @admin_ratings.spontan.to_f/10,precision: 1 %></div>
                   </div>
               <% end %>
             </div>
@@ -62,13 +61,13 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.creative.to_f/10,precision: 1 %></div>
               </div>
-              <% if @gamerating.present? %>
+              <% if @admin_ratings.present? %>
             
                 <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                   <div class="progressbar-view">
-                    <div class="progressbar-fill" style="width: <%=@gamerating.creative%>% !important;"></div>
+                    <div class="progressbar-fill" style="width: <%=@admin_ratings.creative%>% !important;"></div>
                   </div>
-                  <div class="progress-bar-value"><%=number_with_precision @gamerating.creative.to_f/10,precision: 1 %></div>
+                  <div class="progress-bar-value"><%=number_with_precision @admin_ratings.creative.to_f/10,precision: 1 %></div>
                 </div>
               <% end %>
             </div>
@@ -82,12 +81,12 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.body.to_f/10,precision: 1 %></div>
               </div> 
-              <% if @gamerating.present? %>
+              <% if @admin_ratings.present? %>
                 <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                   <div class="progressbar-view">
-                    <div class="progressbar-fill" style="width: <%=@gamerating.body%>% !important;"></div>
+                    <div class="progressbar-fill" style="width: <%=@admin_ratings.body%>% !important;"></div>
                   </div>
-                  <div class="progress-bar-value"><%=number_with_precision @gamerating.body.to_f/10,precision: 1 %></div>
+                  <div class="progress-bar-value"><%=number_with_precision @admin_ratings.body.to_f/10,precision: 1 %></div>
                 </div>
               <% end %>
             </div>
@@ -101,13 +100,13 @@
                 </div>
                 <div class="progress-bar-value"><%=number_with_precision @turns_rating.rhetoric.to_f/10,precision: 1 %></div>
               </div>
-              <% if @gamerating.present? %>
+              <% if @admin_ratings.present? %>
               
                   <div class="progress-bar-con progress-con-b show_it"  style="display: none" style="display: none">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: <%=@gamerating.rhetoric%>% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@admin_ratings.rhetoric%>% !important;"></div>
                     </div>
-                    <div class="progress-bar-value"><%=number_with_precision @gamerating.rhetoric.to_f/10,precision: 1 %></div>
+                    <div class="progress-bar-value"><%=number_with_precision @admin_ratings.rhetoric.to_f/10,precision: 1 %></div>
                   </div>
               <% end %>    
             </div>
@@ -126,8 +125,8 @@
   <div class="videotool-content videotool-content-video" id="video" >
     <div class="video-container">
       <%= image_tag @turn.recorded_pitch.thumb.url, id: "pitch_thumb" %>
-      <video  height="auto" width="100%" id="pitch_video"  preload="metadata" style="display: none;">
-        <source src="<%= @turn.recorded_pitch.url %>">
+      <video  height="auto" width="100%" id="pitch_video"  preload="auto" style="display: none;">
+        <source src="<%= @turn.recorded_pitch.url %>" type="video/webm">
       </video>
     </div>
     <div class="player-bar">
@@ -207,6 +206,7 @@
       $("#time_of_video").addClass('vc-video-t')
       $('#time_of_video').addClass($(this).val())
     })
+    video.addEventListener("loadedmetadata", function(){console.log(video.duration)}, false)
     /* Build out functions */
     function togglePlay(e) {
       e.preventDefault()
@@ -309,7 +309,8 @@
       fillTimeOfCommentBox(video.currentTime)
       $("#comments").fadeIn()
     }
-
+    document.getElementById("pitch_video").currentTime=12228292812
+    document.getElementById("pitch_video").currentTime=0
     function fillTimeOfCommentBox(time){
       var displayedTime = fancyTimeFormat(time)
       $("#time_of_video").text(displayedTime)
@@ -384,10 +385,7 @@
     progress.addEventListener('click', (e) => mousedown && scrub(e));
     progress.addEventListener('click', () => mousedown = true);
     progress.addEventListener('click', () => mousedown = false);
-    var duration;
-    video.addEventListener('loadedmetadata', function () {
-      console.log(video.duration);
-    });
+   
 
     $(".stop-video").click(function(e){
       e.preventDefault()
