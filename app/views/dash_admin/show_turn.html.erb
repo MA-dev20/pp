@@ -20,7 +20,7 @@
               <% if @gamerating.present?%>
               <div class="gesamt rhetorik show_it" style="display: none;">
                 <button class="circle" id="chart_gesamt">
-                  <span><%= number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
+                  <span><%= @aadmin_ratings.present? ? number_with_precision(@admin_ratings.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) : number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
                   <% if @user.present? && @user.avatar? %>
                   <%= image_tag @user.avatar.quad.url %>
                   <% else %>
@@ -151,7 +151,7 @@
     <div class="progress-block">
       <div class="vc-top">
         <div class="vc-top-scroll" id="comment-box">
-          <% @turn.comments.order('time_of_video DESC').each do |c| %>
+          <% @turn.comments.order('time_of_video ASC').each do |c| %>
             <div class="vc-row single-comment  <%= 'vcr-'+c.type_of_comment %> comment-<%=c.time_of_video%>" data-time="<%=c.time_of_video%>">
               <h5><%= c.time_of_video  ? c.time_of_video.to_minutes : '0:00'%></h5>
               <p><%= c.title %></p>
@@ -248,7 +248,7 @@
 
     function sortAndRenderComments(val){
       Comments.push(val)
-      Comments.sort(dynamicSort("-time_of_video"))
+      Comments.sort(dynamicSort("time_of_video"))
       $("#comment-box").empty()
       renderTemplate()
     }

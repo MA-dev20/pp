@@ -38,6 +38,7 @@ class DashAdminController < ApplicationController
     @user = @turn.user
     @turn.review
     @gamerating = GameRating.where(game_id: @turns_rating.game_id).first
+    @admin_ratings = TurnRating.where(game_id: @turns_rating.game_id, turn_id:  @turn.id,admin_id: @admin.id).first
     render :show_turn
   end
 
@@ -314,7 +315,7 @@ class DashAdminController < ApplicationController
           turn["name"] = t.user.fname + ' ' + t.user.lname if t.user.present?
           turn["duration"] = t.recorded_pitch_duration.to_minutes if t.recorded_pitch_duration.present?
           turn["time"] = t.created_at.strftime("%d.%m.%Y")
-          turn["recorded_pitch_url"] = t.recorded_pitch.url if t.recorded_pitch.present?
+          turn["recorded_pitch_url"] = t.recorded_pitch.thumb.url if t.recorded_pitch.present?
           result.push(turn)
         end
       end
