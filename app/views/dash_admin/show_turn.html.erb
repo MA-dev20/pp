@@ -20,7 +20,7 @@
               <% if @gamerating.present?%>
               <div class="gesamt rhetorik show_it" style="display: none;">
                 <button class="circle" id="chart_gesamt">
-                  <span><%= @aadmin_ratings.present? ? number_with_precision(@admin_ratings.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) : number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
+                  <span><%= @admin_ratings.present? ? number_with_precision(@admin_ratings.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) : number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
                   <% if @user.present? && @user.avatar? %>
                   <%= image_tag @user.avatar.quad.url %>
                   <% else %>
