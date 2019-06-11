@@ -313,6 +313,7 @@ class DashAdminController < ApplicationController
           turn["rating"] = number_with_precision(t.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1).to_f if t.turn_rating.present?
           turn["word"] = t.word.name if t.word.present?
           turn["name"] = t.user.fname + ' ' + t.user.lname if t.user.present?
+          turn["name"] = t.admin.fname.to_s + ' ' + t.admin.lname.to_s if t.admin.present? and !turn["name"].present?
           turn["duration"] = t.recorded_pitch_duration.to_minutes if t.recorded_pitch_duration.present?
           turn["time"] = t.created_at.strftime("%d.%m.%Y")
           turn["recorded_pitch_url"] = t.recorded_pitch.thumb.url if t.recorded_pitch.present?
