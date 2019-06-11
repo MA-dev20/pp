@@ -150,16 +150,17 @@ class DashAdminController < ApplicationController
   def filter_videos
     if(params[:team_id].present?)
       @team = Team.find(params[:team_id])
-      @turns = @team.users.map(&:turns).flatten!
+      @users = @team.users
+      @turns = @users.map(&:turns).flatten!
     elsif params[:user_id].present?
       @user = User.find(params[:user_id])
       @turns = @user.turns
     else
       @turns = @teams.map(&:users).flatten!.map(&:turns).flatten!
     end
-    @result = json_convert(@turns)
+    @result = @turns.present? ? json_convert(@turns) : []
     response = render_to_string 'dash_admin/videos', layout: false
-    render json: {turns_html:  response, turns: @result}
+    render json: {turns_html:  response, turns: @result, users: @users}
   end
 
   def compare_user_stats

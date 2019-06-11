@@ -2,7 +2,7 @@
   <div class="head">
      <div class="compare-selects">
       <div class="centerq">
-        <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-left" id="select-user">
+        <select class="cs-select cs-skin-underline cs-again-select form-field cs-select-set cs-select-left select-user" id="select-user">
             <option value=""   data-class="cs-selected" selected>Select User</option>
             <% @users.each do |u| %>
                 <% if @user && u.id == @user.id %>
@@ -18,7 +18,7 @@
             <% end %>
         </select>
 
-        <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right" id="select-team">
+        <select class="cs-select cs-skin-underline cs-again-select form-field cs-select-set  select-team cs-select-right" id="select-team">
             <option value=""   data-class="cs-selected" selected>Select Team</option>
             <% @teams.each do |t| %>
                 <% if @team.present? && t.id == @team.id %>
@@ -69,28 +69,30 @@
 
 <script type="text/javascript">
 
-(function() {
-[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
-    function(el) {
-       new SelectFx(el);
-       newTab: false;
-    } );
-})();
-    var userList = $(".cs-options")[0],
-    usersOption = $($(".cs-options")[0]).find("ul li");
-
-    usersOption.on('click', function(e){
-        $("#select-team").val('');
+    (function() {
+    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
+        function(el) {
+           new SelectFx(el);
+           newTab: false;
+        } );
+    })();
+    function selectClickFunctions(){
+      var userList = $(".cs-options")[0],
+      usersOption = $($(".cs-options")[0]).find("ul li"),
+      teamList = $(".cs-options")[1],
+      teamOption = $($(".cs-options")[1]).find("ul li");
+      usersOption.on('click', function(e){
+          $("#select-team").val('');
+          filterVideos()
+      })
+      teamOption.on('click', function(e){
+        e.preventDefault()
+        $("#select-user").val('');
         filterVideos()
-    })
+      })
+    }
 
-    var teamList = $(".cs-options")[1],
-    teamOption = $($(".cs-options")[1]).find("ul li");
-    teamOption.on('click', function(e){
-      e.preventDefault()
-      $("#select-user").val('');
-      filterVideos()
-    })
+    selectClickFunctions()
 
 
     var sortBy = $(".cs-options")[2],
@@ -100,6 +102,7 @@
       sortAndRenderTurns($val)      
     })
     var turns = (<%= raw(@result.to_json) %>);
+    var teams = <%= raw(@teams.to_json) %>;
     function filterVideos(){
         var team_id = $("#select-team option:selected").val(),
           user_id = $("#select-user option:selected").val(),
@@ -110,9 +113,39 @@
             type: 'post',
             data: {user_id: user_id,team_id: team_id, sort_by: sort_by},
             success: function(res){
-                $(".video-overview").empty()
-                $(".video-overview").html(res.turns_html)
-                turns = res.turns;
+              if(res.users){
+                var template = '<select class="cs-select cs-again-select cs-skin-underline form-field cs-select-set cs-select-left select-user" id="select-user">';
+                template+= '<option value="">Select User</option>'
+                if(res.users && res.users.length > 0){
+                  res.users.forEach(function(u){
+                    template += `<option value="`+u.id +`">`+u.fname +` `+ u.lname +`</option>`;
+                  })
+                }
+                template+= '</select>';
+                var selectId = $("#select-team option:selected").val();
+                $(".cs-again-select").remove()
+                $('.centerq').append(template);
+                var teamTemplate = `<select class="cs-select  cs-again-select select-team cs-selected cs-skin-underline form-field cs-select-set cs-select-right" id="select-team">`;
+                  teamTemplate+=`<option value=''>Select Team</option>`
+                  teams.forEach(function(el){
+                    if(parseInt(selectId) == el.id ){
+                      teamTemplate+=`<option value=`+el.id+` data-class="cs-selected" selected>`+el.name +`</option>`;
+                    }else{
+                      teamTemplate+=`<option value=`+el.id+`>`+el.name +`</option>`;
+                    }
+                  });
+                  teamTemplate+=`</select>`;
+                  $(".centerq").append(teamTemplate)
+                   document.querySelectorAll( 'select.cs-again-select' ).forEach(
+                      function(el) {
+                         new SelectFx(el);
+                         newTab: false;
+                      } );
+                  selectClickFunctions()
+              }
+              $(".video-overview").empty()
+              $(".video-overview").html(res.turns_html)
+              turns = res.turns;
             }
         })
     }
