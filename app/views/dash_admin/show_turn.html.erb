@@ -125,13 +125,13 @@
   <div class="videotool-content videotool-content-video" id="video" >
     <div class="video-container">
       <%= image_tag @turn.recorded_pitch.thumb.url, id: "pitch_thumb" %>
-      <video  height="auto" width="100%" id="pitch_video"  preload="auto" style="display: none;">
+      <video  height="auto" width="100%"  preload="auto" id="pitch_video"  preload="auto" style="display: none;">
         <source src="<%= @turn.recorded_pitch.url %>" type="video/webm">
       </video>
     </div>
     <div class="player-bar">
       <div class="player-bar-current">
-        <span class="player-cursor" draggable="true"></span>
+        <span class="player-cursor" ></span>
       </div>
     </div>
     <div class="video-time">
@@ -374,8 +374,10 @@
     function scrub(e) {
       $("#pitch_video").show()
       $("#pitch_thumb").hide()
-      const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+      var duration = video.duration != Infinity ? video.duration : <%=@turn.recorded_pitch_duration.present? ? @turn.recorded_pitch_duration : 0 %> ;
+      const scrubTime = (e.offsetX / progress.offsetWidth) * duration;
       video.currentTime = scrubTime;
+      handleProgress()
     }
 
     function stopVideo(){
@@ -399,22 +401,16 @@
 
     let mousedown = false;
     progress.addEventListener('click', scrub);
+    progress.addEventListener('mousemove', function(){
+      if(mousedown){
+        scrub()
+      }
+    });
     progress.addEventListener('click', (e) => mousedown && scrub(e));
     progress.addEventListener('click', () => mousedown = true);
     progress.addEventListener('click', () => mousedown = false);
-    var timeDrag = false;  /* check for drag event */
     
-    $('.player-bar').on('mousedown', function(e) {
-      timeDrag = true;
-      handleProgress(e.pageX);
-    });
     
-    $(document).on('mouseup', function(e) {
-      if(timeDrag) {
-        timeDrag = false;
-        handleProgress(e.pageX);
-      }
-    });
     $(".stop-video").click(function(e){
       e.preventDefault()
       stopVideo()
