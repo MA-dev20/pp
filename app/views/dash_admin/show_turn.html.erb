@@ -386,6 +386,7 @@
       $(".play-video").removeClass("pause-video");
       $("#pitch_video").hide()
       $("#pitch_thumb").show()
+      handleProgress()
     }
     /* Hook up the event listeners */
     video.addEventListener('click', togglePlay);
