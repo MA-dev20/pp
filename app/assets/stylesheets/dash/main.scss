@@ -2018,6 +2018,9 @@ button.btn-green-plus.green-plus-se {
   .player-bar-current {
     width: 3%;
     cursor: pointer;
+    -webkit-transition: all  0.208673s ease 0s;
+    -moz-transition: all  0.208673s ease 0s ;
+    -o-transition: all  0.208673s ease 0s ;
     transition: all 0.208673s ease 0s;
     background-color: #1ddab0;
     height: 0.32vh;
