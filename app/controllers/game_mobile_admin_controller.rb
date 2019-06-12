@@ -28,14 +28,11 @@ class GameMobileAdminController < ApplicationController
   end
  
   def save_video
-    name = "Video_#{Time.now.to_s }.mp4"
     @game.update(video_uploading: false)
     @turn.recorded_pitch = params[:file]
     @turn.recorded_pitch_duration = params[:duration]
     @turn.save
-    exec "ffmpeg -i #{@turn.recorded_pitch.path} -s 1280x720 -codec:v mpeg4 -bf 1 -b:v 2567k -mbd 2 -g 300 -flags cgop -acodec copy #{Rails.root.to_s}/public/#{name}"
-    @turn.recorded_pitch = "#{Rails.root.to_s}/public/#{name}"
-    @turn.save
+    puts @turn.errors.messages
   end
 
   def create
