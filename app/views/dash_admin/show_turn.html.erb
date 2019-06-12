@@ -3,7 +3,7 @@
   <div class="videotool-content">
     <div class="progress-block">
         <div class="progress-top">
-            <h6><%= @turn.created_at.strftime("%d.%m.%Y") %> <%= "- #{@turn.user.fname} #{@turn.user.lname}" if @turn.user.present?%> </h6>
+            <h6><%= @turn.created_at.strftime("%d.%m.%Y") %> <%=  @turn.user.present? ? "- #{@turn.user.fname} #{@turn.user.lname}" : "- #{@admin.fname} #{@admin.lname}"%> </h6>
             <h3 class="<%= @turn.word.name.length >= 15 ? 'marquee' : ''%>"><span><span><%= @turn.word.name if @turn.word.present? %></span></span> </h3>
             <div id="dash_stats">
               <div class="gesamt rhetorik active">
@@ -131,7 +131,7 @@
     </div>
     <div class="player-bar">
       <div class="player-bar-current">
-        <span class="player-cursor"></span>
+        <span class="player-cursor" draggable="true"></span>
       </div>
     </div>
     <div class="video-time">
@@ -187,8 +187,10 @@
    
 
 <script type="text/javascript">
+
   var Comments = (<%= raw(@turn.comments.to_json) %>);
   $(document).ready(function(){
+    window.clearInterval(timerId);
 
     const player = document.querySelector('#video');
     const progress = player.querySelector('.player-bar');
@@ -214,8 +216,12 @@
       $("#pitch_video").show()
       $("#pitch_thumb").hide()
       if(method == 'play'){
+         timerId = window.setInterval(function(){
+            handleProgress()  /// call your function here
+          }, 50);
         $(".play-video").addClass("pause-video")
       }else{
+        window.clearInterval(timerId);
         $(".play-video").removeClass("pause-video")
       }
       video[method]();
@@ -328,7 +334,15 @@
       video[this.name] = this.value;
     }
 
-    function handleProgress() {
+
+    var timerId;
+    // video.ontimeupdate = e => {
+    //   console.log(video.currentTime)
+    //   handleProgress()
+    // }
+
+    function handleProgress(e) {
+      console.log(e)
       var duration = video.duration != Infinity ? video.duration : <%=@turn.recorded_pitch_duration.present? ? @turn.recorded_pitch_duration : 0 %> ;
       var percent = (video.currentTime / duration ) * 100;
       video.duration = <%=@turn.recorded_pitch_duration.present? ? @turn.recorded_pitch_duration : 0 %> ;
@@ -339,6 +353,8 @@
           $('.player-cursor').css('right','');
         }
         if(percent == 100){
+          window.clearInterval(timerId);
+
           $("#play-video").removeClass("pause-video")
           $("#pitch_video").hide()
           $("#pitch_thumb").show()
@@ -353,6 +369,7 @@
         $("span#duration").html('/'+secondsToHms(Math.round(duration)))
       $("span#currentTime").html(secondsToHms(Math.round(video.currentTime)))
     }
+
 
     function scrub(e) {
       $("#pitch_video").show()
@@ -375,7 +392,6 @@
     playbutton.addEventListener('click', handleProgress);
     video.addEventListener('play', updateButton);
     video.addEventListener('pause', updateButton);
-    video.addEventListener('timeupdate', handleProgress);
     editButton.addEventListener("click", commentBox)
     skipButtons.forEach(button => button.addEventListener('click', skip));
     ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
@@ -386,8 +402,19 @@
     progress.addEventListener('click', (e) => mousedown && scrub(e));
     progress.addEventListener('click', () => mousedown = true);
     progress.addEventListener('click', () => mousedown = false);
-   
-
+    var timeDrag = false;  /* check for drag event */
+    
+    $('.player-bar').on('mousedown', function(e) {
+      timeDrag = true;
+      handleProgress(e.pageX);
+    });
+    
+    $(document).on('mouseup', function(e) {
+      if(timeDrag) {
+        timeDrag = false;
+        handleProgress(e.pageX);
+      }
+    });
     $(".stop-video").click(function(e){
       e.preventDefault()
       stopVideo()
