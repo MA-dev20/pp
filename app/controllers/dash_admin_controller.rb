@@ -94,7 +94,13 @@ class DashAdminController < ApplicationController
       redirect_to dash_admin_teams_path
     end
 
-    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
+    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
+    @reviewed_videos = userss.map do |user| 
+      user.turns.where.not(recorded_pitch: nil, click_time: nil)
+    end
+    @reviewed_videos.flatten!
+    @reviewed_videos.sort_by! {|t| t.click_time}
+    @reviewed_videos.reverse!
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     # if @result.present?
