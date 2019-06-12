@@ -2375,6 +2375,14 @@ button.btn-green-plus.green-plus-se {
   width: 48vw;
   border-radius: 2.4vh;
 }
+#dash_stats.dash-stats-set .stats_chart::-webkit-scrollbar {
+  width: 1vh;
+  height: 1vh;
+}
+#dash_stats.dash-stats-set .stats_chart::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.7);
+  border-radius: 1vh;
+}
 #dash_stats.dash-stats-set  .compare {
   bottom: -3.8vh;
   right: inherit;
