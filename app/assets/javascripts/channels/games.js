@@ -14,18 +14,7 @@ jQuery(document).ready(function() {
       },
       received: function(data) {
         if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
-          t = setInterval(function(){
-            $.ajax({
-              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-              url: '/mobile/user/game/vidoe_uploading',
-              success: function(data1){
-                if(data1.redirect){
-                  clearInterval(t)
-                  window.location.replace(data['game_state'])
-                }
-              }
-            })
-          }, 500)
+          ajaxRequestToCheck()
         }else{
           if ($("#game_channel").data("turn") !== "replay") {
             if(location.pathname.split("admin")[1]=="/play"){
@@ -56,6 +45,20 @@ jQuery(document).ready(function() {
     });
   }
 });
+function ajaxRequestToCheck(){
+    $.ajax({
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      url: '/mobile/user/game/vidoe_uploading',
+      success: function(data1){
+        if(data1.redirect){
+          clearInterval(t)
+          window.location.replace(data['game_state'])
+        }else{
+          ajaxRequestToCheck()
+        }
+      }
+    })
+   } 
 
 function ajaxCheck(completed_ajax){
   if(completed_ajax == false){
