@@ -25,7 +25,7 @@ jQuery(document).ready(function() {
                 }
               }
             })
-          }, 1500)
+          }, 500)
         }else{
           if ($("#game_channel").data("turn") !== "replay") {
             if(location.pathname.split("admin")[1]=="/play"){
