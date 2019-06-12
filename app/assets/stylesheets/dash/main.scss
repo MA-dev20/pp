@@ -2017,6 +2017,7 @@ button.btn-green-plus.green-plus-se {
   }
   .player-bar-current {
     width: 3%;
+    cursor: pointer;
     transition: all 0.208673s ease 0s;
     background-color: #1ddab0;
     height: 0.32vh;
@@ -2026,6 +2027,7 @@ button.btn-green-plus.green-plus-se {
     .player-cursor {
       width: 3.35vh;
       height: 1.756vh;
+      cursor: grab;
       background-color: #5eb4e2;
       position: absolute;
       right: -10px;
