@@ -185,7 +185,9 @@
   </div>
 </div>
    
-
+  <% content_for(:body_attributes) do %>
+    data-turbolinks="false"
+  <% end %>
 <script type="text/javascript">
 
   var Comments = (<%= raw(@turn.comments.to_json) %>);
