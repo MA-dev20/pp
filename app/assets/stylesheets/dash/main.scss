@@ -1335,9 +1335,6 @@ modal
     }
   }
 }
-.stats_chart{
-  overflow: auto;
-}
 .progress-main {
   margin-top: 1.8vh;
   .progressBar {
@@ -2380,14 +2377,26 @@ button.btn-green-plus.green-plus-se {
 #dash_stats.dash-stats-set .stats_chart {
   width: 48vw;
   border-radius: 2.4vh;
+  padding: 20px;
 }
-#dash_stats.dash-stats-set .stats_chart::-webkit-scrollbar {
+#dash_stats .stats_chart .stats_chart-cont {
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 39vh;
+}
+#dash_stats .stats_chart .stats_chart-cont .chart-container {
+  top: 0;
+  left: 0;
+}
+#dash_stats .stats_chart .stats_chart-cont::-webkit-scrollbar {
   width: 1vh;
   height: 1vh;
 }
-#dash_stats.dash-stats-set .stats_chart::-webkit-scrollbar-thumb {
+#dash_stats .stats_chart .stats_chart-cont::-webkit-scrollbar-thumb {
   background-color: rgba(255,255,255,0.7);
   border-radius: 1vh;
+  width: 100px;
+  height: 100px;
 }
 #dash_stats.dash-stats-set  .compare {
   bottom: -3.8vh;
