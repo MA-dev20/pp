@@ -148,9 +148,21 @@ function requestVideo() {
         Devices.push(mediaDevice)
       }
     })
-  const constraints = {
-    video: { frameRate: { ideal: 100, max: 120 }, width: {exact: 1280}, height: {exact: 720},deviceId: { exact: Devices[Devices.length-1].deviceId} },
-    audio: true
+ 
+  var constraints = {
+    audio:{
+        sampleRate: 48000,
+        volume: 1.0,
+        echoCancellation: true,
+        noiseSuppression: true,
+    }
+    ,
+    video:{
+      width: {exact: 1280}, height: {exact: 720},
+      framerate:120
+    },
+      facingMode: { exact: "user" },
+
   };
   navigator.mediaDevices.getUserMedia(constraints)
     .then(stm => {
@@ -158,7 +170,10 @@ function requestVideo() {
       preview.srcObject = stream;
       preview.captureStream = preview.captureStream(5) || preview.mozCaptureStream(5);
     }).then(()=>{
-      const options = {};
+      const options = {
+        audioBitsPerSecond : 128000,
+        videoBitsPerSecond : 3000000,
+      };
       setTimeout(function(){
         recorder = new MediaRecorder(stream, options);
         recorder.start();
