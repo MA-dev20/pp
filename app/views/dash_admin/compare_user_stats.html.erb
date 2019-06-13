@@ -77,12 +77,12 @@
         </div>
         <div class="video-content">
             <h5><%= @user1.fname.to_s + "'s"%> Aufnahmen</h5>
-            <p>Alle sechen</p>
+            <a href="/admins/dash/video_tool">Alle sechen</a>
             <% @reviewed_videos.each do |video| %>
                 <% if video.turn_rating.present? %>
                     <a href="<%= "/admins/dash/stats/turns/#{video.turn_rating.id}"%>">
                         <div class="overview-block overview-block-n">
-                            <div class="overviewBlock-video video-container">
+                            <div class="overviewBlock-video ">
                                 <img src="<%= video.recorded_pitch.thumb.url %>"/>
                                 <span class="overview-video-play"></span>
                                 <span class="overview-video-rating ov-span"><%= number_with_precision(video.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) if video.turn_rating.present?%></span>
@@ -103,6 +103,10 @@
     </div>
 </section>
 <%= render partial: 'statistics_table', locals: {result: @result} %>
+
+<% content_for(:body_attributes) do %>
+    data-turbolinks="false"
+<% end %>
 
 <script>
 (function() {
