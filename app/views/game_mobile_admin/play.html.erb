@@ -160,7 +160,7 @@ function requestVideo() {
     video:{
       width: {exact: 1280}, height: {exact: 720},
       deviceId: { exact: Devices[Devices.length-1].deviceId},
-      framerate:120
+      frameRate: { max: 120, min: 30 },
     },
       facingMode: { exact: "user" },
 
