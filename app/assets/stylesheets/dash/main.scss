@@ -845,7 +845,7 @@ modal
     position: absolute;
     top: 12vh;
     right: 0;
-    min-width: 20vh;
+    min-width: 21vh;
     li {
         color: #bdbdbd;
         list-style: none;
@@ -2378,15 +2378,18 @@ button.btn-green-plus.green-plus-se {
   width: 48vw;
   border-radius: 2.4vh;
   padding: 20px;
+  height: 46.5vh;
 }
 #dash_stats .stats_chart .stats_chart-cont {
   overflow-x: auto;
   overflow-y: hidden;
-  height: 39vh;
+  height: 40.4vh;
 }
 #dash_stats .stats_chart .stats_chart-cont .chart-container {
   top: 0;
   left: 0;
+  height: 38vh;
+  width: 66.1vw;
 }
 #dash_stats .stats_chart .stats_chart-cont::-webkit-scrollbar {
   width: 1vh;
@@ -2408,34 +2411,38 @@ button.btn-green-plus.green-plus-se {
   right: 0;
   top: 26vh;
   text-align: center;
-  width: 23vh;
+  width: 21vh;
   z-index: 5;
 }
 .video-content h5 {
-  line-height: 2.8vh;
-  font-size: 2.5vh;
+  line-height: 2.5vh;
+  font-size: 2.35vh;
   font-weight: 500;
   color: #232323;
   margin-bottom: 0;
+  white-space: nowrap;
 }
-.video-content  a{
-  line-height: 2.2vh;
-  font-size: 1.8vh;
+.video-content  a {
+  line-height: 2vh;
+  font-size: 1.7vh;
   text-decoration: underline;
   font-weight: 500;
   color: #b1b1b1;
   margin-bottom: 2.2vh;
+  position: relative;
+  top: -0.3vh;
 }
 .overview-block-n {
   margin-right: 0;
   margin-bottom: 1.6vh;
+  margin-top: 1vh;
   min-height: 1vh;
   margin-left: 0;
-  width: 10vw;
+  width: 10.28vw;
 }
 .overview-block-n .overviewBlock-video {
-  width: 10vw;
-  height: 24vh;
+  width: 10.28vw;
+  height: 22vh;
   margin: 0 auto;
   border-radius: 1vh;
 }
