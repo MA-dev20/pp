@@ -28,7 +28,7 @@ class DashAdminController < ApplicationController
 
   def video_tool
     @users = @admin.users
-    @turns = Turn.where.not(recorded_pitch:  nil)
+    @turns = Turn.where.not(recorded_pitch:  nil).order("created_at DESC")
     @result = json_convert(@turns)
   end
 
@@ -45,6 +45,12 @@ class DashAdminController < ApplicationController
     @average = (@spontan + @rhetoric + @body + @creative)/4
     @admin_ratings = Rating.where(turn_id:  @turn.id,admin_id: @admin.id).first
     render :show_turn
+  end
+
+  def delete_video
+    @turn = Turn.find(params[:turn_id])
+    @turn.recorded_pitch.remove!
+    @turn.save!
   end
 
   def get_words
