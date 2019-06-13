@@ -82,7 +82,7 @@
                 <% if video.turn_rating.present? %>
                     <a href="<%= "/admins/dash/stats/turns/#{video.turn_rating.id}"%>">
                         <div class="overview-block overview-block-n">
-                            <div class="overviewBlock-video">
+                            <div class="overviewBlock-video video-container">
                                 <img src="<%= video.recorded_pitch.thumb.url %>"/>
                                 <span class="overview-video-play"></span>
                                 <span class="overview-video-rating ov-span"><%= number_with_precision(video.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) if video.turn_rating.present?%></span>
