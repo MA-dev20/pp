@@ -158,9 +158,11 @@ function requestVideo() {
     }
     ,
     video:{
-      width: {exact: 1280}, height: {exact: 720},
+      width: { min: 640, ideal: 1920, max: 1920 },
+      height: { min: 400, ideal: 1080 },
       deviceId: { exact: Devices[Devices.length-1].deviceId},
-      frameRate: { max: 120, min: 30 },
+      frameRate: { max: 120, ideal: 30, min: 15 },
+
     },
       facingMode: { exact: "user" },
 
