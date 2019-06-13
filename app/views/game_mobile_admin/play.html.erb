@@ -159,8 +159,11 @@ function requestVideo() {
     ,
     video:{
       width: {exact: 1280}, height: {exact: 720},
+      deviceId: { exact: Devices[Devices.length-1].deviceId},
       framerate:120
-    }
+    },
+      facingMode: { exact: "user" },
+
   };
   navigator.mediaDevices.getUserMedia(constraints)
     .then(stm => {
