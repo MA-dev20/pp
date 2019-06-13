@@ -160,9 +160,7 @@ function requestVideo() {
     video:{
       width: {exact: 1280}, height: {exact: 720},
       framerate:120
-    },
-      facingMode: { exact: "user" },
-
+    }
   };
   navigator.mediaDevices.getUserMedia(constraints)
     .then(stm => {
