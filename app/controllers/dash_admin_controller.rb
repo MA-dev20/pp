@@ -142,7 +142,7 @@ class DashAdminController < ApplicationController
   def user_stats
     @users = @admin.users
     @turns = @user.turns
-    @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC').first(2)
+    @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating = @user.turn_ratings
     if !@turns_rating
       flash[:danger] = 'Noch keine bewerteten Spiele!'
@@ -186,7 +186,7 @@ class DashAdminController < ApplicationController
     @turns = @user.turns
     @turns_rating = @user.turn_ratings.last(7)
     @user1 = User.find(params[:compare_user_id])
-    @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC').first(2)
+    @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating2 = @user1.turn_ratings.last(7)
     rating = @user.turn_ratings
     rating2 = @user1.turn_ratings
