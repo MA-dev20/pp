@@ -28,7 +28,7 @@ class DashAdminController < ApplicationController
 
   def video_tool
     @users = @admin.users
-    @turns = Turn.where.not(recorded_pitch:  nil)
+    @turns = Turn.where.not(recorded_pitch:  nil).order("created_at DESC")
     @result = json_convert(@turns)
   end
 
@@ -37,9 +37,20 @@ class DashAdminController < ApplicationController
     @turn = @turns_rating.turn
     @user = @turn.user
     @turn.review
-    @gamerating = GameRating.where(game_id: @turns_rating.game_id).first
-    @admin_ratings = TurnRating.where(game_id: @turns_rating.game_id, turn_id:  @turn.id,admin_id: @admin.id).first
+    @ratings = @turn.ratings
+    @creative = @ratings.average(:creative).to_f
+    @body = @ratings.average(:body).to_f
+    @rhetoric = @ratings.average(:rhetoric).to_f
+    @spontan = @ratings.average(:spontan).to_f
+    @average = (@spontan + @rhetoric + @body + @creative)/4
+    @admin_ratings = Rating.where(turn_id:  @turn.id,admin_id: @admin.id).first
     render :show_turn
+  end
+
+  def delete_video
+    @turn = Turn.find(params[:turn_id])
+    @turn.recorded_pitch.remove!
+    @turn.save!
   end
 
   def get_words
@@ -89,7 +100,13 @@ class DashAdminController < ApplicationController
       redirect_to dash_admin_teams_path
     end
 
-    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
+    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
+    @reviewed_videos = userss.map do |user| 
+      user.turns.where.not(recorded_pitch: nil)
+    end
+    @reviewed_videos.flatten!
+    @reviewed_videos.sort_by! {|t| t.created_at}
+    @reviewed_videos.reverse!
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     # if @result.present?
@@ -125,7 +142,7 @@ class DashAdminController < ApplicationController
   def user_stats
     @users = @admin.users
     @turns = @user.turns
-    @reviewed_videos = @turns.where.not(recorded_pitch: nil, click_time: nil).order('click_time DESC').first(2)
+    @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating = @user.turn_ratings
     if !@turns_rating
       flash[:danger] = 'Noch keine bewerteten Spiele!'
@@ -169,7 +186,7 @@ class DashAdminController < ApplicationController
     @turns = @user.turns
     @turns_rating = @user.turn_ratings.last(7)
     @user1 = User.find(params[:compare_user_id])
-    @reviewed_videos = @turns.where.not(recorded_pitch: nil, click_time: nil).order('click_time DESC').first(2)
+    @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating2 = @user1.turn_ratings.last(7)
     rating = @user.turn_ratings
     rating2 = @user1.turn_ratings
@@ -311,7 +328,8 @@ class DashAdminController < ApplicationController
       turns.each do |t|
         if t.turn_rating.present? and t.recorded_pitch.present?
           turn = JSON.parse(t.to_json(include: [:turn_rating]))
-          turn["rating"] = number_with_precision(t.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1).to_f if t.turn_rating.present?
+          turn["rating"] = number_with_precision(t.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1).to_f if t.turn_rating.present?          
+          turn["rating"] = number_with_precision(t.ratings.pluck('avg(body), avg(creative), avg(spontan), avg(rhetoric)').first.inject(:+).to_f  / 40, precision: 1).to_f if t.ratings.present?
           turn["word"] = t.word.name if t.word.present?
           turn["name"] = t.user.fname + ' ' + t.user.lname if t.user.present?
           turn["name"] = t.admin.fname.to_s + ' ' + t.admin.lname.to_s if t.admin.present? and !turn["name"].present?

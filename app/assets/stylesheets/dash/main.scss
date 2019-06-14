@@ -846,7 +846,7 @@ modal
     position: absolute;
     top: 12vh;
     right: 0;
-    min-width: 20vh;
+    min-width: 21vh;
     li {
         color: #bdbdbd;
         list-style: none;
@@ -1351,9 +1351,6 @@ modal
       }
     }
   }
-}
-.stats_chart{
-  overflow: auto;
 }
 .progress-main {
   margin-top: 1.8vh;
@@ -2014,9 +2011,9 @@ button.btn-green-plus.green-plus-se {
     width: 50vh;
   }
   img {
-    float: left;
-    height: 55vh;
-    width: 50vh;
+    float: left;    
+    height: 80vh;
+    width: 46vh;
   }
 }
 .player-bar {
@@ -2034,6 +2031,11 @@ button.btn-green-plus.green-plus-se {
   }
   .player-bar-current {
     width: 3%;
+    cursor: pointer;
+    -webkit-transition: all  0.208673s ease 0s;
+    -moz-transition: all  0.208673s ease 0s ;
+    -o-transition: all  0.208673s ease 0s ;
+    transition: all 0.208673s ease 0s;
     background-color: #1ddab0;
     height: 0.32vh;
     position: absolute;
@@ -2042,6 +2044,7 @@ button.btn-green-plus.green-plus-se {
     .player-cursor {
       width: 3.35vh;
       height: 1.756vh;
+      cursor: grab;
       background-color: #5eb4e2;
       position: absolute;
       right: -10px;
@@ -2152,7 +2155,7 @@ button.btn-green-plus.green-plus-se {
 .radio-label {
   display: block;
   position: relative;
-  padding-left: 2.6vh;
+  padding-left: 2.2vh;
   margin-bottom: 0;
   margin-left: 2.2vh;
   line-height: 2.6vh;
@@ -2172,8 +2175,8 @@ button.btn-green-plus.green-plus-se {
   position: absolute;
   top: 0.3vh;
   left: 0;
-  height: 1.772vh;
-  width: 1.772vh;
+  height: 1.63vh;
+  width: 1.63vh;
   background-color: transparent;
   border: 0.16vh solid transparent;
   border-radius: 50%;
@@ -2224,7 +2227,7 @@ button.btn-green-plus.green-plus-se {
   border-radius: 50%;
 }
 .vc-detail .vc-video-t {
-  font-size: 3.4vh;
+  font-size: 3.2vh;
   // color: #1ddab0;
   line-height: 2.8vh;
 }
@@ -2389,8 +2392,36 @@ button.btn-green-plus.green-plus-se {
   font-weight: 600;
 }
 #dash_stats.dash-stats-set .stats_chart {
+<<<<<<< HEAD
   width: 55vw;
   border-radius: 8.8vh 2.4vh 2.4vh 8.8vh;
+=======
+  width: 48vw;
+  border-radius: 2.4vh;
+  padding: 20px;
+  height: 46.2vh;
+}
+#dash_stats .stats_chart .stats_chart-cont {
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 40.4vh;
+}
+#dash_stats .stats_chart .stats_chart-cont .chart-container {
+  top: 0;
+  left: 0;
+  height: 38vh;
+  width: 66.1vw;
+}
+#dash_stats .stats_chart .stats_chart-cont::-webkit-scrollbar {
+  width: 1vh;
+  height: 1vh;
+}
+#dash_stats .stats_chart .stats_chart-cont::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.7);
+  border-radius: 1vh;
+  width: 100px;
+  height: 100px;
+>>>>>>> a14289cca4e32d5e65c4d0c7c9539b19bbb208fd
 }
 #dash_stats.dash-stats-set .stats_chart .chart-container {
     width: calc(55vw - 50px);
@@ -2404,33 +2435,38 @@ button.btn-green-plus.green-plus-se {
   right: 0;
   top: 26vh;
   text-align: center;
-  width: 23vh;
+  width: 21vh;
   z-index: 5;
 }
 .video-content h5 {
-  line-height: 2.8vh;
-  font-size: 2.5vh;
+  line-height: 2.5vh;
+  font-size: 2.35vh;
   font-weight: 500;
   color: #232323;
   margin-bottom: 0;
+  white-space: nowrap;
 }
-.video-content p {
-  line-height: 2.2vh;
-  font-size: 1.8vh;
+.video-content  a {
+  line-height: 2vh;
+  font-size: 1.7vh;
+  text-decoration: underline;
   font-weight: 500;
   color: #b1b1b1;
   margin-bottom: 2.2vh;
+  position: relative;
+  top: -0.3vh;
 }
 .overview-block-n {
   margin-right: 0;
   margin-bottom: 1.6vh;
+  margin-top: 1vh;
   min-height: 1vh;
   margin-left: 0;
-  width: 10vw;
+  width: 10.28vw;
 }
 .overview-block-n .overviewBlock-video {
-  width: 10vw;
-  height: 24vh;
+  width: 10.28vw;
+  height: 22vh;
   margin: 0 auto;
   border-radius: 1vh;
 }

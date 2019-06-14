@@ -18,7 +18,7 @@ class PitchUploader < CarrierWave::Uploader::Base
   end
 
   version :thumb do
-    process thumbnail: [{format: 'jpg', quality: 8, size: 360, logger: Rails.logger, square: true}]
+    process thumbnail: [{format: 'jpg', quality: 8, size: 360, logger: Rails.logger, square: false}]
     def full_filename for_file
       jpg_name for_file, version_name
     end

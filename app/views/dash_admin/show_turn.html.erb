@@ -3,12 +3,12 @@
   <div class="videotool-content">
     <div class="progress-block">
         <div class="progress-top">
-            <h6><%= @turn.created_at.strftime("%d.%m.%Y") %> <%= "- #{@turn.user.fname} #{@turn.user.lname}" if @turn.user.present?%> </h6>
+            <h6><%= @turn.created_at.strftime("%d.%m.%Y") %> <%=  @turn.user.present? ? "- #{@turn.user.fname} #{@turn.user.lname}" : "- #{@admin.fname} #{@admin.lname}"%> </h6>
             <h3 class="<%= @turn.word.name.length >= 15 ? 'marquee' : ''%>"><span><span><%= @turn.word.name if @turn.word.present? %></span></span> </h3>
             <div id="dash_stats">
               <div class="gesamt rhetorik active">
                 <button class="circle" id="chart_gesamt">
-                  <span><%= number_with_precision(@turns_rating.ges / 10, precision: 1) %></span>
+                  <span><%= number_with_precision(@average/ 10, precision: 1) %></span>
                   <% if @user.present? && @user.avatar? %>
                     <%= image_tag @user.avatar.quad.url %>
                   <% else %>
@@ -17,10 +17,10 @@
                 </button>
                 <div class="text" id="t_gesamt">Gesamt</div>
               </div>
-              <% if @gamerating.present?%>
+              <% if @admin_ratings.present?%>
               <div class="gesamt rhetorik show_it" style="display: none;">
                 <button class="circle" id="chart_gesamt">
-                  <span><%= @admin_ratings.present? ? number_with_precision(@admin_ratings.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) : number_with_precision(@gamerating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
+                  <span><%=  number_with_precision(@admin_ratings.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %></span>
                   <% if @user.present? && @user.avatar? %>
                   <%= image_tag @user.avatar.quad.url %>
                   <% else %>
@@ -38,17 +38,16 @@
             <div class="progress-bar-pop">
               <div class="progress-bar-con progress-con-t">
                 <div class="progressbar-view">
-                  <div class="progressbar-fill" style="width: <%=@turns_rating.spontan%>% !important;"></div>
+                  <div class="progressbar-fill" style="width: <%=@spontan%>% !important;"></div>
                 </div>
-                <div class="progress-bar-value"><%=number_with_precision @turns_rating.spontan.to_f/10,precision: 1 %></div>
+                <div class="progress-bar-value"><%=number_with_precision @spontan.to_f/10,precision: 1 %></div>
               </div>
-              <% if @gamerating.present? %>
-
+              <% if @admin_ratings.present? %>
                   <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: <%=@gamerating.spontan%>% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@admin_ratings.spontan%>% !important;"></div>
                     </div>
-                    <div class="progress-bar-value"><%=number_with_precision @gamerating.creative.to_f/10,precision: 1 %></div>
+                    <div class="progress-bar-value"><%=number_with_precision @admin_ratings.spontan.to_f/10,precision: 1 %></div>
                   </div>
               <% end %>
             </div>
@@ -58,17 +57,17 @@
             <div class="progress-bar-pop">
               <div class="progress-bar-con progress-con-t">
                 <div class="progressbar-view">
-                  <div class="progressbar-fill" style="width: <%=@turns_rating.creative%>% !important;"></div>
+                  <div class="progressbar-fill" style="width: <%=@creative%>% !important;"></div>
                 </div>
-                <div class="progress-bar-value"><%=number_with_precision @turns_rating.creative.to_f/10,precision: 1 %></div>
+                <div class="progress-bar-value"><%=number_with_precision @creative.to_f/10,precision: 1 %></div>
               </div>
-              <% if @gamerating.present? %>
+              <% if @admin_ratings.present? %>
             
                 <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                   <div class="progressbar-view">
-                    <div class="progressbar-fill" style="width: <%=@gamerating.creative%>% !important;"></div>
+                    <div class="progressbar-fill" style="width: <%=@admin_ratings.creative%>% !important;"></div>
                   </div>
-                  <div class="progress-bar-value"><%=number_with_precision @gamerating.creative.to_f/10,precision: 1 %></div>
+                  <div class="progress-bar-value"><%=number_with_precision @admin_ratings.creative.to_f/10,precision: 1 %></div>
                 </div>
               <% end %>
             </div>
@@ -78,16 +77,16 @@
             <div class="progress-bar-pop">
               <div class="progress-bar-con progress-con-t">
                 <div class="progressbar-view">
-                  <div class="progressbar-fill" style="width: <%=@turns_rating.body%>% !important;"></div>
+                  <div class="progressbar-fill" style="width: <%=@body%>% !important;"></div>
                 </div>
-                <div class="progress-bar-value"><%=number_with_precision @turns_rating.body.to_f/10,precision: 1 %></div>
+                <div class="progress-bar-value"><%=number_with_precision @body.to_f/10,precision: 1 %></div>
               </div> 
-              <% if @gamerating.present? %>
+              <% if @admin_ratings.present? %>
                 <div class="progress-bar-con progress-con-b show_it"  style="display: none">
                   <div class="progressbar-view">
-                    <div class="progressbar-fill" style="width: <%=@gamerating.body%>% !important;"></div>
+                    <div class="progressbar-fill" style="width: <%=@admin_ratings.body%>% !important;"></div>
                   </div>
-                  <div class="progress-bar-value"><%=number_with_precision @gamerating.body.to_f/10,precision: 1 %></div>
+                  <div class="progress-bar-value"><%=number_with_precision @admin_ratings.body.to_f/10,precision: 1 %></div>
                 </div>
               <% end %>
             </div>
@@ -97,17 +96,17 @@
             <div class="progress-bar-pop">
               <div class="progress-bar-con progress-con-t">
                 <div class="progressbar-view">
-                  <div class="progressbar-fill" style="width: <%=@turns_rating.rhetoric%>% !important;"></div>
+                  <div class="progressbar-fill" style="width: <%=@rhetoric%>% !important;"></div>
                 </div>
-                <div class="progress-bar-value"><%=number_with_precision @turns_rating.rhetoric.to_f/10,precision: 1 %></div>
+                <div class="progress-bar-value"><%=number_with_precision @rhetoric.to_f/10,precision: 1 %></div>
               </div>
-              <% if @gamerating.present? %>
+              <% if @admin_ratings.present? %>
               
                   <div class="progress-bar-con progress-con-b show_it"  style="display: none" style="display: none">
                     <div class="progressbar-view">
-                      <div class="progressbar-fill" style="width: <%=@gamerating.rhetoric%>% !important;"></div>
+                      <div class="progressbar-fill" style="width: <%=@admin_ratings.rhetoric%>% !important;"></div>
                     </div>
-                    <div class="progress-bar-value"><%=number_with_precision @gamerating.rhetoric.to_f/10,precision: 1 %></div>
+                    <div class="progress-bar-value"><%=number_with_precision @admin_ratings.rhetoric.to_f/10,precision: 1 %></div>
                   </div>
               <% end %>    
             </div>
@@ -126,13 +125,13 @@
   <div class="videotool-content videotool-content-video" id="video" >
     <div class="video-container">
       <%= image_tag @turn.recorded_pitch.thumb.url, id: "pitch_thumb" %>
-      <video  height="auto" width="100%" id="pitch_video"  preload="metadata" style="display: none;">
-        <source src="<%= @turn.recorded_pitch.url %>">
+      <video  height="auto" width="100%"  preload="auto" id="pitch_video"  preload="auto" style="display: none;">
+        <source src="<%= @turn.recorded_pitch.url %>" type="video/webm">
       </video>
     </div>
     <div class="player-bar">
       <div class="player-bar-current">
-        <span class="player-cursor"></span>
+        <span class="player-cursor" ></span>
       </div>
     </div>
     <div class="video-time">
@@ -186,10 +185,14 @@
   </div>
 </div>
    
-
+  <% content_for(:body_attributes) do %>
+    data-turbolinks="false"
+  <% end %>
 <script type="text/javascript">
+
   var Comments = (<%= raw(@turn.comments.to_json) %>);
   $(document).ready(function(){
+    window.clearInterval(timerId);
 
     const player = document.querySelector('#video');
     const progress = player.querySelector('.player-bar');
@@ -207,6 +210,7 @@
       $("#time_of_video").addClass('vc-video-t')
       $('#time_of_video').addClass($(this).val())
     })
+    video.addEventListener("loadedmetadata", function(){console.log(video.duration)}, false)
     /* Build out functions */
     function togglePlay(e) {
       e.preventDefault()
@@ -214,8 +218,12 @@
       $("#pitch_video").show()
       $("#pitch_thumb").hide()
       if(method == 'play'){
+         timerId = window.setInterval(function(){
+            handleProgress()  /// call your function here
+          }, 50);
         $(".play-video").addClass("pause-video")
       }else{
+        window.clearInterval(timerId);
         $(".play-video").removeClass("pause-video")
       }
       video[method]();
@@ -299,7 +307,6 @@
     }
 
     function skip() {
-     video.currentTime += parseFloat(this.dataset.skip);
     }
 
     function commentBox(e){
@@ -309,7 +316,8 @@
       fillTimeOfCommentBox(video.currentTime)
       $("#comments").fadeIn()
     }
-
+    document.getElementById("pitch_video").currentTime=12228292812
+    document.getElementById("pitch_video").currentTime=0
     function fillTimeOfCommentBox(time){
       var displayedTime = fancyTimeFormat(time)
       $("#time_of_video").text(displayedTime)
@@ -328,9 +336,18 @@
       video[this.name] = this.value;
     }
 
-    function handleProgress() {
+
+    var timerId;
+    // video.ontimeupdate = e => {
+    //   console.log(video.currentTime)
+    //   handleProgress()
+    // }
+
+    function handleProgress(e) {
+      console.log(e)
       var duration = video.duration != Infinity ? video.duration : <%=@turn.recorded_pitch_duration.present? ? @turn.recorded_pitch_duration : 0 %> ;
       var percent = (video.currentTime / duration ) * 100;
+      video.duration = <%=@turn.recorded_pitch_duration.present? ? @turn.recorded_pitch_duration : 0 %> ;
       progressBar.style.width = `${percent}%`;
       if(percent == 0 || percent == 100){
         if(percent == 0){
@@ -338,6 +355,8 @@
           $('.player-cursor').css('right','');
         }
         if(percent == 100){
+          window.clearInterval(timerId);
+
           $("#play-video").removeClass("pause-video")
           $("#pitch_video").hide()
           $("#pitch_thumb").show()
@@ -353,10 +372,14 @@
       $("span#currentTime").html(secondsToHms(Math.round(video.currentTime)))
     }
 
+
     function scrub(e) {
-      video.play()
-      const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
+      $("#pitch_video").show()
+      $("#pitch_thumb").hide()
+      var duration = video.duration != Infinity ? video.duration : <%=@turn.recorded_pitch_duration.present? ? @turn.recorded_pitch_duration : 0 %> ;
+      const scrubTime = (e.offsetX / progress.offsetWidth) * duration;
       video.currentTime = scrubTime;
+      handleProgress()
     }
 
     function stopVideo(){
@@ -365,6 +388,7 @@
       $(".play-video").removeClass("pause-video");
       $("#pitch_video").hide()
       $("#pitch_thumb").show()
+      handleProgress()
     }
     /* Hook up the event listeners */
     video.addEventListener('click', togglePlay);
@@ -373,7 +397,6 @@
     playbutton.addEventListener('click', handleProgress);
     video.addEventListener('play', updateButton);
     video.addEventListener('pause', updateButton);
-    video.addEventListener('timeupdate', handleProgress);
     editButton.addEventListener("click", commentBox)
     skipButtons.forEach(button => button.addEventListener('click', skip));
     ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
@@ -381,14 +404,16 @@
 
     let mousedown = false;
     progress.addEventListener('click', scrub);
+    progress.addEventListener('mousemove', function(){
+      if(mousedown){
+        scrub()
+      }
+    });
     progress.addEventListener('click', (e) => mousedown && scrub(e));
     progress.addEventListener('click', () => mousedown = true);
     progress.addEventListener('click', () => mousedown = false);
-    var duration;
-    video.addEventListener('loadedmetadata', function () {
-      console.log(video.duration);
-    });
-
+    
+    
     $(".stop-video").click(function(e){
       e.preventDefault()
       stopVideo()

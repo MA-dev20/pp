@@ -113,7 +113,8 @@
         </div>
         <div class="video-content">
             <h5><%= @user.fname.to_s + "'s"%> Aufnahmen</h5>
-            <p>Alle sechen</p>
+            <a href="/admins/dash/video_tool">Alle sechen</a>
+            <% count = 0 %>
             <% @reviewed_videos.each do |video| %>
                 <% if video.turn_rating.present? %>
                     <a href="<%= "/admins/dash/stats/turns/#{video.turn_rating.id}"%>">
@@ -126,14 +127,17 @@
                             </div>
                         </div>
                     </a>
-
+                    <% count+=1%>
                 <% end %>
+                <% break if count == 2 %>
             <% end %>
         </div>
     </div>
     <div class="stats_chart">
-        <div class="chart-container">
-            <canvas id="Chart"></canvas>
+        <div class="stats_chart-cont">
+            <div class="chart-container">
+                <canvas id="Chart"></canvas>
+            </div>
         </div>
     </div>
     <style type="text/css">
@@ -151,6 +155,10 @@
 </section>
 <%= render partial: 'statistics_table',locals: {result: @result} %>
 
+<% content_for(:body_attributes) do %>
+    data-turbolinks="false"
+<% end %>
+
 <script>
 (function() {
 [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
@@ -167,7 +175,7 @@ var label = [NaN, NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
 <% @turns_rating.each do |g| %>
     var json_data = <%= g.to_json.html_safe %>
-    json_data["word"] = "<%= g.turn.word.name %>";
+    json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present? %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
         <% if g.turn.recorded_pitch.url.present? %>
@@ -623,7 +631,7 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>  
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present?  %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
 
@@ -677,7 +685,7 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present? %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
 
@@ -730,7 +738,7 @@ document.getElementById('chart_body').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present?  %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
 
@@ -785,7 +793,7 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name %>";
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present?  %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
 
