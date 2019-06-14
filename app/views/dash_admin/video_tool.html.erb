@@ -33,7 +33,7 @@
     <div class="center-r">
       <label>Sortieren nach:  </label>
       <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right" id="select-rating">
-        <option value="date">Date</option>
+        <option value="time" selected>Date</option>
         <option value="rating">Rating</option>
       </select>
     </div>
@@ -111,7 +111,7 @@
     function filterVideos(){
         var team_id = $("#select-team option:selected").val(),
           user_id = $("#select-user option:selected").val(),
-          sort_by = "time";
+          sort_by = $("#select-rating option:selected").val();
         $.ajax({
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
             url: '/admins/dash/filter_videos',
