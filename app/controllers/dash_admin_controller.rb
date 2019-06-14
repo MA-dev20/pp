@@ -28,8 +28,8 @@ class DashAdminController < ApplicationController
 
   def video_tool
     @users = @admin.users
-    @turns = Turn.where.not(recorded_pitch:  nil).order("created_at DESC")
-    @result = json_convert(@turns)
+    @turns = @admin.turns.where.not(recorded_pitch: nil)
+    @result = json_convert(@turns, "date")
   end
 
   def turn_show
@@ -174,11 +174,11 @@ class DashAdminController < ApplicationController
       @user = User.find(params[:user_id])
       @turns = @user.turns
     else
-      @turns = @teams.map(&:users).flatten!.map(&:turns).flatten!
+      @turns = @admin.turns.where.not(recorded_pitch: nil)
     end
-    @result = @turns.present? ? json_convert(@turns) : []
+    @result = @turns.present? ? json_convert(@turns, params[:sort_by]) : []
     response = render_to_string 'dash_admin/videos', layout: false
-    render json: {turns_html:  response, turns: @result, users: @users}
+    render json: {turns_html:  response, turns: @result.each_slice(6), users: @users}
   end
 
   def compare_user_stats
@@ -323,7 +323,7 @@ class DashAdminController < ApplicationController
       url
     end
 
-    def json_convert(turns)
+    def json_convert(turns, sortby="time")
       result = []
       turns.each do |t|
         if t.turn_rating.present? and t.recorded_pitch.present?
@@ -340,6 +340,13 @@ class DashAdminController < ApplicationController
           turn["recorded_pitch_url"] = t.recorded_pitch.thumb.url if t.recorded_pitch.present?
           result.push(turn)
         end
+      end
+      if (sortby=="date")
+        result.sort_by! { |hsh| hsh["created_at"].to_datetime }
+        result.reverse!
+      else
+        result.sort_by! { |hsh| hsh["rating"].to_f }
+        result.reverse!
       end
       result.each_slice(6)
     end

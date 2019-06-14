@@ -2310,8 +2310,8 @@ button.btn-green-plus.green-plus-se {
   display: flex;
   flex-wrap: wrap;
   margin-top: 5.6vh;
-  padding-left: 2.5vh;
-  padding-right: 2.5vh;
+  padding-left: 3.5vh;
+  padding-right: 3.5vh;
 }
 .video-overview a:hover,
 .video-overview a:focus {
@@ -2384,17 +2384,18 @@ button.btn-green-plus.green-plus-se {
   margin: 0;
   line-height: 2.6vh;
 }
+.overview-row-space {
+  margin-left: -2vw;
+  margin-right: -2vw;
+}
 .overview-row {
-  display: flex;
-  justify-content: space-between;
+  display: inline-block;
   border-bottom: 1px solid #dddddd;
   width: 100%;
 }
-.overview-row a:first-child .overview-block {
-  margin-left: 0;
-}
-.overview-row a:last-child .overview-block {
-  margin-right: 0;
+.overview-row a {
+  width: 16.66%;
+  float: left;
 }
 .video-overview .overview-row:last-child {
   border-bottom: 0;

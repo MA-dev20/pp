@@ -1,0 +1,60 @@
+<% if @result.present? %>
+	<% @result.each do |collection| %>
+	  <div class="overview-row">
+	  	<div class="overview-row-space">
+		  <% collection.each do |t| %>
+			  <% if t["turn_rating"].present? %>
+			  	<% if t["click_time"].present? %>
+				    <a href="<%= "/admins/dash/stats/turns/#{t["turn_rating"]["id"]}" if t["turn_rating"].present?%>">
+				    	<div class="overview-block seen-block" >
+				    		<h5 class="overview-block-heading"><%= t['name'] %></h5>
+				    		<div class="overviewBlock-video">
+				    			<img src="<%= t["recorded_pitch_url"] %>"/>
+				    			<span class="overview-video-play"></span>
+				    			<span class="overview-video-rating ov-span"><%= t["rating"]%></span>
+				    			<span class="overview-video-time ov-span"><%=  t["duration"]%> </span>
+				    			<div class="v-profile-img"><img src="<%=image_url t['profile_pic'] %>"/></div>
+				    			<div class="paw-overlay"><span></span></div>
+				    		</div>
+				    		<div class="overviewBlock-detail">
+				    			<h5><%= t["word"]%></h5>
+				    			<div class="ob-de d-flex align-items-center justify-content-between">
+				    				<div class="ob-de-f d-flex align-items-center">
+						    			<h5><%= (t["created_at"]).to_datetime.strftime("%-d.%_m.%y") %></h5>
+						    			<span class="delete-video" data-id="<%= t['id']%>"><i class="fa fa-trash" aria-hidden="true"></i></span>
+						    		</div>
+					    		</div>
+				    		</div>
+				    	</div>
+				    </a>
+				 <% else %>
+				 	<a href="<%= "/admins/dash/stats/turns/#{t["turn_rating"]["id"]}" if t["turn_rating"].present?%>">
+				    	<div class="overview-block" >
+				    		<h5 class="overview-block-heading"><%= t['name'] %></h5>
+				    		<div class="overviewBlock-video">
+				    			<img src="<%= t["recorded_pitch_url"] %>"/>
+				    			<span class="overview-video-play"></span>
+				    			<span class="overview-video-rating ov-span"><%= t["rating"]%></span>
+				    			<span class="overview-video-time ov-span"><%=  t["duration"]%> </span>
+				    			<div class="v-profile-img"><img src="<%=image_url t['profile_pic'] %>"/></div>
+				    		</div>
+				    		<div class="overviewBlock-detail">
+				    			<h5><%= t["word"]%></h5>
+				    			<div class="ob-de d-flex align-items-center justify-content-between">
+				    				<div class="ob-de-f d-flex align-items-center">
+						    			<h5><%= (t["created_at"]).to_datetime.strftime("%-d.%_m.%y") %></h5>
+						    			<span class="delete-video" data-id="<%= t['id']%>"><i class="fa fa-trash" aria-hidden="true"></i></span>
+						    		</div>
+					    			<span class="video-neu">- NEU -</span>
+					    		</div>
+				    		</div>
+				    	</div>
+				    </a>
+				<% end %>
+			  <% end %>
+		  <% end %>
+		</div>
+	  </div>
+
+	<% end %>
+<% end %>

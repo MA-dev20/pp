@@ -33,40 +33,24 @@
     <div class="center-r">
       <label>Sortieren nach:  </label>
       <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right" id="select-rating">
-        <option value="rating">Rating</option>
         <option value="date">Date</option>
+        <option value="rating">Rating</option>
       </select>
     </div>
   </div>
 
   </div>
   <div class="video-overview">
-      <% if @result.present? %>
-        <% @result.each do |t| %>
-          <% if t["turn_rating"].present? %>
-            <a href="<%= "/admins/dash/stats/turns/#{t["turn_rating"]["id"]}" if t["turn_rating"].present?%>">
-              <div class="overview-block" >
-                <h4 class="overview-block-heading"><%= t['word'].present? ? t['word'] : "no"  %></h4>
-                <div class="overviewBlock-video">
-                  <img src="<%= t["recorded_pitch_url"] %>" />
-                  <span class="overview-video-play"></span>
-                  <span class="overview-video-rating ov-span"><%= t["rating"]%></span>
-                  <span class="overview-video-time ov-span"><%=  t["duration"]%> </span>
-                </div>
-                <div class="overviewBlock-detail">
-                  <h5><%= t["name"]%></h5>
-                  <p><%= (t["created_at"]).to_datetime.strftime("%-d.%_m.%y") %></p>
-                </div>
-              </div>
-            </a>
-          <% end %>
-        <% end %>
-      <% end %>
+    <%= render partial: 'videos' %>
+      
   </div>
 </section>
 
 
 
+  <% content_for(:body_attributes) do %>
+    data-turbolinks="false"
+  <% end %>
 <script type="text/javascript">
 
     (function() {
@@ -84,17 +68,34 @@
       usersOption.on('click', function(e){
           $("#select-team").val('');
           filterVideos()
+
       })
       teamOption.on('click', function(e){
         e.preventDefault()
         $("#select-user").val('');
         filterVideos()
+
       })
+
     }
 
     selectClickFunctions()
-
-
+    function deleteVideoFunction(){
+     $(".delete-video").on('click', function(e){
+      e.preventDefault();
+      var $this = $(this);
+      var id = $this.data("id");
+      $.ajax({
+        url: '/admins/dash/stats/turns/'+id,
+        type: 'delete',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        success:  function(res){
+          $this.parent().parent().parent().remove()
+        }
+      })
+     }) 
+    }
+    deleteVideoFunction();
     var sortBy = $(".cs-options")[2],
     sortOption = $($(".cs-options")[2]).find("ul li");
     sortOption.on('click', function(e){
@@ -145,6 +146,7 @@
               }
               $(".video-overview").empty()
               $(".video-overview").html(res.turns_html)
+              deleteVideoFunction();
               turns = res.turns;
             }
         })
@@ -165,47 +167,26 @@
       }
     }
     function sortAndRenderTurns(val){
-      if(val == "rating"){
-        turns.sort(dynamicSort("-rating"))
-      }
-      if(val == "date"){
-        turns.sort(dynamicSort("-created_at"))
-      }
-      renderTemplate()
+      renderTemplate(val)
     }
 
-    function  renderTemplate(){      
-      $(".video-overview").empty()
-      turns.forEach(function(t){
-        var name = t["name"];
-        var duration = t["duration"],
-          rating = t["rating"];
-          if(rating== undefined){
-            rating="";
-          }
-          if(duration==undefined){
-            duration = "";
-          }
-        if(t["name"] == undefined) {
-                  name=""
-                }
-
-        template  = `<a href="/admins/dash/stats/turns/`+t["turn_rating"]["id"]+` ">
-                      <div class="overview-block" >
-                        <h4 class="overview-block-heading">`+t["word"]+`</h4>
-                        <div class="overviewBlock-video">
-                          <img src="`+t["recorded_pitch_url"]+`"/>
-                          <span class="overview-video-play"></span>
-                          <span class="overview-video-rating ov-span">`+rating+`</span>
-                          <span class="overview-video-time ov-span">`+ duration+` </span>
-                        </div>
-                        <div class="overviewBlock-detail">
-                          <h5>`+name+`</h5>
-                          <p>`+ (t["time"])+`</p>
-                        </div>
-                      </div>
-                    </a>`;
-        $(".video-overview").append(template)
+    function  renderTemplate(val){      
+      var team_id = $("#select-team option:selected").val(),
+          user_id = $("#select-user option:selected").val(),
+          sort_by = "time";
+        $.ajax({
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            url: '/admins/dash/filter_videos',
+            type: 'post',
+            data: {user_id: user_id,team_id: team_id, sort_by: val},
+            success: function(res){
+              $(".video-overview").empty()
+              $(".video-overview").html(res.turns_html)
+              deleteVideoFunction();
+              turns = res.turns;
+            }
       })
+      deleteVideoFunction();
+      
     }
 </script>
