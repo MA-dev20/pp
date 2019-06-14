@@ -85,14 +85,17 @@
       e.preventDefault();
       var $this = $(this);
       var id = $this.data("id");
-      $.ajax({
-        url: '/admins/dash/stats/turns/'+id,
-        type: 'delete',
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        success:  function(res){
-          $this.parent().parent().parent().remove()
-        }
-      })
+      var result = confirm("Want to delete?");
+      if (result) {
+        $.ajax({
+          url: '/admins/dash/stats/turns/'+id,
+          type: 'delete',
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          success:  function(res){
+            $("#videoNo"+id).remove()
+          }
+        })
+      }
      }) 
     }
     deleteVideoFunction();
