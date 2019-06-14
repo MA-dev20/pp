@@ -2354,6 +2354,34 @@ button.btn-green-plus.green-plus-se {
   margin: 0;
   line-height: 2.6vh;
 }
+.ob-de .delete-video {
+  color: #ff0000;
+  font-size: 1.8vh;
+  line-height: 2.2vh;
+  margin-left: 1vh;
+  cursor: pointer;
+}
+.ob-de .video-neu {
+  color: #1ddaaf;
+  font-size: 2vh;
+  line-height: 2vh;
+  cursor: pointer;
+}
+.overview-block .v-profile-img {
+  width: 4.5vh;
+  height: 4.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 1.4vh;
+  top: 1.4vh;
+  border-radius: 5vh;
+  overflow: hidden;
+}
+.overview-block .v-profile-img img {
+  max-width: 100%;
+}
 .overview-block {
   margin-left: 2vw;
   margin-right: 2vw;
