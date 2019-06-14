@@ -1,0 +1,18 @@
+<div class="blue_table">
+<div class="blue blue-place modal teamV-modal userDelete-modal" id="<%= "delete-user-modal#{u.id}" %>">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button class="close modal-close" onclick="closeTeamPop()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="table_wrapper">
+                <div id="list-table">
+                    <h1>Nutzer löschen</h1>
+                    <h3>Möchtest du den Nutzer wirklich unwiderruflich löschen?</h3>
+                    <%= link_to 'Löschen', destroy_user_path(u.id), class: 'btn btn-green user-p-btn'%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

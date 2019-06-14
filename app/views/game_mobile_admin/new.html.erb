@@ -5,9 +5,15 @@
 <%= form_for(:admin, url: gma_email_check_path, html: {autocomplete: 'off'}) do |f| %>
 <div class="middle">
     <div class="row">
-        <div class="col-12">
+        
+        <div class="col-12 red">
             <%= f.email_field :email, placeholder: 'E-mail', class: 'form-field', onchange: 'enterName()' %>
         </div>
+        <% else %>
+        <div class="col-12 red">
+            <%= f.email_field :email, placeholder: 'E-mail', class: 'form-field', onchange: 'enterName()' %>
+        </div>
+        <% end %>
     </div>
 </div>
 <div class="bottom">

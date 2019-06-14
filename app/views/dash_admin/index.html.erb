@@ -113,8 +113,10 @@ $("#continue").click(function(e){
 $("#own_rules_check").on("change", function(e){
   var that = $(this);
   if(that.is(":checked")){
-    $("#own-rules-modal").modal({backdrop: 'static', keyboard: false})
-    $(".text-for-switch").addClass("green")
+    $(".text-for-switch").addClass("green");
+    setTimeout(function() {
+        $("#own-rules-modal").modal({backdrop: 'static', keyboard: false});
+    },1000)
   }else{
     $(".text-for-switch").removeClass("green")
   }

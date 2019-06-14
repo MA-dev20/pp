@@ -25,10 +25,10 @@ a.remove{
 #shareModal {
     position: fixed;
     display: none;
-    top: 22vh;
-    left: 32vh;
-    height: 58%;
-    width: 46%;
+    top: 31vh;
+    left: 27.5vw;
+    height: 40%;
+    width: 25vw;
     background-color: white;
     color: #3e91da;
     margin-left: 200px;
@@ -69,23 +69,23 @@ a.remove{
     top: 10vh;
     left: 0;
     width: 100%;
-    height: 20vh;
+    height: 10vh;
     line-height: 20vh;
     text-align: center;
 }
 #shareModal .links2 {
     position: absolute;
-    top: 30vh;
+    top: 20vh;
     left: 0;
     width: 100%;
-    height: 20vh;
+    height: 10vh;
     line-height: 20vh;
     text-align: center;
 }
 #shareModal .ssb-icon {
-    height: 10vw;
-    width: 10vw;
-    background-size: 10vw 10vw;
+    height: 6vw;
+    width: 6vw;
+    background-size: 6vw 6vw;
 }
 .ssb-twitter {
     background-image: image-url('social_share/twitter.png') !important;
@@ -127,7 +127,7 @@ body {
     -webkit-backface-visibility: none; /*fix chrome bug*/
 
     color: black;
-    background-color: #ededed;
+    background-color: white;
     margin: 0;
 }
 
@@ -137,12 +137,13 @@ body {
     top: 0;
     width: 90vw;
     height: 8vh;
-    box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.1);
+    box-shadow: 0 .25rem .25rem 0 rgba(0,0,0,0.1);
     background-color: white;
     padding-left: 2vw;
     line-height: 8vh;
     font-size: 2.5vh;
     padding-left: 5vw;
+    z-index: 100;
 }
 
 .section {
@@ -231,7 +232,7 @@ body {
     width: 10vw;
     background: linear-gradient(#1dacf1 0%, #1a8ed6 51%, #145daa 100%);
     color: white;
-    box-shadow: 0 1rem 1rem 0 rgba(0,0,0,0.5);
+    box-shadow: 0 .5rem .5rem 0 rgba(0,0,0,0.5);
 }
 #sidebar img {
     position: relative;
@@ -938,7 +939,6 @@ modal
     height: 58vh;
     font-size: 30px;
     border-radius: 20px;
-    padding: 6vh 14vh 6vh 9.5vh;
     position: relative;
     h1 {
       position: relative;
@@ -1025,6 +1025,24 @@ modal
       }
     }
 }
+.userDelete-modal.modal {
+    top: 0;
+    .modal-dialog {
+        max-width: 30vw;
+        min-height: calc(100% - 3.2rem);
+        #list-table {
+            height: auto;
+            padding: 2vh 5vh;
+            h1 {
+                margin-bottom: 2.5vh;
+            }
+            h3 {
+                font-size: 1.25rem;
+                padding-bottom: 2vh;
+            }
+        }
+    }
+}
 .userEdit-modal.modal {
   top: 0;
   .modal-dialog {
@@ -1032,7 +1050,7 @@ modal
     min-height: calc(100% - 3.2rem);
     #list-table {
       height: auto;
-      padding: 3vh 16vh;
+      padding: 2vh 10vh;
       h1 {
         margin-bottom: 2.5vh;
       }
@@ -1130,7 +1148,6 @@ modal
       text-align: left;
       width: 100%;
       padding-left: 3vh;
-      font-weight: 700;
       margin-bottom: 0;
     }
     .bootstrap-tagsinput {
@@ -1546,7 +1563,7 @@ modal
 .rule-modal {
   left: 12vh;
   .modal-dialog {
-    max-width: 83vh !important;
+    max-width: 75vh !important;
     #list-table {
       padding: 4vh 16vh;
       h1 {
@@ -2403,10 +2420,8 @@ button.btn-green-plus.green-plus-se {
   font-weight: 600;
 }
 #dash_stats.dash-stats-set .stats_chart {
-  width: 48vw;
-  border-radius: 2.4vh;
-  padding: 20px;
-  height: 46.2vh;
+  width: 55vw;
+  border-radius: 8.8vh 2.4vh 2.4vh 8.8vh;
 }
 #dash_stats .stats_chart .stats_chart-cont {
   overflow-x: auto;
@@ -2414,25 +2429,11 @@ button.btn-green-plus.green-plus-se {
   height: 40.4vh;
 }
 #dash_stats .stats_chart .stats_chart-cont .chart-container {
-  top: 0;
-  left: 0;
-  height: 38vh;
-  width: 66.1vw;
-}
-#dash_stats .stats_chart .stats_chart-cont::-webkit-scrollbar {
-  width: 1vh;
-  height: 1vh;
-}
-#dash_stats .stats_chart .stats_chart-cont::-webkit-scrollbar-thumb {
-  background-color: rgba(255,255,255,0.7);
-  border-radius: 1vh;
-  width: 100px;
-  height: 100px;
+  width: calc(55vw - 50px);
 }
 #dash_stats.dash-stats-set  .compare {
   bottom: -3.8vh;
-  right: inherit;
-  left: 77vh;
+  right: 15vw;
 }
 .video-content {
   position: absolute;

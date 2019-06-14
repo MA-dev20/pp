@@ -71,7 +71,7 @@
                 <div class="teams-block">
                     <div class="form-group bootstrapTag-group">
                         <label>Teams</label>
-                        <select class="InputTags" name='user[teams][]' multiple="true" id="inputtags<%= u.id %>" data-role="tagsinput-typeahead" readonly class="rdonly"/>
+                        <select class="InputTags" name='user[teams][]' multiple="true" id="inputtags<%= u.id %>" data-role="tagsinput-typeahead" readonly class="rdonly">
                             <% u.teams.each do |t| %>
                                 <option value="<%= t.id %>" selected><%= t.name %></option>
                             <% end %>
@@ -82,7 +82,7 @@
                     <%= f.submit "#{u.new_record? ? 'Nutzer Speichern' : 'Anderungen speichern'}", class: "btn btn-green user-p-btn" %>
                 </div>
                 <% if !u.new_record? %>
-                  <a href="/users/<%=u.id %>/destroy"><span class="user-opt-det"><img src="<%= asset_path('delete-m.png') %>"></span></a>
+                  <a href="#" class="delete-user" data-id="<%=u.id %>"><span class="user-opt-det"><img src="<%= asset_path('delete-m.png') %>"></span></a>
                 <% end %>
               <% end %>
             </div>
