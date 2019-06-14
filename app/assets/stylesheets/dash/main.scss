@@ -2392,14 +2392,8 @@ button.btn-green-plus.green-plus-se {
   font-weight: 600;
 }
 #dash_stats.dash-stats-set .stats_chart {
-<<<<<<< HEAD
   width: 55vw;
   border-radius: 8.8vh 2.4vh 2.4vh 8.8vh;
-=======
-  width: 48vw;
-  border-radius: 2.4vh;
-  padding: 20px;
-  height: 46.2vh;
 }
 #dash_stats .stats_chart .stats_chart-cont {
   overflow-x: auto;
@@ -2407,24 +2401,7 @@ button.btn-green-plus.green-plus-se {
   height: 40.4vh;
 }
 #dash_stats .stats_chart .stats_chart-cont .chart-container {
-  top: 0;
-  left: 0;
-  height: 38vh;
-  width: 66.1vw;
-}
-#dash_stats .stats_chart .stats_chart-cont::-webkit-scrollbar {
-  width: 1vh;
-  height: 1vh;
-}
-#dash_stats .stats_chart .stats_chart-cont::-webkit-scrollbar-thumb {
-  background-color: rgba(255,255,255,0.7);
-  border-radius: 1vh;
-  width: 100px;
-  height: 100px;
->>>>>>> a14289cca4e32d5e65c4d0c7c9539b19bbb208fd
-}
-#dash_stats.dash-stats-set .stats_chart .chart-container {
-    width: calc(55vw - 50px);
+  width: calc(55vw - 50px);
 }
 #dash_stats.dash-stats-set  .compare {
   bottom: -3.8vh;
