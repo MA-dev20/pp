@@ -141,7 +141,6 @@
     <div class="video-options position-relative">
       <a href="#" class="stop-video" id="stop"></a>
       <a href="#" class="play-video" id="play-video"></a>
-      <a href="#" class="edit-video" id="edit-video"></a>
       <a href="#" class="volume-on"></a>
     </div>
   </div>
@@ -370,6 +369,7 @@
       if(duration != Infinity)
         $("span#duration").html('/'+secondsToHms(Math.round(duration)))
       $("span#currentTime").html(secondsToHms(Math.round(video.currentTime)))
+      $("#time_of_video").text(secondsToHms(Math.round(video.currentTime)))
     }
 
 

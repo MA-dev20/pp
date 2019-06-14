@@ -115,33 +115,7 @@
             </div>
         </div>
         <% end %>
-        <div class="places">
-           <div class="first">
-               <%= image_tag 'defaults/cup.png' %>
-               <div class="txt"><%= @turns.where(place: 1).count %></div>
-           </div>
-           <div class="second">
-               <%= image_tag 'defaults/silver.png' %>
-               <div class="txt"><%= @turns.where(place: 2).count %></div>
-           </div>
-           <div class="third">
-               <%= image_tag 'defaults/bronze.png' %>
-               <div class="txt"><%= @turns.where(place: 3).count %></div>
-           </div>
-        </div>
-        <ul class="places-ratings">
-           <% @result.first(3).each.with_index(1) do |v ,i| %>
-                <% if v.present? %>
-                    <li class="<%= 'current' if v[:user].id == current_admin.id %>">  
-                        <% if v[:user].id == current_admin.id or i.to_s == "2" %>
-                            <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
-                        <% end %>
-                        <div class="rating-c"><%= i %>. <%= v[:user].fname%></div>
-                        <div class="rating-d"><%= number_with_precision(v[:rating][:average] / 10, precision: 1)  %></div>
-                    </li>
-                <% end %>
-           <% end %> 
-        </ul>
+        
     
     
     <div class="compare">
