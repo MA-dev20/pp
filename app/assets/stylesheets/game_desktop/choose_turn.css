@@ -1,0 +1,104 @@
+#middle .circle-left img,
+#middle .circle-right img{
+    position: absolute;
+    top: calc(50% - 15vh);
+    height: 30vh;
+    width: 30vh;
+    border: 12px solid rgba(29, 218, 175, 1);
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(29, 218, 175, 0.5);
+}
+#middle .circle-left img {
+    left: calc( 50% - 35vh);
+}
+#middle .circle-right img {
+    left: calc(50% + 5vh);
+}
+#middle .circle-left .mid-img,
+#middle .circle-right .mid-img{
+    top: calc(50% - 20vh);
+    left: calc(50% - 20vh);
+    height: 40vh;
+    width: 40vh;
+}
+#middle .circle-right .middle,
+#middle .circle-left .middle {
+    animation-name: middle;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+#middle .circle-right .hide,
+#middle .circle-left .hide {
+    animation-name: hide;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+#bottom .progress {
+    height: 2rem;
+    animation-name: fadefill;
+    animation-delay: 12s;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+#bottom .progress-bar {
+    animation-name: fill;
+    animation-duration: 15s;
+    background-color: rgba(29, 218, 175, 1);
+}
+@keyframes fadefill {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.pulse-single {
+    animation-delay: 2s;
+    animation-name: pulse;
+    animation-duration: 1.5s;
+}
+@keyframes middle {
+    to {
+        left: calc(50% - 20vh);
+        top: calc(50% - 20vh);
+        width: 40vh;
+        height: 40vh;
+    }
+}
+@keyframes hide {
+    to {
+        top: 100vh;
+    }
+}
+#bottom .countdown {
+    margin-top: 5vh;
+}
+
+.vote {
+    position: fixed;
+    top: 50vh;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    background-color: rgba(29, 218, 175, 1);
+    animation-name: fall-in;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+.vote img {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    border-radius: 50%;
+    height: 90%;
+    width: 90%;
+}
+
+@keyframes fall-in {
+    from {
+        top: -150px;
+    }
+}

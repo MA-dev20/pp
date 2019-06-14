@@ -8,15 +8,18 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def wait
+    @handy = true
     if @game.state != 'wait'
         @game.update(state: 'wait')
     end 
     @users = @game.users
+    @acc_users = @game.users.where(status: 0).all
     @count = @game.turns.where(status: "accepted").playable.count 
     @pending_users = @users.select{|user| user if user.status=="pending"}
   end
     
   def choose
+    @handy = true
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
     if @turns.count <= 1
       redirect_to gea_turn_path
@@ -63,6 +66,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def rate
+    @handy = true
     if @game.state != 'rate'
       @game.update(state: 'rate')
     end

@@ -5,30 +5,116 @@
     </div>
     
     <div class="stats_overview">
-        <div class="gesamt active">
-            <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
-            <div class="text" id="t_gesamt">Gesamt</div>
+        <% if @rating.ges < 33 %>
+        <div class="circ-red">
+            <div class="gesamt active">
+                <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
+                <div class="text" id="t_gesamt">Gesamt</div>
+            </div>
         </div>
-        
-        <div class="spontan">
-            <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
-            <div class="text" id="t_spontan">Spontanität</div>
+        <% elsif @rating.ges > 66 %>
+        <div class="circ-green">
+            <div class="gesamt active">
+                <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
+                <div class="text" id="t_gesamt">Gesamt</div>
+            </div>
         </div>
-        
-        <div class="kreativ">
-            <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
-            <div class="text" id="t_kreativ">Kreativität</div>
+        <% else %>
+        <div class="circ-yellow">
+            <div class="gesamt active">
+                <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
+                <div class="text" id="t_gesamt">Gesamt</div>
+            </div>
         </div>
-        
-        <div class="body">
-            <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
-            <div class="text" id='t_body'>Körpersprache</div>
+        <% end %>
+        <% if @rating.spontan < 33 %>
+        <div class="circ-red">
+            <div class="spontan">
+                <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
+                <div class="text" id="t_spontan">Spontanität</div>
+            </div>
         </div>
-        
-        <div class="rhetorik">
-            <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
-            <div class="text" id="t_rhetorik">Rhetorik</div>
+        <% elsif @rating.spontan > 66 %>
+        <div class="circ-green">
+            <div class="spontan">
+                <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
+                <div class="text" id="t_spontan">Spontanität</div>
+            </div>
         </div>
+        <% else %>
+        <div class="circ-yellow">
+            <div class="spontan">
+                <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
+                <div class="text" id="t_spontan">Spontanität</div>
+            </div>
+        </div>
+        <% end %>
+        <% if @rating.creative < 33 %>
+        <div class="circ-red">
+            <div class="kreativ">
+                <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
+                <div class="text" id="t_kreativ">Kreativität</div>
+            </div>
+        </div>
+        <% elsif @rating.creative > 66 %>
+        <div class="circ-green">
+            <div class="kreativ">
+                <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
+                <div class="text" id="t_kreativ">Kreativität</div>
+            </div>
+        </div>
+        <% else %>
+        <div class="circ-yellow">
+            <div class="kreativ">
+                <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
+                <div class="text" id="t_kreativ">Kreativität</div>
+            </div>
+        </div>
+        <% end %>
+        <% if @rating.body < 33 %>
+        <div class="circ-red">
+            <div class="body">
+                <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
+                <div class="text" id='t_body'>Körpersprache</div>
+            </div>
+        </div>
+        <% elsif @rating.body > 66 %>
+        <div class="circ-green">
+            <div class="body">
+                <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
+                <div class="text" id='t_body'>Körpersprache</div>
+            </div>
+        </div>
+        <% else %>
+        <div class="circ-yellow">
+            <div class="body">
+                <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
+                <div class="text" id='t_body'>Körpersprache</div>
+            </div>
+        </div>
+        <% end %>
+        <% if @rating.rhetoric < 33 %>
+        <div class="circ-red">
+            <div class="rhetorik">
+                <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
+                <div class="text" id="t_rhetorik">Rhetorik</div>
+            </div>
+        </div>
+        <% elsif @rating.rhetoric > 66 %>
+        <div class="circ-green">
+            <div class="rhetorik">
+                <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
+                <div class="text" id="t_rhetorik">Rhetorik</div>
+            </div>
+        </div>
+        <% else %>
+        <div class="circ-yellow">
+            <div class="rhetorik">
+                <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
+                <div class="text" id="t_rhetorik">Rhetorik</div>
+            </div>
+        </div>
+        <% end %>
         <div class="places">
            <div class="first">
                <%= image_tag 'defaults/cup.png' %>

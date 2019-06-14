@@ -22,13 +22,7 @@
   </head>
 
 <body>
-<% flash.each do |name, msg| %>
-    <% if msg.is_a?(String) %>
-        <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
-            <%= content_tag :div, msg, :id => "flash_#{name}" %>
-        </div>
-    <% end %>
-<% end %>
+
     <section id="content">
     <% if @game %>
         <%= yield %>
@@ -42,6 +36,7 @@
     </section>
   </body>
   <script type="text/javascript">
-      $(".alert" ).fadeOut(3000);
+      setTimeout(function() {$(".alert" ).fadeOut(3000);}, 5000)
+      
   </script>
 </html>

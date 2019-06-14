@@ -345,6 +345,9 @@
     -webkit-transition-delay: 9999s;
     -webkit-transition: color 9999s ease-out, background-color 9999s ease-out;
 }
+.red .form-field{
+    border-color: rgb(255, 107, 108) !important;
+}
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #cccccc;
 }
@@ -356,6 +359,10 @@
 }
 :-moz-placeholder { /* Firefox 18- */
   color: #cccccc;
+}
+.link-pass {
+    font-size: 2vh;
+    color: white;
 }
 .link,
 .bottom > a,
@@ -681,7 +688,11 @@ input[type='radio'] {
 
 }
 .alert{
+    line-height: 136px;
     z-index: 2;
+    color: white;
+    text-align: center;
+    font-size: 50px;
 }
 
 

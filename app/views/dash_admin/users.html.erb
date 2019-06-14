@@ -63,7 +63,7 @@
                 ...
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu<%= u.id %>">
-                <%= link_to 'Löschen!', destroy_user_path(u), class: 'dropdown-item', style: 'border-bottom: none', type: "button", data: { confirm: "Alles Spiele und Statistiken des Nutzers gehen verloren. Bist du sicher, dass du den Nutzer unwideruflich löschen möchtest?" } %>
+                <a href="#" class="delete-user" data-id="<%=u.id %>">Löschen</a>
               </div>
               </div>
             </td>
@@ -78,6 +78,9 @@
 
             <% content_for :modal do%>
                 <%= render partial: 'form',locals: { u: u} %>
+            <% end %>
+            <% content_for :modal do%>
+            <%= render partial: 'delete_user', locals: {u: u} %>
             <% end %>
           <% end %>
         </tbody>
@@ -102,6 +105,12 @@
   $("#newUserModal").on("click", function(event){
     event.preventDefault();
     $("#new_user").modal("show");
+  });
+  $(".delete-user").on("click", function(event){
+    event.preventDefault();
+    $('.dropdown-menu').hide()
+    var $id = $(this).data("id")
+    $("#delete-user-modal"+$id).modal("show")
   });
   $(document).ready(function(){
 
@@ -158,6 +167,7 @@
 
     $('#myTable').DataTable( {
         "paging":   false,
+        "scrollY": 400,
         "info":     false,
         'searching': false,
         "order": [ 1, 'asc' ],
@@ -189,7 +199,6 @@ $('#searchField').keyup(function() {
         return !reg.test(text);
     }).hide();
 });
-new PerfectScrollbar('#table');
 new PerfectScrollbar('.cs-options');
 
             
