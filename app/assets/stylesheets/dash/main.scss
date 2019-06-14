@@ -2117,6 +2117,7 @@ button.btn-green-plus.green-plus-se {
 }
 .videotool-comment .vc-top-scroll {
   height: 46vh;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 .videotool-comment .vc-top-scroll::-webkit-scrollbar {
@@ -2138,6 +2139,8 @@ button.btn-green-plus.green-plus-se {
   color: #a9a9a9;
   margin: 0;
   line-height: 2.2vh;
+  word-break: break-word;
+  white-space: normal;
 }
 .vc-row.vcr-negative h5 {
   color: #e39999;
