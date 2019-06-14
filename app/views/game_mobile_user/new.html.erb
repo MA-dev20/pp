@@ -5,9 +5,15 @@
 <%= form_for(:user, url: gmu_password_path, html: {autocomplete: 'off'}) do |f| %>
 <div class="middle">
     <div class="row">
+        <% if flash.count != 0 %>
+        <div class="col-12 red">
+            <%= f.email_field :email, placeholder: 'E-Mail', class: 'form-field' %>
+        </div>
+        <% else %>
         <div class="col-12">
             <%= f.email_field :email, placeholder: 'E-Mail', class: 'form-field' %>
         </div>
+        <% end %>
     </div>
 </div>
 <div class="bottom">

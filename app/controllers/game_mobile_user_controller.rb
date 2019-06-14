@@ -55,8 +55,11 @@ class GameMobileUserController < ApplicationController
         sign_in(@user)
         redirect_to gmu_new_avatar_path
       elsif @user
-        flash[:danger] = 'Konnte kein passendes Spiel finden!'
-        redirect_to root_path
+        flash[:danger] = 'Bitte überprüfe die URL!'
+        redirect_to gmu_start_path(@game1.password)
+      elsif  params[:user][:email] == ''
+        flash[:danger] = 'Bitte gib eine E-Mail ein!'
+        redirect_to gmu_password_path
       else
         session[:user_already] = nil
         @user = @admin.users.create(email: params[:user][:email])
@@ -155,8 +158,11 @@ class GameMobileUserController < ApplicationController
 
   def create_name
     @game1 = Game.find(session[:game_session_id])
-    @user.update(user_params)
-    redirect_to gmu_new_company_path
+    if @user.update(user_params)
+      redirect_to gmu_new_company_path
+    else
+      redirect_to gmu_new_name_path
+    end
   end
     
   def new_company
@@ -165,8 +171,11 @@ class GameMobileUserController < ApplicationController
      
   def create_company
     @game1 = Game.find(session[:game_session_id])
-    @user.update(user_params)
-    redirect_to gmu_new_avatar_path
+    if @user.update(user_params)
+      redirect_to gmu_new_avatar_path
+    else
+      redirect_to gmu_new_company_path
+    end
   end
     
   def new_avatar

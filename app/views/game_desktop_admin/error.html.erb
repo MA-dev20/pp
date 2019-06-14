@@ -9,13 +9,16 @@
 </svg>
 
 <section id="head">
-     Nicht genug Spieler, um das Spiel zu starten!
+   <h3>Nicht genug Spieler, um das Spiel zu starten!</h3>
 </section>
 <section id="middle">
    		
 </section>
+<section id="bottom">
+    <%= link_to 'Zum Dashboard', dash_admin_path, class: 'btn btn-green' %>
+</section>
 <section id="skip">
-   Skip mit Leertaste
+   Zurück mit Leertaste
 </section>
 <%= audio_tag('turn/besonderescatchword.mp3', id: 'tag1') %>
 <%= audio_tag('turn/glaskugel.mp3', id: 'tag2') %>

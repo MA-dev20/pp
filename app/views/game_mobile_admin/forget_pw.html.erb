@@ -5,16 +5,15 @@
 <%= form_for(:admin, url: gma_start_path, html: {autocomplete: 'off'}) do |f| %>
 <div class="middle">
     <div class="row">
-        <div class="col-12">
-            <%= f.password_field :password, placeholder: 'Passwort', class: 'form-field', onchange: 'enterName()' %>
+        <div class="col-12 red">
+            <%= f.password_field :password, placeholder: 'Passwort', class: 'form-field', onchange: 'enterName()' %> <br>
+            <%= link_to "Forget Password?", new_admin_password_path, class: 'link-pass' %>
             <%= f.hidden_field :email, class: 'form-field',value: params[:email]  %>
         </div>
     </div>
 </div>
 <div class="bottom">
-    <%= f.submit 'weiter!', class: 'link pulse', id: 'summit'%>
-    <br>
-    <%= link_to "Forget Password?", new_admin_password_path, class: 'link' %>
+    <%= f.submit 'weiter!', class: 'link pulse', id: 'summit'%>    
 </div>
 <% end %>
 

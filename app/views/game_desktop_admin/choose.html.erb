@@ -1,6 +1,6 @@
 <section id="count_channel" data-game-id="<%= @game.id %>">
 <section id="head">
-    Wer soll pitchen?
+    <h1>Wer soll pitchen?</h1>
 </section>
 <section id="middle">
     <div id="vote"></div>
@@ -72,4 +72,15 @@
         return {time: t}
 
     };
+    document.addEventListener('DOMContentLoaded', function() {
+            var typed = new Typed('#head', {
+                strings: ['Wer soll pitchen?'],
+                typeSpeed: 10,
+                backSpeed: 80,
+                backDelay: 0,
+                startDelay: 13000,
+                smartBackspace: false,
+                loop: true,
+            })
+    })
 </script>

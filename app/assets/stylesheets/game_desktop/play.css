@@ -1,3 +1,8 @@
+#gd_play {
+    position: absolute;
+    top: -70px;
+    width: 100%;
+}
 #gd_play .top #logo {
     position: absolute;
     left: 5vw;
