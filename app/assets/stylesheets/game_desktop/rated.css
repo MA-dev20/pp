@@ -198,14 +198,14 @@
         left: calc( 50% - 900px );
         top: calc( 50% - 450px );
         width: 1800px;
-        height: 900px;
+        height: 800px;
     }
     #gd_rated_spontan,
     #gd_rated_creativ,
     #gd_rated_body,
     #gd_rated_rhetoric {
-        height: 400px;
-        width: 400px;
+        height: 350px;
+        width: 350px;
     }
     #gd_rated_spontan {
         top: 50px;
@@ -234,31 +234,31 @@
 .circle {
     top: 70px;
     left: 50px;
-    height: 300px;
-    width: 300px
+    height: 250px;
+    width: 250px
 }
 .circle .bg_1,
 .circle .bg_2 {
-    top: 15px;
-    left: 15px;
-    height: 270px;
-    width: 270px;
+    top: 10px;
+    left: 10px;
+    height: 230px;
+    width: 230px;
 }
 .circle .shield {
     position: absolute;
-    top: 35px;
-    left: 35px;
-    height: 200px;
-    width: 200px;
+    top: 30px;
+    left: 30px;
+    height: 180px;
+    width: 180px;
 }
 #gd_rated .pol,
 #gd_rated .rate {
-    top: 250px;
-    left: 220px;
-    height: 160px;
-    width: 160px;
-    line-height: 170px;
-    font-size: 50px;
+    top: 210px;
+    left: 210px;
+    height: 140px;
+    width: 140px;
+    line-height: 150px;
+    font-size: 40px;
     animation-name: pulse1;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;

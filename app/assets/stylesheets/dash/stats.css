@@ -19,7 +19,7 @@
     top: 8vh;
     left: 0;
     height: 25vh;
-    width: 70vw;
+    width: calc(55vw + 30vh);
 }
 #dash_stats .gesamt {
     position: absolute;
@@ -118,8 +118,16 @@
 #dash_stats .body:hover .circle,
 #dash_stats .rhetorik:hover .circle {
     background-color: rgba(28, 161, 222, 1);
-    border-color: #1ddaaf;
     font-weight: bold;
+}
+#dash_stats .circ-green .circle {
+    border-color: #1ddaaf;
+}
+#dash_stats .circ-red .circle {
+    border-color: rgb(255, 107, 108);
+}
+#dash_stats .circ-yellow .circle {
+    border-color: rgb(254, 251, 198);
 }
 #dash_stats .text {
     position: absolute;
@@ -215,7 +223,7 @@
     left: 0;
     width: 70vw;
     background-color: #1ca1de;
-    border-radius: 50px;
+    border-radius: 25px !important;
     box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.2);
 }
 #dash_stats .stats_chart .chart-container {

@@ -23,6 +23,13 @@
 </head>
 
 <body>
+   <section id="navbar">
+       <%= image_tag 'logo-m.png', class: 'logo' %>
+       - <%= @game.team.name %> -
+       <% if @handy %>
+       <%= image_tag 'game/handy_green.png', class: 'handy' %>
+       <% end %>
+   </section>
     <section id="content">
         <div id='game_channel' data-game-id="<%= @game.id %>">
         <div id='admin' data-admin-id="<%= current_admin.id %>"></div>

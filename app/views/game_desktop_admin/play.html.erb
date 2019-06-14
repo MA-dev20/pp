@@ -3,6 +3,7 @@
     <div class="top">
         <%= image_tag 'defaults/logo-no_shadow.png', id: 'logo' %>
         <%= image_tag @user.avatar.quad.url || '', id: 'avatar' %>
+        <%= image_tag @admin.logo.quad.url || '', id: 'cust-logo' %>
     </div>
     <div class="mid">
         <div class="countdown animated flipInX"><span class="timer" id='timerall'></span></div>
@@ -16,7 +17,18 @@
 <%= audio_tag("play/intro.mp3", autoplay: false, loop: true, id: 'intro') %>
 <%= audio_tag(@word.sound, id: "word_sound") %>
 <%= audio_tag('play/theme.mp3', id: 'theme') %>
+<%= audio_tag('play/AufdenPunkt.mp3', id: 'sound_1') %>
+<%= audio_tag('play/BeiderKonkurrenz.mp3', id: 'sound_2') %>
+<%= audio_tag('play/ChefFragen.mp3', id: 'sound_3') %>
+<%= audio_tag('play/KeinBudget.mp3', id: 'sound_4') %>
+<%= audio_tag('play/KeineZeit.mp3', id: 'sound_5') %>
+<%= audio_tag('play/KeinInteresse.mp3', id: 'sound_6') %>
+<%= audio_tag('play/Mail.mp3', id: 'sound_7') %>
+<%= audio_tag('play/Quatsch.mp3', id: 'sound_8') %>
+<%= audio_tag('play/Referenzen.mp3', id: 'sound_9') %>
+
 <script type="text/javascript">
+    $('#navbar').hide();
     textanim();
     document.getElementById('intro').play();
     document.getElementById("intro").volume = 0.67;
@@ -98,7 +110,25 @@
 
     function startTimerModal(duration, display) {
         $(function() {
-            
+          if ($('#objection-text').text().trim() == 'Auf den Punkt kommen') {
+            document.getElementById('sound_1').play();
+          } else if ($('#objection-text').text().trim() == 'Bei der Konkurrenz') {
+              document.getElementById('sound_2').play();
+          } else if ($('#objection-text').text().trim() == 'Muss ich den Chef Fragen') {
+              document.getElementById('sound_3').play();
+          } else if ($('#objection-text').text().trim() == 'Kein Budget') {
+              document.getElementById('sound_4').play();
+          } else if ($('#objection-text').text().trim() == 'Keine Zeit') {
+              document.getElementById('sound_5').play();
+          } else if ($('#objection-text').text().trim() == 'Kein Interesse') {
+              document.getElementById('sound_6').play();
+          } else if ($('#objection-text').text().trim() == 'Schick mir eine Mail') {
+              document.getElementById('sound_7').play();
+          } else if ($('#objection-text').text().trim() == 'Ist Quatsch') {
+              document.getElementById('sound_8').play();
+          } else if ($('#objection-text').text().trim() == 'Referenzen') {
+            document.getElementById('sound_9').play();
+          }
           document.getElementById('video-bg').pause()
           document.getElementById('theme').pause();
           stopAnimation($("#avatar"))

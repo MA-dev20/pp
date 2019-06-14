@@ -27,7 +27,7 @@
     padding-left: 3vh;
     color: black;
     border-radius: 4vh;
-    border: 2px solid white;
+    border: 2px solid #ededed;
     
 }
 #gd_users .top #searchField:focus {
@@ -47,7 +47,8 @@
     top: 18vh;
     max-height: 65vh;
     background-color: white;
-    border-radius: 50px;
+    border-radius: 25px;
+    border: 1px solid #ededed;
     box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.1);
     padding-bottom: 70px;
     padding-left: 35px;
@@ -69,6 +70,9 @@
     overflow-x: hidden;
     overflow-y: hidden;
 }
+#gd_users #tbody {
+    max-height: 50vh;
+}
 #gd_users thead th {
     border-bottom: 1px solid rgba(1, 1, 1, 0.1) !important;
 }
@@ -81,6 +85,9 @@ table.dataTable.no-footer {
     left: 0;
     width: calc(60vw-40px) !important;
 }
+#gd_users .dataTables_scrollBody {
+    border-bottom: none !important;
+}
 #gd_users table > tbody > tr {
     height: 6vh;
     border-bottom: 1px solid #e9e9e9;
@@ -88,7 +95,8 @@ table.dataTable.no-footer {
 #gd_users table > tbody > tr > td:hover {
     
 }
-#gd_users table > tbody > tr > td a {
+#gd_users table > tbody > tr > td a,
+#gd_users table > tbody > tr > td button{
     font-size: 2vh;
     color: #1ddaaf;
     -webkit-appearance: none !important;
