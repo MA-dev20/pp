@@ -191,7 +191,6 @@
 
   var Comments = (<%= raw(@turn.comments.to_json) %>);
   $(document).ready(function(){
-    window.clearInterval(timerId);
 
     const player = document.querySelector('#video');
     const progress = player.querySelector('.player-bar');
@@ -222,6 +221,7 @@
           }, 50);
         $(".play-video").addClass("pause-video")
       }else{
+        $("input[name=field]").focus()
         window.clearInterval(timerId);
         $(".play-video").removeClass("pause-video")
       }
@@ -397,7 +397,7 @@
     playbutton.addEventListener('click', handleProgress);
     video.addEventListener('play', updateButton);
     video.addEventListener('pause', updateButton);
-    editButton.addEventListener("click", commentBox)
+    // editButton.addEventListener("click", commentBox)
     skipButtons.forEach(button => button.addEventListener('click', skip));
     ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
     ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate));
