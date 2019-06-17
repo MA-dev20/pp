@@ -59,7 +59,7 @@
 <script type="text/javascript">
   <% @acc_users.each do |u| %>
     left1 = Math.random()*80 + 10
-    userRain = '<div style="left:' + left1+'%;"><img src="<%= u.avatar.quad.url %>"></div>'
+    userRain = '<div style="left:' + left1+'%;"><img src="<%= u.findUser.avatar.quad.url %>"></div>'
     $("#user-rain").append(userRain)
   <% end %>
   <% @pending_users.each do |user| %>
