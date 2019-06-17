@@ -1,15 +1,20 @@
-<section id="head">
 <% if @turns.count == 1 %>
- <h1><%= @user.fname %>, du bist dran!</h1>
+<section id="head" class="fly_in_right">
+<h1><%= @user.fname %>, du bist dran!</h1>
+<% else %>
+<section id="head">
+    <h1 id="heading"></h1>
 <% end %>
-<h1 id="heading"></h1>
 </section>
-<section id="middle">
-  <% if @turns.count == 1 %>
-      <div class="circle">
+
+<% if @turns.count == 1 %>
+<section id="middle" class="fly_in_right">
+    <div class="circle">
           <%= image_tag @turn.findUser.avatar.quad.url, class: 'green pulse' %>    
       </div>
-  <% elsif @turn1 == @turn %>
+<% else %>
+<section id="middle">
+  <% if @turn1 == @turn %>
   <div class="circle-left">
       <%= image_tag @turn1.findUser.avatar.quad.url, class: 'blue middle', id: 'middle_img' %>
   </div>
@@ -24,6 +29,7 @@
       <%= image_tag @turn2.findUser.avatar.quad.url, class: 'blue middle', id: 'middle_img' %>
   </div>
   <% end %>
+<% end %>
 </section>
 <section id="skip">
    Skip mit Leertaste

@@ -1,12 +1,12 @@
 <%= video_tag 'countdown.mp4', id: 'video-bg', autoplay: true %>
 <section id="gd_play">
     <div class="top">
-        <%= image_tag 'defaults/logo-no_shadow.png', id: 'logo' %>
+        <%= image_tag 'defaults/logo-no_shadow.png', id: 'logo', class: 'fly_in_left' %>
         <%= image_tag @user.avatar.quad.url || '', id: 'avatar' %>
-        <%= image_tag @admin.logo.quad.url || '', id: 'cust-logo' %>
+        <%= image_tag @admin.logo.quad.url || '', id: 'cust-logo', class: 'fly_in_right' %>
     </div>
     <div class="mid">
-        <div class="countdown animated flipInX"><span class="timer" id='timerall'></span></div>
+        <div class="countdown"><span class="timer animated flipInX" id='timerall'></span></div>
         <div id="word" data-target-resolver><%= @word.name %></div>
     </div>
 </section>
@@ -46,6 +46,7 @@
 
     
     function startTimer(duration, display) {
+        $('.countdown').addClass('fly_in_bottom');
         var timer = duration, minutes, seconds;
         var setTimer = setInterval(function () {
             minutes = parseInt(timer / 60, 10);
@@ -61,6 +62,7 @@
             }
             timer--;
         }, 1000);
+        
         var pause = function(){
             clearInterval(setTimer);
         }

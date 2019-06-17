@@ -45,7 +45,7 @@
     left: 5vw;
     width: 60vw;
     top: 18vh;
-    max-height: 65vh;
+    max-height: 70vh;
     background-color: white;
     border-radius: 25px;
     border: 1px solid #ededed;
@@ -65,35 +65,25 @@
     top: 3vh;
     position: relative;
     left: 0vw;
-    width: calc(60vw-40px);
-    max-height: 59vh;
+    width: 100%;
+    max-height: 65vh;
     overflow-x: hidden;
     overflow-y: hidden;
 }
-#gd_users #tbody {
-    max-height: 50vh;
+#gd_users .users table {
+    width: 100%;
 }
 #gd_users thead th {
     border-bottom: 1px solid rgba(1, 1, 1, 0.1) !important;
 }
-table.dataTable.no-footer {
-    border-bottom: 0px solid black !important;
-}
-
-#gd_users .users #table table {
-    top: 0;
-    left: 0;
-    width: calc(60vw-40px) !important;
-}
-#gd_users .dataTables_scrollBody {
-    border-bottom: none !important;
+#gd_users .dataTables_scrollBody,
+#gd_users .dataTables_scrollBody table,
+#gd_users .dataTables_scrollBody table tbody{
+    border: none;
 }
 #gd_users table > tbody > tr {
     height: 6vh;
-    border-bottom: 1px solid #e9e9e9;
-}
-#gd_users table > tbody > tr > td:hover {
-    
+    border: none;
 }
 #gd_users table > tbody > tr > td a,
 #gd_users table > tbody > tr > td button{
