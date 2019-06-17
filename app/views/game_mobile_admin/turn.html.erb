@@ -25,7 +25,15 @@
     $("#start").on("change", function(e){
       var that = $(this);
       if(that.is(":checked")){
-        $(".text-for-switch").addClass("green-text")
+        try {
+          var stream =new MediaStream()
+          new MediaRecorder(stream)
+          $(".text-for-switch").addClass("green-text")
+        }
+        catch(err) {
+          $("#start").prop("checked", false);
+          alert('sorry your browser does not support record-function \n Please use Chrome to have full functionality of Peter Pitch');
+        }
       }else{
         $(".text-for-switch").removeClass("green-text")
       }
