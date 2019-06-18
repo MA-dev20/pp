@@ -2,46 +2,20 @@
   <div class="head">
      <div class="compare-selects">
       <div class="centerq">
-        <select class="cs-select cs-skin-underline cs-again-select form-field cs-select-set cs-select-left select-user" id="select-user">
-            <option value=""   data-class="cs-selected" selected>Select User</option>
-            <% @users.each do |u| %>
-                <% if @user && u.id == @user.id %>
-                    <option value="<%= u.id %>"  data-class="cs-selected" selected>
-                        <%= u.fname %> <%= u.lname %>
-                    </option>
-                <% else %>
-                    <option value="<%= u.id %>">
-                        <%= u.fname %> <%= u.lname %>
-                    </option>
-                <% end %>
-                
-            <% end %>
-        </select>
-
-        <select class="cs-select cs-skin-underline cs-again-select form-field cs-select-set  select-team cs-select-right" id="select-team">
-            <option value=""   data-class="cs-selected" selected>Select Team</option>
-            <% @teams.each do |t| %>
-                <% if @team.present? && t.id == @team.id %>
-                    <option value="<%= t.id %>"  data-class="cs-selected" selected><%= t.name %></option>
-                <%else %>
-                    <option value="<%= t.id %>" ><%= t.name %></option>
-                <% end %>
-            <% end %>
+        <label>Sortieren nach:  </label>
+        <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right" id="select-rating">
+          <option value="date" selected>Date</option>
+          <option value="rating">Rating</option>
         </select>
       </div>
 
     <div class="center-r">
-      <label>Sortieren nach:  </label>
-      <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right" id="select-rating">
-        <option value="date" selected>Date</option>
-        <option value="rating">Rating</option>
-      </select>
     </div>
   </div>
 
   </div>
   <div class="video-overview">
-    <%= render partial: 'videos',locals: {delete: true} %>
+    <%= render partial: 'videos' , locals: {delete: false}%>
   </div>
 </section>
 
@@ -87,7 +61,7 @@
       var result = confirm("Want to delete?");
       if (result) {
         $.ajax({
-          url: '/admins/dash/stats/turns/'+id,
+          url: '/dash/stats/turns/'+id,
           type: 'delete',
           beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
           success:  function(res){
@@ -113,9 +87,9 @@
           sort_by = $("#select-rating option:selected").val();
         $.ajax({
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-            url: '/admins/dash/filter_videos',
+            url: '/dash/filter_videos',
             type: 'post',
-            data: {user_id: user_id,team_id: team_id, sort_by: sort_by},
+            data: {sort_by: sort_by},
             success: function(res){
               if(res.users){
                 var template = '<select class="cs-select cs-again-select cs-skin-underline form-field cs-select-set cs-select-left select-user" id="select-user">';
@@ -179,7 +153,7 @@
           sort_by = "time";
         $.ajax({
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-            url: '/admins/dash/filter_videos',
+            url: '/dash/filter_videos',
             type: 'post',
             data: {user_id: user_id,team_id: team_id, sort_by: val},
             success: function(res){

@@ -1,0 +1,2 @@
+module DashUserHelper
+end

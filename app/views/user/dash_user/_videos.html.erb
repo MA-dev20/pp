@@ -4,7 +4,7 @@
 	  	<div class="overview-row-space">
 		  <% collection.each do |t| %>
 			  	<% if t["click_time"].present? %>
-				    <a href="<%= "/admins/dash/stats/turns/#{t["turn_rating"]["id"]}"  if t["turn_rating"].present?%>" id="videoNo<%=t["id"]%>">
+				    <a href="<%= "/dash/stats/turns/#{t["turn_rating"]["id"]}"  if t["turn_rating"].present?%>" id="videoNo<%=t["id"]%>">
 				    	<div class="overview-block seen-block" >
 				    		<h5 class="overview-block-heading"><%= t['name'] %></h5>
 				    		<div class="overviewBlock-video">
@@ -28,7 +28,7 @@
 				    	</div>
 				    </a>
 				 <% else %>
-				 	<a href="<%= "/admins/dash/stats/turns/#{t["turn_rating"]["id"]}" if t["turn_rating"].present?%>" id="videoNo<%=t["id"]%>">
+				 	<a href="<%= "/dash/stats/turns/#{t["turn_rating"]["id"]}" if t["turn_rating"].present?%>" id="videoNo<%=t["id"]%>">
 				    	<div class="overview-block" >
 				    		<h5 class="overview-block-heading"><%= t['name'] %></h5>
 				    		<div class="overviewBlock-video">

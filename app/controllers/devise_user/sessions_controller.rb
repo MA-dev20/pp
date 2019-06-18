@@ -13,7 +13,8 @@ class DeviseUser::SessionsController < Devise::SessionsController
   def create
     if !params[:admin][:email].nil? && !params[:admin][:password].nil?
       self.resource = warden.authenticate(auth_options)
-      if  !self.resource.nil?
+      user = User.find_by_email(params[:admin][:email])
+      if  !self.resource.nil?        
         if !((Date.today.to_s).eql?(self.resource.expiration.to_s))
           set_flash_message!(:notice, :signed_in)
           sign_in(resource_name, resource)
@@ -23,13 +24,29 @@ class DeviseUser::SessionsController < Devise::SessionsController
         else
           redirect_to price_path
         end
-      
-      else
+      elsif user && user.encrypted_pw && (user.decrypt(user.encrypted_pw) == params[:admin][:password])
+        set_flash_message!(:notice, :signed_in)
+        sign_in(user)
+        return  render json: {response: "ok", user: true} if request.xhr?
+
+        return redirect_to dash_user_stats_url
+      else  
         email = Admin.find_by_email(params[:admin][:email])
         errors = {}
         errors.merge!({email: true}) if !email.present?
         errors.merge!({password:  true}) if email.present? && !email.valid_password?(params[:admin][:password])
-        return render json: {response: "error", errors: errors}
+        if email.present?
+          return render json: {response: "error", errors: errors}
+        else
+          if user 
+            errors = {}
+            errors.merge!({email: true}) if !user.present?
+            errors.merge!({password:  true}) if user.present? && !(user.encrypt(params[:admin][:password]) == user.encrypted_pw)
+            return render json: {response: "error", errors: errors}
+          else
+            return render json: {response: "error", errors: errors}
+          end
+        end
         redirect_to landing_index_path
       #   email = params.dig(:admin, :email)
       #   # password = params.dig(:admin, :password)
@@ -63,7 +80,6 @@ class DeviseUser::SessionsController < Devise::SessionsController
 
       elsif !@admin
         email = params.dig(:admin, :email)
-        # password = params.dig(:admin, :password)
         @admin =Admin.where(email: email ).first_or_initialize
         @admin.password = "123456"
         @admin.token=  (SecureRandom.random_number(9e5) + 1e5).to_i
@@ -78,6 +94,7 @@ class DeviseUser::SessionsController < Devise::SessionsController
         end
         # redirect_to root_path , notice: 'Signup Information Sent to your Email Successfully.'
         puts "Offer sent."
+        
       end
 
     end

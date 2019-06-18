@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include ApplicationHelper
   before_action :authenticate_admin!, :set_vars, except: [:create]
 
   def destroy
@@ -26,7 +27,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.admin_id = current_admin.id
+    @random_pass = random_pass
+    @user.encrypted_pw = @user.encrypt @random_pass
     if @user.save
+      SendInvitationJob.perform_later(@user, @random_pass)
       if params[:user][:teams].present?
         @user.team_ids = params[:user][:teams] 
       else

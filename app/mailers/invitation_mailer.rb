@@ -11,4 +11,12 @@ class InvitationMailer < ApplicationMailer
     @game = game
     mail to: @user.email
   end
+
+  def new_user user, pass
+    @greeting = "HI #{user.fname}! Your password Is #{pass}"
+    @user = user
+    mail to: @user.email
+  end
 end
+
+

@@ -1,10 +1,17 @@
 module ApplicationHelper
+  include VideosHelper
 	def create_image_of_html(html, js_path, css_path)
 		kit = IMGKit.new(html, :quality => 50)
 		kit.stylesheets << css_path
 		kit.javascripts << js_path
 		file = kit.to_file('file.jpg')
 	end
+
+  
+  def random_pass
+    (0...8).map { (65 + rand(26)).chr }.join
+  end
+
 
 	def send_invitation_emails_to_team_members(team, game)
 		team.users.each do |user|

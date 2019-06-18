@@ -76,6 +76,9 @@
           if(res.errors.password)
            $(".password-error").show()
         }else{
+          if(res.user == true){
+            return  window.location.href = "/dash/stats"
+          }
           window.location.href = "/admin/dash"
         }
       }
