@@ -13,7 +13,7 @@ class GameDesktopAdminController < ApplicationController
         @game.update(state: 'wait')
     end 
     @users = @game.users
-    @acc_users = @game.users.where(status: 0).all
+    @acc_users = @game.turns.where(status: "accepted").playable.all
     @count = @game.turns.where(status: "accepted").playable.count 
     @pending_users = @users.select{|user| user if user.status=="pending"}
   end

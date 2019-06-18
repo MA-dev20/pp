@@ -5,116 +5,30 @@
     </div>
     
     <div class="stats_overview">
-        <% if @rating.ges < 33 %>
-        <div class="circ-red">
-            <div class="gesamt active">
-                <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
-                <div class="text" id="t_gesamt">Gesamt</div>
-            </div>
+        <div class="gesamt active">
+            <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
+            <div class="text" id="t_gesamt">Gesamt</div>
         </div>
-        <% elsif @rating.ges > 66 %>
-        <div class="circ-green">
-            <div class="gesamt active">
-                <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
-                <div class="text" id="t_gesamt">Gesamt</div>
-            </div>
+        
+        <div class="spontan">
+            <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
+            <div class="text" id="t_spontan">Spontanität</div>
         </div>
-        <% else %>
-        <div class="circ-yellow">
-            <div class="gesamt active">
-                <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
-                <div class="text" id="t_gesamt">Gesamt</div>
-            </div>
+        
+        <div class="kreativ">
+            <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
+            <div class="text" id="t_kreativ">Kreativität</div>
         </div>
-        <% end %>
-        <% if @rating.spontan < 33 %>
-        <div class="circ-red">
-            <div class="spontan">
-                <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
-                <div class="text" id="t_spontan">Spontanität</div>
-            </div>
+        
+        <div class="body">
+            <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
+            <div class="text" id='t_body'>Körpersprache</div>
         </div>
-        <% elsif @rating.spontan > 66 %>
-        <div class="circ-green">
-            <div class="spontan">
-                <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
-                <div class="text" id="t_spontan">Spontanität</div>
-            </div>
+        
+        <div class="rhetorik">
+            <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
+            <div class="text" id="t_rhetorik">Rhetorik</div>
         </div>
-        <% else %>
-        <div class="circ-yellow">
-            <div class="spontan">
-                <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
-                <div class="text" id="t_spontan">Spontanität</div>
-            </div>
-        </div>
-        <% end %>
-        <% if @rating.creative < 33 %>
-        <div class="circ-red">
-            <div class="kreativ">
-                <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
-                <div class="text" id="t_kreativ">Kreativität</div>
-            </div>
-        </div>
-        <% elsif @rating.creative > 66 %>
-        <div class="circ-green">
-            <div class="kreativ">
-                <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
-                <div class="text" id="t_kreativ">Kreativität</div>
-            </div>
-        </div>
-        <% else %>
-        <div class="circ-yellow">
-            <div class="kreativ">
-                <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
-                <div class="text" id="t_kreativ">Kreativität</div>
-            </div>
-        </div>
-        <% end %>
-        <% if @rating.body < 33 %>
-        <div class="circ-red">
-            <div class="body">
-                <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
-                <div class="text" id='t_body'>Körpersprache</div>
-            </div>
-        </div>
-        <% elsif @rating.body > 66 %>
-        <div class="circ-green">
-            <div class="body">
-                <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
-                <div class="text" id='t_body'>Körpersprache</div>
-            </div>
-        </div>
-        <% else %>
-        <div class="circ-yellow">
-            <div class="body">
-                <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
-                <div class="text" id='t_body'>Körpersprache</div>
-            </div>
-        </div>
-        <% end %>
-        <% if @rating.rhetoric < 33 %>
-        <div class="circ-red">
-            <div class="rhetorik">
-                <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
-                <div class="text" id="t_rhetorik">Rhetorik</div>
-            </div>
-        </div>
-        <% elsif @rating.rhetoric > 66 %>
-        <div class="circ-green">
-            <div class="rhetorik">
-                <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
-                <div class="text" id="t_rhetorik">Rhetorik</div>
-            </div>
-        </div>
-        <% else %>
-        <div class="circ-yellow">
-            <div class="rhetorik">
-                <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
-                <div class="text" id="t_rhetorik">Rhetorik</div>
-            </div>
-        </div>
-        <% end %>
         
         <ul class="places-ratings">
           <% @result.first(3).each.with_index(1) do |v ,i| %>
@@ -180,6 +94,7 @@
         </div>
     </div>
 </section>
+
 <%= render partial: 'statistics_table', locals: {result: @result} %>
 
 <% content_for(:body_attributes) do %>
@@ -187,6 +102,29 @@
 <% end %>
 
 <script>
+function myColor(div) {
+    if(div == 'chart_gesamt') {
+        var val = <%= number_with_precision(@rating.ges.to_f / 100.0, precision:1) %>;
+    } else if(div == 'chart_spontan') {
+        var val = <%= number_with_precision(@rating.spontan.to_f / 100.0, precision:1) %>;
+    } else if(div == 'chart_kreativ') {
+        var val = <%= number_with_precision(@rating.creative.to_f / 100.0, precision:1) %>;
+    } else if(div == 'chart_body') {
+        var val = <%= number_with_precision(@rating.body.to_f / 100.0, precision:1) %>;
+    } else if(div == 'chart_rhetorik') {
+        var val = <%= number_with_precision(@rating.rhetoric.to_f / 100.0, precision:1) %>;
+    }
+    if (val < 0.5 ) {
+        document.getElementById(div).style.borderColor = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+    } else {
+        document.getElementById(div).style.borderColor = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+    }
+}
+myColor('chart_gesamt');
+myColor('chart_spontan');
+myColor('chart_kreativ');
+myColor('chart_body');
+myColor('chart_rhetorik');
 (function() {
 [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
     function(el) {	

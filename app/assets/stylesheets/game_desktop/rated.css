@@ -7,6 +7,53 @@
 #gd_rated_bottom {
     position: absolute;
 }
+#gd_rated_spontan,
+#gd_rated_creativ {
+    animation-name: lefty;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+@keyframes lefty {
+    0% {
+        left: 0px;
+        opacity: 0;
+    }
+    100% {
+        left: 100px;
+        opacity: 1;
+    }
+}
+#gd_rated_body,
+#gd_rated_rhetoric {
+    animation-name: righty;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+@keyframes righty {
+    0% {
+        right: 0px;
+        opacity: 0;
+    }
+    100% {
+        right: 100px;
+        opacity: 1;
+    }
+}
+#gd_rated_ges {
+    animation-name: topy;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+@keyframes topy {
+    0% {
+        top: 0px;
+        opacity: 0;
+    }
+    100% {
+        top: 150px;
+        opacity: 1;
+    }
+}
 #gd_rated .text {
     position: absolute;
     top: 0;
@@ -88,6 +135,7 @@
         bottom: 50px;
         right: 100px;
     }
+
     .text {
         margin-top: 10px;
         height: 40px;
@@ -121,6 +169,7 @@
         line-height: 120px;
         font-size: 35px;
         animation-name: pulse1;
+        animation-delay: 2s;
         animation-duration: 1.5s;
         animation-iteration-count: infinite;
     }
@@ -146,6 +195,7 @@
         height: 400px;
         width: 300px;
     }
+
     #gd_rated_ges .text {
         margin-top: 20px;
         line-height: 50px;
@@ -173,6 +223,7 @@
         font-size: 80px;
         font-weight: bolder;
         animation-name: pulse2;
+        animation-delay: 2s;
         animation-duration: 1.5s;
         animation-iteration-count: infinite;
     }
@@ -214,17 +265,14 @@
     #gd_rated_creativ {
         bottom: 50px;
         left: 100px;
-        animation-delay: 10s;
     }
     #gd_rated_body {
         top: 50px;
         right: 100px;
-        animation-delay: 20s;
     }
     #gd_rated_rhetoric {
     bottom: 50px;
     right: 100px;
-    animation-delay: 30s
 }
 .text {
     margin-top: 10px;
@@ -260,6 +308,7 @@
     line-height: 150px;
     font-size: 40px;
     animation-name: pulse1;
+    animation-delay: 2s;
     animation-duration: 1.5s;
     animation-iteration-count: infinite;
 }
@@ -312,6 +361,7 @@
         font-size: 80px;
         font-weight: bolder;
         animation-name: pulse2;
+        animation-delay: 2s;
         animation-duration: 1.5s;
         animation-iteration-count: infinite;
     }
@@ -331,16 +381,4 @@
     transform: scale(1, 1)
   }
 }
-}
-#creativ svg {
-    animation-delay: 10s;
-}
-#body {
-    animation-delay: 20s;
-}
-#rhetoric {
-    animation-delay: 30s;
-}
-#ges {
-    animation-delay: 40s
 }

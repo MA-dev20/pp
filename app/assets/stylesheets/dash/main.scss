@@ -940,6 +940,9 @@ modal
     font-size: 30px;
     border-radius: 20px;
     position: relative;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-top: 10px;
     h1 {
       position: relative;
       padding-bottom: 0.75rem;
@@ -1823,7 +1826,7 @@ button.btn-green-plus.green-plus-se {
         font-family: 'Omnes';
       }
       h3 {
-        font-size: 5vh;
+        font-size: 4vh;
         color: #1ddab0;
         font-family: 'Barack-Medium';
         white-space: nowrap;
@@ -2406,7 +2409,7 @@ button.btn-green-plus.green-plus-se {
   border-bottom: 0;
 }
 .ob-de .delete-video {
-  color: #ff0000;
+  color: #1ddaaf;
   font-size: 1.8vh;
   line-height: 2.2vh;
   margin-left: 1vh;
