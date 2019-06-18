@@ -12,6 +12,7 @@
     <%= image_tag 'game/polygon.png', class: 'pol' %>
     <div class="rate" id="spontan_text">?</div>
 </section>
+
 <section id="gd_rated_creativ">
     <div class="text">
         Kreativität
@@ -73,19 +74,21 @@
 <%= audio_tag('rated/einzeln.mp3', id: 'tag1') %>
 <script>
     pick(1);
-    ratecircle('#spontan', 'spontan_text', <%= @rating.spontan / 100.0 %>);
     setTimeout(function() {
-        ratecircle('#creativ', 'creativ_text', <%= @rating.creative / 100.0 %>);
+        ratecircle('#spontan', 'spontan_text', <%= @rating.spontan / 100.0 %>);
     }, 2000);
     setTimeout(function() {
-        ratecircle('#body', 'body_text', <%= @rating.body / 100.0 %>);
+        ratecircle('#creativ', 'creativ_text', <%= @rating.creative / 100.0 %>);
     }, 4000);
     setTimeout(function() {
-        ratecircle('#rhetoric', 'rhetoric_text', <%= @rating.rhetoric / 100.0 %>);
+        ratecircle('#body', 'body_text', <%= @rating.body / 100.0 %>);
     }, 6000);
     setTimeout(function() {
-        ratecircleg('#ges', 'ges_text', <%= @rating.ges / 100.0 %>);
+        ratecircle('#rhetoric', 'rhetoric_text', <%= @rating.rhetoric / 100.0 %>);
     }, 8000);
+    setTimeout(function() {
+        ratecircleg('#ges', 'ges_text', <%= @rating.ges / 100.0 %>);
+    }, 10000);
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_after_rating_path %>');

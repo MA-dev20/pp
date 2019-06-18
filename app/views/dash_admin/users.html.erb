@@ -46,31 +46,25 @@
             <th>Letztes Spiel</th>
             <th></th>
             <th></th>
-            <th></th>
         </tr>
       </thead>
       <tbody>
         <% @users.each do |u| %>
         <tr class="user-row">
            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.avatar? ? image_tag(u.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
+           
             <td class="name" onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
+            
             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.email %></td>
+            
             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.company_name %></td>
             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
-            <td>
-              <div class="btn-group dropleft">
-              <a type="button" id="dropdownMenu<%= u.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 3vh; color: rgba(29, 218, 175, 1);">
-                ...
-              </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenu<%= u.id %>">
-                <a href="#" class="delete-user" data-id="<%=u.id %>">Löschen</a>
-              </div>
-              </div>
-            </td>
+            
             <td><% if u.teams.count > 0 %>
                 <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line package_pop_up" %>
                 <% end %>
             </td>
+            
             <td>
                 <a href="#" class="edit-user" data-id="<%=u.id %>"> Edit</a>
             </td>
@@ -167,7 +161,8 @@
 
     $('#myTable').DataTable( {
         "paging":   false,
-        "scrollY": 400,
+        "scrollY": "58vh",
+        "scrollCollapse": true,
         "info":     false,
         'searching': false,
         "order": [ 1, 'asc' ],
@@ -175,7 +170,6 @@
             { "orderable": false, "targets": 0 },
             { "orderable": false, "targets": 5 },
             { "orderable": false, "targets": 6 },
-            { "orderable": false, "targets": 7 },
         ]
     } );
     

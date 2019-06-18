@@ -1,7 +1,7 @@
-<section id="head">
+<section id="head" class="fly_in_right">
         <h1>Jetzt <%= @user.fname %> bewerten!</h1>
 </section>
-<section id="middle">
+<section id="middle" class="fly_in_right">
     <div class="circle">
         <%= image_tag @user.avatar.quad.url, class: 'buzz' %>
     </div>
@@ -9,7 +9,6 @@
 <section id="skip">
    Skip mit Leertaste
 </section>
-
 <input type="hidden" value=true id="admin" name="">
 <%= audio_tag('rate/haltemichraus.mp3', id: 'tag1') %>
 <%= audio_tag('rate/lehnezurueck.mp3', id: 'tag2') %>

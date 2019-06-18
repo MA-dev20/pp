@@ -57,9 +57,6 @@
                   <%= link_to "Teams", dash_admin_teams_path %>
               <% end %>
               </div>
-              <div class="link">
-                <%= link_to "Catchwords", dash_admin_catchwords_path %>
-              </div>
               
               <div class="link">
               <% if current_page?(dash_admin_users_path) %>
@@ -74,6 +71,12 @@
                   <%= link_to 'Nutzer', dash_admin_users_path %>
               <% end %>
               </div>
+              
+              <div class="link">
+                <%= link_to "Catchwords", dash_admin_catchwords_path %>
+              </div>
+              
+              
               <div class="link">
                   <%= link_to "Video Tool", dash_admin_video_tool_path , class: "#{current_page?(dash_admin_video_tool_path) ? 'active' : ''} "%>
               </div>
