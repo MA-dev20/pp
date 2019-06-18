@@ -9,6 +9,16 @@ Rails.application.routes.draw do
   patch 'game_mobile_user/accept_user/:user_id', to: 'game_mobile_user#accept_user', as: 'accept_user'
   patch 'game_mobile_user/reject_user/:user_id', to: 'game_mobile_user#reject_user', as: 'reject_user'
 
+  get 'dash/stats', to: 'user/dash_user#stats', as: 'dash_user_stats'
+  post 'dash/filter_videos', to:  'user/dash_user#filter_videos', as: 'user_filter_videos'
+  get 'dash/videos', to: 'user/dash_user#tool', as: 'dash_user_video_tool'
+  get 'dash/stats/turns/:turn_id', to: 'user/dash_user#turn_show', as: 'dash_user_show_turn'
+  delete 'dash/stats/turns/:turn_id', to: 'user/dash_user#delete_video', as: 'dash_user_delete_video'
+  get 'dash/account', to: 'user/dash_user#account', as: 'dash_user_account'
+  put 'dash/account', to: 'user/dash_user#update_user', as: 'dash_user_account_update'
+ 
+
+
   get 'landing/index'
   get 'landing/price', to: 'landing#price', as: 'price'
   get 'dash_admin/dash_admin_price', to: 'dash_admin#dash_admin_price', as: 'dash_admin_price'
@@ -165,6 +175,13 @@ Rails.application.routes.draw do
 ############
 # Sessions #
 ############
+
+
+############
+# User dashboard #
+############
+
+
 
 ########
 # Root #

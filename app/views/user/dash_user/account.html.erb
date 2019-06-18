@@ -1,0 +1,69 @@
+<%= form_for(:user, as: User, url: dash_user_account_update_url(User), html: { method: :put }) do |f| %>
+
+    <div class="row_1">
+        <%= f.label :company_name, 'Firmenname', class: 'form-label' %>
+        <%= f.text_field :company_name, class: 'account-form-field p1' %>
+    </div>
+    
+    <div class="row_1">
+        <%= f.label :fname, 'Name', class: 'form-label' %>
+        <%= f.text_field :fname, placeholder: 'Vorname', class: 'account-form-field p1' %>
+        <%= f.text_field :lname, placeholder: 'Nachname', class: 'account-form-field p2' %>
+    </div>
+    
+    <div class="row_1">
+        <%= f.label :street, 'Adresse', class: 'form-label' %>
+        <%= f.text_field :street, placeholder: 'Straße / Hsnr', class: 'account-form-field p1' %>
+        <%= f.number_field :zipcode, placeholder: 'PLZ', class: 'account-form-field p3_1' %>
+        <%= f.text_field :city, placeholder: 'Stadt', class: 'account-form-field p3_2' %>
+    </div>
+    
+    <div class="row_1">
+        <%= f.label :email, 'E-Mail', class: 'form-label' %>
+        <%= f.email_field :email, placeholder: 'E-Mail', class: 'account-form-field p1' %>
+    </div>
+
+    <div class="row_1">
+        <%= f.label :password, 'Passwort', class: 'form-label' %>
+        <%= f.password_field :password, placeholder: 'Passwort', class: 'account-form-field p1' %>
+        <%= f.password_field :password_confirmation, placeholder: 'Passwort wiederholen', class: 'account-form-field p2' %>
+    </div>
+    
+    <div class="row_2">
+        <%= f.label 'Nutzerbild', class: 'form-label' %>
+        <%= image_tag(@user.avatar.quad.url || 'defaults/wolf.jpg', id: 'ava_pic') %>
+        <label for="user_avatar" id='submit-label'>
+            <i class="fas fa-upload"></i>
+        </label>
+        <%= f.file_field :avatar, onchange: "readURL(this, 'ava_pic');" %>
+    </div>
+    <div class="row_2">
+        <%= f.label 'Logo', class: 'form-label' %>
+        <%= image_tag(@user.logo.quad.url || 'defaults/company.jpg', id: 'logo_pic') %>
+        <label for="user_logo" id='submit-label'>
+            <i class="fas fa-upload"></i>
+        </label>
+        <%= f.file_field :logo, onchange: "readURL(this, 'logo_pic');" %>
+    </div>
+    <div id="base_line">
+    <%= f.submit 'Änderungen speichern', class: 'form-submit' %>
+    </div>
+<% end %>
+<% content_for(:body_attributes) do %>
+    data-turbolinks="false"
+<% end %>
+
+<script>
+function readURL(input, outputID) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#'+outputID)
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

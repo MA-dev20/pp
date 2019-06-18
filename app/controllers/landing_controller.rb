@@ -61,7 +61,8 @@ class LandingController < ApplicationController
   
   private 
     def check_sessions   
-      redirect_to dash_admin_path if current_admin.present?   
+      return redirect_to dash_admin_path if current_admin.present?   
+      return redirect_to dash_user_stats_path if current_user.present?   
     end
 
     def admin_params
