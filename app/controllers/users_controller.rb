@@ -26,21 +26,30 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.admin_id = current_admin.id
-    @random_pass = random_pass
-    @user.encrypted_pw = @user.encrypt @random_pass
-    if @user.save
-      SendInvitationJob.perform_later(@user, @random_pass)
-      if params[:user][:teams].present?
-        @user.team_ids = params[:user][:teams] 
-      else
-        @user.teams.destroy_all
-      end
-      redirect_to dash_admin_users_path
-    else
+    if Admin.find_by_email(user_params[:email]).present?
+      @user.errors.messages[:email].push("You can't use this email")
       respond_to do |format|
         format.js do
           render :create
+        end
+      end
+    else
+      @user.admin_id = current_admin.id
+      @random_pass = random_pass
+      @user.encrypted_pw = @user.encrypt @random_pass
+      if @user.save
+        SendInvitationJob.perform_later(@user, @random_pass)
+        if params[:user][:teams].present?
+          @user.team_ids = params[:user][:teams] 
+        else
+          @user.teams.destroy_all
+        end
+        redirect_to dash_admin_users_path
+      else
+        respond_to do |format|
+          format.js do
+            render :create
+          end
         end
       end
     end
