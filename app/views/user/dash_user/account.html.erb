@@ -37,14 +37,7 @@
         </label>
         <%= f.file_field :avatar, onchange: "readURL(this, 'ava_pic');" %>
     </div>
-    <div class="row_2">
-        <%= f.label 'Logo', class: 'form-label' %>
-        <%= image_tag(@user.logo.quad.url || 'defaults/company.jpg', id: 'logo_pic') %>
-        <label for="user_logo" id='submit-label'>
-            <i class="fas fa-upload"></i>
-        </label>
-        <%= f.file_field :logo, onchange: "readURL(this, 'logo_pic');" %>
-    </div>
+    
     <div id="base_line">
     <%= f.submit 'Änderungen speichern', class: 'form-submit' %>
     </div>
