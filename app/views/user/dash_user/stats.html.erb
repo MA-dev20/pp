@@ -96,7 +96,7 @@
             <% count = 0 %>
             <% if @reviewed_videos %>
                 <% @reviewed_videos.each do |video| %>
-                    <% if video.turn_rating.present? && video.recorded_pitch.present? %>
+                    <% if video.turn_rating.present?  && video.recorded_pitch.present? && video.recorded_pitch.file.present? %>
                         <a href="<%= "/dash/stats/turns/#{video.turn_rating.id}"%>">
                             <div class="overview-block overview-block-n">
                                 <div class="overviewBlock-video">
@@ -534,17 +534,17 @@ var gesamtChart = new Chart(ctx, {
         },
     }
 });
-// var canvas = document.getElementById('Chart')
-// canvas.onclick = function (evt) {
-//     var points = gesamtChart.getElementAtEvent(evt);
-//     var current_point = datapoints[points[0]._index];
-//     var game_id = current_point.data.game_id,
-//     turn_id = current_point.data.turn_rating_id,
-//     recorded_pitch = current_point.data.turn_pitch;
-//     if(recorded_pitch){
-//         window.location  = "/dash/stats/turns/"+turn_id;
-//     }
-// };
+var canvas = document.getElementById('Chart')
+canvas.onclick = function (evt) {
+    var points = gesamtChart.getElementAtEvent(evt);
+    var current_point = datapoints[points[0]._index];
+    var game_id = current_point.data.game_id,
+    turn_id = current_point.data.turn_rating_id,
+    recorded_pitch = current_point.data.turn_pitch;
+    if(recorded_pitch){
+        window.location  = "/dash/stats/turns/"+turn_id;
+    }
+};
 document.getElementById('chart_gesamt').addEventListener('click', function() {
     $('.active').removeClass('active');
     $('.gesamt').addClass('active');
