@@ -50,6 +50,7 @@ class DashAdminController < ApplicationController
   def delete_video
     @turn = Turn.find(params[:turn_id])
     @turn.recorded_pitch.remove!
+    @turn.recorded_pitch = nil
     @turn.save!
   end
 
