@@ -104,6 +104,30 @@
 <% end %>
 
 <script>
+
+function myColor(div) {
+    if(div == 'chart_gesamt') {
+        var val = <%= number_with_precision(@current_rating[:rating][:ges].to_f / 100.0, precision:1) %>;
+    } else if(div == 'chart_spontan') {
+        var val = <%= number_with_precision(@current_rating[:rating][:spontan].to_f / 100.0, precision:1) %>;
+    } else if(div == 'chart_kreativ') {
+        var val = <%= number_with_precision(@current_rating[:rating][:creative].to_f / 100.0, precision:1) %>;
+    } else if(div == 'chart_body') {
+        var val = <%= number_with_precision(@current_rating[:rating][:body].to_f / 100.0, precision:1) %>;
+    } else if(div == 'chart_rhetorik') {
+        var val = <%= number_with_precision(@current_rating[:rating][:rhetoric].to_f / 100.0, precision:1) %>;
+    }
+    if (val < 0.5 ) {
+        document.getElementById(div).style.borderColor = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+    } else {
+        document.getElementById(div).style.borderColor = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+    }
+}
+myColor('chart_gesamt');
+myColor('chart_spontan');
+myColor('chart_kreativ');
+myColor('chart_body');
+myColor('chart_rhetorik');
 (function() {
 [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
     function(el) {
