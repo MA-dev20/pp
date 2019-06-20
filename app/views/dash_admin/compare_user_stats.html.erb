@@ -80,7 +80,7 @@
         </div>
         <div class="video-content">
             <h5><%= @user1.fname.to_s + "'s"%> Aufnahmen</h5>
-            <a href="/admins/dash/video_tool">Alle sechen</a>
+            <a href="/admins/dash/video_tool">Alle sehen</a>
             <% count = 0 %>
             <% @reviewed_videos.each do |video| %>
                 <% if video.turn_rating.present? && video.recorded_pitch.present? && video.recorded_pitch.file.present? %>
@@ -202,7 +202,7 @@ var data1 = datapoints.map(el => {
             });
 
 
-var data1 = [], data2=[], pointColors = [];
+var data1 = [], data2=[], pointStyles = [];
 var i = 0
 datapoints2.forEach(function(el){
     if(el.value == undefined){
@@ -216,15 +216,16 @@ var i = 0
 datapoints.forEach(function(el){
     if(el.value == undefined){
         data1[i] = el
-        pointColors[i] = "rgba(255,255,255,1.0)"
-
+        pointStyles[i] = 'circle'
     }else{
         data1[i] = el.value
 
         if(el.data.turn_pitch){
-            pointColors[i] = "rgba(255,0,0,1.0)"
+            var play = new Image();
+            play.src = '<%= asset_path "dash/playbutton.png" %>';
+            pointStyles[i] = play
         }else{
-            pointColors[i] = "rgba(255,255,255,1.0)"
+            pointStyles[i] = 'circle'
         }
     }
     i++;
@@ -316,12 +317,12 @@ var gesamtChart = new Chart(ctx, {
             borderColor:"rgba(255,255,255,1.0)",
             borderWidth: 5,
             pointBorderColor:"rgba(255,255,255,1.0)",
-            pointBackgroundColor: pointColors,
-            pointHoverBackgroundColor: pointColors,
+            pointBackgroundColor:"rgba(255,255,255,1.0)",
+            pointHoverBackgroundColor:"rgba(255,255,255,1.0)",
             pointHoverBorderColor:"rgba(255,255,255,1.0)",
             pointBorderWidth: 2,
             pointRadius: 8,
-            pointColor: pointColors,
+            pointStyle: pointStyles,
             datapoints: datapoints,
             pointHoverRadius: 8,
             lineTension:0,
