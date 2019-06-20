@@ -145,7 +145,7 @@ class DashAdminController < ApplicationController
     @turns = @user.turns
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating = @user.turn_ratings.last(7)
-    if !@turns_rating
+    if !@turns_rating.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       redirect_to dash_admin_users_path
     end
