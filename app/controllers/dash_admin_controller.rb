@@ -144,7 +144,7 @@ class DashAdminController < ApplicationController
     @users = @admin.users
     @turns = @user.turns
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
-    @turns_rating = @user.turn_ratings
+    @turns_rating = @user.turn_ratings.last(7)
     if !@turns_rating
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       redirect_to dash_admin_users_path
@@ -190,7 +190,7 @@ class DashAdminController < ApplicationController
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating2 = @user1.turn_ratings.last(7)
     rating = @user.turn_ratings
-    rating2 = @user1.turn_ratings
+    rating2 = @user1.turn_ratings.last(7)
     if !rating.present? && !rating2.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
