@@ -147,7 +147,7 @@ class DashAdminController < ApplicationController
     @turns_rating = @user.turn_ratings.last(7)
     if !@turns_rating.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
-      redirect_to dash_admin_users_path
+      return redirect_to dash_admin_users_path
     end
     @rating = @turns_rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
