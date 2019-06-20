@@ -3,7 +3,7 @@
      <div class="compare-selects">
       <div class="centerq">
         <select class="cs-select cs-skin-underline cs-again-select form-field cs-select-set cs-select-left select-user" id="select-user">
-            <option value=""   data-class="cs-selected" selected>Select User</option>
+            <option value=""   data-class="cs-selected" selected>Nutzer aussuchen</option>
             <% @users.each do |u| %>
                 <% if @user && u.id == @user.id %>
                     <option value="<%= u.id %>"  data-class="cs-selected" selected>
@@ -19,7 +19,7 @@
         </select>
 
         <select class="cs-select cs-skin-underline cs-again-select form-field cs-select-set  select-team cs-select-right" id="select-team">
-            <option value=""   data-class="cs-selected" selected>Select Team</option>
+            <option value=""   data-class="cs-selected" selected>Team aussuchen</option>
             <% @teams.each do |t| %>
                 <% if @team.present? && t.id == @team.id %>
                     <option value="<%= t.id %>"  data-class="cs-selected" selected><%= t.name %></option>
@@ -119,7 +119,7 @@
             success: function(res){
               if(res.users){
                 var template = '<select class="cs-select cs-again-select cs-skin-underline form-field cs-select-set cs-select-left select-user" id="select-user">';
-                template+= '<option value="">Select User</option>'
+                template+= '<option value="">Nutzer aussuchen</option>'
                 if(res.users && res.users.length > 0){
                   res.users.forEach(function(u){
                     template += `<option value="`+u.id +`">`+u.fname +` `+ u.lname +`</option>`;
@@ -130,7 +130,7 @@
                 $(".cs-again-select").remove()
                 $('.centerq').append(template);
                 var teamTemplate = `<select class="cs-select  cs-again-select select-team cs-selected cs-skin-underline form-field cs-select-set cs-select-right" id="select-team">`;
-                  teamTemplate+=`<option value=''>Select Team</option>`
+                  teamTemplate+=`<option value=''>Team aussuchen</option>`
                   teams.forEach(function(el){
                     if(parseInt(selectId) == el.id ){
                       teamTemplate+=`<option value=`+el.id+` data-class="cs-selected" selected>`+el.name +`</option>`;
