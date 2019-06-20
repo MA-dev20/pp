@@ -49,7 +49,7 @@
         </div>
         <ul class="places-ratings">
             <%
-                @show_three = get_current_user_position(@result)
+                @show_three = get_current_user_position(@result, params[:user_id])
 
             %> 
            <% @show_three.each do |k,v| %>
@@ -166,7 +166,7 @@ var i = 0;
     json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present? %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
-        <% if g.turn.recorded_pitch.url.present? %>
+        <% if g.turn.recorded_pitch.present? %>
             json_data["turn_pitch"] = true;
         <% else %>
             json_data["turn_pitch"] = false;

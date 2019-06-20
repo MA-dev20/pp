@@ -17,6 +17,12 @@ class InvitationMailer < ApplicationMailer
     @user = user
     mail to: @user.email
   end
+
+  def received_comments(user, turn)
+    @user, @turn = user, turn
+    @greeting = "HI #{user.fname}! You have received comments "
+    mail to: @user.email
+  end
 end
 
 

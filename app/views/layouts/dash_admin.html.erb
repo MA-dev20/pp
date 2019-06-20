@@ -129,6 +129,7 @@
             </div>
         </div>
     </div>
+    <%= yield :modal_show %>
 
      <% flash.each do |name, msg| %>
             <% if msg.is_a?(String) && name.to_s == 'pop_up' %>
