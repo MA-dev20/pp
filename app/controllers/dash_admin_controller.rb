@@ -340,7 +340,6 @@ class DashAdminController < ApplicationController
     def set_admin
       @admin = current_admin
       @teams = @admin.teams
-      @team = @teams.last
     end
 
     def users_ratings(users)
