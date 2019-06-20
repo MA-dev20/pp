@@ -82,7 +82,9 @@ class DashAdminController < ApplicationController
   def release_comments
     @turn = Turn.find(params[:turn_id])
     @turn.comments.update_all(:release_it => true)
-    ReceivedCommentsJob.perform_later(@turn.user,@turn)
+    @receiver = @turn.user
+    @receiver = @turn.admin if !@receiver.present?
+    ReceivedCommentsJob.perform_later(@receiver,@turn)
     render json: {res: "ok"}
   end
 
