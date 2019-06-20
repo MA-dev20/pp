@@ -145,7 +145,12 @@ body {
     padding-left: 5vw;
     z-index: 100;
 }
-
+li.greengreen {
+    color: #1ddaaf !important;
+}
+li.greengreen span {
+    font-size: 80%;
+}
 .section {
   -webkit-transform: scale(1);
   -webkit-transition: all linear 0.5s 0;
@@ -2278,8 +2283,23 @@ button.btn-green-plus.green-plus-se {
   width: 4.51vh;
   height: 4.51vh;
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 15vh;
+  bottom: -2.2vh;
+  margin: 0 auto;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  outline: none;
+}
+.vc-detail .com-sendit-icon {
+  background: image-url('Sendit.png') center center no-repeat;
+  background-size: 4.51vh;
+  width: 4.51vh;
+  height: 4.51vh;
+  position: absolute;
+  right: 15vh;
   bottom: -2.2vh;
   margin: 0 auto;
   cursor: pointer;
@@ -2572,7 +2592,40 @@ button.btn-green-plus.green-plus-se {
 .dash_stats_videos .compare-selects .center-r .cs-placeholder {
   font-weight: 700 !important;
 }
-
+#list-table.list-table-f {
+    padding: 5.4vh 15vh;
+    height: 52vh;
+}
+#list-table.list-table-f h1 {
+    font-size: 3.6vh;
+    font-weight: 500;
+}
+#list-table.list-table-f p {
+    margin-bottom: 1rem;
+    font-size: 2.6vh;
+    line-height: 20px;
+}
+#list-table.list-table-f div.text-center button {
+    width: 100%;
+    max-width: 18vh;
+    margin: 3vh 0 0 0;
+}
+.listTable-modal .modal-close {
+    top: 12px;
+    right: 12px;
+    line-height: 33px;
+    height: 30px;
+    width: 30px;
+    font-size: 1.4rem;
+    font-weight: 300;
+}
+.listTable-modal .modal-content {
+    width: 550px;
+    padding-bottom: 0;
+}
+.listTable-modal {
+    left: calc(56vw - 250px);
+}
 
 
 
