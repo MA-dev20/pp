@@ -19,11 +19,12 @@ module ApplicationHelper
 		end
 	end
 
-	def get_current_user_position(result)
+	def get_current_user_position(result, id)
 		@show_three = {}
+    debugger
     result.each.with_index do |r,i|
       if r.present?
-        if r[:user].id.to_s == params[:user_id]
+        if r[:user].id.to_s == id.to_s
           @key = i
           break
      		end

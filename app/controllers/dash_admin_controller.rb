@@ -79,6 +79,13 @@ class DashAdminController < ApplicationController
     end
   end
 
+  def release_comments
+    @turn = Turn.find(params[:turn_id])
+    @turn.comments.update_all(:release_it => true)
+    ReceivedCommentsJob.perform_later(@turn.user,@turn)
+    render json: {res: "ok"}
+  end
+
   def remove_word
     @admin.catchword_baskets.find(params[:basket_id]).words.delete(Word.find(params[:word_id]))
     render json: {count: @admin.catchword_baskets.find(params[:basket_id]).words.count }
@@ -94,7 +101,7 @@ class DashAdminController < ApplicationController
   def team_stats
     @users = @admin.users
     @rating = @team.team_rating
-    @gameratings = @team.game_ratings
+    @gameratings = @team.game_ratings.last(7)
     @count = 1
     if !@rating
       flash[:pop_up] = "Ups, für dieses Team liegen noch keine Statistiken vor.;- Da müsst ihr wohl erst noch eine Runde spielen. -;Let's Play"
@@ -121,7 +128,7 @@ class DashAdminController < ApplicationController
     @turns = current_admin.turns
     if params[:team2_id]
       @team2 = Team.find(params[:team2_id])
-      @gameratings2 = @team2.game_ratings
+      @gameratings2 = @team2.game_ratings.last(7)
     end
   end
 
@@ -142,21 +149,73 @@ class DashAdminController < ApplicationController
 
   def statistics
     @users = @admin.users
-    @turns = @admin.turns
+    @turns = @admin.turns.where(admin_turn: true)
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
-    @turns_rating = @admin.turn_ratings
+    @turns_rating = @turns.map(&:turn_rating).flatten.compact
+    @turns_rating = @turns_rating.last(7)
     if !@turns_rating.present?
+      flash[:danger] = 'Noch keine bewerteten Spiele!'
+      return redirect_to dash_admin_users_path
+    end
+    @rating = {
+      ges: @turns_rating.map(&:ges).inject(:+) / @turns_rating.length,
+      body: @turns_rating.map(&:body).inject(:+) / @turns_rating.length,
+      creative: @turns_rating.map(&:creative).inject(:+) / @turns_rating.length,
+      spontan: @turns_rating.map(&:spontan).inject(:+) / @turns_rating.length,
+      rhetoric: @turns_rating.map(&:rhetoric).inject(:+) / @turns_rating.length
+    }
+    userss = @teams.map do |team| 
+      team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
+    end
+    userss = userss.flatten
+    raw_result = users_ratings userss
+    @result = raw_result.sort_by {|u| -u[:rating][:average]}
+    @ratings = @team.team_rating
+    @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 if @ratings.present?
+    @length = raw_result.length
+  end
+
+  def compare_with_team
+    @users = @admin.users
+    @turns = @admin.turns.where(admin_turn: true)
+    @team = Team.find(params[:team_id])
+    @turns_rating = @admin.turn_ratings
+    if !@turns_rating.present? || !@team.users.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
     end
     @rating = @turns_rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
-    raw_result = users_ratings userss
+    raw_result = users_ratings @userss.to_a.push(@admin)
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     @ratings = @team.team_rating
+    @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 if @ratings.present?
-    @three_records, @current_rating = find_index_and_siblings(@result,params[:user_id]) if @result.present?
+    @three_records, @current_rating = find_index_and_siblings(@result,current_admin.id) if @result.present?
     @length = raw_result.length
+  end
+
+  def compare_with_user
+    @users = @admin.users
+    @turns = @admin.turns.where(admin_turn: true)
+    @user = @admin
+    @turns_rating = @turns.map(&:turn_rating).flatten.compact
+    @turns_rating = @turns_rating.last(7)
+    @user1 = User.find(params[:compare_user_id])
+    @turns_rating2 = @user1.turn_ratings.last(7)
+    rating = @user.turn_ratings
+    rating2 = @user1.turn_ratings.last(7)
+    if !rating.present? && !rating2.present?
+      flash[:danger] = 'Noch keine bewerteten Spiele!'
+      return redirect_to dash_admin_users_path
+    end
+    @rating = rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
+    @userss = @admin.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
+    raw_result = users_ratings @userss.to_a.push(@admin)
+    @result = raw_result.sort_by {|u| -u[:rating][:average]}
+    @three_records, @current_rating = find_index_and_siblings(@result,@admin.id) if @result.present?
+    @length = raw_result.length
+    @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
   end
     
   def user_stats
@@ -178,7 +237,7 @@ class DashAdminController < ApplicationController
     #   if @result.count >= 3
     #     @three_records = @result
     #   else
-        @three_records, @current_rating = find_index_and_siblings(@result,params[:user_id]) if @result.present?
+        @three_records, @current_rating = find_index_and_siblings(@result,current_admin.id) if @result.present?
     #   end
     # end
 
@@ -206,12 +265,12 @@ class DashAdminController < ApplicationController
   def compare_user_stats
     @users = @admin.users
     @turns = @user.turns
-    @turns_rating = @user.turn_ratings
+    @turns_rating = @user.turn_ratings.last(7)
     @user1 = User.find(params[:compare_user_id])
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
-    @turns_rating2 = @user1.turn_ratings
+    @turns_rating2 = @user1.turn_ratings.last(7)
     rating = @user.turn_ratings
-    rating2 = @user1.turn_ratings
+    rating2 = @user1.turn_ratings.last(7)
     if !rating.present? && !rating2.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
@@ -279,12 +338,13 @@ class DashAdminController < ApplicationController
     def set_admin
       @admin = current_admin
       @teams = @admin.teams
+      @team = @teams.last
     end
 
     def users_ratings(users)
       result = []
       users.map do |user|
-        hash = {user: user,rating: {ges: 0,body: 0, spontan: 0, creative: 0, rhetoric: 0}, places: {gold: user.gold_count, silver: user.silver_count, bronze: user.bronze_count}}
+        hash = {user: user,rating: {ges: 0,body: 0, spontan: 0, creative: 0, rhetoric: 0}, places: {gold: user[:gold_count], silver: user[:silver_count], bronze: user[:bronze_count]}}
         ratings = user.turn_ratings
         length = ratings.length
         hash[:rating][:ges] = (ratings.pluck(:ges).compact.inject(:+).to_f / length ) if length > 0
@@ -300,7 +360,7 @@ class DashAdminController < ApplicationController
 
     def find_index_and_siblings(result, user_id)
       index = result.index{|record| record if record[:user].id == user_id.to_i}
-      index = result.index{|record| record if record[:user].admin_id == user_id.to_i} if index.nil?
+      index = result.index{|record| record if record[:user].id == user_id.to_i} if index.nil?
       if index.nil?
         current_user = result.first 
       else

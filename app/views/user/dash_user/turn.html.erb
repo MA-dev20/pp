@@ -1,5 +1,5 @@
 
-<div class="videotool-canvas d-flex">
+<div class="videotool-canvas d-flex justify-content-center">
   <div class="videotool-content">
     <div class="progress-block">
         <div class="progress-top">
@@ -145,12 +145,12 @@
     </div>
   </div>
   <% end %>
-  <% if @turn.comments.count > 0 %>
+  <% if @turn.comments.where(release_it:  true).count > 0 %>
     <div class="videotool-content videotool-comment" id="comments" >
       <div class="progress-block">
         <div class="vc-top">
           <div class="vc-top-scroll user-panel" id="comment-box">
-            <% @turn.comments.order('time_of_video ASC').each do |c| %>
+            <% @turn.comments.where(release_it:  true).order('time_of_video ASC').each do |c| %>
               <div class="vc-row single-comment  <%= 'vcr-'+c.type_of_comment %> comment-<%=c.time_of_video%>" data-time="<%=c.time_of_video%>">
                 <h5><%= c.time_of_video  ? c.time_of_video.to_minutes : '0:00'%></h5>
                 <p><%= c.title %></p>

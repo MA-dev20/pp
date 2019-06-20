@@ -170,7 +170,7 @@ var i = 0;
         json_data["type"] = "body"
         json_data["type2"] = "body2"
 
-        <% if g.turn.recorded_pitch.url.present? %>
+        <% if g.turn.recorded_pitch.present? %>
             json_data["turn_pitch"] = true;
         <% else %>
             json_data["turn_pitch"] = false;
@@ -181,7 +181,7 @@ var i = 0;
         datapoints[i] = {value: <%= g.body / 10.0 %>, data: json_data};
     <% if @turns_rating2[i].present? %>
         var json_data2 = <%= @turns_rating2[i].to_json.html_safe %>
-        <% if @turns_rating2[i].turn.recorded_pitch.url.present? %>
+        <% if @turns_rating2[i].turn.recorded_pitch.present? %>
             json_data2["turn_pitch"] = true;
         <% else %>
             json_data2["turn_pitch"] = false;

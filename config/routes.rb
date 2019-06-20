@@ -148,6 +148,9 @@ Rails.application.routes.draw do
     post 'admin/dash/teams/:team_id/generate_img_from_html', to: 'dash_admin#generate_img_from_html', as: 'dash_admin_generate_img_from_html'
     get 'admin/dash/games/:game_id/turns', to: 'dash_admin#turns', as: 'dash_admin_turns'
     
+    get 'admin/dash/statistics', to: 'dash_admin#statistics', as: 'dash_admin_statistics'
+    get 'admin/dash/statistics/compare_with_team/:team_id', to: 'dash_admin#compare_with_team', as: 'dash_admin_comapre_with_team'
+    get 'admin/dash/statistics/compare_with_user/:compare_user_id', to: 'dash_admin#compare_with_user', as: 'dash_admin_comapre_with_user'
     get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
     get 'admin/dash/teams/:team_id/stats', to: 'dash_admin#team_stats', as: 'dash_admin_team_stats'
     get 'admin/dash/teams/:team_id/stats/share', to: 'dash_admin#team_stats_share', as: 'dash_admin_team_stats_share'
@@ -171,7 +174,7 @@ Rails.application.routes.draw do
     post 'admin/dash/baskets/:basket_id', to: 'dash_admin#delete_basket', as: "dash_admin_delete_basket"
     delete 'admin/dash/catchwords/:word_id', to: 'dash_admin#remove_word', as: "dash_admin_remove_word"
     get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_games'
-    
+    post 'admin/dash/turn/:turn_id/release_comments', to: 'dash_admin#release_comments', as: 'dash_admin_release_comments'
 ############
 # Sessions #
 ############
