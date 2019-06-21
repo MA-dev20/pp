@@ -155,7 +155,6 @@ var label = [NaN, NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
 <% @turns_rating.each.with_index do |g,i| %>
     var json_data = <%= g.to_json.html_safe %>
-    json_data["word"] = "<%= g.turn.word.name %>";
     json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present?  %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
