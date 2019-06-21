@@ -54,8 +54,8 @@
             %> 
            <% @show_three.each do |k,v| %>
             <% if v.present? %>
-                    <li class="<%= 'current' if v[:user].id.to_s == params[:user_id] %>">  
-                        <% if v[:user].id.to_s == params[:user_id]  %>
+                    <li class="<%= 'current' if v[:user].id.to_s == @admin.id.to_s %>">  
+                        <% if v[:user].id.to_s == @admin.id.to_s  %>
                             <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
                         <% end %>
                         <div class="rating-c"><%= k.to_i + 1 %>. <%= v[:user].fname%></div>
