@@ -2262,8 +2262,11 @@ button.btn-green-plus.green-plus-se {
   outline: none;
   line-height: 3vh;
   display: inline-block;
-  height: 10.545vh;
+  height: 3.545vh;
   font-weight: 600;
+}
+.vc-detail .bigger{
+  height: 10.545vh;
 }
 .vc-detail input::placeholder {
   color: #a7a7a7;
