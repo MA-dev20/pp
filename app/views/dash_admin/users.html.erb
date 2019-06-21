@@ -49,7 +49,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="user-row">
+        <tr class="user-row user-row-admin">
            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.avatar? ? image_tag(@admin.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
            
             <td class="name" onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.fname %> <%= @admin.lname %></td>
@@ -65,8 +65,7 @@
             </td>
             <td>
             </td>
-          </tr>
-
+        </tr>
         <% @users.each do |u| %>
         <tr class="user-row">
            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.avatar? ? image_tag(u.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
@@ -182,7 +181,7 @@
     }
     $(document).ready( function () {
 
-    $('#myTable').DataTable( {
+    var table = $('#myTable').DataTable( {
         "paging":   false,
         "scrollY": "58vh",
         "scrollCollapse": true,

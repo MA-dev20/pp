@@ -176,7 +176,7 @@
               </label>
             </div>
           </div>
-          <input type="text" name="field"  autocomplete="off" class="bigger">
+          <textarea type="text" name="field"  autocomplete="off" class="bigger"> </textarea> 
           <button class="com-plus-icon" type="submit"></button>
              <button class="com-sendit-icon" id="release_it" onclick="openReleaseComment()" data-id="<%=@turn.id%>" <%= @turn.comments.where(:release_it => false ).present? ? ' ' : 'disabled'%> style="opacity: <%= @turn.comments.where(:release_it => false ).present? ? 1 : 0.3%>"></button>
         </form>
@@ -224,6 +224,12 @@
   }
   var Comments = (<%= raw(@turn.comments.to_json) %>);
   $(document).ready(function(){
+    $('textarea[name=field]').keydown(function(event) {
+        if (event.keyCode == 13) {
+            $(this.form).submit()
+            return false;
+         }
+    })
     $("#release_it").click(function(e){
       openReleaseComment()
     })
@@ -258,7 +264,7 @@
       $("#time_of_video").removeClass()
       $("#time_of_video").addClass('vc-video-t')
       $('#time_of_video').addClass($(this).val())
-      $("input[name=field]").focus()
+      $("textarea[name=field]").focus()
 
     })
     video.addEventListener("loadedmetadata", function(){console.log(video.duration)}, false)
@@ -274,7 +280,7 @@
           }, 50);
         $(".play-video").addClass("pause-video")
       }else{
-        $("input[name=field]").focus()
+        $("textarea[name=field]").focus()
         window.clearInterval(timerId);
         $(".play-video").removeClass("pause-video")
       }
@@ -282,9 +288,9 @@
     }
     $("#add-comment-form").on('submit', function(e){
       e.preventDefault()
-      var text = $("input[name=field]").val()
+      var text = $("textarea[name=field]").val()
       if(text.length > 0){
-        $("input[name=field]").val('')
+        $("textarea[name=field]").val('')
         var type = $("input[name=radio]:checked").val()
         // $("#comment-box").animate({ scrollTop: $('#comment-box').prop("scrollHeight")}, 300);
         addCommentToCommentBox(text, type) 

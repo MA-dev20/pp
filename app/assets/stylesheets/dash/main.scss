@@ -2180,7 +2180,7 @@ button.btn-green-plus.green-plus-se {
   padding-left: 2.2vh;
   margin-bottom: 0;
   margin-left: 2.2vh;
-  line-height: 2.6vh;
+  line-height: 2.2vh;
   cursor: pointer;
   font-size: 2.1vh;
   -webkit-user-select: none;
@@ -2190,15 +2190,20 @@ button.btn-green-plus.green-plus-se {
 }
 .radio-label input {
   position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
   opacity: 0;
   cursor: pointer;
 }
 .radio-label .checkmark {
   position: absolute;
-  top: 0.3vh;
+  top: 0.1vh;
   left: 0;
   height: 1.63vh;
   width: 1.63vh;
+  min-height: 1.63vh;
+  min-width: 1.63vh;
   background-color: transparent;
   border: 0.16vh solid transparent;
   border-radius: 50%;
@@ -2253,7 +2258,7 @@ button.btn-green-plus.green-plus-se {
   // color: #1ddab0;
   line-height: 2.8vh;
 }
-.vc-detail input {
+.vc-detail textarea {
   margin: 0;
   font-size: 1.8vh;
   color: #a7a7a7;
@@ -2264,8 +2269,6 @@ button.btn-green-plus.green-plus-se {
   display: inline-block;
   height: 3.545vh;
   font-weight: 600;
-}
-.vc-detail .bigger{
   height: 10.545vh;
 }
 .vc-detail input::placeholder {
@@ -2628,6 +2631,9 @@ button.btn-green-plus.green-plus-se {
 }
 .listTable-modal {
     left: calc(56vw - 250px);
+}
+table tr.user-row-admin td {
+    background-color: rgba(29,218,176,0.15);
 }
 
 
