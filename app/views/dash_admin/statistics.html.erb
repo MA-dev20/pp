@@ -6,29 +6,29 @@
     <div class="stats_overview">
         <div class="gesamt active">
             <button class="circle" id="chart_gesamt">
-            <span><%= number_with_precision(@current_rating[:rating][:ges].to_f / 10.0, precision: 1) %></span>
-            <%= image_tag @user.avatar.quad.url if @user.avatar.quad.url.present?%>
+            <span><%= number_with_precision(@rating[:ges].to_f / 10.0, precision: 1) %></span>
+            <%= image_tag @admin.avatar.quad.url if @admin.avatar.quad.url.present?%>
             </button>
             <div class="text" id="t_gesamt">Gesamt</div>
         </div> 
 
         <div class="spontan">
-            <button class="circle" id="chart_spontan"><%= number_with_precision( @current_rating[:rating][:spontan].to_f / 10.0, precision:1) %></button>
+            <button class="circle" id="chart_spontan"><%= number_with_precision( @rating[:spontan].to_f / 10.0, precision:1) %></button>
             <div class="text" id="t_spontan">Spontanität</div>
         </div>
 
         <div class="kreativ">
-            <button class="circle" id="chart_kreativ"><%= number_with_precision(@current_rating[:rating][:creative].to_f / 10.0, precision:1) %></button>
+            <button class="circle" id="chart_kreativ"><%= number_with_precision(@rating[:creative].to_f / 10.0, precision:1) %></button>
             <div class="text" id="t_kreativ">Kreativität</div>
         </div>
 
         <div class="body">
-            <button class="circle" id="chart_body"><%= number_with_precision(@current_rating[:rating][:body].to_f / 10.0, precision:1) %></button>
+            <button class="circle" id="chart_body"><%= number_with_precision(@rating[:body].to_f / 10.0, precision:1) %></button>
             <div class="text" id='t_body'>Körpersprache</div>
         </div>
 
         <div class="rhetorik">
-            <button class="circle" id="chart_rhetorik"><%= number_with_precision(@current_rating[:rating][:rhetoric].to_f / 10.0, precision:1) %></button>
+            <button class="circle" id="chart_rhetorik"><%= number_with_precision(@rating[:rhetoric].to_f / 10.0, precision:1) %></button>
             <div class="text" id="t_rhetorik">Rhetorik</div>
         </div>
 
@@ -47,37 +47,23 @@
                <div class="txt"><%= @turns.where(place: 3).count %></div>
            </div>
         </div>
-        <ul class="places-ratings">
-            <%
-                @show_three = get_current_user_position(@result, params[:user_id])
-
-            %> 
-           <% @show_three.each do |k,v| %>
-            <% if v.present? %>
-                    <li class="<%= 'current' if v[:user].id.to_s == params[:user_id] %>">  
-                        <% if v[:user].id.to_s == params[:user_id]  %>
-                            <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
-                        <% end %>
-                        <div class="rating-c"><%= k.to_i + 1 %>. <%= v[:user].fname%></div>
-                        <div class="rating-d"><%= number_with_precision(v[:rating][:average] / 10, precision: 1)  %></div>
-                    </li>
-                <% end %>
-           <% end %> 
-        </ul>
         <div class="compare">
             <select class="cs-select cs-skin-underline form-field">
                 <option value="" disabled selected>Vergleiche mit</option>
+                <% @teams.each do |t| %>
+                        <option value="<%= t.id %>" data-class="green" data-link="<%= dash_admin_comapre_with_team_path(t.id) %>">
+                             <%= t.name %>
+                        </option>
+                <% end %>
                 <% @users.each do |u| %>
-                       <% if @user.id != u.id %>
-                        <option value="<%= u.id %>" data-link="<%= dash_admin_compare_user_stats_path(@team.id, @user.id, u.id) %>">
+                        <option value="<%= u.id %>" data-link="<%= dash_admin_comapre_with_user_path(u.id) %>">
                              <%= u.fname %> <%= u.lname %>
                         </option>
-                        <% end %>
                 <% end %>
             </select>
         </div>
         <div class="video-content">
-            <h5><%= @user.fname.to_s + "'s"%> Aufnahmen</h5>
+            <h5><%= @admin.fname.to_s + "'s"%> Aufnahmen</h5>
             <a href="/admins/dash/video_tool">Alle sehen</a>
             <% count = 0 %>
             <% @reviewed_videos.each do |video| %>
@@ -127,15 +113,15 @@
 <script>
 function myColor(div) {
     if(div == 'chart_gesamt') {
-        var val = <%= number_with_precision(@current_rating[:rating][:ges].to_f / 100.0, precision:1) %>;
+        var val = <%= number_with_precision(@rating[:ges].to_f / 100.0, precision:1) %>;
     } else if(div == 'chart_spontan') {
-        var val = <%= number_with_precision(@current_rating[:rating][:spontan].to_f / 100.0, precision:1) %>;
+        var val = <%= number_with_precision(@rating[:spontan].to_f / 100.0, precision:1) %>;
     } else if(div == 'chart_kreativ') {
-        var val = <%= number_with_precision(@current_rating[:rating][:creative].to_f / 100.0, precision:1) %>;
+        var val = <%= number_with_precision(@rating[:creative].to_f / 100.0, precision:1) %>;
     } else if(div == 'chart_body') {
-        var val = <%= number_with_precision(@current_rating[:rating][:body].to_f / 100.0, precision:1) %>;
+        var val = <%= number_with_precision(@rating[:body].to_f / 100.0, precision:1) %>;
     } else if(div == 'chart_rhetorik') {
-        var val = <%= number_with_precision(@current_rating[:rating][:rhetoric].to_f / 100.0, precision:1) %>;
+        var val = <%= number_with_precision(@rating[:rhetoric].to_f / 100.0, precision:1) %>;
     }
     if (val < 0.5 ) {
         document.getElementById(div).style.borderColor = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
@@ -182,27 +168,10 @@ var i = 0;
     json_data["type2"] = "ges2"
     json_data["type_text"] = "Gesment"
     datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
-
-    <% if GameRating.where(game_id: g.game_id).first %>
-        <% rating = GameRating.where(game_id: g.game_id).first %>
-        var json_data2 = <%= rating.to_json.html_safe %>
-        json_data2["average_team_ratings"] = <%= number_with_precision(rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;
-
-        datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
-    <% end %>
     label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
     i++;
 <% end %>
 var data1 = [], data2=[], pointStyles = [];
-var i = 0
-datapoints2.forEach(function(el){
-    if(el.value == undefined){
-        data2[i] = el
-    }else{
-        data2[i] = el.value
-    } 
-    i++;
-})
 var i = 0
 datapoints.forEach(function(el){
     if(el.value == undefined){
@@ -294,13 +263,13 @@ function customTooltips(tooltipModel) {
     }
     return;
 }
-var user1 = '<%= @user.fname %>';
+var admin1 = '<%= @admin.fname %>';
 var gesamtChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: label,
         datasets: [{
-            label: user1,
+            label: admin1,
             data: data1,
             fill:false,
             borderColor:"rgba(255,255,255,1.0)",
@@ -358,7 +327,7 @@ var gesamtChart = new Chart(ctx, {
 
             callbacks: {
                 title: function(tooltipItem, data) {
-                  if(data["datasets"][0]["datapoints"][tooltipItem[0]['index']] && data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]){
+                  if(data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]){
 
                     var creative = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
                     
@@ -381,7 +350,7 @@ var gesamtChart = new Chart(ctx, {
                       body=0,
                       rhetorik=0;
                   }
-                  if(data["datasets"][1]["datapoints"][tooltipItem[0]['index']] && data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]){
+                  if(data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]){
                     var creative2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
                     var team_Average = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["average_team_ratings"] ? data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["average_team_ratings"] : 0 
                     var spontan2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["spontan"] / 10
@@ -406,14 +375,6 @@ var gesamtChart = new Chart(ctx, {
                                     val += `<button class="circle" id="chart_rhetorik">`+eval(type)+`</button>`
                                     val += `<div class="text" id="t_rhetorik">`+type_text+`</div>`
                                 val+=`</div>
-                                <div class="rhetorik rhetorik-ts">
-                                    <button class="circle" id="chart_rhetorik">`+eval(type2)+`</button>
-                                    <div class="text" id="t_rhetorik">Teamschnitt</div>
-                                </div>
-                                <div class="rhetorik rhetorik-mb">
-                                    <button class="circle" id="chart_rhetorik">`+team_Average+`</button>
-                                    <div class="text" id="t_rhetorik">Meine Bewertung</div>
-                                </div>
                             </div>
                         </div>
                         <div class="progress-main">
@@ -426,15 +387,6 @@ var gesamtChart = new Chart(ctx, {
                                 </div>
                                 <div class="progress-bar-value">`+spontan+`</div>
                               </div>`;
-                              if(data["datasets"][1]){
-                                val+=`
-                                  <div class="progress-bar-con progress-con-b">
-                                    <div class="progressbar-view">
-                                      <div class="progressbar-fill" style="width: `+spontan2/10*100+`% !important;"></div>
-                                    </div>
-                                    <div class="progress-bar-value">`+spontan2+`</div>
-                                  </div>` ;     
-                              }
                               val+=`
                             </div>
                           </div>
@@ -448,15 +400,6 @@ var gesamtChart = new Chart(ctx, {
                                 <div class="progress-bar-value">`+creative+`</div>
                               </div>
                               `;
-                              if(data["datasets"][1]){
-                                val+=`
-                                  <div class="progress-bar-con progress-con-b">
-                                    <div class="progressbar-view">
-                                      <div class="progressbar-fill" style="width: `+creative2/10*100+`% !important;"></div>
-                                    </div>
-                                    <div class="progress-bar-value">`+creative2+`</div>
-                                  </div>`
-                              }
                               
                               val+=`
                             </div>
@@ -470,15 +413,6 @@ var gesamtChart = new Chart(ctx, {
                                 </div>
                                 <div class="progress-bar-value">`+body+`</div>
                               </div>`;
-                              if(data["datasets"][1]){
-                                val+=` <div class="progress-bar-con progress-con-b">
-                                    <div class="progressbar-view">
-                                      <div class="progressbar-fill" style="width: `+body2/10*100+`% !important;"></div>
-                                    </div>
-                                    <div class="progress-bar-value">`+body2+`</div>
-                                  </div>`;
-                              }
-
                               
                               val+=`
                             </div>
@@ -493,16 +427,7 @@ var gesamtChart = new Chart(ctx, {
                                 <div class="progress-bar-value">`+rhetorik+`</div>
                               </div>
                               `;
-                              if(data["datasets"][1]){
-                                 val+=`
-                                  <div class="progress-bar-con progress-con-b">
-                                    <div class="progressbar-view">
-                                      <div class="progressbar-fill" style="width: `+rhetorik2/10*100+`% !important;"></div>
-                                    </div>
-                                    <div class="progress-bar-value">`+rhetorik2+`</div>
-                                  </div>
-                                  `;
-                              }
+
                               val+=`
                             </div>
                           </div>
@@ -586,25 +511,9 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
 
         json_data["admin_ges"] = admin_ges
         datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
-        <% if GameRating.where(game_id: g.game_id).first %>
-            <% rating = GameRating.where(game_id: g.game_id).first %>
-            var json_data2 = <%= rating.to_json.html_safe %>
-            json_data2["average_team_ratings"] = <%= number_with_precision(rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;
-            
-            datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
-        <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
-    var i = 0
-    datapoints2.forEach(function(el){
-        if(el.value == undefined){
-            data2[i] = el
-        }else{
-            data2[i] = el.value
-        } 
-        i++;
-    })
     var i = 0
     datapoints.forEach(function(el){
         if(el.value == undefined){
@@ -640,26 +549,11 @@ document.getElementById('chart_spontan').addEventListener('click', function() {
 
         json_data["admin_ges"] = admin_spontan
         datapoints[i] = {value: <%= g.spontan / 10.0 %>, data: json_data};
-        <% if GameRating.where(game_id: g.game_id).first %>
-            <% rating = GameRating.where(game_id: g.game_id).first %>
-            var json_data2 = <%= rating.to_json.html_safe %>
-            json_data2["average_team_ratings"] = <%= number_with_precision(rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;
-            
-            datapoints2[i] = {value: <%= rating.spontan / 10.0 %>, data:  json_data2};
-        <% end %>
+       
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
-    var i = 0
-    datapoints2.forEach(function(el){
-        if(el.value == undefined){
-            data2[i] = el
-        }else{
-            data2[i] = el.value
-        } 
-        i++;
-    })
-    var i = 0
+        var i = 0
     datapoints.forEach(function(el){
         if(el.value == undefined){
             data1[i] = el
@@ -693,25 +587,9 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
 
         json_data["admin_ges"] = admin_creative
         datapoints[i] = {value: <%= g.creative / 10.0 %>, data: json_data};
-        <% if GameRating.where(game_id: g.game_id).first %>
-            <% rating = GameRating.where(game_id: g.game_id).first %>
-            var json_data2 = <%= rating.to_json.html_safe %>
-            json_data2["average_team_ratings"] = <%= number_with_precision(rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;
-            
-            datapoints2[i] = {value: <%= rating.creative / 10.0 %>, data:  json_data2};
-        <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
-    var i = 0
-    datapoints2.forEach(function(el){
-        if(el.value == undefined){
-            data2[i] = el
-        }else{
-            data2[i] = el.value
-        } 
-        i++;
-    })
     var i = 0
     datapoints.forEach(function(el){
         if(el.value == undefined){
@@ -747,26 +625,12 @@ document.getElementById('chart_body').addEventListener('click', function() {
 
         json_data["admin_ges"] = admin_body
         datapoints[i] = {value: <%= g.body / 10.0 %>, data: json_data};
-        <% if GameRating.where(game_id: g.game_id).first %>
-            <% rating = GameRating.where(game_id: g.game_id).first %>
-            var json_data2 = <%= rating.to_json.html_safe %>
-        json_data2["average_team_ratings"] = <%= number_with_precision(rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;
-            
-            datapoints2[i] = {value: <%= rating.body / 10.0 %>, data:  json_data2};
-        <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
 
     var i = 0
-    datapoints2.forEach(function(el){
-        if(el.value == undefined){
-            data2[i] = el
-        }else{
-            data2[i] = el.value
-        } 
-        i++;
-    })
+
     var i = 0
     datapoints.forEach(function(el){
         if(el.value == undefined){
@@ -801,25 +665,11 @@ document.getElementById('chart_rhetorik').addEventListener('click', function() {
 
         json_data["admin_ges"] = admin_rhetoric
         datapoints[i] = {value: <%= g.rhetoric / 10.0 %>, data: json_data};
-        <% if GameRating.where(game_id: g.game_id).first %>
-            <% rating = GameRating.where(game_id: g.game_id).first %>
-            var json_data2 = <%= rating.to_json.html_safe %>
-        json_data2["average_team_ratings"] = <%= number_with_precision(rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;
-            
-            datapoints2[i] = {value: <%= rating.rhetoric / 10.0 %>, data:  json_data2};
-        <% end %>
+        
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
-    var i = 0
-    datapoints2.forEach(function(el){
-        if(el.value == undefined){
-            data2[i] = el
-        }else{
-            data2[i] = el.value
-        } 
-        i++;
-    })
+
     var i = 0
     datapoints.forEach(function(el){
         if(el.value == undefined){

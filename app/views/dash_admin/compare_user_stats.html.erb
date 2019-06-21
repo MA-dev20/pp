@@ -369,7 +369,7 @@ var gesamtChart = new Chart(ctx, {
 
             callbacks: {
                 title: function(tooltipItem, data) {
-                  if(data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]){
+                  if(data["datasets"][0]["datapoints"][tooltipItem[0]['index']] && data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]){
 
                     var creative = data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
                     
@@ -392,7 +392,7 @@ var gesamtChart = new Chart(ctx, {
                       body=0,
                       rhetorik=0;
                   }
-                  if(data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]){
+                  if(data["datasets"][1]["datapoints"][tooltipItem[0]['index']] && data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]){
                     var creative2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["creative"] / 10
                     var team_Average = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["average_team_ratings"] ? data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["average_team_ratings"] : 0 
                     var spontan2 = data["datasets"][1]["datapoints"][tooltipItem[0]['index']]["data"]["spontan"] / 10

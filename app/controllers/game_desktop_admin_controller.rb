@@ -139,6 +139,9 @@ class GameDesktopAdminController < ApplicationController
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
       @game.turns.update_all(status: "ended")
+      @game.turns.each do |turn|
+        turn.ratings.destroy_all
+      end
     else
       @game1 = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
     end
