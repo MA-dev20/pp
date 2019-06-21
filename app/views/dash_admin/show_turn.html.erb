@@ -176,7 +176,7 @@
               </label>
             </div>
           </div>
-          <input type="text" name="field" placeholder="Kommentar hinzufügen" autocomplete="off">
+          <input type="text" name="field"  autocomplete="off">
           <button class="com-plus-icon" type="submit"></button>
              <button class="com-sendit-icon" id="release_it" onclick="openReleaseComment()" data-id="<%=@turn.id%>" <%= @turn.comments.where(:release_it => false ).present? ? ' ' : 'disabled'%> style="opacity: <%= @turn.comments.where(:release_it => false ).present? ? 1 : 0.3%>"></button>
         </form>
@@ -258,6 +258,8 @@
       $("#time_of_video").removeClass()
       $("#time_of_video").addClass('vc-video-t')
       $('#time_of_video').addClass($(this).val())
+      $("input[name=field]").focus()
+
     })
     video.addEventListener("loadedmetadata", function(){console.log(video.duration)}, false)
     /* Build out functions */

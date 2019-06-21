@@ -167,18 +167,16 @@ var i = 0;
         <% else %>
             var admin_body = 0;
         <% end %>
-        json_data["type"] = "body"
-        json_data["type2"] = "body2"
-
+        json_data["type"] = "ges"
+        json_data["type2"] = "ges2"
+        json_data["type_text"] = "Gesment"
         <% if g.turn.recorded_pitch.present? %>
             json_data["turn_pitch"] = true;
         <% else %>
             json_data["turn_pitch"] = false;
         <% end %>
-        json_data["type_text"] = "Body"
-
         json_data["admin_ges"] = admin_body
-        datapoints[i] = {value: <%= g.body / 10.0 %>, data: json_data};
+        datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
     <% if @turns_rating2[i].present? %>
         var json_data2 = <%= @turns_rating2[i].to_json.html_safe %>
         <% if @turns_rating2[i].turn.recorded_pitch.present? %>
@@ -599,11 +597,16 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
         json_data["admin_ges"] = admin_ges
         datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
         <% if Turn.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
-            datapoints2[i] = <%= TurnRating.where(game_id: g.game_id, user_id: @user1.id).first.ges / 10.0 %>
+            <% rating = TurnRating.where(game_id: g.game_id, user_id: @user1.id).first %>
+            var json_data2 = <%= rating.to_json.html_safe %>
+            json_data2["average_team_ratings"] = <%= number_with_precision(rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;
+            
+            datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
+    
     window.gesamtChart.update();
 });
 document.getElementById('chart_spontan').addEventListener('click', function() {
