@@ -151,6 +151,7 @@ class DashAdminController < ApplicationController
 
   def statistics
     @users = @admin.users
+    @team = @teams.first
     @turns = @admin.turns.where(admin_turn: true)
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
@@ -172,7 +173,6 @@ class DashAdminController < ApplicationController
     userss = userss.flatten
     raw_result = users_ratings userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
-    @ratings = @team.team_rating
     @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 if @ratings.present?
     @length = raw_result.length
   end
@@ -181,12 +181,12 @@ class DashAdminController < ApplicationController
     @users = @admin.users
     @turns = @admin.turns.where(admin_turn: true)
     @team = Team.find(params[:team_id])
-    @turns_rating = @admin.turn_ratings
+    @turns_rating = @turns.map(&:turn_rating).flatten.compact
+    @turns_rating = @turns_rating.last(7)
     if !@turns_rating.present? || !@team.users.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
     end
-    @rating = @turns_rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings @userss.to_a.push(@admin)
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
@@ -201,17 +201,15 @@ class DashAdminController < ApplicationController
     @users = @admin.users
     @turns = @admin.turns.where(admin_turn: true)
     @user = @admin
+    @team = @user.teams.first
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
     @turns_rating = @turns_rating.last(7)
     @user1 = User.find(params[:compare_user_id])
     @turns_rating2 = @user1.turn_ratings.last(7)
-    rating = @user.turn_ratings
-    rating2 = @user1.turn_ratings.last(7)
-    if !rating.present? && !rating2.present?
+    if !@turns_rating2.present? && !@turns_rating.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
     end
-    @rating = rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
     @userss = @admin.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings @userss.to_a.push(@admin)
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
@@ -235,18 +233,9 @@ class DashAdminController < ApplicationController
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     @ratings = @team.team_rating
     @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 if @ratings.present?
-    # if @result.present?
-    #   if @result.count >= 3
-    #     @three_records = @result
-    #   else
-        @three_records, @current_rating = find_index_and_siblings(@result,current_admin.id) if @result.present?
-    #   end
-    # end
-
+    @three_records, @current_rating = find_index_and_siblings(@result,current_admin.id) if @result.present?
     @length = raw_result.length
   end  
-
-
 
   def filter_videos
     if(params[:team_id].present?)
@@ -281,14 +270,7 @@ class DashAdminController < ApplicationController
     @userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
     raw_result = users_ratings @userss
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
-    # if @result.present?
-    #   if @result.count >= 3
-    #     @three_records = @result
-    #   else
-        @three_records, @current_rating = find_index_and_siblings(@result,params[:user_id]) if @result.present?
-    #   end
-    # end
-
+    @three_records, @current_rating = find_index_and_siblings(@result,params[:user_id]) if @result.present?
     @length = raw_result.length
   end
 
