@@ -188,7 +188,7 @@ class DashAdminController < ApplicationController
       return redirect_to dash_admin_users_path
     end
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
-    raw_result = users_ratings @userss.to_a.push(@admin)
+    raw_result = users_ratings userss.to_a.push(@admin)
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     @ratings = @team.team_rating
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
@@ -211,7 +211,7 @@ class DashAdminController < ApplicationController
       return redirect_to dash_admin_users_path
     end
     @userss = @admin.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
-    raw_result = users_ratings @userss.to_a.push(@admin)
+    raw_result = users_ratings userss.to_a.push(@admin)
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
     @three_records, @current_rating = find_index_and_siblings(@result,@admin.id) if @result.present?
     @length = raw_result.length
