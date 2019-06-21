@@ -155,7 +155,7 @@ class DashAdminController < ApplicationController
     @turns = @admin.turns.where(admin_turn: true)
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
-    @turns_rating = @turns_rating
+    @turns_rating = @turns_rating.last(7)
     if !@turns_rating.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
@@ -182,7 +182,7 @@ class DashAdminController < ApplicationController
     @turns = @admin.turns.where(admin_turn: true)
     @team = Team.find(params[:team_id])
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
-    @turns_rating = @turns_rating
+    @turns_rating = @turns_rating.last(7)
     if !@turns_rating.present? || !@team.users.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
@@ -203,9 +203,9 @@ class DashAdminController < ApplicationController
     @user = @admin
     @team = @user.teams.first
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
-    @turns_rating = @turns_rating
+    @turns_rating = @turns_rating.last(7)
     @user1 = User.find(params[:compare_user_id])
-    @turns_rating2 = @user1.turn_ratings
+    @turns_rating2 = @user1.turn_ratings.last(7)
     if !@turns_rating2.present? && !@turns_rating.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
