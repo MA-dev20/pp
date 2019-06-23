@@ -1,8 +1,8 @@
-<section id="count_channel" data-game-id="<%= @game.id %>" class="fly_in_right">
-<section id="head">
+<section id="count_channel" data-game-id="<%= @game.id %>">
+<section id="head" class="bounce_in">
     <h1>Wer soll pitchen?</h1>
 </section>
-<section id="middle">
+<section id="middle" class="fly_in_right">
     <div id="vote"></div>
     <div class="circle-left" animation>
         <%= image_tag @turn1.findUser.avatar.quad.url, class: 'blue', id: 'left-img' %>

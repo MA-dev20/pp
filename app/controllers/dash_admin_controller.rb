@@ -152,7 +152,7 @@ class DashAdminController < ApplicationController
   def statistics
     @users = @admin.users
     @team = @teams.first
-    @turns = @admin.turns.where(admin_turn: true)
+    @turns = @admin.turns.where(admin_turn: true).order('created_at ASC')
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
     @turns_rating = @turns_rating.last(7)
@@ -179,7 +179,7 @@ class DashAdminController < ApplicationController
 
   def compare_with_team
     @users = @admin.users
-    @turns = @admin.turns.where(admin_turn: true)
+    @turns = @admin.turns.where(admin_turn: true).order('created_at ASC')
     @team = Team.find(params[:team_id])
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
     @turns_rating = @turns_rating.last(7)
@@ -199,7 +199,7 @@ class DashAdminController < ApplicationController
 
   def compare_with_user
     @users = @admin.users
-    @turns = @admin.turns.where(admin_turn: true)
+    @turns = @admin.turns.where(admin_turn: true).order('created_at ASC')
     @user = @admin
     @team = @user.teams.first
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
@@ -222,7 +222,7 @@ class DashAdminController < ApplicationController
     @users = @admin.users
     @turns = @user.turns
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
-    @turns_rating = @user.turn_ratings
+    @turns_rating = @user.turn_ratings.last(7)
     if !@turns_rating.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
@@ -240,7 +240,7 @@ class DashAdminController < ApplicationController
   def compare_user_stats
     @users = @admin.users
     @turns = @user.turns
-    @turns_rating = @user.turn_ratings
+    @turns_rating = @user.turn_ratings.last(7)
     @user1 = User.find(params[:compare_user_id])
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating2 = @user1.turn_ratings
@@ -304,7 +304,7 @@ class DashAdminController < ApplicationController
       flash[:error] = "Error in fetching invoices"
     end
 
-      # @invoice =@admin.invoices.all
+    # @invoice =@admin.invoices.all
     # @invoices= Stripe::InvoiceItem.retrieve(
     #    Invoice.where(stripe_invoice_id: @invoice.id)  
     # )

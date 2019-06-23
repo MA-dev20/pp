@@ -74,59 +74,70 @@ body {
     font-weight: bold;
     vertical-align: middle;
 }
+.bounce_in {
+    animation-name: bounce-in;
+    animation-duration: 1.5s;
+    animation-iteration-count: 1;
+}
+@keyframes bounce-in {
+    0% {
+        transform: translateX(3000px);
+    }
+    60% {
+     transform: translateX(-25px);
+    }
+    80% {
+        transform: translateX(10px)
+    }
+    100% {
+        transform: translateX(-5px);
+    }
+}
 .fly_in_left {
     animation-name: fly-in-left;
-    animation-duration: 2s;
+    animation-duration: 1.5s;
     animation-iteration-count: 1;
 }
 .fly_in_top {
     animation-name: fly-in-top;
-    animation-duration: 2s;
+    animation-duration: 1.5s;
     animation-iteration-count: 1;
 }
 .fly_in_right {
     animation-name: fly-in-right;
-    animation-duration: 2s;
+    animation-duration: 1.5s;
     animation-iteration-count: 1;
 }
 .fly_in_bottom {
     animation-name: fly-in-bottom;
-    animation-duration: 2s;
+    animation-duration: 1.5s;
     animation-iteration-count: 1;
 }
 @keyframes fly-in-left {
     from {
-        left: -200px;
+        transform: translateX(-3000px);
         opacity: 0;
     }
 }
 @keyframes fly-in-top {
     from {
-        top: -200px;
+        transform: translateY(-3000px);
         opacity: 0;
     }
 }
 @keyframes fly-in-right {
     from {
-        left: +200px;
+        transform: translateX(3000px);
         opacity: 0;
     }
 }
 @keyframes fly-in-bottom {
     from {
-        top: +1000px;
+        transform: translateY(-3000px);
         opacity: 0;
     }
 }
-@keyframes fly-in {
-    0% {
-        left: -200px;
-        opacity: 0.1;
-    }
-    90% {
-        left: 10px;
-    }
-}
+
 #content #head h1 {
     line-height: inherit;
     font-size: 10vh;
