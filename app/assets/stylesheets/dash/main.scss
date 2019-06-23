@@ -1693,7 +1693,7 @@ modal
   display: inline-block;
   width: 4.8vh;
   height: 2.38vh;
-  margin: 0;
+  margin: 0 !important;
 }
 /* Hide default HTML checkbox */
 .switch-box .switch input {
@@ -1722,7 +1722,7 @@ modal
   content: "";
   height: 2.1vh;
   width: 2.1vh;
-  left: 0;
+  left: -0.15vh;
   bottom: 0;
   background-color: #a7a7a7;
   -webkit-transition: .4s;
@@ -2523,10 +2523,8 @@ button.btn-green-plus.green-plus-se {
 #dash_stats .stats_chart .stats_chart-cont .chart-container {
   width: calc(55vw - 50px);
 }
-#dash_stats.dash-stats-set  .compare {
-  bottom: -3.8vh;
-  left: calc(55vw - 21vh);
-}
+
+
 .video-content {
   position: absolute;
   right: 0;

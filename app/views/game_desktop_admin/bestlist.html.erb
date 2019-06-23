@@ -1,15 +1,12 @@
-<section id="gd_head_ended">
+<section id="gd_head_ended" class="bounce_in">
     Die Bestenliste!
 </section>
 <section id="gd_ended">
     <% if @turn_ratings.first %>
-    <div class="rate">
-        <div class="line" style="width: calc( <%= @turn_ratings.first.ges %>% - 200px ); animation-name: line1">
-           <div class="text" id="text1">
-            <%= @turn_ratings.first.findUser.fname %> <%= @turn_ratings.first.findUser.lname %>
-            </div>
+    <div class="rate_1">
+        <div class="line">
         </div>
-        <div class="rating" style="left: calc( <%= @turn_ratings.first.ges %>% - 250px ); animation-name: rat1">
+        <div class="rating">
             <div class="circle">
                 <%= image_tag 'game/wolf_button.png', id: 'wolf1' %>
                 <%= image_tag @turn_ratings.first.findUser.avatar.quad.url, class: 'avatar', id: 'avatar1' %>
@@ -23,13 +20,10 @@
     </div>
     <% end %>
     <% if @turn_ratings.second %>
-    <div class="rate">
-        <div class="line" style="width: calc( <%= @turn_ratings.second.ges %>% - 200px ); animation-name: line2">
-           <div class="text" id="text2">
-            <%= @turn_ratings.second.findUser.fname %> <%= @turn_ratings.second.findUser.lname %>
-            </div>
+    <div class="rate_2">
+        <div class="line">
         </div>
-        <div class="rating" style="left: calc( <%= @turn_ratings.second.ges %>% - 250px ); animation-name: rat2">
+        <div class="rating">
             <div class="circle">
                 <%= image_tag 'game/wolf_button.png', id: 'wolf2' %>
                 <%= image_tag @turn_ratings.second.findUser.avatar.quad.url, class: 'avatar', id: 'avatar2' %>
@@ -42,22 +36,19 @@
         </div>
     </div>
     <% end %>
-    <% if @turn_ratings.third %>
-    <div class="rate">
-        <div class="line" style="width: calc( <%= @turn_ratings.third.ges %>% - 200px ); animation-name: line3">
-           <div class="text" id="text3">
-            <%= @turn_ratings.third.findUser.fname %> <%= @turn_ratings.third.findUser.lname %>
-            </div>
+    <% if @turn_ratings.second %>
+    <div class="rate_3">
+        <div class="line">
         </div>
-        <div class="rating" style="left: calc( <%= @turn_ratings.third.ges %>% - 250px ); animation-name: rat3">
+        <div class="rating">
             <div class="circle">
                 <%= image_tag 'game/wolf_button.png', id: 'wolf3' %>
-                <%= image_tag @turn_ratings.third.findUser.avatar.quad.url, class: 'avatar', id: 'avatar3'%>
+                <%= image_tag @turn_ratings.second.findUser.avatar.quad.url, class: 'avatar', id: 'avatar3'%>
             </div>
             <%= image_tag 'game/crown3.png', class: 'crown3' %>
             <%= image_tag 'game/polygon.png', class: 'pol', id: 'pol3' %>
             <div class="rate_ges" id='rat3'>
-                <%= @turn_ratings.third.ges / 10.0 %>
+                <%= @turn_ratings.second.ges / 10.0 %>
             </div>
         </div>
     </div>
