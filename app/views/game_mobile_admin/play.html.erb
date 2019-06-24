@@ -161,8 +161,8 @@ function requestVideo() {
       width: { min: 1920, ideal: 4032},
       height: { min: 1080, ideal: 3024},
       frameRate: { max: 80.0, min: 40.0},
-    },
       facingMode: { exact: "environment" },
+    },
   };
   navigator.mediaDevices.getUserMedia(constraints)
     .then(stm => {
