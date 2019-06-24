@@ -104,7 +104,7 @@
     
     <div class="stats_chart">
         <div class="stats_chart-cont">
-            <div class="chart-container">
+            <div class="chart-container" style="width:<%= 8*@turns_rating.count %>vw">
                 <canvas id="Chart"></canvas>
             </div>
         </div>
@@ -743,7 +743,7 @@ document.getElementById('chart_body').addEventListener('click', function() {
 
         json_data["admin_ges"] = admin_body
         datapoints[i] = {value: <%= g.body / 10.0 %>, data: json_data};
-        <% if Turn.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
+        <% if TurnRating.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
              <% rating = TurnRating.where(game_id: g.game_id, user_id: @user1.id).first %>
             var json_data2 = <%= rating.to_json.html_safe %>
         json_data2["average_team_ratings"] = <%= number_with_precision(rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;

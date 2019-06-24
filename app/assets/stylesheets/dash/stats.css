@@ -151,8 +151,8 @@
 }
 #dash_stats .compare {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: -5vh;
+    left: calc(55vw - 21vh);
     height: 5vh;
     width: 21vh;
 }
@@ -231,7 +231,7 @@
     top: 25px;
     left: 25px;
     height: calc(45vh - 50px);
-    width: calc(70vw - 50px);
+    min-width: calc(55vw - 50px) !important;
 }
 canvas {
     height: 420px;
