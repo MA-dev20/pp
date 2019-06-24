@@ -1,6 +1,6 @@
 <div id="count_channel" data-game-id="<%= @game.id %>" >
+<%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
-    <%= render partial: 'header' , locals: {can: false}%>
     <h1>
     <% if @admin == @cur_user %>
         Du wirst bewertet!
@@ -10,7 +10,7 @@
     </h1>
 </div>
 <div class="middle" id="middle">
-    <%= @count %>
+    <div class="row"><div class="col-12"><%= @count %></div></div>
 </div>
 <div class="bottom">
     <%= link_to 'weiter!', gma_rating_path %>

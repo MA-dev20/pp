@@ -1,5 +1,5 @@
+<%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
-    <%= render partial: 'header' , locals: {can: false}%>
     <% if @admin == @cur_user %>
         <h1>Du bist dran!</h1>
     <% else %>
@@ -10,7 +10,6 @@
     <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green pulse' %>
 </div>
 <div class="bottom bottom-play">
-    <p>ist dran!</p>
     <div class="switch-box switch-box-vt" id="switch">
         <label class="switch">
             <input type="checkbox" id="start" value="is" >

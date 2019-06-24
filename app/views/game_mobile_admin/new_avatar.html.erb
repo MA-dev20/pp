@@ -1,7 +1,6 @@
+<%= render partial: 'header' , locals: {can: false}%>
 <% if @admin.avatar? %>
-<div class="head">
-    <%= render partial: 'header' , locals: {can: false}%>
-    
+<div class="head">    
     <h1>Wow!</h1>
     <h3>Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</h3>
 </div>

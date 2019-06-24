@@ -1,14 +1,11 @@
+<%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
 <% if @user.avatar? %>
 <div class="head">
-      <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-
-      <h1>Wow!</h1>
+    <h1>Wow!</h1>
     <h3>Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</h3>
 </div>
 <% else %>
 <div class="head">
-    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-    
     <h1>Bild hinzufügen!</h1>
     <h3>Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</h3>
 </div>

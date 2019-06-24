@@ -1,6 +1,6 @@
+<%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
 <% if @user == @cur_user %>
 <div class="head">
-    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
     <h1>DU</h1>
 </div>
 <div class="middle">
@@ -11,7 +11,6 @@
 </div>
 <% else %>
 <div class="head">
-    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
     <h1>Bewertung abgegeben!</h1>
 </div>
 <div class="middle">
