@@ -44,6 +44,7 @@
             <th>Email</th>
             <th>Unternehmen</th>
             <th>Letztes Spiel</th>
+            <th>Spiele</th>
             <th></th>
             <th></th>
         </tr>
@@ -58,7 +59,7 @@
             
             <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.company_name %></td>
             <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><% if Turn.where(user_id: @admin.id).count > 0 %><%= Turn.where(user_id: @admin.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
-            
+            <td><%= @admin.turns.where(admin_turn: true).count %></td>
             <td><% if @admin.teams.count > 0 %>
                 <%= link_to '', dash_admin_statistics_path, class: "fas fa-chart-line package_pop_up" %>
                 <% end %>
@@ -76,7 +77,7 @@
             
             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.company_name %></td>
             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
-            
+            <td><%= u.turns.count %></td>
             <td><% if u.teams.count > 0 %>
                 <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line package_pop_up" %>
                 <% end %>

@@ -893,11 +893,6 @@ modal
       color: #1ddaaf;
     }
 }
-#dash_stats {
-    .compare {
-        bottom: -2.5vh;
-    }
-}
 .blue-places {
   top: calc((50vh - 217px) + 8vh);
   left: calc(50vw - 298px);
@@ -2518,7 +2513,7 @@ button.btn-green-plus.green-plus-se {
 #dash_stats .stats_chart .stats_chart-cont {
   overflow-x: auto;
   overflow-y: hidden;
-  height: 40.4vh;
+  height: 45vh;
 }
 #dash_stats .stats_chart .stats_chart-cont .chart-container {
   width: calc(55vw - 50px);
