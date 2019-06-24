@@ -1,21 +1,14 @@
+<%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
 <div class="head">
-    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
     <h1>
     <% if @user == @cur_user %>
-      <%= @user.fname %>
+      <h1>Du bist dran!</h1>
     <% else %>
-      <%= @cur_user.fname %> <% @cur_user.lname %>
+      <h1><%= @cur_user.fname %> ist dran!</h1>
     <% end %>
     </h1>
 </div>
 <div class="middle">
     <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green pulse' %>
-</div>
-<div class="bottom">
-    <% if @user == @cur_user %>
-        <p>du bist dran!</p>
-    <% else %>
-        <p>ist dran!</p>
-    <% end %>
 </div>
 

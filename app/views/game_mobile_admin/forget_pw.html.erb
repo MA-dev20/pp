@@ -1,5 +1,5 @@
+<%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
-    <%= render partial: 'header' , locals: {can: false}%>
     <h1>Bitte logge dich ein!</h1>
 </div>
 <%= form_for(:admin, url: gma_start_path, html: {autocomplete: 'off'}) do |f| %>

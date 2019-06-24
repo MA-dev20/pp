@@ -1,5 +1,5 @@
+<%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
 <div class="head">
-    <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
     <h1>Tolle Runde!</h1>
 </div>
 <div class="middle">
@@ -29,7 +29,9 @@
     </div>
 
     <script>
-    ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);
+    setTimeout(function() {
+      ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);  
+    }, 1500);
     function showModal() {
         $('#shareModal').show();
     }

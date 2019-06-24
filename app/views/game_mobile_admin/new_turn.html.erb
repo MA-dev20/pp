@@ -1,5 +1,5 @@
+<%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
-    <%= render partial: 'header' , locals: {can: false}%>
     <h1>Hi, <%= @admin.fname %> <%= @admin.lname %></h1>
 </div>
 <%= form_for(:turn, url: gma_new_turn_path) do |f| %>
