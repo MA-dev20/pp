@@ -158,14 +158,11 @@ function requestVideo() {
     }
     ,
     video:{
-      width: { min: 640, ideal: 1920, max: 1920 },
-      height: { min: 400, ideal: 1080 },
-      deviceId: { exact: Devices[Devices.length-1].deviceId},
-      frameRate: { max: 120, ideal: 30, min: 15 },
-
+      width: { min: 1920, ideal: 4032},
+      height: { min: 1080, ideal: 3024},
+      frameRate: { max: 80.0, min: 40.0},
     },
-      facingMode: { exact: "user" },
-
+      facingMode: { exact: "environment" },
   };
   navigator.mediaDevices.getUserMedia(constraints)
     .then(stm => {
