@@ -103,7 +103,7 @@ class DashAdminController < ApplicationController
   def team_stats
     @users = @admin.users
     @rating = @team.team_rating
-    @gameratings = @team.game_ratings.last(7)
+    @gameratings = @team.game_ratings
     @count = 1
     if !@rating
       flash[:pop_up] = "Ups, für dieses Team liegen noch keine Statistiken vor.;- Da müsst ihr wohl erst noch eine Runde spielen. -;Let's Play"
@@ -222,7 +222,7 @@ class DashAdminController < ApplicationController
     @users = @admin.users
     @turns = @user.turns
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
-    @turns_rating = @user.turn_ratings.last(7)
+    @turns_rating = @user.turn_ratings
     if !@turns_rating.present?
       flash[:danger] = 'Noch keine bewerteten Spiele!'
       return redirect_to dash_admin_users_path
@@ -240,7 +240,7 @@ class DashAdminController < ApplicationController
   def compare_user_stats
     @users = @admin.users
     @turns = @user.turns
-    @turns_rating = @user.turn_ratings.last(7)
+    @turns_rating = @user.turn_ratings
     @user1 = User.find(params[:compare_user_id])
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating2 = @user1.turn_ratings
