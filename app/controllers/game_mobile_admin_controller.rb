@@ -269,6 +269,7 @@ class GameMobileAdminController < ApplicationController
         ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, user_pic: @admin.avatar.quad.url, new: 'true'
         redirect_to gma_intro_path
       else
+        ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, user_pic: @admin.avatar.quad.url, new: 'true'
         redirect_to gma_new_turn_path
       end
     end
