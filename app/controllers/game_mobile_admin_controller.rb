@@ -177,7 +177,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rating
-    if @game.state != 'rating' && @turn.ratings.count == 0
+    if @game.state != 'rating' && @turn.ratings.where(disabled: false).count == 0
       @turn.update(status: "ended")
       redirect_to gma_after_rating_path
       return
@@ -223,9 +223,8 @@ class GameMobileAdminController < ApplicationController
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
       @game.turn_ratings.destroy_all
-      @game.turns.each do |turn|
-        turn.ratings.destroy_all
-      end
+      ids = @game.turns.pluck(:id)
+      Rating.where('turn_id IN (?)',ids).update_all(disabled: true)
       @game.turns.update_all(status: "ended")
     end
     session[:game_session_id] = @game.id
@@ -251,7 +250,7 @@ class GameMobileAdminController < ApplicationController
       params.require(:turn).permit[:play]
     end
 
-    def create_turn_method(play=false)
+    def create_turn_method(play=true)
       @game = Game.find(session[:game_session_id])
       sign_in(@game)
       if @game.own_words
@@ -262,8 +261,9 @@ class GameMobileAdminController < ApplicationController
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if  CatchwordsBasket.find_by(name: 'PetersWords').present?
         @word = Word.all.sample(5).first if @word.nil?
       end
-      @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true, counter: 0)
-      if @turn.save
+      @turn = Turn.where(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true, counter: 0)
+      @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true, counter: 0) if !@turn.present?
+      if @turn.new_record?  && @turn.save
         @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
         sign_in(@game)
         ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, user_pic: @admin.avatar.quad.url, new: 'true'

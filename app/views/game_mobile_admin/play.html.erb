@@ -1,5 +1,5 @@
-<%= render partial: 'header' , locals: {can: true}%>
 <div class="head head-play">
+    <%= render partial: 'header' , locals: {can: true}%>
     <div style="display: none" id="current_user_id" data-id='<%= @turn.to_json.to_s.html_safe %>'></div>
     <h1><%= @cur_user.fname %> Pitcht!</h1>
 </div>
@@ -158,11 +158,13 @@ function requestVideo() {
     }
     ,
     video:{
-      width: { min: 640, ideal: 4032},
-      height: { min: 720, ideal: 3024},
-      frameRate: { max: 80.0, min: 30.0, ideal: 60},
-      facingMode: { exact: "environment" },
+        facingMode: { exact: "environment" },
+        height: {min: 720, ideal: 1080},
+        width: {min: 1280, ideal: 1920},
+        frameRate: {min: 30, ideal: 60}
     },
+      facingMode: { exact: "environment" },
+
   };
   navigator.mediaDevices.getUserMedia(constraints)
     .then(stm => {
@@ -170,8 +172,7 @@ function requestVideo() {
       preview.srcObject = stream;
       preview.captureStream = preview.captureStream(5) || preview.mozCaptureStream(5);
     }).then(()=>{
-      const options = {
-      };
+      const options = {};
       setTimeout(function(){
         recorder = new MediaRecorder(stream, options);
         recorder.start();
