@@ -158,9 +158,9 @@ function requestVideo() {
     }
     ,
     video:{
-      width: { min: 1920, ideal: 4032},
-      height: { min: 1080, ideal: 3024},
-      frameRate: { max: 80.0, min: 40.0},
+      width: { min: 640, ideal: 4032},
+      height: { min: 720, ideal: 3024},
+      frameRate: { max: 80.0, min: 30.0, ideal: 60},
       facingMode: { exact: "environment" },
     },
   };
@@ -171,8 +171,6 @@ function requestVideo() {
       preview.captureStream = preview.captureStream(5) || preview.mozCaptureStream(5);
     }).then(()=>{
       const options = {
-        audioBitsPerSecond : 128000,
-        videoBitsPerSecond : 3000000,
       };
       setTimeout(function(){
         recorder = new MediaRecorder(stream, options);
