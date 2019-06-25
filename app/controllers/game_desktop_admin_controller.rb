@@ -73,7 +73,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def rating
-    if @game.state != 'rating' && @turn.ratings.count == 0
+    if @game.state != 'rating' && @turn.ratings.where(disabled: false).count == 0
       @turn.update(status: 'ended')
       redirect_to gda_after_rating_path
       return
@@ -139,9 +139,8 @@ class GameDesktopAdminController < ApplicationController
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
       @game.turns.update_all(status: "ended")
-      @game.turns.each do |turn|
-        turn.ratings.destroy_all
-      end
+      ids = @game.turns.pluck(:id)
+      Rating.where('turn_id IN (?)',ids).update_all(disabled: true)
     else
       @game1 = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
     end
