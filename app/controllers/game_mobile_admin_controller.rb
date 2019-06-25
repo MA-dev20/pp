@@ -261,7 +261,7 @@ class GameMobileAdminController < ApplicationController
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if  CatchwordsBasket.find_by(name: 'PetersWords').present?
         @word = Word.all.sample(5).first if @word.nil?
       end
-      @turn = Turn.where(admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted")
+      @turn = Turn.where(admin_id: @admin.id, game_id: @game.id, played: false, status: "accepted").first
       @turn = Turn.new(play: play, admin_id: @admin.id, game_id: @game.id, word_id: @word.id, played: false, status: "accepted", admin_turn: true, counter: 0) if !@turn.present?
       if @turn.new_record?  && @turn.save
         @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
