@@ -8,6 +8,7 @@ class GamesController < ApplicationController
     @game = Game.where(active: true, password: params[:game][:password]).first
     if @game && @game.admin_id == @admin.id
       session[:game_session_id] = @game.id
+      @game.turns.update_all(status: 'ended')
       set_words_for_game(@game, params[:game][:own_rules], params[:game][:baskets], params[:game][:seconds])
       sign_in(@game)
       # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
