@@ -222,9 +222,6 @@ class GameMobileAdminController < ApplicationController
     @game = current_game
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
-      @game.turn_ratings.destroy_all
-      ids = @game.turns.pluck(:id)
-      Rating.where('turn_id IN (?)',ids).update_all(disabled: true)
       @game.turns.update_all(status: "ended")
     end
     session[:game_session_id] = @game.id
