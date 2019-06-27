@@ -68,8 +68,6 @@
                                     <a href=""  id="a_download" style="display: none;" download>
                                     </a>
                                     <%= link_to "<img src=#{image_path('download-m.png')}>".html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'download' %>
-
-                                    <%= link_to "<img src=#{asset_path('share-m.png')}>".html_safe,"/admin/dash/teams/#{params[:team_id]}/generate_img_from_html", class: 'pol-bg', id: 'share' %>
                                 </div>
                             </section>
                         </div>
@@ -81,19 +79,6 @@
             </div>
         </div>
     </div> 
-    
-    <div id="shareModal">
-        <button type="button" id="close" onclick="closeShare()"><i class="far fa-times-circle"></i></button>
-        <div class="header">
-            - Teile dein Ergebnis -
-        </div>
-        <div class="links1">
-            <%= social_share_button_tag('Ich habe  <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div>  erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(twitter linkedin Xing)) %>
-        </div>
-        <div class="links2">
-            <%= social_share_button_tag('Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :url => "http://www.peterpitch.com", desc: 'Ich habe <div class="share_link"> </div> erspielt! Was schaffst du?'.html_safe, :allow_sites => %w(whatsapp_app facebook)) %>
-        </div>
-    </div>
               
     <script type="text/javascript">
         new ClipboardJS("#btn-copy")
@@ -112,33 +97,12 @@
 
             })
         })
-        $("#share").on("click", function(e){
-            e.preventDefault()
-            var $href =  $(this).attr("href");
-            $.ajax({
-                url: $href,
-                type: 'post',
-                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-                data: {html: $("#table_wrapper").html()},
-                success: function(res){
-                    $('#new_team_pop').modal("hide");
-                    $(".social-share-button").data("title","<%= root_url %>" +JSON.parse(res).url )
-                    $("#shareModal").modal("show")
-                    $(".share_link").val("<%= root_url %>" +JSON.parse(res).url)
-                }
-
-            })
-        })
                 
         $("#open-team-scores").on("click", function(){
             $('#new_team_pop').modal("show");
 
         })
 
-        function closeShare(){
-            $("#shareModal").modal("hide")
-
-        }
         function closeTeamPop(){
             $('#new_team_pop').modal("hide");
 

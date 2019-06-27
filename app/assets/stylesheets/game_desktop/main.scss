@@ -228,8 +228,8 @@ body {
   box-shadow: 0 9px 18px rgba(0,0,0,0.17);
 }
 .btn-green:hover {
-    background-color: transparent;
-    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.1);
 }
 @keyframes fadeinout {
     0%,100%{ opacity: 0.3; }
