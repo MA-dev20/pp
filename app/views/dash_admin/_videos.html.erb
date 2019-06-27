@@ -21,7 +21,7 @@
 				    				<div class="ob-de-f d-flex align-items-center">
 						    			<h5><%= (t["created_at"]).to_datetime.strftime("%-d.%_m.%y") %></h5>
 						    			<% if delete %>
-						    				<span class="delete-video" data-id="<%= t['id']%>"><i class="fa fa-trash" aria-hidden="true"></i></span>
+						    				<span class="delete-video" data-id="<%= t['id']%>"><img src="<%= asset_path('delete-m.png') %>"></span>
 						    			<% end %>
 						    		</div>
 					    		</div>
