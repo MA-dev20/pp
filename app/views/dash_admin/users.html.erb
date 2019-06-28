@@ -1,3 +1,5 @@
+<style type="text/css">
+</style>
 <section id="gd_users">
   <%= content_for :modal do %>
     <%= render partial: 'form', locals: {u: User.new } %>
@@ -8,9 +10,9 @@
 
   <div class="select-text">Spielgruppe wählen</div>
     <div class="select">
-      <select class="cs-select cs-skin-underline form-field">
+      <select class="cs-select cs-skin-underline form-field" id="team_id" name="team_id">
         <% if @team %>
-          <option value="" disabled selected><%= @team.name %></option>
+          <option value="<%=@team.id %>" disabled selected><%= @team.name %></option>
           <option value="" data-link="<%= dash_admin_users_path %>">Alle Teams</option>
         <% else %>
           <option value="" disabled selected>Alle Teams</option>
@@ -50,7 +52,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="user-row user-row-admin">
+        <!-- <tr class="user-row user-row-admin">
            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.avatar? ? image_tag(@admin.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
            
             <td class="name" onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.fname %> <%= @admin.lname %></td>
@@ -66,35 +68,8 @@
             </td>
             <td>
             </td>
-        </tr>
-        <% @users.each do |u| %>
-        <tr class="user-row">
-           <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.avatar? ? image_tag(u.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
-           
-            <td class="name" onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
-            
-            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.email %></td>
-            
-            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.company_name %></td>
-            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
-            <td><%= u.turns.count %></td>
-            <td><% if u.teams.count > 0 %>
-                <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line package_pop_up" %>
-                <% end %>
-            </td>
-            
-            <td>
-                <a href="#" class="edit-user" data-id="<%=u.id %>"> Edit</a>
-            </td>
-          </tr>
+        </tr> -->
 
-            <% content_for :modal do%>
-                <%= render partial: 'form',locals: { u: u} %>
-            <% end %>
-            <% content_for :modal do%>
-            <%= render partial: 'delete_user', locals: {u: u} %>
-            <% end %>
-          <% end %>
         </tbody>
       </table>
     </div>
@@ -102,13 +77,21 @@
 </section>
 <script>
   $(document).ready(function(){
+
+    renderElements()
+  })
+
+  function renderElements(){
+    // $("tbody tr").on('click', function(e){
+    //   e.preventDefault()
+    //   var url = $(this).find(".package_pop_up").attr("href")
+    //   window.location.href = url;
+    // })
     $(".email-field").keyup(function(){
       var id = $(this).data("id");
       $("#email-error-"+id).html('')
     })
-  })
-  
-  $(".edit-user").on("click", function(e){
+    $(".edit-user").on("click", function(e){
     e.preventDefault()
     var $id = $(this).data("id")
     $("#edit-user-modal"+$id).modal("show")
@@ -124,48 +107,13 @@
     var $id = $(this).data("id")
     $("#delete-user-modal"+$id).modal("show")
   });
+  }
+  
+  
   $(document).ready(function(){
 
-    $('.InputTags').selectize({
-      valueField: 'id',
-      plugins: [ 'remove_button'
-      ],
-      labelField: 'name',
-      preload: true,
-      create: false,
-      allowEmptyOption: true,
-      render: {
-        option: function(data, escape) {
-            return '<option>' +
-                    '<span class="url">' + escape(data.name) + '</span>' +
-                '</option>';
-        },
-        item: function(data, escape) {
-            return '<span class="tag label label-info">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
-        }
-      },
-      load: function(query, callback) {
-        $.get({
-            url: '/team_list',
-            dataType: 'json',
-            data: {
-                name: query,
-                additionalDataIfRequired: 'Additional Data'
-            },
-            error: function() {
-                callback();
-            },
-            success: function(res) {
-                // you can apply any modification to data before passing it to selectize
-                callback(res);
-                
-            }
-          });
-        }
-      })[0].selectize
-      $(".selectize-control").addClass("bootstrap-tagsinput")
-      $(".selectize-input.items input").attr("readonly", true);
-      // $("").tagsinput()
+    
+    renderSelectize()
   })
 
     function redirect_stats(team, user, admin) {
@@ -181,27 +129,49 @@
         
     }
     $(document).ready( function () {
-
+    
     var table = $('#myTable').DataTable( {
-        "paging":   false,
-        "scrollY": "58vh",
-        "scrollCollapse": true,
-        "info":     false,
-        'searching': false,
+       "responsive": true,
+        "sScrollX": true,
+        "ordering": true,
+        "processing": true,
+        "scrollY":  "400px",
+        "searching": true,
+        "lengthChange": false,
+        oLanguage: {sProcessing: "<div id='loader'>Loading....</div>"},
+        "serverSide": true,
+        "ajax":  {url: "/admin/dash/user_list",
+        "data": function(data){
+          data.team_id = $("select[name=team_id] option:selected").val();
+        }},
         "columnDefs": [
-            { "orderable": false, "targets": 0 },
+            { "orderable": false, "targets": 0},
             { "orderable": false, "targets": 5 },
-            { "orderable": false, "targets": 6 },
-        ]
+            { "orderable": false, "targets": 7 },
+            { "orderable": false, "targets": 6, render: function(data){
+              $("body").append(data.edit_partial);
+              $("body").append(data.del_partial);
+              return data.button;
+            } },
+            { "orderable": false, "targets": 4 },
+        ],
+        "drawCallback": function( settings ) {
+          renderElements()
+          renderSelectize()
+        }
     } );
+    $("#myTable_filter").hide()
+    $("#searchField").keyup(function(){
+      table.search($("#searchField").val()).draw() ;
+    })
     
 } );
 (function() {
-				[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
-					new SelectFx(el);
+        [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
+          new SelectFx(el);
                     newTab: false;
-				} );
-			})();
+        } );
+      })();
     
 var $rows = $('.user-row');
 $('#searchField').keyup(function() {
@@ -217,7 +187,48 @@ $('#searchField').keyup(function() {
 });
 new PerfectScrollbar('.cs-options');
 
-            
+function renderSelectize(){
+  $('.InputTags').selectize({
+    valueField: 'id',
+    plugins: [ 'remove_button'
+    ],
+    labelField: 'name',
+    preload: true,
+    create: false,
+    allowEmptyOption: true,
+    render: {
+      option: function(data, escape) {
+          return '<option>' +
+                  '<span class="url">' + escape(data.name) + '</span>' +
+              '</option>';
+      },
+      item: function(data, escape) {
+          return '<span class="tag label label-info">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
+      }
+    },
+    load: function(query, callback) {
+      $.get({
+          url: '/team_list',
+          dataType: 'json',
+          data: {
+              name: query,
+              additionalDataIfRequired: 'Additional Data'
+          },
+          error: function() {
+              callback();
+          },
+          success: function(res) {
+              // you can apply any modification to data before passing it to selectize
+              callback(res);
+              
+          }
+        });
+      }
+    })[0].selectize
+    $(".selectize-control").addClass("bootstrap-tagsinput")
+    $(".selectize-input.items input").attr("readonly", true);
+  // $("").tagsinput()
+}    
 
 
 </script>

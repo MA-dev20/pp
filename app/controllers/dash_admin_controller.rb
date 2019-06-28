@@ -2,7 +2,7 @@ class DashAdminController < ApplicationController
   before_action :authenticate_admin!, :set_admin , unless: :skip_action?
   before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats,:team_stats_share]
   before_action :set_user, only: [:user_stats, :compare_user_stats]
-  skip_before_action :check_expiration_date, only: :billing
+  skip_before_action :check_expiration_date, only: [:billing, :user_list]
   include ApplicationHelper
   include ActionView::Helpers::NumberHelper
   layout :resolve_layout
@@ -147,6 +147,27 @@ class DashAdminController < ApplicationController
     else
       @users = @admin.users
     end
+  end
+
+  def user_list
+    order_column_no = params[:order]["0"]["column"]
+    dir = params[:order]["0"]["dir"]
+    column_name = params[:columns][order_column_no]["data"]
+    index = params[:start]
+    limit = params[:length]
+    search = params[:search]["value"]
+    # @users = @admin.users.last(2)
+    # users = []
+    # parsed_data =  @users.map do |user|
+    #   json_user = {}
+    #   json_user[:name] = user.fname + user.lname
+    #   json_user[:avatar] = user.avatar.url
+    #   json_user[:company_name] = user.company_name
+    #   json_user[:last_game] = Turn.where(user_id: user.id).last.updated_at.strftime('%d.%m.%Y') if Turn.where(user_id: user.id).last.present?
+    #   json_user[:games] = user.turns.count
+    #   users.push json_user
+    # end
+    render json: UsersDatatable.new(view_context) 
   end
 
   def statistics
