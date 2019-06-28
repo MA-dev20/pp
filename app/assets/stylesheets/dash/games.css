@@ -161,8 +161,8 @@
   }
 }
 .col3 > .row3 > input[type=submit]:hover {
-    background-color: transparent;
-    color: #1ddaaf;
+    transform: translateY(-1px);
+    box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.1);
 }
 .col1 > input[type=submit] {
     position: absolute;
@@ -181,7 +181,7 @@
     cursor: pointer;
 }
 .col1 > input[type=submit]:hover {
-    background-color: darkgray;
-    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.1);
 }
 

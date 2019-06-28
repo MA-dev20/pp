@@ -414,9 +414,8 @@ li.greengreen span {
     }
     .btn-green:hover,
     .btn-green:focus {
-        color: #1ddaaf !important;
-        border-color: #1ddaaf !important;
-        background-color: transparent !important;
+        transform: translateY(-1px);
+        box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.1);
     }
     .tableCard-container {
         max-height: 530px;

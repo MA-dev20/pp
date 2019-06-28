@@ -313,12 +313,12 @@ header
 	  box-shadow: 0 9px 18px rgba(0,0,0,0.17);
   }
   .btn-green:hover, {
-	  color: #37deb8 !important;
-	  background-color: transparent !important;
+      transform: translateY(-1px);
+      box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.1);
   }
   .btn-green-white:hover {
-      color: #37deb8 !important;
-	  background-color: white !important;
+      transform: translateY(-1px);
+      box-shadow: 0 .25rem .5rem 0 rgba(0,0,0,0.1);
   }
   .peter-trial {
   	margin-top: -40px;
