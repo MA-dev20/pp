@@ -20,15 +20,14 @@ private
     users.map do |user|
       a=[	
       	(user.avatar.url.present? ? image_tag(user.avatar.quad.url) : image_tag('defaults/wolf.jpg')),
-        user.fname,
+        (user.fname.to_s+ " "+user.lname.to_s),
         user.email,
         user.company_name,
        ] 
 	 		Turn.where(user_id: user.id).last.present? ? a.push(Turn.where(user_id: user.id).last.updated_at.strftime('%d.%m.%Y')) : a.push(nil)
 			a.push(user.turns.count)
-			a.push({button: link_to( 'Edit','#',  class: 'edit-user', :data => { :id => user.id }), edit_partial: render(partial: 'dash_admin/form', locals: {u: user}), del_partial: render(partial: 'dash_admin/delete_user', locals: {u: user})})
+			a.push({button: link_to( 'Edit','#',  class: 'edit-user', :data => { :id => user.id, user: user.to_json, teams: user.teams.to_json }), edit_partial: '', del_partial: ''})
 			a.push(link_to('',dash_admin_user_stats_path("1", user), class: 'fas fa-chart-line package_pop_up'))
-			a.push(render(partial: 'dash_admin/form',locals: {u: user}))
     end
   end
 

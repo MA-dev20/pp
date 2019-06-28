@@ -74,12 +74,34 @@
       </table>
     </div>
   </div>
+  <%= content_for :modal do %>
+    <%= render partial: 'edit_form' %>
+    <div class="blue_table">
+    <div class="blue blue-place modal teamV-modal userDelete-modal" id="<%= "delete-user-modal" %>">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button class="close modal-close" onclick="closeTeamPop()" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div id="table_wrapper">
+                    <div id="list-table">
+                        <h1>Nutzer löschen</h1>
+                        <h3>Möchtest du den Nutzer wirklich unwiderruflich löschen?</h3>
+                        <%= link_to 'Löschen', "#", class: 'btn btn-green user-p-btn', id: 'del_user'%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  <% end %>
 </section>
 <script>
   $(document).ready(function(){
 
     renderElements()
   })
+  var selectize;
 
   function renderElements(){
     // $("tbody tr").on('click', function(e){
@@ -94,7 +116,29 @@
     $(".edit-user").on("click", function(e){
     e.preventDefault()
     var $id = $(this).data("id")
-    $("#edit-user-modal"+$id).modal("show")
+    var user = $(this).data("user");
+    var teams = $(this).data("teams");
+    
+    var url = '/users/'+$id+'/update';
+    var defaultImgurl = "<%= image_path('defaults/wolf.jpg')%>";
+    if(user.avatar.url == null){
+    $("#imgPrevedit").attr("src", defaultImgurl)
+    }else{
+      $("#imgPrevedit").attr("src", user.avatar.url)
+    }
+    // $(".items").empty()
+    selectize[1].selectize.clear()
+    teams.forEach(function(team){
+      // $("#inputtagsedit").append(`<option value=`+team.id+`" selected>`+ team.name+`</option>`)
+      selectize[1].selectize.addItem(team.id)
+    })
+    $("#edit_company_name").val(user.company_name)
+    $("#lname").val(user.lname)
+    $("#fname").val(user.fname)
+    $("#email").val(user.email)
+    $(".delete-user").data("id",user.id)
+    $("#edit_form").attr("action", url)
+    $("#editUser").modal("show")
 
   })
   $("#newUserModal").on("click", function(event){
@@ -105,14 +149,13 @@
     event.preventDefault();
     $('.dropdown-menu').hide()
     var $id = $(this).data("id")
-    $("#delete-user-modal"+$id).modal("show")
+    $("#del_user").attr("href","/users/"+$id+"/destroy")
+    $("#delete-user-modal").modal("show")
   });
   }
   
   
   $(document).ready(function(){
-
-    
     renderSelectize()
   })
 
@@ -157,7 +200,6 @@
         ],
         "drawCallback": function( settings ) {
           renderElements()
-          renderSelectize()
         }
     } );
     $("#myTable_filter").hide()
@@ -188,7 +230,7 @@ $('#searchField').keyup(function() {
 new PerfectScrollbar('.cs-options');
 
 function renderSelectize(){
-  $('.InputTags').selectize({
+  selectize = $('.InputTags').selectize({
     valueField: 'id',
     plugins: [ 'remove_button'
     ],
@@ -221,10 +263,14 @@ function renderSelectize(){
               // you can apply any modification to data before passing it to selectize
               callback(res);
               
+          }, 
+          load: function(query, callback){
+            this.clearOptions();  
           }
         });
       }
-    })[0].selectize
+    })
+
     $(".selectize-control").addClass("bootstrap-tagsinput")
     $(".selectize-input.items input").attr("readonly", true);
   // $("").tagsinput()
