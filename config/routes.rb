@@ -157,6 +157,7 @@ Rails.application.routes.draw do
     get 'admin/dash/teams/:team_id/stats/:team2_id', to: 'dash_admin#team_stats', as: 'dash_admin_compare_team_stats'
     
     get 'admin/dash/users', to: 'dash_admin#users', as: 'dash_admin_users'
+    get 'admin/dash/user_list', to: 'dash_admin#user_list', as: 'dash_admin_user_list'
     get 'admin/dash/users/:team_id', to: 'dash_admin#users', as: 'dash_admin_team_users'
     post 'admins/dash/filter_videos', to:  'dash_admin#filter_videos', as: 'admin_filter_videos'
     get 'admins/dash/teams/:team_id/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_user_stats'
