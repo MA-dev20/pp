@@ -1,0 +1,93 @@
+<div class="blue_table">
+  <div class="blue blue-place modal teamV-modal userEdit-modal" id='editUser' style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <button type="button" class="close modal-close" onclick="closeTeamPop()" aria-label="Close"><i class="fas fa-times"></i></button>
+          <div id="table_wrapper">
+            <div class="" id="list-table">
+              <h1>
+                  <span>Nutzer bearbeiten</span>
+              </h1>
+              <%= form_for :user, url: "/users/update",html: {id: 'edit_form'},method: "put" , remote: false do |f| %>
+                <div class="user-profile">
+                    <div class="user-profile-img">
+                        <div class="up-img">
+                              <img src="<%=image_path('defaults/wolf.jpg')%>" id="imgPrevedit">
+                        </div>
+                        <div class="user-profile-up">
+                              <%= f.file_field :avatar, onChange: "readURL(this,$('#imgPrevedit'));"%>
+                            <span class="plus-p">+</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-block">
+                    <div class="row">
+                        <div class="col-12 col-md-6 pr-md-4">
+                            <div class="form-group">
+                                <label>Unternehmen</label>
+                                <%= f.text_field :company_name, class: "form-control", id: 'edit_company_name' %>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 pl-md-4">
+                            <div class="form-group">
+                                <label>E-Mail</label>
+                                <%= f.email_field :email, class: "form-control email-field", required: true ,
+                                 data: {id: "#{ 'email'}"} , id: 'email'%>
+                                  <label id="email-error-<%= "#{'email'}" %>" class="error"> </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 pr-md-4">
+                            <div class="form-group">
+                                <label>Vorname</label>
+                                <%= f.text_field :fname, class: "form-control" ,id: 'fname'%>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 pl-md-4">
+                            <div class="form-group">
+                                <label>Nachname</label>
+                                <%= f.text_field :lname, class: "form-control", id: 'lname' %>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="teams-block">
+                    <div class="form-group bootstrapTag-group">
+                        <label>Teams</label>
+                        <select class="InputTags" name='user[teams][]' multiple="true" id="inputtagsedit" data-role="tagsinput-typeahead" readonly class="rdonly">
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <%= f.submit "Anderungen speichern", class: "btn btn-green user-p-btn" %>
+                </div>
+                  <a href="#" class="delete-user" ><span class="user-opt-det"><img src="<%= asset_path('delete-m.png') %>"></span></a>
+              <% end %>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  var teams;
+  var data = ["asa","AS"]
+  function readURL(input, img) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        img.attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  function  closeTeamPop(){
+      $(".blue").modal("hide");
+  }
+</script>
