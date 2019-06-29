@@ -150,23 +150,6 @@ class DashAdminController < ApplicationController
   end
 
   def user_list
-    order_column_no = params[:order]["0"]["column"]
-    dir = params[:order]["0"]["dir"]
-    column_name = params[:columns][order_column_no]["data"]
-    index = params[:start]
-    limit = params[:length]
-    search = params[:search]["value"]
-    # @users = @admin.users.last(2)
-    # users = []
-    # parsed_data =  @users.map do |user|
-    #   json_user = {}
-    #   json_user[:name] = user.fname + user.lname
-    #   json_user[:avatar] = user.avatar.url
-    #   json_user[:company_name] = user.company_name
-    #   json_user[:last_game] = Turn.where(user_id: user.id).last.updated_at.strftime('%d.%m.%Y') if Turn.where(user_id: user.id).last.present?
-    #   json_user[:games] = user.turns.count
-    #   users.push json_user
-    # end
     render json: UsersDatatable.new(view_context) 
   end
 
@@ -249,7 +232,7 @@ class DashAdminController < ApplicationController
       return redirect_to dash_admin_users_path
     end
     @rating = @turns_rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
-    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
+    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").joins(:turn_ratings).distinct
     raw_result = users_ratings userss
     @turns_rating = @turns_rating.order('created_at DESC')
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
