@@ -582,35 +582,63 @@ document.getElementById('chart_gesamt').addEventListener('click', function() {
     $('.active').removeClass('active');
     $('.gesamt').addClass('active');
     var i = 0;
-    <% @turns_rating.each do |g| %>
-        datapoints[i] = <%= g.ges / 10.0 %>;
-        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? %>";
-        json_data["id"] = "<%= g.turn.id %>";
-        json_data["turn_rating_id"] = "<%= g.id %>";
-        json_data["turn_video"] = "<%= g.turn.recorded_pitch.present? ? true : false %>"
-        <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
-        <% if admin_rating.present? %>
-            var admin_ges = <%= admin_rating.ges %>;
-        <% else %>
-            var admin_ges = 0;
-        <% end %>
-        json_data["type"] = "ges"
-        json_data["type2"] = "ges"
-        json_data["type_text"] = "Gesment"
+    <% @turns_rating.each.with_index do |g,i| %>
+        var json_data = <%= g.to_json.html_safe %>
+        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present?  %>";
+            json_data["id"] = "<%= g.turn.id %>";
+            json_data["turn_rating_id"] = "<%= g.id %>";
 
-        json_data["admin_ges"] = admin_ges
-        datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
-        <% if Turn.where(game_id: g.game_id, user_id: @user1.id).count >= 1 %>
-            <% rating = TurnRating.where(game_id: g.game_id, user_id: @user1.id).first %>
-            var json_data2 = <%= rating.to_json.html_safe %>
-            json_data2["average_team_ratings"] = <%= number_with_precision(rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;
-            
-            datapoints2[i] = {value: <%= rating.ges / 10.0 %>, data:  json_data2};
+
+            <% admin_rating = Rating.where(turn_id: g.id, admin_id: @admin.id).first %>
+            <% if admin_rating.present? %>
+                var admin_body = <%= admin_rating.body %>;
+            <% else %>
+                var admin_body = 0;
+            <% end %>
+            json_data["type"] = "ges"
+            json_data["type2"] = "ges2"
+            json_data["type_text"] = "Gesment"
+            <% if g.turn.recorded_pitch.present? %>
+                json_data["turn_pitch"] = true;
+            <% else %>
+                json_data["turn_pitch"] = false;
+            <% end %>
+            json_data["admin_ges"] = admin_body
+            datapoints[i] = {value: <%= g.ges / 10.0 %>, data: json_data};
+        <% if @turns_rating2[i].present? %>
+            var json_data2 = <%= @turns_rating2[i].to_json.html_safe %>
+            <% if @turns_rating2[i].turn.recorded_pitch.present? %>
+                json_data2["turn_pitch"] = true;
+            <% else %>
+                json_data2["turn_pitch"] = false;
+            <% end %>
+            json_data2["average_team_ratings"] = <%= number_with_precision(@turns_rating2[i].slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) %>;
+                
+            datapoints2[i] = {value: <%= @turns_rating2[i].ges / 10.0 %>, data:  json_data2};
         <% end %>
         label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
         i++;
     <% end %>
-    
+    var i = 0
+    datapoints2.forEach(function(el){
+        if(el.value == undefined){
+            data2[i] = el
+        }else{
+            data2[i] = el.value
+        } 
+        i++;
+    })
+    var i = 0
+    datapoints.forEach(function(el){
+        if(el.value == undefined){
+            data1[i] = el
+        }else{
+            data1[i] = el.value
+        }
+        i++;
+        
+    })
+
     window.gesamtChart.update();
 });
 document.getElementById('chart_spontan').addEventListener('click', function() {
@@ -673,7 +701,7 @@ document.getElementById('chart_kreativ').addEventListener('click', function() {
     var i = 0;
     <% @turns_rating.each do |g| %>
         var json_data = <%= g.to_json.html_safe %>
-        json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present? %>";
+    json_data["word"] = "<%= g.turn.word.name if g.turn.word.present? && g.turn.present?  %>";
         json_data["id"] = "<%= g.turn.id %>";
         json_data["turn_rating_id"] = "<%= g.id %>";
 

@@ -17,22 +17,42 @@ class UsersDatatable
 private
 
   def data
-    users.map do |user|
+    users_arr = [admins_data]
+    users.each do |user|
       a=[	
       	(user.avatar.url.present? ? image_tag(user.avatar.quad.url) : image_tag('defaults/wolf.jpg')),
         (user.fname.to_s+ " "+user.lname.to_s),
         user.email,
-        user.company_name,
+        user.company_name
        ] 
 	 		Turn.where(user_id: user.id).last.present? ? a.push(Turn.where(user_id: user.id).last.updated_at.strftime('%d.%m.%Y')) : a.push(nil)
 			a.push(user.turns.count)
 			a.push({button: link_to( 'Edit','#',  class: 'edit-user', :data => { :id => user.id, user: user.to_json, teams: user.teams.to_json }), edit_partial: '', del_partial: ''})
-			a.push(link_to('',dash_admin_user_stats_path("1", user), class: 'fas fa-chart-line package_pop_up'))
+      if user.teams.present?
+        a.push(link_to('',dash_admin_user_stats_path(user.teams.first, user), class: 'fas fa-chart-line package_pop_up')) 
+			else  
+        #a.push(link_to('',dash_admin_user_stats_path("1", user), class: 'fas fa-chart-line package_pop_up')) 
+        a.push(nil)
+      end
+      users_arr.push(a)
     end
+    users_arr
   end
 
   def users
     @users ||= fetch_users
+  end
+
+  def admins_data
+    a= [(current_admin.avatar.url.present? ? image_tag(current_admin.avatar.quad.url) : image_tag('defaults/wolf.jpg')),
+      (current_admin.fname.to_s+ " "+current_admin.lname.to_s),
+      current_admin.email,
+      current_admin.company_name]
+    a.push(nil)
+    a.push(current_admin.turns.where(admin_turn: true).count)
+    a.push(button: nil, del_partial: nil, edit_partial: nil)
+    a.push(link_to('', '/admin/dash/statistics' ,class: 'fas fa-chart-line package_pop_up'))
+    a
   end
 
   def sort_column

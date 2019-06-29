@@ -52,23 +52,7 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <tr class="user-row user-row-admin">
-           <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.avatar? ? image_tag(@admin.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
-           
-            <td class="name" onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.fname %> <%= @admin.lname %></td>
-            
-            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.email %></td>
-            
-            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.company_name %></td>
-            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><% if Turn.where(user_id: @admin.id).count > 0 %><%= Turn.where(user_id: @admin.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
-            <td><%= @admin.turns.where(admin_turn: true).count %></td>
-            <td><% if @admin.teams.count > 0 %>
-                <%= link_to '', dash_admin_statistics_path, class: "fas fa-chart-line package_pop_up" %>
-                <% end %>
-            </td>
-            <td>
-            </td>
-        </tr> -->
+        
 
         </tbody>
       </table>
@@ -102,13 +86,15 @@
     renderElements()
   })
   var selectize;
-
+  var currentAdmin = <%=(@admin.to_json.to_s.html_safe)%>
   function renderElements(){
-    // $("tbody tr").on('click', function(e){
-    //   e.preventDefault()
-    //   var url = $(this).find(".package_pop_up").attr("href")
-    //   window.location.href = url;
-    // })
+    $("tbody tr").on('click', function(e){
+      e.preventDefault()
+      if((event.target.className!="edit-user")){
+        var url = $(this).find(".package_pop_up").attr("href")
+        window.location.href = url;
+      }
+    })
     $(".email-field").keyup(function(){
       var id = $(this).data("id");
       $("#email-error-"+id).html('')
@@ -187,6 +173,13 @@
         "data": function(data){
           data.team_id = $("select[name=team_id] option:selected").val();
         }},
+        createdRow: function (row, data, index) {
+
+          if (data[data.length-2].button == null) {
+              console.dir(row);
+              $(row).addClass('user-row-admin');
+          }
+        },
         "columnDefs": [
             { "orderable": false, "targets": 0},
             { "orderable": false, "targets": 5 },
@@ -198,6 +191,7 @@
             } },
             { "orderable": false, "targets": 4 },
         ],
+
         "drawCallback": function( settings ) {
           renderElements()
         }
