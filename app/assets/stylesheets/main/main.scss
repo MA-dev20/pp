@@ -37,3 +37,13 @@
     left: calc(50vw - 100px);
     margin-bottom: 30px;
 }
+.mb-3 .d-inline-block img {
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+@keyframes pulse {
+    from {
+        transform: scale(1.1);
+    }
+}
