@@ -143,9 +143,9 @@ class DashAdminController < ApplicationController
   def users
     if params[:team_id]
       @team = Team.find(params[:team_id])
-      @users = @team.users
+      @users = @team.users.order("avatar ASC").limit(10)
     else
-      @users = @admin.users
+      @users = @admin.users.order("avatar ASC").limit(10)
     end
   end
 
