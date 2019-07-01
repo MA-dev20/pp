@@ -10,6 +10,8 @@ class GamesController < ApplicationController
       session[:game_session_id] = @game.id
       @game.turns.update_all(status: 'ended')
       set_words_for_game(@game, params[:game][:own_rules], params[:game][:baskets], params[:game][:seconds])
+      set_objections_for_game(@game, params[:game][:own_rules], params[:game][:objections])
+      
       sign_in(@game)
       # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
       redirect_to gda_intro_path
@@ -53,6 +55,23 @@ class GamesController < ApplicationController
         game.build_catchword_basket.save! if game.catchword_basket.nil?
         game.catchword_basket.words.destroy_all
         game.catchword_basket.words << words if words.present?
+      end
+    end
+
+    def set_objections_for_game(game, own_rules, objections_bas)
+      if own_rules == "true"
+        if objections_bas.include?("")
+          game.use_peterobjections = true
+        else
+          game.use_peterobjections = false
+        end
+        objections_bas-= [""]
+        objections = ObjectionsBasket.includes(:objections).where('id IN (?)', objections_bas).map(&:objections).flatten!
+        game.build_objection_basket.save! if game.objection_basket.nil?
+        game.objection_basket.objections.destroy_all
+        objections = objections.first(10)
+        game.objection_basket.objections << objections if objections.present?
+        game.save!
       end
     end
 
