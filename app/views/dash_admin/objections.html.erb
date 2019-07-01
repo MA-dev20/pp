@@ -97,13 +97,13 @@ new PerfectScrollbar('#teams-container');
 $( document ).ready(function() {
   
 });
-$(".forms").submit(function(e){
-    e.preventDefault()
-    var id = $(this).data("id");
-    var name = $("#input_name"+id).val();
-    var $url = $(this).attr("action");
-    createObjection(name, $url, form)
-  })
+// $(".forms").submit(function(e){
+//     e.preventDefault()
+//     var id = $(this).data("id");
+//     var name = $("#input_name"+id).val();
+//     var $url = $(this).attr("action");
+//     createObjection(name, $url, form)
+//   })
 function createObjection(name, url, sound) {
     $.ajax({
       url: url,
