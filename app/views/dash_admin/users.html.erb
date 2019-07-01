@@ -116,6 +116,10 @@
     </div>
   <% end %>
 </section>
+
+<% content_for(:body_attributes) do %>
+    data-turbolinks="false"
+<% end %>
 <script>
   $(document).ready(function(){
 
