@@ -103,7 +103,7 @@
 
     
     <div class="stats_chart">
-        <div class="stats_chart-cont">
+        <div class="stats_chart-cont" id='chart_scroll'>
             <div class="chart-container" style="width:<%= 8*@turns_rating.count %>vw">
                 <canvas id="Chart"></canvas>
             </div>
@@ -117,6 +117,9 @@
 <% end %>
 
 <script>
+$( document ).ready(function() {
+    new PerfectScrollbar("#chart_scroll");
+});
 function myColor(div) {
     if(div == 'chart_gesamt') {
         var val = <%= number_with_precision(@current_rating[:rating][:ges].to_f / 100.0, precision:1) %>;
