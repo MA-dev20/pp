@@ -1,0 +1,184 @@
+<section id="gd_team">
+    <input type="text" id="searchField" placeholder="suchen" onfocus='team_hide()' onblur="team_show()">
+    <%= image_tag 'dash/search.png' %>
+</section>
+
+<section id="teams-container">
+    <div class="add_team" onclick="openObjectionBasket()">
+       <a onclick="openObjectionBasket()"></a>
+        <div class="head">
+            Objection List
+        </div>
+        <div class="middle">
+            +
+        </div>
+        <div class="bottom">
+            hinzufügen
+        </div>
+    </div>
+    <% @baskets.each do |b| %>
+    <div class="team_card">
+
+       <%= link_to '', "", class: "lists", data: {id: b.id} %>
+
+        <div class="head">
+            <%= b.name %>
+        </div>
+        <div class="middle">
+            <span id="count<%= b.id %>"><%= b.objections.distinct.count %></span> words
+        </div>
+        <div class="bottom">
+            <%= link_to '', dash_admin_delete_basket_path(b.id), method: :post,class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie das List unwiederuflich löschen möchten?" }%>
+        </div>
+    </div>
+        <%= render partial: 'objections_modal', locals: {id: b.id, words: b.objections, name: b.name, objection: true} %>
+    <% end %>
+
+</section>
+
+<script>
+$(".lists").on("click", function(e){
+    e.preventDefault()
+    $("#catchword"+$(this).data("id")).modal("show")
+})
+
+var GLOBAL;
+function uploadRecording(form, callback, location){
+  jqxhr = $.ajax({
+    url: '/mobile/admin/upload',
+    type: 'POST',
+    data: form,
+    cache: false,
+    async: true,
+    contentType: false,
+    processData: false,
+    xhr: function () {
+      var myXhr = $.ajaxSettings.xhr();
+      if (myXhr.upload) {
+        myXhr.upload.addEventListener('progress', function (e) {
+          if (e.lengthComputable) {
+            console.log(e.loaded/e.total*100)
+            uploadingprogress = e.loaded/e.total*100
+            if(uploadingprogress== 100){
+              $("#uploaded").parent().fadeIn()
+              showInSequence($("#uploaded").parent());
+              $("#upload").hide()
+              completed_ajax= true
+              callback(location)
+            }
+          }
+        }, false);
+      }
+      return myXhr;
+    }
+  });
+}
+
+var $rows = $('.team_card');
+$('#searchField').keyup(function() {
+    
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+        reg = RegExp(val, 'i'),
+        text;
+    
+    $rows.show().filter(function() {
+        text = $(this).text().replace(/\s+/g, ' ');
+        return !reg.test(text);
+    }).hide();
+});
+team_show = function() {
+    $('.add_team').show();
+}
+team_hide = function() {
+    $('.add_team').hide();
+}
+new PerfectScrollbar('#teams-container');
+
+$( document ).ready(function() {
+  
+});
+$(".forms").submit(function(e){
+    e.preventDefault()
+    var id = $(this).data("id");
+    var name = $("#input_name"+id).val();
+    var $url = $(this).attr("action");
+    createObjection(name, $url, form)
+  })
+function createObjection(name, url, sound) {
+    $.ajax({
+      url: url,
+      type: 'post',
+      cache: false,
+      async: true,
+      contentType: false,
+      processData: false,
+      data: {name: name, sound: GLOBAL},
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      success: function(res){
+        
+      }
+    })
+}
+
+var id, recorder;
+$(".record").on('click', function(e){
+  e.preventDefault()
+  id = $(this).data("id");
+  requestAudio(id)
+})
+function createAudioElement(blobUrl) {
+    const downloadEl = document.createElement('a');
+    downloadEl.style = 'display: block';
+    downloadEl.innerHTML = 'download';
+    downloadEl.download = 'audio.webm';
+    downloadEl.href = blobUrl;
+    const audioEl = document.createElement('audio');
+    audioEl.controls = true;
+    const sourceEl = document.createElement('source');
+    sourceEl.src = blobUrl;
+    sourceEl.type = 'audio/webm';
+    audioEl.appendChild(sourceEl);
+    document.body.appendChild(audioEl);
+    document.body.appendChild(downloadEl);
+}
+var stream, form;
+function requestAudio(id) {
+  var seconds = 10;
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+      const chunks = [];
+      const recorder = new MediaRecorder(stream);
+      recorder.ondataavailable = e => {
+        seconds -= 1 
+        chunks.push(e.data);
+        $("#record-button"+id).addClass("fa-stop").removeClass("fa-microphone")
+        if(seconds >= 0){
+          $("#record-button"+id).text(seconds)
+        }
+        if (recorder.state == 'inactive') {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            form = new FormData();
+            var file = new window.File([blob], ['audio', (new Date() + '').slice(4, 28), '.wav'].join(''))
+            form.append("file",file);
+            $("#record-button"+id).text("")
+            var url = URL.createObjectURL(blob)
+            $("#attached_music"+id).html("attached").attr("src",url)
+            $("#record-button"+id).addClass("fa-microphone").removeClass("fa-stop")
+            GLOBAL = form 
+        }
+      };
+      recorder.start(1000);
+      // $(".fa-stop").on('click', function(e){
+      //     e.preventDefault()
+      //     recorder.stop();
+      // })
+      setTimeout(() => {
+          recorder.stop();
+      }, 10000);
+    }).catch(console.error);
+}
+// window.onload = setTimeout(function(){
+//     alert('This is an alert');
+//     window.location = 'http://www.example.com';
+// }, 5000);
+
+</script>

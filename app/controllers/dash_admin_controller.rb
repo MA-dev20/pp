@@ -58,6 +58,12 @@ class DashAdminController < ApplicationController
     render json: current_admin.has_or_create_basket_for_words.map{|t| {id: t.id, name: t.name.nil? ? " " : t.name}}.to_json
   end
 
+  def get_objections
+    objections = []
+    objections = current_admin.objection_baskets.map{|t| {id: t.id, name: t.name.nil? ? " " : t.name}}.to_json if current_admin.objection_baskets.present?
+    render json:  objections
+  end
+
   def add_word
     @word = Word.find_by_name(params[:name])
     @already = false
@@ -71,6 +77,27 @@ class DashAdminController < ApplicationController
       @word = @admin.catchword_baskets.find(params[:basket_id]).words.create(name: params[:name])
     end
     @count = @admin.catchword_baskets.find(params[:basket_id]).words.count
+    @id = params[:basket_id]
+    respond_to do |format|
+      format.js do
+        render :add_word
+      end
+    end
+  end
+
+  def add_objection
+    @word = Objection.find_by_name(params[:name])
+    @already = false
+    if @word.present?
+      if @admin.objection_baskets.find(params[:basket_id]).objections.include?(@word)
+        @already = true        
+      else
+        @admin.objection_baskets.find(params[:basket_id]).objections << @word 
+      end
+    else
+      @word = @admin.objection_baskets.find(params[:basket_id]).objections.create(name: params[:name])
+    end
+    @count = @admin.objection_baskets.find(params[:basket_id]).objections.count
     @id = params[:basket_id]
     respond_to do |format|
       format.js do
@@ -93,11 +120,20 @@ class DashAdminController < ApplicationController
     render json: {count: @admin.catchword_baskets.find(params[:basket_id]).words.count }
   end
 
+  def remove_objection
+    @admin.objection_baskets.find(params[:basket_id]).objections.delete(Objection.find(params[:word_id]))
+    render json: {count: @admin.objection_baskets.find(params[:basket_id]).objections.count }
+  end
+
   def teams
   end
 
   def catchwords
-    @baskets = @admin.catchword_baskets 
+    @baskets = @admin.catchword_baskets.where.not(objection: true)
+  end
+
+  def objections
+    @baskets = @admin.objection_baskets 
   end
     
   def team_stats
@@ -290,8 +326,13 @@ class DashAdminController < ApplicationController
   end
 
   def create_basket
-    current_admin.catchword_baskets.new(name: params[:basket][:name]).save
-    redirect_to dash_admin_catchwords_path
+    if(params[:basket][:type]== "objection") 
+      current_admin.objection_baskets.new(name: params[:basket][:name]).save
+      redirect_to dash_admin_objections_path
+    else
+      current_admin.catchword_baskets.new(name: params[:basket][:name]).save
+      redirect_to dash_admin_catchwords_path
+    end
   end
 
   def delete_basket
@@ -363,8 +404,6 @@ class DashAdminController < ApplicationController
       [three_records, current_user]
     end
 
-    
-    
     def set_team
       @team = Team.find(params[:team_id])
     end
