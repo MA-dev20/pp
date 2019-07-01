@@ -23,7 +23,7 @@
                             </div>
                             <div class="catchword-block">
                                 <h5><%= name %></h5>
-                                <div class="catchword-block-inner">
+                                <div class="catchword-block-inner" id="catchword-list">
                                     <ul class="catchword-list" id="catchword-list<%=id%>">
                                       <% words.each do |word| %>
                                         <li id="word-id-<%=word.id%>"> <%= word.name %> <span class="remove-word rounded-minus-linear" onclick="removeWord(<%=word.id %>, <%= id %>)"><i class="fas fa-minus remove-word"></i></span></li>
@@ -43,7 +43,9 @@
 <% end %>
 
 <script>
-
+$( document ).ready(function() {
+    new PerfectScrollbar("#catchword-list<%=id%>");
+});
 function removeWord(id, basket_id){
   var $this = $(this);
   $.ajax({
@@ -54,6 +56,7 @@ function removeWord(id, basket_id){
     success: function(res){
       $("#word-id-"+id).remove()
       $("#count"+basket_id).html(res["count"])
+      ps.update();
     }
   })
 }
