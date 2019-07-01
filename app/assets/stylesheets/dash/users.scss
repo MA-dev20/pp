@@ -6,6 +6,9 @@
     width: calc(20vw - 8vh);
     color: #858585;
 }
+#myTable_filter {
+    display: none;
+}
 #gd_users .top .select{
     position: absolute;
     top: 6vh;

@@ -115,11 +115,28 @@
     </div>
     </div>
   <% end %>
+
+<% content_for(:body_attributes) do %>
+    data-turbolinks="false"
+<% end %>
 </section>
 
 <script>
-  $(document).ready(function(){
 
+$(document).on('turbolinks:before-cache', function() {
+  return document.querySelectorAll( 'select.cs-select' ).each(function() {
+    return this.selectize.destroy();
+  });
+});
+
+  $(document).ready(function(){
+    
+(function() {
+        [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
+          new SelectFx(el);
+                    newTab: false;
+        } );
+      })();
     renderElements()
   })
   var selectize;
@@ -233,18 +250,14 @@
           renderElements()
         }
     } );
-    $("#myTable_filter").hide()
+    // $("#myTable_filter").hide()
     $("#searchField").keyup(function(){
       table.search($("#searchField").val()).draw() ;
     })
     
 } );
-(function() {
-        [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
-          new SelectFx(el);
-                    newTab: false;
-        } );
-      })();
+
+
     
 var $rows = $('.user-row');
 $('#searchField').keyup(function() {
