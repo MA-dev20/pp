@@ -124,7 +124,7 @@
                 <button type="button" class="close modal-close" onclick="closeBakset()" aria-label="Close"><i class="fas fa-times"></i></button>
                 <div class="modal-body" id="pop_up-body">
                     <h1>
-                        <span>List of words hinzufügen</span><br><br><br>
+                        <span>List of objections hinzufügen</span><br><br><br>
                         <%= form_for(:basket, url: dash_admin_new_basket_path) do |f| %>
                             <%= f.text_field :name, placeholder: 'Listname', class: 'form-control' , required: true, id: 'basket_name_objection'%><br><br><br>
                             <%= f.hidden_field :type , value: 'objection' %>
