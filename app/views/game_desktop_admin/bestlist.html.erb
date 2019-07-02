@@ -19,36 +19,36 @@
         </div>
     </div>
     <% end %>
-    <% if @turn_ratings.second %>
+    <% if @turn_ratings.first %>
     <div class="rate_2">
         <div class="line">
         </div>
         <div class="rating">
             <div class="circle">
                 <%= image_tag 'game/wolf_button.png', id: 'wolf2' %>
-                <%= image_tag @turn_ratings.second.findUser.avatar.quad.url, class: 'avatar', id: 'avatar2' %>
+                <%= image_tag @turn_ratings.first.findUser.avatar.quad.url, class: 'avatar', id: 'avatar2' %>
             </div>
             <%= image_tag 'game/crown2.png', class: 'crown2' %>
             <%= image_tag 'game/polygon.png', class: 'pol', id: 'pol2' %>
             <div class="rate_ges" id='rat2'>
-                <%= @turn_ratings.second.ges / 10.0 %>
+                <%= @turn_ratings.first.ges / 10.0 %>
             </div>
         </div>
     </div>
     <% end %>
-    <% if @turn_ratings.third %>
+    <% if @turn_ratings.first %>
     <div class="rate_3">
         <div class="line">
         </div>
         <div class="rating">
             <div class="circle">
                 <%= image_tag 'game/wolf_button.png', id: 'wolf3' %>
-                <%= image_tag @turn_ratings.third.findUser.avatar.quad.url, class: 'avatar', id: 'avatar3'%>
+                <%= image_tag @turn_ratings.first.findUser.avatar.quad.url, class: 'avatar', id: 'avatar3'%>
             </div>
             <%= image_tag 'game/crown3.png', class: 'crown3' %>
             <%= image_tag 'game/polygon.png', class: 'pol', id: 'pol3' %>
             <div class="rate_ges" id='rat3'>
-                <%= @turn_ratings.third.ges / 10.0 %>
+                <%= @turn_ratings.first.ges / 10.0 %>
             </div>
         </div>
     </div>
