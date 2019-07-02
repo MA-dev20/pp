@@ -3,7 +3,7 @@
     <h1>Hi, <%= @user.fname %></h1>
 </div>
 <div class="middle">
-    <%= image_tag @user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
+    <%= image_tag @user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse' %>
 </div>
 <div class="bottom bottom-play">
     <%= form_for(:user, url: gmu_new_turn_path, method: 'get') do |f| %>

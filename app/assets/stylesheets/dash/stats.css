@@ -224,7 +224,7 @@
     width: 70vw;
     background-color: #1ca1de;
     border-radius: 25px !important;
-    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.2);
+    box-shadow: 0 1rem 3rem 0 rgba(0, 0, 0, 0.1);
 }
 #dash_stats .stats_chart .chart-container {
     position: relative;

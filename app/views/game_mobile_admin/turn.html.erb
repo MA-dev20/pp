@@ -1,7 +1,7 @@
 <%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
     <% if @admin == @cur_user %>
-        <h1>Du bist dran!</h1>
+        <h1><%= @cur_user.fname %>, du bist dran!</h1>
     <% else %>
         <h1><%= @cur_user.fname %> ist dran!</h1>
     <% end %>

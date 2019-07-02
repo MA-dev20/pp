@@ -3,7 +3,7 @@
     <h1>Hier ist die Bewertung!</h1>
 </div>
 <div class="middle">
-    <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green' %>
+    <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse' %>
 </div>
 <div class="bottom">
     <%= link_to 'weiter!', gma_after_rating_path %>

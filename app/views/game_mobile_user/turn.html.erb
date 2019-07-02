@@ -2,7 +2,7 @@
 <div class="head">
     <h1>
     <% if @user == @cur_user %>
-      <h1>Du bist dran!</h1>
+      <h1><%= @cur_user.fname %>, du bist dran!</h1>
     <% else %>
       <h1><%= @cur_user.fname %> ist dran!</h1>
     <% end %>

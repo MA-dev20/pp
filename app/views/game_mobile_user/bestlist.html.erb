@@ -16,7 +16,7 @@
 <!-- Modal -->
 <% if @turn_rating %>
     <div id="shareModal">
-        <button type="button" id="close" onclick="closeModal()"><i class="far fa-times-circle"></i></button>
+        <button type="button" class="close modal-close" id="close" onclick="closeTeamPop()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
         <div class="header">
             - Teile dein Ergebnis -
         </div>
@@ -30,7 +30,8 @@
 
     <script>
     setTimeout(function() {
-      ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);  
+      ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);
+      $('.mid-img').addClass('pulse');
     }, 1500);
     function showModal() {
         $('#shareModal').show();

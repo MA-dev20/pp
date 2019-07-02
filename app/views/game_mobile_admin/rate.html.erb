@@ -1,6 +1,6 @@
 <%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
-    <h1>Jetzt bewerten!</h1>
+    <h1>Jetzt <%= @cur_user.fname %> bewerten!</h1>
 </div>
 <%= form_for(:rating, url: new_rating_path(@turn)) do |f| %>
 <div class="middle">

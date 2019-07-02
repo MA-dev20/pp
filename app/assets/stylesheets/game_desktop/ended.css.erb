@@ -29,34 +29,38 @@
     animation-iteration-count: 1;
 }
 #gd_ended .rate_1 {
-    left: calc(50vw - 125px);
+    left: calc(50vw - 140px);
 }
 #gd_ended .rate_2 {
-    left: calc(30vw - 125px);
+    left: calc(30vw - 140px);
 }
 #gd_ended .rate_3 {
-    left: calc(70vw - 125px);
+    left: calc(70vw - 140px);
 }
 #gd_ended .rate_1 .line,
 #gd_ended .rate_2 .line,
 #gd_ended .rate_3 .line{
     position: absolute;
     bottom: 0;
-    left: 80px;
-    width: 90px;
+    left: 100px;
+    width: 80px;
     height: 50vh;
-    border-left: 5px solid #d2f8ef;
-    border-right: 5px solid #d2f8ef;
     box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
 }
 #gd_ended .rate_1 .line {
     height: 50vh;
+    border-left: 5px solid #f3d786;
+    border-right: 5px solid #f3d786;
 }
 #gd_ended .rate_2 .line {
     height: 40vh;
+    border-left: 5px solid #b9d3e0;
+    border-right: 5px solid #b9d3e0;
 }
 #gd_ended .rate_3 .line {
     height: 30vh;
+    border-left: 5px solid #d3a180;
+    border-right: 5px solid #d3a180;
 }
 
 #gd_ended .rate_1 .rating,
@@ -64,25 +68,24 @@
 #gd_ended .rate_3 .rating{
     position: absolute;
     left:0px;
-    height: 250px;
-    width: 250px;
+    height: 280px;
+    width: 280px;
 }
 #gd_ended .rate_1 .rating {
-    bottom: 45vh;
+    bottom: 40vh;
 }
 #gd_ended .rate_2 .rating {
-    bottom: 35vh;
+    bottom: 30vh;
 }
 #gd_ended .rate_3 .rating {
-    bottom: 25vh;
+    bottom: 20vh;
 }
 #gd_ended .rating .circle {
     position: absolute;
-    top: 50px;
-    left: 35px;
-    height: 180px;
-    width: 180px;
-    background-color: #00e38b;
+    top: 0;
+    left: 0;
+    height: 280px;
+    width: 280px;
     z-index: 10;
     border-radius: 50%;
     line-height: 140px;
@@ -90,12 +93,21 @@
     color: white;
     box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
 }
+#gd_ended .rate_1 .rating .circle {
+    background-color: #f3d786;
+}
+#gd_ended .rate_2 .rating .circle {
+    background-color: #b9d3e0;
+}
+#gd_ended .rate_3 .rating .circle {
+    background-color: #d3a180;
+}
 #gd_ended .rating .circle img {
     position: absolute;
-    top: 2px;
-    left: 2px;
-    height: 176px;
-    width: 176px;
+    top: 0px;
+    left: 0px;
+    height: 280px;
+    width: 280px;
     opacity: 1;
     border-radius: 50%;
 }
@@ -104,26 +116,26 @@
     display: none;
     top: 10px;
     left: 10px;
-    height: 160px;
-    width: 160px;
+    height: 260px;
+    width: 260px;
     opacity: 1;
 }
 #gd_ended .rating .pol,
 #gd_ended .rating .rate_ges {
     position: absolute;
     display: none;
-    bottom: 0;
-    right: 0;
-    height: 100px;
-    width: 100px;
+    bottom: -50px;
+    right: -50px;
+    height: 200px;
+    width: 200px;
     opacity: 0.8;
     z-index: 100;
 }
 
 #gd_ended .rating .rate_ges {
-    line-height: 100px;
+    line-height: 200px;
     opacity: 1;
-    font-size: 40px;
+    font-size: 70px;
     color: white;
     text-align: center;
 }
@@ -137,16 +149,19 @@
     animation-duration: 1s;
 }
 #gd_ended .rating .crown1 {
-    top: 10px;
-    right: 7px;
+    top: -105px;
+    right: 35px;
+    width: 200px;
 }
 #gd_ended .rating .crown2 {
-    top: -5px;
-    left: 50px;
+    top: -150px;
+    left: -100px;
+    width: 300px;
 }
 #gd_ended .rating .crown3 {
-    top: 0;
-    right: 30px;
+    top: -100px;
+    right: -65px;
+    width: 200px;
 }
 
 @keyframes move-in-bottom {

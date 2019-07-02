@@ -3,10 +3,10 @@
     <div class="top">
         <%= image_tag 'defaults/logo-no_shadow.png', id: 'logo', class: 'fly_in_left' %>
         <%= image_tag @user.avatar.quad.url || '', id: 'avatar' %>
-        <%= image_tag @admin.logo.quad.url || '', id: 'cust-logo', class: 'fly_in_right' %>
+        <%= image_tag @admin.logo.url || '', id: 'cust-logo', class: 'fly_in_right' %>
     </div>
     <div class="mid">
-        <div class="countdown"><span class="timer animated flipInX" id='timerall'></span></div>
+        <div class="countdown fly_in_bottom"><span class="timer animated flipInX" id='timerall'>01:20</span></div>
         <div id="word" data-target-resolver><%= @word.name %></div>
     </div>
 </section>
@@ -39,14 +39,14 @@
         document.getElementById('video-bg').currentTime = 9;
         document.getElementById('intro').pause();
         document.getElementById('word_sound').play();
+        MyApp.timer = startTimer('<%=@game.wait_seconds.to_i - 1 %>', document.getElementById('timerall'));
         document.getElementById('theme').play();
-        MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
+        
     };
     
 
     
     function startTimer(duration, display) {
-        $('.countdown').addClass('fly_in_bottom');
         var timer = duration, minutes, seconds;
         var setTimer = setInterval(function () {
             minutes = parseInt(timer / 60, 10);
@@ -75,7 +75,7 @@
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
                 if(executed== false){
-                    $("#content").removeClass("blur")
+                    $("#play-contant").removeClass("blur")
                     $("#myModal").remove()
                     startAnimation($("#avatar"))
                     document.getElementById('video-bg').play()
