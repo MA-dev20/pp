@@ -52,7 +52,7 @@ function ajaxRequestToCheck(state){
       url: '/mobile/user/game/vidoe_uploading',
       success: function(data1){
         if(data1.redirect){
-          return window.location.replace(state)
+          return window.location.replace("rate")
         }else{
           ajaxRequestToCheck()
         }
