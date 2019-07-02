@@ -37,7 +37,7 @@
 
 <div class="off-canvas">
     <section class="app-banner">
-	    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'width: 100%; top: 0;position: absolute; bottom: 0; right: 0; min-width: 100%; min-height: 100%; z-index: -10000; object-fit: cover;' %>
+	    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'width: 60%; top: 20%;position: absolute; bottom: 10%; right: 20%; height: 60%; z-index: -10000; object-fit: cover; border-radius: 50px; box-shadow: 0px 0px 23px 0px rgba(0, 0, 0, 0.4);' %>
 		<div class="container">
 		    <div class="row flex-column-reverse flex-md-row">
 				<div class="app-banner-main text-center">
@@ -61,6 +61,14 @@
 				</div>
             </div>
         </div>
+    </section>
+    <section style="position: absolute; left: 60%; top: 85vh; width: 0;">
+    <div class="paw-col paw-col-1 paw-ltr">
+                        <div class="paw1 wow add-anim fadeIn" data-wow-duration="1.5s"></div>
+                        <div class="paw2 wow add-anim fadeIn08" data-wow-duration="1.5s" data-wow-delay="0.2s"></div>
+                        <div class="paw3 wow add-anim fadeIn06" data-wow-duration="1.5s" data-wow-delay="0.4s"></div>
+                        <div class="paw4 wow add-anim fadeIn04" data-wow-duration="1.5s" data-wow-delay="0.6s"></div>
+                    </div>
     </section>
 	<section class="peter-trial">
 	    <div class="container">
@@ -417,9 +425,7 @@
    <div class="modal modal-peterpitch fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
-            <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
-              <i class="fas fa-times"></i>
-            </button>
+            <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
             <div class="modal-body">
               <%= image_tag 'logo-m.png', class: 'login-modal-img' %>
               <h1>Starte jetzt mit Peter Pitch!</h1>

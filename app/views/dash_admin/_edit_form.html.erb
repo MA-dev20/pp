@@ -2,7 +2,7 @@
   <div class="blue blue-place modal teamV-modal userEdit-modal" id='editUser' style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
-        <button type="button" class="close modal-close" onclick="closeTeamPop()" aria-label="Close"><i class="fas fa-times"></i></button>
+        <button type="button" class="close modal-close" onclick="closeTeamPop()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
           <div id="table_wrapper">
             <div class="" id="list-table">
               <h1>
@@ -16,7 +16,7 @@
                         </div>
                         <div class="user-profile-up">
                               <%= f.file_field :avatar, onChange: "readURL(this,$('#imgPrevedit'));"%>
-                            <span class="plus-p">+</span>
+                            <span class="plus-p"><i class="fas fa-plus"></i></span>
                         </div>
                     </div>
                 </div>

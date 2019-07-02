@@ -2,9 +2,9 @@
 <div class="head">
     <h1>
     <% if @cur_user == @user %>
-        Du Pitcht!
+        <%= @cur_user.fname %>, du pitcht!
     <% else %>
-        <%= @cur_user.fname %> Pitcht!
+        <%= @cur_user.fname %> pitcht!
     <% end %>
     </h1>
 </div>

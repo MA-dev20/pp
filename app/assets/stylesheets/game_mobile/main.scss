@@ -143,11 +143,14 @@
 
 .middle {
     position: fixed;
-    top: 450px;
+    top: calc(50% - 350px);
     left: 0;
     height: 40%;
     width: 100%;
     text-align: center;
+    animation-name: fade;
+    animation-duration: 1.5s;
+    animation-iteration-count: 1;
 }
 .middle .row {
     position: relative;
@@ -158,9 +161,6 @@
     margin: 0;
     margin-left: 10vw;
     margin-right: 10vw;
-    animation-name: fade;
-    animation-duration: 1.5s;
-    animation-iteration-count: 1;
 }
 .middle .row > label {
     position: absolute;
@@ -204,8 +204,8 @@
 .middle .mid-img,
 .middle .mid-img-left,
 .middle .mid-img-right {
-    position: fixed;
-    top: calc(50% - 250px);
+    position: absolute;
+    top: 100px;
     height: 400px;
     width: 400px;
     text-align: center;
@@ -213,9 +213,6 @@
     line-height: 400px;
     color: #25aae2;
     border-radius: 50%;
-    animation-name: fade;
-    animation-duration: 1.5s;
-    animation-iteration-count: 1;
 }
 .middle .mid-img {
     left: calc(50% - 200px);
@@ -241,9 +238,6 @@
     height: 440px;
     width: 440px;
     border-radius: 50%;
-    animation-name: fade;
-    animation-duration: 1.5s;
-    animation-iteration-count: 1;
 }
 .middle .circle .mid-img {
     position: absolute;
@@ -257,9 +251,6 @@
     left: calc(50% + 50px);
     z-index: 100;
     height: 200px;
-    animation-name: fade;
-    animation-duration: 1.5s;
-    animation-iteration-count: 1;
 }
 .middle .rating {
     position: fixed;
@@ -270,9 +261,6 @@
     z-index: 1000;
     font-size: 70px;
     line-height: 200px;
-    animation-name: fade;
-    animation-duration: 1.5s;
-    animation-iteration-count: 1;
 }
 .rangeslider__fill {
     background-image: linear-gradient(to right, #ff6b6c 0%, #fefbc6 50%, #1ddaaf 100%);
@@ -331,8 +319,8 @@
   }
 }
 .middle .add {
-    position: fixed;
-    top: calc(50% + 50px);
+    position: absolute;
+    bottom: 200px;
     left: calc(50% + 100px);
     height: 100px;
     width: 100px;
@@ -340,9 +328,6 @@
     background-color: white;
     border-radius: 50%;
     z-index: 100;
-    animation-name: fade;
-    animation-duration: 1.5s;
-    animation-iteration-count: 1;
 }
 .middle .add .fas {
     position: absolute;
@@ -362,9 +347,6 @@
     text-align: center;
     line-height: 10vh;
     font-size: 4vh;
-    animation-name: fade;
-    animation-duration: 1.5s;
-    animation-iteration-count: 1;
 }
 .form-field,
 .form-field:-webkit-autofill {

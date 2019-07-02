@@ -3,7 +3,7 @@
 <div class="head">
     <h1>
     <% if @admin == @cur_user %>
-        Du wirst bewertet!
+        <%= @admin.fname %>, du wirst bewertet!
     <% else %>
         Bewertung abgegeben!
     <% end %>

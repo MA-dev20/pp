@@ -21,25 +21,25 @@
         <span class="timer" id="timeralli"></span>
     </div>
 </section>
-<section id="skip">
-   Skip mit Leertaste
 </section>
-</section>
-<%= audio_tag("choose/slot.mp3", id: 'slot') %>
+<%= audio_tag("choose/theme.mp3", id: 'slot') %>
+<%= audio_tag("choose/ping.mp3", id: 'vote_sound') %>
 
 <script>
     document.getElementById('slot').play();
-    startTimerModal('15', document.getElementById('timeralli'))
-     $(window).keypress(function (e) {
-
-        if (e.key === ' ' || e.key === 'Spacebar') {
-            window.location.replace('<%= gda_turn_path %>');
-        };
-    });
+    startTimerModal('14', document.getElementById('timeralli'))
     var left = document.getElementById('left-img');
     var right = document.getElementById('right-img');
-    left.addEventListener('animationend', function() {$('#left-img').removeClass('pulse-single')});
-    right.addEventListener('animationend', function() {$('#right-img').removeClass('pulse-single')});
+    left.addEventListener('animationstart', function() {
+        document.getElementById('vote_sound').play()
+    });
+    right.addEventListener('animationstart', function() {
+        document.getElementById('vote_sound').play()
+    });
+    left.addEventListener('animationend', function() {
+        $('#left-img').removeClass('pulse-single')});
+    right.addEventListener('animationend', function() {
+        $('#right-img').removeClass('pulse-single')});
        
     function startTimerModal(duration, display) {
         $(function() {
@@ -78,7 +78,7 @@
                 typeSpeed: 10,
                 backSpeed: 80,
                 backDelay: 0,
-                startDelay: 13000,
+                startDelay: 12000,
                 smartBackspace: false,
                 loop: true,
             })
