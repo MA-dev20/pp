@@ -79,13 +79,13 @@
   justify-content: center;
   background-color: #fff;
   padding: 2vh 12vh;
-  min-height: 136px;
+  min-height: 5vh;
   box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,.15);
 }
 .menu-position .menu-logo {
   position: absolute;
   left: 2vh;
-  top: 0.8vh;
+  top: 1vh;
 }
 .menu-position p {
   color: #51bbe7;
@@ -261,6 +261,18 @@
     z-index: 1000;
     font-size: 70px;
     line-height: 200px;
+}
+.middle-form {
+    position: fixed;
+    top: calc(50% - 5vh);
+    width: 100%;
+    text-align: center;
+}
+.middle-form2 {
+    position: fixed;
+    top: calc(50% - 10vh);
+    width: 100%;
+    text-align: center;
 }
 .rangeslider__fill {
     background-image: linear-gradient(to right, #ff6b6c 0%, #fefbc6 50%, #1ddaaf 100%);
