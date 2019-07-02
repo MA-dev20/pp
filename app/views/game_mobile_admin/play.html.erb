@@ -39,15 +39,6 @@
           <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 
         	<ul>
-            <% if @game.use_peterobjections %>
-          		<% ObjectionsBasket.peter_objections.each do |obj| %>
-                    <li>
-                      <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-                        <%= obj.name %>
-                      </a>
-                    </li>
-                <% end %>
-            <% else %>
               <% if @game.objection_basket.present? && @game.objection_basket.objections.present? %>
                 <% @game.objection_basket.objections.each do |obj|%>
                   <li>
@@ -65,7 +56,6 @@
                     </li>
                 <% end %>
               <% end %>
-            <% end %>
         	</ul>
         </div>
       </div>
