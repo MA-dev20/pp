@@ -22,11 +22,19 @@
                                     </div>
                                 </div>
                               </div>
-                            <div class="teams-block">
+                            <div class="teams-block" style="margin-bottom: 0px">
                                 <div class="form-group bootstrapTag-group">
                                     <label>Deine Catchwords</label>
                                     <select class="InputTags" name='game[baskets][]' multiple="true" id="inputtags" data-role="tagsinput-typeahead" readonly class="rdonly">
                                         <option value="" selected class="orange">PeterWords</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="teams-block" >
+                                <div class="form-group bootstrapTag-group">
+                                    <label>Deine Objections</label>
+                                    <select class="objectionList" name='game[objections][]' multiple="true" id="inputtags" data-role="tagsinput-typeahead" readonly class="rdonly">
+                                        <option value="" selected class="orange">PeterObjections</option>
                                     </select>
                                 </div>
                             </div>
@@ -80,6 +88,45 @@
     load: function(query, callback) {
         $.get({
             url: '/words_list',
+            dataType: 'json',
+            data: {
+                name: query,
+                additionalDataIfRequired: 'Additional Data'
+            },
+            error: function() {
+                callback();
+            },
+            success: function(res) {
+                callback(res);
+            }
+        });
+    }
+  })[0].selectize
+
+    $('.objectionList').selectize({
+    valueField: 'id',
+    plugins: [ 'remove_button'
+    ],
+    labelField: 'name',
+    preload: true,
+    create: false,
+    allowEmptyOption: true,
+    render: {
+        option: function(data, escape) {
+            return '<option>' +
+                    '<span class="url">' + escape(data.name) + '</span>' +
+                '</option>';
+        },
+        item: function(data, escape) {
+            if(data.name == "PeterWords"){
+                return '<span class="tag label label-info orange">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
+            }
+            return '<span class="tag label label-info">'+escape(data.name)+'<span data-role="remove" class="remove"></span></span>';
+        }
+    },
+    load: function(query, callback) {
+        $.get({
+            url: '/objections_list',
             dataType: 'json',
             data: {
                 name: query,

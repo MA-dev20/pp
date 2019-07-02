@@ -75,6 +75,9 @@
               <div class="link">
                 <%= link_to "Catchwords", dash_admin_catchwords_path %>
               </div>
+              <div class="link">
+                <%= link_to "Objections", dash_admin_objections_path %>
+              </div>
               
               
               <div class="link">
@@ -106,6 +109,25 @@
                         <span>List of words hinzufügen</span><br><br><br>
                         <%= form_for(:basket, url: dash_admin_new_basket_path) do |f| %>
                             <%= f.text_field :name, placeholder: 'Listname', class: 'form-control' , required: true%><br><br><br>
+                            <%= f.hidden_field :type , value: 'catchword' %>
+                            <%= f.submit 'Erstellen', class: 'btn btn-green' %>
+                        <% end %>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-games" id="new_Objection_basket">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="close modal-close" onclick="closeBakset()" aria-label="Close"><i class="fas fa-times"></i></button>
+                <div class="modal-body" id="pop_up-body">
+                    <h1>
+                        <span>List of objections hinzufügen</span><br><br><br>
+                        <%= form_for(:basket, url: dash_admin_new_basket_path) do |f| %>
+                            <%= f.text_field :name, placeholder: 'Listname', class: 'form-control' , required: true, id: 'basket_name_objection'%><br><br><br>
+                            <%= f.hidden_field :type , value: 'objection' %>
                             <%= f.submit 'Erstellen', class: 'btn btn-green' %>
                         <% end %>
                     </h1>
@@ -200,6 +222,12 @@
         $('#basket_name').focus();
     };
 
+     function openObjectionBasket() {
+        $('#new_Objection_basket').show();
+        $('#content').addClass('backgroundblur');
+        $('#basket_name_objection').focus();
+    };
+
     function openCatchword() {
         $('#new_catchword').show();
         $('#content').addClass('backgroundblur');
@@ -211,6 +239,7 @@
     }
     function closeBakset() {
         $('#new_basket').hide();
+        $('#new_Objection_basket').hide();
         $('#content').removeClass('backgroundblur');
     }
 

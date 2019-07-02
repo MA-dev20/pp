@@ -170,10 +170,13 @@ Rails.application.routes.draw do
     
     get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
     get 'admin/dash/catchwords', to: 'dash_admin#catchwords', as: 'dash_admin_catchwords'
+    get 'admin/dash/objections', to: 'dash_admin#objections', as: 'dash_admin_objections'
     post 'admin/dash/catchwords/add', to: 'dash_admin#add_word', as: "dash_admin_add_word"
+    post 'admin/dash/objections/add', to: 'dash_admin#add_objection', as: "dash_admin_add_objection"
     post 'admin/dash/baskets', to: 'dash_admin#create_basket', as: "dash_admin_new_basket"
     post 'admin/dash/baskets/:basket_id', to: 'dash_admin#delete_basket', as: "dash_admin_delete_basket"
     delete 'admin/dash/catchwords/:word_id', to: 'dash_admin#remove_word', as: "dash_admin_remove_word"
+    delete 'admin/dash/objections/:word_id', to: 'dash_admin#remove_objection', as: "dash_admin_remove_objection"
     get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_games'
     post 'admin/dash/turn/:turn_id/release_comments', to: 'dash_admin#release_comments', as: 'dash_admin_release_comments'
 ############
@@ -262,6 +265,7 @@ Rails.application.routes.draw do
 ##############
   get '/team_list', to: 'dash_admin#get_teams'
   get '/words_list', to: 'dash_admin#get_words'
+  get '/objections_list', to: 'dash_admin#get_objections'
   post '/update_seconds', to: 'game_mobile_admin#update_game_seconds', as: 'gma_update_seconds'
   get 'mobile/admins/:password/password', to: 'game_mobile_admin#password', as: 'gma_pw'
   post 'mobile/admins/:password/password', to: 'game_mobile_admin#check_email', as: 'gma_email_check'

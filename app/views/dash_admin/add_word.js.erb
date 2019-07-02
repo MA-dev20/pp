@@ -4,6 +4,7 @@
 	$("#count<%= @id %>").html(<%=@count%>)
 	$("#input_name<%=@id %>").val('');
 	$("#input_name<%=@id %>").removeClass("error")
-	var template = "<li> <%= @word.name %> <span class='rounded-minus-linear'><i class='fas fa-minus remove-word'></i></span></li>";
+	var template = `<li id="word-id-<%=@word.id%>"> <%= @word.name %> <span class="remove-word rounded-minus-linear" onclick="removeWord(<%=@word.id %>, <%= @id %>)"><i class="fas fa-minus remove-word"></i></span></li>`
 	$("#catchword-list<%=@id %>").append(template);
 <% end %>
+
