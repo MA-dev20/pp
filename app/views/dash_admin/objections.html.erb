@@ -41,46 +41,25 @@ $(".lists").on("click", function(e){
     e.preventDefault()
     $("#catchword"+$(this).data("id")).modal("show")
 })
+var globalForm = new FormData(); ;
 
-var GLOBAL;
-function uploadRecording(form, callback, location){
-  jqxhr = $.ajax({
-    url: '/mobile/admin/upload',
-    type: 'POST',
-    data: form,
-    cache: false,
-    async: true,
-    contentType: false,
-    processData: false,
-    xhr: function () {
-      var myXhr = $.ajaxSettings.xhr();
-      if (myXhr.upload) {
-        myXhr.upload.addEventListener('progress', function (e) {
-          if (e.lengthComputable) {
-            console.log(e.loaded/e.total*100)
-            uploadingprogress = e.loaded/e.total*100
-            if(uploadingprogress== 100){
-              $("#uploaded").parent().fadeIn()
-              showInSequence($("#uploaded").parent());
-              $("#upload").hide()
-              completed_ajax= true
-              callback(location)
-            }
-          }
-        }, false);
-      }
-      return myXhr;
-    }
-  });
-}
+
+$(document).ready(function(){
+  $(".forms").on('submit',function(e){
+    e.preventDefault();
+    var id = $(this).data("id");
+    var name = $("#input_name"+id).val();
+    var $url = $(this).attr("action");
+    createObjection(name, $url, form)
+  })
+})
+
 
 var $rows = $('.team_card');
 $('#searchField').keyup(function() {
-    
     var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
         reg = RegExp(val, 'i'),
         text;
-    
     $rows.show().filter(function() {
         text = $(this).text().replace(/\s+/g, ' ');
         return !reg.test(text);
@@ -95,16 +74,15 @@ team_hide = function() {
 new PerfectScrollbar('#teams-container');
 
 $( document ).ready(function() {
-  
+  $(".record").on('click', function(e){
+    e.preventDefault()
+    id = $(this).data("id");
+    requestAudio(id)
+  })
 });
-// $(".forms").submit(function(e){
-//     e.preventDefault()
-//     var id = $(this).data("id");
-//     var name = $("#input_name"+id).val();
-//     var $url = $(this).attr("action");
-//     createObjection(name, $url, form)
-//   })
+
 function createObjection(name, url, sound) {
+    globalForm.append("name", name)
     $.ajax({
       url: url,
       type: 'post',
@@ -112,35 +90,20 @@ function createObjection(name, url, sound) {
       async: true,
       contentType: false,
       processData: false,
-      data: {name: name, sound: GLOBAL},
+      data:  globalForm,
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       success: function(res){
-        
+        globalForm = new FormData();
+        $("#attached_music"+id).text("").attr("href","")
       }
     })
 }
-
 var id, recorder;
 $(".record").on('click', function(e){
   e.preventDefault()
   id = $(this).data("id");
   requestAudio(id)
 })
-function createAudioElement(blobUrl) {
-    const downloadEl = document.createElement('a');
-    downloadEl.style = 'display: block';
-    downloadEl.innerHTML = 'download';
-    downloadEl.download = 'audio.webm';
-    downloadEl.href = blobUrl;
-    const audioEl = document.createElement('audio');
-    audioEl.controls = true;
-    const sourceEl = document.createElement('source');
-    sourceEl.src = blobUrl;
-    sourceEl.type = 'audio/webm';
-    audioEl.appendChild(sourceEl);
-    document.body.appendChild(audioEl);
-    document.body.appendChild(downloadEl);
-}
 var stream, form;
 function requestAudio(id) {
   var seconds = 10;
@@ -150,35 +113,23 @@ function requestAudio(id) {
       recorder.ondataavailable = e => {
         seconds -= 1 
         chunks.push(e.data);
-        $("#record-button"+id).addClass("fa-stop").removeClass("fa-microphone")
-        if(seconds >= 0){
-          $("#record-button"+id).text(seconds)
-        }
+        $("#record-button"+id).css("color","red")
         if (recorder.state == 'inactive') {
             const blob = new Blob(chunks, { type: 'audio/webm' });
-            form = new FormData();
             var file = new window.File([blob], ['audio', (new Date() + '').slice(4, 28), '.wav'].join(''))
-            form.append("file",file);
+            globalForm.append("file",file);
             $("#record-button"+id).text("")
             var url = URL.createObjectURL(blob)
-            $("#attached_music"+id).html("attached").attr("src",url)
-            $("#record-button"+id).addClass("fa-microphone").removeClass("fa-stop")
-            GLOBAL = form 
+            var template = `<a class="remove" id="remove`+id+`">x</a>`;
+            $("#attached_music"+id).html(template).attr("href",url)
+            $("#record-button"+id).css("color","#1ddaaf")
         }
       };
       recorder.start(1000);
-      // $(".fa-stop").on('click', function(e){
-      //     e.preventDefault()
-      //     recorder.stop();
-      // })
       setTimeout(() => {
           recorder.stop();
       }, 10000);
     }).catch(console.error);
 }
-// window.onload = setTimeout(function(){
-//     alert('This is an alert');
-//     window.location = 'http://www.example.com';
-// }, 5000);
 
 </script>

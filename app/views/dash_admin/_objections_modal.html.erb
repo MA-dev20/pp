@@ -12,15 +12,14 @@
                             <h1>
                                 <span>Objection hinzufugen</span>
                             </h1>
-                            <%= form_with url: dash_admin_add_objection_path(basket_id: id) ,method: 'post', id: "form#{id}", class: 'forms', data: {id: id} do |f| %>
+                            <%= form_for :user, url: dash_admin_add_objection_path(basket_id: id) ,method: 'post', html: {id: "form#{id}", class: 'forms'}, data: {id: id} do |f| %>
                             <div class="catchword-profile ">
                                 <div class="form-group position-relative">  
                                   <%= f.text_field :name, class: "form-control", required: true, id: "input_name#{id}" %>
                                   <a id="attached_music<%= id %>"></a>
-<!-- 
-                                  <a  class="record" href="#" data-id="<%=id %>" > 
+                                  <a  class="record" href="javascript::void(0)" data-id="<%=id %>" > 
                                     <i class="fas fa-microphone " id="record-button<%=id %>"></i>
-                                  </a> -->
+                                  </a>
 
                                   <button type="submit" class="btn-green-plus"> 
                                     <i class='fas fa-plus'></i>

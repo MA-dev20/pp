@@ -91,11 +91,12 @@ class DashAdminController < ApplicationController
     if @word.present?
       if @admin.objection_baskets.find(params[:basket_id]).objections.include?(@word)
         @already = true        
-      else
-        @admin.objection_baskets.find(params[:basket_id]).objections << @word 
       end
     else
-      @word = @admin.objection_baskets.find(params[:basket_id]).objections.create(name: params[:name])
+      objection = Objection.new(name: params[:name], sound: params[:file])
+      objection.save!
+      @word = objection
+      @admin.objection_baskets.find(params[:basket_id]).objections << objection
     end
     @count = @admin.objection_baskets.find(params[:basket_id]).objections.count
     @id = params[:basket_id]
