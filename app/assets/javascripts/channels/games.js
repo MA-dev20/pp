@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
       received: function(data) {
         var game_state = data['game_state'];
         if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
-          ajaxRequestToCheck(game_state)
+          ajaxRequestToCheck("rate")
         }else{
           if ($("#game_channel").data("turn") !== "replay") {
             if(location.pathname.split("admin")[1]=="/play"){
