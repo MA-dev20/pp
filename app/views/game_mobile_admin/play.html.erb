@@ -39,52 +39,15 @@
           <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 
         	<ul>
+            <% debugger %>
             <% if @game.use_peterobjections %>
-          		<li>
-          			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-    							Keine Zeit
-  							</a>
-  						</li>
-          		<li>
-          			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-    							Bei der Konkurrenz
-  							</a>
-  						</li>
-          		<li>
-          			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-    							Auf den Punkt kommen
-  							</a>
-  						</li>
-          		<li>
-          			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-    						  Kein Budget
-  							</a>
-  						</li>
-          		<li>
-          			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-    							Schick mir eine Mail
-  							</a>
-  						</li>
-          		<li>
-          			<a type="a" class="  objection -primary" data-toggle="modal" data-target="#myModal">
-    							Kein Interesse
-  							</a>
-  						</li>
-          		<li>
-          			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-    							Muss ich den Chef Fragen
-  							</a>
-  						</li>
-          		<li>
-          			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-    							Referenzen
-  							</a>
-  						</li>
-          		<li>
-          			<a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-    							Ist Quatsch
-  							</a>
-  						</li>
+          		<% ObjectionsBasket.peter_objections.each do |obj| %>
+                    <li>
+                      <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+                        <%= obj.name %>
+                      </a>
+                    </li>
+                <% end %>
             <% else %>
               <% if @game.objection_basket.present? && @game.objection_basket.objections.present? %>
                 <% @game.objection_basket.objections.each do |obj|%>
@@ -95,51 +58,13 @@
                   </li>
                 <% end %>
               <% else %>
-                <li>
-                  <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-                    Keine Zeit
-                  </a>
-                </li>
-                <li>
-                  <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-                    Bei der Konkurrenz
-                  </a>
-                </li>
-                <li>
-                  <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-                    Auf den Punkt kommen
-                  </a>
-                </li>
-                <li>
-                  <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-                    Kein Budget
-                  </a>
-                </li>
-                <li>
-                  <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-                    Schick mir eine Mail
-                  </a>
-                </li>
-                <li>
-                  <a type="a" class="  objection -primary" data-toggle="modal" data-target="#myModal">
-                    Kein Interesse
-                  </a>
-                </li>
-                <li>
-                  <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-                    Muss ich den Chef Fragen
-                  </a>
-                </li>
-                <li>
-                  <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-                    Referenzen
-                  </a>
-                </li>
-                <li>
-                  <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
-                    Ist Quatsch
-                  </a>
-                </li>
+                <% ObjectionsBasket.peter_objections.each do |obj| %>
+                    <li>
+                      <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+                        <%= obj.name %>
+                      </a>
+                    </li>
+                <% end %>
               <% end %>
             <% end %>
         	</ul>
