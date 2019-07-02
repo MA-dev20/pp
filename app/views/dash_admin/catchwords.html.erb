@@ -31,7 +31,7 @@
             <%= link_to '', dash_admin_delete_basket_path(b.id), method: :post,class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie das List unwiederuflich löschen möchten?" }%>
         </div>
     </div>
-        <%= render partial: 'catchwords_modal', locals: {id: b.id, words: b.words, name: b.name} %>
+        <%= render partial: 'catchwords_modal', locals: {id: b.id, words: b.words, name: b.name, objection: false} %>
     <% end %>
 
 </section>

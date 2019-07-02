@@ -1481,6 +1481,14 @@ modal
     }
   }
 }
+.record{
+    position: absolute;
+    right: 8vh;
+    top: 1.15vh;
+    font-size: 2.75vh;
+    line-height: 3vh;
+    color: #1ddaaf;
+}
 .catchword-profile {
   margin-top: 3.8vh;
   padding: 0 5.2vh 0 9.5vh;
@@ -1493,6 +1501,7 @@ modal
       height: 4.8vh;
       font-size: 2.6vh;
       font-weight: 700;
+      padding-right: 5vh;
       color: #9a9a9a;
       transition: none !important;
       background-clip: inherit;

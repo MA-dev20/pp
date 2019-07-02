@@ -7,6 +7,6 @@ class SoundUploader < CarrierWave::Uploader::Base
   end
     
   def extension_whitelist
-    %w(mp3)
+    %w(mp3 wav)
   end
 end

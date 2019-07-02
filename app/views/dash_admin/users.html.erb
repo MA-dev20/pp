@@ -38,60 +38,28 @@
    
 <div class="users" id="users">
    <div id="table">
-    <table id="myTable">
+    <div class="dataTables_wrapper no-footer">
+      <div class="dataTables_scroll">
+       <table id="myTable" class=" dataTable ">
       <thead>
         <tr>
-            <th style="opacity: 0"></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Unternehmen</th>
-            <th>Letztes Spiel</th>
-            <th>Spiele</th>
-            <th></th>
-            <th></th>
+            <th style="opacity: 0;     padding-top: 10px;"></th>
+            <th class="sorting" style="     padding-top: 10px;">Name</th>
+            <th class="sorting" style="width: 201px;     padding-top: 10px;">Email</th>
+            <th class="sorting ">Unternehmen</th>
+            <th class="">Letztes Spiel</th>
+            <th class="">Spiele</th>
+            <th class=""></th>
+            <th class=""></th>
         </tr>
       </thead>
       <tbody>
-        <tr class="user-row user-row-admin">
-           <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.avatar? ? image_tag(@admin.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
-           
-            <td class="name" onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.fname %> <%= @admin.lname %></td>
-            
-            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.email %></td>
-            
-            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.company_name %></td>
-            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><% if Turn.where(user_id: @admin.id).count > 0 %><%= Turn.where(user_id: @admin.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
-            <td><%= @admin.turns.where(admin_turn: true).count %></td>
-            <td><% if @admin.teams.count > 0 %>
-                <%= link_to '', dash_admin_statistics_path, class: "fas fa-chart-line package_pop_up" %>
-                <% end %>
-            </td>
-            <td>
-            </td>
-        </tr>
-      <% @users.each do |u| %>
-         <tr class="user-row">
-            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.avatar? ? image_tag(u.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
-            
-             <td class="name" onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
-             
-             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.email %></td>
-             
-             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.company_name %></td>
-             <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
-             <td><%= u.turns.count %></td>
-             <td><% if u.teams.count > 0 %>
-                 <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line package_pop_up" %>
-                 <% end %>
-             </td>
-             
-             <td>
-                 <a href="#" class="edit-user" data-id="<%=u.id %>"> Edit</a>
-             </td>
-           </tr>
-         <% end %>
+        
         </tbody>
       </table>
+      </div>
+    </div>    
+   
     </div>
   </div>
   <%= content_for :modal do %>
@@ -118,15 +86,9 @@
 
 <script>
 
-$(document).on('turbolinks:before-cache', function() {
-  return document.querySelectorAll( 'select.cs-select' ).each(function() {
-    return this.selectize.destroy();
-  });
-});
 
   $(document).ready(function(){
-    
-(function() {
+    (function() {
         [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
           new SelectFx(el);
                     newTab: false;
@@ -188,8 +150,6 @@ $(document).on('turbolinks:before-cache', function() {
     $("#delete-user-modal").modal("show")
   });
   }
-  
-  
   $(document).ready(function(){
     renderSelectize()
   })
@@ -216,7 +176,7 @@ $(document).on('turbolinks:before-cache', function() {
         "scrollY":  "400px",
         "searching": true,
         "lengthChange": false,
-        oLanguage: {sProcessing: "<div id='loader'>Loading....</div>"},
+        oLanguage: {sProcessing: "<div id='loader'></div>"},
         "serverSide": true,
         "ajax":  {url: "/admin/dash/user_list",
         "data": function(data){
@@ -266,7 +226,7 @@ $('#searchField').keyup(function() {
         return !reg.test(text);
     }).hide();
 });
-new PerfectScrollbar('.cs-options');
+// new PerfectScrollbar('.cs-options');
 
 function renderSelectize(){
   selectize = $('.InputTags').selectize({
