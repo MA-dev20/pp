@@ -22,6 +22,7 @@ class GamesController < ApplicationController
         @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
         if @game.save
           set_words_for_game(@game, params[:game][:own_rules], params[:game][:baskets], params[:game][:seconds])
+          set_objections_for_game(@game, params[:game][:own_rules], params[:game][:objections])
           sign_in(@game)
           # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
           session[:game_session_id] = @game.id
@@ -66,6 +67,7 @@ class GamesController < ApplicationController
         objections = objections.first(10)
         if objections_bas.include?("")
           game.use_peterobjections = true
+          objections+=ObjectionsBasket.peter_objections.first(10-objections.length) if objections.length < 10
         else
           game.use_peterobjections = false
         end
