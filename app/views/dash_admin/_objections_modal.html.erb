@@ -5,33 +5,30 @@
       <div class="blue blue-place modal catchword-modal userEdit-modal" id="catchword<%= id %>" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <button type="button" class="close modal-close" data-id="<%=id %>" onclick="closeCatchword(<%= id %>)" aria-label="Close"><i class="fas fa-times"></i></button>
+                    <button type="button" class="close modal-close modal-close-ch" data-id="<%=id %>" onclick="closeCatchword(<%= id %>)" aria-label="Close"><i class="fas fa-times"></i></button>
                     <div id="table_wrapper">
                         <div class="" id="list-table">
           
                             <h1>
                                 <span>Objection hinzufugen</span>
                             </h1>
-                            <%= form_for :user, url: dash_admin_add_objection_path(basket_id: id) ,method: 'post', html: {id: "form#{id}", class: 'forms'}, data: {id: id} do |f| %>
+                            <%= form_with url: dash_admin_add_objection_path(basket_id: id) ,method: 'post', html: {id: "form#{id}", class: 'forms'}, data: {id: id} do |f| %>
                             <div class="catchword-profile ">
                                 <div class="form-group position-relative">  
                                   <%= f.text_field :name, class: "form-control", required: true, id: "input_name#{id}" %>
-                                  <a id="attached_music<%= id %>"></a>
-                                  <a  class="record" href="javascript::void(0)" data-id="<%=id %>" > 
-                                    <i class="fas fa-microphone " id="record-button<%=id %>"></i>
-                                  </a>
+                                  
 
                                   <button type="submit" class="btn-green-plus"> 
                                     <i class='fas fa-plus'></i>
                                   </button>
                                 </div>
                             </div>
-                            <div class="catchword-block">
+                            <div class="catchword-block catchword-block-ch">
                                 <h5><%= name %></h5>
                                 <div class="catchword-block-inner" id="catchword-list">
                                     <ul class="catchword-list" id="catchword-list<%=id%>">
                                       <% words.each do |word| %>
-                                        <li id="word-id-<%=word.id%>"> <%= word.name %> <span class="remove-word rounded-minus-linear" onclick="removeWord(<%=word.id %>, <%= id %>)"><i class="fas fa-minus remove-word"></i></span></li>
+                                        <%= render partial: 'objection_li', locals: {word: word, id: id} %>
                                       <% end %>
                                     </ul>
                                 </div>
@@ -50,8 +47,28 @@
 <script>
 $(document).ready(function(){
   new PerfectScrollbar("#catchword-list<%=id%>");
-
 })
+function recordAudio(id, basket_id){
+  if($("#recording"+id).hasClass("fa-dot-circle")){
+    if(!processing){
+      requestAudio(id)
+      processing = true
+    }
+  }else{
+    stopRecording(id)
+  }
+}
+function playWord(id, basket_id){
+  var url = $("#word"+id).data("url")
+  if(!$("#word"+id).parent().hasClass("opacity-class")){
+    if(!audio.paused){
+      audio.pause()
+    }
+    audio = new Audio(url)
+    audio.play()
+  }
+  
+}
 function removeWord(id, basket_id){
   var $this = $(this);
   $.ajax({

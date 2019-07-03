@@ -42,7 +42,7 @@
               <% if @game.objection_basket.present? && @game.objection_basket.objections.present? %>
                 <% @game.objection_basket.objections.each do |obj|%>
                   <li>
-                    <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+                    <a type="a" class=" objection -primary" data-url="<%=obj.sound.url%>" data-toggle="modal" data-target="#myModal">
                       <%= obj.name %>
                     </a>
                   </li>
@@ -50,7 +50,7 @@
               <% else %>
                 <% ObjectionsBasket.peter_objections.each do |obj| %>
                     <li>
-                      <a type="a" class=" objection -primary" data-toggle="modal" data-target="#myModal">
+                      <a type="a" class=" objection -primary" data-url="<%=obj.sound.url%>" data-toggle="modal" data-target="#myModal">
                         <%= obj.name %>
                       </a>
                     </li>
@@ -271,12 +271,13 @@ function showInSequence(div){
   var objectionTime = true;
   $(".objection").on("click", function(e){
     e.preventDefault()
-    var objection = $(this).text()
+    var objection = $(this).text();
+    var url = $(this).data("url");
     $.ajax({
       url: "<%= gda_objection_path %>",
       type: 'post',
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-      data: {objection:  objection},
+      data: {objection:  objection, url},
       success: function(res){
         objectionTime = false
         document.getElementById("list").disabled = true;

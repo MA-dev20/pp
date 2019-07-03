@@ -2670,8 +2670,53 @@ button.btn-green-plus.green-plus-se {
 table tr.user-row-admin td {
     background-color: rgba(29,218,176,0.15);
 }
-
-
-
-
+.opacity-class{
+  opacity: 0.4;
+} 
+.catchword-block-ch .catchword-list li {
+  width: 100% !important;
+  padding-bottom: .5vh;
+  min-height: 4vh;
+  font-size: 2.2vh;
+}
+.catchword-block-ch .catchword-list-options {
+  position: absolute;
+  right: 0.65vh;
+  bottom: 0.5vh;
+  display: flex;
+  align-items: center;
+}
+.catchword-block-ch .catchword-list-options span {
+  position: static !important;
+  right: inherit !important;
+  top: inherit !important;
+  width: 2.565vh !important;
+  height: 2.565vh !important;
+  padding-left:  0 !important;
+  margin-left: 0.6vh;
+}
+.catchword-block-ch .catchword-list-options i.fa-play-circle {
+  color: #1ddaaf;
+  font-size: 2.565vh;
+}
+.catchword-block-ch .catchword-list-options i.fa-stop-circle {
+  color: #ff0000;
+  font-size: 2.565vh;
+}
+.catchword-block-ch .catchword-list-options i.fa-minus {
+  font-size: 1.4vh;
+}
+.catchword-block-ch .catchword-list-options i.fa-dot-circle {
+  color: #ff0000;
+  font-size: 2.565vh;
+}
+.userEdit-modal.userEdit-modal .modal-content .modal-close.close {
+  line-height: 34px !important;
+}
+.userEdit-modal.userEdit-modal .modal-close.modal-close-ch {
+  font-size: 3vh !important;
+  background-color: #fff;
+  border: 2px solid #1ddaaf;
+  color: #1ddaaf;
+}
 

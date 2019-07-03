@@ -2,6 +2,15 @@
     <input type="text" id="searchField" placeholder="suchen" onfocus='team_hide()' onblur="team_show()">
     <%= image_tag 'dash/search.png' %>
 </section>
+<script type="text/javascript">
+  var stream, form, globalForm,recorder, audio, timer;
+  globalForm = new FormData();
+  var processing= false;
+  audio = new Audio();
+</script>
+<audio id="current">
+  <source src="" type="audio/mp3" id="currentSrc">
+</audio>
 
 <section id="teams-container">
     <div class="add_team" onclick="openObjectionBasket()">
@@ -41,17 +50,8 @@ $(".lists").on("click", function(e){
     e.preventDefault()
     $("#catchword"+$(this).data("id")).modal("show")
 })
-var globalForm = new FormData(); ;
-
 
 $(document).ready(function(){
-  $(".forms").on('submit',function(e){
-    e.preventDefault();
-    var id = $(this).data("id");
-    var name = $("#input_name"+id).val();
-    var $url = $(this).attr("action");
-    createObjection(name, $url, form)
-  })
 })
 
 
@@ -81,11 +81,10 @@ $( document ).ready(function() {
   })
 });
 
-function createObjection(name, url, sound) {
-    globalForm.append("name", name)
+function createObjection(id, globalForm) {
     $.ajax({
-      url: url,
-      type: 'post',
+      url: "/admin/dash/objections/"+id,
+      type: 'put',
       cache: false,
       async: true,
       contentType: false,
@@ -94,42 +93,63 @@ function createObjection(name, url, sound) {
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       success: function(res){
         globalForm = new FormData();
-        $("#attached_music"+id).text("").attr("href","")
+        $("#word"+id).data("url", res.sound)
+        $("#word"+id).parent().removeClass("opacity-class")
       }
     })
 }
-var id, recorder;
 $(".record").on('click', function(e){
   e.preventDefault()
   id = $(this).data("id");
   requestAudio(id)
 })
-var stream, form;
+// function requestAudio(id) {
+//   var seconds = 10;
+//   navigator.mediaDevices.getUserMedia({ audio: true }).then(stm => {
+//       stream = stm;
+//       recorder = new MediaRecorder(stream);
+//       $("#recording"+id).addClass("fa-stop-circle").removeClass("fa-dot-circle")
+//       recorder.start(1000);
+//       setTimeout(() => {
+//         stopRecording(id)
+//       }, 10000);
+//     }).catch(console.error);
+// }
 function requestAudio(id) {
   var seconds = 10;
-  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(str => {
       const chunks = [];
-      const recorder = new MediaRecorder(stream);
+      stream = str;
+      recorder = new MediaRecorder(stream);
       recorder.ondataavailable = e => {
         seconds -= 1 
         chunks.push(e.data);
-        $("#record-button"+id).css("color","red")
+        $("#recording"+id).addClass("fa-stop-circle").removeClass("fa-dot-circle")
+        $("#word"+id).parent().addClass("opacity-class")
         if (recorder.state == 'inactive') {
             const blob = new Blob(chunks, { type: 'audio/webm' });
-            var file = new window.File([blob], ['audio', (new Date() + '').slice(4, 28), '.wav'].join(''))
+            var file = new window.File([blob], ['audio', (new Date() + '').slice(4, 28), '.mp3'].join(''))
             globalForm.append("file",file);
-            $("#record-button"+id).text("")
-            var url = URL.createObjectURL(blob)
-            var template = `<a class="remove" id="remove`+id+`">x</a>`;
-            $("#attached_music"+id).html(template).attr("href",url)
-            $("#record-button"+id).css("color","#1ddaaf")
+            $("#recording"+id).addClass("fa-dot-circle").removeClass("fa-stop-circle")
+            createObjection(id, globalForm)
+            $("#word"+id).parent().removeClass("opacity-class")
+            processing = false;
         }
       };
       recorder.start(1000);
-      setTimeout(() => {
-          recorder.stop();
-      }, 10000);
+      timer = setTimeout(() => {
+        stopRecording(id)
+      }, 11000);
     }).catch(console.error);
 }
+function stopRecording(id){
+  clearTimeout(timer);
+  if(recorder.state != 'inactive'){
+    recorder.stop()
+  }
+  $("#recording"+id).addClass("fa-dot-circle").removeClass("fa-stop-circle")
+  stream.getTracks()[0].stop()
+}
+
 
 </script>

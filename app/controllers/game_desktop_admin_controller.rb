@@ -130,7 +130,7 @@ class GameDesktopAdminController < ApplicationController
   def objection
     params[:objection]
     @current_admin = current_game.admin
-    ActionCable.server.broadcast "admin_#{@current_admin.id}_channel", type: 'objection', text: params[:objection]
+    ActionCable.server.broadcast "admin_#{@current_admin.id}_channel", type: 'objection', url: params[:url],text: params[:objection]
   end
     
   def replay

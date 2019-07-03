@@ -86,25 +86,29 @@ class DashAdminController < ApplicationController
   end
 
   def add_objection
-    @word = Objection.find_by_name(params[:name])
     @already = false
-    if @word.present?
-      if @admin.objection_baskets.find(params[:basket_id]).objections.include?(@word)
+    @basket = @admin.objection_baskets.find(params[:basket_id])
+    if @basket.objections.find_by_name(params[:name]).present?
         @already = true        
-      end
     else
       objection = Objection.new(name: params[:name], sound: params[:file])
       objection.save!
+      @basket.objections << objection
       @word = objection
-      @admin.objection_baskets.find(params[:basket_id]).objections << objection
     end
-    @count = @admin.objection_baskets.find(params[:basket_id]).objections.count
+    @count = @basket.objections.count
     @id = params[:basket_id]
     respond_to do |format|
       format.js do
         render :add_word
       end
     end
+  end
+
+  def update_objection
+    @word = Objection.find(params[:id])
+    @word.update(sound: params[:file]) if params[:file].present? &&  @word.present?
+    render json: {sound:  @word.sound.url}
   end
 
   def release_comments
@@ -116,13 +120,16 @@ class DashAdminController < ApplicationController
     render json: {res: "ok"}
   end
 
+
   def remove_word
     @admin.catchword_baskets.find(params[:basket_id]).words.delete(Word.find(params[:word_id]))
     render json: {count: @admin.catchword_baskets.find(params[:basket_id]).words.count }
   end
 
+
   def remove_objection
-    @admin.objection_baskets.find(params[:basket_id]).objections.delete(Objection.find(params[:word_id]))
+    @objection = @admin.objection_baskets.find(params[:basket_id]).objections.find(params[:word_id])
+    @objection.destroy
     render json: {count: @admin.objection_baskets.find(params[:basket_id]).objections.count }
   end
 

@@ -4,7 +4,6 @@
 	$("#count<%= @id %>").html(<%=@count%>)
 	$("#input_name<%=@id %>").val('');
 	$("#input_name<%=@id %>").removeClass("error")
-	var template = `<li id="word-id-<%=@word.id%>"> <%= @word.name %> <span class="remove-word rounded-minus-linear" onclick="removeWord(<%=@word.id %>, <%= @id %>)"><i class="fas fa-minus remove-word"></i></span></li>`
-	$("#catchword-list<%=@id %>").append(template);
+	$("#catchword-list<%=@id %>").append("<%= escape_javascript render(:partial => 'objection_li', :locals => { :word => @word, id: @basket.id }) %>");
 <% end %>
 
