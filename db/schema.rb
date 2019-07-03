@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_01_062352) do
+ActiveRecord::Schema.define(version: 2019_03_21_132935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,9 +57,6 @@ ActiveRecord::Schema.define(version: 2019_07_01_062352) do
     t.integer "plan_type"
     t.integer "plan_users"
     t.string "admin_subscription_id"
-    t.boolean "verification_code_confirm", default: false
-    t.string "reset_pw_token"
-    t.boolean "video_uploading", default: false
     t.index ["confirmation_token"], name: "index_admins_on_confirmation_token", unique: true
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
@@ -78,36 +75,6 @@ ActiveRecord::Schema.define(version: 2019_07_01_062352) do
     t.string "card_brand"
     t.string "stripe_custommer_id"
     t.index ["admin_id"], name: "index_cards_on_admin_id"
-  end
-
-  create_table "catchwords_basket_words", force: :cascade do |t|
-    t.bigint "word_id"
-    t.bigint "catchwords_basket_id"
-    t.index ["catchwords_basket_id"], name: "index_catchwords_basket_words_on_catchwords_basket_id"
-    t.index ["word_id"], name: "index_catchwords_basket_words_on_word_id"
-  end
-
-  create_table "catchwords_baskets", force: :cascade do |t|
-    t.bigint "admin_id"
-    t.bigint "game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "name"
-    t.string "type"
-    t.boolean "objection", default: false
-    t.index ["admin_id"], name: "index_catchwords_baskets_on_admin_id"
-    t.index ["game_id"], name: "index_catchwords_baskets_on_game_id"
-  end
-
-  create_table "comments", force: :cascade do |t|
-    t.string "type_of_comment"
-    t.integer "time_of_video"
-    t.string "title"
-    t.bigint "turn_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "release_it", default: false
-    t.index ["turn_id"], name: "index_comments_on_turn_id"
   end
 
   create_table "game_ratings", force: :cascade do |t|
@@ -158,11 +125,6 @@ ActiveRecord::Schema.define(version: 2019_07_01_062352) do
     t.index ["admin_id"], name: "index_invoices_on_admin_id"
   end
 
-  create_table "objection_basket_objections", force: :cascade do |t|
-    t.integer "objection_id"
-    t.integer "objections_basket_id"
-  end
-
   create_table "plans", force: :cascade do |t|
     t.integer "amount"
     t.string "product_name"
@@ -187,8 +149,6 @@ ActiveRecord::Schema.define(version: 2019_07_01_062352) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status"
-    t.boolean "disabled", default: false
     t.index ["turn_id"], name: "index_ratings_on_turn_id"
   end
 
@@ -263,7 +223,6 @@ ActiveRecord::Schema.define(version: 2019_07_01_062352) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status"
     t.index ["game_id"], name: "index_turn_ratings_on_game_id"
     t.index ["turn_id"], name: "index_turn_ratings_on_turn_id"
   end
@@ -315,11 +274,6 @@ ActiveRecord::Schema.define(version: 2019_07_01_062352) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.integer "status", default: 2
-    t.string "encrypted_pw"
-    t.string "street"
-    t.string "zipcode"
-    t.string "city"
-    t.string "logo"
     t.index ["admin_id"], name: "index_users_on_admin_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end

@@ -120,7 +120,6 @@ class DashAdminController < ApplicationController
     render json: {res: "ok"}
   end
 
-
   def remove_word
     @admin.catchword_baskets.find(params[:basket_id]).words.delete(Word.find(params[:word_id]))
     render json: {count: @admin.catchword_baskets.find(params[:basket_id]).words.count }

@@ -17,7 +17,6 @@
                                 <div class="form-group position-relative">  
                                   <%= f.text_field :name, class: "form-control", required: true, id: "input_name#{id}" %>
                                   
-
                                   <button type="submit" class="btn-green-plus"> 
                                     <i class='fas fa-plus'></i>
                                   </button>
@@ -79,7 +78,7 @@ function removeWord(id, basket_id){
     success: function(res){
       $("#word-id-"+id).remove()
       $("#count"+basket_id).html(res["count"])
-      ps.update();
+      // ps.update();
     }
   })
 }
