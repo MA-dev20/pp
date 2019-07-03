@@ -137,7 +137,7 @@ body {
     top: 0;
     width: 90vw;
     height: 8vh;
-    box-shadow: 0 .25rem .25rem 0 rgba(0,0,0,0.1);
+    border-bottom: 1px solid #ededed;
     background-color: white;
     padding-left: 2vw;
     line-height: 8vh;
@@ -237,7 +237,6 @@ li.greengreen span {
     width: 10vw;
     background: linear-gradient(#1dacf1 0%, #1a8ed6 51%, #145daa 100%);
     color: white;
-    box-shadow: 0 .5rem .5rem 0 rgba(0,0,0,0.5);
 }
 #sidebar img {
     position: relative;
@@ -246,7 +245,6 @@ li.greengreen span {
     left: calc(5vw - 7vh);
     width: 14vh;
     border-radius: 50%;
-    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
 }
 #sidebar .links {
     position: relative;
@@ -666,14 +664,14 @@ modal
 .modal-games .modal-close{
   position: absolute;
   top: 20px;
+  top: 20px;
   right: 20px;
   line-height: 37px;
   height: 35px;
   width: 35px;
   border-radius: 50%;
-  border: 2px solid #1ddaaf;
-  color: #1ddaaf;
-  background-color: white;
+  color: white;
+  background-color: rgba(0,0,0,.1);
   opacity: 1;
   z-index: 1000000;
 }
@@ -685,21 +683,20 @@ modal
     height: 35px;
     width: 35px;
     border-radius: 50%;
-    border: 2px solid #1ddaaf;
-    color: #1ddaaf;
-    background-color: white;
+    color: white;
+    background-color: rgba(0,0,0,.1);
     opacity: 1;
     z-index: 1000000;
+}
+.modal-close {
+    font-size: 40px !important;
+    font-weight: 100 !important;
 }
 .modal-games .modal-close:hover{
-    background-color: transparent;
-    opacity: 1;
-    z-index: 1000000;
+    background-color: rgba(0,0,0,.2);
 }
  .blue .modal-close:hover {
-    background-color: transparent;
-    opacity: 1;
-    z-index: 1000000;
+    background-color: rgba(0,0,0,.2);
 }
 .modal-games .modal-dialog{
     margin: 0 !important;
@@ -924,10 +921,10 @@ modal
   height: 4vh;
   width: 4vh;
   font-size: 3vh;
-  font-weight: 300;
   top: 2vh;
   right: 2vh;
-  border: 1px solid #1ddaaf;
+  color: white;
+  background-color: rgba(0,0,0,.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1084,6 +1081,7 @@ modal
       position: absolute;
       right: 0;
       bottom: 1vh;
+      border-radius: 50%;
       input {
         position: absolute;
         left: 0;
@@ -1102,17 +1100,20 @@ modal
 .plus-p {
   height: 4vh;
   width: 4vh;
-  font-size: 5vh;
+  font-size: 2.5vh;
   font-weight: 300;
   top: 0;
   right: 0;
-  border: 1px solid #1ddaaf;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: rgba(29, 218, 175, 0.8);
   border-radius: 50%;
-  color: #1ddaaf;
+  color: white;
+}
+.user-profile-up:hover,
+.plus-p:hover {
+  background-color: rgba(29, 218, 175, 1);
 }
 .form-block {
   margin-top: 2vh;
@@ -1163,12 +1164,14 @@ modal
       line-height: 5vh;
       input {
         background: asset-url('add.png');
-        background-size: 4vh;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 2.2vh;
+        border-radius: 50% !important;
+        background-color: rgba(29, 218, 175, 0.8);
         cursor: pointer;
         height: 4vh !important;
         width: 4vh !important;
-        font-size: 4.4vh;
-        font-weight: 700;
         top: 0.6vh;
         right: 0;
         position: relative;
@@ -1182,6 +1185,9 @@ modal
         line-height: 1vh;
       }
     }
+      .bootstrap-tagsinput input:hover {
+          background-color: rgba(29, 218, 175, 1);
+      }
     .tag {
       margin-right: 2px;
       color: white;
@@ -1664,13 +1670,21 @@ modal
         top: 0;
         right: 0;
         bottom: 0;
+        height: 3.6vh;
+        width: 11vh;
         font-size: 2.6vh;
         color: #1dd9ae;
         font-weight: 500;
         margin: 0 auto;
         line-height: 4vh;
+        cursor: pointer;
+        border-radius: 3vh;
       }
       span.checked {
+        color: #fff;
+      }
+      span:hover {
+        background-color: #1dd9ae;
         color: #fff;
       }
     }
@@ -2645,7 +2659,6 @@ button.btn-green-plus.green-plus-se {
     height: 30px;
     width: 30px;
     font-size: 1.4rem;
-    font-weight: 300;
 }
 .listTable-modal .modal-content {
     width: 550px;

@@ -244,9 +244,12 @@ price
 .header-custom .navbar-list .nav-item .nav-link {
     color: #1c9ee0;
 }
+.navbar-list .nav-item .nav-link {
+    color: #1ddaaf;
+}
 .navbar-list .nav-item .nav-link.login {
-    border-color: white;
-    color: white;
+    border-color: #1ddaaf;
+    color: #1ddaaf;
 }
 .navbar-list .nav-item .nav-link.login:hover,
 .header.affix .navbar-list .nav-item .nav-link.login:hover{

@@ -37,7 +37,7 @@
 
 <div class="off-canvas">
     <section class="app-banner">
-	    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'width: 100%; top: 0;position: absolute; bottom: 0; right: 0; min-width: 100%; min-height: 100%; z-index: -10000; object-fit: cover;' %>
+	    <%= video_tag 'countdown.mp4', autoplay: true, loop: true, muted: true, style: 'width: 100%; top: 0%;position: absolute; bottom: 0%; right: 0%; height: 100%; z-index: -10000; object-fit: cover;' %>
 		<div class="container">
 		    <div class="row flex-column-reverse flex-md-row">
 				<div class="app-banner-main text-center">
@@ -417,9 +417,7 @@
    <div class="modal modal-peterpitch fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
-            <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
-              <i class="fas fa-times"></i>
-            </button>
+            <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
             <div class="modal-body">
               <%= image_tag 'logo-m.png', class: 'login-modal-img' %>
               <h1>Starte jetzt mit Peter Pitch!</h1>
