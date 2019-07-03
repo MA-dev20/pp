@@ -1,5 +1,5 @@
+<%= render partial: 'header' , locals: {can: true}%>
 <div class="head head-play">
-    <%= render partial: 'header' , locals: {can: true}%>
     <div style="display: none" id="current_user_id" data-id='<%= @turn.to_json.to_s.html_safe %>'></div>
     <h1><%= @cur_user.fname %> Pitcht!</h1>
 </div>

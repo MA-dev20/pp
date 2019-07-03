@@ -23,6 +23,7 @@
 </head>
 
 <body>
+   <div id="play-contant">
    <section id="navbar">
        <%= image_tag 'logo-m.png', class: 'logo' %>
        - <%= @game.team.name %> -
@@ -36,6 +37,7 @@
         <%= yield %>
         </div>
     </section>
+    </div>
     <%= render partial: 'shared/user_accept_modal' %>
 </body>
 </html>

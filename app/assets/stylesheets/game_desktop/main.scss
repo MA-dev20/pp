@@ -94,21 +94,25 @@ body {
     }
 }
 .fly_in_left {
+    opacity: 1;
     animation-name: fly-in-left;
     animation-duration: 1.5s;
     animation-iteration-count: 1;
 }
 .fly_in_top {
+    opacity: 1;
     animation-name: fly-in-top;
     animation-duration: 1.5s;
     animation-iteration-count: 1;
 }
 .fly_in_right {
+    opacity: 1;
     animation-name: fly-in-right;
     animation-duration: 1.5s;
     animation-iteration-count: 1;
 }
 .fly_in_bottom {
+    opacity: 1;
     animation-name: fly-in-bottom;
     animation-duration: 1.5s;
     animation-iteration-count: 1;
@@ -133,7 +137,7 @@ body {
 }
 @keyframes fly-in-bottom {
     from {
-        transform: translateY(-3000px);
+        transform: translateY(500px);
         opacity: 0;
     }
 }
