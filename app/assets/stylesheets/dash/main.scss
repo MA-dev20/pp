@@ -2297,7 +2297,7 @@ button.btn-green-plus.green-plus-se {
   color: #a7a7a7;
   width: 100%;
   resize:  none;
-  border: none;
+  border: 1px solid #1ddab0;
   outline: none;
   line-height: 3vh;
   display: inline-block;
@@ -2404,6 +2404,9 @@ button.btn-green-plus.green-plus-se {
   overflow: hidden;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   border: 1px solid transparent;
+}
+.overview-block .overviewBlock-video:hover img {
+    transform: scale(1.1);
 }
 .overview-block .overviewBlock-video video {
   width: 42vh;
@@ -2529,9 +2532,6 @@ button.btn-green-plus.green-plus-se {
   margin-bottom: 2vh;
   margin-top: 2vh;
   min-height: 32vh;
-}
-.overview-block:hover .overviewBlock-video {
-  border-color: #66c1ef;
 }
 .overview-block:hover .overview-video-play {
   background: image-url('play-btn-green.png') center center no-repeat;
