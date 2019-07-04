@@ -45,6 +45,7 @@
 }
 #bottom .progress-bar {
     animation-name: fill;
+    animation-fill-mode: forwards;
     animation-duration: 15s;
     background-color: rgba(29, 218, 175, 1);
     padding: 0;
