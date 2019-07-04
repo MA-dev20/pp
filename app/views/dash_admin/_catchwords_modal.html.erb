@@ -5,7 +5,7 @@
       <div class="blue blue-place modal catchword-modal userEdit-modal" id="catchword<%= id %>" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <button type="button" class="close modal-close" data-id="<%= id %>" onclick="closeCatchword(<%= id %>)" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
+                    <button type="button" class="close modal-close modal-close-ch" data-id="<%= id %>" onclick="closeCatchword(<%= id %>)" aria-label="Close" ><i class="fas fa-times"></i></button>
                     <div id="table_wrapper">
                         <div class="" id="list-table">
           
@@ -21,12 +21,12 @@
                                   </button>
                                 </div>
                             </div>
-                            <div class="catchword-block">
+                            <div class="catchword-block catchword-block-ch">
                                 <h5><%= name %></h5>
                                 <div class="catchword-block-inner" id="catchword-list">
                                     <ul class="catchword-list" id="catchword-list<%=id%>">
                                       <% words.each do |word| %>
-                                        <li id="word-id-<%=word.id%>"> <%= word.name %> <span class="remove-word rounded-minus-linear" onclick="removeWord(<%=word.id %>, <%= id %>)"><i class="fas fa-minus remove-word"></i></span></li>
+                                        <%= render partial: 'objection_li', locals: {word: word, id: id} %>
                                       <% end %>
                                     </ul>
                                 </div>
@@ -60,4 +60,26 @@ function removeWord(id, basket_id){
     }
   })
 }
+function recordAudio(id, basket_id){
+  if($("#recording"+id).hasClass("fa-dot-circle")){
+    if(!processing){
+      requestAudio(id)
+      processing = true
+    }
+  }else{
+    stopRecording(id)
+  }
+}
+function playWord(id, basket_id){
+  var url = $("#word"+id).data("url")
+  if(!$("#word"+id).parent().hasClass("opacity-class")){
+    if(!audio.paused){
+      audio.pause()
+    }
+    audio = new Audio(url)
+    audio.play()
+  }
+  
+}
+
 </script>

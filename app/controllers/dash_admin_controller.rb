@@ -65,18 +65,16 @@ class DashAdminController < ApplicationController
   end
 
   def add_word
-    @word = Word.find_by_name(params[:name])
     @already = false
-    if @word.present?
-      if @admin.catchword_baskets.find(params[:basket_id]).words.include?(@word)
+    @basket = @admin.catchword_baskets.find(params[:basket_id])
+    if @basket.words.find_by_name(params[:name]).present?
         @already = true        
-      else
-        @admin.catchword_baskets.find(params[:basket_id]).words << @word 
-      end
     else
-      @word = @admin.catchword_baskets.find(params[:basket_id]).words.create(name: params[:name])
+      @word = Word.new(name: params[:name])
+      @word.save!
+      @basket.words << @word
     end
-    @count = @admin.catchword_baskets.find(params[:basket_id]).words.count
+    @count = @basket.words.count
     @id = params[:basket_id]
     respond_to do |format|
       format.js do
@@ -91,7 +89,7 @@ class DashAdminController < ApplicationController
     if @basket.objections.find_by_name(params[:name]).present?
         @already = true        
     else
-      objection = Objection.new(name: params[:name], sound: params[:file])
+      objection = Objection.new(name: params[:name])
       objection.save!
       @basket.objections << objection
       @word = objection
@@ -107,6 +105,12 @@ class DashAdminController < ApplicationController
 
   def update_objection
     @word = Objection.find(params[:id])
+    @word.update(sound: params[:file]) if params[:file].present? &&  @word.present?
+    render json: {sound:  @word.sound.url}
+  end
+
+  def update_word 
+    @word = Word.find(params[:id])
     @word.update(sound: params[:file]) if params[:file].present? &&  @word.present?
     render json: {sound:  @word.sound.url}
   end
@@ -345,6 +349,11 @@ class DashAdminController < ApplicationController
   def delete_basket
     CatchwordsBasket.find(params[:basket_id]).destroy
     redirect_to dash_admin_catchwords_path
+  end
+
+  def delete_objection_basket
+    ObjectionsBasket.find(params[:basket_id]).destroy
+    redirect_to dash_admin_objections_path
   end
 
   def billing

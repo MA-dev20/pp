@@ -2,7 +2,12 @@
     <input type="text" id="searchField" placeholder="suchen" onfocus='team_hide()' onblur="team_show()">
     <%= image_tag 'dash/search.png' %>
 </section>
-
+<script type="text/javascript">
+  var stream, form, globalForm,recorder, audio, timer;
+  globalForm = new FormData();
+  var processing= false;
+  audio = new Audio();
+</script>
 <section id="teams-container">
     <div class="add_team" onclick="openBasket()">
        <a onclick="openBasket()"></a>
@@ -61,7 +66,75 @@ team_hide = function() {
     $('.add_team').hide();
 }
 new PerfectScrollbar('#teams-container');
-
+function createObjection(id, globalForm) {
+    $.ajax({
+      url: "/admin/dash/words/"+id,
+      type: 'put',
+      cache: false,
+      async: true,
+      contentType: false,
+      processData: false,
+      data:  globalForm,
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      success: function(res){
+        globalForm = new FormData();
+        $("#word"+id).data("url", res.sound)
+        $("#word"+id).parent().removeClass("opacity-class")
+      }
+    })
+}
+$(".record").on('click', function(e){
+  e.preventDefault()
+  id = $(this).data("id");
+  requestAudio(id)
+})
+// function requestAudio(id) {
+//   var seconds = 10;
+//   navigator.mediaDevices.getUserMedia({ audio: true }).then(stm => {
+//       stream = stm;
+//       recorder = new MediaRecorder(stream);
+//       $("#recording"+id).addClass("fa-stop-circle").removeClass("fa-dot-circle")
+//       recorder.start(1000);
+//       setTimeout(() => {
+//         stopRecording(id)
+//       }, 10000);
+//     }).catch(console.error);
+// }
+function requestAudio(id) {
+  var seconds = 10;
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(str => {
+      const chunks = [];
+      stream = str;
+      recorder = new MediaRecorder(stream);
+      recorder.ondataavailable = e => {
+        seconds -= 1 
+        chunks.push(e.data);
+        $("#recording"+id).addClass("fa-stop-circle").removeClass("fa-dot-circle")
+        $("#word"+id).parent().addClass("opacity-class")
+        if (recorder.state == 'inactive') {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            var file = new window.File([blob], ['audio', (new Date() + '').slice(4, 28), '.mp3'].join(''))
+            globalForm.append("file",file);
+            $("#recording"+id).addClass("fa-dot-circle").removeClass("fa-stop-circle")
+            createObjection(id, globalForm)
+            $("#word"+id).parent().removeClass("opacity-class")
+            processing = false;
+        }
+      };
+      recorder.start(1000);
+      timer = setTimeout(() => {
+        stopRecording(id)
+      }, 11000);
+    }).catch(console.error);
+}
+function stopRecording(id){
+  clearTimeout(timer);
+  if(recorder.state != 'inactive'){
+    recorder.stop()
+  }
+  $("#recording"+id).addClass("fa-dot-circle").removeClass("fa-stop-circle")
+  stream.getTracks()[0].stop()
+}
 
 // window.onload = setTimeout(function(){
 //     alert('This is an alert');

@@ -174,8 +174,10 @@ Rails.application.routes.draw do
     post 'admin/dash/catchwords/add', to: 'dash_admin#add_word', as: "dash_admin_add_word"
     post 'admin/dash/objections/add', to: 'dash_admin#add_objection', as: "dash_admin_add_objection"
     put 'admin/dash/objections/:id', to: 'dash_admin#update_objection', as: "dash_admin_update_objection"
+    put 'admin/dash/words/:id', to: 'dash_admin#update_word', as: "dash_admin_update_word"
     post 'admin/dash/baskets', to: 'dash_admin#create_basket', as: "dash_admin_new_basket"
     post 'admin/dash/baskets/:basket_id', to: 'dash_admin#delete_basket', as: "dash_admin_delete_basket"
+    post 'admin/dash/objections/:basket_id', to: 'dash_admin#delete_objection_basket', as: "dash_admin_delete_objection_basket"
     delete 'admin/dash/catchwords/:word_id', to: 'dash_admin#remove_word', as: "dash_admin_remove_word"
     delete 'admin/dash/objections/:word_id', to: 'dash_admin#remove_objection', as: "dash_admin_remove_objection"
     get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_games'
