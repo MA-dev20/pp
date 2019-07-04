@@ -71,10 +71,19 @@
 </section>
 </section>
 
-<%= audio_tag('rated/einzeln.mp3', id: 'tag1') %>
+<%= audio_tag('rated/befoerderung.mp3', id: 'tag1') %>
+<%= audio_tag('rated/bingespannt.mp3', id: 'tag2') %>
+<%= audio_tag('rated/gaensehaut.mp3', id: 'tag3') %>
+<%= audio_tag('rated/haettegekauft.mp3', id: 'tag4') %>
+<%= audio_tag('rated/ihrhabtbewertet.mp3', id: 'tag5') %>
+<%= audio_tag('rated/jaaaaa.mp3', id: 'tag6') %>
+<%= audio_tag('rated/neuerleitwolf.mp3', id: 'tag7') %>
+<%= audio_tag('rated/staunen.mp3', id: 'tag8') %>
+<%= audio_tag('rated/ueberzeugperformance.mp3', id: 'tag9') %>
+<%= audio_tag('rated/wolfowelpe.mp3', id: 'tag10') %>
 <script>
+    pick(10);
     setTimeout(function() {
-        pick(1);
         ratecircle('#spontan', 'spontan_text', <%= @rating.spontan / 100.0 %>);
     }, 2000);
     setTimeout(function() {
