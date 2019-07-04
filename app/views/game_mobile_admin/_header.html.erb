@@ -11,5 +11,7 @@
 		  <span></span>
 		  <span></span>
 		</button>
+    <% elsif @game && @game.admin.logo %>
+      <%= image_tag @game.admin.logo.url, class: 'company' %>
 	<% end %>
 </div>
