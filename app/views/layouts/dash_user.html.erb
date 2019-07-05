@@ -76,7 +76,7 @@
                 <button type="button" class="close modal-close" onclick="closeBakset()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
                 <div class="modal-body" id="pop_up-body">
                     <h1>
-                        <span>List of words hinzufügen</span><br><br><br>
+                        <span>Liste für Wörter hinzufügen</span><br><br><br>
                         <%= form_for(:basket, url: dash_admin_new_basket_path) do |f| %>
                             <%= f.text_field :name, placeholder: 'Listname', class: 'form-control' , required: true%><br><br><br>
                             <%= f.submit 'Erstellen', class: 'btn btn-green' %>
