@@ -86,10 +86,14 @@
     overflow-y: hidden;
 }
 #gd_users .users table {
-    width: 100%;
+    width: 120.2vh !important;
 }
 #gd_users thead th {
     border-bottom: 1px solid rgba(1, 1, 1, 0.1) !important;
+    font-size: 2.56vh;
+}
+table.dataTable thead .sorting {
+    background-size: 2vh;
 }
 #gd_users .dataTables_scrollBody,
 #gd_users .dataTables_scrollBody table,

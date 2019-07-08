@@ -10,10 +10,10 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.js"></script>
 <%= form_for(:game, url: new_game_path(@admin), html: {id: 'game_form'}) do |f| %>
   
-  <div class="col1">
+  <div class="col1"> 
       <%= f.label 'Team', class: 'row1' %>
       
-      <div class="row2">
+      <div class="row2 cs-select-row">
       <%= f.label "Bitte Team wählen",id: 'team_error', class: 'error', style: "display: none; margin-bottom: 0;"  %>
       <select id='game_team_id' name="game[team_id]" class="cs-select cs-skin-underline team-select form-field" required>
           <option value='' disabled selected>Team wählen</option>

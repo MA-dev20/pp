@@ -1,4 +1,4 @@
-/*
+ /*
  *= require dash/account
  *= require dash/teams
  *= require dash/games
@@ -646,10 +646,10 @@ modal
 .modal-games {
     position: fixed;
     display: none;
-    top: calc((50vh - 250px) + 8vh);
-    left: calc(50vw - 250px);
+    top: calc((50vh - 39.75vh) + 8vh);
+    left: calc(50vw - 39.75vh);
     z-index: 100000;
-    width: 500px;
+    width: 78vh;
     border-radius: 50px;
 }
 .blue{
@@ -663,13 +663,13 @@ modal
 }
 .modal-games .modal-close{
   position: absolute;
-  top: 20px;
-  top: 20px;
-  right: 20px;
+  top: 3.2vh;
+  right: 3.2vh;
   line-height: 37px;
-  height: 35px;
-  width: 35px;
+  width: 5.45vh;
+  height: 5.45vh;
   border-radius: 50%;
+  font-size: 6.5vh !important;
   color: white;
   background-color: rgba(0,0,0,.1);
   opacity: 1;
@@ -712,19 +712,19 @@ modal
   background-color: #1dabf1;
   background-image: linear-gradient(to right, rgba(29, 171, 241, 0.57), rgba(17, 82, 160, 0.57));
   border: none;
-  border-radius: 50px;
+  border-radius: 8vh;
   min-height: 280px;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
-  padding-bottom: 20px;
+  padding-bottom: 3vh;
 }
 .blue .modal-content{
   background-color: #1dabf1;
   background-image: linear-gradient(to right, rgba(29, 171, 241, 0.57), rgba(17, 82, 160, 0.57));
   border: none;
   width: 640px;
-  border-radius: 50px;
+  border-radius: 8vh;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
-  padding-bottom: 20px;
+  padding-bottom: 3vh;
 }
 .modal-games .modal-content .form-control,
 .modal-teams .modal-content .form-control,
@@ -747,6 +747,7 @@ modal
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2.6vh;
 }
 .modal-teams .modal-body h1 {
     color: #fff;
@@ -757,7 +758,7 @@ modal
     text-align: center;
 }
 .modal-games .modal-body h1 {
-    padding-top: 50px;
+    padding-top: 8vh;
     color: #fff;
     font-size: 1rem;
     font-family: Barack-Medium;
@@ -774,11 +775,27 @@ modal
     margin-bottom: 0;
     text-align: center;
 }
-.modal-games .modal-body h1 span{
-    font-size: 1.5rem;
+.modal-games .modal-body h1 span {
+  font-size: 3.8vh;
+  margin-bottom: 8vh;
+  display: inline-block;
+  width: 100%;
+}
+.modal-games .modal-body form .form-control {
+  height: 6.1vh;
+  font-size: 2.55vh;
+}
+.modal-games .modal-body form .btn-green {
+  min-height: 6.997vh;
+  margin-left: 0vh;
+  font-size: 2.9vh;
+  border-radius: 5vh !important;
+  min-width: 27.03vh;
+  margin-top: 8vh;
+  margin-bottom: 1vh;
 }
 .blue .modal-body h1 span {
-    font-size: 1.5rem;
+    font-size: 3.8vh;
 }
 
 /*
@@ -788,9 +805,6 @@ modal
 */
 
   
-.blue .modal-content{
-  border-radius: 20px
-}
 .blue{
   color: white;
   text-align: center;
@@ -1528,7 +1542,7 @@ modal
 }
 .catchword-block {
   background-color: #fff;
-  border-radius: 24px;
+  border-radius: 4vh;
   padding: 1vh 1.5vh;
   margin-top: 2.6vh;
   margin-bottom: 1.6vh;
@@ -2405,6 +2419,10 @@ button.btn-green-plus.green-plus-se {
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   border: 1px solid transparent;
 }
+.overview-block .overviewBlock-video>img {
+  width: 48vh;
+  height: 27vh;
+}
 .overview-block .overviewBlock-video:hover img {
     transform: scale(1.1);
 }
@@ -2712,11 +2730,24 @@ table tr.user-row-admin td {
 }
 .userEdit-modal.userEdit-modal .modal-content .modal-close.close {
   line-height: 34px !important;
+  top: 3.2vh;
+  right: 3.2vh;
 }
 .userEdit-modal.userEdit-modal .modal-close.modal-close-ch {
   font-size: 3vh !important;
   background-color: #fff;
   border: 2px solid #1ddaaf;
   color: #1ddaaf;
+}
+.cs-select-row div.cs-select {
+  max-width: 66.278vh;
+}
+
+
+
+@media (min-width: 576px){
+  .modal-games .modal-dialog {
+    max-width: 78vh;
+  } 
 }
 
