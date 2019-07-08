@@ -1,5 +1,11 @@
 .cs-skin-underline > span::after {
-	content: image_url('table/arrow-down-black.png');
+	content: '';
+	background: image_url('table/arrow-down-black.png');
+    height: 3vh;
+    width: 2.4vh;
+    top: 2.5vh;
+    background-size: 100%;
+    display: inline-block;
 	right: 0.25em;
 	-webkit-transform: translate3d(0,-50%,0) rotate3d(0,0,1,0deg);
 	transform: translate3d(0,-50%,0) rotate3d(0,0,1,0deg);

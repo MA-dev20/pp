@@ -207,11 +207,13 @@ li.greengreen span {
 }
 .dropdown-menu > a {
     height: 6vh;
-    line-height: 6vh;
+    line-height: 4vh;
     width: 100%;
     z-index: 1000;
     text-align: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    font-size: 2.5vh;
+    padding: 1vh 3.8vh;
 }
 .dropdown img {
     position: relative;

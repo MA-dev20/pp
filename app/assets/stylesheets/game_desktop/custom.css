@@ -10,16 +10,16 @@
 	max-width: 690px;
 }
 #objection-text{
-    font-size: 102px;
-    margin-bottom: 24px;
+    font-size: 14.4vh;
+    margin-bottom: 3.4vh;
     text-shadow: 3px 3px 8px rgba(0,0,0,0.4);
 }
 .countdown .progress {
-	height: 2.75rem;
+	height: 6.577vh;
 	overflow: hidden;
 	font-size: .75rem;
-	max-width: 690px;
-	width: 690px;
+	max-width: 104vh;
+	width: 100%;
 	background-color: #fff;
 	border-radius: 30px;
 	padding: 0;
