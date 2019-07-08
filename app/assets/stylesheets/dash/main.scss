@@ -196,6 +196,11 @@ li.greengreen span {
 .dropdown-toggle::after {
     width: 0;
     height: 0;
+    margin-left: 0.5vh;
+    border-top: 0.7vh solid;
+    border-right: 0.7vh solid transparent;
+    border-bottom: 0;
+    border-left: 0.7vh solid transparent;
 }
 .dropdown-menu {
     padding: 0;
@@ -674,7 +679,6 @@ modal
   background-color: rgba(0,0,0,.1) !important;
   opacity: 1;
   z-index: 1000000;
-  font-size: 40px !important;
   font-weight: 100 !important;
   text-align: center;
 }
@@ -1033,7 +1037,7 @@ modal
 .userEdit-modal.modal {
   top: 0;
   .modal-dialog {
-    max-width: 100vh;
+    max-width: 100vh !important;
     min-height: calc(100% - 3.5rem);
     #list-table {
       height: auto;
@@ -1456,6 +1460,7 @@ modal
       padding: 0.7vh 1.4vh;
       height: 4.36vh;
       font-size: 2vh;
+      border-radius: 4vh !important;
     }
   }
 }
@@ -1590,9 +1595,9 @@ modal
       .bootstrap-tagsinput {
         padding: 0;
         span.tag {
-          border-radius: 10px;
+          border-radius: 2vh;
           padding: 1.3vh 1.2vh;
-          margin-bottom: 4px;
+          margin-bottom: 0.8vh !important;
           display: inline-block;
           &:focus,
           &:active {
@@ -1648,7 +1653,7 @@ modal
         top: 0;
         right: 0;
         bottom: 0;
-        height: 3.6vh;
+        height: 3.8vh;
         width: 11vh;
         font-size: 2.6vh;
         color: #1dd9ae;
@@ -1668,7 +1673,8 @@ modal
     }
   }
   .btn-green {
-    min-height: 28px;
+    min-height: 5vh;
+    border-radius: 5vh !important;
     min-width: 10px;
     font-size: 2.2vh;
     padding: 0.6vh 1.5vh;
@@ -2643,6 +2649,10 @@ button.btn-green-plus.green-plus-se {
 }
 table tr.user-row-admin td {
     background-color: rgba(29,218,176,0.15);
+    font-size: 2.8vh;
+}
+table tr td {
+  font-size: 2.8vh;
 }
 .opacity-class{
   opacity: 0.4;
@@ -2695,7 +2705,8 @@ table tr.user-row-admin td {
   border: 2px solid #1ddaaf;
   color: #1ddaaf;
 }
-.cs-select-row div.cs-select {
+.cs-select-row div.cs-select,
+.select div.cs-select {
   max-width: 66.278vh;
 }
 
@@ -2705,5 +2716,10 @@ table tr.user-row-admin td {
   .modal-games .modal-dialog {
     max-width: 78vh;
   } 
+}
+@media (min-width: 2000px) {
+  .teams-block .bootstrapTag-group .bootstrap-tagsinput input {
+    top: 0;
+  }
 }
 

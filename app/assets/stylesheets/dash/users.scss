@@ -31,7 +31,8 @@
     color: black;
     border-radius: 4vh;
     border: 2px solid #ededed;
-    
+    font-size: 2.5vh;
+    padding-top: 0.6vh;
 }
 #gd_users .top #searchField:focus {
     border-color: rgba(29, 218, 175, 1);
@@ -67,8 +68,8 @@
     border: 1px solid #ededed;
     box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.1);
     padding-bottom: 70px;
-    padding-left: 35px;
-    padding-right: 35px;
+    padding-left: 6vh;
+    padding-right: 6vh;
 }
 #gd_users .users #table td img {
     position: relative;
@@ -87,6 +88,9 @@
 }
 #gd_users .users table {
     width: 120.2vh !important;
+}
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
+    height: 69.81vh !important;
 }
 #gd_users thead th {
     border-bottom: 1px solid rgba(1, 1, 1, 0.1) !important;

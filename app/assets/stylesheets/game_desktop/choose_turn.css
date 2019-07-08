@@ -36,12 +36,15 @@
     animation-fill-mode: forwards;
 }
 #bottom .progress {
-    height: 1rem;
+    height: 2.795vh;
+    max-width: 121vh;
+    width: 100%;
     animation-name: fadefill;
     animation-delay: 12s;
     animation-duration: 3s;
     animation-fill-mode: forwards;
     padding: 0;
+    border-radius: 4vh;
 }
 #bottom .progress-bar {
     animation-name: fill;
@@ -49,6 +52,7 @@
     animation-duration: 15s;
     background-color: rgba(29, 218, 175, 1);
     padding: 0;
+    border-radius: 4vh;
 }
 @keyframes fadefill {
   0% {
