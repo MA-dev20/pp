@@ -1,3 +1,5 @@
+<% @game = @game1 if @game1 %>
+<% @game1 = @game if @game %>
 <div class="menu menu-position">
 	<span class="menu-logo"><img width="144" src="<%= image_url 'logo-m.png' %>"></span>
 	<% if @game %>
