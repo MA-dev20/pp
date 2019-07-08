@@ -29,6 +29,8 @@
        - <%= @game.team.name %> -
        <% if @handy %>
        <%= image_tag 'game/handy_green.png', class: 'handy' %>
+       <% elsif current_admin.logo %>
+       <%= image_tag current_admin.logo.url, class: 'company' %>
        <% end %>
    </section>
     <section id="content">

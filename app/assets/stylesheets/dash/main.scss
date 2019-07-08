@@ -661,7 +661,7 @@ modal
     width: 800px;
     border-radius: 50px;
 }
-.modal-games .modal-close{
+.modal-close{
   position: absolute;
   top: 3.2vh;
   right: 3.2vh;
@@ -671,31 +671,16 @@ modal
   border-radius: 50%;
   font-size: 6.5vh !important;
   color: white;
-  background-color: rgba(0,0,0,.1);
+  background-color: rgba(0,0,0,.1) !important;
   opacity: 1;
   z-index: 1000000;
+  font-size: 40px !important;
+  font-weight: 100 !important;
+  text-align: center;
 }
-.blue .modal-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    line-height: 37px;
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-    color: white;
-    background-color: rgba(0,0,0,.1);
-    opacity: 1;
-    z-index: 1000000;
-}
-.modal-close {
-    font-size: 40px !important;
-    font-weight: 100 !important;
-}
-.modal-games .modal-close:hover{
-    background-color: rgba(0,0,0,.2);
-}
- .blue .modal-close:hover {
+.modal-close:hover{
+    color: #fff;
+    text-decoration: none;
     background-color: rgba(0,0,0,.2);
 }
 .modal-games .modal-dialog{
@@ -930,19 +915,6 @@ modal
 .teamV-modal.modal .modal-content {
   width: 100%;
 }
-.teamV-modal.modal .modal-close {
-  line-height: 5.8vh;
-  height: 4vh;
-  width: 4vh;
-  font-size: 3vh;
-  top: 2vh;
-  right: 2vh;
-  color: white;
-  background-color: rgba(0,0,0,.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .t-overflow {
   overflow-x: auto;
   overflow-y: hidden;
@@ -1153,7 +1125,7 @@ modal
   }
 }
 .teams-block {
-  margin-top: 2.6vh;
+  margin-top: 2vh;
   margin-bottom: 6vh;
   display: inline-block;
   width: 100%;
@@ -1473,14 +1445,6 @@ modal
     .modal-content {
       width: 100%;
     }
-    .modal-close {
-      width: 5vh;
-      height: 5vh;
-      font-size: 3vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
   }
   #list-table {
   padding: 3vh 17vh 1.6vh 17vh !important;
@@ -1621,7 +1585,7 @@ modal
     }
   }
   .teams-block {
-    margin-top: 3vh;
+    margin-top: 2vh;
     .bootstrapTag-group {
       .bootstrap-tagsinput {
         padding: 0;
@@ -2669,14 +2633,6 @@ button.btn-green-plus.green-plus-se {
     width: 100%;
     max-width: 18vh;
     margin: 3vh 0 0 0;
-}
-.listTable-modal .modal-close {
-    top: 12px;
-    right: 12px;
-    line-height: 33px;
-    height: 30px;
-    width: 30px;
-    font-size: 1.4rem;
 }
 .listTable-modal .modal-content {
     width: 550px;
