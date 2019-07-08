@@ -13,6 +13,8 @@
     color: black;
     border-radius: 4vh;
     border: 2px solid #ededed;
+    font-size: 2.5vh;
+    padding-top: 0.6vh;
 }
 #gd_team #searchField:focus {
     border-color: rgba(29, 218, 175, 1);

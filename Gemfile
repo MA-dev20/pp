@@ -17,6 +17,7 @@ gem 'jquery-datatables'
 gem 'kaminari'
 gem 'will_paginate'
 
+gem 'mysql2'
 gem 'carrierwave-video'
 gem 'carrierwave-video-thumbnailer'
 gem 'carrierwave-ffmpeg'
