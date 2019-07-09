@@ -223,6 +223,12 @@ li.greengreen span {
     width: 6vh;
     border-radius: 50%;
 }
+.dropdown-menu.show {
+      transform: inherit !important;
+      top: 8vh !important;
+      left: inherit !important;
+      right: -3vh !important;
+}
 
 .dropdown-menu .red {
     color: red;
