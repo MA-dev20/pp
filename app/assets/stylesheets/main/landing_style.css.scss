@@ -1224,7 +1224,55 @@ product
   
  
 
-@media (min-width: 1900px) {
+@media (min-width: 1921px) {
+	.landing-canvas .container,
+	.footer .container,
+	.header .container {
+    padding-left: 2.243vh;
+    padding-right: 2.243vh;
+    max-width: 170.5vh;
+	}
+	.landing-canvas .row,
+	.footer .row {
+		margin-left: -2.243vh;
+		margin-right: -2.243vh;
+	}
+	.landing-canvas .col-12,
+	.footer .col-12 {
+		padding-left: 2.243vh;
+		padding-right: 2.243vh;
+	}
+	.navbar-list .nav-item .nav-link {
+		font-size: 2.75vh;
+		border: 0.3vh solid transparent;
+		padding: 0.6vh 2.4vh 0.6vh 2.4vh !important;
+		margin: 0 0.3vh;
+		border-radius: 4vh;
+	}
+	.polygon {
+		width: 57.4vh
+	}
+	.polygon .polygon-img img {
+		width: 57.2vh;
+		height: 48vh;
+	}
+	.polygon .navbar-brand img {
+		width: 45.2vh;
+		height: 30.5vh;
+	}
+	.header.affix .navbar-brand img {
+		height: 12vh;
+		width: auto;
+	}
+	.header.affix .navbar-expand-lg.bg-transparent {
+		min-height: 10.17vh;
+	}
+	.header.affix .navbar-list .nav-item .nav-link {
+		font-size: 2vh;
+	}
+	.navbar-list {
+		margin-top: 4.5vh;
+	}
 	.app-banner-main h1 {
 		font-size: 6vh;
 		margin-bottom: 1.2vh;
@@ -1248,22 +1296,6 @@ product
 	.app-banner-main div.mb-3.pb-1 {
 		padding-bottom: 0.6vh !important;
 		margin-bottom: 2.4vh !important;
-	}
-	.landing-canvas .container,
-	.footer .container {
-    padding-left: 2.243vh;
-    padding-right: 2.243vh;
-    max-width: 170.5vh;
-	}
-	.landing-canvas .row,
-	.footer .row {
-		margin-left: -2.243vh;
-		margin-right: -2.243vh;
-	}
-	.landing-canvas .col-12,
-	.footer .col-12 {
-		padding-left: 2.243vh;
-		padding-right: 2.243vh;
 	}
 	.app-banner-main div.mb-3 .d-inline-block img {
 		width: 6.4vh;
