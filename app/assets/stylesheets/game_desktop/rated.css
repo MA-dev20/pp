@@ -19,7 +19,7 @@
         opacity: 0;
     }
     100% {
-        left: 100px;
+        left: 13.262vh;
         opacity: 1;
     }
 }
@@ -35,7 +35,7 @@
         opacity: 0;
     }
     100% {
-        right: 100px;
+        right: 13.262vh;
         opacity: 1;
     }
 }
@@ -50,7 +50,7 @@
         opacity: 0;
     }
     100% {
-        top: 150px;
+        top: 19.3vh;
         opacity: 1;
     }
 }
