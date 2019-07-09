@@ -382,3 +382,118 @@
   }
 }
 }
+
+
+@media (min-width: 1280px) {
+  #gd_rated {
+    width: 172.3vh;
+    height: 96.9vh;
+    left: calc( 50% - 84.8vh );
+    top: calc( 50% - 48.5vh );
+  }
+  #gd_rated_spontan,
+  #gd_rated_creativ,
+  #gd_rated_body,
+  #gd_rated_rhetoric {
+    width: 26.91vh;
+    height: 40.4vh;
+  }
+  #gd_rated_spontan {
+    top: 6.8vh;
+    left: 13.5vh;
+  }
+  #gd_rated_creativ {
+    bottom: 7.6vh;
+    left: 13.5vh;
+  }
+  #gd_rated_body {
+    top: 6.8vh;
+    right: 13.5vh;
+  }
+  #gd_rated_rhetoric {
+    bottom: 7.6vh;
+    right: 13.5vh;
+  }
+  #gd_rated .text {
+    margin-top: 1.4vh;
+    font-size: 3.3vh;
+    height: 4.5vh;
+  }
+  #gd_rated .circle {
+    width: 26.91vh;
+    height: 26.91vh;
+    top: 6.6vh;
+    left: 0vh;
+  }
+  .circle .bg_1,
+  .circle .bg_2 {
+    top: 2.1vh;
+    left: 2.1vh;
+    height: 22.87vh;
+    width: 22.87vh;
+  }
+  .circle .bg_1 .avatar,
+  .circle .bg_2 .avatar {
+    top: -4vh;
+    left: -4vh;
+    width: calc(100% + 8.074vh);
+    height: calc(100% + 8.074vh);
+  }
+  .circle .shield {
+    width: 13.454vh;
+    height: 13.454vh;
+    top: 4.8vh;
+    left: 4.8vh;
+    position: absolute;
+  }
+  #gd_rated .pol {
+    top: 21.6vh;
+    left: 14.8vh;
+    height: 14.8vh;
+    width: 14.8vh;
+  }
+  #gd_rated .rate {
+    font-size: 4.8vh;
+    width: 10vh;
+    height: 8vh;
+    line-height: 8vh;
+    top: 25.4vh;
+    left: 17.5vh;
+  }
+  #gd_rated_ges {
+    width: 40.36vh;
+    height: 53.812vh;
+    top: 19.2vh;
+    left: 65.9vh;
+  }
+  #gd_rated_ges .text {
+    margin-top: 2.8vh;
+    line-height: 6.8vh;
+    font-size: 6.8vh;
+  }
+  #gd_rated_ges .circle {
+    width: 40.36vh;
+    height: 40.36vh;
+    top: 10.8vh;
+  }
+  #gd_rated_ges .circle .avatar {
+    width: 34.978vh;
+    height: 34.978vh;
+    top: 2.7vh;
+    left: 2.7vh;
+  }
+  #gd_rated_ges .pol {
+    width: 28vh;
+    height: 28vh;
+    top: 31vh;
+    left: 20vh;
+  }
+  #gd_rated_ges .rate {
+    width: 18vh;
+    height: 14vh;
+    line-height: 12vh;
+    top: 40vh;
+    left: 25vh;
+    font-size: 10.8vh;
+  }
+}
