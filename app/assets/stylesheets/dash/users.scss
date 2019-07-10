@@ -68,8 +68,8 @@
     border: 0.1326vh solid #ededed;
     box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.1);
     padding-bottom: 9.283vh;
-    padding-left: 4.6419vh;
-    padding-right: 4.6419vh;
+    padding-left: 3.9vh;
+    padding-right: 3.9vh;
 }
 #gd_users .users #table td img {
     position: relative;
@@ -87,11 +87,10 @@
     overflow-y: hidden;
 }
 #gd_users thead th {
-    border-bottom: 1px solid rgba(1, 1, 1, 0.1) !important;
-    font-size: 2.1220vh;
-}
-table.dataTable thead .sorting {
-    background-size: 1.989vh;
+  font-size: 2vh;
+  border-bottom: 0.2vh solid rgba(1, 1, 1, 0.1) !important;
+  padding-right: 2.6vh;
+  padding-left: 2.6vh;
 }
 table.dataTable tbody td {
     padding: 1.326vh 2.387vh !important; 
@@ -124,28 +123,21 @@ table.dataTable tbody td {
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button {
     min-width: 3.183vh !important;
-    padding: 1.061vh 2.122vh !important;
+    padding: 0.8vh 2vh !important;
     margin-left: 0.265vh !important;
-    font-size: 2.122vh !important;
+    font-size: 2vh !important;
+}
+table.dataTable thead .sorting {
+  background-size: 1.6vh;
+}
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
+  height: 37.04vh !important;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
     border: 0.1326vh solid #979797 !important;
     border-radius: 0.265vh !important;
 }
-
-
-@media (min-width: 1910px) {
-    #gd_users .users {
-      padding-left: 3.9vh;
-      padding-right: 3.9vh;
-    }
-    #gd_users thead th {
-      font-size: 1.5vh;
-    }
-    table.dataTable thead .sorting {
-      background-size: 1.6vh;
-    }
-    .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
-      height: 37.04vh !important;
-    }
+.dataTables_scrollHead .dataTables_scrollHeadInner,
+#gd_users .users table {
+    width: 100vh !important;
 }
