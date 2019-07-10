@@ -2,7 +2,7 @@
   <div class="head">
      <div class="compare-selects">
       <div class="centerq">
-        <select class="cs-select cs-skin-underline cs-again-select form-field cs-select-set cs-select-left select-user" id="select-user">
+        <select class="cs-select cs-select-ch cs-skin-underline cs-again-select form-field cs-select-set cs-select-left select-user" id="select-user">
             <option value=""   data-class="cs-selected" selected>Nutzer aussuchen</option>
             <% @users.each do |u| %>
                 <% if @user && u.id == @user.id %>
@@ -18,7 +18,7 @@
             <% end %>
         </select>
 
-        <select class="cs-select cs-skin-underline cs-again-select form-field cs-select-set  select-team cs-select-right" id="select-team">
+        <select class="cs-select cs-select-ch cs-skin-underline cs-again-select form-field cs-select-set  select-team cs-select-right" id="select-team">
             <option value=""   data-class="cs-selected" selected>Team aussuchen</option>
             <% @teams.each do |t| %>
                 <% if @team.present? && t.id == @team.id %>
@@ -32,7 +32,7 @@
 
     <div class="center-r">
       <label>Sortieren nach:  </label>
-      <select class="cs-select cs-skin-underline form-field cs-select-set cs-select-right" id="select-rating">
+      <select class="cs-select cs-select-ch cs-skin-underline form-field cs-select-set cs-select-right" id="select-rating">
         <option value="date" selected>Datum</option>
         <option value="rating">Bewertung</option>
       </select>
