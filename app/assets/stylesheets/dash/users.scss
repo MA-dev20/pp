@@ -64,12 +64,12 @@
     left: 5vw;
     top: 18vh;
     background-color: white;
-    border-radius: 25px;
-    border: 1px solid #ededed;
+    border-radius: 3.315vh;
+    border: 0.1326vh solid #ededed;
     box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.1);
-    padding-bottom: 70px;
-    padding-left: 6vh;
-    padding-right: 6vh;
+    padding-bottom: 9.283vh;
+    padding-left: 4.6419vh;
+    padding-right: 4.6419vh;
 }
 #gd_users .users #table td img {
     position: relative;
@@ -87,17 +87,24 @@
     overflow-y: hidden;
 }
 #gd_users .users table {
-    width: 120.2vh !important;
+    width: 118.8vh !important;
 }
 .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
-    height: 69.81vh !important;
+    height: 53.0503vh !important;
 }
 #gd_users thead th {
     border-bottom: 1px solid rgba(1, 1, 1, 0.1) !important;
-    font-size: 2.56vh;
+    font-size: 2.1220vh;
 }
 table.dataTable thead .sorting {
-    background-size: 2vh;
+    background-size: 1.989vh;
+}
+table.dataTable tbody td {
+    padding: 1.326vh 2.387vh !important; 
+    font-size: 2.1220vh !important;
+}
+.dataTables_info {
+    font-size: 2.1220vh;
 }
 #gd_users .dataTables_scrollBody,
 #gd_users .dataTables_scrollBody table,
@@ -121,3 +128,14 @@ table.dataTable thead .sorting {
 .cs-options > ul > li:hover {
     background-color: #f0f0f0;
 }
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    min-width: 3.183vh !important;
+    padding: 1.061vh 2.122vh !important;
+    margin-left: 0.265vh !important;
+    font-size: 2.122vh !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    border: 0.1326vh solid #979797 !important;
+    border-radius: 0.265vh !important;
+}
+
