@@ -87,19 +87,19 @@
     overflow-y: hidden;
 }
 #gd_users table thead tr th {
-  font-size: 1.7vh;
-  padding-right: 2.6vh;
-  padding-left: 2.6vh;
+  font-size: 1.6vh;
+  padding-right: 1.5vh;
+  padding-left: 1.5vh;
   border-bottom: 0 !important;
-  white-space: nowrap;
+  word-break: break-word;
 }
 #gd_users .dataTables_scrollHead .dataTable thead th {
   border-bottom: 0.2vh solid rgba(1, 1, 1, 0.1) !important;
 }
 table.dataTable tbody td {
-    padding: 1.326vh 2.387vh !important; 
-    font-size: 1.7vh !important;
-    white-space: nowrap;
+    padding: 1.2vh 1.5vh !important; 
+    font-size: 1.6vh !important;
+    word-break: break-word;
 }
 .dataTables_info {
     font-size: 1.7vh;
@@ -149,10 +149,10 @@ table.dataTable thead .sorting {
 }
 .dataTables_scrollHead .dataTables_scrollHeadInner,
 #gd_users .users table {
-    width: 100vh !important;
+    width: 102vh !important;
 }
 #gd_users table thead tr th:nth-of-type(1) {
-  opacity: 1;
+  opacity: 1 !important;
   background-image: none;
 }
 #gd_users table thead tr th:nth-of-type(1),
@@ -169,7 +169,7 @@ table.dataTable tbody tr td:nth-of-type(3) {
 }
 #gd_users table thead tr th:nth-of-type(4),
 table.dataTable tbody tr td:nth-of-type(4) {
-  width: 8vh !important;
+  width: 10vh !important;
 }
 #gd_users table thead tr th:nth-of-type(5),
 table.dataTable tbody tr td:nth-of-type(5) {
@@ -178,6 +178,17 @@ table.dataTable tbody tr td:nth-of-type(5) {
 #gd_users table thead tr th:nth-of-type(6),
 table.dataTable tbody tr td:nth-of-type(6) {
   width: 5.2vh !important;
+  text-align: center;
+}
+#gd_users table thead tr th:nth-of-type(7),
+table.dataTable tbody tr td:nth-of-type(7) {
+  width: 5vh !important;
+  text-align: center;
+}
+#gd_users table thead tr th:nth-of-type(8),
+table.dataTable tbody tr td:nth-of-type(8) {
+  width: 3.3vh !important;
+  text-align: center;
 }
 
 
