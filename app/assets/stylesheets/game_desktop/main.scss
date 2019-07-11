@@ -479,3 +479,17 @@ body {
     }
   }
 }
+
+.penta-img {
+  background: image-url('polygon.companylogo.png');
+  right: 5vw;
+  top: 5vh;
+  position: absolute;
+  height: 20vh;
+  width: 20vh;
+  background-size: 20vh;
+  display: flex;
+  padding: 1.5vh;
+  align-items: center;
+  justify-content: center;
+}

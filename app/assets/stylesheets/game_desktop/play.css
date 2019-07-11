@@ -40,10 +40,15 @@
   }
 }
 #gd_play .top #cust-logo {
-    position: absolute;
+   /* position: absolute;
     right: 5vw;
     top: 10vh;
-    height: 10vh;
+    height: 10vh;*/
+    max-width: 10vh;
+    max-height: 9vh;
+    margin-right: 1.4vh;
+    position: relative;
+    top: -0.8vh;
 }
 
 #gd_play .mid #word {

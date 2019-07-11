@@ -3,7 +3,11 @@
     <div class="top">
         <%= image_tag 'defaults/logo-no_shadow.png', id: 'logo', class: 'fly_in_left' %>
         <%= image_tag @user.avatar.quad.url || '', id: 'avatar' %>
-        <%= image_tag @admin.logo.url || '', id: 'cust-logo', class: 'fly_in_right' %>
+        <% if @admin.logo.present? %>
+            <span class="penta-img fly_in_right">
+                <%= image_tag @admin.logo.url || '', id: 'cust-logo' %>
+            </span>
+        <% end %>
     </div>
     <div class="mid">
         <div class="countdown fly_in_bottom"><span class="timer animated flipInX" id='timerall'>01:20</span></div>

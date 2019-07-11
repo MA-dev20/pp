@@ -266,10 +266,9 @@ header
   
   
   .app-banner {
-	  min-height: calc(100vh - 10px);
-	  padding: 220px 0px 50px 0px;
+	  min-height: calc(100vh - 1.416vh);
+	  padding: 31.16vh 0vh 7.082vh 0vh;
 	  position: relative;
-	  overflow: hidden;
   }
   .app-banner-main {
        position: absolute;
@@ -281,9 +280,9 @@ header
       margin: 0 auto;
   }
 .app-banner-img {
-    position: absolute;
-    top: -80px;
-    left: -40px;
+	position: absolute;
+	top: -10vh;
+	left: -20vh;
 }
   .banner-heading {
 	  font-size: 3.75rem;
@@ -1221,10 +1220,11 @@ product
   
   
   
-  
+
+ 
  
 
-@media (min-width: 1921px) {
+@media (min-width: 1922px) {
 	.landing-canvas .container,
 	.footer .container,
 	.header .container {
@@ -2129,9 +2129,83 @@ product
 
 
 
+// ==========
 
-   
+.app-banner-img {
+    position: absolute;
+    bottom: -5vh;
+    top: inherit;
+    left: -5vh;
+}
+.decoration-banner {
+	transform: rotate(46deg);
+	top: 4vh;
+	left: -2vh;
+}
+.decoration-banner .app-banner-img img {
+	min-width: 30vh;
+}
+.app-banner {
+    min-height: calc(100vh - 20vh);
+    padding: 0;
+    position: relative;
+}
+.app-banner-main {
+    position: absolute;
+    top: 31vh;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 830px;
+    margin: 0 auto;
+}
+.landing-canvas {
+	overflow-x: hidden;
+	padding-top: 12vh;
+}
+.header .navbar-expand-lg.bg-transparent {
+    height: 12vh;
+}
+.peter-trial {
+    margin-top: 0;
+}
+.min-height-foot {
+	height: 19.26vh;
+}
+.min-height-foot .paw-col {
+	top: 0;
+}
+.app-banner:before {
+	content: "";
+	background: image_url('banner-left.png');
+	height: 60vh;
+	width: 40vh;
+	display: block;
+	position: absolute;
+	left: -20vh;
+	background-size: 100%;
+	top: -9vh;
+	z-index: -10000;
+}
+.app-banner:after {
+	content: "";
+	background: image_url('banner-right.png');
+	height: 50vh;
+	width: 40vh;
+	display: block;
+	position: absolute;
+	right: -23vh;
+	background-size: 100%;
+	bottom: -12vh;
+	z-index: -100001;
+}
 
 
-
-
+@media (min-width: 1920px) and (max-width: 2000px) {
+	.min-height-foot {
+    	height: 13.26vh;
+	}
+	.container {
+		max-width: 161.473vh;
+	}
+}
