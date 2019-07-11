@@ -1738,13 +1738,13 @@ product
     height: 12vh;
 }
 .peter-trial {
-    margin-top: 0;
+    margin-top: 0 !important;
 }
 .min-height-foot {
 	height: 19.26vh;
 }
 .min-height-foot .paw-col {
-	top: 0;
+	top: -2vh;
 }
 .app-banner:before {
 	content: "";
@@ -1824,9 +1824,17 @@ h1, .h1 {
 	    width: 9vh;
     height: 11.6vh;
 }
+.modal-backdrop {
+	height: auto;
+	width: auto;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
 
 @media (min-width: 768px) {
-	body {
+	body.home-page {
 		zoom: 0.9;
 	}
 	.landing-canvas .container,
