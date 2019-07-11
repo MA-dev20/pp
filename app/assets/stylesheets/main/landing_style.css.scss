@@ -279,11 +279,11 @@ header
       max-width: 830px;
       margin: 0 auto;
   }
-.app-banner-img {
-	position: absolute;
-	top: -10vh;
-	left: -20vh;
-}
+// .app-banner-img {
+// 	position: absolute;
+// 	top: -10vh;
+// 	left: -20vh;
+// }
   .banner-heading {
 	  font-size: 3.75rem;
 	  text-transform: uppercase;
@@ -1224,7 +1224,611 @@ product
  
  
 
-@media (min-width: 1922px) {
+
+@media only screen and (min-width: 992px) {
+	.product-block-beit .product-detail,
+	.product-block-akku .product-detail {
+		margin-top: -44px;
+	}
+	.form-group-postal {
+		max-width: 50%;
+	}
+	.app-banner .container {
+	 	position: absolute;
+	 	left: 0;
+	    right: 0;
+	    bottom: 0;
+	    top: 0;
+	    margin: 0 auto;
+	    min-height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	 }
+}
+@media only screen and (min-width: 768px) {
+	.pitchit-intro [class*="col-"] {
+	  padding: 0 30px;
+	}
+	.offer-box {
+		min-height: 557px;
+	}
+	.offer-top-btn:after {
+		right: -40px;
+		-ms-transform: rotate(-75deg);
+		-webkit-transform: rotate(-75deg);
+		transform: rotate(-75deg);
+	}
+}
+@media only screen and (max-width: 1200px) {
+	.polygon .polygon-img img {
+		max-width: 300px;
+		-o-object-fit: cover;
+		object-fit: cover;
+	}
+	.polygon .navbar-brand img {
+		height: 90px;
+		-o-object-fit: cover;
+		object-fit: cover;
+	}
+	.paw-col.paw-col-1:after {
+    left: -28px;
+    bottom: -35px;
+	}
+	.paw-col.paw-col-2:after {
+		right: -26px;
+		bottom: -42px;
+	}
+	.paw-col.paw-col-3:after {
+		left: 76px;
+		bottom: -33px;
+	}
+	.app-banner video {
+		min-height: 100% !important;
+	}
+}
+@media only screen and (max-width: 991px) {
+	.container {
+		max-width: 100%;
+	}
+	.navbar-expand-lg>.container,
+	.navbar-expand-lg>.container-fluid {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	.polygon .polygon-img {
+		display: none;
+	}
+	.polygon,
+	.polygon .navbar-brand {
+		position: static;
+	}
+	.polygon {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+	}
+	.polygon .navbar-brand {
+		margin-left: -20px;
+	}
+	.polygon .navbar-brand img {
+		max-width: 150px;
+	}
+	.header {
+		background-color: #fff;
+		box-shadow: 0px 6px 15px -10px rgba(0,0,0,0.3);
+	}
+	.navbar-toggler .navbar-toggler-line {
+		background-color: #1c9ee0;
+	}
+	.header .navbar-links {
+		background-color: #1988d0;
+	}
+	.navbar-links .nav-item .nav-link {
+		color: #fff;
+	}
+	.header .navbar-list .nav-item .nav-link {
+		color: #1c9ee0;
+		font-size: 0.875rem;
+	}
+
+	.navbar-list {
+		margin-top: 16px;
+		margin-bottom: 16px;
+	}
+	.navbar-list .nav-item .nav-link {
+		margin: 0;
+	}
+	.header.affix .navbar-list,
+	.footer-label {
+		margin-bottom: 16px;
+	}
+	.customer-section .customer-block-l .customer-review {
+		padding-right: 44px;
+	}
+	.customer-section .customer-block-r .customer-review {
+		padding-left: 44px;
+	}
+	.offer-section {
+		padding-top: 160px;
+	}
+	.product-content {
+		overflow-x: hidden;
+	}
+	.product-block-akku .product-img:after {
+        bottom: -170px;
+        right: 0px;
+    }
+    .app-banner .app-banner-img {
+		position: static;
+    }
+    .offer-block {
+    	padding: 0 2rem;
+    }
+    .app-banner{
+		padding-top: 110px;
+	}
+	.app-banner-main {
+		top: 140px;
+	}
+	.app-banner-img {
+		height: 300px;
+		margin-top: 16px;
+	}
+	.app-banner-img img {
+		max-height: 100%;
+	}
+	.app-banner-main {
+		position: static;
+		width: 100%;
+	}
+    .app-banner video {
+    	top: 90px !important;
+    }
+}
+@media only screen and (max-width: 767px) {
+	.banner-paragraph {
+		font-size: 1.15rem;
+	}
+	.banner-heading {
+		font-size: 2rem;
+	}
+	.btn-green {
+		font-size: 1rem;
+	}
+	.footer-list {
+		margin-bottom: 24px;
+	}
+	.footer-intro {
+		margin-top: 0;
+	}
+	.questions-accordian {
+		margin-top: 50px;
+	}
+	.trial-block {
+		align-items: center;
+		padding-left: 24px;
+	}
+	.trial-block .trial-block-img {
+		width: 80px;
+		height: 80px;
+		min-width: 80px;
+		position: relative;
+	}
+	.trial-block .trial-block-img img {
+		right: 0;
+		bottom: 0;
+		margin: auto;
+	}
+    .trial-block .trial-block-img .overlay {
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		font-size: 40px;
+		margin: auto;
+    }
+	.trial-block p {
+		margin-bottom: 1rem;
+	}
+	.paw-col.paw-col-1:after {
+    left: inherit;
+    bottom: -18px;
+    right: 30px;
+	}
+	.paw-col.paw-col-2:after {
+		right: 30px;
+		bottom: 2px;
+		-ms-transform: rotate(0deg);
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	.paw-col.paw-col-3:after {
+    left: inherit;
+    bottom: -10px;
+    right: 30px;
+  }
+	.box-pitch {
+		margin-bottom: 130px;
+	}
+	.pitchit-intro {
+		padding-bottom: 60px;
+	}
+	.pitchit-intro .row:nth-of-type(1) .col-12:first-child .box-pitch,
+	.pitchit-intro .row:nth-of-type(2) .col-12:last-child .box-pitch,
+	.pitchit-intro .row:nth-of-type(3) .col-12:first-child .box-pitch {
+		margin-bottom: 60px;
+	}
+	.section-heading {
+		font-size: 2rem;
+	}
+	.customer-review h3 {
+		font-size: 1.5rem;
+	}
+	.modal-peterpitch .modal-body p {
+		font-size: 1.25rem;
+	}
+	.modal-peterpitch .modal-body h1 {
+		font-size: 2.25rem;
+	}
+	.modal-form .form-control,
+	.trail-para .trail-text {
+		font-size: 1rem;
+	}
+	.trail-para .trail-text-line {
+		width: 40px;
+	}
+	.price-signup-portion {
+		margin-top: 80px;
+	}
+	.offer-section {
+		padding-bottom: 20px;
+	}
+	.questions-section {
+		padding: 80px 0;
+	}
+	.price-signup-portion form {
+		width: 100%;
+	}
+  .register-inner {
+    margin-top: 0;
+  }
+  .register-logo {
+    overflow: hidden;
+    margin-left: -60px;
+  }
+  .register-page .container {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .register-main {
+    padding: 34px 30px 10px 30px;
+  }
+  .register-main label {
+    font-size: 1.25rem;
+  }
+  .product-block-starten .product-img:after {
+		bottom: -170px;
+		right: 0;
+  }
+  .product-block-beit .product-img:after {
+  	left: 0;
+  	bottom: -150px;
+  }
+  .product-block-akku .decoration-left {
+		bottom: 0px;
+	}
+	.register-inner {
+		margin-top: 0;
+	}
+	.register-logo {
+		overflow: hidden;
+		margin-left: -60px;
+	}
+	.register-page .container {
+		padding-left: 25px;
+		padding-right: 25px;
+	}
+	.register-main {
+		padding: 34px 30px 10px 30px;
+	}
+	.register-main label {
+		font-size: 1.25rem;
+	}
+	.banner-reg {
+		min-height: 810px;
+	}
+	.form-main-reg {
+		margin-top: -570px;
+	}
+	.banner-form .capt-text {
+		padding-top: 0px;
+	} 
+	.banner-form .capt-text h2 {
+		font-size: 40px;
+	}
+	.banner-login {
+		min-height: 1050px;
+	}
+	.form-main-login {
+		margin-top: -640px;
+	}
+	.form-main .row [class*="col-"] {
+		padding: 0 15px;
+	}
+	.product-content .product-block:first-child,
+    .product-content .product-block:last-child {
+        padding-right: 0;
+        padding-left: 20px;
+    }
+    .product-content .product-block:nth-of-type(even) {
+        padding-right: 20px;
+    }
+    .product-content .product-block:nth-of-type(odd) {
+        padding-left: 20px;
+    }
+    .product-block-starten .decoration-left {
+        top: -34px;
+        left: -26px;
+    }
+    .product-block-beit .decoration-right {
+        top: -38px;
+        right: -28px;
+    }
+    .product-block-akku .decoration-left {
+        bottom: 6px;
+        left: -27px;
+	}
+	.pricing-signup .form-group>font {
+		margin-top: 1rem;
+		width: 100%;
+	}
+	.pricing-signup .form-group .btn-green {
+		width: 100%;
+	}
+	.pricing-signup .form-control {
+		height: auto;
+		font-size: 1rem;
+		padding: 0.375rem 0.75rem;
+	}
+	.app-banner-img {
+		position: static;
+		width: 100%;
+	}
+	.paw-col.paw-col-1,
+	.paw-col1.paw-col-2,
+	.paw-col.paw-col-3 {
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		top: calc(74% - 60px);
+	}
+	.paw-col.paw-col-3 {
+		top: calc(90% - 60px);
+	}
+	.peter-trial .trial-container {
+		padding-left: 15px;
+	}
+    .app-banner .app-banner-main {
+    	padding: 10px 15px;
+    }
+    .product-content .product-block-akku .paw-col2 {
+    	right: 15px !important;
+    }
+    .offer-section .offer-top-btn .paw-col1 {
+		right: 0;
+		left: 0;
+		margin: 0 auto;
+    }
+	.modal-peterpitch .modal-close {
+		right: 0;
+		top: 0;
+	}
+}
+@media only screen and (max-width: 575px) {
+	.customer-section .customer-block-l .customer-review {
+		margin-left: 0;
+	}
+	.customer-section .customer-block-r .customer-review {
+		margin-right: 0;
+	}
+	.customer-section,
+	.customerLove-section {
+		padding-bottom: 44px;
+	}
+	.review-box {
+		max-width: 100%;
+		min-height: 150px;
+	}
+	.digit-box input {
+		width: 38px;
+		height: 54px;
+		font-size: 1rem;
+	}
+	// .product-block-akku .decoration-left {
+	// 	bottom: -12px;
+	// }
+	// .product-block-beit .decoration-right {
+	// 	right: -15px;
+	// 	top: -37px;
+	// }
+	// .product-block-akku .decoration-left {
+	// 	left: -15px;
+	// }
+	.trial-block {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 25px;
+	}
+	.trial-block .trial-block-detail {
+		padding: 22px 0px 6px 0px;
+	}
+	.trialblock-btns {
+		bottom: -46px;
+	}
+	.form-main-login {
+		margin-top: -750px;
+	}
+	.coactches_say {
+		padding: 30px 15px;
+	}
+	.img-co {
+		right: 0;
+	}
+	.img-co img {
+		height: 190px;
+	}
+	.banner-form .capt-text h2 {
+		font-size: 32px;
+	}
+	.why_peter {
+		padding: 25px 12px 40px 25px;
+	}
+	.product-block-akku .decoration-left {
+        bottom: -8px;
+        left: -31px;
+    }
+    .banner-paragraph {
+		margin-bottom: 0.4rem;
+	}
+}
+@media only screen and (max-width: 400px) {
+	.product-block-akku .decoration-left {
+		bottom: -24px;
+	}
+}
+
+
+
+// ==========
+
+.app-banner-img {
+    position: absolute;
+    bottom: -5vh;
+    top: inherit;
+    left: -5vh;
+}
+.decoration-banner {
+	transform: rotate(46deg);
+	top: 7vh;
+    left: -3vh;
+}
+.decoration-banner .app-banner-img img {
+	min-width: 32vh;
+}
+.app-banner {
+    min-height: calc(100vh - 20vh);
+    padding: 0;
+    position: relative;
+}
+.app-banner-main {
+    position: absolute;
+    top: 31vh;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 830px;
+    margin: 0 auto;
+}
+.landing-canvas {
+	overflow-x: hidden;
+	padding-top: 12vh;
+}
+.header .navbar-expand-lg.bg-transparent {
+    height: 12vh;
+}
+.peter-trial {
+    margin-top: 0;
+}
+.min-height-foot {
+	height: 19.26vh;
+}
+.min-height-foot .paw-col {
+	top: 0;
+}
+.app-banner:before {
+	content: "";
+	background: image_url('banner-left.png');
+	height: 60vh;
+	width: 40vh;
+	display: block;
+	position: absolute;
+	left: -20vh;
+	background-size: 100%;
+	top: -9vh;
+	z-index: -10000;
+}
+.app-banner:after {
+	content: "";
+	background: image_url('banner-right.png');
+	height: 47vh;
+	width: 40vh;
+	display: block;
+	position: absolute;
+	right: -23vh;
+	background-size: 100%;
+	bottom: -12vh;
+	z-index: -100001;
+}
+
+
+@media (min-width: 1920px) and (max-width: 2000px) {
+	.min-height-foot {
+    	height: 13.26vh;
+	}
+	.container {
+		max-width: 161.473vh;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// dawood-styling
+
+
+.container {
+    max-width: 161.473vh !important;
+}
+.app-banner-main {
+	max-width: 235.7vh;
+}
+h1, .h1 {
+    font-size: 3.363vh;
+}
+.banner-paragraph {
+	font-size: 2.2vh;
+}
+.app-banner video {
+	height: 80vh;
+}
+.app-banner-img {
+	width: 32vh;
+	height: 70vh;
+}
+.app-banner-img img {
+	width: 32vh;
+}
+.app-banner-img svg {
+	    width: 9vh;
+    height: 11.6vh;
+}
+
+@media (min-width: 768px) {
+	body {
+		zoom: 0.9;
+	}
 	.landing-canvas .container,
 	.footer .container,
 	.header .container {
@@ -1300,13 +1904,13 @@ product
 	.app-banner-main div.mb-3 .d-inline-block img {
 		width: 6.4vh;
 	}
-	.app-banner-img {
-		top: -12vh;
-		left: -6vh;
-	}
-	.app-banner-img img {
-		height: 59.8vh;
-	}
+	// .app-banner-img {
+	// 	top: -12vh;
+	// 	left: -6vh;
+	// }
+	// .app-banner-img img {
+	// 	height: 59.8vh;
+	// }
 	.app-banner-main {
 		max-width: 124.1vh;
 	}
@@ -1653,559 +2257,14 @@ product
 		height: 4.8vh;
 	}
 }
-@media only screen and (min-width: 992px) {
-	.product-block-beit .product-detail,
-	.product-block-akku .product-detail {
-		margin-top: -44px;
-	}
-	.form-group-postal {
-		max-width: 50%;
-	}
-	.app-banner .container {
-	 	position: absolute;
-	 	left: 0;
-	    right: 0;
-	    bottom: 0;
-	    top: 0;
-	    margin: 0 auto;
-	    min-height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	 }
-}
-@media only screen and (min-width: 768px) {
-	.pitchit-intro [class*="col-"] {
-	  padding: 0 30px;
-	}
-	.offer-box {
-		min-height: 557px;
-	}
-	.offer-top-btn:after {
-		right: -40px;
-		-ms-transform: rotate(-75deg);
-		-webkit-transform: rotate(-75deg);
-		transform: rotate(-75deg);
-	}
-}
-@media only screen and (max-width: 1200px) {
-	.polygon .polygon-img img {
-		max-width: 300px;
-		-o-object-fit: cover;
-		object-fit: cover;
-	}
-	.polygon .navbar-brand img {
-		height: 90px;
-		-o-object-fit: cover;
-		object-fit: cover;
-	}
-	.paw-col.paw-col-1:after {
-    left: -28px;
-    bottom: -35px;
-	}
-	.paw-col.paw-col-2:after {
-		right: -26px;
-		bottom: -42px;
-	}
-	.paw-col.paw-col-3:after {
-		left: 76px;
-		bottom: -33px;
-	}
-	.app-banner video {
-		min-height: 100% !important;
-	}
-}
-@media only screen and (max-width: 991px) {
-	.container {
-		max-width: 100%;
-	}
-	.navbar-expand-lg>.container,
-	.navbar-expand-lg>.container-fluid {
-		padding-left: 15px;
-		padding-right: 15px;
-	}
-	.polygon .polygon-img {
-		display: none;
-	}
-	.polygon,
-	.polygon .navbar-brand {
-		position: static;
-	}
-	.polygon {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		width: 100%;
-	}
-	.polygon .navbar-brand {
-		margin-left: -20px;
-	}
-	.polygon .navbar-brand img {
-		max-width: 150px;
-	}
-	.header {
-		background-color: #fff;
-		box-shadow: 0px 6px 15px -10px rgba(0,0,0,0.3);
-	}
-	.navbar-toggler .navbar-toggler-line {
-		background-color: #1c9ee0;
-	}
-	.header .navbar-links {
-		background-color: #1988d0;
-	}
-	.navbar-links .nav-item .nav-link {
-		color: #fff;
-	}
-	.header .navbar-list .nav-item .nav-link {
-		color: #1c9ee0;
-		font-size: 0.875rem;
-	}
-
-	.navbar-list {
-		margin-top: 16px;
-		margin-bottom: 16px;
-	}
-	.navbar-list .nav-item .nav-link {
-		margin: 0;
-	}
-	.header.affix .navbar-list,
-	.footer-label {
-		margin-bottom: 16px;
-	}
-	.customer-section .customer-block-l .customer-review {
-		padding-right: 44px;
-	}
-	.customer-section .customer-block-r .customer-review {
-		padding-left: 44px;
-	}
-	.offer-section {
-		padding-top: 160px;
-	}
-	.product-content {
-		overflow-x: hidden;
-	}
-	.product-block-akku .product-img:after {
-        bottom: -170px;
-        right: 0px;
-    }
-    .app-banner .app-banner-img {
-		position: static;
-    }
-    .offer-block {
-    	padding: 0 2rem;
-    }
-    .app-banner{
-		padding-top: 110px;
-	}
-	.app-banner-main {
-		top: 140px;
-	}
-	.app-banner-img {
-		height: 300px;
-		margin-top: 16px;
-	}
-	.app-banner-img img {
-		max-height: 100%;
-		height: auto;
-	}
-	.app-banner-main {
-		position: static;
-		width: 100%;
-	}
-    .app-banner video {
-    	top: 90px !important;
-    }
-}
-@media only screen and (max-width: 767px) {
-	.banner-paragraph {
-		font-size: 1.15rem;
-	}
-	.banner-heading {
-		font-size: 2rem;
-	}
-	.btn-green {
-		font-size: 1rem;
-	}
-	.footer-list {
-		margin-bottom: 24px;
-	}
-	.footer-intro {
-		margin-top: 0;
-	}
-	.questions-accordian {
-		margin-top: 50px;
-	}
-	.trial-block {
-		align-items: center;
-		padding-left: 24px;
-	}
-	.trial-block .trial-block-img {
-		width: 80px;
-		height: 80px;
-		min-width: 80px;
-		position: relative;
-	}
-	.trial-block .trial-block-img img {
-		right: 0;
-		bottom: 0;
-		margin: auto;
-	}
-    .trial-block .trial-block-img .overlay {
-		width: 40px;
-		height: 40px;
-		line-height: 40px;
-		font-size: 40px;
-		margin: auto;
-    }
-	.trial-block p {
-		margin-bottom: 1rem;
-	}
-	.paw-col.paw-col-1:after {
-    left: inherit;
-    bottom: -18px;
-    right: 30px;
-	}
-	.paw-col.paw-col-2:after {
-		right: 30px;
-		bottom: 2px;
-		-ms-transform: rotate(0deg);
-		-webkit-transform: rotate(0deg);
-		transform: rotate(0deg);
-	}
-	.paw-col.paw-col-3:after {
-    left: inherit;
-    bottom: -10px;
-    right: 30px;
-  }
-	.box-pitch {
-		margin-bottom: 130px;
-	}
-	.pitchit-intro {
-		padding-bottom: 60px;
-	}
-	.pitchit-intro .row:nth-of-type(1) .col-12:first-child .box-pitch,
-	.pitchit-intro .row:nth-of-type(2) .col-12:last-child .box-pitch,
-	.pitchit-intro .row:nth-of-type(3) .col-12:first-child .box-pitch {
-		margin-bottom: 60px;
-	}
-	.section-heading {
-		font-size: 2rem;
-	}
-	.customer-review h3 {
-		font-size: 1.5rem;
-	}
-	.modal-peterpitch .modal-body p {
-		font-size: 1.25rem;
-	}
-	.modal-peterpitch .modal-body h1 {
-		font-size: 2.25rem;
-	}
-	.modal-form .form-control,
-	.trail-para .trail-text {
-		font-size: 1rem;
-	}
-	.trail-para .trail-text-line {
-		width: 40px;
-	}
-	.price-signup-portion {
-		margin-top: 80px;
-	}
-	.offer-section {
-		padding-bottom: 20px;
-	}
-	.questions-section {
-		padding: 80px 0;
-	}
-	.price-signup-portion form {
-		width: 100%;
-	}
-  .register-inner {
-    margin-top: 0;
-  }
-  .register-logo {
-    overflow: hidden;
-    margin-left: -60px;
-  }
-  .register-page .container {
-    padding-left: 25px;
-    padding-right: 25px;
-  }
-  .register-main {
-    padding: 34px 30px 10px 30px;
-  }
-  .register-main label {
-    font-size: 1.25rem;
-  }
-  .product-block-starten .product-img:after {
-		bottom: -170px;
-		right: 0;
-  }
-  .product-block-beit .product-img:after {
-  	left: 0;
-  	bottom: -150px;
-  }
-  .product-block-akku .decoration-left {
-		bottom: 0px;
-	}
-	.register-inner {
-		margin-top: 0;
-	}
-	.register-logo {
-		overflow: hidden;
-		margin-left: -60px;
-	}
-	.register-page .container {
-		padding-left: 25px;
-		padding-right: 25px;
-	}
-	.register-main {
-		padding: 34px 30px 10px 30px;
-	}
-	.register-main label {
-		font-size: 1.25rem;
-	}
-	.banner-reg {
-		min-height: 810px;
-	}
-	.form-main-reg {
-		margin-top: -570px;
-	}
-	.banner-form .capt-text {
-		padding-top: 0px;
-	} 
-	.banner-form .capt-text h2 {
-		font-size: 40px;
-	}
-	.banner-login {
-		min-height: 1050px;
-	}
-	.form-main-login {
-		margin-top: -640px;
-	}
-	.form-main .row [class*="col-"] {
-		padding: 0 15px;
-	}
-	.product-content .product-block:first-child,
-    .product-content .product-block:last-child {
-        padding-right: 0;
-        padding-left: 20px;
-    }
-    .product-content .product-block:nth-of-type(even) {
-        padding-right: 20px;
-    }
-    .product-content .product-block:nth-of-type(odd) {
-        padding-left: 20px;
-    }
-    .product-block-starten .decoration-left {
-        top: -34px;
-        left: -26px;
-    }
-    .product-block-beit .decoration-right {
-        top: -38px;
-        right: -28px;
-    }
-    .product-block-akku .decoration-left {
-        bottom: 6px;
-        left: -27px;
-	}
-	.pricing-signup .form-group>font {
-		margin-top: 1rem;
-		width: 100%;
-	}
-	.pricing-signup .form-group .btn-green {
-		width: 100%;
-	}
-	.pricing-signup .form-control {
-		height: auto;
-		font-size: 1rem;
-		padding: 0.375rem 0.75rem;
-	}
-	.app-banner-img {
-		position: static;
-		width: 100%;
-	}
-	.paw-col.paw-col-1,
-	.paw-col1.paw-col-2,
-	.paw-col.paw-col-3 {
-		left: 0;
-		right: 0;
-		margin: 0 auto;
-		top: calc(74% - 60px);
-	}
-	.paw-col.paw-col-3 {
-		top: calc(90% - 60px);
-	}
-	.peter-trial .trial-container {
-		padding-left: 15px;
-	}
-    .app-banner .app-banner-main {
-    	padding: 10px 15px;
-    }
-    .product-content .product-block-akku .paw-col2 {
-    	right: 15px !important;
-    }
-    .offer-section .offer-top-btn .paw-col1 {
-		right: 0;
-		left: 0;
-		margin: 0 auto;
-    }
-	.modal-peterpitch .modal-close {
-		right: 0;
-		top: 0;
-	}
-}
-@media only screen and (max-width: 575px) {
-	.customer-section .customer-block-l .customer-review {
-		margin-left: 0;
-	}
-	.customer-section .customer-block-r .customer-review {
-		margin-right: 0;
-	}
-	.customer-section,
-	.customerLove-section {
-		padding-bottom: 44px;
-	}
-	.review-box {
-		max-width: 100%;
-		min-height: 150px;
-	}
-	.digit-box input {
-		width: 38px;
-		height: 54px;
-		font-size: 1rem;
-	}
-	// .product-block-akku .decoration-left {
-	// 	bottom: -12px;
-	// }
-	// .product-block-beit .decoration-right {
-	// 	right: -15px;
-	// 	top: -37px;
-	// }
-	// .product-block-akku .decoration-left {
-	// 	left: -15px;
-	// }
-	.trial-block {
-		flex-direction: column;
-		align-items: flex-start;
-		padding: 25px;
-	}
-	.trial-block .trial-block-detail {
-		padding: 22px 0px 6px 0px;
-	}
-	.trialblock-btns {
-		bottom: -46px;
-	}
-	.form-main-login {
-		margin-top: -750px;
-	}
-	.coactches_say {
-		padding: 30px 15px;
-	}
-	.img-co {
-		right: 0;
-	}
-	.img-co img {
-		height: 190px;
-	}
-	.banner-form .capt-text h2 {
-		font-size: 32px;
-	}
-	.why_peter {
-		padding: 25px 12px 40px 25px;
-	}
-	.product-block-akku .decoration-left {
-        bottom: -8px;
-        left: -31px;
-    }
-    .banner-paragraph {
-		margin-bottom: 0.4rem;
-	}
-}
-@media only screen and (max-width: 400px) {
-	.product-block-akku .decoration-left {
-		bottom: -24px;
-	}
-}
 
 
 
-// ==========
-
-.app-banner-img {
-    position: absolute;
-    bottom: -5vh;
-    top: inherit;
-    left: -5vh;
-}
-.decoration-banner {
-	transform: rotate(46deg);
-	top: 4vh;
-	left: -2vh;
-}
-.decoration-banner .app-banner-img img {
-	min-width: 30vh;
-}
-.app-banner {
-    min-height: calc(100vh - 20vh);
-    padding: 0;
-    position: relative;
-}
-.app-banner-main {
-    position: absolute;
-    top: 31vh;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 830px;
-    margin: 0 auto;
-}
-.landing-canvas {
-	overflow-x: hidden;
-	padding-top: 12vh;
-}
-.header .navbar-expand-lg.bg-transparent {
-    height: 12vh;
-}
-.peter-trial {
-    margin-top: 0;
-}
-.min-height-foot {
-	height: 19.26vh;
-}
-.min-height-foot .paw-col {
-	top: 0;
-}
-.app-banner:before {
-	content: "";
-	background: image_url('banner-left.png');
-	height: 60vh;
-	width: 40vh;
-	display: block;
-	position: absolute;
-	left: -20vh;
-	background-size: 100%;
-	top: -9vh;
-	z-index: -10000;
-}
-.app-banner:after {
-	content: "";
-	background: image_url('banner-right.png');
-	height: 47vh;
-	width: 40vh;
-	display: block;
-	position: absolute;
-	right: -23vh;
-	background-size: 100%;
-	bottom: -12vh;
-	z-index: -100001;
-}
 
 
-@media (min-width: 1920px) and (max-width: 2000px) {
-	.min-height-foot {
-    	height: 13.26vh;
-	}
-	.container {
-		max-width: 161.473vh;
-	}
-}
+
+
+
+
+
+
