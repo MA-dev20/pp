@@ -1818,7 +1818,7 @@ modal
   .cs-placeholder {
     &:after {
       background: transparent;
-      top: 1.5vh;
+      top: 1.3vh;
     }
   }
 }
@@ -2636,7 +2636,7 @@ button.btn-green-plus.green-plus-se {
   line-height: 3vh;
   margin-right: .28vh;
   position: relative;
-  top: -.3vh;
+  top: -.2vh;
   font-weight: 400;
 }
 .dash_stats_videos .compare-selects .center-r .cs-placeholder {
@@ -2737,9 +2737,11 @@ table tr td {
     max-width: 78vh;
   } 
 }
-@media (min-width: 2000px) {
+@media (min-width: 1900px) {
   .teams-block .bootstrapTag-group .bootstrap-tagsinput input {
     top: 0;
+    height: 3.5vh !important;
+    width: 3.5vh !important;
   }
 }
 

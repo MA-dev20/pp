@@ -73,10 +73,18 @@
               </div>
               
               <div class="link">
+              <% if current_page?( dash_admin_catchwords_path ) %>
+                <%= link_to "Catchwords", dash_admin_catchwords_path, class: 'active' %>
+              <% else %>
                 <%= link_to "Catchwords", dash_admin_catchwords_path %>
+              <% end %>
               </div>
               <div class="link">
+              <% if current_page?( dash_admin_objections_path ) %>
+                <%= link_to "Einwände", dash_admin_objections_path, class: 'active' %>
+              <% else %>
                 <%= link_to "Einwände", dash_admin_objections_path %>
+              <% end %>
               </div>
               
               
