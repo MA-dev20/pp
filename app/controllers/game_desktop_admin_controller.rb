@@ -106,7 +106,7 @@ class GameDesktopAdminController < ApplicationController
     end
     update_game_rating @game
     update_team_rating @team
-    @turn_ratings = @game.turn_ratings.rating_order
+    @turn_ratings = @game.turn_ratings.where(ended: false).rating_order
     place = 1
     @turn_ratings.each do |t|
         @turn = Turn.find(t.turn_id)
@@ -138,6 +138,7 @@ class GameDesktopAdminController < ApplicationController
     @admin = current_admin
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
+      @game.turn_ratings.update_all(ended: true)
       @game.turns.update_all(status: "ended")
       ids = @game.turns.pluck(:id)
       Rating.where('turn_id IN (?)',ids).update_all(disabled: true)

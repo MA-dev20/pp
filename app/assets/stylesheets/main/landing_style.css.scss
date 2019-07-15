@@ -58,9 +58,6 @@ header
 	top: 0;
 	z-index: 555;
 }
-.header .navbar-expand-lg.bg-transparent {
-	min-height: 50px;
-}
 .navbar-list {
 	margin-top: 30px;
 }
@@ -1784,6 +1781,8 @@ product
 }
 .container {
     max-width: 116.5vh;
+    padding-left: 1.5vh;
+    padding-right: 1.5vh;
 }
 .header .navbar-expand-lg.bg-transparent {
     height: 6.9vh;
@@ -1832,6 +1831,8 @@ product
     font-size: 1.82vh;
     border-radius: 10vh !important;
     padding: 0.9vh;
+    min-width: inherit;
+    box-shadow: 0 0.9vh 1.8vh rgba(0, 0, 0, 0.17);
 }
 .app-banner-main {
     max-width: 85vh;
@@ -2054,23 +2055,154 @@ product
     bottom: 2.1vh;
 }
 .cst-sh-m img {
-	min-width: 7.5vh;
+	width: 7.5vh;
+}
+.decoration-set .dot-pin {
+    width: 0.51vh !important;
+    height: 0.51vh !important;
+    border-radius: 1vh !important;
+}
+.decoration-left .dot-pin-t {
+    left: 1.6vh !important;
+    top: 1.9vh !important;
+}
+.decoration-left .dot-pin-b {
+    left: 1.6vh !important;
+    bottom: 1.8vh !important;
+}
+.decoration-right .dot-pin-t {
+    right: 1.8vh !important;
+    top: 1.9vh !important;
+}
+.decoration-right .dot-pin-b {
+    right: 1.82vh !important;
+    bottom: 1.82vh !important;
+}
+.customer-block-r .customer-review {
+    margin-right: 6.7vh;
+}
+.customer-block {
+    margin-bottom: 6vh;
+}
+.decoration-set {
+    width: 5.9vh !important;
+    height: 7.2vh !important;
+}
+.customer-block-r .review-box .decoration-left {
+    left: -4.3vh !important;
+    top: -5.5vh !important;
+}
+.dot-box {
+    width: 1.23vh;
+    height: 1.23vh;
+    border-radius: 4vh;
+    display: inline-block;
+    margin-bottom: 2.91vh;
+}
+.training-block {
+    box-shadow: 0 0 1.8vh 0 rgba(0, 0, 0, 0.32);
+    padding: 4vh 3vh;
+    max-width: 106.15vh;
+}
+.training-block .training-text h2 {
+    font-size: 3.08vh;
+    margin-bottom: 3vh;
+}
+.training-block .training-text p {
+    font-size: 1.85vh;
+    line-height: 2.3vh;
+}
+.training-text {
+	padding-right: 5vh !important;
+	margin-right: 1.5vh !important;
+}
+.questions-accordian {
+    margin-top: 8vh;
+}
+.card-questions .card-header, .questions-accordian > .card .card-header {
+	padding: 4vh 1.5vh 3.5vh 1.5vh !important;
+	border-bottom: 0.1vh solid rgba(0, 0, 0, 0.125) !important;
+}
+.training-block .training-btns {
+	min-width: inherit;
+}
+.card-questions .card-header h4 {
+    font-size: 2.3vh;
 }
 
+.card-questions .card-header .btn {
+    height: 3.2vh;
+    margin-left: 1vh;
+    width: 3.2vh;
+    min-width: inherit;
+}
+.card-questions .card-header .btn img {
+	width: 100%
+}
+.card-body {
+    padding: 2vh;
+    font-size: 1.65vh;
+}
+.footer {
+    padding: 4.1vh 3.1vh;
+}
+.footer .row {
+	margin-right: -1.5vh !important;
+	margin-left: -1.5vh !important;
+}
+.footer .col-12 {
+	padding-right: 1.5vh !important;
+	padding-left: 1.5vh !important;
+}
+.footer-label {
+    font-size: 2.3vh;
+    margin-bottom: 3vh;
+}
+.footer-list li a {
+    font-size: 1.7vh;
+    margin-bottom: 0.8vh;
+}
+.footer-intro {
+    margin-top: 15.5vh;
+    font-size: 1.65vh;
+}
+.footer-intro > span {
+    top: -0.2vh;
+}
+.social-list li a img {
+	height: 3vh;
+}
+.social-list li {
+	margin-right: 0.8vh;
+}
+.customer-block-l .customer-review {
+    margin-left: 6.6vh;
+    min-height: inherit;
+}
+.customer-block-l .review-box .decoration-right {
+    right: -4.2vh;
+    top: -5.4vh;
+}
+.navbar-list {
+	margin-top: 3vh;
+}
 
+.customer-section {
+    padding-top: 2.4vh;
+    padding-bottom: 8vh;
+}
+.questions-section {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+}
+.trialblock-btns {
+	bottom: -2vh;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.customer-block-r .customer-holder .customer-shape {
+    left: -4.5vh;
+}
+.footer-intro img {
+	width: 2vh;
+}
 

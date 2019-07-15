@@ -223,6 +223,7 @@ class GameMobileAdminController < ApplicationController
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
       @game.turns.update_all(status: "ended")
+      @game.turn_ratings.update_all(ended: true)
     end
     session[:game_session_id] = @game.id
     redirect_to gma_new_turn_path
