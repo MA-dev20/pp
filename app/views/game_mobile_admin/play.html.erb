@@ -113,14 +113,7 @@ var Devices = []
   requestVideo()
 <% end %>
 function requestVideo() {
-  navigator.mediaDevices.enumerateDevices().then(gotDevices)
-  function gotDevices(mediaDevices){
-    mediaDevices.forEach(function(mediaDevice){
-      if (mediaDevice.kind === 'videoinput') {
-        Devices.push(mediaDevice)
-      }
-    })
-  }
+  
   var constraints = {
     audio:{
         sampleRate: 48000,
