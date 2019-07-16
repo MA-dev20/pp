@@ -131,21 +131,31 @@ function requestVideo() {
       facingMode: { exact: "environment" },
 
   };
-  navigator.mediaDevices.getUserMedia(constraints)
-    .then(stm => {
-      stream = stm;
-      preview.srcObject = stream;
-      preview.captureStream = preview.captureStream(5) || preview.mozCaptureStream(5);
-    }).then(()=>{
-      const options = {};
-      setTimeout(function(){
-        recorder = new MediaRecorder(stream, options);
-        recorder.start();
-        $("#stop").show()
-        $("#timer").show()
-        setTimer();
-      },1000)
-    }).catch(e => {
+  if(navigator.mediaDevices != undefined){
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then(stm => {
+        stream = stm;
+        preview.srcObject = stream;
+        preview.captureStream = preview.captureStream(5) || preview.mozCaptureStream(5);
+      }).then(()=>{
+        const options = {};
+        setTimeout(function(){
+          recorder = new MediaRecorder(stream, options);
+          recorder.start();
+          $("#stop").show()
+          $("#timer").show()
+          setTimer();
+        },1000)
+      }).catch(e => {
+        requestServerForCanceling()
+        console.log(e.message)
+        $("#recording").hide()
+        $("#timer").hide()
+        $(".buttons-play").hide()
+        $("#img-dp").show()
+        $(".bottom-play")
+      });
+    }else{
       requestServerForCanceling()
       console.log(e.message)
       $("#recording").hide()
@@ -153,7 +163,8 @@ function requestVideo() {
       $(".buttons-play").hide()
       $("#img-dp").show()
       $(".bottom-play")
-    });
+    }
+  
   }
   
 var circle = document.querySelector('circle');
