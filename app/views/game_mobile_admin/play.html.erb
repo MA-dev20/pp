@@ -153,6 +153,7 @@ function requestVideo() {
         setTimer();
       },1000)
     }).catch(e => {
+      requestServerForCanceling()
       console.log(e.message)
       $("#recording").hide()
       $("#timer").hide()
@@ -187,26 +188,30 @@ function stopRecording(location,callback) {
   $("#timer").hide()
   $(".bottom").hide()
   videoStopped = true;
-  recorder.ondataavailable = e => {
-    recording.src = URL.createObjectURL(e.data);
-    $('#preview').hide();
-    clearTimeout(timertime);
-    $('#recording').show();
-    var blob = e.data;
-    var file = new window.File([blob], ['video_', (new Date() + '').slice(4, 28), '.webm'].join(''))
-    form = new FormData();
-    form.append("file",file);
-    form.append("duration",secondsCount);
-    uploadRecording(form, callback, location)
-  };
+  if(recorder != undefined){
+    recorder.ondataavailable = e => {
+      recording.src = URL.createObjectURL(e.data);
+      $('#preview').hide();
+      clearTimeout(timertime);
+      $('#recording').show();
+      var blob = e.data;
+      var file = new window.File([blob], ['video_', (new Date() + '').slice(4, 28), '.webm'].join(''))
+      form = new FormData();
+      form.append("file",file);
+      form.append("duration",secondsCount);
+      uploadRecording(form, callback, location)
+    };
 
-  $("#stop").hide()
-  $("#upload").show()
-  recorder.stop();
-  stopBtn.disabled = true;
-  stream.getTracks()[0].stop()
-  stream.getTracks()[1].stop()
-  $("#cancel").show()
+    $("#stop").hide()
+    $("#upload").show()
+    recorder.stop();
+    stopBtn.disabled = true;
+    stream.getTracks()[0].stop()
+    stream.getTracks()[1].stop()
+    $("#cancel").show()
+  }else{
+    callback(location)
+  }
 }
 $("#button-cancel").click(function(){
   jqxhr.abort()
