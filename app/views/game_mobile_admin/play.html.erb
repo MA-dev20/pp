@@ -120,7 +120,7 @@ function requestVideo() {
         Devices.push(mediaDevice)
       }
     })
- 
+  }
   var constraints = {
     audio:{
         sampleRate: 48000,
@@ -163,7 +163,6 @@ function requestVideo() {
     });
   }
   
-}
 var circle = document.querySelector('circle');
 var radius = circle.r.baseVal.value;
 var circumference = radius * 2 * Math.PI;
