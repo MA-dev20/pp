@@ -128,7 +128,12 @@
 
 
   $(document).ready(function(){
-    
+    (function() {
+        [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
+          new SelectFx(el);
+                    newTab: false;
+        } );
+      })();
     renderElements()
   })
   var selectize;
@@ -207,12 +212,6 @@
   document.addEventListener("turbolinks:load", function() {
   "use strict";
   if ($("#myTable_wrapper").length == 0) {
-    (function() {
-        [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
-          new SelectFx(el);
-                    newTab: false;
-        } );
-      })();
     var table = $('#myTable').DataTable( {
        "responsive": true,
         "sScrollX": true,
