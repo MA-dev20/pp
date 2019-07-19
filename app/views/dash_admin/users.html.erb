@@ -54,9 +54,49 @@
         </tr>
       </thead>
       <tbody>
+       <tr class="user-row user-row-admin">
+          <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.avatar? ? image_tag(@admin.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
+          
+           <td class="name" onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.fname %> <%= @admin.lname %></td>
+           
+           <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.email %></td>
+           
+           <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.company_name %></td>
+           <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><% if Turn.where(user_id: @admin.id).count > 0 %><%= Turn.where(user_id: @admin.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
+           <td><%= @admin.turns.where(admin_turn: true).count %></td>
+           <td>
+           </td>
+           <td><% if @admin.teams.count > 0 %>
+               <%= link_to '', dash_admin_statistics_path, class: "fas fa-chart-line package_pop_up" %>
+               <% end %>
+           </td>
+       </tr>
+     <% @users.each do |u| %>
+        <tr class="user-row">
+           <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.avatar? ? image_tag(u.avatar.quad.url) : image_tag('defaults/wolf.jpg') %></td>
+           
+            <td class="name" onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
+            
+            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.email %></td>
+            
+            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><%= u.company_name %></td>
+            <td onclick="redirect_stats(<%= u.teams.first.id if  u.teams.first.present? %>,<%= u.id %>)"><% if Turn.where(user_id: u.id).count > 0 %><%= Turn.where(user_id: u.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
+            <td><%= u.turns.count %></td>
+            
+            
+            <td>
+                <a href="#" class="edit-user" data-id="<%=u.id %>" data-user=<%=u.to_json.html_safe%> data-teams=<%= u.teams.to_json.html_safe%>> Edit</a>
+            </td>
+            <td><% if u.teams.count > 0 %>
+                <%= link_to '', dash_admin_user_stats_path(u.teams.first, u), class: "fas fa-chart-line package_pop_up" %>
+                <% end %>
+            </td>
+          </tr>
+        <% end %>
         
         </tbody>
       </table>
+
       </div>
     </div>     
    
@@ -88,12 +128,7 @@
 
 
   $(document).ready(function(){
-    (function() {
-        [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
-          new SelectFx(el);
-                    newTab: false;
-        } );
-      })();
+    
     renderElements()
   })
   var selectize;
@@ -166,8 +201,18 @@
         }
         
     }
-    $(document).ready( function () {
-    
+
+
+// $(document).ready( function () {
+  document.addEventListener("turbolinks:load", function() {
+  "use strict";
+  if ($("#myTable_wrapper").length == 0) {
+    (function() {
+        [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
+          new SelectFx(el);
+                    newTab: false;
+        } );
+      })();
     var table = $('#myTable').DataTable( {
        "responsive": true,
         "sScrollX": true,
@@ -205,15 +250,14 @@
           renderElements()
         }
     } );
-    // $("#myTable_filter").hide()
+    $("#myTable_filter").hide()
     $("#searchField").keyup(function(){
       table.search($("#searchField").val()).draw() ;
     })
-    
-} );
+  }
+})
 
 
-    
 var $rows = $('.user-row');
 $('#searchField').keyup(function() {
     
@@ -273,7 +317,7 @@ function renderSelectize(){
     $(".selectize-control").addClass("bootstrap-tagsinput")
     $(".selectize-input.items input").attr("readonly", true);
   // $("").tagsinput()
-}    
+}
 
 
 </script>
