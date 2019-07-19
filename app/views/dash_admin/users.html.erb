@@ -62,7 +62,7 @@
            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.email %></td>
            
            <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><%= @admin.company_name %></td>
-           <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><% if Turn.where(user_id: @admin.id).count > 0 %><%= Turn.where(user_id: @admin.id).last.updated_at.strftime('%d.%m.%Y') %><% end %></td>
+           <td onclick="redirect_stats(<%= @admin.teams.first.id if  @admin.teams.first.present? %>,<%= @admin.id %>, true)"><% if Turn.where(user_id: @admin.id).count > 0 %><%=  %><% end %></td>
            <td><%= @admin.turns.where(admin_turn: true).count %></td>
            <td>
            </td>
