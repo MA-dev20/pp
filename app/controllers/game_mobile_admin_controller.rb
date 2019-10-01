@@ -226,7 +226,7 @@ class GameMobileAdminController < ApplicationController
       @game.turn_ratings.update_all(ended: true)
     end
     session[:game_session_id] = @game.id
-    redirect_to gma_new_turn_path
+    redirect_to gma_new_avatar_path
   end
     
   private
