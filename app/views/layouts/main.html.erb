@@ -37,6 +37,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   </head>
 
   <body class="<%= yield :body_class %>">
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WZWWH8V"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
    <% flash.each do |name, msg| %>
             <% if msg.is_a?(String) %>
                 <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
