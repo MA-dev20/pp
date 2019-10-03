@@ -177,7 +177,13 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rating
-    if @game.state != 'rating' 
+    # @game.turns.where(status: 'accepted').count
+    @rating = Rating.find_by(turn_id: @turn.id)
+    if @rating && @game.state == 'rate'
+      @game.update(state: 'rating')
+      redirect_to gma_rating_path
+      return
+    elsif @game.state != 'rating' 
       @turn.update(status: "ended")
       redirect_to gma_after_rating_path
       return
