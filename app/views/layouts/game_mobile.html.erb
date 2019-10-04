@@ -47,7 +47,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section id="content">
     <% if @game %>
         <%= yield %>
-        <div id='game_channel' data-game-id="<%= @game.id %>"></div>
+    <% elsif @user %>
+        <%= yield %>
+        <div id='game_channel' data-game-id="<%= @game.id %>"></div>    
     <% else %>
         <%= yield %>
     <% end %>
