@@ -45,9 +45,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
     <section id="content">
-    <% if @game %>
-        <%= yield %>
-    <% elsif @user %>
+    <% if (@game && @user) || (@game && @admin) %>
         <%= yield %>
         <div id='game_channel' data-game-id="<%= @game.id %>"></div>    
     <% else %>
