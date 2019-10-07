@@ -10,6 +10,6 @@ module Basket
 	  if self.catchword_baskets.nil?
 	    self.catchword_baskets.build.save!
 	  end
-	  return self.catchword_baskets
+	  return self.catchword_baskets.where.not(objection: true)
 	end
 end
