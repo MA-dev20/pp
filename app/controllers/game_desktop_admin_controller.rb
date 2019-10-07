@@ -71,7 +71,7 @@ class GameDesktopAdminController < ApplicationController
       @game.update(state: 'rate')
     end
   end
-    
+   
   def rating
     if @game.state != 'rating' && @turn.ratings.where(disabled: false).count == 0
       @turn.update(status: 'ended')

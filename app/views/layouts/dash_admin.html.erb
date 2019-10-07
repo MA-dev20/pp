@@ -219,10 +219,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </button>
               <div class="dropdown-menu dropdown-menu-right">
                 <%= link_to "Account", dash_admin_account_path , class: 'dropdown-item'%>
-                <%= link_to "Abrechnungsdaten", dash_admin_billing_path, class: 'dropdown-item'  %>
-                <% if @admin.admin_subscription_id.nil? %>
-                  <%= link_to "Select Package", dash_admin_price_path , class: 'dropdown-item'%>
-                <% end %>
+                <%# <%= link_to "Abrechnungsdaten", dash_admin_billing_path, class: 'dropdown-item'  %>
+                <%# <% if @admin.admin_subscription_id.nil? %>
+                  <%# <%= link_to "Select Package", dash_admin_price_path , class: 'dropdown-item'%>
+                <%# <% end %>
                 <%= link_to 'Logout', destroy_admin_session_path, class: 'dropdown-item red' %>
               </div>
           </div>

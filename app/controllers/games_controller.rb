@@ -64,10 +64,10 @@ class GamesController < ApplicationController
         objections = ObjectionsBasket.includes(:objections).where('id IN (?)', objections_basket_ids).map(&:objections).flatten!
         game.build_objection_basket.save! if game.objection_basket.nil?
         game.objection_basket.objections.destroy_all
-        objections = objections.first(10)
-        if objections_bas.include?("")
+        objections = objections&.first(10)
+        if objections && objections_bas.include?("")
           game.use_peterobjections = true
-          objections+=ObjectionsBasket.peter_objections.first(10-objections.length) if objections.length < 10
+          objections+=ObjectionsBasket.peter_objections&.first(10-objections.length) if objections.length < 10
         else
           game.use_peterobjections = false
         end

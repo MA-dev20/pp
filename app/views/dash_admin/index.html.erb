@@ -155,12 +155,13 @@ $("#url-field").on("change", function(e){
   $("#anim_but").on("click", function(e){
     e.preventDefault()
     if(($("#url-field").val() != "") && $("#game_team_id").val() != ""){
-      $('#pop_up').modal({backdrop: 'static', keyboard: false});
-    }
-    $("#continue").click(function(e){
-      e.preventDefault();
+      // $('#pop_up').modal({backdrop: 'static', keyboard: false});
       createNewGame()
-    });
+    }
+    // $("#continue").click(function(e){
+    //   e.preventDefault();
+    //   createNewGame()
+    // });
   })
 <% else %>
   $("#anim_but").on("click", function(e){
