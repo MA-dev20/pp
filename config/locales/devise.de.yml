@@ -12,6 +12,11 @@ de:
             password: 
               too_short: "too short"
               blank: "is blank"
+            email:
+              blank: 'is blank'
+              taken: 'is already taken'
+
+            
         user:
           attributes:
             email:

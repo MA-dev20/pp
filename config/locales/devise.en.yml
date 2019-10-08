@@ -13,6 +13,8 @@ en:
             password: 
               too_short: "too short"
               blank: "is blank"
+            email:
+              blank: 'is blank'  
         user:
           attributes:
             email:

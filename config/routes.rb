@@ -24,15 +24,15 @@ Rails.application.routes.draw do
   get 'dash_admin/dash_admin_price', to: 'dash_admin#dash_admin_price', as: 'dash_admin_price'
   get 'landing/product', to: 'landing#product', as: 'product'
   root 'landing#index'
-  patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
+  # patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'
-  get 'admins/sign_up/:v_id', to: 'landing#sign_up', as: 'edit_admin'
-  get 'admins/signup/:v_id', to: 'landing#signup' , as: 'edit_next_admin'
-  patch 'admins/update_admin/:v_id', to: 'landing#update_admin', as: 'update_admin'
-  patch 'admins/update_admin_details/:v_id', to: 'landing#update_admin_details', as: 'update_admin_details'
+  # get 'admins/sign_up/:v_id', to: 'landing#sign_up', as: 'edit_admin'
+  # get 'admins/signup/:v_id', to: 'landing#signup' , as: 'edit_next_admin'
+  # patch 'admins/update_admin/:v_id', to: 'landing#update_admin', as: 'update_admin'
+  # patch 'admins/update_admin_details/:v_id', to: 'landing#update_admin_details', as: 'update_admin_details'
 
   get 'coaches/info', to: 'landing#coach', as: 'coach_info'
-  get '/verfication/:token' , to: 'verification#token' , as: 'verification_token'
+  # get '/verfication/:token' , to: 'verification#token' , as: 'verification_token'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 ########
 # Game #
@@ -125,7 +125,11 @@ Rails.application.routes.draw do
 ##############
 # Backoffice #
 ##############
-    
+  
+  get 'backoffice/admin/new', to: 'backoffice#new'
+  post 'backoffice/admin/new', to: 'backoffice#create'
+  get 'backoffice/admin/:id/edit', to: 'backoffice#edit', as: 'edit_backoffice_admin'
+  patch 'backoffice/admin/:id', to: 'backoffice#update', as: 'update_backoffice_admin'
   get 'backoffice', to: 'backoffice#index', as: 'backoffice'
   get 'backoffice/admins', to: 'backoffice#admins', as: 'backoffice_admins'
   get 'backoffice/baskets/', to: 'backoffice#baskets', as: 'backoffice_baskets'
