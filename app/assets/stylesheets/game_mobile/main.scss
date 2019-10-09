@@ -380,7 +380,8 @@
 .form-field:-webkit-autofill {
     color: white !important;
     height: 100px;
-    line-height: 74px;
+    // line-height: 74px;
+    line-height: normal;
     font-size: 40px;
     cursor: pointer;
     width: 600px;
@@ -433,10 +434,10 @@
     padding-bottom: 1vh;
 }
 
-.bottom > a {
-  padding-top: 2.3vh;
-  padding-bottom: 2.3vh;
-}
+// .bottom > a {
+//   padding-top: 2.3vh;
+//   padding-bottom: 2.3vh;
+// }
 
 .bottom > .pol-bg {
     background-color: transparent;
