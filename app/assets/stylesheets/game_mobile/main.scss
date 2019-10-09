@@ -379,7 +379,7 @@
 .form-field,
 .form-field:-webkit-autofill {
     color: white !important;
-    height: 80px;
+    height: 100px;
     line-height: 74px;
     font-size: 40px;
     cursor: pointer;
@@ -433,7 +433,7 @@
     padding-bottom: 1vh;
 }
 
-.link, .bottom > a {
+.bottom > a {
   padding-top: 2.3vh;
   padding-bottom: 2.3vh;
 }
