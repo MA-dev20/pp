@@ -379,10 +379,8 @@
 .form-field,
 .form-field:-webkit-autofill {
     color: white !important;
-    // height: 80px;
-    height: 200px;
-    // line-height: 74px;
-    line-height: normal;
+    height: 80px;
+    line-height: 74px;
     font-size: 40px;
     cursor: pointer;
     width: 600px;
