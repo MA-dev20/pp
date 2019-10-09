@@ -1,12 +1,12 @@
 <section id="head" class="bounce_in">
-        <h1>Jetzt <%= @user.fname %> bewerten!</h1>
+        <h1 class="nunito-bold">Jetzt <%= @user.fname %> bewerten!</h1>
 </section>
 <section id="middle" class="fly_in_right">
     <div class="circle">
         <%= image_tag @user.avatar.quad.url, class: 'buzz' %>
     </div>
 </section>
-<section id="skip">
+<section id="skip" class="nunito-bold">
    Skip mit Leertaste
 </section>
 <input type="hidden" value=true id="admin" name="">

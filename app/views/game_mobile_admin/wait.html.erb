@@ -1,7 +1,7 @@
 <section id="count_channel" data-game-id="<%= @game.id %>">
 <%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
-    <h1>Alle beigetreten?</h1>
+    <h1 class="nunito-bold">Alle beigetreten?</h1>
 </div>
 <div class="middle">
     <% if @admin.avatar? %>
@@ -13,7 +13,7 @@
     <% end %>
 </div>
 <div class="bottom">
-    <%= link_to 'weiter!', gma_choose_path %>
+    <%= link_to 'weiter!', gma_choose_path, class: 'nunito-regular' %>
 </div>
 </section>
 <%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>

@@ -1,22 +1,22 @@
 <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
-<div class="head">
+<div class="head nunito-bold">
     <h1>Wie ist deine E-Mail?</h1>
 </div>
 <%= form_for(:user, url: gmu_password_path, html: {autocomplete: 'off'}) do |f| %>
 <div class="middle-form">
     <div class="row">
         <% if flash.count != 0 %>
-        <div class="col-12 red">
+        <div class="col-12 red nunito-regular">
             <%= f.email_field :email, placeholder: 'E-Mail', class: 'form-field' %>
         </div>
         <% else %>
-        <div class="col-12">
+        <div class="col-12 nunito-regular">
             <%= f.email_field :email, placeholder: 'E-Mail', class: 'form-field' %>
         </div>
         <% end %>
     </div>
 </div>
 <div class="bottom">
-    <%= f.submit 'weiter!', class: 'link pulse' %>
+    <%= f.submit 'weiter!', class: 'link pulse nunito-regular' %>
 </div>
 <% end %>

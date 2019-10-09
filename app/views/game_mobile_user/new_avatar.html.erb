@@ -1,13 +1,13 @@
 <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
 <% if @user.avatar? %>
 <div class="head">
-    <h1>Wow!</h1>
-    <h3>Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</h3>
+    <h1 class="nunito-bold">Wow!</h1>
+    <h3 class="nunito-regular">Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</h3>
 </div>
 <% else %>
 <div class="head">
-    <h1>Bild hinzufügen!</h1>
-    <h3>Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</h3>
+    <h1 class="nunito-bold">Bild hinzufügen!</h1>
+    <h3 class="nunito-regular">Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</h3>
 </div>
 <% end %>
 <div class="middle">
@@ -37,7 +37,7 @@
 
     <div class="bottom bottom-play">
       <%= render partial: 'toggle_for_rate' %>
-      <%= f.submit 'weiter!', class: 'link pulse' %>
+      <%= f.submit 'weiter!', class: 'link pulse nunito-regular' %>
       <% end %>
     </div>
 <% end %>

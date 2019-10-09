@@ -1,13 +1,13 @@
 <%= render partial: 'header' , locals: {can: false}%>
 <% if @admin.avatar? %>
 <div class="head">    
-    <h1>Wow!</h1>
-    <h3>Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</h3>
+    <h1 class="nunito-bold">Wow!</h1>
+    <h3 class="nunito-regular">Drücke auf "weiter" oder auf das <br> Bild für einen neuen Versuch!</h3>
 </div>
 <% else %>
-<div class="head">
-    <h1>Bild hinzufügen!</h1>
-    <h3>Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</h3>
+<div class="head nunito-bold">
+    <h1 class="nunito-bold">Bild hinzufügen!</h1>
+    <h3 class="nunito-regular">Drücke das Plus, um ein Foto zu machen oder ein bestehendes Bild von dir hochzuladen.</h3>
 </div>
 <% end %>
 <div class="middle">
@@ -36,9 +36,9 @@
             <input type="checkbox" id="start" value="rate" name="play" >
             <span class="slider round"></span>
           </label>
-          <p class="text-for-switch" id=''>Ich möchte selbst nicht pitchen,<br> sondern nur bewerten</p>
+          <p class="text-for-switch nunito-regular" id=''>Ich möchte selbst nicht pitchen,<br> sondern nur bewerten</p>
         </div>
-        <%= f.submit 'weiter!', class: 'link pulse' %>
+        <%= f.submit 'weiter!', class: 'link pulse nunito-regular' %>
       <% end %>
     </div>
   <% end %>

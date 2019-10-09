@@ -1,6 +1,6 @@
 <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
 <div class="head">
-    <h1>Jetzt <%= @cur_user.fname %> bewerten!</h1>
+    <h1 class="nunito-bold">Jetzt <%= @cur_user.fname %> bewerten!</h1>
 </div>
 <%= form_for(:rating, url: new_rating_user_path(@turn)) do |f| %>
 <div class="middle">

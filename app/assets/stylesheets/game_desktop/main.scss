@@ -9,8 +9,9 @@
  *= require bootstrap.min
  *= require omnes
  */
-
+@import '../nunito-fonts.scss';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
 body {
     font-family: 'BarackPro-Solid';
     margin: 0;
