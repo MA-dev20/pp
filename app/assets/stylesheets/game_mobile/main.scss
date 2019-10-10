@@ -419,14 +419,14 @@
     top: 5vh;
     background-color: #1ddaaf;
     color: white;
-    border-radius: 3vh;
-    // border-radius: 4.013vh;
+    // border-radius: 3vh;
+    border-radius: 4.013vh;
     border: none;
-    font-size: 3vh;
-    // font-size: 2.67vh;
-    height: 6vh;
-    // height: 8.026vh;
-    // line-height: 2.67vh;
+    // font-size: 3vh;
+    font-size: 2.67vh;
+    // height: 6vh;
+    height: 8.026vh;
+    line-height: 2.67vh;
     line-height: normal;
     padding-left: 50px;
     padding-right: 50px;
@@ -436,10 +436,10 @@
     padding-bottom: 1vh;
 }
 
-// .bottom > a {
-//   padding-top: 2.3vh;
-//   padding-bottom: 2.3vh;
-// }
+.bottom > a {
+  padding-top: 2.3vh;
+  padding-bottom: 2.3vh;
+}
 
 .bottom > .pol-bg {
     background-color: transparent;
