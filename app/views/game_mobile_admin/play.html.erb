@@ -124,12 +124,10 @@ function requestVideo() {
     ,
     video:{
         facingMode: { exact: "environment" },
-        height: {min: 720, ideal: 1080},
-        width: {min: 1280, ideal: 1920},
-        frameRate: {min: 30, ideal: 60}
+        height: {min: 720, ideal: 1280},
+        width: {min: 1280, ideal: 1920}
     },
       facingMode: { exact: "environment" },
-
   };
   if(navigator.mediaDevices != undefined){
     navigator.mediaDevices.getUserMedia(constraints)
@@ -148,7 +146,7 @@ function requestVideo() {
         },1000)
       }).catch(e => {
         requestServerForCanceling()
-        console.log(e.message)
+        // alert(e)
         $("#recording").hide()
         $("#timer").hide()
         $(".buttons-play").hide()
