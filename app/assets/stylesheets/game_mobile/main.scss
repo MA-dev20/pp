@@ -436,9 +436,10 @@
     padding-bottom: 1vh;
 }
 
+.link,
 .bottom > a {
-  padding-top: 2.3vh;
-  padding-bottom: 2.3vh;
+  padding-top: 2.3vh !important;
+  padding-bottom: 2.3vh !important;
 }
 
 .bottom > .pol-bg {
