@@ -5,19 +5,19 @@
 <%= form_for(:rating, url: new_rating_user_path(@turn)) do |f| %>
 <div class="middle">
     <div class="row">
-        <%= f.label 'Spontanität: ' %> <div class="output" id="val1"></div>
+        <%= f.label 'Spontanität: ', class: 'nunito-bold' %> <div class="output" id="val1"></div>
         <%= f.range_field :spontan, min: 0, max: 100, id: 'slider1' %>
     </div>
     <div class="row">
-        <%= f.label 'Kreativität: ' %> <div class="output" id="val2"></div>
+        <%= f.label 'Kreativität: ', class: 'nunito-bold' %> <div class="output" id="val2"></div>
         <%= f.range_field :creative, min: 0, max: 100, id: 'slider2' %>
     </div>
     <div class="row">
-        <%= f.label 'Körpersprache: ' %> <div class="output" id="val3"></div>
+        <%= f.label 'Körpersprache: ', class: 'nunito-bold' %> <div class="output" id="val3"></div>
         <%= f.range_field :body, min: 0, max: 100, id: 'slider3' %>
     </div>
     <div class="row">
-        <%= f.label 'Rhetorik: ' %> <div class="output" id="val4"></div>
+        <%= f.label 'Rhetorik: ', class: 'nunito-bold' %> <div class="output" id="val4"></div>
         <%= f.range_field :rhetoric, min: 0, max: 100, id: 'slider4' %>
     </div>
 </div>
