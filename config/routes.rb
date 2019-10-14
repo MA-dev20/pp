@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   put 'dash/account', to: 'user/dash_user#update_user', as: 'dash_user_account_update'
  
 
-
   get 'landing/index'
   get 'landing/price', to: 'landing#price', as: 'price'
   get 'dash_admin/dash_admin_price', to: 'dash_admin#dash_admin_price', as: 'dash_admin_price'
@@ -47,6 +46,7 @@ Rails.application.routes.draw do
   get 'games/choose', to: 'game_desktop_admin#choose', as: 'gda_choose'
   get 'games/turn', to: 'game_desktop_admin#turn', as: 'gda_turn'
   get 'games/error', to: 'game_desktop_admin#error', as: 'gea_turn'
+  get 'video_testing', to: 'game_mobile_admin#video_testing'
   get 'games/play', to: 'game_desktop_admin#play', as: 'gda_play'
   get 'games/rate', to: 'game_desktop_admin#rate', as: 'gda_rate'
   get 'games/rating', to: 'game_desktop_admin#rating', as: 'gda_rating'
