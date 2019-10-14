@@ -1,6 +1,6 @@
 class GameMobileAdminController < ApplicationController
   before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel]
-  before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email]
+  before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email, :video_testing]
   before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
   skip_before_action :verify_authenticity_token, only: [:save_video]
@@ -10,6 +10,15 @@ class GameMobileAdminController < ApplicationController
     session[:admin_email] = nil
     @game1 = Game.where(password: params[:password], active: true).first
     session[:game_session_id] = @game1.id
+  end
+
+
+
+  def video_testing
+    @cur_user = User.first
+    @game1 = Game.first
+    @turn  = Turn.first
+    @record = true
   end
 
   def password
