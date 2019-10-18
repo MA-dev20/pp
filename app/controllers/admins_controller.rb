@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-  skip_before_action :check_expiration_date
+  # skip_before_action :check_expiration_date
   before_action :require_root, :set_vars
   def destroy
     if @admin.destroy
