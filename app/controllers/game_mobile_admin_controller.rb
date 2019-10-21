@@ -216,11 +216,16 @@ class GameMobileAdminController < ApplicationController
   def ended
     @game = current_game
     if @game.state != 'ended'
-      @game.update(state: 'ended', active: false)
+      @game.update(state: 'end_pitch', active: false)
     end
     sign_out(@game)
     sign_out(@admin)
     redirect_to root_path
+    # redirect_to gma_pitch_ended_path
+  end
+
+  def end_pitch
+    @game = current_game
   end
     
   def replay
@@ -283,3 +288,4 @@ class GameMobileAdminController < ApplicationController
       end
     end
 end
+
