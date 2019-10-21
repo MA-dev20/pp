@@ -9,6 +9,8 @@ class GamesController < ApplicationController
     if @game && @game.admin_id == @admin.id
       session[:game_session_id] = @game.id
       @game.turns.update_all(status: 'ended')
+      @game[:youtube_url] = params[:game][:youtube_url]
+      @game.save!
       set_words_for_game(@game, params[:game][:own_rules], params[:game][:baskets], params[:game][:seconds])
       set_objections_for_game(@game, params[:game][:own_rules], params[:game][:objections])
       sign_in(@game)
@@ -21,6 +23,8 @@ class GamesController < ApplicationController
       if params[:game][:team_id].present?
         @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
         if @game.save
+          @game[:youtube_url] = params[:game][:youtube_url]
+          @game.save!
           set_words_for_game(@game, params[:game][:own_rules], params[:game][:baskets], params[:game][:seconds])
           set_objections_for_game(@game, params[:game][:own_rules], params[:game][:objections])
           sign_in(@game)
