@@ -1,7 +1,7 @@
 class PlansController < ApplicationController
   before_action :authenticate_admin!, :set_admin
   before_action :card_check, only: [:create]
-  skip_before_action :check_expiration_date
+  # skip_before_action :check_expiration_date
   layout 'main'
   
   def create
