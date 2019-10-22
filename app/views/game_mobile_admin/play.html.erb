@@ -27,12 +27,14 @@
         </div>
     </div>
 </div>
+<% if params[:video] == 'true' %>
 <div class="bottom bottom-play video-upload-wrapper">
   <div class="upload-btn-wrapper">
     <button class="video-btn nunito-regular">Open Camera</button>
     <input id="video" type="file" name="video" accept="video/*" capture="environment" class="video-file">
   </div>
 </div>
+<% end %>
 <div class="bottom bottom-play" style="top: <%= @record ? '88% !important' : '66%'%>;">
     <%= link_to 'weiter!', gma_rate_path, class: 'nunito-regular' %>
 </div>
