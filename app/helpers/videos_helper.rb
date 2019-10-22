@@ -7,7 +7,7 @@ module VideosHelper
 	      turn["rating"] = number_with_precision(t.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1).to_f if t.turn_rating.present?          
 	      turn["rating"] = number_with_precision(t.ratings.pluck('avg(body), avg(creative), avg(spontan), avg(rhetoric)').first.inject(:+).to_f  / 40, precision: 1).to_f if t.ratings.present?
 	      turn["word"] = t.word.name if t.word.present?
-	      turn["name"] = t.user.fname.to_s.capitalize + ' ' + (t.user.lname.present? ? t.user.lname.first.upcase+"." : t.user.lname)  if t.user.present?
+	      turn["name"] = (t.user.fname.present? ? t.user.fname.to_s.capitalize : '') + ' ' + (t.user.lname.present? ? t.user.lname.first.upcase+"." : '')  if t.user.present?
 	      turn["profile_pic"] = t.user.avatar.url if t.user.present?
 	      turn["name"] = t.admin.fname.to_s.capitalize + ' ' + (t.admin.lname.present? ? t.admin.lname.first.upcase+"." : t.admin.lname) if t.admin.present? and !turn["name"].present?
 	      turn["profile_pic"] = t.admin.avatar.url if !turn["profile_pic"].present?
