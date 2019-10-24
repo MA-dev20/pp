@@ -6,7 +6,7 @@
 
 <div class="middle middle-play middlePlay-top">
   <% if !params[:wait] %>
-  <!-- <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: #{@record == true ? 'none' : 'block'}" %> -->
+  <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: block" %>
   <div class="middle-content">
     <video id="preview" width="600" height="600" style="display: none" controls></video>
     <video id="recording" width="600" height="600" controls style="display: none;"></video>
@@ -29,8 +29,8 @@
     </div>
   </div>
   <% else %>
-    <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: block" %>
-    <div class="middle-content">
+    <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', style: "display: block" %>
+    <div class="bottom bottom-play">
       <h1 class="nunito-bold">Video is uploading in background tab...</h1>
     </div>
   <% end %>
@@ -171,6 +171,7 @@
     uploadRecording(form, '', location)
     $('.video-upload-wrapper').attr('style', 'display: none !important');
     $("#upload").show()
+    $("#img-dp").hide()
     // $("#timer").hide()
     // $(".bottom").hide()
     // videoStopped = true;
@@ -363,6 +364,7 @@
       contentType: false,
       processData: false,
       xhr: function () {
+        console.log(11111111)
         var myXhr = $.ajaxSettings.xhr();
         if (myXhr.upload) {
           myXhr.upload.addEventListener('progress', function (e) {
