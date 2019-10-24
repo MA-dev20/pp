@@ -29,10 +29,12 @@
     </div>
   </div>
   <% else %>
-    <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', style: "display: block" %>
-    <div class="bottom bottom-play">
-      <h1 class="nunito-bold">Das Video wird in einem separaten Tab hochgeladen...</h1>
+  <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', style: "display: block" %>
+  <div class="middle-content">
+    <div class="bottom bottom-play spinner-div">
+      <%= image_tag 'spinner.gif', class: 'spinner mid-img pulse' %>
     </div>
+  </div>
   <% end %>
 </div>
 <% if params[:video] == 'true' && !params[:wait] %>
@@ -84,6 +86,16 @@
 
 
 <style>
+  .spinner-div {
+    top: 45% !important;
+  }
+
+  .spinner {
+    height: auto !important;
+    width: auto !important;
+    left: calc(60% - 200px) !important;
+  }
+
   input[type='file'] {
     display: block !important;
   }
@@ -354,7 +366,7 @@
   var completed_ajax = false;
   function uploadRecording(form, callback, location) {
     App.games.unsubscribe();
-    window.open(window.location.href+"&wait=true", '_blank');
+    window.open(window.location.href + "&wait=true", '_blank');
     jqxhr = $.ajax({
       url: '/mobile/admin/upload',
       type: 'POST',
