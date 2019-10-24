@@ -31,7 +31,7 @@
   <% else %>
   <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', style: "display: block" %>
   <div class="middle-content">
-    <div class="bottom bottom-play spinner-div">
+    <div class="bottom spinner-div">
       <%= image_tag 'spinner.gif', class: 'spinner mid-img pulse' %>
     </div>
   </div>
@@ -88,7 +88,11 @@
 <style>
   .spinner-div {
     top: 45% !important;
+    position: absolute;
   }
+  /* .middle-content {
+    position: relative;
+  } */
 
   .spinner {
     height: auto !important;
@@ -136,7 +140,6 @@
 </style>
 
 <script>
-  var videoParam = '<%= @record && !params[:wait] %>';
   var uploadingprogress = 0;
   var timer = document.getElementById("timer");
   var seconds = 0, minutes = 0, hours = 0, secondsCount = 0;
@@ -152,12 +155,6 @@
   var timertime;
   var videoStopped = false;
   $(document).ready(function () {
-    if(videoParam) {
-      console.log(videoParam);
-      // $('#video')[0].trigger('click');
-      $('#video')[0].click();
-    }
-
     $("#video").on("change", function (e) {
       let file = e.target.files[0];
       let blobURL = URL.createObjectURL(file);
@@ -191,46 +188,6 @@
     $('.video-upload-wrapper').attr('style', 'display: none !important');
     $("#upload").show()
     $("#img-dp").hide()
-    // $("#timer").hide()
-    // $(".bottom").hide()
-    // videoStopped = true;
-    // if(recorder != undefined){
-    //   recorder.ondataavailable = e => {
-    //     recording.src = URL.createObjectURL(e.data);
-    //     $('#preview').hide();
-    //     clearTimeout(timertime);
-    //     $('#recording').show();
-    //     var blob = e.data;
-    //     var file = new window.File([blob], ['video_', (new Date() + '').slice(4, 28), '.mp4'].join(''))
-    //     form = new FormData();
-    //     form.append("file",file);
-    //     form.append("duration",secondsCount);
-    //     uploadRecording(form, callback, location)
-    //   };
-
-    //   $("#stop").hide()
-    //   $("#upload").show()
-    //   recorder.stop();
-    //   stopBtn.disabled = true;
-    //   stream.getTracks()[0].stop()
-    //   stream.getTracks()[1].stop()
-    //   $("#cancel").show()
-    // }else{
-    //   callback(location)
-    // }
-
-
-
-
-
-    // const a = document.createElement('a');
-    // Download file
-    // a.style.display = 'none';
-    // a.href = blobUrl;
-    // document.body.appendChild(a);
-
-    // a.download = "video.mp4";
-    // a.click();
   }
 
 
