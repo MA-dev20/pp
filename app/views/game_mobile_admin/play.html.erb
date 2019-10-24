@@ -90,9 +90,6 @@
     top: 45% !important;
     position: absolute;
   }
-  /* .middle-content {
-    position: relative;
-  } */
 
   .spinner {
     height: auto !important;
@@ -186,8 +183,10 @@
     form.append("file", file1);
     uploadRecording(form, '', location)
     $('.video-upload-wrapper').attr('style', 'display: none !important');
-    $("#upload").show()
-    $("#img-dp").hide()
+    $('#img-dp').attr('style', 'display: none !important');
+    $('#upload').attr('style', 'display: block !important');
+    // $("#upload").show()
+    // $("#img-dp").hide()
   }
 
 
