@@ -142,7 +142,7 @@
     $("#video").on("change", function (e) {
       let file = e.target.files[0];
       let blobURL = URL.createObjectURL(file);
-      uploaddVideo(blobURL, file)
+      uploadVideo(blobURL, file)
     })
 
     $("#start").change(function () {
