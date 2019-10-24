@@ -136,6 +136,7 @@
 </style>
 
 <script>
+  var videoParam = '<%= @record && !params[:wait] %>';
   var uploadingprogress = 0;
   var timer = document.getElementById("timer");
   var seconds = 0, minutes = 0, hours = 0, secondsCount = 0;
@@ -151,6 +152,12 @@
   var timertime;
   var videoStopped = false;
   $(document).ready(function () {
+    if(videoParam) {
+      console.log(videoParam);
+      // $('#video')[0].trigger('click');
+      $('#video')[0].click();
+    }
+
     $("#video").on("change", function (e) {
       let file = e.target.files[0];
       let blobURL = URL.createObjectURL(file);
