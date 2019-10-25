@@ -8,6 +8,7 @@ class LandingController < ApplicationController
 
 
   def index
+    render 'index1'
   end
     
   def coach
