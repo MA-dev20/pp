@@ -17,6 +17,18 @@ class GameDesktopAdminController < ApplicationController
     @count = @game.turns.where(status: "accepted").playable.count 
     @pending_users = @users.select{|user| user if user.status=="pending"}
   end
+
+  def youtube_video
+    # url = "https://youtu.be/XzZudNOwkU8"
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    if @turns.count <= 1
+      redirect_to gea_turn_path
+      return
+    else
+      @video_id = @game.youtube_url.split('/').last
+      ActionCable.server.broadcast "game_#{@game.id}_channel",desktop: "youtube_video", game_admin_id: @game.admin_id
+    end
+  end
     
   def choose
     @handy = true

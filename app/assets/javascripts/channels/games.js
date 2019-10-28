@@ -13,32 +13,41 @@ jQuery(document).ready(function() {
         return console.log("disconneted");
       },
       received: function(data) {
-        var game_state = data['game_state'];
-        if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
-          ajaxRequestToCheck("rate")
-        }else{
-          if ($("#game_channel").data("turn") !== "replay") {
-            if(location.pathname.split("admin")[1]=="/play"){
-              if(typeof completed_ajax !== 'undefined'){
-                if (videoStopped != true){
-                  stopRecording(data['game_state'], function(x){
-                    window.location.replace(x)
-                  })
+
+        var game_state = data['desktop'];
+        if ((game_state == "youtube_video") && (window.location.pathname.split("mobile").length == 1)) {
+          return window.location.replace('youtube_video');
+        } else if((game_state == "youtube_video") && (window.location.pathname.split("admin").length > 1)) {
+          return window.location.replace('youtube_video');
+        }
+        if(data['game_state']){
+          if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
+            ajaxRequestToCheck("rate")
+          }else{
+            if ($("#game_channel").data("turn") !== "replay") {
+              if(location.pathname.split("admin")[1]=="/play"){
+                if(typeof completed_ajax !== 'undefined'){
+                  if (videoStopped != true){
+                    stopRecording(data['game_state'], function(x){
+                      window.location.replace(x)
+                    })
+                  }
+                }else{
+                  if(typeof redirect == "undefined")
+                    return window.location.replace(data['game_state']);
                 }
               }else{
                 if(typeof redirect == "undefined")
                   return window.location.replace(data['game_state']);
               }
-            }else{
+            } else {
+              console.log("return to replay page");
               if(typeof redirect == "undefined")
-                return window.location.replace(data['game_state']);
+                return window.location.replace("replay");
             }
-          } else {
-            console.log("return to replay page");
-            if(typeof redirect == "undefined")
-              return window.location.replace("replay");
           }
         }
+        
       }
     });
     $(window).bind('beforeunload', function(){

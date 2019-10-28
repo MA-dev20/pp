@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   get 'games/choose', to: 'game_desktop_admin#choose', as: 'gda_choose'
   get 'games/turn', to: 'game_desktop_admin#turn', as: 'gda_turn'
   get 'games/error', to: 'game_desktop_admin#error', as: 'gea_turn'
+  get 'games/youtube_video', to: 'game_desktop_admin#youtube_video', as: 'gda_youtube'
   get 'video_testing', to: 'game_mobile_admin#video_testing'
   get 'games/play', to: 'game_desktop_admin#play', as: 'gda_play'
   get 'games/rate', to: 'game_desktop_admin#rate', as: 'gda_rate'
@@ -70,6 +71,7 @@ Rails.application.routes.draw do
     
   get 'mobile/admin/intro', to: 'game_mobile_admin#intro', as: 'gma_intro'
   get 'mobile/admin/wait', to: 'game_mobile_admin#wait', as: 'gma_wait'
+  get 'mobile/admin/youtube_video', to: 'game_mobile_admin#youtube_video', as: 'gma_youtube'
   get 'mobile/admin/error', to: 'game_mobile_admin#error', as: 'gea_mobile'
   get 'mobile/admin/choose', to: 'game_mobile_admin#choose', as: 'gma_choose'
   get 'mobile/admin/choosen/:turn_id', to: 'game_mobile_admin#choosen', as: 'gma_choosen'

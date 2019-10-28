@@ -52,7 +52,7 @@
     $(window).keypress(function (e) {
 
         if (e.key === ' ' || e.key === 'Spacebar') {
-            window.location.replace('<%= gda_choose_path %>');
+            window.location.replace('<%= @game.youtube_url.present? ? gda_youtube_path : gda_choose_path %>');
         };
     });
 </script>
