@@ -82,7 +82,9 @@ class GameDesktopAdminController < ApplicationController
       @game.update(state: 'rating')
     end
     update_turn_rating @turn
-    update_user_rating @user
+    if @user != @admin
+      update_user_rating @user
+    end
     @rating = @turn.turn_rating
   end
     

@@ -1,195 +1,150 @@
-<section id="dash_stats" class="dash_stats-head dash_stats_videos">
-  <div class="head">
-     <div class="compare-selects">
-      <div class="centerq">
-        <select class="cs-select cs-select-ch cs-skin-underline cs-again-select form-field cs-select-set cs-select-left select-user" id="select-user">
-            <option value=""   data-class="cs-selected" selected>Nutzer aussuchen</option>
-            <% @users.each do |u| %>
-                <% if @user && u.id == @user.id %>
-                    <option value="<%= u.id %>"  data-class="cs-selected" selected>
-                        <%= u.fname %> <%= u.lname %>
-                    </option>
-                <% else %>
-                    <option value="<%= u.id %>">
-                        <%= u.fname %> <%= u.lname %>
-                    </option>
-                <% end %>
-                
-            <% end %>
-        </select>
-
-        <select class="cs-select cs-select-ch cs-skin-underline cs-again-select form-field cs-select-set  select-team cs-select-right" id="select-team">
-            <option value=""   data-class="cs-selected" selected>Team aussuchen</option>
-            <% @teams.each do |t| %>
-                <% if @team.present? && t.id == @team.id %>
-                    <option value="<%= t.id %>"  data-class="cs-selected" selected><%= t.name %></option>
-                <%else %>
-                    <option value="<%= t.id %>" ><%= t.name %></option>
-                <% end %>
-            <% end %>
-        </select>
-      </div>
-
-    <div class="center-r">
-      <label>Sortieren nach:  </label>
-      <select class="cs-select cs-select-ch cs-skin-underline form-field cs-select-set cs-select-right" id="select-rating">
-        <option value="date" selected>Datum</option>
-        <option value="rating">Bewertung</option>
-      </select>
+<div class="video-tool-container">
+<div class="video-tool">
+    <div class="searchbar">
+        <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        <input type="text" placeholder="Search" id="searchPitch">
     </div>
-  </div>
+    <% if Turn.where(recorded_pitch: nil).first %>
+    <div class="add" onclick="openDropzone2()">
+        <i class="fas fa-plus"></i>
+    </div>
+    <% end %>
+    <div class="karte">
+        <div class="head left">Video Tool</div>
+        <div class="sort_by">
+        <label for="">Sortieren nach:</label>
+        <select name="sortBy" id="sortBy" class="custom-select">
+            <% if @sort_by == 'dateASC' %>
+                <option value="date" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'dateDSC') %>')" selected>Datum</option>
+            <% else %>
+                <option value="date" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'dateASC') %>')" <% if @sort_by == 'dateDSC' %>selected<% end %> >Datum</option>
+            <% end %>
+            <% if @sort_by == 'fnameASC' %>
+                <option value="" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'fnameDSC') %>')" selected>Vorname</option>
+            <% else %>
+                <option value="" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'fnameASC') %>')" <% if @sort_by == 'fnameDSC' %>selected<% end %>>Vorname</option>
+            <% end %>
+            <% if @sort_by == 'lnameASC' %>
+                <option value="" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'lnameDSC') %>')" selected>Nachname</option>
+            <% else %>
+                <option value="" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'lnameASC') %>')" <% if @sort_by == 'lnameDSC' %>selected<% end %>>Nachname</option>
+            <% end %>
+            <% if @sort_by == 'ratingASC' %>
+                <option value="" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'ratingDSC') %>')" selected>Bewertung</option>
+            <% else %>
+                <option value="" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'ratingASC') %>')" <% if @sort_by == 'ratingDSC' %>selected<% end %>>Bewertung</option>
+            <% end %>
+        </select>
+        </div>
+        <div class="video-list" id="videoList">
+            <% @result.each do |r| %>
+               <div class="video-karte pitches" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')">
+                <div class="top" style="background-image: url('<%= asset_path(r[:pitch_url]) %>')">
+                    <div class="overlay"></div>
+                    <div class="rating"><%= r[:rating] / 10.0 %></div>
+                    <div class="play"><i class="fas fa-play"></i></div>
+                    <div class="heart"><i class="far fa-heart"></i></div>
+                </div>
+                <div class="word">
+                    <%= r[:word] %>
+                </div>
+                <div class="player">
+                    <%= image_tag r[:user_avatar] %>
+                    <%= r[:user_fname] + ' ' + r[:user_lname] %>
+                </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
 
-  </div>
-  <div class="video-overview">
-    <%= render partial: 'videos',locals: {delete: true} %>
-  </div>
-</section>
-
-
-
-  <% content_for(:body_attributes) do %>
-    data-turbolinks="false"
-  <% end %>
-<script type="text/javascript">
-
-    (function() {
-    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
-        function(el) {
-           new SelectFx(el);
-           newTab: false;
-        } );
-    })();
-    function selectClickFunctions(){
-      var userList = $(".cs-options")[0],
-      usersOption = $($(".cs-options")[0]).find("ul li"),
-      teamList = $(".cs-options")[1],
-      teamOption = $($(".cs-options")[1]).find("ul li");
-      usersOption.on('click', function(e){
-          $("#select-team").val('');
-          filterVideos()
-
-      })
-      teamOption.on('click', function(e){
-        e.preventDefault()
-        $("#select-user").val('');
-        filterVideos()
-
-      })
-
-    }
-
-    selectClickFunctions()
-    function deleteVideoFunction(){
-     $(".delete-video").on('click', function(e){
-      e.preventDefault();
-      var $this = $(this);
-      var id = $this.data("id");
-      var result = confirm("Want to delete?");
-      if (result) {
-        $.ajax({
-          url: '/admins/dash/stats/turns/'+id,
-          type: 'delete',
-          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-          success:  function(res){
-            $("#videoNo"+id).remove()
-            filterVideos()
-          }
-        })
-      }
-     }) 
-    }
-    deleteVideoFunction();
-    var sortBy = $(".cs-options")[2],
-    sortOption = $($(".cs-options")[2]).find("ul li");
-    sortOption.on('click', function(e){
-      var $val = $("#select-rating").val() 
-      sortAndRenderTurns($val)      
+<div class="video-uploads">
+    <div class="searchbar">
+        <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        <input type="text" placeholder="Search" id="searchVideo">
+    </div>
+    <div class="add" onclick="openDropzone()">
+        <i class="fas fa-plus"></i>
+    </div>
+    <div class="karte">
+        <div class="head left">Video Uploads</div>
+        <div class="body" id='videouploadList'>
+            <% @admin.videos.each do |v| %>
+                <div class="video-karte videoSearch" style="background-image: url('<%= asset_path(v.file.thumb.url) %>')">
+                    <div class="overlay"></div>
+                    <div class="title"><%= v.name %></div>
+                    <div class="duration"></div>
+                </div>
+            <% end %>
+        </div>
+        
+    </div>
+</div>
+</div>
+<div class="popup" id="dropzone1">
+    
+    <%= form_for(:video, url: video_upload_path(), html: {class: 'dropzone'}) do |f|%>
+        <%= f.hidden_field :admin_id, value: @admin.id %>
+        <%= f.text_field :name, placeholder: 'Enter name here', class: 'field' %>
+        <div class="dz-message">Drop files here or click to upload.</div>
+        <div class="fallback">
+        <%= f.file_field :file %>
+        </div>
+    <% end %>
+    <div class="close" onclick="closeDropzone()"><i class="fas fa-times"></i></div>
+</div>
+<% if Turn.where(recorded_pitch: nil).first %>
+<div class="popup" id="dropzone2">
+    <%= form_for(:turn, url: add_video_to_turn_path(Turn.where(recorded_pitch: nil).first), html: {class: 'dropzone'}) do |f| %>
+        <div class="dz-message">Drop files here or click to upload.</div>
+        <div class="fallback">
+            <%= f.file_field :recorded_pitch %>
+            <%= f.submit 'save' %>
+        </div>
+    <% end %>
+    <div class="close" onclick="closeDropzone2()"><i class="fas fa-times"></i></div>
+</div>
+<% end %>
+<script>
+    /* search Pitches */
+    $('#searchPitch').keyup(function() {
+            $rows = $('.pitches');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).find($('.player')).text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
     })
-    var turns = (<%= raw(@result.to_json) %>);
-    var teams = <%= raw(@teams.to_json) %>;
-    function filterVideos(){
-        var team_id = $("#select-team option:selected").val(),
-          user_id = $("#select-user option:selected").val(),
-          sort_by = $("#select-rating option:selected").val();
-        $.ajax({
-            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-            url: '/admins/dash/filter_videos',
-            type: 'post',
-            data: {user_id: user_id,team_id: team_id, sort_by: sort_by},
-            success: function(res){
-              if(res.users){
-                var template = '<select class="cs-select cs-again-select cs-skin-underline form-field cs-select-set cs-select-left select-user" id="select-user">';
-                template+= '<option value="">Nutzer aussuchen</option>'
-                if(res.users && res.users.length > 0){
-                  res.users.forEach(function(u){
-                    template += `<option value="`+u.id +`">`+u.fname +` `+ u.lname +`</option>`;
-                  })
-                }
-                template+= '</select>';
-                var selectId = $("#select-team option:selected").val();
-                $(".cs-again-select").remove()
-                $('.centerq').append(template);
-                var teamTemplate = `<select class="cs-select  cs-again-select select-team cs-selected cs-skin-underline form-field cs-select-set cs-select-right" id="select-team">`;
-                  teamTemplate+=`<option value=''>Team aussuchen</option>`
-                  teams.forEach(function(el){
-                    if(parseInt(selectId) == el.id ){
-                      teamTemplate+=`<option value=`+el.id+` data-class="cs-selected" selected>`+el.name +`</option>`;
-                    }else{
-                      teamTemplate+=`<option value=`+el.id+`>`+el.name +`</option>`;
-                    }
-                  });
-                  teamTemplate+=`</select>`;
-                  $(".centerq").append(teamTemplate)
-                   document.querySelectorAll( 'select.cs-again-select' ).forEach(
-                      function(el) {
-                         new SelectFx(el);
-                         newTab: false;
-                      } );
-                  selectClickFunctions()
-              }
-              $(".video-overview").empty()
-              $(".video-overview").html(res.turns_html)
-              deleteVideoFunction();
-              turns = res.turns;
-            }
-        })
+    /* search Pitches */
+    $('#searchVideo').keyup(function() {
+            $rows = $('.videoSearch');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).find($('.title')).text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
+    })
+    new PerfectScrollbar('#videoList');
+    new PerfectScrollbar('#videouploadList');
+    function openDropzone() {
+        $('#dropzone1').show();
     }
-
-    function dynamicSort(property) {
-      var sortOrder = 1;
-      if(property[0] === "-") {
-          sortOrder = -1;
-          property = property.substr(1);
-      }
-      return function (a,b) {
-          /* next line works with strings and numbers, 
-           * and you may want to customize it to your needs
-           */
-          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-          return result * sortOrder;
-      }
+    function closeDropzone() {
+        $('#dropzone1').hide();
+        window.location.reload(true);
     }
-    function sortAndRenderTurns(val){
-      renderTemplate(val)
+    function openDropzone2() {
+        $('#dropzone2').show();
     }
-
-    function  renderTemplate(val){      
-      var team_id = $("#select-team option:selected").val(),
-          user_id = $("#select-user option:selected").val(),
-          sort_by = "time";
-        $.ajax({
-            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-            url: '/admins/dash/filter_videos',
-            type: 'post',
-            data: {user_id: user_id,team_id: team_id, sort_by: val},
-            success: function(res){
-              $(".video-overview").empty()
-              $(".video-overview").html(res.turns_html)
-              deleteVideoFunction();
-              turns = res.turns;
-            }
-      })
-      deleteVideoFunction();
-      
+    function closeDropzone2() {
+        $('#dropzone2').hide();
+        window.location.reload(true);
+    }
+    function redirect(url) {
+        window.location.replace(url);
     }
 </script>

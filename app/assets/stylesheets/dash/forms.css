@@ -1,0 +1,254 @@
+label {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 30px;
+    margin-bottom: 0;
+    width: 100%;
+}
+label .alert {
+    float: right;
+    color: #ff5f58;
+    font-weight: 600;
+}
+.field {
+    position: relative;
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    border: solid 1px #dfe1e5;
+    line-height: 48px;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 5px 10px;
+    margin: 0;
+}
+.field .custom-submit-field {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    border: none;
+    line-height: 36px;
+    width: calc(100% - 60px);
+    padding: 0;
+}
+.field .custom-submit {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-color: #16e2a5;
+    border: none;
+    cursor: pointer;
+    color: white;
+    line-height: 28px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+.half-field {
+    width: calc(50% - 10px);
+    height: 48px;
+    border-radius: 8px;
+    border: solid 1px #dfe1e5;
+    line-height: 48px;
+    font-size: 16px;
+    font-weight: 300;
+}
+.searchbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 48px;
+    border-radius: 8px;
+    box-shadow: 0px 6px 20px 0 rgba(107, 107, 107, 0.1);
+    background-color: #ffffff;
+}
+.searchbar img {
+    position: relative;
+    margin: 13px;
+}
+.searchbar input[type='text'] {
+    position: relative;
+    border: none;
+}
+
+.user-list,
+.team-list {
+    position: relative;
+    left: 0;
+    height: 197px;
+    width: 100%;
+    border: 1px solid #dfe1e5;
+    background-color: #fff;
+    overflow: hidden;
+    padding: 0 15px;
+    border-radius: 8px;
+}
+.team-list {
+    height: 100px;
+}
+.user-list .search-field,
+.team-list .search-field {
+    position: relative;
+    left: 0;
+    top: 0;
+    height: 47px;
+    width: 100%;
+    border-bottom: 1px solid #dfe1e5;
+}
+.team-list .search-field {
+    height: 40px;
+}
+.user-list .search-field img,
+.team-list .search-field img {
+    position: relative;
+    float: left;
+    margin: 13px;
+}
+.team-list .search-field img {
+    margin: 9.5px;
+}
+.user-list .search-field input[type='text'],
+.team-list .search-field input[type='text'] {
+    border: none;
+    width: calc(100% - 60px);
+    height: 37px;
+    line-height: 37px;
+    margin: 5px;
+}
+.team-list .search-field input[type='text'] {
+    height: 30px;
+    line-height: 30px;
+    margin: 4px;
+}
+.user-list .user,
+.team-list .team {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #dfe1e5;
+    line-height: 50px;
+    display: flex;
+}
+.team-list .team {
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+}
+.user-list .user img,
+.user-list .user .circle {
+    margin: 7px;
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    background-color: #d7eeff;
+    line-height: 36px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.url-field {
+    position: relative;
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    border: solid 1px #dfe1e5;
+    line-height: 38px;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 5px 10px;
+    margin: 0;
+}
+.url-field .text {
+    float: left;
+}
+.url-field .custom-url-field {
+    float: left;
+    max-width: 60%;
+    border: none;
+    height: 36px;
+}
+.checkbox label {
+    width: auto;
+}
+.img-upload {
+    position: relative;
+    float: left;
+    height: 136px;
+    width: 100px;
+    margin-right: 40px;
+    cursor: pointer;
+}
+.img-upload label {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    text-align: left
+}
+.img-upload img {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+.img-upload i {
+    position: absolute;
+    font-size: 28px;
+    color: #16e2a5;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 50%;
+}
+.fields {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    margin: 20px 0;
+}
+.half-1 {
+    position: relative;
+    width: calc(50% - 10px);
+}
+.half-1-1 {
+    position: relative;
+    width: calc(25% - 10px);
+}
+.half-1-2 {
+    position: relative;
+    width: calc(25% - 10px);
+    margin-left: 10px;
+    
+}
+.half-1-3 {
+    position: relative;
+    width: calc(25% - 10px);
+    margin-left: 20px;
+}
+.half-2 {
+    position: relative;
+    left: 20px;
+    width: calc(50% - 10px);
+}
+
+.btn.half {
+    left: 25% !important;
+    width: 50% !important;
+    margin: 40px auto !important;
+}
+a.remove {
+    position: absolute;
+    bottom: 47px;
+    right: 40px;
+    font-size: 20px;
+    color: #c1c1c1;
+}

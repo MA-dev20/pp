@@ -1,18 +1,190 @@
 class DashAdminController < ApplicationController
   before_action :authenticate_admin!, :set_admin , unless: :skip_action?
-  before_action :set_team, only: [:games, :team_stats, :team_users, :user_stats, :compare_user_stats,:team_stats_share]
-  before_action :set_user, only: [:user_stats, :compare_user_stats]
+  before_action :set_team, only: [:games, :team_stats, :team_users, :team_stats_share]
+  before_action :set_user, only: [:user_stats, :user_stats_compare]
   skip_before_action :check_expiration_date, only: [:billing, :user_list]
   include ApplicationHelper
   include ActionView::Helpers::NumberHelper
   layout :resolve_layout
   
+  #Let's Play
   def index
+    @users = @admin.users
     if params[:team_id]
       @team = Team.find(params[:team_id])
     end
   end
-  
+    
+  #User
+  def teams
+    if params[:team_id]
+      @team = Team.find(params[:team_id])
+      @users = @team.users.order("avatar ASC").limit(10)
+    elsif params[:user_id]
+      @user = User.find(params[:user_id])
+      @users = @admin.users.order("avatar ASC").limit(10)
+    else
+      @users = @admin.users.order("avatar ASC").limit(10)
+    end
+  end
+    
+  #Stats
+    
+  def user_stats
+    if @user.turns.count == 0
+      redirect_to dash_admin_teams_path
+      return
+    end
+    @users = @admin.users.all
+    @turns = @user.turns.all
+    @user_rating = @user.user_rating
+    @turn_ratings = @user.turn_ratings.order('created_at ASC')
+    @date = @turn_ratings.first.created_at.beginning_of_day
+    @days = 1;
+    @turn_ratings.each do |tr|
+        bod = tr.created_at.beginning_of_day
+        if @date != bod
+            @date = bod
+            @days = @days + 1
+        end
+    end
+    @user_ratings = []
+    @users.each do |u|
+        if u.user_rating
+          @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges}
+        end
+    end
+    @user_ratings.sort_by{|e| -e[:rating]}
+    @chartdata = @turn_ratings.map{|t| {turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric}}
+  end
+    
+  def user_stats_compare
+    @user2 = User.find(params[:user2_id])
+    if @user.turns.count == 0 || @user2.turns.count == 0
+      redirect_to dash_admin_teams_path
+      return
+    end
+    @users = @admin.users.all
+    @turns = @user.turns.all
+    @user_rating = @user.user_rating
+    @turn_ratings = @user.turn_ratings.order('created_at ASC')
+    @date = @turn_ratings.first.created_at.beginning_of_day
+    @days = 1
+    @turn_ratings.each do |tr|
+      bod = tr.created_at.beginning_of_day
+      if @date != bod
+        @date = bod
+        @days = @days + 1
+      end
+    end
+    @user_ratings = []
+    @users.each do |u|
+      if u.user_rating
+        @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges}
+      end
+    end
+    @user_ratings.sort_by{|e| -e[:rating]}
+    @chartdata = []
+    @turn_ratings.each do |t|
+      @turnrating2 = TurnRating.where(game_id: t.game_id, user_id: @user2.id).first
+      if @turnrating2
+        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, ges2: @turnrating2.ges,  spontan2: @turnrating2.spontan, creative2: @turnrating2.creative, body2: @turnrating2.body, rhetoric2: @turnrating2.rhetoric}
+      else
+        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric}
+      end
+    end
+  end
+    
+  def team_stats
+    @team_rating = TeamRating.find_by(team_id: @team.id)
+    if @team_rating.nil?
+      redirect_to dash_admin_teams_path
+      return
+    end
+    @games = Game.where(team_id: @team.id)
+    @game_ratings = GameRating.where(team_id: @team.id)
+    @date = @games.first.created_at.beginning_of_day
+    @days = 1
+    @games.each do |g|
+        bod = g.created_at.beginning_of_day
+        if @date != bod
+            @date = bod
+            @days = @days + 1
+        end
+    end
+    @teams = @admin.teams.all
+    @user_ratings = []
+    @team.users.each do |u|
+        if u.user_rating
+            @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges}
+        end
+    end
+    @user_ratings.sort_by{|e| -e[:rating]}
+    @chartdata = @game_ratings.map{|g| {game_id: g.game_id, date: g.created_at.strftime("%d.%m.%Y"), ges: g.ges, spontan: g.spontan, creative: g.creative, body: g.body, rhetoric: g.rhetoric}}
+  end
+
+    
+  #Customize
+  def customize
+    if params[:cbasket_id]
+        @catchword = @admin.catchword_baskets.find(params[:cbasket_id])
+    elsif params[:obasket_id]
+        @objection = @admin.objection_baskets.find(params[:obasket_id])
+    end
+    @catchwords = @admin.catchword_baskets.where(objection: false)
+    @objections = @admin.objection_baskets
+  end
+    
+  #Video Tool
+  def video_tool
+    @sort_by = params[:sort_by]
+    @turn = @admin.turns.where(recorded_pitch: nil).first
+    @users = @admin.users
+    @turns = @admin.turns.where.not(recorded_pitch: nil).order('created_at ASC')
+    @result = []
+    @turns.each do |t|
+      @result << {turn_id: t.id, pitch_url: t.recorded_pitch.thumb.url, word: Word.find(t.word_id).name, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRating.find_by(turn_id: t.id).ges}
+    end
+    if @sort_by == 'fnameASC'
+      @result = @result.sort{|a,b| a[:user_fname] <=> b[:user_fname]}
+    elsif @sort_by == 'fnameDSC'
+      @result = @result.sort{|b,a| a[:user_fname] <=> b[:user_fname]}
+    elsif @sort_by == 'lnameASC'
+      @result = @result.sort{|a,b| a[:user_lname] <=> b[:user_lname]}
+    elsif @sort_by == 'lnameDSC'
+      @result = @result.sort{|b,a| a[:user_lname] <=> b[:user_lname]}
+    elsif @sort_by == 'ratingASC'
+      @result = @result.sort{|a,b| a[:rating] <=> b[:rating]}
+    elsif @sort_by == 'ratingDSC'
+      @result = @result.sort{|b,a| a[:rating] <=> b[:rating]}
+    elsif @sort_by == 'dateDSC'
+      @result = @result.sort{|b,a| a[:date] <=> b[:date]}
+    else
+      @result = @result.sort{|a,b| a[:date] <=> b[:date]}
+    end
+  end
+    
+  def video_details
+    @turn = Turn.find(params[:turn_id])
+    @comments = @turn.comments.order('time_of_video ASC')
+    @word = Word.find(@turn.word_id)
+    @user = @turn.findUser
+    @rating = @turn.turn_rating
+    @my_rating = @turn.ratings.find_by(admin_id: @admin.id)
+  end
+    
+  #Account
+  def account
+  end
+    
+  def add_video_to_turn
+  end
+    
+  def save_video_to_turn
+    @turn = Turn.find(params[:turn_id])
+    @turn.update(recorded_pitch: params[:file])
+  end
+    
   def generate_img_from_html
     kit = html_to_jpg(params[:html], params[:team_id])
     respond_to do |format| 
@@ -24,12 +196,6 @@ class DashAdminController < ApplicationController
       #   send_data(kit.to_png, :type => "image/png", :disposition => 'inline')
       # end
     end
-  end
-
-  def video_tool
-    @users = @admin.users
-    @turns = @admin.turns.where.not(recorded_pitch: nil)
-    @result = json_convert(@turns, "date")
   end
 
   def turn_show
@@ -136,49 +302,12 @@ class DashAdminController < ApplicationController
     render json: {count: @admin.objection_baskets.find(params[:basket_id]).objections.count }
   end
 
-  def teams
-  end
-
   def catchwords
     @baskets = @admin.catchword_baskets.where.not(objection: true)
   end
 
   def objections
     @baskets = @admin.objection_baskets 
-  end
-    
-  def team_stats
-    @users = @admin.users
-    @rating = @team.team_rating
-    @gameratings = @team.game_ratings.order('created_at DESC')
-    @count = 1
-    if !@rating
-      flash[:pop_up] = "Ups, für dieses Team liegen noch keine Statistiken vor.;- Da müsst ihr wohl erst noch eine Runde spielen. -;Let's Play"
-      redirect_to dash_admin_teams_path
-    end
-
-    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
-    @reviewed_videos = userss.map do |user| 
-      user.turns.where.not(recorded_pitch: nil)
-    end
-    @reviewed_videos.flatten!
-    @reviewed_videos.sort_by! {|t| t.created_at}
-    @reviewed_videos.reverse!
-    raw_result = users_ratings userss
-    @result = raw_result.sort_by {|u| -u[:rating][:average]}
-    # if @result.present?
-    #   if @result.count >= 3
-    #     @three_records = @result
-    #   else
-    #     @three_records, current_rating = find_index_and_siblings(@result, current_admin.id) if @result.present?
-    #   end
-    # end
-    @length = raw_result.length
-    @turns = current_admin.turns
-    if params[:team2_id]
-      @team2 = Team.find(params[:team2_id])
-      @gameratings2 = @team2.game_ratings.last(7)
-    end
   end
 
   def team_stats_share
@@ -187,14 +316,6 @@ class DashAdminController < ApplicationController
     @result = raw_result.sort_by {|u| -u[:rating][:average]}
   end
     
-  def users
-    if params[:team_id]
-      @team = Team.find(params[:team_id])
-      @users = @team.users.order("avatar ASC").limit(10)
-    else
-      @users = @admin.users.order("avatar ASC").limit(10)
-    end
-  end
 
   def user_list
     render json: UsersDatatable.new(view_context) 
@@ -267,27 +388,7 @@ class DashAdminController < ApplicationController
     @three_records, @current_rating = find_index_and_siblings(@result,@admin.id) if @result.present?
     @length = raw_result.length
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
-  end
-    
-  def user_stats
-    @users = @admin.users
-    @turns = @user.turns
-    @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
-    @turns_rating = @user.turn_ratings
-    if !@turns_rating.present?
-      flash[:danger] = 'Noch keine bewerteten Spiele!'
-      return redirect_to dash_admin_users_path
-    end
-    @rating = @turns_rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
-    userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").joins(:turn_ratings).distinct
-    raw_result = users_ratings userss
-    @turns_rating = @turns_rating.order('created_at DESC')
-    @result = raw_result.sort_by {|u| -u[:rating][:average]}
-    @ratings = @team.team_rating
-    @average_team_rating = @ratings.attributes.slice("ges", "body","rhetoric", "spontan").values.map(&:to_i).inject(:+) / 40 if @ratings.present?
-    @three_records, @current_rating = find_index_and_siblings(@result,params[:user_id]) if @result.present?
-    @length = raw_result.length
-  end  
+  end 
 
   def compare_user_stats
     @users = @admin.users
@@ -329,8 +430,7 @@ class DashAdminController < ApplicationController
     render json: current_admin.teams.map{|t| {id: t.id, name: t.name}}.to_json
   end
     
-  def account
-  end
+  
     
   def verification
     @token = params[:token]     

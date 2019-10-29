@@ -1,9 +1,0 @@
-<% if @already %>
-	$("#input_name<%=@id %>").addClass("error")
-<% else %>
-	$("#count<%= @id %>").html(<%=@count%>)
-	$("#input_name<%=@id %>").val('');
-	$("#input_name<%=@id %>").removeClass("error")
-	$("#catchword-list<%=@id %>").append("<%= escape_javascript render(:partial => 'objection_li', :locals => { :word => @word, id: @basket.id }) %>");
-<% end %>
-

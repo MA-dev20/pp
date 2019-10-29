@@ -1,6 +1,17 @@
 class AdminsController < ApplicationController
-  skip_before_action :check_expiration_date
-  before_action :require_root, :set_vars
+  before_action :set_admin
+    
+  def edit
+  end
+    
+  def update
+    if @admin.update(admin_params)
+      redirect_to dash_admin_account_path
+    else
+      flash[:danger] = 'Konnte Admin nicht speichern!'
+    end
+  end
+    
   def destroy
     if @admin.destroy
       flash[:success] = 'Spieler erfolgreich gelöscht!'
@@ -10,6 +21,28 @@ class AdminsController < ApplicationController
       redirect_to backoffice_admins_path
     end
   end
+    
+  def edit_logo
+  end
+    
+  def update_logo
+    if @admin.update(logo: params[:file])
+      redirect_to dash_admin_account_path
+    else
+      flash[:danger] = 'Konnte Admin nicht speichern!'
+    end
+  end
+    
+  def edit_avatar
+  end
+    
+  def update_avatar
+    if @admin.update(avatar: params[:file])
+      redirect_to dash_admin_account_path
+    else
+      flash[:danger] = 'Konnte Admin nicht speichern!'
+    end
+  end
 
 
 
@@ -17,8 +50,11 @@ class AdminsController < ApplicationController
 
     
   private
-    def set_vars
-      @root = current_root
+    def set_admin
       @admin = Admin.find(params[:admin_id])
+    end
+    
+    def admin_params
+      params.require(:admin).permit(:company_name, :fname, :lname, :street, :city, :avatar, :logo, :zipcode, :email, :password)
     end
 end

@@ -1,69 +1,411 @@
-<section id="gd_team">
-    <input type="text" id="searchField" placeholder="suchen" onfocus='team_hide()' onblur="team_show()">
-    <%= image_tag 'dash/search.png' %>
-</section>
-
-<section id="teams-container">
-    <div class="add_team" onclick="openTeam()">
-       <a onclick="openTeam()"></a>
-        <div class="head">
-            Team
-        </div>
-        <div class="middle">
-            +
-        </div>
-        <div class="bottom">
-            hinzufügen
+<div class="teams">
+    <div class="searchbar">
+        <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        <input type="text" placeholder="Search Teams" id="searchTeams" onkeyup="search(this, $('.teamname'))">
+    </div>
+    <button class="btn btn-green" onclick="showNewteam()">Team erstellen</button>
+    <div class="karte" id="teams">
+        <div class="head left">Teams</div>
+        <div class="table" id="teams-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Teamname</th>
+                        <th>Users</th>
+                        <th>Rating</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <% @teams.each do |t| %>
+                    <tr class="teamname <% if @team && @team.id == t.id %> active <% end %>" >
+                        <td onclick="selectTeam(<%= t.id %>)" id="search" ><%= t.name %></td>
+                        <td onclick="selectTeam(<%= t.id %>)"><%= t.users.count %></td>
+                        <td onclick="selectTeam(<%= t.id %>)"><div class="rating"><%= if TeamRating.find_by(team_id: t.id) then TeamRating.find_by(team_id: t.id).ges / 10.0 else 0 end%></div></td>
+                        <td><%= link_to '', dash_admin_team_path(t.id, query: 'edit'), class: 'far fa-edit edit'%></td>
+                        <td><%= link_to image_tag('dash/icons/stats.png'), dash_admin_team_stats_path(t.id) %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
         </div>
     </div>
-    <% @teams.each do |t| %>
-    <div class="team_card">
-       <%= link_to '', dash_admin_team_users_path(t.id) %>
-        <div class="head">
-            <%= t.name %>
-        </div>
-        <div class="middle">
-            <span><%= t.users.distinct.count %></span> User
-        </div>
-        <div class="bottom">
-            <%= link_to '', dash_admin_team_stats_path(t.id), class: 'fas fa-chart-line' , id:"users_stats"  %>   
-            <%= link_to '', destroy_team_path(t.id), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie das Team unwiederuflich löschen möchten?" }%>
-        </div>
+    <div class="karte" id="newteam">
+        <i class="back fas fa-arrow-left" onclick="hideNewteam()"></i>
+        <div class="head left">Team erstellen!</div>
+        <%= form_for(:team, url: new_team_path()) do |f| %>
+            <% if flash[:team_name] %>
+                <label>Teamname
+                    <div class="alert alert-team"><%= flash[:team_name] %></div>
+                </label>
+                <%= f.text_field :name, class: 'field red', value: '' %>
+            <% else %>
+                <label>Teamname</label>
+                <%= f.text_field :name, class: 'field', value: ''%>
+            <% end %>
+        
+            <label>Search for Users</label><br>
+            <div class="user-list">
+                <div class="search-field">
+                    <%= image_tag 'dash/icons/search.png', class: 'search' %>
+                    <input type="text" placeholder="Search Users" id='searchNewTeam'>
+                </div>
+                <% @admin.users.all.each do |u| %>
+                    <div class="user">
+                        <input type="checkbox" name="team[users][]" value="<%= u.id %>">
+                        <% if u.avatar.present? %>
+                            <%= image_tag u.avatar.quad.url %>
+                        <% end %>
+                        <%= u.fname + " " + u.lname %>
+                    </div>
+                <% end %>
+            </div>
+            <%= f.hidden_field :url, value: 'teams' %>
+            <%= f.submit 'Team erstellen!', class: 'btn half btn-green' %>
+        <% end %>
+    </div>
+    
+    <%  if @team %>
+    <div class="karte editteam" id="editteam">
+        <i class="back fas fa-arrow-left" onclick="hideEditteam()"></i>
+        <div class="head left">Team bearbeiten!</div>
+        <%= form_for(:team, url: edit_team_path(@team)) do |f| %>
+            <% if flash[:team_name] %>
+                <label>Teamname
+                <div class="alert alert-team_name"><%= flash[:team_name] %></div>
+                </label>
+                <%= f.text_field :name, class: 'field red', value: @team.name %>
+            <% else %>
+                <label>Teamname</label>
+                <%= f.text_field :name, class: 'field', value: @team.name%>
+            <% end %>
+        
+            <label>Search for Users</label><br>
+            <div class="user-list">
+                <div class="search-field">
+                    <%= image_tag 'dash/icons/search.png', class: 'search' %>
+                    <input type="text" placeholder="Search Users" id='searchEditTeam'>
+                </div>
+                <% @admin.users.all.each do |u| %>
+                    <div class="user editTeam">
+                        <% if TeamUser.where(team_id: @team.id, user_id: u.id).count == 1 %>
+                        <input type="checkbox" name="team[users][]" value="<%= u.id %>"  checked>
+                        <% else %>
+                        <input type="checkbox" name="team[users][]" value="<%= u.id %>">
+                        <% end %>
+                        <% if u.avatar.present? %>
+                            <%= image_tag u.avatar.quad.url %>
+                         <% else %>
+                             <div class="circle"></div>
+                         <% end %>
+                        <%= u.fname + ' ' + u.lname %>
+                    </div>
+                <% end %>
+            </div>
+            <%= f.submit 'Daten updaten!', class: 'btn half btn-green' %>
+        <% end %>
+        <%= link_to '', destroy_team_path(@team), class: 'remove far fa-trash-alt' %>
     </div>
     <% end %>
+</div>
 
-</section>
-
-
-
-
+<div class="users">
+    <% if !@user %>
+    <div class="searchbar">
+        <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        <input type="text" placeholder="Search Users" id="searchUsers">
+    </div>
+    <% end %>
+    <button class="btn btn-green" onclick="showNewUser()">User erstellen</button>
+    <div class="karte" id="users">
+        <div class="head left">Users</div>
+        <select name="team" id="select-team" class="custom-select custom-select-lg">
+            <option value="" <% if !@team %> selected <% end %> onclick="unselectTeams()">Alle Teams</option>
+            <% @teams.each do |t| %>
+            <% if @team && t.id == @team.id %>
+            <option value="<%= t.id %>" selected><%= t.name %></option>
+            <% else %>
+            <option value="<%= t.id %>" onclick="selectTeam(<%= t.id %>)"><%= t.name %></option>
+            <% end %>
+            <% end %>
+        </select>
+        <div class="table" id="users-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Pitches</th>
+                        <th>Rating</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <% @users.each do |u| %>
+                    <tr class="username">
+                        <% if u.avatar.present? %>
+                        <td><%= image_tag u.avatar.quad.url %><%= u.fname + ' ' + u.lname %></td>
+                        <% else %>
+                        <td><div class="circle"></div><%= u.fname %> <%= u.lname %></td>
+                        <% end %>
+                        <td><%= u.turns.count %></td>
+                        <td><div class="rating"><%= if UserRating.find_by(user_id: u.id) then UserRating.find_by(user_id: u.id).ges / 10.0 else 0 end%></div></td>
+                        <td><%= link_to '', dash_admin_user_path(u.id), class: 'far fa-edit' %></td>
+                        <td><%= link_to image_tag('dash/icons/stats.png'), dash_admin_user_stats_path(u.id) %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="karte" id="newUser">
+        <i class="back fas fa-arrow-left" onclick="hideNewUser()"></i>
+        <div class="head left">Nutzer erstellen!</div>
+        <%= form_for(:user, url: new_user_path) do |f| %>
+            <label class="half left">Unternehmen</label>
+            <label class="half right">E-Mail
+                <% if flash[:user_email] %>
+                <div class="alert alert-newUser"><%= flash[:user_email] %></div>
+                <% end %>
+            </label>
+            <%= f.text_field :company_name, class: 'half-field left' %>
+            <% if flash[:user_email] %>
+            <%= f.email_field :email, class: 'half-field right red' %>
+            <% else %>
+            <%= f.email_field :email, class: 'half-field right' %>
+            <% end %>
+            <label class="half left">Vorname</label>
+            <label class="half right">Nachname</label>
+            <%= f.text_field :fname, class: 'half-field left' %>
+            <%= f.text_field :lname, class: 'half-field right' %>
+            <%= f.hidden_field :admin_id, value: @admin.id %>
+            <label>Teams</label>
+            <% @admin.teams.each do |t| %>
+                <input type="checkbox" name="user[teams][]" value="<%= t.id %>" multiple id="new_user_teams_<%= t.id %>">
+            <% end %>
+            <div class="selected-teams" id="selected_new_teams">
+                
+            </div>
+            <div class="team-list" id="unselected_new_teams">
+                <div class="search-field">
+                    <%= image_tag 'dash/icons/search.png', class: 'search' %>
+                    <input type="text" placeholder="Search Users" id='searchNewUser'>
+                </div>
+                <% @admin.teams.each do |t| %>
+                    <label for="new_user_teams_<%= t.id %>" class="team newUser" onclick="moveNewTeam(this)"><%= t.name %> <i class="fas fa-times"></i></label>
+                <% end %>
+            </div>
+            <%= f.submit 'User erstellen!', class: 'btn half btn-green' %>
+        <% end %>
+    </div>
+    <% if @user %>
+    <div class="karte" id="editUser">
+        <i class="back fas fa-arrow-left" onclick="unselectTeams()"></i>
+        <div class="head left">Nutzer bearbeiten!</div>
+        <%= form_for(:user, url: edit_user_path(@user)) do |f| %>
+            <label class="half left">Unternehmen</label>
+            <label class="half right">E-Mail</label>
+            <%= f.text_field :company_name, class: 'half-field left' %>
+            <%= f.email_field :email, class: 'half-field right' %>
+            <label class="half left">Vorname</label>
+            <label class="half right">Nachname</label>
+            <%= f.text_field :fname, class: 'half-field left' %>
+            <%= f.text_field :lname, class: 'half-field right' %>
+            <%= f.hidden_field :admin_id, value: @admin.id %>
+            <label>Teams</label><br>
+            <% @admin.teams.each do |t| %>
+                <% if TeamUser.where(team_id: t.id, user_id: @user.id).count != 0 %>
+                    <input type="checkbox" name="user[teams][]" value="<%= t.id %>" multiple id="edit_user_teams_<%= t.id %>" checked>
+                <% else %>
+                    <input type="checkbox" name="user[teams][]" value="<%= t.id %>" multiple id="edit_user_teams_<%= t.id %>">
+                <% end %>
+            <% end %>
+            <div class="selected-teams" id="selected_edit_teams">
+                <% @user.teams.each do |t| %>
+                <label for="edit_user_teams_<%= t.id %>" class="team" onclick="moveEditTeam(this)"><%= t.name %> <i class="fas fa-times"></i></label>
+                <% end %>
+            </div>
+            <div class="team-list" id="unselected_edit_teams">
+                <div class="search-field">
+                    <%= image_tag 'dash/icons/search.png', class: 'search' %>
+                    <input type="text" placeholder="Search Users" id='searchEditUser'>
+                </div>
+                <% @admin.teams.each do |t| %>
+                    <% if TeamUser.where(team_id: t.id, user_id: @user.id).count == 0 %>
+                    <label for="edit_user_teams_<%= t.id %>" class="team editUser" onclick="moveEditTeam(this)"><%= t.name %> <i class="fas fa-times"></i></label>
+                    <% end %>
+                <% end %>
+            </div>
+            <%= f.submit 'Daten updaten!', class: 'btn half btn-green' %>
+        <% end %>
+        <%= link_to '', destroy_user_path(@user), class: 'remove far fa-trash-alt' %>
+    </div>
+    <% end %>
+</div>
 <script>
+    new PerfectScrollbar('#teams-table');
+    new PerfectScrollbar('#users-table');
+    /* search Teams */
+        $('#searchTeams').keyup(function() {
+            var $rows = $('.teamname');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
 
-
-var $rows = $('.team_card');
-$('#searchField').keyup(function() {
+        $rows.show().filter(function() {
+            text = $(this).children().first().text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
+        })
     
-    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-        reg = RegExp(val, 'i'),
-        text;
+    /* search Users */
+        $('#searchUsers').keyup(function() {
+            $rows = $('.username');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).children().first().text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
+        })
     
-    $rows.show().filter(function() {
-        text = $(this).text().replace(/\s+/g, ' ');
-        return !reg.test(text);
-    }).hide();
-});
-team_show = function() {
-    $('.add_team').show();
-}
-team_hide = function() {
-    $('.add_team').hide();
-}
-new PerfectScrollbar('#teams-container');
-
-
-// window.onload = setTimeout(function(){
-//     alert('This is an alert');
-//     window.location = 'http://www.example.com';
-// }, 5000);
-
+    /* search newTeam */
+        $('#searchNewTeam').keyup(function() {
+            $rows = $('.user');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
+        })
+    
+    /* search EditTeam */
+        $('#searchEditTeam').keyup(function() {
+            $rows = $('.editTeam');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
+        })
+    
+    /* search newUser */
+        $('#searchNewUser').keyup(function() {
+            $rows = $('.newUser');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
+        })
+    /* search EditUser */
+        $('#searchEditUser').keyup(function() {
+            $rows = $('.editUser');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
+        })
+    
+    
+    function moveNewTeam(e) {
+        var selected = document.getElementById('selected_new_teams');
+        var unselected = document.getElementById('unselected_new_teams');
+        var id = e.getAttribute('for');
+        var checkbox = document.getElementById(id)
+        if(checkbox.checked) {
+            e.className += ' newUser';
+            unselected.appendChild(e);
+        } else {
+            e.className = 'team';
+            selected.appendChild(e);
+        }
+        
+    }
+    function moveEditTeam(e) {
+        var selected = document.getElementById('selected_edit_teams');
+        var unselected = document.getElementById('unselected_edit_teams');
+        var id = e.getAttribute('for');
+        var checkbox = document.getElementById(id)
+        if(checkbox.checked) {
+            e.className += ' editUser';
+            unselected.appendChild(e);
+        } else {
+            e.className = 'team';
+            selected.appendChild(e);
+        }
+        
+    }
+    flash();
+    getUrl();
+    function getUrl() {
+        var url = window.location.href;
+        if (url.indexOf("?") != -1) {
+            var arguments = url.split('?')[1].split('=');
+            arguments.shift();
+            if (arguments == 'edit') {
+                showEditteam()
+            }
+        }
+    }
+    function flash() {
+        if ($('.alert-team_name')[0] || $('.alert-team_danger')[0]){showNewteam();}
+        if ($('.alert-newUser')[0]){showNewUser();}
+    }
+    function unselectTeams() {
+        <% if !current_page?(dash_admin_teams_path) %>
+        location.replace("<%= dash_admin_teams_path %>");
+        <% end %>
+    }
+    function selectTeam(team_id) {
+        <% if current_page?(dash_admin_teams_path) %>
+        location.replace('teams/'+team_id);
+        <% else %>
+        location.replace(team_id);
+        <% end %>
+    }
+    function showNewUser() {
+        <% if @user %>$('#editUser').hide();<% end %>
+        $('#users').hide();
+        $('#newUser').show();
+        $('.users .searchbar').hide();
+    }
+    function hideNewUser() {
+        $('#newUser').hide();
+        $('#users').show();
+        <% if !@user %>$('.users .searchbar').show();<% end %>
+        <% if @user %>$('#editUser').show();<% end %>
+    }
+    function showNewteam() {
+        $('#teams').hide();
+        $('#newteam').show();
+        $('.teams .searchbar').hide();
+    }
+    function hideNewteam() {
+        $('#teams').show();
+        $('#newteam').hide();
+        $('.teams .searchbar').show();
+    }
+    function showEditteam() {
+        $('#teams').hide();
+        $('#editteam').show();
+        $('.teams .searchbar').hide();
+    }
+    function hideEditteam() {
+        $('#teams').show();
+        $('#editteam').hide();
+        $('.teams .searchbar').show();
+    }
 </script>

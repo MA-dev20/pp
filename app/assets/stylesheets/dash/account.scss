@@ -1,0 +1,56 @@
+.account {
+    position: relative;
+    height: 679px;
+    width: 780px;
+    margin: auto;
+}
+.poligon {
+    background-image: image-url('polygon.companylogo.png');
+    width: 100px;
+    height: 100px;
+    background-size: 100px;
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.poligon img{
+    height: 60px;
+    width: 60px;
+}
+.popup {
+    display: none;
+    position: absolute;
+    left: calc(50% - 500px);
+    top: calc(50% - 250px);
+    height: 500px;
+    width: 1000px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 6px 20px 0 rgba(172, 172, 172, 0.1);
+    padding: 40px;
+    z-index: 100;
+}
+.popup form {
+    border: 2px dashed #0087F7;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    padding: 50px;
+}
+.popup form .dz-message {
+    font-size: 32px;
+    font-weight: bold;
+}
+.popup .close {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 50px;
+    line-height: 50px;
+    width: 50px;
+    color: #6e6e6e;
+    font-size: 30px;
+    text-align: center;
+}

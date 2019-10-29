@@ -4,7 +4,6 @@
  *= require cs-select/cs-skin-underline
  *= require omnes
  *= require dash/jquery.dataTables.min
- *= require dash/teams
  */
 @import "bootstrap";
 @import "font-awesome-sprockets";
@@ -91,16 +90,11 @@ body {
     text-decoration: none;
     text-align: center;
 }
-.links .link:hover,
-.links .link.active {
-    background-color: rgba(0,0,0,0.1);
-    font-weight: bold;
-}
 
 #content {
     position: fixed;
     top: 121px;
-    left: 273px;
+    left: 220px;
     width: calc( 100% - 323px );
     height: calc( 100% - 171px );
 }

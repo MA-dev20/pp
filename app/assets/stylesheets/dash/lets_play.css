@@ -1,0 +1,255 @@
+.karte.letsplay {
+    position: fixed;
+    top: calc(50vh - 235px);
+    left: calc(50vw - 120px);
+    height: 470px;
+    width: 460px;
+}
+.karte#letsplay {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.karte#letsplay .btn{
+    width: calc(100% - 100px);
+    margin-left: 50px;
+}
+#ownrules,
+#newteam{
+    display: none;
+}
+.karte-content {
+    position: absolute;
+    top: 70px;
+    left: 40px;
+    max-height: 280px;
+    width: 400px;
+    padding-right: 20px;
+}
+.
+.karte.letsplay .team {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+}
+
+.karte.letsplay .team .newteam-link {
+    float: right;
+    color: #16e2a5;
+    font-weight: 600;
+    cursor: pointer;
+}
+.karte.letsplay .team .alert-team_name {
+    float: right;
+    color: #ff5f58;
+    font-weight: 600;
+}
+.karte.letsplay .team select {
+    width: 100%;
+    outline: none !important;
+}
+.karte.letsplay .team .custom-select {
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    border: solid 1px #dfe1e5;
+    line-height: 48px;
+    padding-bottom: 0;
+    padding-top: 0;
+    font-size: 16px;
+    font-weight: 300;
+    outline: none !important;
+}
+option:focus {
+    outline: none !important;
+}
+.karte.letsplay .team .custom-select:focus {
+    border: solid 1px #dfe1e5;
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+}
+.karte.letsplay .time .field{
+    position: relative;
+    width: 134px;
+    height: 48px;
+    border: solid 1px #dfe1e5;
+    border-radius: 8px;
+}
+.karte.letsplay .time .field .up,
+.karte.letsplay .time .field .down{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 50%;
+    width: 43px;
+    border-left: 1px solid #dfe1e5;
+    text-align: center;
+    line-height: 24px;
+    cursor: pointer;
+    z-index: 100;
+}
+.karte.letsplay .time .field .down {
+    top: 50%;
+    border-top: 1px solid #dfe1e5;
+}
+.karte.letsplay .time .field .time {
+    left: 0;
+    height: 100%;
+    width: 91px;
+    text-align: center;
+    line-height: 46px;
+    font-size: 20px;
+}
+.karte.letsplay .team input {
+    padding: 10px;
+}
+
+
+.karte.letsplay .switch-box {
+    height: 50px;
+    width: 100%;
+    font-weight: 300;
+}
+#rules-button {
+    display: none;
+}
+.karte.letsplay .users {
+    position: relative;
+    left: 0;
+    top: 0;
+    
+}
+
+.karte.letsplay .team .red {
+    border-color: #ff5f58;
+}
+.karte.letsplay .users .field .search {
+    padding-top: 10px;
+    padding-right: 10px;
+}
+.karte.letsplay .users .field{
+    float: left;
+    width: 100%;
+    height: 45px;
+    border-bottom: solid 1px #dfe1e5;
+    line-height: 45px;
+    font-size: 16px;
+    font-weight: 300;
+}
+.karte.letsplay .users .user-list .user {
+    float: left;
+    width: 100%;
+    height: 45px;
+    border-bottom: solid 1px #dfe1e5;
+    line-height: 45px;
+    font-size: 16px;
+    font-weight: 300;
+}
+.karte.letsplay .custom-control-label::before {
+    border-color: lightgray;
+     background-color: white;
+}
+.karte.letsplay .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #16e2a5;
+    background-color: #16e2a5;
+}
+.karte.letsplay .custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+    border-color: lightgray !important;
+}
+.custom-control-label {
+    cursor: pointer;
+}
+
+.karte.letsplay .catchwords, 
+.karte.letsplay .objections {
+    position: relative;
+    float: left;
+}
+.karte.letsplay .youtube {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+.karte.letsplay .youtube label {
+    line-height: 38px;
+}
+.karte.letsplay .youtube label .add {
+    top: 5px;
+}
+.karte.letsplay .add .fas {
+    font-size: 18px;
+}
+.karte.letsplay .youtube input {
+    display: none;
+}
+.karte.letsplay .checked-field,
+.karte.letsplay .unchecked-field {
+    position: relative;
+    float: left;
+    width: 380px;
+    border-radius: 8px;
+    border: solid 1px #dfe1e5;
+    line-height: 48px;
+    font-size: 16px;
+    font-weight: 300;
+}
+.karte.letsplay .checked-field {
+    padding-bottom: 10px;
+    min-height: 48px;
+    padding-left: 5px;
+}
+.karte.letsplay .unchecked-field {
+    display: none;
+    border: none;
+}
+
+.karte.letsplay .add{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    background-color: #16e2a5;
+    color: white;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
+    font-weight: 900;
+    cursor: pointer;
+}
+.karte.letsplay .checkbox {
+    position: relative;
+    float: left;
+    top: 10px;
+    left: 0;
+    height: 28px;
+    border-radius: 14px;
+    border: solid 2px #a358df;
+    line-height: 28px;
+    cursor: pointer;
+    margin: 0 5px 10px 0;
+}
+.karte.letsplay .checkbox label {
+    text-align: center;
+    padding: 0 5px;
+}
+.karte.letsplay .checkbox label .fas {
+    width: 20px;
+    line-height: 28px;
+}
+.karte.letsplay .checked-field label .fas {
+    float: right;
+}
+
+.karte.letsplay .unchecked-field label .fas {
+    float: left;
+}
+
+.karte.letsplay input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}

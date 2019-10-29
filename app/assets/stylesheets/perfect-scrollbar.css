@@ -25,11 +25,11 @@
 }
 
 .ps__rail-y {
-  display: none;
-  opacity: 0;
-  transition: background-color .2s linear, opacity .2s linear;
-  -webkit-transition: background-color .2s linear, opacity .2s linear;
-  width: 15px;
+  display: block;
+  opacity: 0.6;
+  width: 8px;
+  border-radius: 4px;
+  background-color: #eaf6ff;
   /* there must be 'right' or 'left' for ps__rail-y */
   right: 0;
   /* please don't change 'position' */
@@ -39,7 +39,7 @@
 .ps--active-x > .ps__rail-x,
 .ps--active-y > .ps__rail-y {
   display: block;
-  background-color: transparent;
+  background-color: #eaf6ff;
 }
 
 .ps:hover > .ps__rail-x,
@@ -48,6 +48,7 @@
 .ps--focus > .ps__rail-y,
 .ps--scrolling-x > .ps__rail-x,
 .ps--scrolling-y > .ps__rail-y {
+  background-color: #eaf6ff;
   opacity: 0.6;
 }
 
@@ -57,7 +58,7 @@
 .ps .ps__rail-y:focus,
 .ps .ps__rail-x.ps--clicking,
 .ps .ps__rail-y.ps--clicking {
-  background-color: #eee;
+  background-color: #eaf6ff;
   opacity: 0.9;
 }
 
@@ -77,13 +78,11 @@
 }
 
 .ps__thumb-y {
-  background-color: #aaa;
-  border-radius: 6px;
-  transition: background-color .2s linear, width .2s ease-in-out;
-  -webkit-transition: background-color .2s linear, width .2s ease-in-out;
-  width: 6px;
+  width: 8px;
+  border-radius: 4px;
+  background-color: #c4e6ff;
   /* there must be 'right' for ps__thumb-y */
-  right: 2px;
+  right: 0;
   /* please don't change 'position' */
   position: absolute;
 }
@@ -98,8 +97,8 @@
 .ps__rail-y:hover > .ps__thumb-y,
 .ps__rail-y:focus > .ps__thumb-y,
 .ps__rail-y.ps--clicking .ps__thumb-y {
-  background-color: #999;
-  width: 11px;
+  background-color: #eaf6ff;
+  width: 8px;
 }
 
 /* MS supports */

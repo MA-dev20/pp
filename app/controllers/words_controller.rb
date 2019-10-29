@@ -6,26 +6,32 @@ class WordsController < ApplicationController
     
   def create
     @basket = CatchwordsBasket.find_by(id: params[:basket_id])
-    params[:word][:sounds].each do |sound|
-      @word = @basket.words.create(sound: sound)
-      @word.name = @word.sound_identifier.remove('.mp3')
-      if @word.save
-        flash[:success] = 'Wort gespeichert!'
-      else
-        flash[:danger] = 'Konnte Wort nicht speichern!'
-      end
+    if params[:word][:sound]
+        params[:word][:sounds].each do |sound|
+            @word = @basket.words.create(sound: sound)
+            @word.name = @word.sound_identifier.remove('.mp3')
+            if !@word.save
+              flash[:danger] = 'Konnte Wort nicht speichern!'
+            end
+        end
+    elsif params[:word][:name] && params[:word][:name] != ''
+        @word = Word.find_by(name: params[:word][:name])
+        if @word
+          @basket.words << @word
+        else
+          @word = Word.new(name: params[:word][:name])
+          if @word.save
+            @basket.words << @word
+          end
+        end
+    else
+        flash[:word_name] = 'Gib einen Namen an!'
     end
-    redirect_to backoffice_words_path
-#    @word = Word.create(word_params)
-#    @word.name = @word.sound_identifier.remove('.mp3')
-#    @word.free = false
-#    if @word.save
-#      flash[:success] = 'Wort gespeichert!'
-#      redirect_to backoffice_words_path
-#    else
-#      flash[:danger] = 'Konnte Wort nicht speichern!'
-#      redirect_to backoffice_words_path
-#    end
+    if params[:word][:site] == 'admin_dash'
+      redirect_to dash_admin_catchwords_path(@basket.id)
+    else
+      redirect_to backoffice_words_path
+    end
   end
     
   def edit
@@ -45,13 +51,13 @@ class WordsController < ApplicationController
     if @word.catchword_baskets.count > 1
       @basket.words.delete(@word)
       flash[:success] = 'Wort aus Liste gelöscht!'
-      redirect_to backoffice_words_path(@basket.id)
+      redirect_to dash_admin_catchwords_path(@basket.id)
     elsif @word.destroy
       flash[:success] = 'Wort gelöscht!'
-      redirect_to backoffice_words_path(@basket.id)
+      redirect_to dash_admin_catchwords_path(@basket.id)
     else
       flash[:danger] = 'Konnte Wort NICHT löschen!'
-      redirect_to backoffice_words_path(@basket.id)
+      redirect_to dash_admin_catchwords_path(@basket.id)
     end
   end
     

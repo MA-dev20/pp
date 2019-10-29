@@ -1,5 +1,6 @@
 redis: &redis
-  adapter: any_cable
+  adapter: redis
+  url: redis://localhost:6379/1
 
 production: *redis
 staging: *redis
