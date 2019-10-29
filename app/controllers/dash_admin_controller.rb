@@ -2,7 +2,7 @@ class DashAdminController < ApplicationController
   before_action :authenticate_admin!, :set_admin , unless: :skip_action?
   before_action :set_team, only: [:games, :team_stats, :team_users, :team_stats_share]
   before_action :set_user, only: [:user_stats, :user_stats_compare]
-  skip_before_action :check_expiration_date, only: [:billing, :user_list]
+  skip_before_action :check_expiration_date, only: [:billing, :user_list, :index]
   include ApplicationHelper
   include ActionView::Helpers::NumberHelper
   layout :resolve_layout

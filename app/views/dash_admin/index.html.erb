@@ -212,41 +212,41 @@
 // <<<<<<< HEAD
 
 
-    if($("#url-field").val() == ""){
-      $("#url-field").parent().addClass("error-border")
-    } 
-  }
-}
-$("#url-field").on("change", function(e){
-  var $this = $(this);
-  if($this.val != ""){
-    $this.parent().removeClass("error-border")
-  }else{
-    $this.parent().addClass("error-border")
-  }
-})
-<% if @admin.admin_subscription_id.nil? %>
-  $("#anim_but").on("click", function(e){
-    e.preventDefault()
-    if(($("#url-field").val() != "") && $("#game_team_id").val() != ""){
-      // $('#pop_up').modal({backdrop: 'static', keyboard: false});
-      createNewGame()
-    }
-    // $("#continue").click(function(e){
-    //   e.preventDefault();
-    //   createNewGame()
-    // });
-  })
-<% else %>
-  $("#anim_but").on("click", function(e){
-    e.preventDefault()
-    createNewGame()
-  })
-<% end %>
-function set_arrow(){
-    $('#arrow-bottom').show();
-    $('#anim_but').addClass( "anim" );
-}
+//     if($("#url-field").val() == ""){
+//       $("#url-field").parent().addClass("error-border")
+//     } 
+//   }
+// }
+// $("#url-field").on("change", function(e){
+//   var $this = $(this);
+//   if($this.val != ""){
+//     $this.parent().removeClass("error-border")
+//   }else{
+//     $this.parent().addClass("error-border")
+//   }
+// })
+// <% if @admin.admin_subscription_id.nil? %>
+//   $("#anim_but").on("click", function(e){
+//     e.preventDefault()
+//     if(($("#url-field").val() != "") && $("#game_team_id").val() != ""){
+//       // $('#pop_up').modal({backdrop: 'static', keyboard: false});
+//       createNewGame()
+//     }
+//     // $("#continue").click(function(e){
+//     //   e.preventDefault();
+//     //   createNewGame()
+//     // });
+//   })
+// <% else %>
+//   $("#anim_but").on("click", function(e){
+//     e.preventDefault()
+//     createNewGame()
+//   })
+// <% end %>
+// function set_arrow(){
+//     $('#arrow-bottom').show();
+//     $('#anim_but').addClass( "anim" );
+// }
 
 
 // =======
