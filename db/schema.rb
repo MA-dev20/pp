@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_085724) do
+ActiveRecord::Schema.define(version: 2019_10_25_141705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,6 +228,11 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "change_ges"
+    t.integer "change_body"
+    t.integer "change_creative"
+    t.integer "change_rhetoric"
+    t.integer "change_spontan"
     t.index ["team_id"], name: "index_team_ratings_on_team_id"
   end
 
@@ -294,6 +299,11 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "change_ges"
+    t.integer "change_body"
+    t.integer "change_creative"
+    t.integer "change_rhetoric"
+    t.integer "change_spontan"
     t.index ["user_id"], name: "index_user_ratings_on_user_id"
   end
 
@@ -320,6 +330,15 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.string "logo"
     t.index ["admin_id"], name: "index_users_on_admin_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  create_table "videos", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.string "name"
+    t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_videos_on_admin_id"
   end
 
   create_table "words", force: :cascade do |t|
@@ -352,4 +371,5 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
   add_foreign_key "turns", "games"
   add_foreign_key "user_ratings", "users"
   add_foreign_key "users", "admins"
+  add_foreign_key "videos", "admins"
 end

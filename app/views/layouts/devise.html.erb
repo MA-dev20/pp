@@ -28,14 +28,5 @@
             <% end %>
         <% end %>
     <%= yield %>
-
   </body>
-<script>
-    $(".modal").modal("show")
-    $(document).ready(function() {
-        window.setTimeout(function() {
-           $('.alert').fadeOut(1000);
-        }, 4000);
-    })
-</script>
 </html>

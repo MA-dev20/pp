@@ -1,0 +1,175 @@
+.teams, .users {
+    position: absolute;
+    top: calc(50vh - 396.5px);
+    width: 555px;
+    height: 593px;
+}
+.teams {
+    right: calc(50% + 15px);
+}
+.users {
+    left: calc(50% + 15px);
+}
+.teams .searchbar,
+.users .searchbar {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 300px;
+    height: 48px;
+    border-radius: 8px;
+    box-shadow: 0px 6px 20px 0 rgba(107, 107, 107, 0.1);
+    background-color: #ffffff;
+}
+
+.teams > .btn,
+.users > .btn {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    width: 166px;
+    border-radius: 24px;
+}
+.teams .karte,
+.users .karte {
+    position: absolute;
+    top: 78px;
+    width: 555px;
+    height: 515px;
+}
+#newteam,
+.editteam,
+#newUser {
+    display: none;
+}
+
+#newUser input[type='checkbox'],
+#editUser input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+.users .karte #select-team {
+    position: absolute;
+    right: 40px;
+    top: 25px;   
+}
+.users .karte .custom-select {
+    width: 190px;
+    height: 38px;
+    border-radius: 8px;
+    border: solid 1px #dfe1e5;
+    line-height: 38px;
+    padding-bottom: 0;
+    padding-top: 0;
+    font-size: 16px;
+    font-weight: 300;
+    outline: none !important;
+}
+.selected-teams > label {
+    position: relative;
+    float: left;
+    line-height: 20px;
+    height: 25px;
+    border: solid 2px #a358df;
+    border-radius: 12.5px;
+    cursor: pointer;
+    margin: 0 2.5px 5px 0;
+    width: auto;
+    padding: 2.5px 10px;
+    font-size: 14px;
+}
+.selected-teams > label i {
+    line-height: 20px;
+    text-align: center;
+    width: 10px;
+}
+.team-list > label > i {
+    display: none;
+}
+option {
+    box-shadow: none;
+}
+option:focus {
+    outline: none !important;
+}
+.users .karte .custom-select:focus {
+    border: solid 1px #dfe1e5;
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+}
+.teams .karte .table,
+.users .karte .table {
+    position: absolute;
+    top: 90px;
+    width: 500px;
+    height: 400px;
+}
+.teams .karte .table table,
+.users .karte .table table{
+    width: 475px;
+    max-height: 100%;
+}
+.table table th {
+    border: none !important;
+    padding: 5px 5px 11px 5px;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+    color: #4e4e4e;
+    text-align: center;
+    align-content: center;
+}
+.table table tr th:first-child {
+    text-align: left;
+}
+.table table td {
+    position: relative;
+    border-top: 1px solid #dfe1e5;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+    color: black;
+    line-height: 50px;
+    text-align: center;
+    align-content: center;
+}
+.teams table tbody tr:hover,
+.teams table tbody tr.active {
+    background-color: rgba(192,192,192,.1);
+    cursor: pointer;
+}
+.table table tbody tr td:first-child {
+    text-align: left;
+}
+.table table td .rating {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border: solid 2px #4394ec;
+    border-radius: 50%;
+    line-height: 36px;
+    text-align: center;
+    margin: 5px auto;
+}
+
+.users .table table tr td:first-child img,
+.users .table table tr td:first-child .circle{
+    float: left;
+    margin: 7px;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 50%;
+    line-height: 36px;
+    text-align: center;
+    background-color: #d7eeff;
+    font-size: 12px;
+    font-weight: 600;
+}
+.users .table table tr td .fa-edit,
+.teams .table table tr td .fa-edit {
+    color: #16e2a5;
+    font-size: 20px;
+}

@@ -26,7 +26,6 @@ Rails.application.routes.draw do
   root 'landing#index'
   patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'
-  get 'admins/sign_up/:v_id', to: 'landing#sign_up', as: 'edit_admin'
   get 'admins/signup/:v_id', to: 'landing#signup' , as: 'edit_next_admin'
   patch 'admins/update_admin/:v_id', to: 'landing#update_admin', as: 'update_admin'
   patch 'admins/update_admin_details/:v_id', to: 'landing#update_admin_details', as: 'update_admin_details'
@@ -131,14 +130,6 @@ Rails.application.routes.draw do
   get 'backoffice/baskets/', to: 'backoffice#baskets', as: 'backoffice_baskets'
   get 'backoffice/baskets/:admin_id', to: 'backoffice#baskets', as: 'backoffice_admin_baskets'
   get 'backoffice/words/:basket_id', to: 'backoffice#words', as: 'backoffice_words'
-    
-  # Catchword Basket #
-    
-  get 'catchword_basket/new', to: 'catchwords_basket#new', as: 'new_basket'
-  post 'catchword_basket/new', to: 'catchwords_basket#create'
-  get 'catchword_basket/:basket_id/edit', to: 'catchwords_basket#edit', as: 'edit_basket'
-  post 'catchword_basket/:basket_id/update', to: 'catchwords_basket#update'
-  get 'catchword_basket/:basket_id/destroy', to: 'catchwords_basket#destroy', as: 'destroy_basket'
 
 #########
 # Admin #
@@ -148,29 +139,52 @@ Rails.application.routes.draw do
     post 'admin/dash/teams/:team_id/generate_img_from_html', to: 'dash_admin#generate_img_from_html', as: 'dash_admin_generate_img_from_html'
     get 'admin/dash/games/:game_id/turns', to: 'dash_admin#turns', as: 'dash_admin_turns'
     
+    #User
+    get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
+    get 'admin/dash/teams/:team_id', to: 'dash_admin#teams', as: 'dash_admin_team'
+    get 'admin/dash/users/:user_id', to: 'dash_admin#teams', as: 'dash_admin_user'
+    
+    #Stats
+    get 'admin/dash/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_user_stats'
+    get 'admin/dash/users/:user_id/stats/compare/:user2_id', to: 'dash_admin#user_stats_compare', as: 'dash_admin_user_stats_compare'
+    get 'admin/dash/teams/:team_id/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_team_user_stats'
+    
+    #Customize
+    get 'admin/dash/customize', to: 'dash_admin#customize', as: 'dash_admin_customize'
+    get 'admin/dash/customize/catchwords/:cbasket_id', to: 'dash_admin#customize', as: 'dash_admin_catchwords'
+    get 'admin/dash/customize/objections/:obasket_id', to: 'dash_admin#customize', as: 'dash_admin_objections'
+    #Video Tool
+    get 'admins/dash/video_tool', to: 'dash_admin#video_tool', as: 'dash_admin_video_tool'
+    get 'admins/dash/turns/:turn_id/video', to: 'dash_admin#video_details', as: 'dash_admin_video_details'
+    
+    #Let's Play
+    get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
+    get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_game'
+    
+    #add video
+    get 'admin/dash/turns/:turn_id/video/new', to: 'dash_admin#add_video_to_turn', as: 'add_video_to_turn'
+    post 'admin/dash/turns/:turn_id/video/new', to: 'dash_admin#save_video_to_turn'
+    
+    
     get 'admin/dash/statistics', to: 'dash_admin#statistics', as: 'dash_admin_statistics'
     get 'admin/dash/statistics/compare_with_team/:team_id', to: 'dash_admin#compare_with_team', as: 'dash_admin_comapre_with_team'
     get 'admin/dash/statistics/compare_with_user/:compare_user_id', to: 'dash_admin#compare_with_user', as: 'dash_admin_comapre_with_user'
-    get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
     get 'admin/dash/teams/:team_id/stats', to: 'dash_admin#team_stats', as: 'dash_admin_team_stats'
     get 'admin/dash/teams/:team_id/stats/share', to: 'dash_admin#team_stats_share', as: 'dash_admin_team_stats_share'
     get 'admin/dash/teams/:team_id/stats/:team2_id', to: 'dash_admin#team_stats', as: 'dash_admin_compare_team_stats'
     
-    get 'admin/dash/users', to: 'dash_admin#users', as: 'dash_admin_users'
+    
     get 'admin/dash/user_list', to: 'dash_admin#user_list', as: 'dash_admin_user_list'
     get 'admin/dash/users/:team_id', to: 'dash_admin#users', as: 'dash_admin_team_users'
     post 'admins/dash/filter_videos', to:  'dash_admin#filter_videos', as: 'admin_filter_videos'
-    get 'admins/dash/teams/:team_id/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_user_stats'
     get 'admins/dash/stats/turns/:turn_id', to: 'dash_admin#turn_show', as: 'dash_admin_show_turn'
     delete 'admins/dash/stats/turns/:turn_id', to: 'dash_admin#delete_video', as: 'dash_admin_delete_video'
     get 'admins/teams/:team_id/users/:user_id/compare/:compare_user_id', to: 'dash_admin#compare_user_stats', as: 'dash_admin_compare_user_stats'
-    get 'admins/dash/video_tool', to: 'dash_admin#video_tool', as: 'dash_admin_video_tool'
+    
     get 'admins/dash/account', to: 'dash_admin#account', as: 'dash_admin_account'
     get 'admins/dash/billing', to: 'dash_admin#billing', as: 'dash_admin_billing'
     
-    get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
-    get 'admin/dash/catchwords', to: 'dash_admin#catchwords', as: 'dash_admin_catchwords'
-    get 'admin/dash/objections', to: 'dash_admin#objections', as: 'dash_admin_objections'
+    
     post 'admin/dash/catchwords/add', to: 'dash_admin#add_word', as: "dash_admin_add_word"
     post 'admin/dash/objections/add', to: 'dash_admin#add_objection', as: "dash_admin_add_objection"
     put 'admin/dash/objections/:id', to: 'dash_admin#update_objection', as: "dash_admin_update_objection"
@@ -186,12 +200,7 @@ Rails.application.routes.draw do
 # Sessions #
 ############
 
-
-############
-# User dashboard #
-############
-
-
+# Admin #
 
 ########
 # Root #
@@ -210,6 +219,12 @@ Rails.application.routes.draw do
 # Admin #
 #########
     
+  get 'admins/:admin_id/edit', to: 'admins#edit', as: 'edit_admin'
+  post 'admins/:admin_id/edit', to: 'admins#update'
+  get 'admins/:admin_id/avatar/edit', to: 'admins#edit_avatar', as: 'edit_admin_avatar'
+  post 'admins/:admin_id/avatar/edit', to: 'admins#update_avatar'
+  get 'admins/:admin_id/logo/edit', to: 'admins#edit_logo', as: 'edit_admin_logo'
+  post 'admins/:admin_id/logo/edit', to: 'admins#update_logo'
   get 'admins/:admin_id/destroy', to: 'admins#destroy', as: 'destroy_admin'
 
 ########
@@ -219,8 +234,11 @@ Rails.application.routes.draw do
   get 'teams/new', to: 'teams#new', as: 'new_team'
   post 'teams/new', to: 'teams#create'
     
-  get 'teams/new_game', to: 'teams#new_game', as: 'new_team_game'
-  post 'teams/new_game', to: 'teams#create_game'
+  get 'admin/dash/teams/new', to: 'teams#new_admin_dash', as: 'new_team_admin_dash'
+  post 'admin/dash/teams/new', to: 'teams#create_admin_dash'
+    
+  get 'teams/:team_id/edit', to: 'teams#edit', as: 'edit_team'
+  post 'teams/:team_id/edit', to: 'teams#update'
     
   get 'teams/:team_id/destroy', to: 'teams#destroy', as: 'destroy_team'
 
@@ -234,6 +252,11 @@ Rails.application.routes.draw do
 ########
 # User #
 ########
+    
+  get 'users/new', to: 'users#new', as: 'new_user'
+  post 'users/new', to: 'users#create'
+  get 'user/:user_id/edit', to: 'users#edit', as: 'edit_user'
+  post 'user/:user_id/edit', to: 'users#update'
     
   get 'users/:user_id/destroy', to: 'users#destroy', as: 'destroy_user'
   put 'users/:user_id/update', to: 'users#update', as: 'update_user'
@@ -262,6 +285,38 @@ Rails.application.routes.draw do
     
   get 'words/:basket_id/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
   mount ActionCable.server => '/cable'
+
+#########
+# Video #
+#########
+    
+  get 'videos/new', to: 'videos#new', as: 'video_upload'
+  post 'videos/new', to: 'videos#create'
+    
+###########
+# Comment #
+###########
+    
+  get 'turns/:turn_id/comments/new', to: 'comments#new', as: 'new_comment'
+  post 'turns/:turn_id/comments/new', to: 'comments#create'
+#############
+# Objection #
+#############
+
+  get 'objections/:basket_id/new', to: 'objections#new', as: 'new_objection'
+  post 'objections/:basket_id/new', to: 'objections#create'
+  get "baskets/:basket_id/objections/:objection_id", to: "objections#destroy", as: 'destroy_objection'
+  
+##########
+# Basket #
+##########
+    
+  get 'basket/new', to: 'basket#new', as: 'new_basket'
+  post 'basket/new', to: 'basket#create'
+  get 'basket/:basket_id/edit', to: 'basket#edit', as: 'edit_basket'
+  post 'basket/:basket_id/edit', to: 'basket#update'
+  get 'basket/:basket_id/destroy', to: 'basket#destroy', as: 'destroy_basket'
+  get 'basket/:basket_id/destroy/:site', to: 'basket#destroy', as: 'destroy_basket_admin'
     
 ##############
 # Enter Game #

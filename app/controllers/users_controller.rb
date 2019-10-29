@@ -2,58 +2,71 @@ class UsersController < ApplicationController
   include ApplicationHelper
   before_action :authenticate_admin!, :set_vars, except: [:create]
 
+    
+  def new
+  end
+    
+  def create
+    if user_params[:email].empty?
+      flash[:user_email] = 'Gib eine E-Mail an!'
+    elsif !Admin.find_by(email: user_params[:email]).nil? || !User.find_by(email: user_params[:email]).nil?
+      flash[:user_email] = 'Schon vergeben!'
+    end
+    if user_params[:email].empty? || !Admin.find_by(email: user_params[:email]).nil? || !User.find_by(email: user_params[:email]).nil?
+      redirect_to dash_admin_teams_path
+      return
+    end
+    @random_pass = random_pass
+    @user = User.new(user_params)
+    @user.encrypted_pw = @user.encrypt @random_pass
+    @user.save
+    if params[:user][:teams].present?
+      @user.teams.destroy_all
+      params[:user][:teams].each do |t|
+        @user.teams << Team.find_by(id: t)
+      end
+    else
+      @user.teams.destroy_all
+    end
+    if @user.save
+      SendInvitationJob.perform_later(@user, @random_pass)
+    else
+      flash[:danger] = "Konnte User nicht erstellen"
+    end
+    redirect_to dash_admin_teams_path
+  end
+    
+  def edit
+  end
+    
+  def update
+    @user = User.find(params[:user_id])
+    @user.update(user_params)
+    team_ids = @user.team_ids.map(&:to_s)
+    if params[:user][:teams].present?
+      @user.teams.destroy_all
+      params[:user][:teams].each do |t|
+        @user.teams << Team.find_by(id: t)
+      end
+    else
+      @user.teams.destroy_all
+    end
+    redirect_to dash_admin_user_path(@user)
+  end
+    
+    
   def destroy
     if @user.destroy
-      flash[:success] = 'Spieler erfolgreich gelöscht!'
-      redirect_to dash_admin_users_path
+      redirect_to dash_admin_teams_path
     else
       flash[:danger] = 'Konnte Spieler nicht löschen!'
       redirect_to dash_admin_users_path
     end
   end
   
-  def update
-    @user = User.find(params[:user_id])
-    @user.update(user_params)
-    team_ids = @user.team_ids.map(&:to_s)
-    if params[:user][:teams].present?
-      @user.team_ids = params[:user][:teams] 
-    else
-      @user.teams.destroy_all
-    end
-    redirect_to dash_admin_users_path
-  end
+  
 
-  def create
-    @user = User.new(user_params)
-    if Admin.find_by_email(user_params[:email]).present?
-      @user.errors.messages[:email].push("You can't use this email")
-      respond_to do |format|
-        format.js do
-          render :create
-        end
-      end
-    else
-      @user.admin_id = current_admin.id
-      @random_pass = random_pass
-      @user.encrypted_pw = @user.encrypt @random_pass
-      if @user.save
-        SendInvitationJob.perform_later(@user, @random_pass)
-        if params[:user][:teams].present?
-          @user.team_ids = params[:user][:teams] 
-        else
-          @user.teams.destroy_all
-        end
-        redirect_to dash_admin_users_path
-      else
-        respond_to do |format|
-          format.js do
-            render :create
-          end
-        end
-      end
-    end
-  end
+
   
   private
     def set_vars
@@ -62,6 +75,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:fname,:lname, :company_name, :email, :avatar )
+      params.require(:user).permit(:fname, :lname, :company_name, :email, :avatar, :admin_id )
     end
 end

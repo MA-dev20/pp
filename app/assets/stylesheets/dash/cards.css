@@ -1,0 +1,78 @@
+.karte {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 6px 20px 0 rgba(172, 172, 172, 0.1);
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.karte .head {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+    line-height: 100px
+}
+.karte .head.left {
+    text-align: left;
+}
+
+.karte .head.small {
+    height: 70px;
+    line-height: 70px;
+    font-size: 26px;
+}
+
+.karte .back {
+    position: relative;
+    float: left;
+    line-height: 100px;
+    padding: 0 10px 0 0;
+    cursor: pointer;
+    z-index: 10;
+    color: #16e2a5;
+    font-size: 18px;
+    text-decoration: none;
+}
+.karte .back.small{
+    line-height: 70px;
+    padding: 0 10px 0 0;
+    font-size: 16px;
+}
+
+label.half {
+    width: calc(50% - 10px)
+}
+label.right {
+    float: right;
+}
+.karte .alert {
+    float: right;
+    font-size: 16px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 30px;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.half-field.left {
+    left: 0;
+}
+.half-field.right {
+    float: right;
+    right: 0;
+}
+
+.karte .btn {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: calc(100% - 80px);
+    cursor: pointer;
+    margin: 40px;
+}
+
+

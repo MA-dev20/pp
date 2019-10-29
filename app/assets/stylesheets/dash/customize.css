@@ -1,0 +1,156 @@
+#newCatchword,
+#editCatchword {
+    margin-right: 60px;
+}
+#newObjection,
+#newCatchword {
+    display: none;
+}
+.customize {
+    width: 1170px;
+    height: 538px;
+    margin: 0 auto;
+}
+.customize-sm {
+    float: left;
+    position: relative;
+    top: 48px;
+    width: 555px;
+    height: 648px;
+}
+.customize-sm:first-child {
+    margin-right: 60px;
+}
+.customize-sm .searchbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 48px;
+    border-radius: 8px;
+    box-shadow: 0px 6px 20px 0 rgba(107, 107, 107, .1);
+    background-color: #fff;
+}
+.customize-sm > .btn {
+    position: absolute;
+    top: 0;
+    right: 0px;
+}
+.customize-sm > .karte {
+    margin-top: 68px;
+    height: 580px;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+.customize-sm > .karte .head {
+    padding-left: 10px;
+}
+.customize-sm > .karte .divider {
+    margin: 20px 0;
+    height: 1px;
+    background-color: #dfe1e5;
+}
+.customize-sm > .karte > .list {
+    position: relative;
+    height: 449px;
+    width: 100%;
+}
+.customize-sm > .karte > .list > .list-karte {
+    float: left;
+    height: 105px;
+    width: 150px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px 0 rgba(94, 94, 94, .15);
+    background-color: #fff;
+    margin-left: 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+.customize-sm > .karte > .list > .list-karte .pic {
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    color: white;
+    height: 74px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-position: center;
+    background-blend-mode:darken;
+    background-color: rgba(0,0,0,.5);
+}
+
+.customize-sm > .karte > .list > .list-karte .pic .first {
+    padding-top: 7px;
+    font-size: 16px;
+}
+.customize-sm > .karte > .list > .list-karte .pic .second {
+    font-size: 13px;    
+}
+.customize-sm > .karte > .list > .list-karte .pic .third {
+    font-size: 11px;
+}
+.customize-sm > .karte > .list > .list-karte .bottom {
+    line-height: 31px;
+    height: 31px;
+    width: 100%;
+    padding: 0 10px;
+    font-size: 14px;
+}
+.customize-sm > .karte > .list > .list-karte .bottom .name {
+    float: left;
+    max-width: 110px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.customize-sm > .karte > .list > .list-karte .bottom .count {
+    float: right;
+}
+.customize-sm > .karte table {
+    width: 100%;
+}
+.customize-sm > .karte table thead {
+    border-bottom: 1px solid #dfe1e5;
+}
+.customize-sm > .karte table tr td:first-child,
+.customize-sm > .karte table tr th:first-child {
+    width: 399px;
+    cursor: pointer;
+}
+.customize-sm > .karte table tr td i {
+    font-size: 20px;
+    line-height: 30px;
+    margin: 5px;
+    color: #16e2a5;
+}
+.customize-sm > .karte table tr td img {
+    margin: 10px 5px;
+}
+.customize-sm > .karte table thead tr th {
+    font-size: 16px;
+    line-height: 36px;
+    font-weight: 300;
+}
+.customize-sm > .karte > .table-content {
+    position: relative;
+    max-height: 160px;
+    width: 100%;
+}
+
+.customize-sm > .karte > .table-content > table > tbody{
+    width: 100%;
+}
+.customize-sm > .karte > .table-content > table > tbody tr {
+    height: 40px;
+    border-bottom: 1px solid #dfe1e5;
+    width: 100%;
+}
+.customize-sm > .karte > form > .btn {
+    width: 226px;
+    left: 125px;
+}
+.customize-sm > .karte > .remove {
+    position: absolute;
+    bottom: 47px;
+    right: 40px;
+}
