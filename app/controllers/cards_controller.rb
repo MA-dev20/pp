@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
   before_action :authenticate_admin!, :set_admin , unless: :skip_action?
-  # skip_before_action :check_expiration_date
+  skip_before_action :check_expiration_date
   layout 'main'
   respond_to :html, :json
 
