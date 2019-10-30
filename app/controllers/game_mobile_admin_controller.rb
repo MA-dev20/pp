@@ -238,7 +238,8 @@ class GameMobileAdminController < ApplicationController
   def ended
     @game = current_game
     if @game.state != 'ended'
-      @game.update(state: 'end_pitch', active: false)
+      # @game.update(state: 'end_pitch', active: false)
+      @game.update(state: 'ended', active: false)
     end
     sign_out(@game)
     sign_out(@admin)
