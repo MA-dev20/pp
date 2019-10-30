@@ -50,7 +50,7 @@
                 </div>
                 <div class="player">
                     <%= image_tag r[:user_avatar] %>
-                    <%= (r[:user_fname].present? ? r[:user_fname] : '' + " " + r[:user_lname].present? ? r[:user_lname] : '') %>
+                    <%= (r[:user_fname].present? ? r[:user_fname] : '') + " " + (r[:user_lname].present? ? r[:user_lname] : '') %>
                 </div>
                 </div>
             <% end %>
