@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   put 'dash/account', to: 'user/dash_user#update_user', as: 'dash_user_account_update'
  
 
-
   get 'landing/index'
   get 'landing/price', to: 'landing#price', as: 'price'
   get 'dash_admin/dash_admin_price', to: 'dash_admin#dash_admin_price', as: 'dash_admin_price'
@@ -53,6 +52,8 @@ Rails.application.routes.draw do
   get 'games/choose', to: 'game_desktop_admin#choose', as: 'gda_choose'
   get 'games/turn', to: 'game_desktop_admin#turn', as: 'gda_turn'
   get 'games/error', to: 'game_desktop_admin#error', as: 'gea_turn'
+  get 'games/youtube_video', to: 'game_desktop_admin#youtube_video', as: 'gda_youtube'
+  get 'video_testing', to: 'game_mobile_admin#video_testing'
   get 'games/play', to: 'game_desktop_admin#play', as: 'gda_play'
   get 'games/rate', to: 'game_desktop_admin#rate', as: 'gda_rate'
   get 'games/rating', to: 'game_desktop_admin#rating', as: 'gda_rating'
@@ -66,6 +67,7 @@ Rails.application.routes.draw do
 # Admin Mobile #
 ################
 
+  
   get 'mobile/admins/:password', to: 'game_mobile_admin#new', as: 'gma_start'
   post 'mobile/admins/:password', to: 'game_mobile_admin#create'
   get 'mobile/admin/avatar', to: 'game_mobile_admin#new_avatar', as: 'gma_new_avatar'
@@ -75,6 +77,7 @@ Rails.application.routes.draw do
     
   get 'mobile/admin/intro', to: 'game_mobile_admin#intro', as: 'gma_intro'
   get 'mobile/admin/wait', to: 'game_mobile_admin#wait', as: 'gma_wait'
+  get 'mobile/admin/youtube_video', to: 'game_mobile_admin#youtube_video', as: 'gma_youtube'
   get 'mobile/admin/error', to: 'game_mobile_admin#error', as: 'gea_mobile'
   get 'mobile/admin/choose', to: 'game_mobile_admin#choose', as: 'gma_choose'
   get 'mobile/admin/choosen/:turn_id', to: 'game_mobile_admin#choosen', as: 'gma_choosen'
@@ -88,6 +91,7 @@ Rails.application.routes.draw do
   get 'mobile/admin/bestlist', to: 'game_mobile_admin#bestlist', as: 'gma_bestlist'
   get 'mobile/admin/replay', to: 'game_mobile_admin#replay', as: 'gma_replay'
   get 'mobile/admin/ended', to: 'game_mobile_admin#ended', as: 'gma_ended'
+  get 'mobile/admin/end_pitch', to: 'game_mobile_admin#end_pitch', as: 'gma_pitch_ended'
     
   get 'mobile/admin/after_rating', to: 'game_mobile_admin#after_rating', as: 'gma_after_rating'
     
@@ -344,3 +348,4 @@ Rails.application.routes.draw do
   get '/:password', to: 'game_mobile_user#welcome', as: 'gmu_start'
 
 end
+

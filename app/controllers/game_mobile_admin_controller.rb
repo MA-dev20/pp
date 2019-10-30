@@ -1,6 +1,6 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel]
-  before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email]
+  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :end_pitch, :youtube_video]
+  before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email, :video_testings]
   before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
   skip_before_action :verify_authenticity_token, only: [:save_video]
@@ -10,6 +10,15 @@ class GameMobileAdminController < ApplicationController
     session[:admin_email] = nil
     @game1 = Game.where(password: params[:password], active: true).first
     session[:game_session_id] = @game1.id
+  end
+
+
+
+  def video_testing
+    @cur_user = User.first
+    @game1 = Game.first
+    @turn  = Turn.first
+    @record = true
   end
 
   def password
@@ -98,9 +107,22 @@ class GameMobileAdminController < ApplicationController
     @count = @users.select{|user| user if user.status!="pending"}.count    
     @pending_users = @users.select{|user| user if user.status=="pending"}
   end
-    
+  
+  def youtube_video
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)  
+    if @game.state != 'choose' && @turns.count <= 1
+      redirect_to gea_mobile_path
+      return
+    else
+      ActionCable.server.broadcast "game_#{@game.id}_channel",desktop: "youtube_video", game_admin_id: @game.admin_id
+    end    
+    @users = @game.users
+    @count = @users.select{|user| user if user.status!="pending"}.count    
+    @pending_users = @users.select{|user| user if user.status=="pending"}
+  end
+
   def choose
-    @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)  
     if @game.state != 'choose' && @turns.count <= 1
       redirect_to gea_mobile_path
       return
@@ -216,11 +238,16 @@ class GameMobileAdminController < ApplicationController
   def ended
     @game = current_game
     if @game.state != 'ended'
-      @game.update(state: 'ended', active: false)
+      @game.update(state: 'end_pitch', active: false)
     end
     sign_out(@game)
     sign_out(@admin)
     redirect_to root_path
+    # redirect_to gma_pitch_ended_path
+  end
+
+  def end_pitch
+    @game = current_game
   end
     
   def replay
@@ -283,3 +310,4 @@ class GameMobileAdminController < ApplicationController
       end
     end
 end
+
