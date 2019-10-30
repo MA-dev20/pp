@@ -41,7 +41,7 @@
                <div class="video-karte pitches" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')">
                 <div class="top" style="background-image: url('<%= asset_path(r[:pitch_url]) %>')">
                     <div class="overlay"></div>
-                    <div class="rating"><%= r[:rating] / 10.0 %></div>
+                    <div class="rating"><%= r[:rating].present? ? r[:rating] / 10.0 : 0 %></div>
                     <div class="play"><i class="fas fa-play"></i></div>
                     <div class="heart"><i class="far fa-heart"></i></div>
                 </div>
