@@ -4,13 +4,8 @@
   include ApplicationHelper
     
   before_action :configure_permitted_parameters, if: :devise_controller?
-# <<<<<<< HEAD
   before_action :check_expiration_date
 #  before_action :authenticate_request
-# =======
-#   # before_action :check_expiration_date
-#   before_action :authenticate_request
-# >>>>>>> youtube-field-branch
   
   def check_expiration_date
     if admin_signed_in?

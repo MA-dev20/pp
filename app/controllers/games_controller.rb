@@ -28,15 +28,8 @@ class GamesController < ApplicationController
     if @game && @game.admin_id == @admin.id
       session[:game_session_id] = @game.id
       @game.turns.update_all(status: 'ended')
-# <<<<<<< HEAD
       set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
       set_objections_for_game(@game, params[:game][:objections])
-# =======
-#       @game[:youtube_url] = params[:game][:youtube_url]
-#       @game.save!
-#       set_words_for_game(@game, params[:game][:own_rules], params[:game][:baskets], params[:game][:seconds])
-#       set_objections_for_game(@game, params[:game][:own_rules], params[:game][:objections])
-# >>>>>>> youtube-field-branch
       sign_in(@game)
       # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
       redirect_to gda_intro_path
@@ -44,7 +37,6 @@ class GamesController < ApplicationController
         flash[:pop_up] = "Ups, diese URL ist schon vergeben!;- Sei kreativ und wähle eine ander aus. -"
         redirect_to dash_admin_games_path(params[:game][:team_id])
     else
-# <<<<<<< HEAD
       @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
       if @game.save
         @game[:youtube_url] = params[:game][:youtube_url]
@@ -55,23 +47,6 @@ class GamesController < ApplicationController
         # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
         session[:game_session_id] = @game.id
         redirect_to gda_intro_path
-# =======
-#       if params[:game][:team_id].present?
-#         @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
-#         if @game.save
-#           @game[:youtube_url] = params[:game][:youtube_url]
-#           @game.save!
-#           set_words_for_game(@game, params[:game][:own_rules], params[:game][:baskets], params[:game][:seconds])
-#           set_objections_for_game(@game, params[:game][:own_rules], params[:game][:objections])
-#           sign_in(@game)
-#           # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
-#           session[:game_session_id] = @game.id
-#           redirect_to gda_intro_path
-#         else
-#           flash[:danger] = 'Konnte Spiel nicht speichern'
-#           redirect_to dash_admin_games_path(params[:game][:team_id])
-#         end
-# >>>>>>> youtube-field-branch
       else
         flash[:danger] = 'Konnte Spiel nicht speichern'
         redirect_to dash_admin_games_path(params[:game][:team_id])
@@ -97,23 +72,6 @@ class GamesController < ApplicationController
       game.catchword_basket.words << words if words.present?
     end
 
-# <<<<<<< HEAD
-    # def set_objections_for_game(game, own_rules, objections_bas)
-    #   if own_rules == "true"
-    #     objections_basket_ids = objections_bas - [""]
-    #     objections = ObjectionsBasket.includes(:objections).where('id IN (?)', objections_basket_ids).map(&:objections).flatten!
-    #     game.build_objection_basket.save! if game.objection_basket.nil?
-    #     game.objection_basket.objections.destroy_all
-    #     objections = objections&.first(10)
-    #     if objections && objections_bas.include?("")
-    #       game.use_peterobjections = true
-    #       objections+=ObjectionsBasket.peter_objections&.first(10-objections.length) if objections.length < 10
-    #     else
-    #       game.use_peterobjections = false
-    #     end
-    #     game.objection_basket.objections << objections if objections.present?
-    #     game.save!
-# =======
     def set_objections_for_game(game, objections_bas)
       objections_basket_ids = objections_bas - ["pp"]
       if !objections_basket_ids.empty?
@@ -129,7 +87,6 @@ class GamesController < ApplicationController
       end
       game.objection_basket.objections << objections if objections.present?
       game.save!
-# >>>>>>> b4fdc86187467b2d34a5dd01c2a711c28e43646a
       end
     end
 

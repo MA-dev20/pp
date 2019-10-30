@@ -25,16 +25,9 @@ Rails.application.routes.draw do
   root 'landing#index'
   # patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'
-# <<<<<<< HEAD
-  # get 'admins/sign_up/:v_id', to: 'landing#sign_up', as: 'edit_admin'
-  # get 'admins/signup/:v_id', to: 'landing#signup' , as: 'edit_next_admin'
-  # patch 'admins/update_admin/:v_id', to: 'landing#update_admin', as: 'update_admin'
-  # patch 'admins/update_admin_details/:v_id', to: 'landing#update_admin_details', as: 'update_admin_details'
-# =======
   get 'admins/signup/:v_id', to: 'landing#signup' , as: 'edit_next_admin'
   patch 'admins/update_admin/:v_id', to: 'landing#update_admin', as: 'update_admin'
   patch 'admins/update_admin_details/:v_id', to: 'landing#update_admin_details', as: 'update_admin_details'
-# >>>>>>> b4fdc86187467b2d34a5dd01c2a711c28e43646a
 
   get 'coaches/info', to: 'landing#coach', as: 'coach_info'
   # get '/verfication/:token' , to: 'verification#token' , as: 'verification_token'

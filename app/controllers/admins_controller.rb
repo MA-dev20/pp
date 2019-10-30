@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-# <<<<<<< HEAD
+
   before_action :set_admin
     
   def edit
@@ -13,10 +13,6 @@ class AdminsController < ApplicationController
     end
   end
     
-# =======
-#   # skip_before_action :check_expiration_date
-#   before_action :require_root, :set_vars
-# >>>>>>> youtube-field-branch
   def destroy
     if @admin.destroy
       flash[:success] = 'Spieler erfolgreich gelöscht!'

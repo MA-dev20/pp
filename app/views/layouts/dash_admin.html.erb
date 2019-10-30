@@ -103,30 +103,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <%= msg %>
         </div>
         <% end %>
-<!-- <<<<<<< HEAD -->
-         
-      <!-- <div class="dropdown">
-              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <% if @admin.avatar? %>
-                      <%= image_tag @admin.avatar.quad.url %>
-                  <% else %>
-                      <%= image_tag 'defaults/wolf.jpg' %>
-                  <% end %>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <%= link_to "Account", dash_admin_account_path , class: 'dropdown-item'%>
-                <%# <%= link_to "Abrechnungsdaten", dash_admin_billing_path, class: 'dropdown-item'  %>
-                <%# <% if @admin.admin_subscription_id.nil? %>
-                  <%# <%= link_to "Select Package", dash_admin_price_path , class: 'dropdown-item'%>
-                <%# <% end %>
-                <%= link_to 'Logout', destroy_admin_session_path, class: 'dropdown-item red' %>
-              </div>
-          </div>
-         
-  </div>   
-
-  <%= yield :modal %> -->
-<!-- ======= -->
     <% end %>
     <%= yield %>
 </section>
@@ -135,7 +111,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
    <div class="link"><%= link_to 'Account', dash_admin_account_path %></div>
    <div class="link"><%= link_to('Logout', destroy_admin_session_path, class: 'red') %></div>
 </div>
-<!-- >>>>>>> b4fdc86187467b2d34a5dd01c2a711c28e43646a -->
 </body>
 <script>
     function openDropdown(){
