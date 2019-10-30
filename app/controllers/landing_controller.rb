@@ -1,6 +1,6 @@
 class LandingController < ApplicationController
 
-  skip_before_action :check_expiration_date, only: :price
+  # skip_before_action :check_expiration_date, only: :price
   before_action :check_sessions, only: [:index,:price, :product]
 
   layout 'main'
