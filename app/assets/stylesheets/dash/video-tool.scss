@@ -52,6 +52,7 @@
     margin: 0 auto;
     height: 589px;
     width: 1140px;
+    top: 30px;
 }
 .video-details .left-part {
     position: absolute;
@@ -92,22 +93,35 @@
     border-top: 1px solid #dfe1e5;
     padding-top: 8px;
 }
+.video-details .left-part .toggle-my-ratings .left {
+    background-color: #16E2a5;
+}
+
+.video-details .left-part .toggle-my-ratings .right {
+    background-color: white;
+}
+
+.video-details .left-part .toggle-my-ratings .right .dot {
+    background-color: #adb5bd !important;
+}
+
 .video-details .left-part .toggle-my-ratings .toggle {
     position: relative;
     float: left;
-    width: 48px;
-    height: 24px;
+    width: 28px;
+    height: 17px;
     border-radius: 12px;
-    background-color: #dfe1e5;
+    border: 1px solid #dfe1e5;
     margin: 0 8px 0 0;
     cursor: pointer;
+    top: 2px;
 }
 .video-details .left-part .toggle-my-ratings .toggle .dot {
-    margin: 2px;
-    height: 20px;
-    width: 20px;
+    margin: 1px 2px;
+    height: 12px;
+    width: 12px;
     border-radius: 10px;
-    background-color: #fff;
+    background-color: white;
 }
 
 .video-details .left-part .toggle-my-ratings .toggle.left .dot {
@@ -233,7 +247,7 @@
     border-radius: 50%;
     height: 26px;
     width: 26px;
-    line-height: 26px;
+    line-height: 23px;
     text-align: center;
     color: #16e2a5;
 }
@@ -245,7 +259,7 @@
     color: white;
     height: 40px;
     width: 40px;
-    line-height: 40px;
+    line-height: 42px;
     text-align: center;
     border-radius: 50%;
     font-size: 12px;

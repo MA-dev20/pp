@@ -41,13 +41,18 @@ class BasketController < ApplicationController
     elsif !@basket.update(basket_params)
       flash[:danger] = 'Konnte Liste NICHT updaten!'
     end
-    if params[:basket][:site] == 'admin_dash' && params[:basket][:type] == "objection"
-        redirect_to dash_admin_objections_path(@basket.id)
-    elsif params[:basket][:site] == 'admin_dash'
-        redirect_to dash_admin_catchwords_path(@basket.id)
+    if (params[:basket][:site] == 'admin_dash' && params[:basket][:type] == "objection") || params[:basket][:site] == 'admin_dash'
+        redirect_to dash_admin_customize_path
     else
         redirect_to backoffice_words_path(@basket.id)
     end
+    # if params[:basket][:site] == 'admin_dash' && params[:basket][:type] == "objection"
+    #     redirect_to dash_admin_objections_path(@basket.id)
+    # elsif params[:basket][:site] == 'admin_dash'
+    #     redirect_to dash_admin_customize_path
+    # else
+    #     redirect_to backoffice_words_path(@basket.id)
+    # end
   end
     
   def destroy

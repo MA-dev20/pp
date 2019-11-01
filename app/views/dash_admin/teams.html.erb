@@ -49,7 +49,7 @@
             <div class="user-list">
                 <div class="search-field">
                     <%= image_tag 'dash/icons/search.png', class: 'search' %>
-                    <input type="text" placeholder="Search Users" id='searchNewTeam'>
+                    <input type="text" placeholder="Search Users" id='searchNewTeam' autocomplete="off">
                 </div>
                 <% @admin.users.all.each do |u| %>
                     <div class="user">
@@ -191,7 +191,7 @@
             <div class="team-list" id="unselected_new_teams">
                 <div class="search-field">
                     <%= image_tag 'dash/icons/search.png', class: 'search' %>
-                    <input type="text" placeholder="Search Users" id='searchNewUser'>
+                    <input type="text" placeholder="Search Users" id='searchNewUser' autocomplete="off">
                 </div>
                 <% @admin.teams.each do |t| %>
                     <label for="new_user_teams_<%= t.id %>" class="team newUser" onclick="moveNewTeam(this)"><%= t.name %> <i class="fas fa-times"></i></label>
@@ -244,6 +244,12 @@
     </div>
     <% end %>
 </div>
+
+<style>
+    .user, .newUser {
+        display: none !important;
+    }
+</style>
 <script>
     new PerfectScrollbar('#teams-table');
     new PerfectScrollbar('#users-table');
@@ -274,6 +280,11 @@
     
     /* search newTeam */
         $('#searchNewTeam').keyup(function() {
+            if ($('#searchNewTeam').val() == ""){
+                $('.user').attr('style', 'display: none !important');
+            } else {
+                $('.user').attr('style', 'display: block !important');
+            }
             $rows = $('.user');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
             reg = RegExp(val, 'i'),
@@ -298,6 +309,11 @@
     
     /* search newUser */
         $('#searchNewUser').keyup(function() {
+            if ($('#searchNewUser').val() == ""){
+                $('.newUser').attr('style', 'display: none !important');
+            } else {
+                $('.newUser').attr('style', 'display: block !important');
+            }
             $rows = $('.newUser');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
             reg = RegExp(val, 'i'),

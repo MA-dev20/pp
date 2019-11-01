@@ -47,7 +47,12 @@ label .alert {
     font-size: 20px;
     font-weight: bold;
 }
+.field .custom-submit {
+    line-height: 24px;
+    font-size: 22px;
+}
 .half-field {
+    padding: 10px;
     width: calc(50% - 10px);
     height: 48px;
     border-radius: 8px;
@@ -71,6 +76,7 @@ label .alert {
     margin: 13px;
 }
 .searchbar input[type='text'] {
+    width: 80%;
     position: relative;
     border: none;
 }
@@ -167,7 +173,7 @@ label .alert {
 }
 .url-field .custom-url-field {
     float: left;
-    max-width: 60%;
+    width: 65%;
     border: none;
     height: 36px;
 }

@@ -32,7 +32,7 @@ class DashAdminController < ApplicationController
   #Stats
     
   def user_stats
-    if @user.turns.count == 0
+    if @user.turns.count == 0 || !@user.user_rating.present?
       redirect_to dash_admin_teams_path
       return
     end
@@ -40,7 +40,7 @@ class DashAdminController < ApplicationController
     @turns = @user.turns.all
     @user_rating = @user.user_rating
     @turn_ratings = @user.turn_ratings.order('created_at ASC')
-    @date = @turn_ratings.first.created_at.beginning_of_day
+    @date = @turn_ratings.first&.created_at&.beginning_of_day
     @days = 1;
     @turn_ratings.each do |tr|
         bod = tr.created_at.beginning_of_day
@@ -155,7 +155,7 @@ class DashAdminController < ApplicationController
     elsif @sort_by == 'lnameDSC'
       @result = @result.sort{|b,a| a[:user_lname] <=> b[:user_lname]}
     elsif @sort_by == 'ratingASC'
-      @result = @result.sort{|a,b| a[:rating] <=> b[:rating]}
+      @result = @result.sort{|a,b| a[:rating].to_i <=> b[:rating].to_i}
     elsif @sort_by == 'ratingDSC'
       @result = @result.sort{|b,a| a[:rating] <=> b[:rating]}
     elsif @sort_by == 'dateDSC'

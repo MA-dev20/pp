@@ -138,7 +138,26 @@
             <% end %>
         </div>
         <div class="progress-in-video"></div>
-        <%= form_for(:comment, url: new_comment_path(@turn)) do |f| %>
+        <form class="" id="add-comment-form">
+            <div class="time" id="videoTime">0:00</div>
+            <label for="coment_type_of_comment_negative" id="negative">
+                    <input type="radio" value="negative" checked="checked" name="radio" id="comment_type_of_comment_neutral">
+                    <span class="checkbox"><span class="dot"></span></span>
+                    Negativ
+                </label>
+                <label for="coment_type_of_comment_neutral" id="neutral">
+                        <input type="radio" value="neutral" checked="checked" name="radio" id="comment_type_of_comment_neutral">
+                    <span class="checkbox"><span class="dot"></span></span>
+                    Neutral
+                </label>
+                <label for="coment_type_of_comment_positive" id="positive">
+                    <input type="radio" value="positive" name="radio" id="comment_type_of_comment_positive">
+                    <span class="checkbox"><span class="dot"></span></span>
+                    Positiv
+                </label>
+            <input class="field" placeholder="Write here..." type="text" name="title" id="comment_title"> 
+        </form>
+        <!-- <%= form_for(:comment, url: new_comment_path(@turn)) do |f| %>
             <div class="time" id="videoTime">0:00</div>
             <label for="coment_type_of_comment_negative" id="negative">
                 <%= f.radio_button :type_of_comment, 'negative' %>
@@ -157,12 +176,62 @@
             </label>
             <%= f.text_field :title, class: 'field', placeholder: 'Write here...' %>
             <%= f.hidden_field :time_of_video, value: 0 %>
-        <% end %>
+        <% end %> -->
     </div>
 </div>
 <script>
+    var admin_img = '<%= @admin.avatar.quad.url %>'
+    var admin_fname = '<%= @admin.fname %>'
+    var admin_lname = '<%= @admin.lname %>'
+    var total_duration = '<%=  @turn.recorded_pitch_duration.to_minutes if @turn.recorded_pitch_duration.present? %>';
     new PerfectScrollbar('#commentCard');
     setDuration();
+
+    $("#add-comment-form").on('submit', function(e){
+      e.preventDefault()
+      var text = $("input[name=title]").val()
+      if(text.length > 0){
+        $("input[name=title]").val('')
+        var type = $("input[name=radio]:checked").val()
+        addCommentToCommentBox(text, type)
+        var hms = $('#videoTime').text(); 
+        var a = hms.split(':');
+        var time_seconds = 0; 
+        if (a.length > 2) {
+        time_seconds = (parseInt(a[0]) * 3600) + (parseInt(a[1]) * 60) + (a[2]); 
+        } else {
+        time_seconds = parseInt(a[0]) * 60 + parseInt(a[1])
+        } 
+        sendToServer(text, type, time_seconds)
+      }
+    });
+
+    function addCommentToCommentBox(text, type){
+        var comment = $('<div class="comment" onclick="videoJumpTo(2)"></div>')
+        var img = $('<img>');
+        $(img).attr('src', admin_img);
+        var user = $('<div class=head></div>')
+        $(user).text(admin_fname + ' ' + admin_lname + ' - ' + $('#videoTime').text())
+        var span_elem = $('<span class="neutral"></span>')
+        $(comment).append(img).append(user).append('<div class=comment-title>' + '<span class='+type+'></span>' + text +'</div>');
+        $('#commentCard').append(comment);
+    }
+
+    function sendToServer(text, type, time_seconds){
+      $.ajax({
+        url: '<%= create_comment_path(@turn.id)%>',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: {title: text, type: type, current_time:  time_seconds},
+        type: 'post',
+        success: function(res){
+          $('#release_it').attr("disabled", false)
+          $("#release_it").css("opacity",1)
+        }
+      })
+    }
+
+
+
     function playVideo() {
         if($('#videoPlay').hasClass('fa-play')) {
             document.getElementById('videoId').play();
@@ -208,10 +277,13 @@
         setTimeout(function(){
             var duration = getDuration();
             vid.load();
-            $('#progressText').text('0:00/'+duration)
+            $('#progressText').text('0:00/'+total_duration)
         },100)
     }
     function getProgress() {
+        // if ($('#videoPlay').hasClass('fa-pause') && $('#progressText').text().split('/')[0] == '0:00') {
+        //         debugger
+        // }
         var vid = document.getElementById('videoId');
         var time = vid.currentTime
         var min = Math.floor(time / 60);
@@ -229,10 +301,10 @@
         var duration = getDuration();
         var progress = getProgress();
         var progressdot = $('#progressDot')
-        $('#progressText').text(progress + "/" + duration);
+        $('#progressText').text(progress + "/" + total_duration);
         var timer = setInterval(function() {
             progress = getProgress();
-            $('#progressText').text(progress + "/" + duration);
+            $('#progressText').text(progress + "/" + total_duration);
             if(document.getElementById('videoId').paused) {
                 clearInterval(timer);
             }

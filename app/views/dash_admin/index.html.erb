@@ -1,39 +1,40 @@
-<div class="karte letsplay"  id="letsplay">
+<div class="karte letsplay" id="letsplay">
     <div class="head">
         Jetzt Pitch starten!
     </div>
     <%= form_for(:game, url: new_game_path(@admin), html: {id: 'game-form'}) do |f| %>
     <div class="team">
         <label>
-        Team
-        <% if flash[:select_team] %>
+            Team
+            <% if flash[:select_team] %>
             <div class="alert alert-game1"><%= flash[:select_team] %></div>
-        <% else %>
+            <% else %>
             <div class="newteam-link" onclick="showTeam()">Team erstellen</div>
-        <% end %>
+            <% end %>
         </label>
-        <select name="game[team_id]" id="game_team_id" class="custom-select custom-select-lg <% if flash[:select_team] %>red<% end %>">
+        <select name="game[team_id]" id="game_team_id"
+            class="custom-select custom-select-lg <% if flash[:select_team] %>red<% end %>">
             <% if !@team %>
             <option value="" selected disabled>Team wählen</option>
             <% end %>
             <% @teams.each do |t| %>
-                <% if @team && t.id == @team.id %>
-                <option value="<%= t.id %>" selected><%= t.name %></option>
-                <% else %>
-                <option value="<%= t.id %>"><%= t.name %></option>
-                <% end %>
+            <% if @team && t.id == @team.id %>
+            <option value="<%= t.id %>" selected><%= t.name %></option>
+            <% else %>
+            <option value="<%= t.id %>"><%= t.name %></option>
+            <% end %>
             <% end %>
         </select>
     </div>
     <div class="url">
         <label>Pitch-URL
-        <% if flash[:missing_password] %>
+            <% if flash[:missing_password] %>
             <div class="alert alert-game1"><%= flash[:missing_password] %></div>
-        <% end %>
+            <% end %>
         </label>
         <div class="url-field <% if flash[:missing_password] %>red<% end %>">
-           <div class="text">peterpitch.com/</div>
-           <%= f.text_field :password, class: 'custom-url-field' %>
+            <div class="text">peterpitch.com/</div>
+            <%= f.text_field :password, class: 'custom-url-field' %>
         </div>
     </div>
     <div class="switch-box">
@@ -42,8 +43,8 @@
             <label for="ownrules-toggle" class="custom-control-label">Nach eigenen Regeln pitchen</label>
         </div>
     </div>
-        <button id="rules-button" class="btn btn-green" onclick="showRules()">weiter</button>
-        <%= f.submit 'Pitch starten!', class: 'btn btn-green', id: 'play-button' %>
+    <button id="rules-button" class="btn btn-green" onclick="showRules()">weiter</button>
+    <%= f.submit 'Pitch starten!', class: 'btn btn-green', id: 'play-button' %>
 </div>
 <div class="karte letsplay" id="ownrules">
     <i class="back small fas fa-arrow-left" onclick="hideRules()"></i>
@@ -58,60 +59,62 @@
                 <div class="down" onclick="timeDown()"><i class="fa fa-angle-down"></i></div>
             </div>
         </div>
-        
+
         <div class="catchwords">
             <label>Deine Catchwords
-            <% if flash[:select_catchword] %>
-            <div class="alert alert-game2">
-                <%= flash[:select_catchword] %>
-            </div>
-            <% end %>
+                <% if flash[:select_catchword] %>
+                <div class="alert alert-game2">
+                    <%= flash[:select_catchword] %>
+                </div>
+                <% end %>
             </label>
             <input type="checkbox" name="game[baskets][]" value="pp" multiple id="game_baskets_pp" checked>
             <% @admin.catchword_baskets.where(objection: false).each do |b| %>
-                <input type="checkbox" name="game[baskets][]" value="<%= b.id %>" multiple id="game_baskets_<%= b.id %>">
+            <input type="checkbox" name="game[baskets][]" value="<%= b.id %>" multiple id="game_baskets_<%= b.id %>">
             <% end %>
             <div class="checked-field <% if flash[:select_catchword] %>red<% end %>">
-               <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_pp">
-                   <label for="game_baskets_pp">PetersWords<i class="fas fa-times"></i></label>
-               </div>
-               <div class="add" onclick="catchwordsShow()"><i class="fas fa-plus"></i></div>
+                <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_pp">
+                    <label for="game_baskets_pp">PetersWords<i class="fas fa-times"></i></label>
+                </div>
+                <div class="add" onclick="catchwordsShow()"><i class="fas fa-plus"></i></div>
             </div>
             <div class="unchecked-field">
                 <% @admin.catchword_baskets.where(objection: false).each do |b| %>
-                   <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_<%= b.id %>">
-                       <label for="game_baskets_<%= b.id %>"><%= b.name %> <i class="fas fa-plus"></i></label>
-                   </div>
+                <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_<%= b.id %>">
+                    <label for="game_baskets_<%= b.id %>"><%= b.name %> <i class="fas fa-plus"></i></label>
+                </div>
                 <% end %>
             </div>
         </div>
-        
+
         <div class="objections">
             <label>Deine Objections
-            <% if flash[:select_objection] %>
+                <% if flash[:select_objection] %>
                 <div class="alert alert-game2"><%= flash[:select_objection] %></div>
-            <% end %>
+                <% end %>
             </label>
             <input type="checkbox" name="game[objections][]" value="pp" multiple id="game_objections_pp" checked>
             <% @admin.catchword_baskets.where(objection: true).each do |b| %>
-                <input type="checkbox" name="game[objections][]" value="<%= b.id %>" multiple id="game_objections_<%= b.id %>">
+            <input type="checkbox" name="game[objections][]" value="<%= b.id %>" multiple
+                id="game_objections_<%= b.id %>">
             <% end %>
             <div class="checked-field <% if flash[:select_objection] %>red<% end %>">
-               <div class="checkbox" onclick="moveObjections(this)" data-value="game_objections_pp">
-                   <label for="game_objections_pp">PetersObjection <i class="fas fa-times"></i></label>
-               </div>
-               <div class="add" onclick="objectionsShow()"><i class="fas fa-plus"></i></div>
+                <div class="checkbox" onclick="moveObjections(this)" data-value="game_objections_pp">
+                    <label for="game_objections_pp">PetersObjection <i class="fas fa-times"></i></label>
+                </div>
+                <div class="add" onclick="objectionsShow()"><i class="fas fa-plus"></i></div>
             </div>
             <div class="unchecked-field">
                 <% @admin.catchword_baskets.where(objection: true).each do |b| %>
-                   <div class="checkbox" onclick="moveObjections(this)" data-value="game_objections_<%= b.id %>">
-                       <label for="game_objections_<%= b.id %>"><%= b.name %> <i class="fas fa-plus"></i></label>
-                   </div>
+                <div class="checkbox" onclick="moveObjections(this)" data-value="game_objections_<%= b.id %>">
+                    <label for="game_objections_<%= b.id %>"><%= b.name %> <i class="fas fa-plus"></i></label>
+                </div>
                 <% end %>
             </div>
         </div>
         <div class="youtube">
-            <label for="">Youtube Link <div class="add" onclick="openYoutube()"><i class="fas fa-plus"></i></div></label>
+            <label for="">Youtube Link <div class="add" onclick="openYoutube()"><i class="fas fa-plus"></i></div>
+            </label>
             <input type="text" class="field" name="game[youtube_url]" id="youtube-link">
         </div>
     </div>
@@ -126,61 +129,92 @@
         Team erstellen!
     </div>
     <%= form_for(:team, url: new_team_path()) do |f| %>
-        <% if flash[:team_name] %>
-        <label>Teamname
-            <div class="alert alert-team"><%= flash[:team_name] %></div>
-        </label>
-        <%= f.text_field :name, class: 'field red' %>
-        <% else %>
-            <label>Teamname</label>
-            <%= f.text_field :name, class: 'field' %>
-        <% end %>
-        
-        <label>Search for Users</label><br>
-        <div class="user-list">
-            <div class="search-field">
-                <%= image_tag 'dash/icons/search.png', class: 'search' %>
-                <input type="text" placeholder="Search Users" id='searchField'>
-            </div>
-            <% @users.each do |u| %>
-                <div class="user">
-                    <input type="checkbox" name="team[users][]" value="<%= u.id %>">
-                    <% if u.avatar.present? %>
-                    <%= image_tag u.avatar.quad.url %><% end %><%= u.fname %>
-                </div>
-            <% end %>
+    <% if flash[:team_name] %>
+    <label>Teamname
+        <div class="alert alert-team"><%= flash[:team_name] %></div>
+    </label>
+    <%= f.text_field :name, class: 'field red' %>
+    <% else %>
+    <label>Teamname</label>
+    <%= f.text_field :name, class: 'field' %>
+    <% end %>
+
+    <label>Search for Users</label><br>
+    <div class="user-list">
+        <div class="search-field">
+            <%= image_tag 'dash/icons/search.png', class: 'search' %>
+            <input type="text" placeholder="Search Users" id='searchField'>
         </div>
-        <%= f.hidden_field :url, value: 'letsplay' %>
-        <%= f.submit 'Team erstellen!', class: 'btn btn-green' %>
+        <% @users.each do |u| %>
+        <div class="user">
+            <input type="checkbox" name="team[users][]" value="<%= u.id %>">
+            <% if u.avatar.present? %>
+            <%= image_tag u.avatar.quad.url %><% end %><%= u.fname %>
+        </div>
+        <% end %>
+    </div>
+    <%= f.hidden_field :url, value: 'letsplay' %>
+    <%= f.submit 'Team erstellen!', class: 'btn btn-green' %>
     <% end %>
 </div>
 
+<style>
+    .custom-switch .custom-control-label::before {
+        width: 30px;
+        height: 18px;
+    }
+
+    .custom-switch .custom-control-label::after {
+        top: calc(.45rem + 2px);
+        margin: 1px 1px;
+        height: 12px;
+        width: 12px;
+    }
+
+    .custom-control-label::after {
+        top: 0.45rem;
+    }
+
+    .custom-control-label::before {
+        top: 0.45rem;
+    }
+
+    .karte.letsplay .time .field .time {
+        padding-left: 14px;
+        line-height: 38px;
+        text-align: inherit;
+    }
+
+    .karte.letsplay .add .fas {
+        padding: 0.3em;
+    }
+</style>
 <script>
     new PerfectScrollbar('.karte-content');
     flash();
     ownRulesCheck();
     function openYoutube() {
-        if($('#youtube-link').css('display') == 'none') {
+        if ($('#youtube-link').css('display') == 'none') {
             $('#youtube-link').show();
-            document.querySelector('.karte-content').scrollTo(0,document.querySelector('.karte-content').scrollHeight);
+            document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
         } else {
             $('#youtube-link').hide();
-            document.querySelector('.karte-content').scrollTo(0,0);
+            document.querySelector('.karte-content').scrollTo(0, 0);
         }
     }
     function objectionsShow() {
         if ($(".objections > .unchecked-field").css('display') == 'none') {
             $(".objections > .unchecked-field").show();
             $(".catchwords > .unchecked-field").hide();
-            document.querySelector('.karte-content').scrollTo(0,document.querySelector('.karte-content').scrollHeight);
+            document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
         } else {
             $(".objections > .unchecked-field").hide();
-            document.querySelector('.karte-content').scrollTo(0,0);
+            document.querySelector('.karte-content').scrollTo(0, 0);
         }
     }
     function moveObjections(e) {
         var checkbox = document.getElementById(e.getAttribute('data-value'));
-        if(checkbox.checked) {
+        if (checkbox.checked) {
             e.querySelector('.fas').className = "fas fa-plus";
             document.querySelector('.objections > .unchecked-field').appendChild(e);
         } else {
@@ -192,16 +226,16 @@
         if ($(".catchwords > .unchecked-field").css('display') == 'none') {
             $(".catchwords > .unchecked-field").show();
             $(".objections > .unchecked-field").hide();
-            document.querySelector('.karte-content').scrollTo(0,document.querySelector('.karte-content').scrollHeight);
+            document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
         } else {
             $(".catchwords > .unchecked-field").hide();
-            document.querySelector('.karte-content').scrollTo(0,0);
+            document.querySelector('.karte-content').scrollTo(0, 0);
         }
     }
     function moveCatchwords(e) {
         var id = e.getAttribute('data-value');
         var checkbox = document.getElementById(id);
-        if(checkbox.checked) {
+        if (checkbox.checked) {
             e.querySelector('.fas').className = "fas fa-plus";
             document.querySelector('.catchwords > .unchecked-field').appendChild(e);
         } else {
@@ -212,8 +246,8 @@
 
 
     function flash() {
-        if ($('.alert-team')[0]){showTeam();}
-        if (!$('.alert-game1')[0] && $('.alert-game2')[0]) {showRules();}
+        if ($('.alert-team')[0]) { showTeam(); }
+        if (!$('.alert-game1')[0] && $('.alert-game2')[0]) { showRules(); }
     }
     function showTeam() {
         $('#letsplay').hide();
@@ -224,23 +258,23 @@
         $('#newteam').hide();
     }
     var $rows = $('.user');
-    $('#searchField').keyup(function() {
-    
-    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-        reg = RegExp(val, 'i'),
-        text;
-    
-    $rows.show().filter(function() {
-        text = $(this).text().replace(/\s+/g, ' ');
-        return !reg.test(text);
-    }).hide();
+    $('#searchField').keyup(function () {
+
+        var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+
+        $rows.show().filter(function () {
+            text = $(this).text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
     });
     function submitForm() {
         $('#game-form').unbind('submit');
         $('#game-form').submit();
     }
     function ownRulesCheck() {
-        if($('#ownrules-toggle').is(':checked')) {
+        if ($('#ownrules-toggle').is(':checked')) {
             $('#play-button').hide();
             $('#rules-button').show();
             $('#rules-button').addClass('pulse');
@@ -250,12 +284,12 @@
         }
     }
     function showRules() {
-        $("#game-form").submit(function(e){
-             e.preventDefault();
+        $("#game-form").submit(function (e) {
+            e.preventDefault();
         });
         $('#letsplay').hide();
         $('#ownrules').show();
-        setTimeout(function() {
+        setTimeout(function () {
             $('#game-form').unbind('submit');
         }, 500)
     }
@@ -265,19 +299,19 @@
     }
     function timeUp() {
         $('#game-form').unbind('submit');
-        if($('#game-time').val() == 80) {
+        if ($('#game-time').val() == 80) {
             $('#game-time').val(150);
             $('#game-time-input').text('2:30');
-        } else if($('#game-time').val() == 150) {
+        } else if ($('#game-time').val() == 150) {
             $('#game-time').val(300);
             $('#game-time-input').text('5:00');
         }
     }
     function timeDown() {
-        if($('#game-time').val() == 150) {
+        if ($('#game-time').val() == 150) {
             $('#game-time').val(80);
             $('#game-time-input').text('1:20');
-        } else if($('#game-time').val() == 300) {
+        } else if ($('#game-time').val() == 300) {
             $('#game-time').val(150);
             $('#game-time-input').text('2:30');
         }
