@@ -2,12 +2,12 @@
 <div class="heading">
     <% if @user.avatar.present? %>
         <%= image_tag @user.avatar.quad.url %>
-        <%= @user.fname + ' ' + @user.lname + "'s Ratings" %>
+        <%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') + "'s Ratings" %>
     <% else %>
         <div class="circle">
-            <%= @user.fname.to(0).upcase_first() + @user.lname.to(0).upcase_first() %>
+            <%= (@user.fname.present? ? @user.fname.to(0).upcase_first() : '') + ' ' + (@user.lname.present? ? @user.lname.to(0).upcase_first() : '')  %>
         </div>
-        <%= @user.fname + ' ' + @user.lname + "'s Ratings" %>
+        <%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') + "'s Ratings" %>
     <% end %>
     <div class="select-team custom-select" onclick="teamSelect()">Alle Teams
         <div class="teams" id="scrollTeams" >
@@ -303,7 +303,7 @@ var datapoints = [NaN, NaN, NaN, NaN, NaN, NaN ];
 var datapoints2 = [NaN, NaN, NaN, NaN, NaN, NaN ];
 var label = [NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
-var user = '<%= @user.fname + ' ' + @user.lname %>';
+var user = '<%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') %>';
 <% @chartdata.first(6).each do |cd| %>
     var json_data = <%= cd.to_json.html_safe %>;
     json_data['word'] = "<%= Word.find(Turn.find(cd[:turn_id]).word_id).name %>";
