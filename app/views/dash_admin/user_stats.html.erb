@@ -17,7 +17,7 @@
                         <div class="users" id="scrollUsers">
                             <% t.users.order("lname ASC").order("fname ASC").each do |u| %>
                                 <% if u.user_rating %>
-                                    <div class="user"><%= link_to u.fname + ' ' + u.lname, dash_admin_user_stats_path(u.id) %></div>
+                                    <div class="user"><%= link_to (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : ''), dash_admin_user_stats_path(u.id) %></div>
                                 <% end %>
                             <% end %>
                         </div>
@@ -198,7 +198,7 @@
             <option value="" selected onclick="">Vergleich mit</option>
             <% @users.each do |u| %>
                 <% if u.id != @user.id && u.user_rating %>
-                    <option value="<%= u.id %>" onclick="redirectURL('<%= dash_admin_user_stats_compare_path(@user, u.id) %>')"><%= u.fname + ' ' + u.lname %></option>
+                    <option value="<%= u.id %>" onclick="redirectURL('<%= dash_admin_user_stats_compare_path(@user, u.id) %>')"><%= (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : '') %></option>
                 <% end %>
             <% end %>
         </select>
