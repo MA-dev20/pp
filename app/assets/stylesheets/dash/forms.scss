@@ -73,12 +73,16 @@ label .alert {
 }
 .searchbar img {
     position: relative;
-    margin: 13px;
+    margin: 1.5vh;
+    width: 2.35vh;
+    height: 2.35vh;
+
 }
 .searchbar input[type='text'] {
     width: 80%;
     position: relative;
     border: none;
+    font-size: 1.9vh;
 }
 
 .user-list,
