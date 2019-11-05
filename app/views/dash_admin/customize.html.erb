@@ -1,4 +1,5 @@
-
+<%= image_tag 'dash/icons/stop.png', class: 'stop-img-icon' %>
+<%= image_tag 'dash/icons/record.png', class: 'record-img-icon' %>
 <div class="customize">
 <% if @catchword %>
 <div class="customize-sm" id="editCatchword">
@@ -234,6 +235,11 @@ new PerfectScrollbar('#table_content');
     .opacity-class {
         opacity: 0.6;
     }
+
+    .stop-img-icon, 
+    .record-img-icon {
+        display: none;
+    }
 </style>
 
 <script>
@@ -250,7 +256,7 @@ var stream, form, globalForm,recorder, audio, timer;
                     if ($("#recording" + id).children().hasClass('record-img')) {
                         $("#recording" + id).children().removeClass('record-img').addClass('stop-img');
                         record_img = $("#recording" + id).children()[0]
-                        $(record_img).attr('src', '/assets/dash/icons/stop.png')
+                        $(record_img).attr('src', $('.stop-img-icon').attr('src'))
                     }
                     requestAudio(id, 'word')
                     processing = true
@@ -265,7 +271,7 @@ var stream, form, globalForm,recorder, audio, timer;
                     if ($("#orecording" + id).children().hasClass('record-img')) {
                         $("#orecording" + id).children().removeClass('record-img').addClass('stop-img');
                         record_img = $("#orecording" + id).children()[0]
-                        $(record_img).attr('src', '/assets/dash/icons/stop.png')
+                        $(record_img).attr('src', $('.stop-img-icon').attr('src'))
                     }
                     requestAudio(id, 'objection')
                     processing = true
@@ -348,7 +354,7 @@ var stream, form, globalForm,recorder, audio, timer;
                         if ($("#recording" + id).children().hasClass('stop-img')) {
                             $("#recording" + id).children().removeClass('stop-img').addClass('record-img');
                             record_img = $("#recording" + id).children()[0]
-                            $(record_img).attr('src', '/assets/dash/icons/record.png')
+                            $(record_img).attr('src', $('.record-img-icon').attr('src'))
                             $('#word'+ id).removeClass('opacity-class');
                         }
                         createObjection(id, globalForm, 'word')
@@ -356,7 +362,7 @@ var stream, form, globalForm,recorder, audio, timer;
                         if ($("#orecording" + id).children().hasClass('stop-img')) {
                             $("#orecording" + id).children().removeClass('stop-img').addClass('record-img');
                             record_img = $("#orecording" + id).children()[0]
-                            $(record_img).attr('src', '/assets/dash/icons/record.png')
+                            $(record_img).attr('src', $('.record-img-icon').attr('src'))
                             $('#objectionWord'+ id).removeClass('opacity-class');
                         }
                         createObjection(id, globalForm, 'objection')
@@ -380,14 +386,14 @@ var stream, form, globalForm,recorder, audio, timer;
             if ($("#recording" + id).children().hasClass('stop-img')) {
                 $("#recording" + id).children().removeClass('stop-img').addClass('record-img');
                 record_img = $("#recording" + id).children()[0]
-                $(record_img).attr('src', '/assets/dash/icons/record.png')
+                $(record_img).attr('src', $('.record-img-icon').attr('src'))
                 $('#word'+ id).removeClass('opacity-class');
             }
         } else {
             if ($("#orecording" + id).children().hasClass('stop-img')) {
                 $("#orecording" + id).children().removeClass('stop-img').addClass('record-img');
                 record_img = $("#orecording" + id).children()[0]
-                $(record_img).attr('src', '/assets/dash/icons/record.png')
+                $(record_img).attr('src', $('.record-img-icon').attr('src'))
                 $('#objectionWord'+ id).removeClass('opacity-class');
             }
         }
