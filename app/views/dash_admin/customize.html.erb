@@ -48,8 +48,8 @@
                 <% @catchword.words.each do |word| %>
                 <tr>
                     <td><%= word.name %></td>
-                    <td><%= image_tag 'dash/icons/record.png' %></td>
-                    <td><%= image_tag 'dash/icons/play.png' %></td>
+                    <td id="recording<%= word.id %>" class="record" onclick="recordAudio(<%=word.id %>, 'word')"><%= image_tag 'dash/icons/record.png', class: 'record-img' %></td>
+                    <td id="word<%= word.id %>" class="record" data-url="<%= word.sound.url %>" onclick="playWord(<%=word.id %>, 'word')"><%= image_tag 'dash/icons/play.png', class: 'play' %></td>
                     <td><%= link_to image_tag('dash/icons/minus.png'), destroy_word_path(@catchword, word) %></td>
                 </tr>
                 <% end %>
@@ -158,8 +158,8 @@ new PerfectScrollbar('#table_content');
                 <% @objection.objections.each do |o| %>
                 <tr>
                     <td><%= o.name %></td>
-                    <td><%= image_tag 'dash/icons/record.png' %></td>
-                    <td><%= image_tag 'dash/icons/play.png' %></td>
+                    <td id="orecording<%= o.id %>" class="record" onclick="recordAudio(<%= o.id %>, 'objection')"><%= image_tag 'dash/icons/record.png', class: 'record-img' %></td>
+                    <td id="objectionWord<%= o.id %>" class="record" data-url="<%= o.sound.url %>" onclick="playWord(<%= o.id %>, 'objection')"><%= image_tag 'dash/icons/play.png', class: 'play' %></td>
                     <td><%= link_to image_tag('dash/icons/minus.png'), destroy_objection_path(@objection, o.id) %></td>
                 </tr>
                 <% end %>
@@ -220,7 +220,183 @@ new PerfectScrollbar('#table_content');
 </div>
 <% end %>
 
+
+<style>
+    .record-img {
+        height: 20px;
+        height: 20px;
+    }
+
+    .record {
+        cursor: pointer;
+    }
+
+    .opacity-class {
+        opacity: 0.6;
+    }
+</style>
+
 <script>
+var stream, form, globalForm,recorder, audio, timer;
+  globalForm = new FormData();
+  var processing= false;
+  audio = new Audio();
+
+    function recordAudio(id, type) {
+        if (type == 'word') {
+            if ($("#recording" + id).children().hasClass('record-img')) {
+                if (!processing) {
+                    $('#word'+ id).addClass('opacity-class');
+                    if ($("#recording" + id).children().hasClass('record-img')) {
+                        $("#recording" + id).children().removeClass('record-img').addClass('stop-img');
+                        record_img = $("#recording" + id).children()[0]
+                        $(record_img).attr('src', '/assets/dash/icons/stop.png')
+                    }
+                    requestAudio(id, 'word')
+                    processing = true
+                }
+            } else {
+                stopRecording(id, 'word')
+            }
+        } else {
+            if ($("#orecording" + id).children().hasClass('record-img')) {
+                if (!processing) {
+                    $('#objectionWord'+ id).addClass('opacity-class');
+                    if ($("#orecording" + id).children().hasClass('record-img')) {
+                        $("#orecording" + id).children().removeClass('record-img').addClass('stop-img');
+                        record_img = $("#orecording" + id).children()[0]
+                        $(record_img).attr('src', '/assets/dash/icons/stop.png')
+                    }
+                    requestAudio(id, 'objection')
+                    processing = true
+                }
+            } else {
+                stopRecording(id, 'objection')
+            }
+        }
+    }
+
+    function playWord(id, type) {
+        if (type == 'word') {
+            var url = $("#word" + id).data("url")
+            if (!$("#word" + id).hasClass("opacity-class")) {
+                if (!audio.paused) {
+                    audio.pause()
+                }
+                audio = new Audio(url)
+                audio.play()
+            }
+        } else {
+            var url = $("#objectionWord" + id).data("url")
+            if (!$("#objectionWord" + id).hasClass("opacity-class")) {
+                if (!audio.paused) {
+                    audio.pause()
+                }
+                audio = new Audio(url)
+                audio.play()
+            }
+        }
+
+    }
+
+    function createObjection(id, globalForm, type) {
+            var url = ''
+            if (type == 'word') {
+                url = '/admin/dash/words/'
+            } else {
+                url = '/admin/dash/objections/'
+            }
+            $.ajax({
+                url: url + id,
+                type: 'put',
+                cache: false,
+                async: true,
+                contentType: false,
+                processData: false,
+                data: globalForm,
+                beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+                success: function (res) {
+                    globalForm = new FormData();
+                    if (type == 'word') {
+                        $("#word" + id).data("url", res.sound)
+                        $('#word'+ id).removeClass('opacity-class');
+                    } else {
+                        $("#objectionWord" + id).data("url", res.sound)
+                        $('#objectionWord'+ id).removeClass('opacity-class');
+                    }
+                }
+            })
+        }
+
+
+
+    function requestAudio(id, type) {
+        var seconds = 10;
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(str => {
+            const chunks = [];
+            stream = str;
+            recorder = new MediaRecorder(stream);
+            recorder.ondataavailable = e => {
+                seconds -= 1
+                chunks.push(e.data);
+                // $("#word"+id).parent().addClass("opacity-class")
+                if (recorder.state == 'inactive') {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    var file = new window.File([blob], ['audio', (new Date() + '').slice(4, 28), '.mp3'].join(''))
+                    globalForm.append("file", file);
+                    if (type == 'word') {
+                        if ($("#recording" + id).children().hasClass('stop-img')) {
+                            $("#recording" + id).children().removeClass('stop-img').addClass('record-img');
+                            record_img = $("#recording" + id).children()[0]
+                            $(record_img).attr('src', '/assets/dash/icons/record.png')
+                            $('#word'+ id).removeClass('opacity-class');
+                        }
+                        createObjection(id, globalForm, 'word')
+                    } else {
+                        if ($("#orecording" + id).children().hasClass('stop-img')) {
+                            $("#orecording" + id).children().removeClass('stop-img').addClass('record-img');
+                            record_img = $("#orecording" + id).children()[0]
+                            $(record_img).attr('src', '/assets/dash/icons/record.png')
+                            $('#objectionWord'+ id).removeClass('opacity-class');
+                        }
+                        createObjection(id, globalForm, 'objection')
+                    }
+                    processing = false;
+                }
+            };
+            recorder.start(1000);
+            timer = setTimeout(() => {
+                stopRecording(id, type)
+            }, 11000);
+        }).catch(console.error);
+    }
+
+    function stopRecording(id, type) {
+        clearTimeout(timer);
+        if (recorder.state != 'inactive') {
+            recorder.stop()
+        }
+        if (type == 'word') {
+            if ($("#recording" + id).children().hasClass('stop-img')) {
+                $("#recording" + id).children().removeClass('stop-img').addClass('record-img');
+                record_img = $("#recording" + id).children()[0]
+                $(record_img).attr('src', '/assets/dash/icons/record.png')
+                $('#word'+ id).removeClass('opacity-class');
+            }
+        } else {
+            if ($("#orecording" + id).children().hasClass('stop-img')) {
+                $("#orecording" + id).children().removeClass('stop-img').addClass('record-img');
+                record_img = $("#orecording" + id).children()[0]
+                $(record_img).attr('src', '/assets/dash/icons/record.png')
+                $('#objectionWord'+ id).removeClass('opacity-class');
+            }
+        }
+        stream.getTracks()[0].stop()
+    }
+
+
+
+
 /* search Catchwords */
         $('#searchCW').keyup(function() {
             $rows = $('.CWsearch');
