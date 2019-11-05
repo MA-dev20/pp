@@ -244,6 +244,7 @@
 </div>
 
 <script>
+    console.log('<%= @chartdata.count %>')
     new PerfectScrollbar('#scrollbar');
 function teamSelect() {
     setTimeout(function() {
@@ -268,7 +269,7 @@ var team = '<%= '' + @team.name %>';
 <% @chartdata.first(6).each do |cd| %>
     var json_data = <%= cd.to_json.html_safe %>;
     label[i] = "<%= cd[:date].to_s %>";
-    datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+    datapoints[i] = {value: <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>, data: json_data};
     i++;
 <% end %>
 var data1 = [];
@@ -442,7 +443,7 @@ function ratingGes() {
     $('.active').removeClass('active');
     $('#gesamt').addClass('active');
     <% @chartdata.first(6).each do |cd| %>
-        datapoints[i].value = <%= cd[:ges] / 10.0 %>;
+        datapoints[i].value = <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>;
         i++;
     <% end %>
     i = 0;
