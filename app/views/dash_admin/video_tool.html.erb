@@ -52,7 +52,7 @@
             <div class="overlay"></div>
             <div class="rating"><%= r[:rating].present? ? r[:rating] / 10.0 : 0 %></div>
             <div class="play"><i class="fas fa-play"></i></div>
-            <div class="heart" data-id="<%= r[:turn_id] %>" id="<%= r[:turn_id] %>_heart"><i class="<%= r[:favorite] ? 'fa' : 'far' %> fa-heart"></i></div>
+            <div class="heart" data-id="<%= r[:turn_id] %>" id="<%= r[:turn_id] %>_heart"><i class="<%= r[:favorite] ? 'fa active' : 'far' %> fa-heart"></i></div>
           </div>
           <div class="word">
             <%= r[:word] %>
@@ -118,6 +118,9 @@
 <style>
   .fa-plus {
     line-height: unset;
+  }
+  .active {
+    color: #45b1ff;
   }
 </style>
 
@@ -191,9 +194,9 @@
         type: 'post',
         success: function(res){
           if ($(`#${id}_heart .fa-heart`).hasClass('far')){
-            $(`#${id}_heart .fa-heart`).removeClass('far').addClass('fa');
+            $(`#${id}_heart .fa-heart`).removeClass('far').addClass('fa').addClass('active');
           } else {
-            $(`#${id}_heart .fa-heart`).removeClass('fa').addClass('far');
+            $(`#${id}_heart .fa-heart`).removeClass('fa').addClass('far').removeClass('active');
           }
         }
       })
