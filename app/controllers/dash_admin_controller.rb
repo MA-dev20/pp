@@ -52,10 +52,10 @@ class DashAdminController < ApplicationController
     @user_ratings = []
     @users.each do |u|
         if u.user_rating
-          @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges}
+          @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges.present? ? u.user_rating.ges : 0 }
         end
     end
-    @user_ratings.sort_by{|e| -e[:rating]}
+    @user_ratings.sort_by{|e| -e[:rating] if e[:rating].present? }
     @chartdata = @turn_ratings.map{|t| {turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric}}
   end
     
@@ -117,7 +117,7 @@ class DashAdminController < ApplicationController
     @user_ratings = []
     @team.users.each do |u|
         if u.user_rating
-            @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges}
+            @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges.present? ? u.user_rating.ges : 0 }
         end
     end
     @user_ratings.sort_by{|e| -e[:rating]}
