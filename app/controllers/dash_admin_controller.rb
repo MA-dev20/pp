@@ -144,7 +144,7 @@ class DashAdminController < ApplicationController
     @turns = @admin.turns.where.not(recorded_pitch: nil).order('created_at ASC')
     @result = []
     @turns.each do |t|
-      @result << {turn_id: t.id, pitch_url: t.recorded_pitch.thumb.url, word: Word.find(t.word_id).name, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRating.find_by(turn_id: t.id)&.ges}
+      @result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, word: Word.find(t.word_id).name, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRating.find_by(turn_id: t.id)&.ges}
     end
     if @sort_by == 'fnameASC'
       @result = @result.sort{|a,b| a[:user_fname] <=> b[:user_fname]}
@@ -172,6 +172,14 @@ class DashAdminController < ApplicationController
     @user = @turn.findUser
     @rating = @turn.turn_rating
     @my_rating = @turn.ratings.find_by(admin_id: @admin.id)
+  end
+
+  def add_favorite
+    Turn.find(params[:id]).update(favorite: true)
+  end
+
+  def remove_favorite
+    Turn.find(params[:id]).update(favorite: false)
   end
     
   #Account

@@ -165,6 +165,8 @@ Rails.application.routes.draw do
     get 'admins/dash/video_tool', to: 'dash_admin#video_tool', as: 'dash_admin_video_tool'
     get 'admins/dash/turns/:turn_id/video', to: 'dash_admin#video_details', as: 'dash_admin_video_details'
     
+    post 'admins/dash/add_favorite', to: 'dash_admin#add_favorite', as: 'dash_admin_add_favorite'
+    post 'admins/dash/remove_favorite', to: 'dash_admin#remove_favorite', as: 'dash_admin_remove_favorite'
     #Let's Play
     get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
     get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_game'

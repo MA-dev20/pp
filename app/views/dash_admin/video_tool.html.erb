@@ -52,7 +52,7 @@
             <div class="overlay"></div>
             <div class="rating"><%= r[:rating].present? ? r[:rating] / 10.0 : 0 %></div>
             <div class="play"><i class="fas fa-play"></i></div>
-            <div class="heart"><i class="far fa-heart"></i></div>
+            <div class="heart" data-id="<%= r[:turn_id] %>" id="<%= r[:turn_id] %>_heart"><i class="<%= r[:favorite] ? 'fa' : 'far' %> fa-heart"></i></div>
           </div>
           <div class="word">
             <%= r[:word] %>
@@ -160,13 +160,42 @@
     $('#dropzone2').hide();
     window.location.reload(true);
   }
-  // function redirect(url) {
-  //   window.location.replace(url);
-  // }
+  
+  function redirect(url) {
+    window.location.replace(url);
+  }
 
   function redirectUrl() {
     if ($('#sortBy').val() != undefined) {
       window.location.replace($('#sortBy').val());
     }
   }
+
+  $('.heart').on('click', function(e){
+    var target = e.currentTarget
+    var id = $(target).data('id')
+    Favorite(id)
+    e.stopPropagation()
+  });
+  function Favorite(id){
+      var url = '';
+      if ($(`#${id}_heart .fa-heart`).hasClass('far')){
+        url = '<%= dash_admin_add_favorite_path %>'
+      } else {
+        url = '<%= dash_admin_remove_favorite_path %>'
+      }
+      $.ajax({
+        url: url,
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: {id: id},
+        type: 'post',
+        success: function(res){
+          if ($(`#${id}_heart .fa-heart`).hasClass('far')){
+            $(`#${id}_heart .fa-heart`).removeClass('far').addClass('fa');
+          } else {
+            $(`#${id}_heart .fa-heart`).removeClass('fa').addClass('far');
+          }
+        }
+      })
+    }
 </script>
