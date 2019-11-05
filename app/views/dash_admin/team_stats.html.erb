@@ -462,7 +462,7 @@ function ratingSpontan() {
     $('.active').removeClass('active');
     $('#spontan').addClass('active');
     <% @chartdata.first(6).each do |cd| %>
-        datapoints[i].value = <%= cd[:spontan] / 10.0 %>;
+        datapoints[i].value = <%= (cd[:spontan].present? ? cd[:spontan] : 0) / 10.0 %>;
         i++;
     <% end %>
     i = 0;
@@ -481,7 +481,7 @@ function ratingCreative() {
     $('.active').removeClass('active');
     $('#creative').addClass('active');
     <% @chartdata.first(6).each do |cd| %>
-        datapoints[i].value = <%= cd[:creative] / 10.0 %>;
+        datapoints[i].value = <%= (cd[:creative].present? ? cd[:creative] : 0) / 10.0 %>;
         i++;
     <% end %>
     i = 0;
@@ -500,7 +500,7 @@ function ratingBody() {
     $('.active').removeClass('active');
     $('#body').addClass('active');
     <% @chartdata.first(6).each do |cd| %>
-        datapoints[i].value = <%= cd[:body] / 10.0 %>;
+        datapoints[i].value = <%= (cd[:body].present? ? cd[:body] : 0) / 10.0 %>;
         i++;
     <% end %>
     i = 0;
@@ -519,7 +519,7 @@ function ratingRhet() {
     $('.active').removeClass('active');
     $('#rhetoric').addClass('active');
     <% @chartdata.first(6).each do |cd| %>
-        datapoints[i].value = <%= cd[:rhetoric] / 10.0 %>;
+        datapoints[i].value = <%= (cd[:rhetoric].present? ? cd[:rhetoric] : 0) / 10.0 %>;
         i++;
     <% end %>
     i = 0;
