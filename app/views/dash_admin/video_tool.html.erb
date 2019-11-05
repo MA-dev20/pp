@@ -79,7 +79,7 @@
       <div class="head left">Video Uploads</div>
       <div class="body" id='videouploadList'>
         <% @admin.videos.each do |v| %>
-        <div class="video-karte videoSearch" style="background-image: url('<%= asset_path(v.file.thumb.url) %>')">
+        <div class="video-karte videoSearch" style="background-image: url('<%= v.file.thumb.url.present? ? asset_path(v.file.thumb.url) : '' %>')">
           <div class="overlay"></div>
           <div class="title"><%= v.name %></div>
           <div class="duration"></div>
