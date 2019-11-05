@@ -28,6 +28,7 @@
             <%= @team_rating.ges / 10.0 %>
         </div>
         <label>Gesamt</label>
+        <% if @team_rating.change_ges.present? %>
         <% if @team_rating.change_ges > 0 %>
             <div class="change up">
                 <i class="fas fa-caret-up"></i>
@@ -44,6 +45,7 @@
                 <%= (@team_rating.change_ges / 10.0).round(1) %>
             </div>
         <% end %>
+        <% end %>
     </div>
     
     <div class="karte" onclick="ratingSpontan()" id="spontan">
@@ -54,6 +56,7 @@
             <%= @team_rating.spontan / 10.0 %>
         </div>
         <label>Spontanität</label>
+        <% if @team_rating.change_spontan.present? %>
         <% if @team_rating.change_spontan > 0 %>
             <div class="change up">
                 <i class="fas fa-caret-up"></i>
@@ -70,6 +73,7 @@
                 <%= (@team_rating.change_spontan / 10.0).round(1) %>
             </div>
         <% end %>
+        <% end %>
     </div>
     
     <div class="karte" onclick="ratingCreative()" id="creative">
@@ -80,6 +84,7 @@
             <%= @team_rating.creative / 10.0 %>
         </div>
         <label>Kreativität</label>
+        <% if @team_rating.change_creative.present? %>
         <% if @team_rating.change_creative > 0 %>
             <div class="change up">
                 <i class="fas fa-caret-up"></i>
@@ -96,6 +101,7 @@
                 <%= (@team_rating.change_creative / 10.0).round(1) %>
             </div>
         <% end %>
+        <% end %>
     </div>
     
     <div class="karte" onclick="ratingBody()" id="body">
@@ -106,6 +112,7 @@
             <%= @team_rating.body / 10.0 %>
         </div>
         <label>Körpersprache</label>
+        <% if @team_rating.change_body.present? %>
         <% if @team_rating.change_body > 0 %>
             <div class="change up">
                 <i class="fas fa-caret-up"></i>
@@ -122,6 +129,7 @@
                 <%= (@team_rating.change_body / 10.0).round(1) %>
             </div>
         <% end %>
+        <% end %>
     </div>
     
     <div class="karte" onclick="ratingRhet()" id="rhetoric">
@@ -132,6 +140,7 @@
             <%= @team_rating.rhetoric / 10.0 %>
         </div>
         <label>Rhetorik</label>
+        <% if @team_rating.change_rhetoric.present? %>
         <% if @team_rating.change_rhetoric > 0 %>
             <div class="change up">
                 <i class="fas fa-caret-up"></i>
@@ -147,6 +156,7 @@
                 <i class="fas fa-equals"></i>
                 <%= (@team_rating.change_rhetoric / 10.0).round(1) %>
             </div>
+        <% end %>
         <% end %>
     </div>
 </div>
