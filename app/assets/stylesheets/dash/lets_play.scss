@@ -6,12 +6,17 @@
     width: 460px;
 }
 .karte#letsplay {
-    padding-left: 50px;
-    padding-right: 50px;
+    position: fixed;
+    top: calc(50vh - 27vh);
+    left: calc(50vw - 13vh);
+    height: 54.67vh;
+    width: 53.5vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
 }
 .karte#letsplay .btn{
-    width: calc(100% - 100px);
-    margin-left: 50px;
+    width: calc(100% - 10vh);
+    margin-left: 5vh;
 }
 #ownrules,
 #newteam{
@@ -30,7 +35,7 @@
     position: relative;
     top: 0;
     left: 0;
-    height: 100px;
+    height: 11.5vh;
     width: 100%;
 }
 
@@ -51,15 +56,15 @@
 }
 .karte.letsplay .team .custom-select {
     width: 100%;
-    height: 48px;
-    border-radius: 8px;
-    border: solid 1px #dfe1e5;
-    line-height: 48px;
+    border-radius: 0.8vh;
+    border: solid 0.1vh #dfe1e5;
     padding-bottom: 0;
     padding-top: 0;
-    font-size: 16px;
     font-weight: 300;
     outline: none !important;
+    height: 5.5vh;
+    line-height: 5.5vh;
+    font-size: 1.8vh;
 }
 option:focus {
     outline: none !important;
@@ -101,12 +106,12 @@ option:focus {
     font-size: 20px;
 }
 .karte.letsplay .team input {
-    padding: 10px;
+    padding: 1.3vh;
 }
 
 
 .karte.letsplay .switch-box {
-    height: 50px;
+    height: 5.82vh;
     width: 100%;
     font-weight: 300;
 }
@@ -124,8 +129,8 @@ option:focus {
     border-color: #ff5f58;
 }
 .karte.letsplay .users .field .search {
-    padding-top: 10px;
-    padding-right: 10px;
+    padding-top: 1.3vh;
+    padding-right: 1.3vh;
 }
 .karte.letsplay .users .field{
     float: left;
@@ -195,7 +200,7 @@ option:focus {
     font-weight: 300;
 }
 .karte.letsplay .checked-field {
-    padding-bottom: 10px;
+    padding-bottom: 1.3vh;
     min-height: 48px;
     padding-left: 5px;
 }
@@ -206,8 +211,8 @@ option:focus {
 
 .karte.letsplay .add{
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 1.3vh;
+    right: 1.3vh;
     height: 28px;
     width: 28px;
     border-radius: 50%;
@@ -222,7 +227,7 @@ option:focus {
 .karte.letsplay .checkbox {
     position: relative;
     float: left;
-    top: 10px;
+    top: 1.3vh;
     left: 5px;
     height: 30px;
     border-radius: 14px;
@@ -230,7 +235,7 @@ option:focus {
     line-height: 27px;
     cursor: pointer;
     margin: 0 5px 10px 0;
-    padding: 0 5px 0 10px;
+    padding: 0 5px 0 1.3vh;
 }
 .karte.letsplay .checkbox label {
     text-align: center;

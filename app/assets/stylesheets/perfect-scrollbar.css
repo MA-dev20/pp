@@ -27,8 +27,8 @@
 .ps__rail-y {
   display: block;
   opacity: 0.6;
-  width: 8px;
-  border-radius: 4px;
+  width: 0.8vh;
+  border-radius: 0.4vh;
   background-color: #eaf6ff;
   /* there must be 'right' or 'left' for ps__rail-y */
   right: 0;
@@ -78,8 +78,8 @@
 }
 
 .ps__thumb-y {
-  width: 8px;
-  border-radius: 4px;
+  width: 0.8vh;
+  border-radius: 0.4vh;
   background-color: #c4e6ff;
   /* there must be 'right' for ps__thumb-y */
   right: 0;
@@ -98,7 +98,7 @@
 .ps__rail-y:focus > .ps__thumb-y,
 .ps__rail-y.ps--clicking .ps__thumb-y {
   background-color: #eaf6ff;
-  width: 8px;
+  width: 0.8vh;
 }
 
 /* MS supports */

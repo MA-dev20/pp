@@ -1,41 +1,43 @@
 .teams, .users {
     position: absolute;
-    top: calc(50vh - 396.5px);
-    width: 555px;
-    height: 593px;
+    top: calc(50vh - 42.1vh);
+    width: 58.7vh;
+    height: 62.7vh;
 }
 .teams {
-    right: calc(50% + 15px);
+    right: calc(50% + 1.9vh);
 }
 .users {
-    left: calc(50% + 15px);
+    left: calc(50% + 1.9vh);
 }
 .teams .searchbar,
 .users .searchbar {
     position: absolute;
-    top: 10px;
+    top: 1vh;
     left: 0;
-    width: 300px;
-    height: 48px;
-    border-radius: 8px;
-    box-shadow: 0px 6px 20px 0 rgba(107, 107, 107, 0.1);
+    height: 5.6vh;
+    border-radius: 1vh;
+    box-shadow: 0 0.5vh 2vh 0 rgba(107, 107, 107, 0.1);
     background-color: #ffffff;
+    width: 31.8vh;
+    display: flex;
 }
 
 .teams > .btn,
 .users > .btn {
     position: absolute;
-    top: 10px;
+    top: 1vh;
     right: 0;
-    width: 166px;
-    border-radius: 24px;
+    border-radius: 4vh;
+    width: 17.5vh;
 }
 .teams .karte,
 .users .karte {
     position: absolute;
-    top: 78px;
-    width: 555px;
-    height: 515px;
+    width: 58.7vh;
+    // height: 54.5vh;
+    height: 68.5vh;
+    top: 8.5vh;
 }
 #newteam,
 .editteam,
@@ -52,38 +54,37 @@
 }
 .users .karte #select-team {
     position: absolute;
-    right: 40px;
-    top: 25px;   
+    right: 4.3vh;
+    top: 3vh;   
 }
 .users .karte .custom-select {
-    width: 190px;
-    height: 38px;
-    border-radius: 8px;
-    border: solid 1px #dfe1e5;
-    line-height: 38px;
+    border: solid 0.1vh #dfe1e5;
+    line-height: 3.9vh;
     padding-bottom: 0;
     padding-top: 0;
-    font-size: 16px;
+    font-size: 1.8vh;
     font-weight: 300;
     outline: none !important;
+    width: 20.1vh;
+    height: 4vh;
 }
 .selected-teams > label {
     position: relative;
     float: left;
-    line-height: 20px;
+    line-height: 2.2vh;
     height: 28px;
-    border: solid 2px #a358df;
+    border: solid 0.2vh #a358df;
     border-radius: 12.5px;
     cursor: pointer;
     margin: 0 2.5px 5px 0;
     width: auto;
-    padding: 2.5px 10px;
+    padding: 2.5px 1vh;
     font-size: 14px;
 }
 .selected-teams > label i {
-    line-height: 20px;
+    line-height: 2.2vh;
     text-align: center;
-    width: 10px;
+    width: 1vh;
     margin-left: 5px;
 }
 .team-list > label > i {
@@ -96,45 +97,44 @@ option:focus {
     outline: none !important;
 }
 .users .karte .custom-select:focus {
-    border: solid 1px #dfe1e5;
+    border: solid 0.1vh #dfe1e5;
     box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
 }
 .teams .karte .table,
 .users .karte .table {
     position: absolute;
-    top: 90px;
-    width: 500px;
-    height: 400px;
+    width: 52.9vh;
+    // height: 42.3vh;
+    height: 54vh;
+    top: 9.3vh;
 }
 .teams .karte .table table,
 .users .karte .table table{
-    width: 475px;
+    width: 100%;
     max-height: 100%;
 }
 .table table th {
     border: none !important;
-    padding: 5px 5px 11px 5px;
-    font-size: 16px;
     font-weight: 300;
-    text-align: left;
     color: #4e4e4e;
-    text-align: center;
     align-content: center;
+    font-size: 1.8vh;
+    padding: 0.5vh 0.5vh 1vh 0.5vh;
+    text-align: left;
 }
 .table table tr th:first-child {
     text-align: left;
 }
 .table table td {
     position: relative;
-    border-top: 1px solid #dfe1e5;
+    border-top: 0.1vh solid #dfe1e5;
     padding: 0;
-    font-size: 16px;
     font-weight: 300;
-    text-align: left;
     color: black;
-    line-height: 50px;
-    text-align: center;
     align-content: center;
+    font-size: 1.8vh;
+    line-height: 5.2vh;
+    text-align: left;
 }
 .teams table tbody tr:hover,
 .teams table tbody tr.active {
@@ -145,12 +145,12 @@ option:focus {
     text-align: left;
 }
 .table table td .rating {
-    width: 40px;
-    height: 40px;
+    width: 4.3vh;
+    height: 4.3vh;
     object-fit: contain;
-    border: solid 2px #4394ec;
+    border: solid 0.2vh #4394ec;
     border-radius: 50%;
-    line-height: 36px;
+    line-height: 3.8vh;
     text-align: center;
     margin: 5px auto;
 }
@@ -159,18 +159,24 @@ option:focus {
 .users .table table tr td:first-child .circle{
     float: left;
     margin: 7px;
-    width: 36px;
-    height: 36px;
+    width: 3.8vh;
+    height: 3.8vh;
     object-fit: contain;
     border-radius: 50%;
-    line-height: 36px;
+    line-height: 3.8vh;
     text-align: center;
     background-color: #d7eeff;
-    font-size: 12px;
+    font-size: 1.2vh;
     font-weight: 600;
 }
 .users .table table tr td .fa-edit,
 .teams .table table tr td .fa-edit {
     color: #16e2a5;
-    font-size: 20px;
+    font-size: 2.2vh;
+    position: relative;
+    top: 0.4vh;
+}
+.table.ps table img {
+    width: 2.4vh;
+    height: 2.4vh;
 }

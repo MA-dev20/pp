@@ -1,6 +1,6 @@
 #newCatchword,
 #editCatchword {
-    margin-right: 60px;
+    margin-right: 6.3vh;
 }
 #newObjection,
 #newCatchword {
@@ -39,7 +39,8 @@
 }
 .customize-sm > .karte {
     margin-top: 7.9vh;
-    height: 67.45vh;
+    // height: 67.45vh;
+    height: 71.45vh;
     padding-right: 3.5vh;
     padding-left: 3.5vh;
 }
@@ -47,8 +48,8 @@
     padding-left: 1.2vh;
 }
 .customize-sm > .karte .divider {
-    margin: 20px 0;
-    height: 1px;
+    margin: 2vh 0;
+    height: 0.1vh;
     background-color: #dfe1e5;
 }
 .customize-sm > .karte > .list {
@@ -109,6 +110,9 @@
     white-space: nowrap;
     overflow: hidden;
 }
+.fas.fa-sort {
+    font-size: 1.8vh;
+}
 .customize-sm > .karte > .list > .list-karte .bottom .count {
     float: right;
 }
@@ -116,30 +120,32 @@
     width: 100%;
 }
 .customize-sm > .karte table thead {
-    border-bottom: 1px solid #dfe1e5;
+    border-bottom: 0.1vh solid #dfe1e5;
 }
 .customize-sm > .karte table tr td:first-child,
 .customize-sm > .karte table tr th:first-child {
-    width: 399px;
+    width: 46vh;
     cursor: pointer;
 }
 .customize-sm > .karte table tr td i {
-    font-size: 20px;
-    line-height: 30px;
-    margin: 5px;
+    font-size: 2.2vh;
+    line-height: 3.3vh;
+    margin: 0.5vh;
     color: #16e2a5;
 }
 .customize-sm > .karte table tr td img {
-    margin: 10px 5px;
+    margin: 1vh 0.5vh;
+    height: 2vh;
+    width: 2vh;
 }
 .customize-sm > .karte table thead tr th {
-    font-size: 16px;
-    line-height: 36px;
     font-weight: 300;
+    font-size: 1.8vh;
+    line-height: 3.8vh;
 }
 .customize-sm > .karte > .table-content {
     position: relative;
-    max-height: 160px;
+    max-height: 20vh;
     width: 100%;
 }
 
@@ -147,16 +153,18 @@
     width: 100%;
 }
 .customize-sm > .karte > .table-content > table > tbody tr {
-    height: 40px;
-    border-bottom: 1px solid #dfe1e5;
+    height: 4.2vh;
+    border-bottom: 0.1vh solid #dfe1e5;
     width: 100%;
+    font-size: 1.9vh;
 }
 .customize-sm > .karte > form > .btn {
-    width: 226px;
-    left: 125px;
+    width: 27.7vh;
+    left: 15.3vh;
 }
 .customize-sm > .karte > .remove {
     position: absolute;
-    bottom: 47px;
-    right: 40px;
+    bottom: 5vh;
+    right: 4vh;
+    font-size: 2.4vh;
 }
