@@ -145,7 +145,7 @@
                    <% @users.each do |u| %>
                     <tr class="username">
                         <% if u.avatar.present? %>
-                        <td><%= image_tag u.avatar.quad.url %><%= (u.fname.present? ? u.fname : "") + " " + (u.lname.present? ? u.lname : "") %></td>
+                        <td><%= link_to image_tag(u.avatar.quad.url), dash_admin_user_stats_path(u.id) %><%= (u.fname.present? ? u.fname : "") + " " + (u.lname.present? ? u.lname : "") %></td>
                         <% else %>
                         <td><div class="circle"></div><%= u.fname %> <%= u.lname %></td>
                         <% end %>

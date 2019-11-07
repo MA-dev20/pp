@@ -37,7 +37,7 @@
 .users .karte {
     position: absolute;
     // width: 58.7vh;
-    height: 54.5vh;
+    height: 64vh;
     // height: 68.5vh;
     top: 8.5vh;
     width: 100%;
@@ -75,7 +75,7 @@
     position: relative;
     float: left;
     line-height: 2.2vh;
-    height: 28px;
+    height: 3.2vh;
     border: solid 0.2vh #a358df;
     border-radius: 12.5px;
     cursor: pointer;
@@ -105,10 +105,15 @@ option:focus {
 }
 .teams .karte .table,
 .users .karte .table {
+    // position: absolute;
+    // width: 52.9vh;
+    // height: 42.3vh;
+    // // height: 54vh;
+    // top: 9.3vh;
+
     position: absolute;
-    width: 52.9vh;
-    height: 42.3vh;
-    // height: 54vh;
+    width: 55.9vh;
+    height: 48vh;
     top: 9.3vh;
 }
 .teams .karte .table table,
