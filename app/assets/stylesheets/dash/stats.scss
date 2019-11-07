@@ -45,16 +45,16 @@
 .heading .select-team .teams{
     display: none;
     position: absolute;
-    top: 0px;
-    margin-top: 35px;
-    left: 0;
-    width: 212px;
+    top: 0;
+    margin-top: 4vh;
+    left: -2vh;
+    width: 24.8vh;
     background-color: white;
-    border: 1px solid #c1c1c1;
+    border: 0.1vh solid #c1c1c1;
     height: auto;
-    max-height: 380px;
+    max-height: 42.3vh;
     z-index: 10;
-    box-shadow: 0px 6px 2.2vh 0 rgba(172, 172, 172, 0.1);
+    box-shadow: 0px 0.6vh 2.2vh 0 rgba(172, 172, 172, 0.1);
     border-radius: 5px;
 }
 .heading .select-team .teams .team {
@@ -70,19 +70,18 @@
 .heading .select-team .teams .team a {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     height: 3.9vh;
     line-height: 3.9vh;
     font-size: 1.8vh;
     color: black;
     font-weight: 600;
-    padding: 0 10px;
+    padding: 0 1vh;
     text-decoration: none;
-    width: 190px;
 }
 .heading .select-team .teams .team i {
-    float: right;
-    width: 22px;
+    float: left;
+    width: 2.2vh;
     text-align: center;
     line-height: 3.9vh;
 }
@@ -94,18 +93,18 @@
     display: none;
     position: absolute;
     top: 0;
-    left: 100%;
+    left: -25.2vh;
     height: auto;
-    max-height: 300px;
-    width: 212px;
+    max-height: 23.3vh;
+    width: 25vh;
     background-color: white;
-    box-shadow: 0px 6px 2.2vh 0 rgba(172, 172, 172, 0.1);
-    border: 1px solid #c1c1c1;
-    border-radius: 5px;
+    box-shadow: 0px 0.6vh 2.2vh 0 rgba(172, 172, 172, 0.1);
+    border: 0.1vh solid #c1c1c1;
+    border-radius: 0.5vh;
 }
 .heading .select-team .teams .team .users .user {
     position: relative;
-    width: 212px;
+    width: 100%;
     cursor: pointer;
     line-height: 3.4vh;
     height: 3.4vh;
@@ -253,7 +252,9 @@
 #statistic .head select {
     float: right;
     height: 3.9vh;
-    width: 190px;
+    width: 22vh;
+    font-size: 1.8vh;
+    line-height: 1.8vh;
 }
 #statistic .chart {
     margin: 6.2vh 4.3vh 3.4vh;
@@ -281,7 +282,7 @@
 #statistic .right .bestlist {
     left: 0;
     width: 20vh;
-    height: 208px;
+    height: 22vh;
     padding: 0;
 }
 #statistic .right .bestlist.small {
@@ -290,19 +291,23 @@
 #statistic .right .place { 
     float: left;
     height: 10vh;
-    width: 55px;
-    padding: 2.2vh 0.7vh;
+    width: 6.4vh;
+    padding: 1vh 0.7vh;
     text-align: center;
     font-size: 1.8vh;
     font-weight: 600;
 }
+#statistic .right .place img {
+    width: 4vh;
+    height: 4vh;
+}
 #statistic .bestlist .divider {
     position: absolute;
     top: 10vh;
-    left: 10px;
-    width: 145px;
-    height: 1px;
+    height: 0.1vh;
     background-color: #dfe1e5;
+    width: 16.9vh;
+    left: 1vh;
 }
 // #statistic .bestlist .table {
 //     position: absolute;
@@ -321,6 +326,7 @@
     height: 2.4vh;
     line-height: 2.4vh;
     font-size: 1.8vh;
+    padding: 1vh;
 }
 #statistic .bestlist .table .table-line.highlighted {
     background-color: rgba(192,192,192,.1);

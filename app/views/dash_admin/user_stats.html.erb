@@ -13,7 +13,7 @@
         <div class="teams" id="scrollTeams" >
             <% @teams.each do |t| %>
                 <% if t.team_rating %>
-                    <div class="team" onmouseover="teamSelectUser(this)" onmouseout="teamSelectUserHide(this)"><%= link_to t.name, dash_admin_team_stats_path(t.id) %> <i class="fas fa-caret-right"></i>
+                    <div class="team" onmouseover="teamSelectUser(this)" onmouseout="teamSelectUserHide(this)"><%= link_to t.name, dash_admin_team_stats_path(t.id) %> <i class="fas fa-caret-left"></i>
                         <div class="users" id="scrollUsers">
                             <% t.users.order("lname ASC").order("fname ASC").each do |u| %>
                                 <% if u.user_rating %>

@@ -5,9 +5,9 @@
       <input type="text" placeholder="Search" id="searchPitch">
     </div>
     <% if Turn.where(recorded_pitch: nil).first %>
-    <div class="add" onclick="openDropzone2()">
+    <!-- <div class="add" onclick="openDropzone2()">
       <i class="fas fa-plus"></i>
-    </div>
+    </div> -->
     <% end %>
     <div class="karte">
       <div class="head left">Video Tool</div>
@@ -51,6 +51,10 @@
           <div class="top" style="background-image: url('<%= asset_path(r[:pitch_url]) %>')">
             <div class="overlay"></div>
             <div class="rating"><%= r[:rating].present? ? r[:rating] / 10.0 : 0 %></div>
+            <% turn = Turn.find(r[:turn_id])
+              total_time = turn.recorded_pitch_duration.to_minutes if turn.recorded_pitch_duration.present? 
+            %>
+            <div class="timer"><%= total_time %></div>
             <div class="play"><i class="fas fa-play"></i></div>
             <div class="heart" data-id="<%= r[:turn_id] %>" id="<%= r[:turn_id] %>_heart"><i class="<%= r[:favorite] ? 'fa active' : 'far' %> fa-heart"></i></div>
           </div>

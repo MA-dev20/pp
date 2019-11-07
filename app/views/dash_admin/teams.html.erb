@@ -53,7 +53,11 @@
                 </div>
                 <% @admin.users.all.each do |u| %>
                     <div class="user">
-                        <input type="checkbox" name="team[users][]" value="<%= u.id %>">
+                        <label class="usercheck">
+                            <input type="checkbox"  name="team[users][]" value="<%= u.id %>">
+                            <span class="checkmark"></span>
+                        </label>
+                        <!-- <input type="checkbox" name="team[users][]" value="<%= u.id %>"> -->
                         <% if u.avatar.present? %>
                             <%= image_tag u.avatar.quad.url %>
                         <% end %>
@@ -90,9 +94,17 @@
                 <% @admin.users.all.each do |u| %>
                     <div class="user editTeam">
                         <% if TeamUser.where(team_id: @team.id, user_id: u.id).count == 1 %>
-                        <input type="checkbox" name="team[users][]" value="<%= u.id %>"  checked>
+                        <!-- <input type="checkbox" name="team[users][]" value="<%= u.id %>"  checked> -->
+                        <label class="usercheck">
+                            <input type="checkbox"  name="team[users][]" value="<%= u.id %>" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
                         <% else %>
-                        <input type="checkbox" name="team[users][]" value="<%= u.id %>">
+                        <label class="usercheck">
+                            <input type="checkbox"  name="team[users][]" value="<%= u.id %>">
+                            <span class="checkmark"></span>
+                        </label>
+                        <!-- <input type="checkbox" name="team[users][]" value="<%= u.id %>"> -->
                         <% end %>
                         <% if u.avatar.present? %>
                             <%= image_tag u.avatar.quad.url %>
@@ -283,7 +295,7 @@
             if ($('#searchNewTeam').val() == ""){
                 $('.user').attr('style', 'display: none !important');
             } else {
-                $('.user').attr('style', 'display: block !important');
+                $('.user').attr('style', 'display: flex !important');
             }
             $rows = $('.user');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
@@ -297,6 +309,11 @@
     
     /* search EditTeam */
         $('#searchEditTeam').keyup(function() {
+            if ($('#searchEditTeam').val() == ""){
+                $('.editTeam').attr('style', 'display: none !important');
+            } else {
+                $('.editTeam').attr('style', 'display: flex !important');
+            }
             $rows = $('.editTeam');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
             reg = RegExp(val, 'i'),
@@ -306,18 +323,25 @@
             return !reg.test(text);
         }).hide();
         })
-    
+        // if ($('#searchNewUser').val() == ""){
+        //         $('.newUser').attr('style', 'display: none !important');
+        //         $('.team-list').attr('style','height: 6vh !important');
+        //     }
     /* search newUser */
         $('#searchNewUser').keyup(function() {
             if ($('#searchNewUser').val() == ""){
                 $('.newUser').attr('style', 'display: none !important');
+                $('.team-list').attr('style','height: 6vh !important');
             } else {
                 $('.newUser').attr('style', 'display: block !important');
+                $('.team-list').attr('style','height: 12.9vh !important');
             }
             $rows = $('.newUser');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
             reg = RegExp(val, 'i'),
             text;
+            console.log('test')
+            console.log(val)
         $rows.show().filter(function() {
             text = $(this).text().replace(/\s+/g, ' ');
             return !reg.test(text);
@@ -325,6 +349,13 @@
         })
     /* search EditUser */
         $('#searchEditUser').keyup(function() {
+            if ($('#searchEditUser').val() == ""){
+                $('.editUser').attr('style', 'display: none !important');
+                // $('.team-list').attr('style','height: 6vh !important');
+            } else {
+                $('.editUser').attr('style', 'display: block !important');
+                // $('.team-list').attr('style','height: 12.9vh !important');
+            }
             $rows = $('.editUser');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
             reg = RegExp(val, 'i'),
