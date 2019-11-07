@@ -1,6 +1,6 @@
 .video-tool-container {
     position: relative;
-    width: 154.4vh;
+    // width: 154.4vh;
     margin: 0 auto;
 }
 .video-tool {
@@ -39,8 +39,8 @@
 .video-uploads .karte,
 .video-tool .karte {
     position: relative;
-    // height: 52.9vh;
-    height: 75vh;
+    height: 60vh;
+    // height: 75vh;
     width: 47.6vh;
     margin: 2.2vh 0;
 }
@@ -444,7 +444,7 @@
     position: relative;
     top: 0;
     left: 0;
-    height: 60vh;
+    height: 40vh;
     width: 100%;
 }
 .video-tool .video-list .video-karte {
@@ -461,8 +461,8 @@
 .video-uploads .karte .body .video-karte {
     position: relative;
     float: left;
-    height: 128px;
-    width: 165px;
+    height: 13.5vh;
+    width: 17.8vh;
     border-radius: 0.8vh;
     box-shadow: 0px 0.2vh 1vh 0 rgba(94, 94, 94, .15);
     margin: 0 1.7vh 1.7vh 0;

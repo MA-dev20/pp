@@ -37,11 +37,15 @@
             <%= f.text_field :password, class: 'custom-url-field' %>
         </div>
     </div>
-    <div class="switch-box">
+    <!-- <div class="switch-box">
         <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="ownrules-toggle" onchange="ownRulesCheck()" value=0>
             <label for="ownrules-toggle" class="custom-control-label">Nach eigenen Regeln pitchen</label>
         </div>
+    </div> -->
+    <div class="toggle-my-ratings toggle-my-ratings-1">
+        <div class="toggle left" onclick="ownRulesCheck()"><div class="dot"></div></div>
+        <div class="text">Nach eigenen Regeln pitchen</div>
     </div>
     <button id="rules-button" class="btn btn-green" onclick="showRules()">weiter</button>
     <%= f.submit 'Pitch starten!', class: 'btn btn-green', id: 'play-button' %>
@@ -159,17 +163,30 @@
 </div>
 
 <style>
+    .custom-switch {
+        padding-left: 3.8vh;
+    }
     .custom-switch .custom-control-label::before {
-        width: 30px;
-        height: 18px;
+        width: 3.2vh;
+        height: 1.9vh;
+        left: -3.8vh;
+        border-radius: 1.5vh;
+    }
+    .custom-control-label::before {
+        top: 0.7vh;
+    }
+    .custom-control {
+        position: relative;
+        display: block;
+        min-height: 2.6vh;
     }
 
     .custom-switch .custom-control-label::after {
-        top: calc(.45rem + 2px);
-        margin: 1px 1px;
-        height: 12px;
-        width: 12px;
-    }
+    top: calc(0.8vh + 0.2vh);
+    margin: 0.1vh 0.1vh;
+    height: 1.27vh;
+    width: 1.27vh;
+}
 
     .custom-control-label::after {
         top: 0.45rem;
@@ -180,20 +197,34 @@
     }
 
     .karte.letsplay .time .field .time {
-        padding-left: 14px;
-        line-height: 38px;
         text-align: inherit;
+        padding-left: 1.6vh;
+        line-height: 4.3vh;
     }
 
     .karte.letsplay .add .fas {
-        /* padding: 0.3em; */
-        font-size: 16px;
+        font-size: 1.8vh;
     }
 </style>
 <script>
+    function ownRulesCheck() {
+        var toggle = $('.toggle');
+        if (toggle.hasClass('left')) {
+            toggle.removeClass('left');
+            toggle.addClass('right');
+            $('#play-button').hide();
+            $('#rules-button').show();
+            $('#rules-button').addClass('pulse');
+        } else {
+            toggle.removeClass('right');
+            toggle.addClass('left');
+            $('#play-button').show();
+            $('#rules-button').hide();
+        }
+    }
     new PerfectScrollbar('.karte-content');
     flash();
-    ownRulesCheck();
+    // ownRulesCheck();
     function openYoutube() {
         if ($('#youtube-link').css('display') == 'none') {
             $('#youtube-link').show();
@@ -274,16 +305,16 @@
         $('#game-form').unbind('submit');
         $('#game-form').submit();
     }
-    function ownRulesCheck() {
-        if ($('#ownrules-toggle').is(':checked')) {
-            $('#play-button').hide();
-            $('#rules-button').show();
-            $('#rules-button').addClass('pulse');
-        } else {
-            $('#play-button').show();
-            $('#rules-button').hide();
-        }
-    }
+    // function ownRulesCheck() {
+    //     if ($('#ownrules-toggle').is(':checked')) {
+    //         $('#play-button').hide();
+    //         $('#rules-button').show();
+    //         $('#rules-button').addClass('pulse');
+    //     } else {
+    //         $('#play-button').show();
+    //         $('#rules-button').hide();
+    //     }
+    // }
     function showRules() {
         $("#game-form").submit(function (e) {
             e.preventDefault();

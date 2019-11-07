@@ -1,19 +1,20 @@
 .karte.letsplay {
     position: fixed;
-    top: calc(50vh - 235px);
-    left: calc(50vw - 120px);
-    height: 470px;
-    width: 460px;
+    top: calc(50vh - 25vh);
+    left: 25.6vh;
+    right: 0;
+    margin: auto;
+    height: 50.69vh;
+    width: 48.64vh;
 }
-.karte#letsplay {
-    position: fixed;
-    top: calc(50vh - 27vh);
-    left: calc(50vw - 13vh);
-    height: 54.67vh;
-    width: 53.5vh;
-    padding-left: 5vh;
-    padding-right: 5vh;
-}
+// .karte#letsplay {
+//     position: fixed;
+//     top: calc(50vh - 27vh);
+//     height: 54.67vh;
+//     width: 53.5vh;
+//     padding-left: 5vh;
+//     padding-right: 5vh;
+// }
 .karte#letsplay .btn{
     width: calc(100% - 10vh);
     margin-left: 5vh;
@@ -24,13 +25,11 @@
 }
 .karte-content {
     position: absolute;
-    top: 70px;
-    left: 40px;
-    max-height: 280px;
-    width: 400px;
-    padding-right: 20px;
+    top: 8.1vh;
+    left: 4.3vh;
+    padding-right: 2.25vh;
+    max-height: 34vh;
 }
-
 .karte.letsplay .team {
     position: relative;
     top: 0;
@@ -70,15 +69,15 @@ option:focus {
     outline: none !important;
 }
 .karte.letsplay .team .custom-select:focus {
-    border: solid 1px #dfe1e5;
+    border: solid 0.1vh #dfe1e5;
     box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
 }
 .karte.letsplay .time .field{
     position: relative;
-    width: 134px;
-    height: 48px;
-    border: solid 1px #dfe1e5;
-    border-radius: 8px;
+    border: solid 0.1vh #dfe1e5;
+    border-radius: 0.8vh;
+    width: 15.6vh;
+    height: 5.57vh;
 }
 .karte.letsplay .time .field .up,
 .karte.letsplay .time .field .down{
@@ -86,24 +85,25 @@ option:focus {
     top: 0;
     right: 0;
     height: 50%;
-    width: 43px;
-    border-left: 1px solid #dfe1e5;
+    border-left: 0.1vh solid #dfe1e5;
     text-align: center;
-    line-height: 24px;
     cursor: pointer;
     z-index: 100;
+    width: 4.55vh;
+    line-height: 2.44vh;
 }
 .karte.letsplay .time .field .down {
     top: 50%;
-    border-top: 1px solid #dfe1e5;
+    border-top: 0.1vh solid #dfe1e5;
 }
 .karte.letsplay .time .field .time {
+    text-align: inherit;
+    padding-left: 1.6vh;
+    line-height: 4.6vh;
+    width: 10.5vh;
+    font-size: 2.2vh;
     left: 0;
     height: 100%;
-    width: 91px;
-    text-align: center;
-    line-height: 46px;
-    font-size: 20px;
 }
 .karte.letsplay .team input {
     padding: 1.3vh;
@@ -175,15 +175,21 @@ option:focus {
     position: relative;
     float: left;
     width: 100%;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
+}
+.karte.letsplay .youtube input {
+    width: 40.2vh;
 }
 .karte.letsplay .youtube label {
-    line-height: 38px;
+    line-height: 4vh;
 }
 .karte.letsplay .youtube label .add {
-    top: 5px;
+    top: 0.7vh;
+    right: 3.2vh;
 }
 .karte.letsplay .add .fas {
-    font-size: 18px;
+    font-size: 1.9vh;
 }
 .karte.letsplay .youtube input {
     display: none;
@@ -192,17 +198,16 @@ option:focus {
 .karte.letsplay .unchecked-field {
     position: relative;
     float: left;
-    width: 380px;
-    border-radius: 8px;
-    border: solid 1px #dfe1e5;
-    line-height: 48px;
-    font-size: 16px;
-    font-weight: 300;
+    border-radius: 0.8vh;
+    border: solid 0.1vh #dfe1e5;
+    line-height: 5.5vh;
+    font-size: 1.8vh;
+    width: 40.2vh;
 }
 .karte.letsplay .checked-field {
     padding-bottom: 1.3vh;
-    min-height: 48px;
-    padding-left: 5px;
+    min-height: 5.5vh;
+    padding-left: 0.5vh;
 }
 .karte.letsplay .unchecked-field {
     display: none;
@@ -213,39 +218,39 @@ option:focus {
     position: absolute;
     top: 1.3vh;
     right: 1.3vh;
-    height: 28px;
-    width: 28px;
     border-radius: 50%;
     background-color: #16e2a5;
     color: white;
-    font-size: 20px;
-    line-height: 28px;
     text-align: center;
     font-weight: 900;
     cursor: pointer;
+    height: 2.96vh;
+    width: 2.96vh;
+    font-size: 2.2vh;
+    line-height: 3vh;
 }
 .karte.letsplay .checkbox {
     position: relative;
     float: left;
     top: 1.3vh;
-    left: 5px;
-    height: 30px;
-    border-radius: 14px;
-    border: solid 2px #a358df;
-    line-height: 27px;
+    left: 0.5vh;
+    border-radius: 1.6vh;
+    border: solid 0.2vh #a358df;
     cursor: pointer;
-    margin: 0 5px 10px 0;
-    padding: 0 5px 0 1.3vh;
+    margin: 0 0.5vh 1vh 0;
+    padding: 0 0.5vh 0 1.3vh;
+    height: 3.21vh;
+    line-height: 2.88vh;
 }
 .karte.letsplay .checkbox label {
     text-align: center;
-    padding: 0 5px;
-    line-height: 16px;
+    padding: 0 0.5vh;
+    line-height: 1.8vh;
 }
 .karte.letsplay .checkbox label .fas {
-    width: 20px;
-    line-height: 17px;
-    margin-left: 5px;
+    margin-left: 0.5vh;
+    width: 2.12vh;
+    line-height: 1.9vh;
 }
 .karte.letsplay .checked-field label .fas {
     float: right;

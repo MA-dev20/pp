@@ -20,8 +20,8 @@
 }
 
 .karte .head.small {
-    height: 8.5vh;
-    line-height: 8.5vh;
+    height: 8vh;
+    line-height: 8vh;
     font-size: 3vh;
 }
 
@@ -56,7 +56,9 @@ label.right {
     margin-bottom: 0;
     padding: 0;
 }
-
+.alert {
+    margin: 0 2vh;
+}
 .half-field.left {
     left: 0;
 }
@@ -69,8 +71,18 @@ label.right {
     position: absolute;
     bottom: 0px;
     left: 0;
-    width: calc(100% - 80px);
+    width: calc(100% - 8vh);
     cursor: pointer;
-    margin: 4.9vh;
+    margin: 2vh auto;
+    right: 0;
 }
+// .karte .btn {
+//     position: absolute;
+//     bottom: 0;
+//     left: 0 !important;
+//     width: calc(100% - 8vh);
+//     cursor: pointer;
+//     margin: 10vh auto;
+//     right: 0;
+// }
 

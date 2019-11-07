@@ -16,7 +16,7 @@
     position: relative;
     width: 64.55vh;
     height: 75.35vh;
-    top: 5.6vh;
+    top: 8.6vh;
 }
 .customize-sm:first-child {
     margin-right: 6.3vh;
@@ -36,11 +36,12 @@
     position: absolute;
     top: 0;
     right: 0px;
+    width: 17.5vh;
 }
 .customize-sm > .karte {
     margin-top: 7.9vh;
     // height: 67.45vh;
-    height: 71.45vh;
+    height: 60vh;
     padding-right: 3.5vh;
     padding-left: 3.5vh;
 }
@@ -54,7 +55,7 @@
 }
 .customize-sm > .karte > .list {
     position: relative;
-    height: 52.2vh;
+    height: 43.2vh;
     width: 100%;
 }
 .customize-sm > .karte > .list > .list-karte {
@@ -145,7 +146,8 @@
 }
 .customize-sm > .karte > .table-content {
     position: relative;
-    max-height: 20vh;
+    // max-height: 20vh;
+    max-height: 13vh;
     width: 100%;
 }
 
@@ -160,11 +162,17 @@
 }
 .customize-sm > .karte > form > .btn {
     width: 27.7vh;
-    left: 15.3vh;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    cursor: pointer;
+    margin: 10vh auto;
+    right: 0;
 }
 .customize-sm > .karte > .remove {
     position: absolute;
-    bottom: 5vh;
+    // bottom: 5vh;
+    bottom: 11vh;
     right: 4vh;
     font-size: 2.4vh;
 }
