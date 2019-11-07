@@ -52,6 +52,9 @@ label .alert {
     height: 3.3vh;
     width: 3.3vh;
     padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 .half-field {
     padding: 1vh;

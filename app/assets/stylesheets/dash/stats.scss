@@ -101,6 +101,7 @@
     box-shadow: 0px 0.6vh 2.2vh 0 rgba(172, 172, 172, 0.1);
     border: 0.1vh solid #c1c1c1;
     border-radius: 0.5vh;
+    overflow-y: auto;
 }
 .heading .select-team .teams .team .users .user {
     position: relative;
@@ -334,7 +335,7 @@
 #statistic .bestlist .table .name {
     float: left;
     height: 2.4vh;
-    width: 11.5vh;
+    width: 13vh;
     border-right: 0.1vh solid #f4faff;
 }
 #statistic .bestlist .table .points {
@@ -342,7 +343,7 @@
     float: right;
     height: 2.2vh;
     font-weight: 900;
-    text-align: right;
+    // text-align: right;
 }
 #chartjs-tooltip {
     width: 555px;
@@ -401,6 +402,8 @@
     font-size: 3.4vh;
     font-weight: bold;
     color: #46c13f;
+    position: relative;
+    top: -10px;
 }
 #chartjs-tooltip .body .rating .text {
     color: #6e6e6e;

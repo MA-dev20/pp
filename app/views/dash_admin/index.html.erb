@@ -151,7 +151,11 @@
         </div>
         <% @users.each do |u| %>
         <div class="user">
-            <input type="checkbox" name="team[users][]" value="<%= u.id %>">
+            <!-- <input type="checkbox" name="team[users][]" value="<%= u.id %>"> -->
+            <label class="usercheck">
+                <input type="checkbox"  name="team[users][]" value="<%= u.id %>">
+                <span class="checkmark"></span>
+            </label>
             <% if u.avatar.present? %>
             <%= image_tag u.avatar.quad.url %><% end %><%= u.fname %>
         </div>
