@@ -51,7 +51,7 @@ label .alert {
     top: 1.16vh;
     height: 3.3vh;
     width: 3.3vh;
-    padding: 0 0 0.3vh 0;
+    padding: 0 0 0.1vh 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -106,6 +106,10 @@ label .alert {
 .team-list {
     height: 12.9vh;
 }
+.team-list .search-field {
+    padding-top: 0.2vh;
+}
+
 .user-list .search-field,
 .team-list .search-field {
     position: relative;
@@ -116,7 +120,7 @@ label .alert {
     border-bottom: 0.1vh solid #dfe1e5;
 }
 .team-list .search-field {
-    height: 4.3vh;
+    height: 5vh;
 }
 .user-list .search-field img,
 .team-list .search-field img {
@@ -128,18 +132,23 @@ label .alert {
 }
 .team-list .search-field img {
     margin: 1vh;
+    margin-right: 1.9vh;
 }
 .user-list .search-field input[type='text'],
 .team-list .search-field input[type='text'] {
+    padding-top: 0.5vh;
     border: none;
     width: calc(100% - 7vh);
-    height: 3.8vh;
+    // height: 3.8vh;
+    height: 4vh;
     line-height: 3.8vh;
     margin: 0.5vh;
     font-size: 1.8vh;
 }
 .team-list .search-field input[type='text'] {
     margin: 0;
+    height: 3.8vh;
+    padding-top: 0.8vh;
 }
 .user-list .user,
 .team-list .team {
@@ -335,7 +344,7 @@ content: "";
 .usercheck .checkmark:after {
     left: 0.6vh;
     top: 0.1vh;
-    width: 0.6vh;
+    width: 0.7vh;
     height: 1.3vh;
     border: solid white;
     border-width: 0 0.2vh 0.2vh 0;

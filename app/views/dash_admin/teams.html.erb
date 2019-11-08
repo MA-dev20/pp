@@ -290,12 +290,18 @@
         }).hide();
         })
     
+        $('.user-list').attr('style','height: auto !important');
+        $('.user-list .search-field').attr('style','border-bottom: 0 !important');
     /* search newTeam */
         $('#searchNewTeam').keyup(function() {
-            if ($('#searchNewTeam').val() == ""){
-                $('.user').attr('style', 'display: none !important');
-            } else {
+            if (this.value) {
                 $('.user').attr('style', 'display: flex !important');
+                $('.user-list').attr('style','height: 18vh !important');
+                $('.user-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
+            } else {
+                $('.user-list').attr('style','height: auto !important');
+                $('.user').attr('style', 'display: none !important');
+                $('.user-list .search-field').attr('style','border-bottom: 0 !important');
             }
             $rows = $('.user');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
@@ -309,10 +315,14 @@
     
     /* search EditTeam */
         $('#searchEditTeam').keyup(function() {
-            if ($('#searchEditTeam').val() == ""){
-                $('.editTeam').attr('style', 'display: none !important');
-            } else {
+            if (this.value) {
                 $('.editTeam').attr('style', 'display: flex !important');
+                $('.user-list').attr('style','height: 18vh !important');
+                $('.user-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
+            } else {
+                $('.user-list').attr('style','height: auto !important');
+                $('.editTeam').attr('style', 'display: none !important');
+                $('.user-list .search-field').attr('style','border-bottom: 0 !important');
             }
             $rows = $('.editTeam');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
@@ -323,18 +333,26 @@
             return !reg.test(text);
         }).hide();
         })
-        // if ($('#searchNewUser').val() == ""){
-        //         $('.newUser').attr('style', 'display: none !important');
-        //         $('.team-list').attr('style','height: 6vh !important');
-        //     }
+        
+        $('.team-list').attr('style','height: 5.5vh !important');
+        $('.team-list .search-field').attr('style','border-bottom: 0 !important');
     /* search newUser */
         $('#searchNewUser').keyup(function() {
-            if ($('#searchNewUser').val() == ""){
-                $('.newUser').attr('style', 'display: none !important');
-                $('.team-list').attr('style','height: 6vh !important');
-            } else {
-                $('.newUser').attr('style', 'display: block !important');
+            // if ($('#searchNewUser').val() == ""){
+            //     $('.newUser').attr('style', 'display: none !important');
+            //     $('.team-list').attr('style','height: 6vh !important');
+            // } else {
+            //     $('.newUser').attr('style', 'display: block !important');
+            //     $('.team-list').attr('style','height: 12.9vh !important');
+            // }
+            if (this.value) {
+                $('.newUser').attr('style', 'display: flex !important');
                 $('.team-list').attr('style','height: 12.9vh !important');
+                $('.team-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
+            } else {
+                $('.team-list').attr('style','height: 5.5vh !important');
+                $('.newUser').attr('style', 'display: none !important');
+                $('.team-list .search-field').attr('style','border-bottom: 0 !important');
             }
             $rows = $('.newUser');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
@@ -349,12 +367,14 @@
         })
     /* search EditUser */
         $('#searchEditUser').keyup(function() {
-            if ($('#searchEditUser').val() == ""){
-                $('.editUser').attr('style', 'display: none !important');
-                // $('.team-list').attr('style','height: 6vh !important');
+            if (this.value) {
+                $('.editUser').attr('style', 'display: flex !important');
+                $('.team-list').attr('style','height: 12.9vh !important');
+                $('.team-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
             } else {
-                $('.editUser').attr('style', 'display: block !important');
-                // $('.team-list').attr('style','height: 12.9vh !important');
+                $('.team-list').attr('style','height: 5.5vh !important');
+                $('.editUser').attr('style', 'display: none !important');
+                $('.team-list .search-field').attr('style','border-bottom: 0 !important');
             }
             $rows = $('.editUser');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',

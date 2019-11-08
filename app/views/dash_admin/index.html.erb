@@ -144,7 +144,7 @@
     <% end %>
 
     <label>Search for Users</label><br>
-    <div class="user-list">
+    <div class="index-list user-list">
         <div class="search-field">
             <%= image_tag 'dash/icons/search.png', class: 'search' %>
             <input type="text" placeholder="Search Users" id='searchField'>
@@ -293,9 +293,19 @@
         $('#letsplay').show();
         $('#newteam').hide();
     }
+    $('.index-list').attr('style','height: 5.5vh !important');
+    $('.index-list .search-field').attr('style','border-bottom: 0 !important');
     var $rows = $('.user');
     $('#searchField').keyup(function () {
-
+        if (this.value) {
+                $('.user').attr('style', 'display: flex !important');
+                $('.index-list').attr('style','height: 18vh !important');
+                $('.index-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
+            } else {
+                $('.index-list').attr('style','height: 5.5vh !important');
+                $('.user').attr('style', 'display: none !important');
+                $('.index-list .search-field').attr('style','border-bottom: 0 !important');
+            }
         var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
             reg = RegExp(val, 'i'),
             text;
