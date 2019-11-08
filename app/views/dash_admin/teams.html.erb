@@ -157,9 +157,9 @@
                    <% @users.each do |u| %>
                     <tr class="username">
                         <% if u.avatar.present? %>
-                        <td><%= link_to image_tag(u.avatar.quad.url), dash_admin_user_stats_path(u.id) %><%= (u.fname.present? ? u.fname : "") + " " + (u.lname.present? ? u.lname : "") %></td>
+                        <td><a class="username-link" href="<%= dash_admin_user_stats_path(u.id) %>"><%= image_tag u.avatar.quad.url %><%= (u.fname.present? ? u.fname : "") + " " + (u.lname.present? ? u.lname : "") %></a></td>
                         <% else %>
-                        <td><div class="circle"></div><a class="username-link" href="<%= dash_admin_user_stats_path(u.id) %>"><%= u.fname %><%= u.lname %></a></td>
+                        <td><a class="username-link" href="<%= dash_admin_user_stats_path(u.id) %>"><div class="circle"></div><%= u.fname %><%= u.lname %></a></td>
                         <% end %>
                         <td><%= u.turns.count %></td>
                         <td><div class="rating"><%= if UserRating.find_by(user_id: u.id) then UserRating.find_by(user_id: u.id).ges / 10.0 else 0 end%></div></td>
