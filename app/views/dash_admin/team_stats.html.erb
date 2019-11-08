@@ -25,7 +25,7 @@
             <i class="fas fa-star"></i>
         </div>
         <div class="rating">
-            <%= @team_rating.ges / 10.0 %>
+            <%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 5.0) ? '10' : (@team_rating.ges / 10.0)) : '' %>
         </div>
         <label>Gesamt</label>
         <% if @team_rating.change_ges.present? %>
@@ -53,7 +53,7 @@
             <i class="fas fa-bolt"></i>
         </div>
         <div class="rating">
-            <%= @team_rating.spontan / 10.0 %>
+            <%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '' %>
         </div>
         <label>Spontanität</label>
         <% if @team_rating.change_spontan.present? %>
@@ -81,7 +81,7 @@
             <%= image_tag 'dash/icons/creative.png' %>
         </div>
         <div class="rating">
-            <%= @team_rating.creative / 10.0 %>
+            <%= @team_rating.creative.present? ? ((@team_rating.creative / 10.0 == 10.0) ? '10' : (@team_rating.creative / 10.0)) : '' %>
         </div>
         <label>Kreativität</label>
         <% if @team_rating.change_creative.present? %>
@@ -109,7 +109,7 @@
             <i class="fas fa-child"></i>
         </div>
         <div class="rating">
-            <%= @team_rating.body / 10.0 %>
+            <%= @team_rating.body.present? ? ((@team_rating.body / 10.0 == 10.0) ? '10' : (@team_rating.body / 10.0)) : '' %>
         </div>
         <label>Körpersprache</label>
         <% if @team_rating.change_body.present? %>
@@ -137,7 +137,7 @@
             <%= image_tag 'dash/icons/megaphone.png' %>
         </div>
         <div class="rating">
-            <%= @team_rating.rhetoric / 10.0 %>
+            <%= @team_rating.rhetoric.present? ? ((@team_rating.rhetoric / 10.0 == '10.0') ? '10' : (@team_rating.rhetoric / 10.0)) : '' %>
         </div>
         <label>Rhetorik</label>
         <% if @team_rating.change_rhetoric.present? %>

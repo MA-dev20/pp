@@ -288,12 +288,13 @@
 }
 #statistic .right .bestlist.small {
     height: 12.8vh;
+    height: 8.8vh;
 }
 #statistic .right .place { 
     float: left;
     height: 10vh;
     width: 6.4vh;
-    padding: 1vh 0.7vh;
+    padding: 2.2vh 0.7vh 0vh 0.7vh;
     text-align: center;
     font-size: 1.8vh;
     font-weight: 600;
@@ -304,7 +305,7 @@
 }
 #statistic .bestlist .divider {
     position: absolute;
-    top: 10vh;
+    top: 10.3vh;
     height: 0.1vh;
     background-color: #dfe1e5;
     width: 16.9vh;
@@ -323,11 +324,14 @@
 #statistic .bestlist .table .table-line {
     position: relative;
     left: 0;
-    top: 0;
-    height: 2.4vh;
+    top: 3.4vh;
+    height: 1.4vh;
     line-height: 2.4vh;
     font-size: 1.8vh;
-    padding: 1vh;
+    padding: 1vh 1.6vh;
+}
+#statistic .right .bestlist.small .table-line {
+    top: 0;
 }
 #statistic .bestlist .table .table-line.highlighted {
     background-color: rgba(192,192,192,.1);
@@ -335,8 +339,11 @@
 #statistic .bestlist .table .name {
     float: left;
     height: 2.4vh;
-    width: 13.5vh;
+    width: 12vh;
     border-right: 0.1vh solid #f4faff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #statistic .bestlist .table .points {
     // width: 3.2vh;
@@ -344,7 +351,7 @@
     float: right;
     height: 2.2vh;
     font-weight: 900;
-    // text-align: right;
+    text-align: center;
 }
 #chartjs-tooltip {
     width: 555px;
@@ -398,7 +405,7 @@
     border-radius: 50%;
     border: 4px solid #46c13f;
     margin: 0 auto;
-    line-height: 73.3px;
+    line-height: 71.3px;
     text-align: center;
     font-size: 3.4vh;
     font-weight: bold;
@@ -411,6 +418,8 @@
     text-align: center;
     font-size: 1.8vh;
     font-weight: 600;
+    position: relative;
+    top: -0.5vh;
 }
 #chartjs-tooltip .body .stats .text {
     float: left;
@@ -438,4 +447,8 @@
     font-weight: 600;
     line-height: 2.2vh;
     text-align: left;
+}
+#chartjs-tooltip .body .left .line,
+#chartjs-tooltip .body .right .line {
+    width: 210px !important;
 }

@@ -37,8 +37,8 @@ label .alert {
 //     flex-direction: column;
 // }
 .field .custom-submit {
-    line-height: 2.5vh;
-    font-size: 2.5vh;
+    line-height: 2.4vh;
+    font-size: 2.4vh;
     position: absolute;
     border-radius: 50%;
     background-color: #16e2a5;
@@ -51,7 +51,7 @@ label .alert {
     top: 1.16vh;
     height: 3.3vh;
     width: 3.3vh;
-    padding: 0;
+    padding: 0 0 0.3vh 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
