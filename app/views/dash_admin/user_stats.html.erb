@@ -184,11 +184,11 @@
     </div>
     <div class="karte">
         <label for="">Best rating</label>
-        <div class="number green"><%= @turn_ratings.reorder('ges DESC').first.ges / 10.0 %></div>
+        <div class="number green"><%= (@turn_ratings.reorder('ges DESC').first.ges.present? ? (@turn_ratings.reorder('ges DESC').first.ges / 10.0) : 0.0) %></div>
     </div>
     <div class="karte">
         <label for="">Worst rating</label>
-        <div class="number red"><%= @turn_ratings.reorder('ges ASC').first.ges / 10.0 %></div>
+        <div class="number red"><%= (@turn_ratings.reorder('ges ASC').first.ges.present? ? (@turn_ratings.reorder('ges ASC').first.ges / 10.0) : 0.0) %></div>
     </div>
 </div>
 
