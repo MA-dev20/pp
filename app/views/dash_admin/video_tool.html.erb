@@ -48,7 +48,8 @@
       <div class="video-list" id="videoList">
         <% @result.each do |r| %>
         <div class="video-karte pitches" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')">
-          <div class="top" style="background-image: url('<%= asset_path(r[:pitch_url]) %>')">
+          <div class="top">
+            <div class="video-img" style="background-image: url('<%= asset_path(r[:pitch_url]) %>')"></div>
             <div class="overlay"></div>
             <div class="rating"><%= r[:rating].present? ? r[:rating] / 10.0 : 0 %></div>
             <% turn = Turn.find(r[:turn_id])

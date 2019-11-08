@@ -564,9 +564,18 @@
     border-top-right-radius: 0.8vh;
     height: 23.3vh;
     width: 20.1vh;
+    overflow: hidden;
+}
+.video-karte .top .video-img {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: rotate(90deg);
 }
 .video-karte .word {
     width: 100%;
