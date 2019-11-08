@@ -151,9 +151,16 @@ option:focus {
     text-align: left;
 }
 .teams table tbody tr:hover,
-.teams table tbody tr.active {
+.teams table tbody tr.active 
+{
     background-color: rgba(192,192,192,.1);
     cursor: pointer;
+}
+
+.users table tbody tr:hover,
+.users table tbody tr.active {
+    background-color: rgba(192,192,192,.1);
+    // cursor: pointer;
 }
 .table table tbody tr td:first-child {
     text-align: left;
