@@ -75,7 +75,10 @@ new PerfectScrollbar('#table_content');
         <div class="list" id="catchword-list">
             <% @catchwords.each do |c| %>
                 <div class="list-karte CWsearch" onclick="redirect('<%= dash_admin_catchwords_url(c.id) %>')">
-                    <div class="pic" style="background-image: url(<%= image_url("dash/randomBGpics/chair.png") %>)">
+                    <% cw_img = Random.new.rand(1..8)
+                        img_url = "dash/randomBGpics/Catchwords/#{cw_img}.jpg"
+                    %>
+                    <div class="pic" style="background-image: url(<%= image_url(img_url) %>)">
                     </div>
                     <div class="bottom">
                         <div class="name"><%= c.name %></div>
@@ -184,8 +187,12 @@ new PerfectScrollbar('#table_content');
         <div class="head left">Objections</div>
         <div class="list" id="objection-list">
             <% @objections.each do |o| %>
+                <% 
+                    obj_img = Random.new.rand(1..8)
+                    img_url = "dash/randomBGpics/Objections/#{obj_img}.jpg"
+                %>
                 <div class="list-karte OBsearch" onclick="redirect('<%= dash_admin_objections_url(o.id) %>')">
-                    <div class="pic" style="background-image: url(<%= image_url("dash/randomBGpics/chair.png") %>)">
+                    <div class="pic" style="background-image: url(<%= image_url(img_url) %>)">
                     </div>
                     <div class="bottom">
                         <div class="name"><%= o.name %></div>
