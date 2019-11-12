@@ -299,7 +299,7 @@
                 <table style="width: 100%">
                     <thead>
                         <tr>
-                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 50px;"></th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 5%;"></th>
                             <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 30%;">Name</th>
                             <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Ges</th>
                             <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Spon</th>
@@ -327,33 +327,36 @@
                         </tbody>
                 </table>
                 </div>
-                <div id="team-users" class="table-responsive">
+                <div id="team-users" class="table-scroll table-scroll-live">
                 <table style="width: 100%">
                     <tbody>
                         <% @team_users.each.with_index(1) do |user,i| %>
                         <tr>
-                            <td style="padding: 10px; width: 50px; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= i %>.</td>
-                            <td style="padding: 10px; width: 30%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= "#{user[:fname]} #{user[:lname]}" %></td>
-                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><div class="rating"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></div></td>
-                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:spon] / 10, precision: 1 %></td>
-                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:rhetoric] / 10, precision: 1 %></td>
-                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:creative] / 10, precision: 1 %></td>
-                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:body] / 10, precision: 1 %></td>
-                            <td style="padding: 10px; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:gold] %></td>
-                            <td style="padding: 10px; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:silver] %></td>
-                            <td style="padding: 10px; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:bronze] %></td>
+                            <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= i %>.</td>
+                            <td style="padding: 10px; text-align: left; width: 30%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= "#{user[:fname]} #{user[:lname]}" %></td>
+                            <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><div class="rating"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></div></td>
+                            <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:spon] / 10, precision: 1 %></td>
+                            <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:rhetoric] / 10, precision: 1 %></td>
+                            <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:creative] / 10, precision: 1 %></td>
+                            <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:body] / 10, precision: 1 %></td>
+                            <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:gold] %></td>
+                            <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:silver] %></td>
+                            <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:bronze] %></td>
                         </tr>
                         <% end %>
                     </tbody>
                 </table>
             </div>
-            <div class="download-btn" style="text-align: center;margin-top: 20px">
+            <!-- <div class="download-btn">
                 <button class="btn btn-green" data-href="/admin/dash/teams/<%= @team.id %>/generate_img_from_html" onclick="downloadImage()">Download</button>
-            </div>
+            </div> -->
         </div>
         </div>
     </div>
   </div>
+  <div class="download-btn">
+        <button class="btn btn-green" data-href="/admin/dash/teams/<%= @team.id %>/generate_img_from_html" onclick="downloadImage()">Download</button>
+    </div>
 </div>
 
 <div>
@@ -362,13 +365,15 @@
 
 
 <style>
+
+    #table_wrapper .modal-body {
+        padding-bottom: 9vh;
+    }
     .modal-backdrop.show {
         opacity: .7;
     }
     .modal-backdrop {
         display: none;
-        
-        
     }
     .status-modal {
         background-color: rgba(244, 250, 255, 0.7);
@@ -465,18 +470,26 @@
     .status-modal table td:nth-child(3) {
         padding-left: 1vh;
     }
-    .status-modal .download-btn {
-        text-align: center;
+    .download-btn {
+        /* text-align: center;
         margin: 1vh 0;
+        text-align: center;
+        margin-top: 20px; */
+        position: absolute;
+        bottom: 24vh;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        z-index: 555555555;
     }
-    .status-modal .download-btn .btn-green {
+    .download-btn .btn-green {
         width: 20vh;
     }
     .table-responsive {
         max-height: 31vh;
     }
 
-    /* .table-responsive .rating {
+    .table-scroll .rating {
         width: 4vh;
         height: 4vh;
         border: 0.26vh solid #a8c916;
@@ -485,7 +498,7 @@
         text-align: center;
         font-size: 1.8vh;
         line-height: 3.8vh;
-    } */
+    }
 
     .rating-record {
         cursor: pointer;
@@ -495,14 +508,16 @@
         width: 4vh;
         height: 4vh;
     }
+
+    .table-scroll {
+        height: 31vh;
+        position: relative;
+    }
+
+
 </style>
 
 <!-- Modal end -->
-
-
-
-
-
 
 
 
