@@ -19,14 +19,26 @@
         </div>
     </div>
 </div>
+
+
 <div class="rating-overview">
     <div class="karte active" onclick="ratingGes()" id="gesamt">
         <div class="icon-circle">
             <i class="fas fa-star"></i>
         </div>
         <div class="rating">
-            <%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 5.0) ? '10' : (@team_rating.ges / 10.0)) : '' %>
+            <%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '' %>
         </div>
+        <!-- <% ges = @team_rating.ges.present? ? @team_rating.ges : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="c100 p<%= ges %> center" style="background-color: #4394ec; font-size: 11vh;">
+                    <span><%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %></span>
+                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                </div>
+            </div>
+        </div> -->
+        
         <label>Gesamt</label>
         <% if @team_rating.change_ges.present? %>
         <% if @team_rating.change_ges > 0 %>
@@ -55,6 +67,15 @@
         <div class="rating">
             <%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '' %>
         </div>
+        <!-- <% spontan = @team_rating.spontan.present? ? @team_rating.spontan : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="c100 p<%= spontan %> center" style="background-color: white; font-size: 11vh;">
+                    <span><%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '' %></span>
+                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                </div>
+            </div>
+        </div> -->
         <label>Spontanität</label>
         <% if @team_rating.change_spontan.present? %>
         <% if @team_rating.change_spontan > 0 %>
@@ -249,6 +270,16 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <!-- Modal start -->
 
 
@@ -259,46 +290,46 @@
 
         <!-- Modal content-->
         <div class="modal-content" id="table_wrapper">
-        <div class="modal-header">
+        <div class="modal-header" style="border: 0">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Team Vertrieb</h4>
+            <h4 class="modal-title" style="text-align: center">Team Vertrieb</h4>
         </div>
         <div class="modal-body">
             <div class="table-responsive">
-                <table>
+                <table style="width: 100%">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Ges</th>
-                            <th>Spon</th>
-                            <th>Korp</th>
-                            <th>Krea</th>
-                            <th>Rhet</th>
-                            <th><img src="<%= root_url %>/gold.png", style="width: 16px"></th>
-                            <th><img src="<%= root_url %>/silver.png", style="width: 16px"></th>
-                            <th><img src="<%= root_url %>/bronze.png", style="width: 16px"></th>
+                            <th style="text-align: left; padding-bottom: 5px;"></th>
+                            <th style="text-align: left; padding-bottom: 5px;">Name</th>
+                            <th style="text-align: left; padding-bottom: 5px;">Ges</th>
+                            <th style="text-align: left; padding-bottom: 5px;">Spon</th>
+                            <th style="text-align: left; padding-bottom: 5px;">Korp</th>
+                            <th style="text-align: left; padding-bottom: 5px;">Krea</th>
+                            <th style="text-align: left; padding-bottom: 5px;">Rhet</th>
+                            <th style="text-align: left; padding-bottom: 5px; padding-left: 8px;"><img src="<%= root_url %>/gold.png", style="width: 20px"></th>
+                            <th style="text-align: left; padding-bottom: 5px; padding-left: 8px;"><img src="<%= root_url %>/silver.png", style="width: 20px"></th>
+                            <th style="text-align: left; padding-bottom: 5px; padding-left: 8px;"><img src="<%= root_url %>/bronze.png", style="width: 20px"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <% @team_users.each.with_index(1) do |user,i| %>
                         <tr>
-                            <td><%= i %>.</td>
-                            <td><%= "#{user[:fname]} #{user[:lname]}" %></td>
-                            <td><div class="rating"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></div></td>
-                            <td><%= number_with_precision user[:spon] / 10, precision: 1 %></td>
-                            <td><%= number_with_precision user[:rhetoric] / 10, precision: 1 %></td>
-                            <td><%= number_with_precision user[:creative] / 10, precision: 1 %></td>
-                            <td><%= number_with_precision user[:body] / 10, precision: 1 %></td>
-                            <td><%= user[:gold] %></td>
-                            <td><%= user[:silver] %></td>
-                            <td><%= user[:bronze] %></td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= i %>.</td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= "#{user[:fname]} #{user[:lname]}" %></td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><div class="rating"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></div></td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= number_with_precision user[:spon] / 10, precision: 1 %></td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= number_with_precision user[:rhetoric] / 10, precision: 1 %></td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= number_with_precision user[:creative] / 10, precision: 1 %></td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= number_with_precision user[:body] / 10, precision: 1 %></td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= user[:gold] %></td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= user[:silver] %></td>
+                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= user[:bronze] %></td>
                         </tr>
                         <% end %>
                     </tbody>
                 </table>
             </div>
-            <div class="download-btn">
+            <div class="download-btn" style="text-align: center;margin-top: 20px">
                 <button class="btn btn-green" data-href="/admin/dash/teams/<%= @team.id %>/generate_img_from_html" onclick="downloadImage()">Download</button>
             </div>
         </div>
@@ -359,11 +390,13 @@
         box-shadow: 0px 0.6vh 2.2vh 0 rgba(172, 172, 172, 0.1);
     }
     .status-modal .modal-dialog {
-        max-width: 85vh;
+        max-width: 100vh;
+        width: 100%;
         margin: 0 auto;
     }
     .status-modal table {
         width: 100%;
+        width: 2000px;
         font-size: 1.8vh;
     }
     .status-modal table th {
@@ -375,8 +408,12 @@
     .status-modal table th img {
         width: 2vh;
     }
+    .status-modal table td,
+    .status-modal table th {
+        width: 10%;
+    }
     .status-modal table td {
-        padding: 1.5vh 2vh;
+        padding: 1.1vh 2vh;
         border-top: 0.2vh solid #dfe1e5;
     }
     .status-modal table td:nth-child(2) {
@@ -385,6 +422,7 @@
     .status-modal table td:first-child,
     .status-modal table th:first-child {
         width: 4vh;
+        width: 5%;
         padding-left: 0;
         padding-right: 0;
     }
@@ -395,6 +433,7 @@
     .status-modal table td:nth-child(10),
     .status-modal table th:nth-child(10) {
         width: 4vh;
+        width: 5%;
         padding-left: 0;
         padding-right: 0;
         text-align: center;
@@ -402,6 +441,7 @@
     .status-modal table td:nth-child(2),
     .status-modal table th:nth-child(2) {
         width: 25vh;
+        width: 30%;
         word-break: break-word;
     }
     .status-modal table td:nth-child(3) {
@@ -432,8 +472,10 @@
     .rating-record {
         cursor: pointer;
         position: absolute;
-        right: -10vh;
+        right: -6.5vh;
         top: 3vh;
+        width: 4vh;
+        height: 4vh;
     }
 </style>
 
@@ -449,6 +491,15 @@
 
 <script>
     
+// $('.progressWrapper progress').each(function(){
+//       var prgsVal = $(this).data('value');
+//       var maxN = $(this).attr('max');
+//       var pop = prgsVal/maxN * 100
+      
+//       $(this).prev().css('left', pop + '%').text(prgsVal);
+//       $(this).val(prgsVal);
+//     });
+
     $(".rating-record").on('click',function(){
         $('#myModal').modal('show');
     });
