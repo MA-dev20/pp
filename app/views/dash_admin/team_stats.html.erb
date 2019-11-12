@@ -295,35 +295,53 @@
             <h4 class="modal-title" style="text-align: center">Team Vertrieb</h4>
         </div>
         <div class="modal-body">
-            <div class="table-responsive">
+                <div style="width: 100%">
                 <table style="width: 100%">
                     <thead>
                         <tr>
-                            <th style="text-align: left; padding-bottom: 5px;"></th>
-                            <th style="text-align: left; padding-bottom: 5px;">Name</th>
-                            <th style="text-align: left; padding-bottom: 5px;">Ges</th>
-                            <th style="text-align: left; padding-bottom: 5px;">Spon</th>
-                            <th style="text-align: left; padding-bottom: 5px;">Korp</th>
-                            <th style="text-align: left; padding-bottom: 5px;">Krea</th>
-                            <th style="text-align: left; padding-bottom: 5px;">Rhet</th>
-                            <th style="text-align: left; padding-bottom: 5px; padding-left: 8px;"><img src="<%= root_url %>/gold.png", style="width: 20px"></th>
-                            <th style="text-align: left; padding-bottom: 5px; padding-left: 8px;"><img src="<%= root_url %>/silver.png", style="width: 20px"></th>
-                            <th style="text-align: left; padding-bottom: 5px; padding-left: 8px;"><img src="<%= root_url %>/bronze.png", style="width: 20px"></th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 50px;"></th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 30%;">Name</th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Ges</th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Spon</th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Korp</th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Krea</th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Rhet</th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/gold.png", style="width: 20px"></th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/silver.png", style="width: 20px"></th>
+                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/bronze.png", style="width: 20px"></th>
                         </tr>
                     </thead>
                     <tbody>
+                            <tr>
+                                <td style="padding: 0 10px;width: 5%;"></td>
+                                <td style="padding: 0 10px;width: 30%;"></td>
+                                <td style="padding: 0 10px;width: 10%;"></td>
+                                <td style="padding: 0 10px;width: 10%;"></td>
+                                <td style="padding: 0 10px;width: 10%;"></td>
+                                <td style="padding: 0 10px;width: 10%;"></td>
+                                <td style="padding: 0 10px;width: 10%;"></td>
+                                <td style="padding: 0 10px;width: 5%;"></td>
+                                <td style="padding: 0 10px;width: 5%;"></td>
+                                <td style="padding: 0 10px;width: 5%;"></td>
+                            </tr>
+                        </tbody>
+                </table>
+                </div>
+                <div id="team-users" class="table-responsive">
+                <table style="width: 100%">
+                    <tbody>
                         <% @team_users.each.with_index(1) do |user,i| %>
                         <tr>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= i %>.</td>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= "#{user[:fname]} #{user[:lname]}" %></td>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><div class="rating"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></div></td>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= number_with_precision user[:spon] / 10, precision: 1 %></td>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= number_with_precision user[:rhetoric] / 10, precision: 1 %></td>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= number_with_precision user[:creative] / 10, precision: 1 %></td>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= number_with_precision user[:body] / 10, precision: 1 %></td>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= user[:gold] %></td>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= user[:silver] %></td>
-                            <td style="border-top: 1px solid #dfe1e5; padding: 10px;"><%= user[:bronze] %></td>
+                            <td style="padding: 10px; width: 50px; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= i %>.</td>
+                            <td style="padding: 10px; width: 30%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= "#{user[:fname]} #{user[:lname]}" %></td>
+                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><div class="rating"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></div></td>
+                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:spon] / 10, precision: 1 %></td>
+                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:rhetoric] / 10, precision: 1 %></td>
+                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:creative] / 10, precision: 1 %></td>
+                            <td style="padding: 10px; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:body] / 10, precision: 1 %></td>
+                            <td style="padding: 10px; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:gold] %></td>
+                            <td style="padding: 10px; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:silver] %></td>
+                            <td style="padding: 10px; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:bronze] %></td>
                         </tr>
                         <% end %>
                     </tbody>
@@ -455,10 +473,10 @@
         width: 20vh;
     }
     .table-responsive {
-        max-height: 40vh;
+        max-height: 31vh;
     }
 
-    .table-responsive .rating {
+    /* .table-responsive .rating {
         width: 4vh;
         height: 4vh;
         border: 0.26vh solid #a8c916;
@@ -467,7 +485,7 @@
         text-align: center;
         font-size: 1.8vh;
         line-height: 3.8vh;
-    }
+    } */
 
     .rating-record {
         cursor: pointer;
@@ -500,6 +518,7 @@
 //       $(this).val(prgsVal);
 //     });
 
+    new PerfectScrollbar('#team-users');
     $(".rating-record").on('click',function(){
         $('#myModal').modal('show');
     });
