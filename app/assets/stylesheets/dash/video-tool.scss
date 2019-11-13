@@ -270,13 +270,15 @@
     bottom: 1.29vh;
     border: 0.2vh solid #16e2a5;
     border-radius: 50%;
-    line-height: 24px;
     text-align: center;
     color: #16e2a5;
     height: 2.8vh;
     width: 2.8vh;
-    line-height: 2.6vh;
+    line-height: 1.6vh;
     font-size: 1.6vh;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 .video-details .controls .play {
     position: absolute;
@@ -286,10 +288,13 @@
     color: white;
     height: 4.3vh;
     width: 4.3vh;
-    line-height: 4.5vh;
+    line-height: 1.2vh;
     text-align: center;
     border-radius: 50%;
     font-size: 1.2vh;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 .video-details .controls .mute {
     position: absolute;
@@ -391,6 +396,7 @@
     border: 0.1vh solid white;
     border-radius: 50%;
     margin: 1.2vh 0.5vh;
+    pointer-events: none;
 }
 .video-details .right-part label .checkbox .dot {
     position: absolute;
@@ -524,6 +530,9 @@
 }
 .player {
     font-size: 1.8vh;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .top .play {
     position: absolute;
