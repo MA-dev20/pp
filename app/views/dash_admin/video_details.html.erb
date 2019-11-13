@@ -111,8 +111,12 @@
         </div>
         <div id="progressText"></div>
         <div class="controls">
-            <div class="stop" onclick="stopVideo()"><i class="fas fa-stop"></i></div>
-            <div class="play" onclick="playVideo()"><i class="fas fa-play" id="videoPlay"></i></div>
+            <!-- <div class="stop" onclick="stopVideo()"><i class="fas fa-stop"></i></div> -->
+            <!-- <div class="play" onclick="playVideo()"><i class="fas fa-play" id="videoPlay"></i></div> -->
+            <%= image_tag 'dash/icons/pause-i.png', class: 'video-pause' %>
+            <%= image_tag 'dash/icons/play-i.png', class: 'video-play' %>
+            <div class="stop" onclick="stopVideo()"><%= image_tag 'dash/icons/stop-i.png', class: 'fa-stop' %></div>
+            <div class="play" onclick="playVideo()"><%= image_tag 'dash/icons/play-i.png', id: 'videoPlay', class: 'fa-play' %></div>
             <div class="mute" onclick="muteVideo()"><i class="fas fa-volume-up" id="videoMute"></i></div>
         </div>
     </div>
@@ -180,6 +184,15 @@
         <% end %> -->
     </div>
 </div>
+
+<style>
+    .video-play,
+    .video-pause {
+        display: none;
+    }
+</style>
+
+
 <script>
     var admin_img = '<%= @admin.avatar.quad.url %>'
     var admin_fname = '<%= @admin.fname %>'
@@ -238,18 +251,31 @@
             document.getElementById('videoId').play();
             $('#videoPlay').removeClass('fa-play');
             $('#videoPlay').addClass('fa-pause');
+            video_pause_src = $('.video-pause').attr('src');
+            $('.play img').attr('src', video_pause_src)
+            // if('#progressText' == ) {}
             setProgress();
         } else {
             document.getElementById('videoId').pause();
             $('#videoPlay').removeClass('fa-pause');
             $('#videoPlay').addClass('fa-play');
+            video_play_src = $('.video-play').attr('src');
+            $('.play img').attr('src', video_play_src)
         }
     }
     function stopVideo() {
+        // if(($('#progressText').text().split('/')[0] == '0:00')) {
+        //     $('#videoPlay').removeClass('fa-pause');
+        //     $('#videoPlay').addClass('fa-play');
+        //     video_play_src = $('.video-play').attr('src');
+        //     $('.play img').attr('src', video_play_src)
+        // }
         document.getElementById('videoId').load();
         if($('#videoPlay').hasClass('fa-pause')) {
             $('#videoPlay').removeClass('fa-pause');
             $('#videoPlay').addClass('fa-play');
+            video_play_src = $('.video-play').attr('src');
+            $('.play img').attr('src', video_play_src)
         }
     }
     function muteVideo() {
@@ -280,6 +306,12 @@
             vid.load();
             $('#progressText').text('0:00/'+total_duration)
         },100)
+        // if(($('#progressText').text().split('/')[0] == '0:00') && $('#videoPlay').hasClass('fa-pause')) {
+        //     $('#videoPlay').removeClass('fa-pause');
+        //     $('#videoPlay').addClass('fa-play');
+        //     video_play_src = $('.video-play').attr('src');
+        //     $('.play img').attr('src', video_play_src)
+        // }
     }
     function getProgress() {
         // if ($('#videoPlay').hasClass('fa-pause') && $('#progressText').text().split('/')[0] == '0:00') {
