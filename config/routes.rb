@@ -19,10 +19,9 @@ Rails.application.routes.draw do
  
 
   get 'landing/index'
-  get 'landing/price', to: 'landing#price', as: 'price'
-  get 'dash_admin/dash_admin_price', to: 'dash_admin#dash_admin_price', as: 'dash_admin_price'
-  get 'landing/product', to: 'landing#product', as: 'product'
   root 'landing#index'
+  get '/contact', to: 'landing#contact', as: 'contact'
+  get '/after_register/:admin_id', to: 'landing#after_register', as: 'after_register'
   # patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'
   get 'admins/signup/:v_id', to: 'landing#signup' , as: 'edit_next_admin'
@@ -129,15 +128,14 @@ Rails.application.routes.draw do
 # Backoffice #
 ##############
   
-  get 'backoffice/admin/new', to: 'backoffice#new'
-  post 'backoffice/admin/new', to: 'backoffice#create'
-  get 'backoffice/admin/:id/edit', to: 'backoffice#edit', as: 'edit_backoffice_admin'
-  patch 'backoffice/admin/:id', to: 'backoffice#update', as: 'update_backoffice_admin'
   get 'backoffice', to: 'backoffice#index', as: 'backoffice'
   get 'backoffice/admins', to: 'backoffice#admins', as: 'backoffice_admins'
-  get 'backoffice/baskets/', to: 'backoffice#baskets', as: 'backoffice_baskets'
-  get 'backoffice/baskets/:admin_id', to: 'backoffice#baskets', as: 'backoffice_admin_baskets'
-  get 'backoffice/words/:basket_id', to: 'backoffice#words', as: 'backoffice_words'
+    
+  get 'backoffice/admins/:admin_id', to: 'backoffice#admin', as: 'backoffice_admin'
+  get 'backoffice/admins/:admin_id/activate', to: 'backoffice#activate_admin', as: 'backoffice_admin_activate'
+  get 'backoffice/admins/:admin_id/destroy', to: 'backoffice#destroy_admin', as: 'backoffice_admin_destroy'
+  get 'backoffice/word_baskets', to: 'backoffice#word_baskets', as: 'backoffice_word_baskets'
+  get 'backoffice/word_baskets/:basket_id/words', to: 'backoffice#words', as: 'backoffice_words'
 
 #########
 # Admin #
@@ -227,6 +225,8 @@ Rails.application.routes.draw do
 # Admin #
 #########
     
+  get 'admins/new', to: 'admins#new', as: 'new_admin'
+  post 'admins/new', to: 'admins#create'
   get 'admins/:admin_id/edit', to: 'admins#edit', as: 'edit_admin'
   post 'admins/:admin_id/edit', to: 'admins#update'
   get 'admins/:admin_id/avatar/edit', to: 'admins#edit_avatar', as: 'edit_admin_avatar'

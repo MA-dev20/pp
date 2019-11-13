@@ -1,0 +1,31 @@
+<div class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Telefonnr.</th>
+                <th>E-Mail</th>
+                <th>Unternehmen</th>
+                <th>Position</th>
+                <th>Mitarbeiter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @admins.each do |a| %>
+            <tr onclick="redirect(<%= a.id %>)">
+                <td><%= a.fname + ' ' + a.lname %></td>
+                <td><%= a.telephone %></td>
+                <td><%= a.email %></td>
+                <td><%= a.company_name %></td>
+                <td><%= a.company_position %></td>
+                <td><%= a.employees %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+<script>
+    function redirect(admin_id) {
+        location.replace('/backoffice/admins/'+admin_id);
+    }
+</script>

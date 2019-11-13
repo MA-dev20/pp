@@ -1,0 +1,73 @@
+<section id="navbar">
+    <%= image_tag 'landing/logo.png', class: 'logo'%>
+    <%= link_to '', '#login', class: 'login fas fa-sign-in-alt', onclick: 'showLoginModal()' %>
+</section>
+<section id="contact">
+    <h1>Jetzt kostenlosen Zugang zu Peter Pitch erhalten!</h1>
+    <h5>Peter Pitch stellt Trainings auf den Kopf. Damit möglichst viele Unternehmen schnell von unserem Tool profitieren können, ist der Zugang für begrenzte Zeit kostenlos. Es gibt keinen Haken, nur eine Bitte: Teilt eure Erfahrungen mit uns und verratet uns was euch besonders gut gefällt oder was wir besse machen können. Liebt ihr Peter Pitch? Dann teilt es mit eurem Netzwerk und werdet Teil der nächsten Trainingsrevolution. Let's Pitch!</h5>
+    <%= form_for(:admin, url: new_admin_path(Admin)) do |f| %>
+        <div class="form-group l1">
+            <label for="">Vorname <span class="red">*</span></label>
+            <%= f.text_field :fname, class: 'form-field' %>
+        </div>
+        <div class="form-group l2">
+            <label for="">Nachname <span class="red">*</span></label>
+            <%= f.text_field :lname, class: 'form-field' %>
+        </div>
+        <div class="form-group l1">
+            <label for="">Tel Nr. <span class="red">*</span></label>
+            <%= f.text_field :telephone, class: 'form-field' %>
+        </div>
+        <div class="form-group l2">
+            <label for="">E-Mail <span class="red">*</span></label>
+            <%= f.email_field :email, class: 'form-field' %>
+        </div>
+        <div class="form-group l1">
+            <label for="">Unternehmen <span class="red">*</span></label>
+            <%= f.text_field :company_name, class: 'form-field' %>
+        </div>
+        <div class="form-group l21">
+            <label for="">Position <span class="red">*</span></label>
+            <%= f.text_field :company_position, class: 'form-field' %>
+        </div>
+        <div class="form-group l22">
+            <label for="">Mitarbeiter <span class="red">*</span></label>
+            <%= f.number_field :employees, class: 'form-field' %>
+        </div>
+        <div class="form-group">
+            <label for="">Nachricht <span class="red">*</span></label>
+            <%= f.text_area :message, class: 'form-field message' %>
+        </div>
+        <div class="form-group center">
+            <%= f.submit 'Kostenlos testen!', class: 'btn btn-green' %>
+        </div>
+    <% end %>
+</section>
+<div class="fullscreen-modal" id="loginModal">
+    <div class="close"><%= link_to '', contact_path, class: "fas fa-times" %></div>
+    <div class="card">
+    <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
+        <h1>Login</h1>
+        <div class="form-group ">
+            <%= f.email_field :email, class: 'form-field', id: 'loginEmail',placeholder:"E-Mail eingeben", required: true  %>
+            <br>
+            <%= f.password_field :password, class: 'form-field',id: 'loginPassword',placeholder:"Passwort eingeben", required: true  %>
+            <br>
+            <%= f.submit 'Login', class: 'btn btn-green', id: "loginButton" %>
+            <br>
+        </div>
+    <% end %>
+    </div>
+</div>
+<script>
+    function showNavLinks() {
+        if($('#navLinks').is(":hidden")) {
+            $('#navLinks').show();   
+        } else {
+            $('#navLinks').hide();
+        }
+    }
+    function showLoginModal() {
+        $('#loginModal').toggle();
+    }
+</script>

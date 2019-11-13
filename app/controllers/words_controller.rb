@@ -7,16 +7,24 @@ class WordsController < ApplicationController
   def create
     @basket = CatchwordsBasket.find_by(id: params[:basket_id])
     if params[:word][:sound]
-        params[:word][:sounds].each do |sound|
-            @word = @basket.words.create(sound: sound)
-            @word.name = @word.sound_identifier.remove('.mp3')
-            if !@word.save
-              flash[:danger] = 'Konnte Wort nicht speichern!'
+        params[:word][:sound].each do |sound|
+            @word = Word.find_by(name: sound.original_filename.split(".mp3").first)
+            if @word
+              if @word.update(sound: sound) && @basket.words.where(name: @word.name).count == 0
+                @basket.words << @word
+              else
+                flash[:danger] = 'Konnte Wort nicht speichern'
+              end
+            else
+              @word = @basket.words.create(sound: sound, name: sound.original_filename.split(".mp3").first)
+              if !@word.save
+                flash[:danger] = 'Konnte Wort nicht speichern!'
+              end
             end
         end
     elsif params[:word][:name] && params[:word][:name] != ''
         @word = Word.find_by(name: params[:word][:name])
-        if @word
+        if @word && @basket.words.where(name: @word.name).count == 0
           @basket.words << @word
         else
           @word = Word.new(name: params[:word][:name])

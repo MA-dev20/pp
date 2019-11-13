@@ -10,11 +10,15 @@ class LandingController < ApplicationController
   def index
   end
     
-  def coach
+  def contact
   end
     
   def register
     @admin = Admin.new
+  end
+    
+  def after_register
+    @admin = Admin.find(params[:admin_id])
   end
 
   def update_admin

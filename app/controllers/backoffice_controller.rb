@@ -1,71 +1,48 @@
 class BackofficeController < ApplicationController
   before_action :if_root
   before_action :require_root, :set_root
+  before_action :set_admin, only: [:admin, :activate_admin, :destroy_admin]
+  before_action :if_basket, only: [:word_baskets]
+  before_action :set_basket, only: [:words]
   layout 'backoffice'
-  
-  def new
-    @admin1 = Admin.new
-  end
-
-  def create
-    @admin1 = Admin.new(admin_params)
-    if @admin1.password.eql?(@admin1.password_confirm)
-      if @admin1.save
-        flash[:notice] = "Admin created"
-        redirect_to backoffice_admins_path
-      else
-        flash[:alert]= @admin1.errors.full_messages.to_sentence
-        render 'new'  
-      end
-    else
-      flash[:notice] = "Password Doesnot match"
-      render 'new'
-    end
-  end
-
-  def edit
-    @admin1 = Admin.find(params[:id])
-  end
-
-  def update
-    @admin1 = Admin.find(params[:id])
-    if @admin1.update(admin_params)
-      if @admin1.password.eql?(@admin1.password_confirm)
-        flash[:notice] = "Admin record updated"
-        redirect_to backoffice_admins_path
-      else
-        flash[:notice] = "Password Does not match"
-        render 'edit'
-      end
-    else
-      flash[:alert]= @admin1.errors.full_messages.to_sentence
-      render 'edit' 
-    end
-  end
-
-  def index
-  end
-    
+      
   #GET backoffice_admins
+  def index
+    @admins = Admin.where(activated: false).all
+  end
+
   def admins
-    @admins = Admin.all
+    @admins = Admin.where(activated: true).all
   end
     
-  def baskets
-    if params[:admin_id]
-      @admin = Admin.find(params[:admin_id])
-      @baskets = @admin.catchword_baskets
-    elsif CatchwordsBasket.find_by(name: 'PetersWords').nil?
-      @basket = CatchwordsBasket.create(name: 'PetersWords')
-      @basket1 = CatchwordsBasket.create(name: 'PetersFreeWords')
-      @baskets = CatchwordsBasket.where(admin_id: nil).all
+  def admin
+  end
+    
+  def activate_admin
+    if @admin.update(activated: true)
+      flash[:success] = 'Admin aktiviert'
+      @admin.send_reset_password_instructions
     else
-      @baskets = CatchwordsBasket.where(admin_id: nil).all
+      flash[:danger] = 'FEHLER!'
+    end
+    redirect_to backoffice_admin_path(@admin)
+  end
+  def destroy_admin
+    if @admin.destroy
+      flash[:success] = 'Admin deactiviert'
+      redirect_to backoffice_path
+    else
+      flash[:danger] = 'FEHLER!'
+      redirect_to backoffice_admin_path(@admin)
     end
   end
+    
   #GET backoffice_words
+  def word_baskets
+    @baskets = CatchwordsBasket.all
+  end
+
   def words
-    @basket = CatchwordsBasket.find(params[:basket_id])
     @words = @basket.words.all
   end
     
@@ -77,6 +54,18 @@ class BackofficeController < ApplicationController
     end
     def set_root
       @root = current_root
+    end
+    def set_admin
+      @admin = Admin.find(params[:admin_id])
+    end
+    def set_basket
+      @basket = CatchwordsBasket.find(params[:basket_id])
+    end
+      
+    def if_basket
+      if CatchwordsBasket.count == 0
+        CatchwordsBasket.create(name: 'PetersWords')
+      end
     end
 
     def admin_params
