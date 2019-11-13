@@ -545,6 +545,10 @@
         $('#myModal').modal('show');
     });
 
+    $(".close").on('click',function(){
+        $('#myModal').modal('hide');
+    });
+    
     function downloadImage(){
         var $href =  $('.btn-green').attr('data-href');
         $.ajax({

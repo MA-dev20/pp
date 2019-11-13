@@ -563,7 +563,8 @@ class DashAdminController < ApplicationController
     end
 
     def to_file(kit, team_id)
-      title = SecureRandom.urlsafe_base64(nil, false)
+      # title = SecureRandom.urlsafe_base64(nil, false)
+      title = "Peter Pitch Tabelle Team Vertrieb"
       url = Rails.root.to_s + "/public/pngs/teams/#{team_id}/" + "#{title}.png"
       file = kit.to_file(url)
       url = "/pngs/teams/#{team_id}/" + "#{title}.png"
