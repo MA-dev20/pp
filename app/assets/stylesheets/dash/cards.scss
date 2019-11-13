@@ -58,6 +58,9 @@ label.right {
 }
 .alert {
     margin: 0 2vh;
+    position: absolute;
+    right: 0;
+    left: 0;
 }
 .half-field.left {
     left: 0;
@@ -76,13 +79,4 @@ label.right {
     margin: 2vh auto;
     right: 0;
 }
-// .karte .btn {
-//     position: absolute;
-//     bottom: 0;
-//     left: 0 !important;
-//     width: calc(100% - 8vh);
-//     cursor: pointer;
-//     margin: 10vh auto;
-//     right: 0;
-// }
 
