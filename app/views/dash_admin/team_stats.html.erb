@@ -306,9 +306,10 @@
                             <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Korp</th>
                             <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Krea</th>
                             <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Rhet</th>
-                            <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/gold.png", style="width: 20px"></th>
-                            <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/silver.png", style="width: 20px"></th>
-                            <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/bronze.png", style="width: 20px"></th>
+                            <!-- <img src="<%= root_url %>/gold.png", style="width: 20px"> -->
+                            <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><%= image_tag 'dash/icons/gold.png', class: 'trophy-img' %></th>
+                            <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><%= image_tag 'dash/icons/silver.png', class: 'trophy-img' %></th>
+                            <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><%= image_tag 'dash/icons/bronze.png', class: 'trophy-img' %></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -365,6 +366,10 @@
 
 
 <style>
+
+    .trophy-img {
+        width: 20px !important;
+    }
 
     #table_wrapper .modal-body {
         padding-bottom: 9vh;
