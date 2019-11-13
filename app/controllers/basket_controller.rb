@@ -5,10 +5,13 @@ class BasketController < ApplicationController
   end
     
   def create
+    rand_img = Random.new.rand(1..8)
     if(params[:basket][:type] == "objection")
         @basket = ObjectionsBasket.new(basket_params)
+        @basket.image = rand_img
     else
         @basket = CatchwordsBasket.new(basket_params)
+        @basket.image = rand_img
     end
     if params[:basket][:name] == ""
         if params[:basket][:type] == "objection"

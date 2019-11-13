@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_01_222112) do
+ActiveRecord::Schema.define(version: 2019_11_13_161825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 2019_11_01_222112) do
     t.string "name"
     t.string "type"
     t.boolean "objection", default: false
+    t.integer "image"
     t.index ["admin_id"], name: "index_catchwords_baskets_on_admin_id"
     t.index ["game_id"], name: "index_catchwords_baskets_on_game_id"
   end

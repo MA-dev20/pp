@@ -253,7 +253,6 @@
             $('#videoPlay').addClass('fa-pause');
             video_pause_src = $('.video-pause').attr('src');
             $('.play img').attr('src', video_pause_src)
-            // if('#progressText' == ) {}
             setProgress();
         } else {
             document.getElementById('videoId').pause();
@@ -264,12 +263,6 @@
         }
     }
     function stopVideo() {
-        // if(($('#progressText').text().split('/')[0] == '0:00')) {
-        //     $('#videoPlay').removeClass('fa-pause');
-        //     $('#videoPlay').addClass('fa-play');
-        //     video_play_src = $('.video-play').attr('src');
-        //     $('.play img').attr('src', video_play_src)
-        // }
         document.getElementById('videoId').load();
         if($('#videoPlay').hasClass('fa-pause')) {
             $('#videoPlay').removeClass('fa-pause');
@@ -305,18 +298,16 @@
             var duration = getDuration();
             vid.load();
             $('#progressText').text('0:00/'+total_duration)
+            if(($('#progressText').text().split('/')[0] == '0:00') && $('#videoPlay').hasClass('fa-pause')) {
+                $('#videoPlay').removeClass('fa-pause');
+                $('#videoPlay').addClass('fa-play');
+                video_play_src = $('.video-play').attr('src');
+                $('.play img').attr('src', video_play_src)
+                $('.progressDot').css( "left", 0)
+            }
         },100)
-        // if(($('#progressText').text().split('/')[0] == '0:00') && $('#videoPlay').hasClass('fa-pause')) {
-        //     $('#videoPlay').removeClass('fa-pause');
-        //     $('#videoPlay').addClass('fa-play');
-        //     video_play_src = $('.video-play').attr('src');
-        //     $('.play img').attr('src', video_play_src)
-        // }
     }
     function getProgress() {
-        // if ($('#videoPlay').hasClass('fa-pause') && $('#progressText').text().split('/')[0] == '0:00') {
-        //         debugger
-        // }
         var vid = document.getElementById('videoId');
         var time = vid.currentTime
         var min = Math.floor(time / 60);
