@@ -266,12 +266,30 @@
                 </div>
                 <% end %>
             </div>
+            <%= image_tag 'current.png', class: 'rating-record' %>
         </div>
     </div>
 </div>
 </div>
 
+<%= render partial: 'stats_modal', locals: {team_id: @team.id, team_users: @team_users} %>
+
+<style>
+    .rating-record {
+        cursor: pointer;
+        position: absolute;
+        right: -6.5vh;
+        top: 3vh;
+        width: 4vh;
+        height: 4vh;
+    }
+</style>
+
 <script>
+    $(".rating-record").on('click',function(){
+        $('#myModal').modal('show');
+    });
+
     new PerfectScrollbar('#scrollbar');
 function teamSelect() {
     setTimeout(function() {
