@@ -8,9 +8,21 @@ class BasketController < ApplicationController
     rand_img = Random.new.rand(1..8)
     if(params[:basket][:type] == "objection")
         @basket = ObjectionsBasket.new(basket_params)
+        (1..8).each do |i|
+          if !current_admin.objection_baskets.select{|o| o.image === i}.present?
+            rand_img = i
+            break
+          end
+        end
         @basket.image = rand_img
     else
         @basket = CatchwordsBasket.new(basket_params)
+        (1..8).each do |i|
+          if !current_admin.catchword_baskets.where(objection: false).select{|c| c.image === i}.present?
+            rand_img = i
+            break
+          end
+        end
         @basket.image = rand_img
     end
     if params[:basket][:name] == ""
