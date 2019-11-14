@@ -198,7 +198,6 @@ class DashAdminController < ApplicationController
     
   #Video Tool
   def video_tool
-
     @sort_by = params[:sort_by]
     @turn = @admin.turns.where(recorded_pitch: nil).first
     @users = @admin.users
@@ -212,7 +211,7 @@ class DashAdminController < ApplicationController
     elsif @sort_by == 'fnameDSC'
       @result = @result.sort{|b,a| a[:user_fname] <=> b[:user_fname]}
     elsif @sort_by == 'lnameASC'
-      @result = @result.sort{|b,a| a[:user_lname] <=> b[:user_lname]}
+      @result = @result.sort{|a,b| a[:user_lname] <=> b[:user_lname]}
     elsif @sort_by == 'lnameDSC'
       @result = @result.sort{|b,a| a[:user_lname] <=> b[:user_lname]}
     elsif @sort_by == 'ratingASC'
