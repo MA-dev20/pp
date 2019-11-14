@@ -505,11 +505,11 @@ class DashAdminController < ApplicationController
   private
     def is_activated
       @admin = current_admin
-      if @admin && !@admin.activated
-        flash[:danger] = 'Du bist noch nicht aktiviert!'
-        sign_out @admin
-        redirect_to root_path
-      end
+      # if @admin && !@admin.activated
+      #   flash[:danger] = 'Du bist noch nicht aktiviert!'
+      #   sign_out @admin
+      #   redirect_to root_path
+      # end
     end
     def set_admin
       @admin = current_admin
