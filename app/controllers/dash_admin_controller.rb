@@ -207,13 +207,13 @@ class DashAdminController < ApplicationController
       @result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, word: Word.find(t.word_id).name, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRating.find_by(turn_id: t.id)&.ges}
     end
     if @sort_by == 'fnameASC'
-      @result = @result.sort{|a,b| a[:user_fname] <=> b[:user_fname]}
+      @result = @result.sort{|a,b| a[:user_fname].downcase <=> b[:user_fname].downcase}
     elsif @sort_by == 'fnameDSC'
-      @result = @result.sort{|b,a| a[:user_fname] <=> b[:user_fname]}
+      @result = @result.sort{|b,a| a[:user_fname].downcase <=> b[:user_fname].downcase}
     elsif @sort_by == 'lnameASC'
-      @result = @result.sort{|a,b| a[:user_lname] <=> b[:user_lname]}
+      @result = @result.sort{|a,b| a[:user_lname].downcase <=> b[:user_lname].downcase}
     elsif @sort_by == 'lnameDSC'
-      @result = @result.sort{|b,a| a[:user_lname] <=> b[:user_lname]}
+      @result = @result.sort{|b,a| a[:user_lname].downcase <=> b[:user_lname].downcase}
     elsif @sort_by == 'ratingASC'
       @result = @result.sort{|a,b| a[:rating].to_i <=> b[:rating].to_i}
     elsif @sort_by == 'ratingDSC'
