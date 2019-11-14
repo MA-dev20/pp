@@ -55,6 +55,21 @@ class DashAdminController < ApplicationController
           @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges.present? ? u.user_rating.ges : 0 }
         end
     end
+
+    @team = @user.teams.first
+    @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
+    @team_users = []
+    @team_userss.each do |u|
+      ges =  u.user_rating&.ges.present? ? u.user_rating.ges.to_f : 0.0
+      spon = u.user_rating&.spontan.present? ? u.user_rating.spontan.to_f : 0.0
+      creative =  u.user_rating&.creative.present? ? u.user_rating.creative.to_f : 0.0
+      rhetoric = u.user_rating&.rhetoric.present? ? u.user_rating.rhetoric.to_f : 0.0
+      body = u.user_rating&.body.present? ? u.user_rating.body.to_f : 0.0
+      average =  (ges + spon + creative + rhetoric + body) / 5
+      @team_users << {user_id: u.id, fname: u.fname, lname: u.lname, ges: ges, spon: spon, rhetoric: rhetoric, creative: creative, body: body, average: average, gold: u.gold_count, silver: u.silver_count, bronze: u.bronze_count}
+    end
+    @team_users = @team_users.sort_by {|u| -u[:average]}
+
     @user_ratings.sort_by{|e| -e[:rating] if e[:rating].present? }
     @chartdata = @turn_ratings.map{|t| {turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric}}
   end
@@ -97,6 +112,7 @@ class DashAdminController < ApplicationController
   end
     
   def team_stats
+    # debugger
     @team_rating = TeamRating.find_by(team_id: @team.id)
     if @team_rating.nil?
       redirect_to dash_admin_teams_path
@@ -182,6 +198,7 @@ class DashAdminController < ApplicationController
     
   #Video Tool
   def video_tool
+
     @sort_by = params[:sort_by]
     @turn = @admin.turns.where(recorded_pitch: nil).first
     @users = @admin.users
@@ -195,7 +212,7 @@ class DashAdminController < ApplicationController
     elsif @sort_by == 'fnameDSC'
       @result = @result.sort{|b,a| a[:user_fname] <=> b[:user_fname]}
     elsif @sort_by == 'lnameASC'
-      @result = @result.sort{|a,b| a[:user_lname] <=> b[:user_lname]}
+      @result = @result.sort{|b,a| a[:user_lname] <=> b[:user_lname]}
     elsif @sort_by == 'lnameDSC'
       @result = @result.sort{|b,a| a[:user_lname] <=> b[:user_lname]}
     elsif @sort_by == 'ratingASC'

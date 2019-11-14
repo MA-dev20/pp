@@ -265,248 +265,10 @@
 </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Modal start -->
-
-
-<!-- Modal -->
-<div id="myModal" class="modal status-modal fade" role="dialog">
-    <div class="inner">
-        <div style="width: 100vh;position: relative;">
-            <button type="button" class="close">&times;</button>
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content" id="table_wrapper">
-                <img src="<%= root_url %>/logo.png", style="width: 100px;position: absolute;top: 1vh;left: 3vh;">
-                <div class="modal-header" style="border: 0;background-color: #fff;">
-                    <h4 class="modal-title" style="text-align: center">Team Vertrieb</h4>
-                </div>
-                <div class="modal-body" style="background-color: #fff;">
-                        <div style="width: 100%">
-                        <table style="width: 100%">
-                            <thead>
-                                <tr>
-                                    <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 5%;"></th>
-                                    <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 30%;">Name</th>
-                                    <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Ges</th>
-                                    <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Spon</th>
-                                    <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Korp</th>
-                                    <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Krea</th>
-                                    <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Rhet</th>
-                                    <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/gold.png", style="width: 20px"></th>
-                                    <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/silver.png", style="width: 20px"></th>
-                                    <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/bronze.png", style="width: 20px"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    <tr>
-                                        <td style="padding: 0 10px;width: 5%;"></td>
-                                        <td style="padding: 0 10px;width: 30%;"></td>
-                                        <td style="padding: 0 10px;width: 10%;"></td>
-                                        <td style="padding: 0 10px;width: 10%;"></td>
-                                        <td style="padding: 0 10px;width: 10%;"></td>
-                                        <td style="padding: 0 10px;width: 10%;"></td>
-                                        <td style="padding: 0 10px;width: 10%;"></td>
-                                        <td style="padding: 0 10px;width: 5%;"></td>
-                                        <td style="padding: 0 10px;width: 5%;"></td>
-                                        <td style="padding: 0 10px;width: 5%;"></td>
-                                    </tr>
-                                </tbody>
-                        </table>
-                        </div>
-                        <div id="team-users" class="table-scroll table-scroll-live">
-                        <table style="width: 100%">
-                            <tbody>
-                                <% @team_users.each.with_index(1) do |user,i| %>
-                                <tr>
-                                    <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= i %>.</td>
-                                    <td style="padding: 10px; text-align: left; width: 30%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= "#{user[:fname]} #{user[:lname]}" %></td>
-                                    <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><div class="rating"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></div></td>
-                                    <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:spon] / 10, precision: 1 %></td>
-                                    <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:rhetoric] / 10, precision: 1 %></td>
-                                    <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:creative] / 10, precision: 1 %></td>
-                                    <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:body] / 10, precision: 1 %></td>
-                                    <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:gold] %></td>
-                                    <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:silver] %></td>
-                                    <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:bronze] %></td>
-                                </tr>
-                                <% end %>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- <div class="download-btn">
-                        <button class="btn btn-green" data-href="/admin/dash/teams/<%= @team.id %>/generate_img_from_html" onclick="downloadImage()">Download</button>
-                    </div> -->
-                </div>
-                </div>
-        </div>
-        
-    </div>
-  </div>
-  <div class="download-btn">
-        <button class="btn btn-green" data-href="/admin/dash/teams/<%= @team.id %>/generate_img_from_html" onclick="downloadImage()">Download</button>
-    </div>
-</div>
-
-<div>
-<a href=""  id="a_download" style="display: none;" download></a>
-</div>
+<%= render partial: 'stats_modal', locals: {team_id: @team.id, team_users: @team_users} %>
 
 
 <style>
-
-    .trophy-img {
-        width: 20px;
-    }
-    #table_wrapper .modal-body {
-        padding-bottom: 9vh;
-    }
-    .modal-backdrop.show {
-        opacity: .7;
-    }
-    .modal-backdrop {
-        display: none;
-    }
-    .status-modal {
-        background-color: rgba(244, 250, 255, 0.7);
-        left: 25.6vh;
-        width: auto;
-        right: 0;
-    }
-    .status-modal .inner {
-        display: flex;
-        height: 100vh;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-    }
-    .status-modal .close {
-        position: absolute;
-        right: 3vh;
-        top: 2vh;
-        font-size: 3vh;
-        font-weight: 300;
-        opacity: 0.4;
-        z-index: 55555;
-    }
-    .status-modal .modal-title {
-        text-align: center;
-        width: 100%;
-        font-size: 2.8vh;
-    }
-    .status-modal .modal-header {
-        border: 0;
-    }
-    .status-modal .modal-dialog {
-        z-index: 555;
-    }
-    .status-modal .modal-content {
-        border: 0;
-        border-radius: 1vh;
-        box-shadow: 0px 0.6vh 2.2vh 0 rgba(172, 172, 172, 0.1);
-    }
-    .status-modal .modal-dialog {
-        max-width: 100vh;
-        width: 100%;
-        margin: 0 auto;
-    }
-    .status-modal table {
-        width: 100%;
-        width: 2000px;
-        font-size: 1.8vh;
-    }
-    .status-modal table th {
-        color: #4e4e4e;
-        font-size: 1.8vh;
-        font-weight: 300;
-        padding: 1vh;
-    }
-    .status-modal table th img {
-        width: 2vh;
-    }
-    .status-modal table td,
-    .status-modal table th {
-        width: 10%;
-    }
-    .status-modal table td {
-        padding: 1.1vh 2vh;
-        border-top: 0.2vh solid #dfe1e5;
-    }
-    .status-modal table td:nth-child(2) {
-        padding-left: 1vh;
-    }
-    .status-modal table td:first-child,
-    .status-modal table th:first-child {
-        width: 4vh;
-        width: 5%;
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .status-modal table td:nth-child(8),
-    .status-modal table th:nth-child(8),
-    .status-modal table td:nth-child(9),
-    .status-modal table th:nth-child(9),
-    .status-modal table td:nth-child(10),
-    .status-modal table th:nth-child(10) {
-        width: 4vh;
-        width: 5%;
-        padding-left: 0;
-        padding-right: 0;
-        text-align: center;
-    }
-    .status-modal table td:nth-child(2),
-    .status-modal table th:nth-child(2) {
-        width: 25vh;
-        width: 30%;
-        word-break: break-word;
-    }
-    .status-modal table td:nth-child(3) {
-        padding-left: 1vh;
-    }
-    .download-btn {
-        /* text-align: center;
-        margin: 1vh 0;
-        text-align: center;
-        margin-top: 20px; */
-        position: absolute;
-        bottom: 24vh;
-        width: 100%;
-        justify-content: center;
-        text-align: center;
-        z-index: 555555555;
-    }
-    .download-btn .btn-green {
-        width: 20vh;
-    }
-    .table-responsive {
-        max-height: 31vh;
-    }
-
-    .table-scroll .rating {
-        width: 4vh;
-        height: 4vh;
-        border: 0.26vh solid #a8c916;
-        color: #a8c916;
-        border-radius: 50%;
-        text-align: center;
-        font-size: 1.8vh;
-        line-height: 3.8vh;
-    }
-
     .rating-record {
         cursor: pointer;
         position: absolute;
@@ -515,19 +277,7 @@
         width: 4vh;
         height: 4vh;
     }
-
-    .table-scroll {
-        height: 31vh;
-        position: relative;
-    }
-
-
 </style>
-
-<!-- Modal end -->
-
-
-
 
 <script>
     
@@ -545,39 +295,24 @@
         $('#myModal').modal('show');
     });
 
-    $(".close").on('click',function(){
-        $('#myModal').modal('hide');
-    });
+    // $(".close").on('click',function(){
+    //     $('#myModal').modal('hide');
+    // });
     
-    function downloadImage(){
-        var $href =  $('.btn-green').attr('data-href');
-        $.ajax({
-            url: $href,
-            type: 'post',
-            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-            data: {html: $("#table_wrapper").html()},
-            success: function(res){
-                $("#a_download").attr("href", JSON.parse(res).url)
-                document.getElementById("a_download").click()
-            }
+    // function downloadImage(){
+    //     var $href =  $('.btn-green').attr('data-href');
+    //     $.ajax({
+    //         url: $href,
+    //         type: 'post',
+    //         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+    //         data: {html: $("#table_wrapper").html()},
+    //         success: function(res){
+    //             $("#a_download").attr("href", JSON.parse(res).url)
+    //             document.getElementById("a_download").click()
+    //         }
 
-        })
-    }
-    $("#download").on("click", function(e){
-        e.preventDefault()
-        var $href =  $(this).attr("href");
-        $.ajax({
-            url: $href,
-            type: 'post',
-            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-            data: {html: $("#table_wrapper").html()},
-            success: function(res){
-                $("#a_download").attr("href", JSON.parse(res).url)
-                document.getElementById("a_download").click()
-            }
-
-        })
-    })
+    //     })
+    // }
 
 
     console.log('<%= @chartdata.count %>')
