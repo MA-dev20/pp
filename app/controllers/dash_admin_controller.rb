@@ -146,6 +146,36 @@ class DashAdminController < ApplicationController
     elsif params[:obasket_id]
         @objection = @admin.objection_baskets.find(params[:obasket_id])
     end
+    cwords = @admin.catchword_baskets.where(objection: false, image: nil)
+    cwords.each do |cword|
+      rand_value = true
+      (1..8).each do |i|
+        if !@admin.catchword_baskets.where(objection: false, image: i).present?
+          rand_value = false
+          cword.update(image: i)
+          break
+        end
+      end
+      if rand_value
+        rand_img = Random.new.rand(1..8)
+        cword.update(image: rand_img)
+      end
+    end
+    owords = @admin.objection_baskets.where(image: nil)
+    owords.each do |oword|
+      rand_value = true
+      (1..8).each do |i|
+        if !@admin.objection_baskets.where(image: i).present?
+          rand_value = false
+          oword.update(image: i)
+          break
+        end
+      end
+      if rand_value
+        rand_img = Random.new.rand(1..8)
+        oword.update(image: rand_img)
+      end
+    end
     @catchwords = @admin.catchword_baskets.where(objection: false)
     @objections = @admin.objection_baskets
   end
