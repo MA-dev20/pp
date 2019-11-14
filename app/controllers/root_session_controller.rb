@@ -1,5 +1,5 @@
 class RootSessionController < ApplicationController
-    
+  layout 'main'
   def new
   end
     

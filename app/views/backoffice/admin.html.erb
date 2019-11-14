@@ -1,57 +1,112 @@
-<div class="table">
+<h1><%= @admin.fname + ' ' + @admin.lname %></h1>
+
+<div class="card" id="contact">
+    <h3>Kontakt</h3>
+    <table>
+        <tr>
+            <th>Telefonnr.</th>
+            <td><%= @admin.telephone %></td>    
+        </tr>
+        <tr>
+            <th>E-Mail</th>
+            <td><%= @admin.email %></td>    
+        </tr>
+        <tr>
+            <th>Straße / Hsnr.</th>
+            <td><%= @admin.street %></td>
+        </tr>
+        <tr>
+            <th>PLZ / Ort</th>
+            <td><%= @admin.zipcode %> <%= @admin.city %></td>
+        </tr>
+    </table>
+</div>
+<div class="card" id="company">
+    <h3>Unternehmen</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <td><%= @admin.company_name %></td>
+        </tr>
+        <tr>
+            <th>Position</th>
+            <td><%= @admin.company_position %></td>
+        </tr>
+        <tr>
+            <th>Mitarbeiter</th>
+            <td><%= @admin.employees %></td>
+        </tr>
+    </table>
+</div>
+<% if @admin.activated %>
+<div class="card" id="stats">
+    <h3>Stats</h3>
+    <table>
+        <tr>
+            <th>Teams / Users</th>
+            <td><%= @admin.teams.count %> / <%= @admin.users.count %></td>
+        </tr>
+        <tr>
+            <th>Spiele</th>
+            <td><%= @admin.games.count %></td>
+        </tr>
+        <tr>
+            <th>Wort- / Einwandlisten</th>
+            <td><%= @cw_baskets.count %> / <%= @ob_baskets.count %></td>
+        </tr>
+        <tr>
+            <th>Logins</th>
+            <td><%= @admin.sign_in_count %></td>
+        </tr>
+        <tr>
+            <th>Letzte Aktivität</th>
+            <td>
+                <% if !@admin.last_sign_in_at.nil? %>
+                    <%= @admin.last_sign_in_at.strftime("%d.%m.%Y") %>
+                <% end %>
+            </td>
+        </tr>
+    </table>
+</div>
+<% else %>
+<div class="card" id="message">
+    <h3>Nachricht</h3>
+    <%= @admin.message %>
+</div>
+<% end %>
+<div class="card" id="edit">
+   <h3>Edit</h3>
+    <% if !@admin.activated %><%= link_to 'Akzeptieren', backoffice_admin_activate_path(@admin), class: 'btn btn-green' %><% end %>
+    <%= link_to 'Edit', backoffice_edit_admin_path(@admin), class: 'btn btn-green' %>
+    <%= link_to 'Löschen', backoffice_admin_destroy_path(@admin), class: 'btn btn-green', data: { confirm: 'Are you sure?' } %>
+</div>
+<div class="user-overview">
     <table>
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Telefonnr.</th>
-                <th>E-Mail</th>
-                <th>Unternehmen</th>
-                <th>Position</th>
-                <th>Mitarbeiter</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><%= @admin.fname + ' ' + @admin.lname %></td>
-                <td><%= @admin.telephone %></td>
-                <td><%= @admin.email %></td>
-                <td><%= @admin.company_name %></td>
-                <td><%= @admin.company_position %></td>
-                <td><%= @admin.employees %></td>
-            </tr>
-        </tbody>
-    </table>
-    <% if @admin.activated %>
-    <table>
-        <thead>
-            <tr>
-                <th>Teams</th>
-                <th>User</th>
-                <th>Wortlisten</th>
-                <th>Einwandlisten</th>
+                <th>Email</th>
                 <th>Spiele</th>
                 <th>Logins</th>
-                <th>Letzte Aktivität</th>
+                <th>Letze Aktivität</th>
+                <th>Erstellt</th>
             </tr>
         </thead>
         <tbody>
+            <% @users.each do |u| %>
             <tr>
-                <td><%= @admin.teams.count %></td>
-                <td><%= @admin.users.count %></td>
-                <td><%= @admin.catchword_baskets.where(objection: false).count %></td>
-                <td><%= @admin.objection_baskets.count %></td>
-                <td><%= @admin.games.count %></td>
-                <td><%= @admin.sign_in_count %></td>
-                <td><% if !@admin.last_sign_in_at.nil? %><%= @admin.last_sign_in_at.strftime("%d.%m.%Y") %><% end%></td>
+                <td><%= u.fname %> <%= u.lname %></td>
+                <td><%= u.email %></td>
+                <td><%= u.turns.count %></td>
+                <td><%= u.sign_in_count %></td>
+                <td>
+                    <% if !u.last_sign_in_at.nil? %>
+                        <%= u.last_sign_in_at.strftime("%d.%m.%Y") %>
+                    <% end %>
+                </td>
+                <td><%= u.created_at.strftime("%d.%m.%Y") %></td>
             </tr>
+            <% end %>
         </tbody>
     </table>
-    <%= link_to 'Löschen', backoffice_admin_destroy_path(@admin), class: 'btn btn-green' %>
-    <% else %>
-    <h3>Nachricht:</h3>
-    <%= @admin.message %>
-    <br>
-    <%= link_to 'Akzeptieren', backoffice_admin_activate_path(@admin), class: 'btn btn-green' %>
-    <%= link_to 'Löschen', backoffice_admin_destroy_path(@admin), class: 'btn btn-green' %>
-    <% end %>
 </div>

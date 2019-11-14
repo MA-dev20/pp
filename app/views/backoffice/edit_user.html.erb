@@ -1,0 +1,36 @@
+<div class="card" id="editUser">
+    <h3>Edit User</h3>
+    <%= form_for(:user, url: edit_user_path(@user)) do |f| %>
+        <div class="form-group l1">
+            <label for="">Vorname</label>
+            <%= f.text_field :fname, class: 'form-field' %>
+        </div>
+        <div class="form-group l1">
+            <label for="">Nachname</label>
+            <%= f.text_field :lname, class: 'form-field' %>
+        </div>
+        <div class="form-group">
+            <label for="">E-Mail</label>
+            <%= f.text_field :email, class: 'form-field' %>
+        </div>
+        <% @user.admin.teams.each do |t| %>
+            <div class="user-list-form">
+            <% if TeamUser.where(team_id: t.id, user_id: @user.id).count == 1 %>
+                <input type="checkbox" name="user[teams][]" value="<%= t.id %>" checked id="team_users_<%=t.id%>">
+            <% else %>
+                <input type="checkbox" name="user[teams][]" value="<%= t.id %>" id="team_users_<%=t.id%>">
+            <% end %>
+            <label for="team_users_<%=t.id%>"><%= t.name %></label>
+            </div>
+        <% end %>
+        <div class="form-group submit">
+            <%= f.hidden_field :site, value: 'backoffice' %>
+            <%= f.hidden_field :admin_id, value: @admin.id %>
+            <%= f.submit 'speichern', class: 'btn btn-green' %>
+        </div>
+    <% end %>
+</div>
+<div class="card" id="destroyUser">
+    <%= link_to 'löschen', destroy_user_path(@user), class: 'btn btn-green', data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'zurück', backoffice_edit_admin_path(@admin), class: 'btn btn-green' %>
+</div>

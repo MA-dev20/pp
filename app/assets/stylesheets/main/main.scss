@@ -39,12 +39,21 @@ label .red {
     color: #ff5f58;
 }
 #contact {
+    position: relative;
     padding: 20px;
     max-width: 600px;
+    min-height: calc(100vh - 500px);
     margin: 0 auto;
 }
 .form-group {
     padding: 5px 0;
+}
+.form-group label {
+    float: left;
+}
+.form-group .error {
+    float: right;
+    color: red;
 }
 .form-group.center {
     padding-top: 20px;
@@ -76,7 +85,7 @@ label .red {
     background-color: #fafafa;
     text-align: center;
     width: 100%;
-    padding: 20px 0 50px 0;
+    padding: 20px 0;
     height: auto;
 }
 #footer .logo,
@@ -293,11 +302,17 @@ label .red {
     right: 0;
     top: 25px;
     line-height: 50px;
-    font-size: 30px;
     cursor: pointer;
     z-index: 100;
+}
+#navbar .login .login-link {
     color: #16e2a5;
+    font-size: 16px;
     text-decoration: none;
+    font-weight: bold;
+}
+#navbar .login .btn {
+    margin-left: 15px;
 }
 
 #contact h5 {
@@ -337,38 +352,41 @@ label .red {
 }
 #content .head .left .points .point {
     position: relative;
-    left: 25px;
+    left: 15px;
     height: 50px;
-    width: 250px;
+    width: 270px;
     
 }
-#content .head .left .points .point img {
+#content .head .left .points .point i {
     position: absolute;
     left: 0;
     top: 10px;
     height: 30px;
+    line-height: 30px;
+    font-size: 30px;
+    width: 30px;
     text-align: center;
     color: #4394ec;
 }
 #content .head .left .points .point h1 {
     position: absolute;
-    left: 50px;
+    left: 40px;
     top: 5px;
     font-size: 15px;
     font-weight: 600;
     text-align: left;
-    width: 200px;
+    width: 230px;
     line-height: 20px;
     margin: 0;
 }
 #content .head .left .points .point h5 {
     position: absolute;
     top: 25px;
-    left: 50px;
+    left: 40px;
     font-size: 13px;
     font-weight: normal;
     text-align: left;
-    width: 200px;
+    width: 230px;
     color: #667093;
     line-height: 20px;
     margin: 0;
@@ -411,13 +429,20 @@ label .red {
     margin-top: 0;
 }
 #content .wie-geil-ist-das .play-video {
-    color: #16e2a5;
-    font-size: 60px;
-    line-height: 70px;
-}
-#content .wie-geil-ist-das .play-video i:hover {
-    transform: scale(1.1);
+    position: relative;
+    left: calc(50% - 30px);
+    background-color: #16e2a5;
+    height: 60px;
+    width: 60px;
+    color: white;
+    border-radius: 50%;
     cursor: pointer;
+}
+#content .wie-geil-ist-das .play-video i {
+    font-size: 30px;
+    height: 30px;
+    width: 30px;
+    margin: 15px 12px 15px 18px;
 }
 #content .references {
     position: relative;
@@ -478,6 +503,9 @@ label .red {
     align-items: center;
     margin: 20px 0;
 }
+#content .testimonials .heading {
+    margin-bottom: 40px;
+}
 #content .testimonials .cards {
     position: absolute;
     left: -300px;
@@ -490,7 +518,7 @@ label .red {
     height: 253px;
     margin: 10px;
     border-radius: 4px;
-    box-shadow: 0 6px 10px 0 rgba(172, 172, 172, .1);
+    box-shadow: 0 10px 15px 0 rgba(172, 172, 172, .4);
     pointer-events: none;
 }
 #content .testimonials .card.c500 {
@@ -577,7 +605,12 @@ label .red {
 #content .faq {
     margin-bottom: 50px;
 }
-
+#content .faq .heading {
+    text-align: center;
+}
+#content .faq .question-section {
+    margin-top: 20px;
+}
 #content .faq .question {
     width: 100%;
 }
@@ -585,16 +618,19 @@ label .red {
     width: 100%;
     text-align: left;
     font-size: 14px;
-    line-height: 46px;
+    line-height: 100px;
     color: #667093;
     border-bottom: 1px solid #e8e9ef;
     cursor: pointer;
+}
+#content .faq .question:last-child .q {
+    border-bottom: none;
 }
 #content .faq .question .q img {
     float: right;
     height: 20px;
     width: 20px;
-    margin: 13px 0;
+    margin: 40px 0;
 }
 #content .faq .question .q i {
     float: right;
@@ -604,7 +640,7 @@ label .red {
     text-align: center;
     border-radius: 50%;
     color: #16e2a5;
-    margin: 10px 0;
+    margin: 36px 0;
     padding: 0;
     font-size: 16px;
     border: 2px solid #16e2a5;
@@ -716,7 +752,7 @@ label .red {
         margin: calc(50vh - 183px) auto;
     }
     #navbar .navbar-links {
-        display: flex;
+        display: block;
         background-color: white;
         top: 0;
         left: 200px;
@@ -726,6 +762,8 @@ label .red {
         width: 300px;
     }
     #navbar .navbar-links .link {
+        position: relative;
+        float: left;
         width: 100px;
         text-align: center;
         border-bottom: 0px solid #0e0e0e;
@@ -1031,7 +1069,7 @@ label .red {
         left: 500px;
     }
      #content .head {
-        height: 700px;
+        height: 600px;
     }
     #content .head .left {
         left: 100px;
@@ -1062,7 +1100,7 @@ label .red {
         font-size: 16px;
     }
     #content .references {
-        margin-bottom: 50px;
+        margin: 50px 0;
     }
     #content .image-text {
         height: 400px;
@@ -1162,7 +1200,7 @@ label .red {
     #footer {
         left: calc(50vw - 600px);
         width: 1200px;
-        margin: 50px 0;
+        margin: 50px 0 0;
     }
     #footer .company {
         margin: 0 100px 0 200px;

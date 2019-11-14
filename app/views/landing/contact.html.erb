@@ -1,6 +1,8 @@
 <section id="navbar">
     <%= image_tag 'landing/logo.png', class: 'logo'%>
-    <%= link_to '', '#login', class: 'login fas fa-sign-in-alt', onclick: 'showLoginModal()' %>
+    <div class="login">
+        <%= link_to 'Login', '#login', onclick: 'showLoginModal()', class: 'login-link' %>
+    </div>
 </section>
 <section id="contact">
     <h1>Jetzt kostenlosen Zugang zu Peter Pitch erhalten!</h1>

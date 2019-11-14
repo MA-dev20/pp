@@ -1,5 +1,7 @@
-class Admins::SessionsController < ApplicationController
-
+class Admins::SessionsController < Devise::SessionsController
+    def new
+      super
+    end
     protected
     def after_sign_in_path_for(resource)
       dash_admin_path

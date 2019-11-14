@@ -6,6 +6,10 @@
 @import "font-awesome";
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
 
+.red {
+    color: #ff5f58;
+}
+
 .btn {
     display: inline-block !important;
     height: 35px !important;
@@ -15,6 +19,7 @@
     padding: 0 24px !important;
     text-decoration: none !important;
     font-weight: 600 !important;
+    cursor: pointer;
 }
 .btn-green,
 .btn-white:hover {
@@ -129,11 +134,18 @@ body {
 .table table thead tr th,
 .table table tbody tr td {
     border-bottom: 1px solid #dfe1e5;
+    border-left: none;
+    border-right: none;
     padding: 0;
+    margin: 0;
     position: relative;
     text-align: left;
     height: 40px;
     line-height: 40px;
+}
+.table table tbody tr:hover {
+    cursor: pointer;
+    background-color: #dfe1e5;
 }
 .table table thead tr th {
     font-weight: 300;
@@ -141,4 +153,116 @@ body {
 .table table .center {
     text-align: center;
 }
-
+#content .card,
+#content .card-big {
+    float: left;
+    position: relative;
+    color: black;
+    margin: 20px 20px 20px 0;
+    position: relative;
+    width: 300px;
+    min-height: 200px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+}
+#content .card-big {
+    width: 1000px;
+}
+#content .card .btn {
+    width: 200px;
+    margin: 10px 20px;
+}
+#content .card h3 {
+    margin-top: 0;
+}
+#content .card table th {
+    text-align: left;
+}
+#content .user-overview {
+    position: relative;
+    float: left;
+    width: 100%;
+    max-width: 1420px;
+    background-color: white;
+    margin: 20px 0;
+}
+#content .user-overview table {
+    width: calc(100% - 40px);
+    margin: 20px;
+    border-radius: 10px;
+    text-align: left;
+}
+.form-field {
+    height: 30px;
+    border: 1px solid #dfe1e5;
+    border-radius: 5px;
+    line-height: 30px;
+    padding: 0 10px;
+}
+#content #edit_admin h3 {
+    margin-bottom: 0;
+}
+#content .form-group {
+    margin: 10px 0;
+    width: 100%;
+}
+#content .form-group.submit {
+    text-align: center;
+    margin: 10px 0 0;
+}
+#content .form-group.l1 {
+    width: 50%;
+    float: left;
+}
+#content .form-group.l2 {
+    width: 25%;
+    float: left;
+}
+#content .form-group label {
+    font-size: 14px;
+    font-weight: normal;
+}
+#content .form-group input {
+    width: calc(100% - 30px);
+}
+#content .user-list-form {
+    width: 100%;
+}
+#content .form-group .btn {
+    margin: 10px auto;
+    cursor: pointer;
+}
+#content #teams tr:hover,
+#content #users tr:hover,
+#content #words tr:hover,
+#content #objections tr:hover {
+    background-color: #dfe1e5;
+    cursor: pointer;
+}
+#content .fullscreen-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, .8);
+    z-index: 100;
+}
+#content .fullscreen-modal .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: #dfe1e5;
+    font-size: 30px;
+    cursor: pointer;
+}
+#content .fullscreen-modal .card {
+    top: calc(50vh - 120px);
+    left: calc(50vw - 170px);
+}

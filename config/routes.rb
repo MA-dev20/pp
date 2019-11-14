@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :games
   devise_for :users
-  devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'devise_user/sessions', passwords: 'admins/passwords' }
+  devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'admins/sessions', passwords: 'admins/passwords', confirmations: 'admins/confirmations', unlocks: 'admins/unlocks'}
   resource :cards
   resource :plans
 
@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   root 'landing#index'
   get '/contact', to: 'landing#contact', as: 'contact'
   get '/after_register/:admin_id', to: 'landing#after_register', as: 'after_register'
+  get '/byebye', to: 'landing#byebye', as: 'byebye'
   # patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'
   get 'admins/signup/:v_id', to: 'landing#signup' , as: 'edit_next_admin'
@@ -132,6 +133,11 @@ Rails.application.routes.draw do
   get 'backoffice/admins', to: 'backoffice#admins', as: 'backoffice_admins'
     
   get 'backoffice/admins/:admin_id', to: 'backoffice#admin', as: 'backoffice_admin'
+  get 'backoffice/admins/:admin_id/edit', to: 'backoffice#edit_admin', as: 'backoffice_edit_admin'
+  get 'backoffice/teams/:team_id', to: 'backoffice#edit_team', as: 'backoffice_edit_team'
+  get 'backoffice/users/:user_id', to: 'backoffice#edit_user', as: 'backoffice_edit_user'
+  get 'backoffice/catchwords/:basket_id', to: 'backoffice#edit_catchword', as: 'backoffice_edit_catchword'
+  get 'backoffice/objections/:basket_id', to: 'backoffice#edit_objection', as: 'backoffice_edit_objection'
   get 'backoffice/admins/:admin_id/activate', to: 'backoffice#activate_admin', as: 'backoffice_admin_activate'
   get 'backoffice/admins/:admin_id/destroy', to: 'backoffice#destroy_admin', as: 'backoffice_admin_destroy'
   get 'backoffice/word_baskets', to: 'backoffice#word_baskets', as: 'backoffice_word_baskets'
@@ -225,29 +231,19 @@ Rails.application.routes.draw do
 # Admin #
 #########
     
-  get 'admins/new', to: 'admins#new', as: 'new_admin'
-  post 'admins/new', to: 'admins#create'
-  get 'admins/:admin_id/edit', to: 'admins#edit', as: 'edit_admin'
-  post 'admins/:admin_id/edit', to: 'admins#update'
-  get 'admins/:admin_id/avatar/edit', to: 'admins#edit_avatar', as: 'edit_admin_avatar'
-  post 'admins/:admin_id/avatar/edit', to: 'admins#update_avatar'
-  get 'admins/:admin_id/logo/edit', to: 'admins#edit_logo', as: 'edit_admin_logo'
-  post 'admins/:admin_id/logo/edit', to: 'admins#update_logo'
+  post 'admins/new', to: 'admins#create', as: 'new_admin'
+  post 'admins/:admin_id/edit', to: 'admins#update', as: 'edit_admin'
+  post 'admins/:admin_id/activate', to: 'admins#activate', as: 'activate_admin'
+  post 'admins/:admin_id/avatar/edit', to: 'admins#update_avatar', as: 'edit_admin_avatar'
+  post 'admins/:admin_id/logo/edit', to: 'admins#update_logo', as: 'edit_admin_logo'
   get 'admins/:admin_id/destroy', to: 'admins#destroy', as: 'destroy_admin'
 
 ########
 # Team #
 ########
     
-  get 'teams/new', to: 'teams#new', as: 'new_team'
-  post 'teams/new', to: 'teams#create'
-    
-  get 'admin/dash/teams/new', to: 'teams#new_admin_dash', as: 'new_team_admin_dash'
-  post 'admin/dash/teams/new', to: 'teams#create_admin_dash'
-    
-  get 'teams/:team_id/edit', to: 'teams#edit', as: 'edit_team'
-  post 'teams/:team_id/edit', to: 'teams#update'
-    
+  post 'teams/new', to: 'teams#create', as: 'new_team'
+  post 'teams/:team_id/edit', to: 'teams#update', as: 'edit_team'  
   get 'teams/:team_id/destroy', to: 'teams#destroy', as: 'destroy_team'
 
 ########
@@ -261,11 +257,8 @@ Rails.application.routes.draw do
 # User #
 ########
     
-  get 'users/new', to: 'users#new', as: 'new_user'
-  post 'users/new', to: 'users#create'
-  get 'user/:user_id/edit', to: 'users#edit', as: 'edit_user'
-  post 'user/:user_id/edit', to: 'users#update'
-    
+  post 'users/new', to: 'users#create', as: 'new_user'
+  post 'user/:user_id/edit', to: 'users#update', as: 'edit_user'
   get 'users/:user_id/destroy', to: 'users#destroy', as: 'destroy_user'
   put 'users/:user_id/update', to: 'users#update', as: 'update_user'
   post 'users/create', to: 'users#create', as: 'create_user'
@@ -313,6 +306,7 @@ Rails.application.routes.draw do
 
   get 'objections/:basket_id/new', to: 'objections#new', as: 'new_objection'
   post 'objections/:basket_id/new', to: 'objections#create'
+  post 'objections/:basket_id/:objection_id/edit', to: 'objections#update', as: 'edit_objection'
   get "baskets/:basket_id/objections/:objection_id", to: "objections#destroy", as: 'destroy_objection'
   
 ##########

@@ -20,7 +20,7 @@
         <%= link_to image_tag('defaults/wolf.jpg'), backoffice_path %>
     </div>
     <div class="links">
-        <div class="link <% if current_page?(backoffice_admins_path) %> active <% end %>">
+        <div class="link <% if current_page?(backoffice_admins_path) || @admin && current_page?(backoffice_admin_path(@admin)) || @admin && current_page?(backoffice_edit_admin_path(@admin)) %> active <% end %>">
             <i class="far fa-user"></i>
             <%= link_to 'Admins', backoffice_admins_path %>
         </div>

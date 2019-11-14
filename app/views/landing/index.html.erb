@@ -17,7 +17,10 @@
             <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
         </div>
     </div>
-    <%= link_to '', '#login', class: 'login fas fa-sign-in-alt', onclick: 'showLoginModal()' %>
+    <div class="login">
+        <%= link_to 'Login', '#login', onclick: 'showLoginModal()', class: 'login-link' %>
+        <%= link_to 'Get early access', contact_path, class: 'btn btn-white' %>
+    </div>
     <div class="navbar-mobile" onclick="showNavLinks()">
         <i class="fas fa-bars"></i>
     </div>
@@ -25,7 +28,7 @@
 <section id="content">
     <div class="head">
         <div class="left wow fadeIn">
-            <div class="heading-big" id='typed'>Peter Pitch</div>
+            <div class="heading-big" id='typed'></div>
             <div id="typed-strings">
                 <span>Peter Pitch</span>
                 <p>ZurückBlitzer</p>
@@ -35,24 +38,24 @@
             <div class="heading-small">Das Blended Learning Tool für<br>Kommunikation und Vertrieb</div>
             <div class="points">
                 <div class="point">
-                    <%= image_tag 'landing/icon-secure.png' %>
-                    <h1>Exzellente Absicherung</h1>
-                    <h5>Hervorragend bewertete Technik</h5>
+                    <i class="fas fa-running"></i>
+                    <h1>Training</h1>
+                    <h5>Interaktiv und Digital</h5>
                 </div>
                 <div class="point">
-                    <%= image_tag 'landing/icon-target.png' %>
-                    <h1>Maximale Zeitersparnis</h1>
-                    <h5>100% digitale Services</h5>
+                    <i class="fas fa-chart-line"></i>
+                    <h1>Analyse</h1>
+                    <h5>Macht Softskills messbar</h5>
                 </div>
                 <div class="point">
-                    <%= image_tag 'landing/icon-money.png' %>
-                    <h1>Hohes Einsparpotential</h1>
-                    <h5>Günstige Beiträge</h5>
+                    <i class="far fa-handshake"></i>
+                    <h1>Recruiting</h1>
+                    <h5>Testet Bewerber</h5>
                 </div>
                 <div class="point">
-                    <%= image_tag 'landing/icon-time.png' %>
-                    <h1>Stabile Beiträge</h1>
-                    <h5>Zukunftssicher Berechnung</h5>
+                    <i class="far fa-calendar-check"></i>
+                    <h1>Event</h1>
+                    <h5>Gamification mit Entertainmentgarantie</h5>
                 </div>
             </div>
             <div class="cta">
@@ -71,7 +74,7 @@
     <div class="wie-geil-ist-das wow fadeIn">
         <h1>Wie geil ist das denn?</h1>
         <h5>Nimm den Spaß in deinem Unternehmen ernst und verwandel dein Meetings in wahre Performance-Booster. Mit Peter Pitch treibst du das Mitarbeiter-Rudel zusammen und machst sogar aus den wackeligsten Welpen wahre Wölfe. Stage is yours!</h5>
-        <div class="play-video"><i class="fas fa-play-circle pulse" onclick="showVideoModal()"></i></div>
+        <div class="play-video pulse-shadow"><i class="fas fa-play" onclick="showVideoModal()"></i></div>
     </div>
     <%= image_tag 'landing/shape.svg', class: 'shape s310', id: 'shape3' %>
     <%= image_tag 'landing/shape.svg', class: 'shape s87 right219', id: 'shape4' %>
@@ -260,6 +263,7 @@
             <%= link_to 'Preise', contact_path %>
             <%= link_to 'FAQ', '#faq' %>
             <%= link_to 'Login', '#login', onclick: 'showLoginModal()' %>
+            <%= link_to 'Backoffice', login_root_path %>
         </div>
     </div>
     <div class="legal">
