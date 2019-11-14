@@ -1,0 +1,57 @@
+<div class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Telefonnr.</th>
+                <th>E-Mail</th>
+                <th>Unternehmen</th>
+                <th>Position</th>
+                <th>Mitarbeiter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @admin.fname + ' ' + @admin.lname %></td>
+                <td><%= @admin.telephone %></td>
+                <td><%= @admin.email %></td>
+                <td><%= @admin.company_name %></td>
+                <td><%= @admin.company_position %></td>
+                <td><%= @admin.employees %></td>
+            </tr>
+        </tbody>
+    </table>
+    <% if @admin.activated %>
+    <table>
+        <thead>
+            <tr>
+                <th>Teams</th>
+                <th>User</th>
+                <th>Wortlisten</th>
+                <th>Einwandlisten</th>
+                <th>Spiele</th>
+                <th>Logins</th>
+                <th>Letzte Aktivität</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @admin.teams.count %></td>
+                <td><%= @admin.users.count %></td>
+                <td><%= @admin.catchword_baskets.where(objection: false).count %></td>
+                <td><%= @admin.objection_baskets.count %></td>
+                <td><%= @admin.games.count %></td>
+                <td><%= @admin.sign_in_count %></td>
+                <td><% if !@admin.last_sign_in_at.nil? %><%= @admin.last_sign_in_at.strftime("%d.%m.%Y") %><% end%></td>
+            </tr>
+        </tbody>
+    </table>
+    <%= link_to 'Löschen', backoffice_admin_destroy_path(@admin), class: 'btn btn-green' %>
+    <% else %>
+    <h3>Nachricht:</h3>
+    <%= @admin.message %>
+    <br>
+    <%= link_to 'Akzeptieren', backoffice_admin_activate_path(@admin), class: 'btn btn-green' %>
+    <%= link_to 'Löschen', backoffice_admin_destroy_path(@admin), class: 'btn btn-green' %>
+    <% end %>
+</div>

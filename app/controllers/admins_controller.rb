@@ -1,7 +1,26 @@
 class AdminsController < ApplicationController
 
-  before_action :set_admin
+  before_action :set_admin, except: [:new, :create]
     
+  def new
+  end
+    
+  def create
+    @admin = Admin.find_by(email: admin_params[:email])
+    if @admin
+      flash[:admin_email] = 'Email schon vergeben!'
+    else
+      @admin = Admin.new(admin_params)
+      @admin.activated = false
+      @admin.skip_password_validation = true
+      if @admin.save
+        redirect_to after_register_path(@admin)
+      else
+        flash[:admin_error] = 'Konnte Anfrage nicht bearbeiten!'
+      end
+    end
+  end
+
   def edit
   end
     
@@ -56,6 +75,6 @@ class AdminsController < ApplicationController
     end
     
     def admin_params
-      params.require(:admin).permit(:company_name, :fname, :lname, :street, :city, :avatar, :logo, :zipcode, :email, :password)
+      params.require(:admin).permit(:fname, :lname, :company_name, :employees, :company_position, :telephone, :message, :street, :city, :avatar, :logo, :zipcode, :email, :password)
     end
 end

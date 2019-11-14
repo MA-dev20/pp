@@ -1,5 +1,5 @@
 class DashAdminController < ApplicationController
-  before_action :authenticate_admin!, :set_admin , unless: :skip_action?
+  before_action :authenticate_admin!, :set_admin , :is_activated, unless: :skip_action?
   before_action :set_team, only: [:games, :team_stats, :team_users, :team_stats_share]
   before_action :set_user, only: [:user_stats, :user_stats_compare]
   # skip_before_action :check_expiration_date, only: [:billing, :user_list]
@@ -503,6 +503,14 @@ class DashAdminController < ApplicationController
   end
   
   private
+    def is_activated
+      @admin = current_admin
+      # if @admin && !@admin.activated
+      #   flash[:danger] = 'Du bist noch nicht aktiviert!'
+      #   sign_out @admin
+      #   redirect_to root_path
+      # end
+    end
     def set_admin
       @admin = current_admin
       @teams = @admin.teams
