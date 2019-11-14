@@ -1,71 +1,27 @@
-<div class="row btn-wrapper">
-    <div class="col-md-4">
-        <%= link_to 'Erstellen!', backoffice_admin_new_path, class: 'btn btn-green mt-3 mt-md-0 ml-0' %>
-    </div>
+<div class="table" id="admins-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Unternehmen</th>
+                <th class="center">Users</th>
+                <th class="center">Games</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @admins.each do |a| %>
+            <tr onclick="redirect(<%= a.id %>)">
+                <td><%= a.fname + ' ' + a.lname %></td>
+                <td><%= a.company_name %></td>
+                <td class="center"><%= a.users.count %></td>
+                <td class="center"><%= a.games.count %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
 </div>
-
-<div>
-<table id='admin_table'>
-<thead>
-    <th scope="col">Name</th>
-    <th scope='col'>E-mail</th>
-    <th scope="col">Unternehmen</th>
-    <th scope="col">User</th>
-    <th scope="col">Wort Listen</th>
-    <th scope="col">Edit</th>
-    <th scope="col">Delete</th>
-</thead>
-<tbody>
-<% @admins.each do |c| %>
-    <tr>
-        <td><%= c.fname %> <%= c.lname %></td>
-        <td><%= c.email %></td>
-        <td><%= c.company_name %></td>
-        <td><%= c.users.all.count %></td>
-        <td><%= link_to c.catchword_baskets.count, backoffice_admin_baskets_path(c.id) %></td>
-        <td><%= link_to '', edit_backoffice_admin_path(c.id), class: 'fas fa-edit' %></td>
-        <td><%= link_to '', destroy_admin_path(c.id), class: 'fas fa-trash-alt', data: { confirm: "Sind Sie sicher, dass Sie den Admin unwiederuflich löschen möchten?" } %></td>
-    </tr>
-<% end %>
-</tbody>
-</table>
-</div>
-
-<style>
-
-/* .btn-wrapper {
-    margin-top: 0.5em;
-} */
-
-.create-admin {
-    padding: 0.5em 2em;
-    border-radius: 3vh;
-    line-height: 6vh;
-    font-size: 3vh;
-    border: 2px solid #1ddaaf;
-    background-color: #1ddaaf;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.create-admin:hover {
-    color: white !important;
-    text-decoration: none !important;
-}
-</style>
-
 <script>
-$(document).ready( function () {
-    $('#admin_table').DataTable( {
-        "paging":   false,
-        "info":     false,
-        'searching': false,
-        "order": [ 0, 'asc' ],
-        "columnDefs": [
-            { "orderable": false, "targets": 4 },
-        ]
-    } );
-} );
-new PerfectScrollbar('#table');
+    function redirect(admin_id) {
+        location.replace('/backoffice/admins/'+admin_id);
+    }
 </script>

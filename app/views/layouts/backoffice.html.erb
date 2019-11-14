@@ -7,95 +7,36 @@
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag    'backoffice/main', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'dash/main' %>
-    <meta property="og:url"           content="http://www.peterpitch.com" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="Peterpitch" />
-    <meta property="og:description"   content="Das erste Gamification Tool" />
-    <meta property="og:image"         content="<%= image_url('defaults/wolf.jpg') %>" />
-    <meta property="og:site_name"     content="Peterpitch" >
-    <meta property="og:locale"        content="de_DE" />
-    
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@peterpitch" />
 </head>
 
 <body>
-
 <section id="navbar">
-    <div class="welcome">Wilkommen im Backoffice!</div> 
-</section>
-
-<section id="sidebar">
-    <a href="<%= root_path %>" ><%= image_tag 'defaults/wolf.jpg', class: 'logo-top' %></a>
-    <div class="links">
-    
-    <% if current_page?(backoffice_admins_path) %>
-        <div class="link active">
-            <%= link_to 'Admins', backoffice_admins_path %>
-        </div>
-    <% else %>
-        <div class="link">
-            <%= link_to 'Admins', backoffice_admins_path %>
-        </div>
-    <% end %>
- 
-    <% if current_page?(backoffice_baskets_path) || (@basket && current_page?(backoffice_words_path(@basket.id))) || (@admin && current_page?(backoffice_admin_baskets_path(@admin.id))) %>
-        <div class="link active">
-            <%= link_to 'Spielbegriffe', backoffice_baskets_path %>
-        </div>
-    <% else %>
-        <div class="link">
-            <%= link_to 'Spielbegriffe', backoffice_baskets_path %>
-        </div>
-    <% end %>
-
+    <div class="logout">
+        <%= link_to('', logout_root_path, class: 'fas fa-sign-out-alt red') %>
     </div>
 </section>
-
+<section id="sidebar">
+    <div class="avatar">
+        <%= link_to image_tag('defaults/wolf.jpg'), backoffice_path %>
+    </div>
+    <div class="links">
+        <div class="link <% if current_page?(backoffice_admins_path) %> active <% end %>">
+            <i class="far fa-user"></i>
+            <%= link_to 'Admins', backoffice_admins_path %>
+        </div>
+        <div class="link <% if current_page?(backoffice_word_baskets_path) %> active <% end %>">
+            <i class="far fa-file-word"></i>
+            <%= link_to 'Worte', backoffice_word_baskets_path %>
+        </div>
+    </div>
+</section>
 <section id="content">
-    <% flash.each do |name, msg| %>
-        <% if msg.is_a?(String) %>
-            <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
-                <%= content_tag :div, msg, :id => "flash_#{name}" %>
-            </div>
-        <% end %>
-    <% end %>
-    
     <%= yield %>
 </section>
-<div class="modal-games" id="new_team" style="display: none">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <button type="button" class="close modal-close" onclick="closeBasket()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
-            <div class="modal-body" id="pop_up-body">
-                <h1>
-                    <span>Liste hinzufügen</span><br><br><br>
-                    <%= form_for(:basket, url: new_basket_path) do |f| %>
-                        <%= f.text_field :name, placeholder: 'Listenname', class: 'form-control' %><br><br><br>
-                        <%= f.submit 'Erstellen', class: 'btn btn-green' %>
-                    <% end %>
-                </h1>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 
 <script>
-    $(document).ready(function() {
-        window.setTimeout(function() {
-           $('.alert').slideUp(500);
-        }, 4000);
-    })
-    function openBasket() {
-        $('#new_team').show();
-        $('#content').addClass('backgroundblur');
-        $('#team_name').focus();
-    };
-    function closeBasket() {
-        $('#new_team').hide();
-        $('#content').removeClass('backgroundblur');
-    }
+    
 </script>
 
 </html>

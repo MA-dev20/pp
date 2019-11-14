@@ -1,38 +1,15 @@
-
-
-   <div class="modal modal-peterpitch fade show" id="exampleModalCenterLogin" style="display: block;" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <h1>Change your password</h1>
-              <!--<p>Simple, visual collaboration</p>-->
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "modal-form mt-2"  }) do |f| %>
-
-
-          <%= render "devise/shared/error_messages", resource: resource %>
-                <% if @minimum_password_length %>
-                  <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-                <% end %>
-                <div class="form-group ">
-                  <%= f.password_field :password,class: 'form-control mr-sm-3', autofocus: true, autocomplete: "new-password", placeholder: "Password" %>
-
-                  <br>
-                  <%= f.hidden_field :reset_password_token %>
-
-                  <%= f.password_field :password_confirmation, autocomplete: "off" ,class: 'form-control mr-sm-3' , placeholder: "Confirm password"%>
-                  <br>
-                  <%= f.submit 'Change password!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
-                  <br>
-
-                </div>
-              <% end %>
-              <!--<form class="modal-form mt-2">-->
-              <!-- <div class="form-group d-flex flex-column flex-md-row align-items-center justify-content-between">-->
-              <!-- <input type="email" class="form-control mr-sm-3" placeholder="Enter your work email">-->
-              <!-- <button type="button" class="btn btn-green mt-3 mt-md-0 w-100">Get Started</button>-->
-              <!-- </div>-->
-              <!-- </form>-->
-              
-          </div>
-        </div>
-      </div>
+<h1>Passwort ändern!</h1>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "modal-form mt-2"  }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+    <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+    <% end %>
+    <div class="form-group ">
+        <%= f.password_field :password,class: 'form-control mr-sm-3', autofocus: true, autocomplete: "new-password", placeholder: "Password" %>
+        <br>
+        <%= f.hidden_field :reset_password_token %>
+        <%= f.password_field :password_confirmation, autocomplete: "off" ,class: 'form-control mr-sm-3' , placeholder: "Confirm password"%>
+        <br>
+        <%= f.submit 'Change password!', class: 'btn btn-green mt-3 mt-md-0 w-100' %>
+    </div>
+<% end %>
