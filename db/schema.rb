@@ -59,6 +59,10 @@ ActiveRecord::Schema.define(version: 2019_11_13_161825) do
     t.string "admin_subscription_id"
     t.boolean "verification_code_confirm", default: false
     t.string "reset_pw_token"
+    t.string "telephone"
+    t.string "company_position"
+    t.boolean "activated"
+    t.string "message"
     t.index ["confirmation_token"], name: "index_admins_on_confirmation_token", unique: true
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
