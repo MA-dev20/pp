@@ -20,7 +20,7 @@ class DeviseUser::SessionsController < Devise::SessionsController
           sign_in(resource_name, resource)
           yield resource if block_given?
           return  render json: {response: "ok"} if request.xhr?
-          respond_with resource, location: after_sign_in_path_for(resource) 
+          respond_with resource, location: after_sign_in_path_for(resource)
         else
           redirect_to price_path
         end
