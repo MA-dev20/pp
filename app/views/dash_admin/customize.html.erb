@@ -49,7 +49,7 @@
                 <% @catchword.words.each do |word| %>
                 <tr>
                     <td><%= word.name %></td>
-                    <td id="recording<%= word.id %>" class="record" onclick="recordAudio(<%=word.id %>, 'word')"><%= image_tag 'dash/icons/record.png', class: 'record-img' %></td>
+                    <td id="recording<%= word.id %>" class="record" onclick="recordAudio(<%=word.id %>, 'word')"><%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %></td>
                     <td id="word<%= word.id %>" class="record" data-url="<%= word.sound.url %>" onclick="playWord(<%=word.id %>, 'word')"><%= image_tag 'dash/icons/play.png', class: 'play' %></td>
                     <td><%= link_to image_tag('dash/icons/minus.png'), destroy_word_path(@catchword, word) %></td>
                 </tr>
@@ -163,7 +163,7 @@ new PerfectScrollbar('#table_content');
                 <% @objection.objections.each do |o| %>
                 <tr>
                     <td><%= o.name %></td>
-                    <td id="orecording<%= o.id %>" class="record" onclick="recordAudio(<%= o.id %>, 'objection')"><%= image_tag 'dash/icons/record.png', class: 'record-img' %></td>
+                    <td id="orecording<%= o.id %>" class="record" onclick="recordAudio(<%= o.id %>, 'objection')"><%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %></td>
                     <td id="objectionWord<%= o.id %>" class="record" data-url="<%= o.sound.url %>" onclick="playWord(<%= o.id %>, 'objection')"><%= image_tag 'dash/icons/play.png', class: 'play' %></td>
                     <td><%= link_to image_tag('dash/icons/minus.png'), destroy_objection_path(@objection, o.id) %></td>
                 </tr>
@@ -248,9 +248,45 @@ new PerfectScrollbar('#table_content');
     .record-img-icon {
         display: none;
     }
+
+    .table-content button {
+    margin: 1vh 0.5vh;
+    height: 2vh;
+    width: 2vh;
+	font-size: 0;
+	background-color: red;
+	border: 0;
+	border-radius: 35px;
+	outline: none;
+}
+
+/* .notRec{
+	background-color: darkred !important;
+} */
+.stop-img,
+.Rec{
+	animation-name: pulse;
+	animation-duration: 1.3s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes pulse{
+	0%{
+		box-shadow: 0 0 0.3vh 0 rgba(173,0,0,.3);
+	}
+	65%{
+		box-shadow: 0 0 0.5vh 0.6vh rgba(173,0,0,.3);
+	}
+	90%{
+		box-shadow: 0 0 0.5vh 0.9vh rgba(173,0,0,0);
+	}
+}
 </style>
 
 <script>
+
+
 var stream, form, globalForm,recorder, audio, timer;
   globalForm = new FormData();
   var processing= false;
@@ -263,8 +299,8 @@ var stream, form, globalForm,recorder, audio, timer;
                     $('#word'+ id).addClass('opacity-class');
                     if ($("#recording" + id).children().hasClass('record-img')) {
                         $("#recording" + id).children().removeClass('record-img').addClass('stop-img');
-                        record_img = $("#recording" + id).children()[0]
-                        $(record_img).attr('src', $('.stop-img-icon').attr('src'))
+                        // record_img = $("#recording" + id).children()[0]
+                        // $(record_img).attr('src', $('.stop-img-icon').attr('src'))
                     }
                     requestAudio(id, 'word')
                     processing = true
@@ -278,8 +314,9 @@ var stream, form, globalForm,recorder, audio, timer;
                     $('#objectionWord'+ id).addClass('opacity-class');
                     if ($("#orecording" + id).children().hasClass('record-img')) {
                         $("#orecording" + id).children().removeClass('record-img').addClass('stop-img');
-                        record_img = $("#orecording" + id).children()[0]
-                        $(record_img).attr('src', $('.stop-img-icon').attr('src'))
+                        $('#recButton').removeClass("Rec");
+                        // record_img = $("#orecording" + id).children()[0]
+                        // $(record_img).attr('src', $('.stop-img-icon').attr('src'))
                     }
                     requestAudio(id, 'objection')
                     processing = true
