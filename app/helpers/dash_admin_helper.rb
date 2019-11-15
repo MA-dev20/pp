@@ -15,4 +15,14 @@ module DashAdminHelper
         return @count > 0 ? 'block;' : 'none;'
     end
 
+    def get_color_code(value)
+        if value > 0 && value <= 50
+            '#FF4233'
+        elsif value > 50 && value < 80
+            '#FFD733'
+        else
+            '#8DFF33'
+        end
+    end
+
 end

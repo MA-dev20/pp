@@ -26,18 +26,18 @@
         <div class="icon-circle">
             <i class="fas fa-star"></i>
         </div>
-        <div class="rating">
-            <%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '' %>
-        </div>
-        <!-- <% ges = @team_rating.ges.present? ? @team_rating.ges : 0 %>
+        <!-- <div class="rating">
+            <%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %>
+        </div> -->
+        <% ges = @team_rating.ges.present? ? @team_rating.ges : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="c100 p<%= ges %> center" style="background-color: #4394ec; font-size: 11vh;">
-                    <span><%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %></span>
+                <div class="c100 p<%= ges %> center" style="font-size: 11vh;">
+                    <span class="rating-1" style="color:<%= get_color_code(ges)%>"><%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
             </div>
-        </div> -->
+        </div>
         
         <label>Gesamt</label>
         <% if @team_rating.change_ges.present? %>
@@ -64,18 +64,18 @@
         <div class="icon-circle">
             <i class="fas fa-bolt"></i>
         </div>
-        <div class="rating">
-            <%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '' %>
-        </div>
-        <!-- <% spontan = @team_rating.spontan.present? ? @team_rating.spontan : 0 %>
+        <!-- <div class="rating">
+            <%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '0.0' %>
+        </div> -->
+        <% spontan = @team_rating.spontan.present? ? @team_rating.spontan : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="c100 p<%= spontan %> center" style="background-color: white; font-size: 11vh;">
-                    <span><%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '' %></span>
+                <div class="c100 p<%= spontan %> center" style="font-size: 11vh;">
+                    <span class="rating-1" style="color:<%= get_color_code(spontan)%>"><%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
             </div>
-        </div> -->
+        </div>
         <label>Spontanität</label>
         <% if @team_rating.change_spontan.present? %>
         <% if @team_rating.change_spontan > 0 %>
@@ -101,8 +101,17 @@
         <div class="icon-circle">
             <%= image_tag 'dash/icons/creative.png' %>
         </div>
-        <div class="rating">
-            <%= @team_rating.creative.present? ? ((@team_rating.creative / 10.0 == 10.0) ? '10' : (@team_rating.creative / 10.0)) : '' %>
+        <!-- <div class="rating">
+            <%= @team_rating.creative.present? ? ((@team_rating.creative / 10.0 == 10.0) ? '10' : (@team_rating.creative / 10.0)) : '0.0' %>
+        </div> -->
+        <% creative = @team_rating.creative.present? ? @team_rating.creative : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="c100 p<%= creative %> center" style="font-size: 11vh;">
+                    <span class="rating-1" style="color:<%= get_color_code(creative)%>"><%= @team_rating.creative.present? ? ((@team_rating.creative / 10.0 == 10.0) ? '10' : (@team_rating.creative / 10.0)) : '0.0' %></span>
+                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                </div>
+            </div>
         </div>
         <label>Kreativität</label>
         <% if @team_rating.change_creative.present? %>
@@ -129,8 +138,17 @@
         <div class="icon-circle">
             <i class="fas fa-child"></i>
         </div>
-        <div class="rating">
+        <!-- <div class="rating">
             <%= @team_rating.body.present? ? ((@team_rating.body / 10.0 == 10.0) ? '10' : (@team_rating.body / 10.0)) : '' %>
+        </div> -->
+        <% body = @team_rating.body.present? ? @team_rating.body : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="c100 p<%= body %> center" style="font-size: 11vh;">
+                    <span class="rating-1" style="color:<%= get_color_code(body)%>"><%= @team_rating.body.present? ? ((@team_rating.body / 10.0 == 10.0) ? '10' : (@team_rating.body / 10.0)) : '' %></span>
+                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                </div>
+            </div>
         </div>
         <label>Körpersprache</label>
         <% if @team_rating.change_body.present? %>
@@ -157,8 +175,17 @@
         <div class="icon-circle">
             <%= image_tag 'dash/icons/megaphone.png' %>
         </div>
-        <div class="rating">
+        <!-- <div class="rating">
             <%= @team_rating.rhetoric.present? ? ((@team_rating.rhetoric / 10.0 == '10.0') ? '10' : (@team_rating.rhetoric / 10.0)) : '' %>
+        </div> -->
+        <% rhetoric = @team_rating.rhetoric.present? ? @team_rating.rhetoric : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="c100 p<%= rhetoric %> center" style="font-size: 11vh;">
+                    <span class="rating-1" style="color:<%= get_color_code(rhetoric)%>"><%= @team_rating.rhetoric.present? ? ((@team_rating.rhetoric / 10.0 == '10.0') ? '10' : (@team_rating.rhetoric / 10.0)) : '0.0' %></span>
+                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                </div>
+            </div>
         </div>
         <label>Rhetorik</label>
         <% if @team_rating.change_rhetoric.present? %>
