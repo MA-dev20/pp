@@ -147,6 +147,12 @@ class DashAdminController < ApplicationController
         end
     end
     @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
+    @reviewed_videos = @team_userss.map do |user| 
+      user.turns.where.not(recorded_pitch: nil)
+    end
+    @reviewed_videos.flatten!
+    @reviewed_videos.sort_by! {|t| t.created_at}
+    @reviewed_videos.reverse!
     @teams = @admin.teams.all
     @user_ratings = []
     @team_users = []
