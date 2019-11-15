@@ -36,21 +36,23 @@
             <%= @user_rating.ges.present? ? ((@user_rating.ges / 10.0 == 10.0 ? '10' : (@user_rating.ges / 10.0)))  : '' %>
         </div>
         <label>Gesamt</label>
-        <% if @user_rating.change_ges > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@user_rating.change_ges / 10.0).round(1) %>
-            </div>
-        <% elsif @user_rating.change_ges < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@user_rating.change_ges / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@user_rating.change_ges / 10.0).round(1) %>
-            </div>
+        <% if @user_rating.change_ges.present? %>
+            <% if @user_rating.change_ges > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_ges / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_ges < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_ges / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_ges / 10.0).round(1) %>
+                </div>
+            <% end %>
         <% end %>
     </div>
     
@@ -62,21 +64,23 @@
             <%= @user_rating.spontan.present? ? ((@user_rating.spontan / 10.0 == 10.0) ? '10' : (@user_rating.spontan / 10.0)) : '' %>
         </div>
         <label>Spontanität</label>
-        <% if @user_rating.change_spontan > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@user_rating.change_spontan / 10.0).round(1) %>
-            </div>
-        <% elsif @user_rating.change_spontan < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@user_rating.change_spontan / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@user_rating.change_spontan / 10.0).round(1) %>
-            </div>
+        <% if @user_rating.change_spontan.present? %>
+            <% if @user_rating.change_spontan > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_spontan / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_spontan < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_spontan / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_spontan / 10.0).round(1) %>
+                </div>
+            <% end %>
         <% end %>
     </div>
     
@@ -88,21 +92,23 @@
             <%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '' %>
         </div>
         <label>Kreativität</label>
-        <% if @user_rating.change_creative > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@user_rating.change_creative / 10.0).round(1) %>
-            </div>
-        <% elsif @user_rating.change_creative < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@user_rating.change_creative / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@user_rating.change_creative / 10.0).round(1) %>
-            </div>
+        <% if @user_rating.change_creative.present? %>
+            <% if @user_rating.change_creative > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_creative / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_creative < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_creative / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_creative / 10.0).round(1) %>
+                </div>
+            <% end %>
         <% end %>
     </div>
     
@@ -114,21 +120,23 @@
             <%= @user_rating.body.present? ? ((@user_rating.body / 10.0 == 10.0) ? '10' : (@user_rating.body / 10.0)) : '' %>
         </div>
         <label>Körpersprache</label>
-        <% if @user_rating.change_body > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@user_rating.change_body / 10.0).round(1) %>
-            </div>
-        <% elsif @user_rating.change_body < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@user_rating.change_body / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@user_rating.change_body / 10.0).round(1) %>
-            </div>
+        <% if @user_rating.change_body.present? %>
+            <% if @user_rating.change_body > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_body / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_body < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_body / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_body / 10.0).round(1) %>
+                </div>
+            <% end %>
         <% end %>
     </div>
     
@@ -140,21 +148,23 @@
             <%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '' %>
         </div>
         <label>Rhetorik</label>
-        <% if @user_rating.change_rhetoric > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@user_rating.change_rhetoric / 10.0).round(1) %>
-            </div>
-        <% elsif @user_rating.change_rhetoric < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@user_rating.change_rhetoric / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@user_rating.change_rhetoric / 10.0).round(1) %>
-            </div>
+        <% if @user_rating.change_rhetoric.present? %>
+            <% if @user_rating.change_rhetoric > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_rhetoric / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_rhetoric < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_rhetoric / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_rhetoric / 10.0).round(1) %>
+                </div>
+            <% end %>
         <% end %>
     </div>
 </div>
@@ -187,10 +197,10 @@
 <div class="karte" id="statistic">
     <div class="head left">Details
         <select name="team" id="select-team" class="custom-select">
-            <option value="" selected onclick="">Vergleich mit</option>
+            <option value="" selected>Vergleich mit</option>
             <% @users.each do |u| %>
                 <% if u.id != @user.id && u.user_rating %>
-                    <option value="<%= u.id %>" onclick="redirectURL('<%= dash_admin_user_stats_compare_path(@user, u.id) %>')"><%= u.fname + ' ' + u.lname %></option>
+                    <option class="option<%= u.id %>"value="<%= u.id %>"  data-redirect-value="<%= dash_admin_user_stats_compare_path(@user, u.id) %>"><%= u.fname + ' ' + u.lname %></option>
                 <% end %>
             <% end %>
         </select>
@@ -264,6 +274,15 @@
 </div>
 
 <script>
+    var comapre_user = "<%= @user2.id %>"
+    $(`.option${comapre_user}`).attr('selected','selected');
+
+    $('#select-team').on('change',function(e){
+        if ($('option:selected',this).data('redirect-value') == undefined) {
+        } else {
+            window.location.replace($('option:selected',this).data('redirect-value'));
+        }
+    })
     new PerfectScrollbar('#scrollbar');
 function teamSelect() {
     setTimeout(function() {

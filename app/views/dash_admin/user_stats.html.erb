@@ -198,7 +198,7 @@
             <option value="" selected onclick="">Vergleich mit</option>
             <% @users.each do |u| %>
                 <% if u.id != @user.id && u.user_rating %>
-                    <option value="<%= u.id %>" onclick="redirectURL('<%= dash_admin_user_stats_compare_path(@user, u.id) %>')"><%= (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : '') %></option>
+                    <option class="select-team-option" value="<%= u.id %>" data-redirect-value="<%= dash_admin_user_stats_compare_path(@user, u.id) %>"><%= (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : '') %></option>
                 <% end %>
             <% end %>
         </select>
@@ -286,6 +286,11 @@
 </style>
 
 <script>
+
+    $('#select-team').on('change',function(e){
+        window.location.replace($('option:selected',this).data('redirect-value'));
+    })
+
     $(".rating-record").on('click',function(){
         $('#myModal').modal('show');
     });
