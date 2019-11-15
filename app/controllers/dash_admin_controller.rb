@@ -58,6 +58,12 @@ class DashAdminController < ApplicationController
 
     @team = @user.teams.first
     @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
+    @reviewed_videos = @team_userss.map do |user| 
+      user.turns.where.not(recorded_pitch: nil)
+    end
+    @reviewed_videos.flatten!
+    @reviewed_videos.sort_by! {|t| t.created_at}
+    @reviewed_videos.reverse!
     @team_users = []
     @team_userss.each do |u|
       ges =  u.user_rating&.ges.present? ? u.user_rating.ges.to_f : 0.0
@@ -103,6 +109,12 @@ class DashAdminController < ApplicationController
 
     @team = @user.teams.first
     @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
+    @reviewed_videos = @team_userss.map do |user| 
+      user.turns.where.not(recorded_pitch: nil)
+    end
+    @reviewed_videos.flatten!
+    @reviewed_videos.sort_by! {|t| t.created_at}
+    @reviewed_videos.reverse!
     @team_users = []
     @team_userss.each do |u|
       ges =  u.user_rating&.ges.present? ? u.user_rating.ges.to_f : 0.0

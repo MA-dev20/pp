@@ -313,6 +313,30 @@
             </div>
             <%= image_tag 'current.png', class: 'rating-record' %>
         </div>
+        <% video = @reviewed_videos.first %>
+        <% if video.present? %>
+        <div class="video-box">
+        <h6><%= @team.name.to_s + "'s"%> Aufnahmen</h6>
+        <div class="video-list" id="videoList">
+        <div class="video-karte pitches" onclick="redirect_video('<%= dash_admin_video_details_url(video.id) %>')">
+            <div class="top">
+            <div class="video-img" style="background-image: url('<%= asset_path(video.recorded_pitch.thumb.url) %>')"></div>
+            <div class="overlay"></div>
+            <%
+                total_time = video.recorded_pitch_duration.to_minutes if video.recorded_pitch_duration.present? 
+            %>
+            <!-- <div class="timer"><%= total_time %></div> -->
+            <div class="play"><i class="fas fa-play"></i></div>
+            <div class="heart"><%= total_time%></div>
+            </div>
+            <div class="player">
+            <%#= (r[:user_fname].present? ? r[:user_fname] : '') + " " + (r[:user_lname].present? ? r[:user_lname] : '') %>
+            </div>
+        </div>
+        </div>
+        <% end %>
+        <a href="/admins/dash/video_tool">Alle sehen</a>
+        </div>
     </div>
 </div>
 </div>
@@ -320,6 +344,69 @@
 <%= render partial: 'stats_modal', locals: {team_id: @team.id, team_users: @team_users} %>
 
 <style>
+
+.video-list {
+        cursor: pointer;
+    }
+
+    #videoList .top .video-img {
+        top: -1.5vh;
+        right: 0;
+        bottom: -1.5vh;
+        left: 0;
+    }
+
+    #videoList .fa-play {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 1.7vh;
+    }
+
+    #videoList .top .play {
+        position: absolute;
+        top: 4.5vh;
+        left: 6.2vh;
+        height: 5.2vh;
+        width: 5.2vh;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        line-height: 6.2vh;
+        text-align: center;
+        color: white;
+        font-size: 1.8vh;
+        align-items: center;
+    }
+
+    #videoList .top {
+        position: relative;
+        border-top-left-radius: 0.8vh;
+        border-top-right-radius: 0.8vh;
+        height: 14.5vh;
+        width: auto;
+        overflow: hidden;
+        border-radius: 0.8vh;
+    }
+
+    .video-box {
+        padding-top: 2vh;
+        text-align: center;
+    }
+
+    .video-box h6,
+    .video-box {
+        font-size: 1.8vh;
+    }
+
+    .video-box a {
+        padding-top: 1vh;
+        display: flex; 
+        justify-content: center; 
+        text-decoration: none; 
+        color: #16e2a5;
+    }
+
     .rating-record {
         cursor: pointer;
         position: absolute;
@@ -332,6 +419,9 @@
 
 <script>
 
+    function redirect_video(url) {
+        window.location.replace(url);
+    }
     $('#select-team').on('change',function(e){
         window.location.replace($('option:selected',this).data('redirect-value'));
     })
