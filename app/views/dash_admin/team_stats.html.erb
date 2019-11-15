@@ -316,7 +316,6 @@
 </div>
 </div>
 
-<%= image_tag 'dash/icons/dot.png', class: 'dot-image' %>
 
 <%= render partial: 'stats_modal', locals: {team_id: @team.id, team_users: @team_users} %>
 
@@ -404,8 +403,7 @@
         window.location.replace(url);
     }
 
-    const image = $('.dot-image').attr('src');
-
+    
     new PerfectScrollbar('#team-users');
     $(".rating-record").on('click',function(){
         $('#myModal').modal('show');
