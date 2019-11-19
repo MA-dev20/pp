@@ -628,9 +628,9 @@ var myChart = new Chart(ctx, {
                 var position = this._chart.canvas.getBoundingClientRect();
                 
                 tooltipEl.style.opacity = 1;
-                tooltipEl.style.position = 'relative';
+                tooltipEl.style.position = 'absolute';
                 // debugger
-                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 138.5 + 'px';
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 140 + 'px';
                 tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 420 + 'px';
                 // tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 950 + 'px';
                 // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 690 + 'px';
