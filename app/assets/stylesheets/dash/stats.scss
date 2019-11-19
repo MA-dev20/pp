@@ -163,12 +163,12 @@
 }
 .rating-overview .karte .rating-1 {
     margin: 0.8vh auto 0;
-    width: 10vh;
-    height: 10vh;
+    width: 12vh;
+    height: 12vh;
     color: white;
     text-align: center;
     font-size: 5vh;
-    line-height: 9.8vh;
+    line-height: 10.8vh;
 }
 .rating-overview .karte:hover .c100,
 .rating-overview .karte:hover  .c100:after{
@@ -1621,6 +1621,7 @@
     // transition-timing-function: ease-in;
     bottom: 4px;
     right: 4px;
+    overflow: hidden;
 }
 
 

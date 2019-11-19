@@ -31,7 +31,7 @@
         <% ges = @team_rating.ges.present? ? @team_rating.ges : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_ges" class="c100 p<%= ges %> center" style="font-size: 10.5vh;">
+                <div id="chart_ges" class="c100 p<%= ges %> center" style="font-size: 12vh;">
                     <span class="rating-1"><%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
@@ -69,7 +69,7 @@
         <% spontan = @team_rating.spontan.present? ? @team_rating.spontan : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_spontan" class="c100 p<%= spontan %> center" style="font-size: 10.5vh;">
+                <div id="chart_spontan" class="c100 p<%= spontan %> center" style="font-size: 12vh;">
                     <span class="rating-1"><%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
@@ -106,7 +106,7 @@
         <% creative = @team_rating.creative.present? ? @team_rating.creative : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_creative" class="c100 p<%= creative %> center" style="font-size: 10.5vh;">
+                <div id="chart_creative" class="c100 p<%= creative %> center" style="font-size: 12vh;">
                     <span class="rating-1"><%= @team_rating.creative.present? ? ((@team_rating.creative / 10.0 == 10.0) ? '10' : (@team_rating.creative / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
@@ -143,7 +143,7 @@
         <% body = @team_rating.body.present? ? @team_rating.body : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_body" class="c100 p<%= body %> center" style="font-size: 10.5vh;">
+                <div id="chart_body" class="c100 p<%= body %> center" style="font-size: 12vh;">
                     <span class="rating-1"><%= @team_rating.body.present? ? ((@team_rating.body / 10.0 == 10.0) ? '10' : (@team_rating.body / 10.0)) : '' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
@@ -180,7 +180,7 @@
         <% rhetoric = @team_rating.rhetoric.present? ? @team_rating.rhetoric : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_rhetorik" class="c100 p<%= rhetoric %> center" style="font-size: 10.5vh;">
+                <div id="chart_rhetorik" class="c100 p<%= rhetoric %> center" style="font-size: 12vh;">
                     <span class="rating-1"><%= @team_rating.rhetoric.present? ? ((@team_rating.rhetoric / 10.0 == '10.0') ? '10' : (@team_rating.rhetoric / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
@@ -629,13 +629,14 @@ var myChart = new Chart(ctx, {
                 
                 tooltipEl.style.opacity = 1;
                 tooltipEl.style.position = 'relative';
-                // tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 138.5 + 'px';
-                // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 420 + 'px';
+                // debugger
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 138.5 + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 420 + 'px';
                 // tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 950 + 'px';
                 // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 690 + 'px';
                 
-                tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()*3.45))+ 'px';
-                tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight()*1.73)) + 'px';
+                // tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()*3.45))+ 'px';
+                // tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight()*1.73)) + 'px';
                 tooltipEl.style.pointerEvents = 'none';
             },
             callbacks: {
