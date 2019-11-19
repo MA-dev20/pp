@@ -485,6 +485,7 @@ var i = 0;
 var team = '<%= '' + @team.name %>';
 <% @chartdata.last(6).each do |cd| %>
     var json_data = <%= cd.to_json.html_safe %>;
+    console.log(json_data)
     label[i] = "<%= cd[:date].to_s %>";
     datapoints[i] = {value: <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>, data: json_data};
     i++;
