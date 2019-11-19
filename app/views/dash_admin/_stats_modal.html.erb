@@ -55,10 +55,11 @@
                                                 <%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %>
                                             </div> -->
                                             <% ges = user[:ges].present? ? user[:ges] : 0 %>
+                                            <% color_value = number_with_precision(user[:ges].present? ? user[:ges].to_f / 100.0 : 0.0, precision:1) %>
                                             <div>
                                                 <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                                                    <div class="c100 p<%= ges.round %> center" style="font-size: 5vh;line-height: 6vh;font-weight: 600;margin: 0 !important;">
-                                                        <span class="rating-1" style="color: #000000;"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></span>
+                                                    <div class="<%= color_value %> c100 p<%= ges.round %> center" style="font-size: 5vh;line-height: 6vh;font-weight: 600;margin: 0 !important;">
+                                                        <span class="ges-rating" style="color: #000000 !important;"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></span>
                                                         <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                                     </div>
                                                 </div>
@@ -114,7 +115,7 @@
         width: auto;
         right: 0;
     }
-    .status-modal .rating-1 {
+    .status-modal .ges-rating {
         font-size: 1.4vh;
         line-height: 5.2vh;
         width: 5vh;
@@ -229,10 +230,6 @@
     }
 
     .download-btn {
-        /* text-align: center;
-            margin: 1vh 0;
-            text-align: center;
-            margin-top: 20px; */
         position: absolute;
         bottom: 24vh;
         width: 100%;
@@ -277,6 +274,21 @@
     
 
 <script>
+
+    $.each($('#team-users .c100'), function(i, ele){
+        let val = parseFloat($(ele).attr('class').split(' ')[0])
+        let class_name = $(ele).attr('class').split(' ')[2]
+        if (val != 0.0) {
+            if (val < 0.5 ) {
+                var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+            } else {
+                var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+            }
+            $(`.c100.${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
+            $(`.c100.${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
+        }
+    });
+
     new PerfectScrollbar('#team-users');
     $(".rating-record").on('click', function () {
         $('#myModal').modal('show');
