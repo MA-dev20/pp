@@ -208,7 +208,7 @@ class DashAdminController < ApplicationController
       else
         turn_pitch = false
       end
-      @chartdata << {game_id: g.game_id, date: g.created_at.strftime("%d.%m.%Y"), ges: g.ges, spontan: g.spontan, creative: g.creative, body: g.body, rhetoric: g.rhetoric, turn_pitch: turn_pitch}
+      @chartdata << {game_id: g.game_id, turn_id: turn_rating&.turn_id, date: g.created_at.strftime("%d.%m.%Y"), ges: g.ges, spontan: g.spontan, creative: g.creative, body: g.body, rhetoric: g.rhetoric, turn_pitch: turn_pitch}
     end
   end
 
