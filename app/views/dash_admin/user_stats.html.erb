@@ -446,9 +446,9 @@ function myColor(div) {
         } else {
             var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
         }
-        $(`.c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`.c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`.c100.p${class_name} .rating-1`).attr('style',`color: ${color_value}`);
+        $(`.rating-overview .c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`.rating-overview .c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`.rating-overview .c100.p${class_name} .rating-1`).attr('style',`color: ${color_value}`);
     }
 }
 
