@@ -225,11 +225,13 @@
     </div> -->
     <div class="karte">
         <label for="">Best rating</label>
-        <div class="number green"><%= (@game_ratings.reorder('ges DESC').first.ges.present? ? (@game_ratings.reorder('ges DESC').first.ges / 10.0) : 0.0) %></div>
+        <% best_rating = number_with_precision(@game_ratings.reorder('ges DESC').first.ges.present? ? @game_ratings.reorder('ges DESC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
+        <div class="number best-rating"><%= (@game_ratings.reorder('ges DESC').first.ges.present? ? (@game_ratings.reorder('ges DESC').first.ges / 10.0) : 0.0) %></div>
     </div>
     <div class="karte">
         <label for="">Worst rating</label>
-        <div class="number red"><%= (@game_ratings.reorder('ges ASC').first.ges.present? ?  (@game_ratings.reorder('ges ASC').first.ges / 10.0) : 0.0) %></div>
+        <% worst_rating = number_with_precision(@game_ratings.reorder('ges ASC').first.ges.present? ? @game_ratings.reorder('ges ASC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
+        <div class="number worst-rating"><%= (@game_ratings.reorder('ges ASC').first.ges.present? ?  (@game_ratings.reorder('ges ASC').first.ges / 10.0) : 0.0) %></div>
     </div>
 </div>
 
@@ -403,37 +405,34 @@
     }
 
     function myColor(div) {
+        var class_name = 0
+        var val = 0
     if(div == 'chart_ges') {
-        var val = <%= number_with_precision(@team_rating.ges.present? ? @team_rating.ges.to_f / 100.0 : 0.0, precision:1) %>;
-        var class_name = <%= ges %>
-        var id = '#chart_ges'
+        val = <%= number_with_precision(@team_rating.ges.present? ? @team_rating.ges.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= ges %>
     } else if(div == 'chart_spontan') {
-        var val = <%= number_with_precision(@team_rating.spontan.present? ? @team_rating.spontan.to_f / 100.0 : 0.0, precision:1) %>;
-        var class_name = <%= spontan %>
-        var id = '#chart_spontan'
+        val = <%= number_with_precision(@team_rating.spontan.present? ? @team_rating.spontan.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= spontan %>
     } else if(div == 'chart_creative') {
-        var val = <%= number_with_precision(@team_rating.creative.present? ? @team_rating.creative.to_f / 100.0 : 0.0, precision:1) %>;
-        var class_name = <%= creative %>
-        var id = '#chart_creative'
+        val = <%= number_with_precision(@team_rating.creative.present? ? @team_rating.creative.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= creative %>
     } else if(div == 'chart_body') {
-        var val = <%= number_with_precision(@team_rating.body.present? ? @team_rating.body.to_f / 100.0 : 0.0, precision:1) %>;
-        var class_name = <%= body %>
-        var id = '#chart_body'
+        val = <%= number_with_precision(@team_rating.body.present? ? @team_rating.body.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= body %>
     } else if(div == 'chart_rhetorik') {
-        var val = <%= number_with_precision(@team_rating.rhetoric.present? ? @team_rating.rhetoric.to_f / 100.0 : 0.0, precision:1) %>;
-        var class_name = <%= rhetoric %>
-        var id = '#chart_rhetorik'
+        val = <%= number_with_precision(@team_rating.rhetoric.present? ? @team_rating.rhetoric.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= rhetoric %>
     }
     if (val < 0.5 ) {
         var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
         $(`.c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
         $(`.c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`${id} .rating-1`).attr('style',`color: ${color_value}`);
+        $(`#${div} .rating-1`).attr('style',`color: ${color_value}`);
     } else {
         var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
         $(`.c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
         $(`.c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`${id} .rating-1`).attr('style',`color: ${color_value}`);
+        $(`#${div} .rating-1`).attr('style',`color: ${color_value}`);
     }
 }
 
@@ -442,6 +441,21 @@ myColor('chart_spontan');
 myColor('chart_creative');
 myColor('chart_body');
 myColor('chart_rhetorik');
+
+function ratingColor(class_name, rating) {
+    if (rating < 0.5 ) {
+        let color_value = '#'+(Math.round(255-(rating*2))).toString(16)+(Math.round(107+(rating*288))).toString(16)+(Math.round(108+(rating*180))).toString(16);
+        $(`.${class_name}`).attr('style',`color: ${color_value}`);
+    } else {
+        let color_value = '#'+(Math.round(29+((1-rating)*450))).toString(16)+(Math.round(218+((1-rating)*66))).toString(16)+(Math.round(175+((1-rating)*46))).toString(16);
+        $(`.${class_name}`).attr('style',`color: ${color_value}`);
+    }
+}
+
+var best_rating = <%= best_rating %>
+var worst_rating = <%= worst_rating %>
+ratingColor('best-rating', best_rating);
+ratingColor('worst-rating', worst_rating);
 
     
     new PerfectScrollbar('#team-users');
