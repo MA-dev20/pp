@@ -443,15 +443,12 @@ function myColor(div) {
     }
     if (val < 0.5 ) {
         var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
-        $(`.c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`.c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`#${div} .rating-1`).attr('style',`color: ${color_value}`);
     } else {
         var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
-        $(`.c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`.c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`#${div} .rating-1`).attr('style',`color: ${color_value}`);
     }
+    $(`.c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
+    $(`.c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
+    $(`.c100.p${class_name} .rating-1`).attr('style',`color: ${color_value}`);
 }
 
 myColor('chart_ges');
@@ -463,12 +460,11 @@ myColor('chart_rhetorik');
 
 function ratingColor(class_name, rating) {
     if (rating < 0.5 ) {
-        let color_value = '#'+(Math.round(255-(rating*2))).toString(16)+(Math.round(107+(rating*288))).toString(16)+(Math.round(108+(rating*180))).toString(16);
-        $(`.${class_name}`).attr('style',`color: ${color_value}`);
+        var color_value = '#'+(Math.round(255-(rating*2))).toString(16)+(Math.round(107+(rating*288))).toString(16)+(Math.round(108+(rating*180))).toString(16);
     } else {
-        let color_value = '#'+(Math.round(29+((1-rating)*450))).toString(16)+(Math.round(218+((1-rating)*66))).toString(16)+(Math.round(175+((1-rating)*46))).toString(16);
-        $(`.${class_name}`).attr('style',`color: ${color_value}`);
+        var color_value = '#'+(Math.round(29+((1-rating)*450))).toString(16)+(Math.round(218+((1-rating)*66))).toString(16)+(Math.round(175+((1-rating)*46))).toString(16);
     }
+    $(`.${class_name}`).attr('style',`color: ${color_value}`);
 }
 
 var best_rating = <%= best_rating %>
