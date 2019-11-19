@@ -38,8 +38,8 @@
         <% ges = @user_rating.ges.present? ? @user_rating.ges : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="c100 p<%= ges %> center" style="font-size: 11vh;">
-                    <span class="rating-1" style="color:<%= get_color_code(ges)%>"><%= @user_rating.ges.present? ? ((@user_rating.ges / 10.0 == 10.0 ? '10' : (@user_rating.ges / 10.0)))  : '0.0' %></span>
+                <div id="chart_ges" class="c100 p<%= ges %> center" style="font-size: 10.5vh;">
+                    <span class="rating-1"><%= @user_rating.ges.present? ? ((@user_rating.ges / 10.0 == 10.0 ? '10' : (@user_rating.ges / 10.0)))  : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
             </div>
@@ -73,8 +73,8 @@
         <% spontan = @user_rating.spontan.present? ? @user_rating.spontan : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="c100 p<%= ges %> center" style="font-size: 11vh;">
-                    <span class="rating-1" style="color:<%= get_color_code(spontan)%>"><%= @user_rating.spontan.present? ? ((@user_rating.spontan / 10.0 == 10.0) ? '10' : (@user_rating.spontan / 10.0)) : '0.0' %></span>
+                <div id="chart_spontan" class="c100 p<%= ges %> center" style="font-size: 10.5vh;">
+                    <span class="rating-1"><%= @user_rating.spontan.present? ? ((@user_rating.spontan / 10.0 == 10.0) ? '10' : (@user_rating.spontan / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
             </div>
@@ -110,8 +110,8 @@
         <% creative = @user_rating.creative.present? ? @user_rating.creative : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="c100 p<%= ges %> center" style="font-size: 11vh;">
-                    <span class="rating-1" style="color:<%= get_color_code(creative)%>"><%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '0.0' %></span>
+                <div id="chart_creative" class="c100 p<%= ges %> center" style="font-size: 10.5vh;">
+                    <span class="rating-1"><%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
             </div>
@@ -147,8 +147,8 @@
         <% body = @user_rating.body.present? ? @user_rating.body : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="c100 p<%= ges %> center" style="font-size: 11vh;">
-                    <span class="rating-1" style="color:<%= get_color_code(body)%>"><%= @user_rating.body.present? ? ((@user_rating.body / 10.0 == 10.0) ? '10' : (@user_rating.body / 10.0)) : '0.0' %></span>
+                <div id="chart_body" class="c100 p<%= ges %> center" style="font-size: 10.5vh;">
+                    <span class="rating-1"><%= @user_rating.body.present? ? ((@user_rating.body / 10.0 == 10.0) ? '10' : (@user_rating.body / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
             </div>
@@ -184,8 +184,8 @@
         <% rhetoric = @user_rating.rhetoric.present? ? @user_rating.rhetoric : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="c100 p<%= ges %> center" style="font-size: 11vh;">
-                    <span class="rating-1" style="color:<%= get_color_code(rhetoric)%>"><%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '0.0' %></span>
+                <div id="chart_rhetorik" class="c100 p<%= ges %> center" style="font-size: 10.5vh;">
+                    <span class="rating-1"><%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
             </div>
@@ -419,6 +419,47 @@
 
 <script>
 
+function myColor(div) {
+    if(div == 'chart_ges') {
+        var val = <%= number_with_precision(@user_rating.ges.present? ? @user_rating.ges.to_f / 100.0 : 0.0, precision:1) %>;
+        var class_name = <%= ges %>
+        var id = '#chart_ges'
+    } else if(div == 'chart_spontan') {
+        var val = <%= number_with_precision(@user_rating.spontan.present? ? @user_rating.spontan.to_f / 100.0 : 0.0, precision:1) %>;
+        var class_name = <%= spontan %>
+        var id = '#chart_spontan'
+    } else if(div == 'chart_creative') {
+        var val = <%= number_with_precision(@user_rating.creative.present? ? @user_rating.creative.to_f / 100.0 : 0.0, precision:1) %>;
+        var class_name = <%= creative %>
+        var id = '#chart_creative'
+    } else if(div == 'chart_body') {
+        var val = <%= number_with_precision(@user_rating.body.present? ? @user_rating.body.to_f / 100.0 : 0.0, precision:1) %>;
+        var class_name = <%= body %>
+        var id = '#chart_body'
+    } else if(div == 'chart_rhetorik') {
+        var val = <%= number_with_precision(@user_rating.rhetoric.present? ? @user_rating.rhetoric.to_f / 100.0 : 0.0, precision:1) %>;
+        var class_name = <%= rhetoric %>
+        var id = '#chart_rhetorik'
+    }
+    if (val < 0.5 ) {
+        var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+        $(`.c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`.c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`${id} .rating-1`).attr('style',`color: ${color_value}`);
+    } else {
+        var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+        $(`.c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`.c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`${id} .rating-1`).attr('style',`color: ${color_value}`);
+    }
+}
+
+myColor('chart_ges');
+myColor('chart_spontan');
+myColor('chart_creative');
+myColor('chart_body');
+myColor('chart_rhetorik');
+
     function redirect_video(url) {
         window.location.replace(url);
     }
@@ -462,7 +503,7 @@ var datapoints2 = [NaN, NaN, NaN, NaN, NaN, NaN ];
 var label = [NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
 var user = '<%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') %>';
-<% @chartdata.first(6).each do |cd| %>
+<% @chartdata.last(6).each do |cd| %>
     var json_data = <%= cd.to_json.html_safe %>;
     json_data['word'] = "<%= Word.find(Turn.find(cd[:turn_id]).word_id).name %>";
     <% if !@admin.ratings.find_by(turn_id: cd[:turn_id]).nil? %>
@@ -476,13 +517,28 @@ var user = '<%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.p
     datapoints[i] = {value: <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>, data: json_data};
     i++;
 <% end %>
-var data1 = [];
+var data1 = [], pointStyles = [];
 i = 0;
 datapoints.forEach(function(el){
     if(el.value == undefined){
         data1[i] = el
+        pointStyles[i] = 'circle'
     }else{
         data1[i] = el.value
+        if(el.data.turn_pitch){
+            var play = new Image();
+            play.src = '<%= asset_path "dash/icons/play-shadow.png" %>';
+            play.width = 35
+            play.height = 35
+            pointStyles[i] = play
+        }else{
+            var play = new Image();
+            play.src = '<%= asset_path "dash/icons/dot.png" %>';
+            play.width = 25
+            play.height = 25
+            pointStyles[i] = play
+            // pointStyles[i] = 'circle'
+        }
     }
     i++;        
 })
@@ -501,6 +557,7 @@ var myChart = new Chart(ctx, {
             pointBackgroundColor: "#4394ec",
             pointBorderColor: "#fafafa",
             pointBorderWidth: 3,
+            pointStyle: pointStyles,
             pointRadius: 9,
             hoverRadius: 9,
             datapoints: datapoints,
@@ -600,10 +657,8 @@ var myChart = new Chart(ctx, {
                 
                 tooltipEl.style.opacity = 1;
                 tooltipEl.style.position = 'relative';
-                // tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 277 + 'px';
-                // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 420 + 'px';
                 tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()*1.73))+ 'px';
-                tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight()*1.6)) - 18 + 'px';
+                tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight()*1.7)) - 18 + 'px';
                 tooltipEl.style.pointerEvents = 'none';
             },
             callbacks: {
@@ -682,6 +737,17 @@ var myChart = new Chart(ctx, {
         },
     }
 });
+
+var canvas = document.getElementById('myChart')
+canvas.onclick = function (evt) {
+    var points = myChart.getElementAtEvent(evt);
+    var current_point = datapoints[points[0]._index];
+    var turn_id = current_point.data.turn_id,
+    recorded_pitch = current_point.data.turn_pitch;
+    if(recorded_pitch){
+        window.location  = `/admins/dash/turns/${turn_id}/video`;
+    }
+};
 function ratingGes() {
     i = 0;
     $('.active').removeClass('active');

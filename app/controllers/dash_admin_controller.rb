@@ -77,7 +77,7 @@ class DashAdminController < ApplicationController
     @team_users = @team_users.sort_by {|u| -u[:average]}
 
     @user_ratings.sort_by{|e| -e[:rating] if e[:rating].present? }
-    @chartdata = @turn_ratings.map{|t| {turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric}}
+    @chartdata = @turn_ratings.map{|t| {turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn_pitch: t.turn.recorded_pitch?}}
   end
     
   def user_stats_compare
@@ -90,7 +90,7 @@ class DashAdminController < ApplicationController
     @turns = @user.turns.all
     @user_rating = @user.user_rating
     @turn_ratings = @user.turn_ratings.order('created_at ASC')
-    @date = @turn_ratings.first.created_at.beginning_of_day
+    @date = @turn_ratings.first&.created_at.beginning_of_day
     @days = 1
     @turn_ratings.each do |tr|
       bod = tr.created_at.beginning_of_day
@@ -133,15 +133,14 @@ class DashAdminController < ApplicationController
     @turn_ratings.each do |t|
       @turnrating2 = TurnRating.where(game_id: t.game_id, user_id: @user2.id).first
       if @turnrating2
-        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, ges2: @turnrating2.ges,  spontan2: @turnrating2.spontan, creative2: @turnrating2.creative, body2: @turnrating2.body, rhetoric2: @turnrating2.rhetoric}
+        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, ges2: @turnrating2.ges,  spontan2: @turnrating2.spontan, creative2: @turnrating2.creative, body2: @turnrating2.body, rhetoric2: @turnrating2.rhetoric, turn_pitch: t.turn.recorded_pitch?}
       else
-        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric}
+        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn_pitch: t.turn.recorded_pitch?}
       end
     end
   end
     
   def team_stats
-    # debugger
     @team_rating = TeamRating.find_by(team_id: @team.id)
     if @team_rating.nil?
       redirect_to dash_admin_teams_path
@@ -186,7 +185,12 @@ class DashAdminController < ApplicationController
     end
     @team_users = @team_users.sort_by {|u| -u[:average]}
     @user_ratings.sort_by{|e| -e[:rating]}
-    @chartdata = @game_ratings.map{|g| {game_id: g.game_id, date: g.created_at.strftime("%d.%m.%Y"), ges: g.ges, spontan: g.spontan, creative: g.creative, body: g.body, rhetoric: g.rhetoric}}
+    # @chartdata = @game_ratings.map{|g| {game_id: g.game_id, date: g.created_at.strftime("%d.%m.%Y"), ges: g.ges, spontan: g.spontan, creative: g.creative, body: g.body, rhetoric: g.rhetoric}}
+    @chartdata = []
+    @game_ratings.each do |g|
+      turn_rating = TurnRating.where(game_id: g.game_id).first
+      @chartdata << {game_id: g.game_id, date: g.created_at.strftime("%d.%m.%Y"), ges: g.ges, spontan: g.spontan, creative: g.creative, body: g.body, rhetoric: g.rhetoric, turn_pitch: turn_rating.turn.recorded_pitch?}
+    end
   end
 
     
