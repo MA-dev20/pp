@@ -73,7 +73,7 @@
         <% spontan = @user_rating.spontan.present? ? @user_rating.spontan : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_spontan" class="c100 p<%= ges %> center" style="font-size: 12vh;">
+                <div id="chart_spontan" class="c100 p<%= spontan %> center" style="font-size: 12vh;">
                     <span class="rating-1"><%= @user_rating.spontan.present? ? ((@user_rating.spontan / 10.0 == 10.0) ? '10' : (@user_rating.spontan / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
@@ -110,7 +110,7 @@
         <% creative = @user_rating.creative.present? ? @user_rating.creative : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_creative" class="c100 p<%= ges %> center" style="font-size: 12vh;">
+                <div id="chart_creative" class="c100 p<%= creative %> center" style="font-size: 12vh;">
                     <span class="rating-1"><%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
@@ -147,7 +147,7 @@
         <% body = @user_rating.body.present? ? @user_rating.body : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_body" class="c100 p<%= ges %> center" style="font-size: 12vh;">
+                <div id="chart_body" class="c100 p<%= body %> center" style="font-size: 12vh;">
                     <span class="rating-1"><%= @user_rating.body.present? ? ((@user_rating.body / 10.0 == 10.0) ? '10' : (@user_rating.body / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
@@ -184,7 +184,7 @@
         <% rhetoric = @user_rating.rhetoric.present? ? @user_rating.rhetoric : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_rhetorik" class="c100 p<%= ges %> center" style="font-size: 12vh;">
+                <div id="chart_rhetorik" class="c100 p<%= rhetoric %> center" style="font-size: 12vh;">
                     <span class="rating-1"><%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '0.0' %></span>
                     <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                 </div>
