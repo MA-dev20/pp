@@ -1648,7 +1648,7 @@
  
  .c100 .slice {
      position: absolute;
-     width: 1em;
+     width: 1.2em;
      height: 1em;
      clip: rect(0em, 1em, 1em, 0.5em);
  }
@@ -2527,3 +2527,10 @@
 //  .c100.orange.dark:hover > span {
 //      color: #e08833;
 //  }
+
+@media only screen and (min-width: 1900px) {
+    .active .pie, .active .c100 .bar, .active .c100 .fill {
+        border-radius: 55%;
+        margin: 0 -1px;
+    }
+}
