@@ -383,15 +383,16 @@
 }
 #chartjs-tooltip {
     width: 555px;
-    // height: 399px;
+    height: 399px;
     border-radius: 10px;
     box-shadow: 0px 6px 2.2vh 0 rgba(172, 172, 172, 0.4);
     background-color: #ffffff;
     padding: 10px 10px 10px 3.4vh;
 }
 #chartjs-tooltip.small {
-    width: 300px;
-    height: 440px;
+    width: 277.5px;
+    // width: 300px;
+    // height: 440px;
 }
 #chartjs-tooltip .head {
     position: relative;
@@ -2526,20 +2527,18 @@
  .c100.orange.dark .fill {
      border-color: #e08833 !important;
  }
- 
-//  .c100.orange.dark:hover > span {
-//      color: #e08833;
-//  }
-
-@media only screen and (min-width: 1900px) {
-    // .active .pie, .active .c100 .bar, .active .c100 .fill {
-    //     border-radius: 15vh;
-    //     margin: 0 -1px;
-    // }
-}
 
 .right-border {
     display: inline-flex;
     border-radius: 15vh;
     overflow: hidden;
+}
+
+.gesamt-label {
+    color: #6e6e6e;
+    text-align: center;
+    font-size: 1.8vh;
+    font-weight: 600;
+    position: relative;
+    /* top: -0.5vh; */
 }

@@ -405,15 +405,6 @@
         height: 4vh;
     }
 
-    .gesamt-label {
-        color: #6e6e6e;
-        text-align: center;
-        font-size: 1.8vh;
-        font-weight: 600;
-        position: relative;
-        /* top: -0.5vh; */
-    }
-
     
 </style>
 
@@ -650,8 +641,8 @@ var myChart = new Chart(ctx, {
                 tooltipEl.style.opacity = 1;
                 tooltipEl.style.position = 'absolute';
                 // debugger
-                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 145 + 'px';
-                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 455 + 'px';
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 140 + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 420 + 'px';
                 // tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 950 + 'px';
                 // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 690 + 'px';
                 
@@ -681,12 +672,14 @@ var myChart = new Chart(ctx, {
                         }
 
                         innerHtml += '<div class="inner-content text-center">';
-                        innerHtml += `<div class="c100 p${ges_value} center" style="font-size: 8vh;">`;
+                        innerHtml += '<div class="right-border">';
+                        innerHtml += `<div class="c100 p${ges_value} center" style="font-size: 9vh;">`;
                         innerHtml += '<span>'+ges_value/ 10.0+'</span>';
                         innerHtml += '<div class="slice">';
                         innerHtml += `<div class="bar" style="border-color: ${color_value}">`;
                         innerHtml += '</div>';
                         innerHtml += `<div class="fill" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
                         innerHtml += '</div>';
                         innerHtml += '</div>';
                         innerHtml += '</div>';

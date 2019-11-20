@@ -38,9 +38,11 @@
         <% ges = @user_rating.ges.present? ? @user_rating.ges : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_ges" class="c100 p<%= ges %> center" style="font-size: 12vh;">
-                    <span class="rating-1"><%= @user_rating.ges.present? ? ((@user_rating.ges / 10.0 == 10.0 ? '10' : (@user_rating.ges / 10.0)))  : '0.0' %></span>
-                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                <div class="right-border">
+                    <div id="chart_ges" class="c100 p<%= ges %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.ges.present? ? ((@user_rating.ges / 10.0 == 10.0 ? '10' : (@user_rating.ges / 10.0)))  : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,9 +75,11 @@
         <% spontan = @user_rating.spontan.present? ? @user_rating.spontan : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_spontan" class="c100 p<%= spontan %> center" style="font-size: 12vh;">
-                    <span class="rating-1"><%= @user_rating.spontan.present? ? ((@user_rating.spontan / 10.0 == 10.0) ? '10' : (@user_rating.spontan / 10.0)) : '0.0' %></span>
-                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                <div class="right-border">
+                    <div id="chart_spontan" class="c100 p<%= spontan %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.spontan.present? ? ((@user_rating.spontan / 10.0 == 10.0) ? '10' : (@user_rating.spontan / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,9 +114,11 @@
         <% creative = @user_rating.creative.present? ? @user_rating.creative : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_creative" class="c100 p<%= creative %> center" style="font-size: 12vh;">
-                    <span class="rating-1"><%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '0.0' %></span>
-                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                <div class="right-border">
+                    <div id="chart_creative" class="c100 p<%= creative %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -147,9 +153,11 @@
         <% body = @user_rating.body.present? ? @user_rating.body : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_body" class="c100 p<%= body %> center" style="font-size: 12vh;">
-                    <span class="rating-1"><%= @user_rating.body.present? ? ((@user_rating.body / 10.0 == 10.0) ? '10' : (@user_rating.body / 10.0)) : '0.0' %></span>
-                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                <div class="right-border">
+                    <div id="chart_body" class="c100 p<%= body %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.body.present? ? ((@user_rating.body / 10.0 == 10.0) ? '10' : (@user_rating.body / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -184,9 +192,11 @@
         <% rhetoric = @user_rating.rhetoric.present? ? @user_rating.rhetoric : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_rhetorik" class="c100 p<%= rhetoric %> center" style="font-size: 12vh;">
-                    <span class="rating-1"><%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '0.0' %></span>
-                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                <div class="right-border">
+                    <div id="chart_rhetorik" class="c100 p<%= rhetoric %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -670,7 +680,7 @@ var myChart = new Chart(ctx, {
                 tooltipEl.style.opacity = 1;
                 tooltipEl.style.position = 'absolute';
                 tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 280 + 'px';
-                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 440 + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 420 + 'px';
                 // tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()*1.73))+ 'px';
                 // tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight()*1.7)) - 18 + 'px';
                 tooltipEl.style.pointerEvents = 'none';
@@ -684,10 +694,34 @@ var myChart = new Chart(ctx, {
                         innerHtml += '<div class= "body">';
                         innerHtml += '<div class="left">';
 
-                        innerHtml += '<div class="rating">';
-                        innerHtml += '<div class="circle">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"]/ 10.0+'</div>';
-                        innerHtml += '<div class="text">Gesamt</div>';
+                        var ges_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"];
+                        var val =  ges_value / 100
+                        val = val.toPrecision(1)
+                        if (val < 0.5 ) {
+                            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+                        } else {
+                            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+                        }
+
+                        innerHtml += '<div class="inner-content text-center">';
+                        innerHtml += '<div class="right-border">';
+                        innerHtml += `<div class="c100 p${ges_value} center" style="font-size: 9vh;">`;
+                        innerHtml += '<span>'+ges_value/ 10.0+'</span>';
+                        innerHtml += '<div class="slice">';
+                        innerHtml += `<div class="bar" style="border-color: ${color_value}">`;
                         innerHtml += '</div>';
+                        innerHtml += `<div class="fill" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label">Gesamt</label>';
+
+                        // innerHtml += '<div class="rating">';
+                        // innerHtml += '<div class="circle">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"]/ 10.0+'</div>';
+                        // innerHtml += '<div class="text">Gesamt</div>';
+                        // innerHtml += '</div>';
                     
                         innerHtml += '<div class="stats">';
                         innerHtml += '<div class="text">Spontanität</div>';
@@ -713,10 +747,35 @@ var myChart = new Chart(ctx, {
                         
                         innerHtml += '</div><div class="right">'
                     
-                        innerHtml += '<div class="rating">';
-                        innerHtml += '<div class="circle">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_ges"]/ 10.0+'</div>';
-                        innerHtml += '<div class="text">Meine Bewertung</div>'
+                        // innerHtml += '<div class="rating">';
+                        // innerHtml += '<div class="circle">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_ges"]/ 10.0+'</div>';
+                        // innerHtml += '<div class="text">Meine Bewertung</div>'
+                        // innerHtml += '</div>';
+
+
+                        var ges_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_ges"];
+                        var val =  ges_value / 100
+                        val = val.toPrecision(1)
+                        if (val < 0.5 ) {
+                            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+                        } else {
+                            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+                        }
+
+                        innerHtml += '<div class="inner-content text-center">';
+                        innerHtml += '<div class="right-border">';
+                        innerHtml += `<div class="c100 p${ges_value} center" style="font-size: 9vh;">`;
+                        innerHtml += '<span>'+ges_value/ 10.0+'</span>';
+                        innerHtml += '<div class="slice">';
+                        innerHtml += `<div class="bar" style="border-color: ${color_value}">`;
                         innerHtml += '</div>';
+                        innerHtml += `<div class="fill" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label">Meine Bewertung</label>';
                     
                         innerHtml += '<div class="stats">';
                         innerHtml += '<div class="text">Spontanität</div>';
@@ -739,10 +798,25 @@ var myChart = new Chart(ctx, {
                         innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_rhetoric"] / 10.0+'</div></div>'
                         } else {
                         innerHtml += '</div><div class="right">'
-                        innerHtml += '<div class="rating">';
-                        innerHtml += '<div class="circle">0</div>';
-                        innerHtml += '<div class="text">Nicht bewertet!</div>'
+                        // innerHtml += '<div class="rating">';
+                        // innerHtml += '<div class="circle">0</div>';
+                        // innerHtml += '<div class="text">Nicht bewertet!</div>'
+                        // innerHtml += '</div>';
+
+                        innerHtml += '<div class="inner-content text-center">';
+                        innerHtml += '<div class="right-border">';
+                        innerHtml += `<div class="c100 p0 center" style="font-size: 9vh;">`;
+                        innerHtml += '<span>'+0+'</span>';
+                        innerHtml += '<div class="slice">';
+                        innerHtml += `<div class="bar" style="border-color: white">`;
                         innerHtml += '</div>';
+                        innerHtml += `<div class="fill" style="border-color: white">`;
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label">Nicht bewertet!</label>';
                         }
                         innerHtml += '</div></div>';
                     return innerHtml
