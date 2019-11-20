@@ -753,8 +753,8 @@ var myChart = new Chart(ctx, {
                         // innerHtml += '</div>';
 
 
-                        var ges_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_ges"];
-                        var val =  ges_value / 100
+                        var admin_ges_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_ges"];
+                        var val =  admin_ges_value / 100
                         val = val.toPrecision(1)
                         if (val < 0.5 ) {
                             var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
@@ -764,8 +764,8 @@ var myChart = new Chart(ctx, {
 
                         innerHtml += '<div class="inner-content text-center">';
                         innerHtml += '<div class="right-border">';
-                        innerHtml += `<div class="c100 p${ges_value} center" style="font-size: 9vh;">`;
-                        innerHtml += '<span>'+ges_value/ 10.0+'</span>';
+                        innerHtml += `<div class="c100 p${admin_ges_value} center" style="font-size: 9vh;">`;
+                        innerHtml += '<span>'+admin_ges_value / 10.0+'</span>';
                         innerHtml += '<div class="slice">';
                         innerHtml += `<div class="bar" style="border-color: ${color_value}">`;
                         innerHtml += '</div>';
