@@ -31,9 +31,11 @@
         <% ges = @team_rating.ges.present? ? @team_rating.ges : 0 %>
         <div>
             <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div id="chart_ges" class="c100 p<%= ges %> center" style="font-size: 12vh;">
-                    <span class="rating-1"><%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %></span>
-                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                <div class="right-border">
+                    <div id="chart_ges" class="c100 p<%= ges %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -395,6 +397,15 @@
         height: 4vh;
     }
 
+    .gesamt-label {
+        color: #6e6e6e;
+        text-align: center;
+        font-size: 1.8vh;
+        font-weight: 600;
+        position: relative;
+        /* top: -0.5vh; */
+    }
+
     
 </style>
 
@@ -631,8 +642,8 @@ var myChart = new Chart(ctx, {
                 tooltipEl.style.opacity = 1;
                 tooltipEl.style.position = 'absolute';
                 // debugger
-                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 140 + 'px';
-                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 420 + 'px';
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 145 + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 455 + 'px';
                 // tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 950 + 'px';
                 // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 690 + 'px';
                 
@@ -648,10 +659,32 @@ var myChart = new Chart(ctx, {
 
                         innerHtml += '<div class= "body">';
                         
-                        innerHtml += '<div class="rating">';
-                        innerHtml += '<div class="circle">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"]/ 10.0+'</div>';
-                        innerHtml += '<div class="text">Gesamt</div>';
+                        // innerHtml += '<div class="rating">';
+                        // innerHtml += '<div class="circle">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"]/ 10.0+'</div>';
+                        // innerHtml += '<div class="text">Gesamt</div>';
+                        // innerHtml += '</div>';
+                        var ges_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"];
+                        var val =  ges_value / 100
+                        val = val.toPrecision(1)
+                        if (val < 0.5 ) {
+                            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+                        } else {
+                            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+                        }
+
+                        innerHtml += '<div class="inner-content text-center">';
+                        innerHtml += `<div class="c100 p${ges_value} center" style="font-size: 8vh;">`;
+                        innerHtml += '<span>'+ges_value/ 10.0+'</span>';
+                        innerHtml += '<div class="slice">';
+                        innerHtml += `<div class="bar" style="border-color: ${color_value}">`;
                         innerHtml += '</div>';
+                        innerHtml += `<div class="fill" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label">Gesamt</label>';
+
                     
                         innerHtml += '<div class="stats">';
                         innerHtml += '<div class="text">Spontanität</div>';
