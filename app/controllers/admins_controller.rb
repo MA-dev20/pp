@@ -1,7 +1,8 @@
 class AdminsController < ApplicationController
 
   before_action :set_admin, except: [:new, :create]
-    
+  before_action :require_root, :set_vars
+
   def new
   end
     
@@ -31,7 +32,7 @@ class AdminsController < ApplicationController
       flash[:danger] = 'Konnte Admin nicht speichern!'
     end
   end
-    
+
   def destroy
     if @admin.destroy
       flash[:success] = 'Spieler erfolgreich gelöscht!'

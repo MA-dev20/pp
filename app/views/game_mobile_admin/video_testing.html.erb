@@ -1,0 +1,621 @@
+
+<div id="cameraButtons" style="display:none;">
+</div>
+
+
+<div class="upload-btn-wrapper">
+  <button class="video-btn">Upload Video</button>
+  <input id="video" type="file" name="video" accept="video/*" capture="environment" class="video-file">
+</div>
+
+<div class="middle middle-play middlePlay-top">
+    <div class="middle-content">
+        <video id="preview" width="600" height="600" style="display: none" controls></video>
+        <%# <video id="recording" width="600" height="600"  controls style="display: none;"></video> %>
+    </div>
+    <label id="timer" style="display: none">00:00:00</label>
+    <div class="buttons buttons-play">
+        <button id='play' class="button-stop" style="display: none"><i class="fa fa-play" aria-hidden="true"></i></button>
+        <button id='stop' class="button-stop" style="display: none"><i class="fa fa-stop"></i></button>
+        <div class="play-check-time" style="display: none">
+            <button id='uploaded' class="button-check" ><i class="fa fa-check"></i></button>
+            <p class="play-time-para">Video erfolgreich hochgeladen</p>
+        </div>
+
+        <div class="cancel play-cancel-time" id="upload" style="display: none">
+            <button id="button-cancel" class="button-cancel">
+                <svg class="progress-ring" width="98" height="98">
+                    <circle class="progress-ring__circe" stroke="white" stroke-width="4" fill="transparent" r="39" cx="49" cy="49"/>
+                </svg>
+                <i class="fa fa-times"></i>
+            </button>
+            <p class="play-time-para nunito-regular" >Video wird gespiehert...</p>
+        </div>
+    </div>
+</div>
+
+<!-- Trigger/Open The Modal -->
+<%# <button id="myBtn">Open Modal</button> %>
+
+<!-- The Modal -->
+<%# <div id="choseCamera" data-backdrop="static" data-keyboard="false" class="modal"> %>
+  <!-- Modal content -->
+  <%# <div class="camera-modal-content" id="modalContent">
+    <span class="close">&times;</span>
+  </div> %>
+
+<%# </div> %>
+
+
+
+
+
+
+
+
+
+
+<style>
+input[type='file'] {
+  display: block !important;
+}
+
+
+.upload-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* bottom: 0; */
+  top: 3em;
+  /* position: relative; */
+  overflow: hidden;
+  /* display: inline-block; */
+}
+
+.video-btn {
+  border: 2px solid #1ddaaf;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.camera-modal-content div, .camera-modal-content p {
+  color: black;
+}
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.camera-modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#cameraButtons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  bottom: 0;
+  top: 3em;
+}
+
+.camera-btn {
+  background-color: #1ddaaf !important;
+  margin-left: 7px;
+  border: 0.15vh solid #1ddaaf !important;
+  min-height: 4.7vh;
+  width: 13.5vh;
+  font-size: 1.82vh;
+  border-radius: 10vh !important;
+  /* padding: 0.9vh; */
+  min-width: inherit;
+  box-shadow: 0 0.9vh 1.8vh rgba(0, 0, 0, 0.17);
+  border-radius: 3vh;
+  line-height: 6vh;
+  /* font-size: 3vh; */
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+</style>
+<script>
+
+  // Get the modal
+  function downloadVideo(file){
+    // debugger
+    $('#preview').attr('style', 'display: block !important');
+    var sourceMP4 = document.createElement("source"); 
+    sourceMP4.type = "video/mp4";
+    sourceMP4.src = file;
+    $('#preview').append(sourceMP4);
+    const a = document.createElement('a');
+    // Download file
+    a.style.display = 'none';
+    a.href = file;
+    document.body.appendChild(a);
+
+    a.download = "video.mp4";
+    a.click();
+    // $("#spreview").attr("src", blobURL)
+    // window.location.href = $('.video-file').val()
+  }
+  var modal = document.getElementById("choseCamera");
+
+  // Get the button that opens the modal
+  // var btn = document.getElementById("myBtn");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks the button, open the modal 
+  // btn.onclick = function() {
+  //   modal.style.display = "block";
+  // }
+
+  // $('.launch-modal').click(function(){
+  //   if ($('#chooseCamera').hasClass('active')) {
+  //     $('#chooseCamera').hide();
+  //     $('#chooseCamera').removeClass('active')
+  //     $('#chooseCamera').attr('style', 'display: none !important')
+  //   } else {
+  //     $('#chooseCamera').show();
+  //     $('#chooseCamera').addClass('active')
+  //     $('#chooseCamera').attr('style', 'display: block')
+  //   }
+  // });
+
+  // When the user clicks on <span> (x), close the modal
+  // span.onclick = function() {
+  //   modal.style.display = "none";
+  // }
+
+  // // When the user clicks anywhere outside of the modal, close it
+  // window.onclick = function(event) {
+  //   if (event.target == modal) {
+  //     modal.style.display = "none";
+  //   }
+  // }
+
+  var uploadingprogress = 0;
+  var timer = document.getElementById("timer");
+  var seconds = 0, minutes = 0, hours = 0, secondsCount = 0;
+  const preview = document.querySelector('video#preview');
+  const recording = document.querySelector('video#recording');
+  var video, reqBtn, startBtn,jqxhr, stopBtn, ul, stream, recorder,form, uploadBtn, file;
+  video = document.getElementById('video');
+  reqBtn = document.getElementById('request');
+  startBtn = document.getElementById('start');
+  stopBtn = document.getElementById('stop');
+  uploadBtn = document.getElementById('upload');
+  ul = document.getElementById('ul');
+  var timertime;
+  var videoStopped = false;
+  var device_id = "";
+  var devices = [];
+  var constraints = ''
+  var facing_mode = true;
+  var start_timer = false;
+
+  $(document).ready(function(){
+    $('#video').trigger('click');
+
+    $("#video").on("change", function(e){
+    let file = e.target.files[0];
+    let blobURL = URL.createObjectURL(file);
+    //  $("#spreview").attr("src", blobURL)
+     downloadVideo(blobURL)
+})
+    constraints = {
+      audio: true,
+      video: true
+    };
+
+    $("#start").change(function(){
+      if( $(this).is(':checked')){
+        requestVideo(constraints)
+        setTimeout(startRecording(), 200)
+      }
+    })
+
+
+    // $('#choseCamera').css('display','block');
+
+    // cameraDiv = document.getElementById('choseCamera');
+    camera_modal = document.getElementById('cameraButtons');
+    var counter = 1;
+    navigator.mediaDevices.enumerateDevices().then(res => {
+    res.filter((d) =>{
+    if(d.kind == "videoinput"){
+      // alert(d.deviceId)}
+      devices.push(d.deviceId)
+      cameraButton = document.createElement('button');
+      cameraButton.setAttribute('id', d.deviceId);
+      // if (counter == 0) {
+      //   device_id = d.deviceId
+      // } 
+      cameraButton.setAttribute('content', 'test content');
+      cameraButton.setAttribute('class', 'camera-btn');
+      cameraButton.innerHTML = `Camera ${counter}`;
+      camera_modal.appendChild(cameraButton);
+      counter += 1;
+    }
+
+    })
+    })
+
+
+
+    $("#cameraButtons").on('click','button.camera-btn', function(e){
+    // if (e.target.textContent.includes('1'))
+    //   facing_mode = true;
+    // else
+    //   facing_mode = false; 
+
+  if (window.stream) {
+      window.stream.getTracks().forEach(function(track) {
+        track.stop();
+      });
+    }
+
+    device_id = e.target.id;
+    constraints = {
+      audio: true,
+      video:{
+          // facingMode: facing_mode ? "user" : "environment" ,
+          // height: {min: 420, ideal: 1280},
+          // width: {min: 640, ideal: 1920},
+          height: {min: 720, ideal: 1280},
+          width: {min: 1280, ideal: 1920},
+          deviceId: { exact: e.target.id }        
+      }
+    };
+  
+    requestVideo(constraints)
+    // $("#choseCamera").hide();
+    $('#timer').show();
+    $('#play').show();
+
+  });
+
+  $('#play').click(function(){
+    // if (window.stream) {
+    //   window.stream.getTracks().forEach(function(track) {
+    //     track.stop();
+    //   });
+    // }
+    // debugger
+    constraints = {
+      audio: true,
+      video:{
+          // facingMode: facing_mode ? "user" : "environment" ,
+          // height: {min: 720, ideal: 1280},
+          // width: {min: 1280, ideal: 1920},
+          // height: {min: 420, ideal: 1280},
+          // width: {min: 640, ideal: 1920},
+          height: {min: 720, ideal: 1280},
+          width: {min: 1280, ideal: 1920},
+          deviceId: { exact: device_id }        
+      }
+    };
+    start_timer = true;
+    requestVideo(constraints)
+    $('#timer').show();
+    $('#stop').show();
+    $('#play').hide();
+    $('#cameraButtons').hide();
+    // setTimeout(startRecording(), 200)  
+  });
+
+  })
+
+  
+
+  $("#stop").on('click', function(){
+    stopRecording("nothing", function(x){console.log(x)})
+    // $('#play').css('display', 'none');
+  })
+
+  function add() {
+      seconds++;
+      secondsCount++;
+      if (seconds >= 60) {
+          seconds = 0;
+          minutes++;
+          if (minutes >= 60) {
+              minutes = 0;
+              hours++;
+          }
+      }
+      
+      timer.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+      setTimer();
+  }
+  function setTimer() {
+      timertime = setTimeout(add, 1000);
+  }
+
+  // <% if true  %>
+  //   requestVideo(constraints)
+  // <% end %>
+
+// let supports = navigator.mediaDevices.getSupportedConstraints();
+// if( supports['facingMode'] === true ) {
+//   // flipBtn.disabled = false;
+// }
+  function requestVideo(constraints) {
+    
+    if (Object.keys(constraints).length) {
+        // startTimer = true;
+    } else {
+      start_timer = false;
+      let camera_btn = $('.camera-btn');
+      if ($(camera_btn).length > 1) {
+        let first_camera_btn = $(camera_btn)[0]
+        device_id = $(first_camera_btn).attr('id')
+      } else {
+        device_id = $(camera_btn).attr('id')
+      }
+    constraints = {
+      audio: true
+      // {
+          // sampleRate: 48000,
+          // sampleSize: 256,
+          // volume: 1.0,
+          // // echoCancellation: true,
+          // noiseSuppression: true,
+          // autoGainControl: true,
+          // echoCancellation: false
+      // }
+      ,
+      video:{
+          // facingMode: facing_mode ? "user" : "environment",
+          // height: {min: 720, ideal: 1280},
+          // width: {min: 1280, ideal: 1920},
+          // deviceId:  {exact: device_id} 
+          // deviceId: '7c1d62c7d182b995ecf9b453110ad0160211b3a4585741375d65285b7ff5a1dd'
+          // height: {min: 420, ideal: 1280},
+          // width: {min: 640, ideal: 1920},
+          height: {min: 720, ideal: 1280},
+          width: {min: 1280, ideal: 1920},
+          deviceId: { exact: device_id }
+          
+      },
+        // facingMode: { exact: "environment" },
+
+    };
+    }
+    // debugger
+    if(navigator.mediaDevices != undefined){
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then(stm => {
+          // debugger
+          stream = stm;
+          preview.srcObject = stream;
+          // preview.captureStream = preview.captureStream(5) || preview.mozCaptureStream(5);
+        }).then(()=>{
+          // debugger
+          const options = {};
+          if (start_timer) {
+          setTimeout(function(){
+            recorder = new MediaRecorder(stream, options);
+            recorder.start();
+            $("#stop").show()
+            $("#timer").show()
+            setTimer();
+          },1000)
+          } else {
+            $('#timer').show();
+            $('#play').show();
+          }
+        }).catch(e => {
+          $("#recording").hide()
+          $("#timer").hide()
+          $(".buttons-play").hide()
+          $("#img-dp").show()
+          $(".bottom-play")
+        });
+      }else{
+        $("#recording").hide()
+        $("#timer").hide()
+        $(".buttons-play").hide()
+        $("#img-dp").show()
+        $(".bottom-play")
+      }
+    
+    }
+    
+  var circle = document.querySelector('circle');
+  var radius = circle.r.baseVal.value;
+  var circumference = radius * 2 * Math.PI;
+
+  circle.style.strokeDasharray = `${circumference} ${circumference}`;
+  circle.style.strokeDashoffset = `${circumference}`;
+
+  function setProgress(percent) {
+    const offset = circumference - percent / 100 * circumference;
+    circle.style.strokeDashoffset = offset;
+  }
+
+
+
+  function startRecording() {
+    $("#switch").hide()
+    $("#img-dp").hide()
+    $(".bottom-play").hide()
+    $(".middle-play").addClass("middlePlay-top")
+  }
+  function stopRecording(location,callback) {
+  //   navigator.mediaDevices.enumerateDevices().then(res => {
+  // res.filter((d) =>{
+  // if(d.kind =="videoinput"){
+  // alert(d.deviceId)}
+  // })
+  // })
+    $("#timer").hide()
+    $(".bottom").hide()
+    videoStopped = true;
+    if(recorder != undefined){
+      recorder.ondataavailable = e => {
+        recording.src = URL.createObjectURL(e.data);
+        $('#preview').hide();
+        clearTimeout(timertime);
+        $('#recording').show();
+        var blob = e.data;
+        var file = new window.File([blob], ['video_', (new Date() + '').slice(4, 28), '.webm'].join(''))
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        debugger
+      // Download file
+      a.style.display = 'none';
+      a.href = url;
+      // the filename you want
+      a.download = ['video_', (new Date() + '').slice(4, 28), '.webm'].join('') ;
+      document.body.appendChild(a);
+      a.click();
+      //   form = new FormData();
+      //   form.append("file",file);
+      //   form.append("duration",secondsCount);
+      //   uploadRecording(form, callback, location)
+      };
+
+      $("#stop").hide()
+      $("#upload").show()
+      recorder.stop();
+      stopBtn.disabled = true;
+      stream.getTracks()[0].stop()
+      stream.getTracks()[1].stop()
+      $("#cancel").show()
+    }else{
+      callback(location)
+    }
+  }
+  $("#button-cancel").click(function(){
+    jqxhr.abort()
+    requestServerForCanceling()
+    showInSequence($(this).parent())
+  })
+
+  function requestServerForCanceling(){
+    $.ajax({
+      url: '/mobile/admin/video_cancel'
+    })
+  }
+  var completed_ajax= false;
+  function uploadRecording(form, callback, location){
+    jqxhr = $.ajax({
+      url: '/mobile/admin/upload',
+      type: 'POST',
+      data: form,
+      cache: false,
+      async: true,
+      contentType: false,
+      processData: false,
+      xhr: function () {
+        var myXhr = $.ajaxSettings.xhr();
+        if (myXhr.upload) {
+          myXhr.upload.addEventListener('progress', function (e) {
+            if (e.lengthComputable) {
+              console.log(e.loaded/e.total*100)
+              setProgress(e.loaded/e.total*100)
+              uploadingprogress = e.loaded/e.total*100
+              if(uploadingprogress== 100){
+                $("#uploaded").parent().fadeIn()
+                showInSequence($("#uploaded").parent());
+                $("#upload").hide()
+                completed_ajax= true
+                callback(location)
+              }
+            }
+          }, false);
+        }
+        return myXhr;
+      }
+    });
+  }
+  function showInSequence(div){
+    div.fadeOut(1000)
+    setTimeout(function(){$(".bottom").fadeIn(1000)},1500)
+  }
+</script>
+<% if @game %>
+  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
+<% end %>
+<script type="text/javascript">
+  $("#list").on("click", function(e){
+    if(objectionTime == true){
+      $("#myModal").show()      
+    }
+  })
+  $(".close").on("click", function(){
+      $("#myModal").hide()     
+  })
+  var objectionTime = true;
+  $(".objection").on("click", function(e){
+    e.preventDefault()
+    var objection = $(this).text();
+    var url = $(this).data("url");
+    $.ajax({
+      url: "<%= gda_objection_path %>",
+      type: 'post',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      data: {objection:  objection, url},
+      success: function(res){
+        objectionTime = false
+        document.getElementById("list").disabled = true;
+        setTimeout(function(){
+          objectionTime = true;
+          $("#list").removeAttr("disabled");
+        }, 10000)
+        $("#myModal").hide()
+
+      }
+    })
+  })
+</script>
