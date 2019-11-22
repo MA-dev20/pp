@@ -238,13 +238,13 @@ class GameMobileAdminController < ApplicationController
   def ended
     @game = current_game
     if @game.state != 'ended'
-      @game.update(state: 'ended_game', active: false)
-      # @game.update(state: 'ended', active: false)
+      # @game.update(state: 'ended_game', active: false)
+      @game.update(state: 'ended', active: false)
     end
     sign_out(@game)
     sign_out(@admin)
-    # redirect_to root_path
-    redirect_to gma_ended_game_path
+    redirect_to root_path
+    # redirect_to gma_ended_game_path
   end
 
   def ended_game
@@ -254,6 +254,7 @@ class GameMobileAdminController < ApplicationController
     end
     sign_out(@game)
     sign_out(@admin)
+    # redirect_to gma_ended_game_path
   end
     
   def replay
