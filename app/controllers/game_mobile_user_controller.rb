@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :video_uploading]
+  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :video_uploading, :ended_game]
   before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user, :video_uploading]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
@@ -272,7 +272,14 @@ class GameMobileUserController < ApplicationController
   def ended
     sign_out(@game)
     sign_out(@user)
-    redirect_to root_path
+    redirect_to gmu_ended_game_path
+    # redirect_to root_path
+  end
+
+  def ended_game
+    @game = current_game
+    sign_out(@game)
+    sign_out(@user)
   end
     
   private

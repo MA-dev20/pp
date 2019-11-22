@@ -1,5 +1,5 @@
 class GameDesktopAdminController < ApplicationController
-  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :ended]
+  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :ended, :ended_game]
   before_action :set_turn, only: [:play, :rate, :rating]
     
   layout 'game_desktop'
@@ -140,6 +140,19 @@ class GameDesktopAdminController < ApplicationController
     end
     redirect_to dash_admin_path
   end
+
+  def ended_game
+    @game = current_game
+    if @game.state != 'ended_game'
+      @game.update(state: 'ended_game', active: false)
+    end
+    sign_out(@game)
+    if @game.turns.where(status: "accepted").playable.count == 0
+      # @game.destroy
+    end
+    redirect_to dash_admin_path
+  end
+
 
   def objection
     params[:objection]

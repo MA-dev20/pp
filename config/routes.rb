@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   get 'games/rating', to: 'game_desktop_admin#rating', as: 'gda_rating'
   get 'games/bestlist', to: 'game_desktop_admin#bestlist', as: 'gda_bestlist'
   get 'games/ended', to: 'game_desktop_admin#ended', as: 'gda_ended'
+  get 'games/ended_game', to: 'game_desktop_admin#ended_game', as: 'gda_ended_game'
   get 'games/replay', to: 'game_desktop_admin#replay', as: 'gda_replay'
     
   get 'games/after_rating', to: 'game_desktop_admin#after_rating', as: 'gda_after_rating'
@@ -83,7 +84,7 @@ Rails.application.routes.draw do
   get 'mobile/admin/bestlist', to: 'game_mobile_admin#bestlist', as: 'gma_bestlist'
   get 'mobile/admin/replay', to: 'game_mobile_admin#replay', as: 'gma_replay'
   get 'mobile/admin/ended', to: 'game_mobile_admin#ended', as: 'gma_ended'
-  get 'mobile/admin/end_pitch', to: 'game_mobile_admin#end_pitch', as: 'gma_pitch_ended'
+  get 'mobile/admin/ended_game', to: 'game_mobile_admin#ended_game', as: 'gma_ended_game'
     
   get 'mobile/admin/after_rating', to: 'game_mobile_admin#after_rating', as: 'gma_after_rating'
     
@@ -117,6 +118,7 @@ Rails.application.routes.draw do
   get 'mobile/user/game/bestlist', to: 'game_mobile_user#bestlist', as: 'gmu_bestlist'
   get 'mobile/user/game/replay', to: 'game_mobile_user#replay', as: 'gmu_replay'
   get 'mobile/user/game/ended', to: 'game_mobile_user#ended', as: 'gmu_ended'
+  get 'mobile/user/game/ended_game', to: 'game_mobile_user#ended_game', as: 'gmu_ended_game'
   
     
 ####################################################################################
