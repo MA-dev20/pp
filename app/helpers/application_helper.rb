@@ -69,8 +69,8 @@ module ApplicationHelper
     qr = Barby::QrCode.new(text, level: :q, size: 4)
     svg = Barby::CairoOutputter.new(qr).to_svg({ xdim: 5, margin: 0 })
     svg.sub!('<svg ', '<svg preserveAspectRatio="none" ')
-    svg.sub!('rgb(100%,100%,100%)', 'transparent')
-    svg.sub!('rgb(0%,0%,0%)', 'white')
+    # svg.sub!('rgb(100%,100%,100%)', 'transparent')
+    # svg.sub!('rgb(0%,0%,0%)', 'white')
     "data:image/svg+xml;utf8,#{svg.gsub(/\n/, '')}"
 
   end
