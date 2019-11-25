@@ -14,7 +14,9 @@
 </section>
 
 <div class="qr-code-wrapper">
-    <img src='<%= generate_qr("#{request.host_with_port}/#{@game.password}") %>' alt="" class="qr-code">
+    <div class="qr-img-div">
+        <img src='<%= generate_qr("#{request.host_with_port}/#{@game.password}") %>' alt="" class="qr-code">
+    </div>
 </div>
 
 
