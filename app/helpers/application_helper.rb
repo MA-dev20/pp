@@ -57,16 +57,11 @@ module ApplicationHelper
     qr = Barby::QrCode.new(text, level: :q, size: 4)
     svg = Barby::CairoOutputter.new(qr).to_svg({ xdim: 5, margin: 0 })
     svg.sub!('<svg ', '<svg preserveAspectRatio="none" ')
-    svg.sub!('rgb(100%,100%,100%)', 'transparent')
-    svg.sub!('rgb(0%,0%,0%)', 'white')
+    # svg.sub!('rgb(100%,100%,100%)', 'transparent')
+    # svg.sub!('rgb(0%,0%,0%)', 'white')
+    svg.sub!('rgb(100%,100%,100%)', 'white')
+    svg.sub!('rgb(0%,0%,0%)', 'rgb(26, 142, 214)')
     "data:image/svg+xml;utf8,#{svg.gsub(/\n/, '')}"
-
-
-    # qrcode = RQRCode::QRCode.new("http://github.com/")
-    # svg = qrcode.as_svg(offset: 0,color: '000',shape_rendering: 'crispEdges',module_size: 6,standalone: true)
-    # svg.sub!('<svg ', '<svg preserveAspectRatio="none" ')
-    # "data:image/svg+xml;utf8,#{svg.gsub(/\n/, '')}"
-    # # debugger
 
   end
 end
