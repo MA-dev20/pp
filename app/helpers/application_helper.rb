@@ -51,6 +51,9 @@ module ApplicationHelper
     require 'barby'
     require 'barby/barcode'
     require 'barby/barcode/qr_code'
+    require 'barby/outputter/png_outputter'
+    require 'barby/outputter/html_outputter'
+    require 'barby/barcode/code_128'
   
     svg = Barby::QrCode.new(text, level: :q, size: 4).to_svg({ xdim: 5, margin: 0 })
     svg.sub!('<svg ', '<svg preserveAspectRatio="none" ')
