@@ -12,6 +12,11 @@
     <h1 class="nunito-bold">Jetzt Spiel beitreten!</h1>
     <h5 class="nunito-regular">peterpitch.com/<%= @game.password %></h5>
 </section>
+
+<div class="qr-code-wrapper">
+    <img src='<%= generate_qr("#{request.host_with_port}/#{@game.password}") %>' alt="" class="qr-code">
+</div>
+
 <section id="count" class="count">
     <%= @count %>
 </section>

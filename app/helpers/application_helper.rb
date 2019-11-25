@@ -45,5 +45,18 @@ module ApplicationHelper
       @show_three[@key+1] = result[@key+1]
     end
     return @show_three
-	end
+  end
+  
+  def generate_qr(text)
+    require 'barby'
+    require 'barby/barcode'
+    require 'barby/barcode/qr_code'
+  
+    svg = Barby::QrCode.new(text, level: :q, size: 4).to_svg({ xdim: 5, margin: 0 })
+    svg.sub!('<svg ', '<svg preserveAspectRatio="none" ')
+    # svg.sub!('rgb(100%,100%,100%)', 'transparent')
+    # svg.sub!('rgb(0%,0%,0%)', 'white')
+    "data:image/svg+xml;utf8,#{svg.gsub(/\n/, '')}"
+    
+  end
 end
