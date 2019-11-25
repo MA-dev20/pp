@@ -49,29 +49,24 @@ module ApplicationHelper
   
   def generate_qr(text)
     require 'barby'
+    require 'rqrcode'
     require 'barby/barcode/qr_code'
     require 'barby/outputter/svg_outputter'
     require 'barby/outputter/cairo_outputter'
-    
-  
-    # barcode = Barby::QrCode.new(text, level: :q, size: 5)
-    # base64_output = Base64.encode64(barcode.to_png({ xdim: 5 }))
-    # "data:image/png;base64,#{base64_output}"
-
-    # svg = Barby::QrCode.new(text, level: :q, size: 4).to_svg({ xdim: 5, margin: 0 })
-    # svg.sub!('<svg ', '<svg preserveAspectRatio="none" ')
-    # svg.sub!('rgb(100%,100%,100%)', 'transparent')
-    # svg.sub!('rgb(0%,0%,0%)', 'white')
-    # debugger
-    # "data:image/svg+xml;utf8,#{svg.gsub(/\n/, '')}"
-    
 
     qr = Barby::QrCode.new(text, level: :q, size: 4)
     svg = Barby::CairoOutputter.new(qr).to_svg({ xdim: 5, margin: 0 })
     svg.sub!('<svg ', '<svg preserveAspectRatio="none" ')
-    # svg.sub!('rgb(100%,100%,100%)', 'transparent')
-    # svg.sub!('rgb(0%,0%,0%)', 'white')
+    svg.sub!('rgb(100%,100%,100%)', 'transparent')
+    svg.sub!('rgb(0%,0%,0%)', 'white')
     "data:image/svg+xml;utf8,#{svg.gsub(/\n/, '')}"
+
+
+    # qrcode = RQRCode::QRCode.new("http://github.com/")
+    # svg = qrcode.as_svg(offset: 0,color: '000',shape_rendering: 'crispEdges',module_size: 6,standalone: true)
+    # svg.sub!('<svg ', '<svg preserveAspectRatio="none" ')
+    # "data:image/svg+xml;utf8,#{svg.gsub(/\n/, '')}"
+    # # debugger
 
   end
 end
