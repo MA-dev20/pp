@@ -255,8 +255,10 @@ class GameMobileAdminController < ApplicationController
       end
       sign_out(@game)
       sign_out(@admin)
+      redirect_to landing_ended_game_path
     else
-      redirect_to root_path
+      # redirect_to root_path
+      redirect_to landing_ended_game_path
     end
   end
     

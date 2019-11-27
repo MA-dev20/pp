@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   get 'landing/index'
   root 'landing#index'
+  get 'landing/ended_game', to: 'landing#ended_game', as: 'landing_ended_game'
   get '/contact', to: 'landing#contact', as: 'contact'
   get '/after_register/:admin_id', to: 'landing#after_register', as: 'after_register'
   get '/byebye', to: 'landing#byebye', as: 'byebye'

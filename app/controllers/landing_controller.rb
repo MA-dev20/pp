@@ -9,6 +9,9 @@ class LandingController < ApplicationController
 
   def index
   end
+
+  def ended_game
+  end
     
   def contact
   end
