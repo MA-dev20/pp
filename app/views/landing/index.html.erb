@@ -17,12 +17,12 @@
             <%= link_to 'Login', '#login', class: 'login-link', onclick: 'showLoginModal()' %> 
         </div>
         <div class="link">
-            <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
+            <%= link_to 'Demo vereinbaren', contact_path, class: 'btn btn-white' %>
         </div>
     </div>
     <div class="login">
         <%= link_to 'Login', '#login', onclick: 'showLoginModal()', class: 'login-link' %>
-        <%= link_to 'Get early access', contact_path, class: 'btn btn-white' %>
+        <%= link_to 'Demo vereinbaren', contact_path, class: 'btn btn-white' %>
     </div>
     <div class="navbar-mobile" onclick="showNavLinks()">
         <i class="fas fa-bars"></i>
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="cta">
-                <%= link_to 'Get early access', contact_path, class: 'btn btn-green' %>
+                <%= link_to 'Kostenlos starten', contact_path, class: 'btn btn-green' %>
             </div>
         </div>
         <div class="right wow fadeIn" data-wow-delay=".2s">
@@ -92,26 +92,26 @@
         <h1 class="wow fadeIn" data-wow-delay=".2s">So funktioniert's</h1>
         <div class="categories wow fadeInUp" data-wow-delay=".2s">
         <div class="rudel">
-            <%= image_tag 'landing/hiw/1.png'%>
+            <%= image_tag 'landing/hiw/rudel.png'%>
             <div class="text">
                 <h1>Rudelbildung</h1>
-                Bacon ipsum dolor amet venison pancetta sirloin alcatra strip steak beef ribs. Short loin meatball turkey, frankfurter ribeye bil et.
+                Du trommelst das Rudel zusammen und erstellst online eine Spielgruppe. Sind alle Wölfe mit ihren Smartphones beigetreten? Dann kann es losgehen!
             </div>
         </div>
         <%= image_tag 'landing/hiw/line1.png', id: 'line1' %>
         <div class="pitch">
-            <%= image_tag 'landing/hiw/2.png' %>
+            <%= image_tag 'landing/hiw/pitchit.png' %>
             <div class="text">
                 <h1>Pitch It</h1>
-                Bacon ipsum dolor amet venison pancetta sirloin alcatra strip steak beef ribs. Short loin meatball turkey, frankfurter ribeye bil et.
+                Jetzt wird es spannend! Das Voting entscheidet wer pitcht. Ab nach vorne um dem Team ein Catchword zu verkaufen… Produkt oder Dienstleistung?
             </div>
         </div>
         <%= image_tag 'landing/hiw/line2.png', id: 'line2' %>
         <div class="rating">
-            <%= image_tag 'landing/hiw/3.png' %>
+            <%= image_tag 'landing/hiw/rating.png' %>
             <div class="text">
                 <h1>Rating</h1>
-                Bacon ipsum dolor amet venison pancetta sirloin alcatra strip steak beef ribs. Short loin meatball turkey, frankfurter ribeye bil et.
+                Das Publikum bewertet den Pitch anschließend mit dem Smartphone in 4 Kategorien. Direktes Feedback und Interaktion auf ganzer Linie.
             </div>
         </div>
         </div>
@@ -136,7 +136,7 @@
             <div class="blue">Stage is yours</div>
             <div class="heading"><span class="green">Gamification</span> - Pitch It!</div>
             <div class="content">Gamification bedeutet Spaß in spielfremde & theoretische Situationen einzubringen, wie beispielsweise in Vertriebsschulungen. Mit unserem digitalen Trainingstool und lustigen Catchwords kommen bei deinen Mitarbeitern ungeahnte Potential zum Vorschein. <br>
-            <%= link_to 'Get early access!', contact_path , class: 'btn btn-green' %>
+            <%= link_to 'Jetzt anmelden', contact_path , class: 'btn btn-green' %>
             </div>
         </div>
         <div class="paw1">
@@ -155,7 +155,7 @@
             <div class="blue">Rate now</div>
             <div class="heading"><span class="green">Interaktion</span> - par excellence</div>
             <div class="content">Frontpräsentationen waren gestern. Durch die interaktive Bewertung jedes Einzelnen, sind alle Mitarbeiter eingebunden und verbessern nicht nur sich selbst, sondern auch das Teamwork. Die Kollegen helfen spielerisch bei der Einschätzung der Fremdwahrnehmung und hieven das Team auf ein neues Level. <br>
-            <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
+            <%= link_to 'Zugang anfordern', contact_path, class: 'btn btn-white' %>
             </div>
         </div>
         <div class="paw2">
@@ -175,7 +175,7 @@
             <div class="blue">Performance-boost!</div>
             <div class="heading"><span class="green">Controlling</span> - maximale Transparenz</div>
             <div class="content">Wir machen Softskills erstmals messbar. Du behälst den Lernfortschritt deiner Mitarbeiter genau im Auge. Jede Pitch-Performance wird gespeichert und ist jederzeit abrufbar. Erkenne die Stärken und Schwächen und arbeite gezielt an den Fähigkeiten deines Teams. <br>
-            <%= link_to 'Get early access!', contact_path, class: 'btn btn-green' %>
+            <%= link_to 'Kostenlos testen', contact_path, class: 'btn btn-green' %>
             </div>
         </div>
     </div>
@@ -261,7 +261,8 @@
             <div class="question">
                 <div class="q" onclick="showFAQ('q1')">
                     Warum sollte ich Peter Pitch nutzen? 
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus" id="plus1"></i>
+                    <i class="fas fa-minus" id="minus1"></i>
                 </div>
                 <div class="text fadeIn" id="q1">
                     Als erstes Blended-Learning Tool für Kommunikation und Vertrieb verbindet Peter Pitch die Vorteile digitaler und analoger Lernwelten. Durch den praktischen Trainingsansatz deckt Peter Pitch deine kommunikativen Stärken und Schwächen auf und verbessert durch detailiertes Feedback deine Beratungs- und Verkaufskompetenzen.
@@ -270,7 +271,8 @@
             <div class="question">
                 <div class="q" onclick="showFAQ('q2')">
                     Muss ich mir eine Software herunterladen?
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus" id="plus2"></i>
+                    <i class="fas fa-minus" id="minus2"></i>
                 </div>
                 <div class="text fadeIn" id="q2">
                     Nein, es muss kein Programm auf den jeweiligen Endgeräten installiert werden. Peter Pitch ist zu 100% browserbasiert und ohne das Herunterladen von Software direkt einsatzbereit.
@@ -279,7 +281,8 @@
             <div class="question">
                 <div class="q" onclick="showFAQ('q3')">
                     Kann ich Peter Pitch individualisieren?
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus" id="plus3"></i>
+                    <i class="fas fa-minus" id="minus3"></i>
                 </div>
                 <div class="text fadeIn" id="q3">
                     Peter Pitch kann im Handumdrehen auf deine Bedürfnisse und individuellen Anforderungen angepasst werden. Neben den angebotenen Catchwords kannst du reale Produkt- und Dienstleistungsnamen in dein Pitch Training integrieren. Darüberhinaus hast du die Möglichkeit das Zeitfenster anzupassen und eigene Einwände zu verfassen.
@@ -288,7 +291,8 @@
             <div class="question">
                 <div class="q" onclick="showFAQ('q4')">
                     Ist Peter Pitch ein E-Learning Tool?
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus" id="plus4"></i>
+                    <i class="fas fa-minus" id="minus4"></i>
                 </div>
                 <div class="text fadeIn" id="q4">
                     Jein. Es gibt Kompetenzen die in der reinen Theorie nur schwer vermittelbar sind und umso mehr in der Praxis trainiert werden müssen. Peter Pitch vereint die digitalen UND analogen Lernwelten. Das Lehrziel deiner Schulungsmaßnahme wird so möglichst effizient und effektiv erreicht.
@@ -297,7 +301,8 @@
             <div class="question">
                 <div class="q" onclick="showFAQ('q5')">
                     Was kostet Peter Pitch
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus" id="plus5"></i>
+                    <i class="fas fa-minus" id="minus5"></i>
                 </div>
                 <div class="text fadeIn" id="q5">
                     Kontaktiere das Peter Pitch-Team für dein individuelles 
@@ -308,10 +313,41 @@
     </div>
 </section>
 <div class="startnow wow fadeIn">
-        Jetzt mit Peter Pitch durchstarten!
-        <%= link_to "Let's Pitch", contact_path, class: 'btn btn-white' %>
+    Jetzt mit Peter Pitch durchstarten!
+    <%= link_to "Demo vereinbaren", contact_path, class: 'btn btn-white' %>
+</div>
+<section id="secure">
+    <div class="heading">Sicherheit &#38; Datenschutz</div>
+    <div class="text">
+        Wir nehmen unsere Verantwortung zum Schutz deiner Daten sehr ernst. Peter Pitch ist eine komplett inhouse programmierte Software aus Deutschland und wird auch dort gehosted. Zudem verwenden wir ausschließlich höchste Industriestandarts, um Datenschuts und Vertraulichkeit sicherzustellen.
+    </div>
+    <div class="content">
+    <div class="hosted">
+        <%= image_tag 'landing/germany.png' %>
+        <h1>Datenschutz made in Germany</h1>
+        <div class="text">
+            Unsere Server stehen in Deutschland und Peter Pitch wurde auch dort entwickelt. Deine Daten sind in Rechenzentren gespeichert die nach den höchsten Industrienormen PCI DSS Level 1 und ISO 9001/ISO 27001 zertifiziert sind.
+        </div>
+    </div>
+    
+    <div class="ssl">
+        <%= image_tag 'landing/ssl.png' %>
+        <h1>SSL Zertifizierung</h1>
+        <div class="text">
+            Peter Pitch ist SSL-zertifiziert und operiert ausschließlich über sichere SSL verschlüsselte Verbindungen, um den Schutz deiner Daten sicherzustellen.
+        </div>
+    </div>
+    <div class="daten">
+        <%= image_tag 'landing/gdpr.png' %>
+        <h1>Datenschutz auf Onlinebanking Niveau</h1>
+        <div class="text">
+            Peter Pitch ist DSGVO konform! Unsere Kundendaten und User Informationen werden mit den besten Verschlüsselungsalgorithmen übertragen, die derzeit verfügbar sind.  
+        </div>
+    </div>
     </div>
 </section>
+</section>
+
 <section id="footer">
     <div class="logo">
         <%= image_tag 'landing/logo.png' %>
@@ -626,18 +662,28 @@
         if(qid == 'q1') {
             $('#q1').toggle();
             $('#q1').addClass('animated');
+            $('#plus1').toggle();
+            $('#minus1').toggle();
         } else if(qid == 'q2') {
             $('#q2').toggle();
             $('#q2').addClass('animated');
+            $('#plus2').toggle();
+            $('#minus2').toggle();
         } else if(qid == 'q3') {
             $('#q3').toggle();
             $('#q3').addClass('animated');
+            $('#plus3').toggle();
+            $('#minus3').toggle();
         } else if(qid == 'q4') {
             $('#q4').toggle();
             $('#q4').addClass('animated');
+            $('#plus4').toggle();
+            $('#minus4').toggle();
         } else if(qid == 'q5') {
             $('#q5').toggle();
             $('#q5').addClass('animated');
+            $('#plus5').toggle();
+            $('#minus5').toggle();
         }
     }
 
