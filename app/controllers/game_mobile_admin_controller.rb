@@ -1,6 +1,6 @@
 class GameMobileAdminController < ApplicationController
   before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :youtube_video]
-  before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email, :video_testings]
+  before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email, :video_testings, :ended_game]
   before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
   skip_before_action :verify_authenticity_token, only: [:save_video]
@@ -256,7 +256,6 @@ class GameMobileAdminController < ApplicationController
       sign_out(@game)
       sign_out(@admin)
     else
-      # redirect_to landing_index_path
       redirect_to root_path
     end
   end
