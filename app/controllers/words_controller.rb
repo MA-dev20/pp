@@ -1,4 +1,5 @@
 class WordsController < ApplicationController
+  before_action :authenticate
   before_action :set_word, only: [:edit, :update, :destroy]
     
   def new
@@ -35,10 +36,10 @@ class WordsController < ApplicationController
     else
         flash[:word_name] = 'Gib einen Namen an!'
     end
-    if params[:word][:site] == 'admin_dash'
+    if !current_admin.nil?
       redirect_to dash_admin_catchwords_path(@basket.id)
     else
-      redirect_to backoffice_words_path
+      redirect_to backoffice_edit_catchword_path(@basket)
     end
   end
     
@@ -48,10 +49,10 @@ class WordsController < ApplicationController
   def update
     if @word.update(word_params)
       flash[:success] = 'Wort geupdated!'
-      redirect_to backoffice_words_path
+      redirect_to backoffice_edit_catchword_path(@basket)
     else
       flash[:danger] = 'Konnte Wort NICHT updaten!'
-      redirect_to backoffice_words_path
+      redirect_to backoffice_edit_catchword_path(@basket)
     end
   end
     
@@ -59,17 +60,27 @@ class WordsController < ApplicationController
     if @word.catchword_baskets.count > 1
       @basket.words.delete(@word)
       flash[:success] = 'Wort aus Liste gelöscht!'
-      redirect_to dash_admin_catchwords_path(@basket.id)
     elsif @word.destroy
       flash[:success] = 'Wort gelöscht!'
-      redirect_to dash_admin_catchwords_path(@basket.id)
     else
       flash[:danger] = 'Konnte Wort NICHT löschen!'
       redirect_to dash_admin_catchwords_path(@basket.id)
     end
+    if !current_root.nil?
+        redirect_to backoffice_edit_catchword_path(@basket)
+    else
+        redirect_to dash_admin_catchwords_path(@basket.id)
+    end
   end
     
   private
+    def authenticate
+      if current_admin.nil? && current_root.nil?
+          flash[:danger] = "Bitte logge dich ein!"
+          redirect_to new_session_path(admin)
+          return
+      end
+    end
     def set_word
       @word = Word.find(params[:word_id])
       @basket = CatchwordsBasket.find(params[:basket_id])

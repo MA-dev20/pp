@@ -1,5 +1,21 @@
 class Admins::RegistrationsController < Devise::RegistrationsController
-  
+  def create
+    @admin = Admin.new(admin_params)
+    @admin.activated = false
+    @admin.skip_password_validation = true
+    if !@admin.save
+      redirect_to contact_path
+    else
+      redirect_to after_register_path(@admin)
+    end
+  end
+  def destroy
+    resource.destroy
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    set_flash_message! :notice, :destroyed
+    yield resource if block_given?
+    respond_with_navigational(resource){ redirect_to byebye_path(name: resource.fname) }
+  end
   protected
     def after_sign_up_path_for(resource)
       dash_admin_path
@@ -11,5 +27,9 @@ class Admins::RegistrationsController < Devise::RegistrationsController
     
     def update_resource(resource, params)
       resource.update_without_password(params)
+    end
+  private
+    def admin_params
+      params.require(:admin).permit(:fname, :lname, :company_name, :employees, :company_position, :telephone, :message, :street, :city, :avatar, :logo, :zipcode, :email, :password)
     end
 end

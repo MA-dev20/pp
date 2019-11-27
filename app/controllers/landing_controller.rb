@@ -20,6 +20,9 @@ class LandingController < ApplicationController
   def after_register
     @admin = Admin.find(params[:admin_id])
   end
+    
+  def byebye
+  end
 
   def update_admin
     @admin = Admin.where(vid_token: params[:v_id]).first

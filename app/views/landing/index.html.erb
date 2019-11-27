@@ -3,12 +3,15 @@
     <div class="navbar-links" id="navLinks">
         <div class="link">
             <%= link_to 'Produkt', '#product' %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'FAQ', '#faq' %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'Kontakt', contact_path %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'Login', '#login', class: 'login-link', onclick: 'showLoginModal()' %> 
@@ -17,15 +20,18 @@
             <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
         </div>
     </div>
-    <%= link_to '', '#login', class: 'login fas fa-sign-in-alt', onclick: 'showLoginModal()' %>
+    <div class="login">
+        <%= link_to 'Login', '#login', onclick: 'showLoginModal()', class: 'login-link' %>
+        <%= link_to 'Get early access', contact_path, class: 'btn btn-white' %>
+    </div>
     <div class="navbar-mobile" onclick="showNavLinks()">
         <i class="fas fa-bars"></i>
     </div>
 </section>
 <section id="content">
     <div class="head">
-        <div class="left wow fadeIn">
-            <div class="heading-big" id='typed'>Peter Pitch</div>
+        <div class="left wow fadeIn" data-wow-delay=".2s">
+            <div class="heading-big" id='typed'></div>
             <div id="typed-strings">
                 <span>Peter Pitch</span>
                 <p>ZurückBlitzer</p>
@@ -35,31 +41,31 @@
             <div class="heading-small">Das Blended Learning Tool für<br>Kommunikation und Vertrieb</div>
             <div class="points">
                 <div class="point">
-                    <%= image_tag 'landing/icon-secure.png' %>
-                    <h1>Exzellente Absicherung</h1>
-                    <h5>Hervorragend bewertete Technik</h5>
+                    <%= image_tag 'landing/icon-training.png' %>
+                    <h1>Training</h1>
+                    <h5>Interaktiv und Digital</h5>
                 </div>
                 <div class="point">
-                    <%= image_tag 'landing/icon-target.png' %>
-                    <h1>Maximale Zeitersparnis</h1>
-                    <h5>100% digitale Services</h5>
+                    <%= image_tag 'landing/icon-analyse.png' %>
+                    <h1>Analyse</h1>
+                    <h5>Macht Softskills messbar</h5>
                 </div>
                 <div class="point">
-                    <%= image_tag 'landing/icon-money.png' %>
-                    <h1>Hohes Einsparpotential</h1>
-                    <h5>Günstige Beiträge</h5>
+                    <%= image_tag 'landing/icon-recruiting.png' %>
+                    <h1>Recruiting</h1>
+                    <h5>Testet Bewerber</h5>
                 </div>
                 <div class="point">
-                    <%= image_tag 'landing/icon-time.png' %>
-                    <h1>Stabile Beiträge</h1>
-                    <h5>Zukunftssicher Berechnung</h5>
+                    <%= image_tag 'landing/icon-event.png' %>
+                    <h1>Event</h1>
+                    <h5>100% Entertainmentgarantie</h5>
                 </div>
             </div>
             <div class="cta">
                 <%= link_to 'Get early access', contact_path, class: 'btn btn-green' %>
             </div>
         </div>
-        <div class="right wow fadeIn">
+        <div class="right wow fadeIn" data-wow-delay=".2s">
             <%= image_tag 'landing/pitch.png' %>
             
         </div>
@@ -68,57 +74,106 @@
     <%= image_tag 'landing/shape.svg', class: 'shape s153', id: 'shape2' %>
     
     
-    <div class="wie-geil-ist-das wow fadeIn">
+    <div class="wie-geil-ist-das wow fadeIn" data-wow-delay=".2s">
         <h1>Wie geil ist das denn?</h1>
         <h5>Nimm den Spaß in deinem Unternehmen ernst und verwandel dein Meetings in wahre Performance-Booster. Mit Peter Pitch treibst du das Mitarbeiter-Rudel zusammen und machst sogar aus den wackeligsten Welpen wahre Wölfe. Stage is yours!</h5>
-        <div class="play-video"><i class="fas fa-play-circle pulse" onclick="showVideoModal()"></i></div>
+        <div class="play-video pulse-shadow"><i class="fas fa-play" onclick="showVideoModal()"></i></div>
     </div>
     <%= image_tag 'landing/shape.svg', class: 'shape s310', id: 'shape3' %>
     <%= image_tag 'landing/shape.svg', class: 'shape s87 right219', id: 'shape4' %>
     
+    <div class="dots">
+        <div class="dot blue wow fadeIn"></div>
+        <div class="dot green wow fadeIn" data-wow-delay=".2s"></div>
+        <div class="dot wow fadeIn" data-wow-delay=".4s"></div>
+    </div>
     
+    <section id="hiw">
+        <h1 class="wow fadeIn" data-wow-delay=".2s">So funktioniert's</h1>
+        <div class="categories wow fadeInUp" data-wow-delay=".2s">
+        <div class="rudel">
+            <%= image_tag 'landing/hiw/1.png'%>
+            <div class="text">
+                <h1>Rudelbildung</h1>
+                Bacon ipsum dolor amet venison pancetta sirloin alcatra strip steak beef ribs. Short loin meatball turkey, frankfurter ribeye bil et.
+            </div>
+        </div>
+        <%= image_tag 'landing/hiw/line1.png', id: 'line1' %>
+        <div class="pitch">
+            <%= image_tag 'landing/hiw/2.png' %>
+            <div class="text">
+                <h1>Pitch It</h1>
+                Bacon ipsum dolor amet venison pancetta sirloin alcatra strip steak beef ribs. Short loin meatball turkey, frankfurter ribeye bil et.
+            </div>
+        </div>
+        <%= image_tag 'landing/hiw/line2.png', id: 'line2' %>
+        <div class="rating">
+            <%= image_tag 'landing/hiw/3.png' %>
+            <div class="text">
+                <h1>Rating</h1>
+                Bacon ipsum dolor amet venison pancetta sirloin alcatra strip steak beef ribs. Short loin meatball turkey, frankfurter ribeye bil et.
+            </div>
+        </div>
+        </div>
+    </section>
     <div class="references wow fadeIn">
-        <h1>Referenzen</h1>
+        <h1 class="mobilehead">Referenzen</h1>
+        <h1 class="desktophead"><div class="line1"></div>Du befindest dich in bester Gesellschaft <div class="line2"></div></h1>
         <div class="logo-wheel">
-            <%= image_tag 'logos/instafreight.png' %>
+            <%= image_tag 'logos/lensing.png' %>
+            <%= image_tag 'logos/mysecondear.png' %>
             <%= image_tag 'logos/ergo.png' %>
             <%= image_tag 'logos/tremonia.png' %>
-            <%= image_tag 'logos/masterplan.png' %>
         </div>
     </div>
     
     <section id="product">
     <div class="image-text left">
-        <div class="image wow fadeIn">
-            <%= image_tag 'landing/gamification.gif' %>
+        <div class="image wow fadeInLeft" data-wow-delay=".2s">
+            <%= image_tag 'landing/gamification.png' %>
         </div>
-        <div class="text wow fadeIn">
+        <div class="text wow fadeInRight" data-wow-delay=".2s">
             <div class="blue">Stage is yours</div>
-            <div class="heading">Gamification - Pitch It!</div>
+            <div class="heading"><span class="green">Gamification</span> - Pitch It!</div>
             <div class="content">Gamification bedeutet Spaß in spielfremde & theoretische Situationen einzubringen, wie beispielsweise in Vertriebsschulungen. Mit unserem digitalen Trainingstool und lustigen Catchwords kommen bei deinen Mitarbeitern ungeahnte Potential zum Vorschein. <br>
             <%= link_to 'Get early access!', contact_path , class: 'btn btn-green' %>
             </div>
         </div>
+        <div class="paw1">
+            <div class="paw1 wow fadeIn"></div>
+            <div class="paw2 wow fadeIn06" data-wow-delay=".2s"></div>
+            <div class="paw3 wow fadeIn06" data-wow-delay=".4s"></div>
+            <div class="paw4 wow fadeIn04" data-wow-delay=".6s"></div>
+        </div>
     </div>
+    <%= image_tag 'landing/shape.svg', class: 'shape s87', id: 'shape5' %>
     <div class="image-text right">
-       <div class="image wow fadeIn">
+       <div class="image wow fadeInRight" data-wow-delay=".2s">
             <%= image_tag 'landing/interaction.png' %>
         </div>
-        <div class="text wow fadeIn">
+        <div class="text wow fadeInLeft" data-wow-delay=".2s">
             <div class="blue">Rate now</div>
-            <div class="heading">Interaktion - par excellence</div>
+            <div class="heading"><span class="green">Interaktion</span> - par excellence</div>
             <div class="content">Frontpräsentationen waren gestern. Durch die interaktive Bewertung jedes Einzelnen, sind alle Mitarbeiter eingebunden und verbessern nicht nur sich selbst, sondern auch das Teamwork. Die Kollegen helfen spielerisch bei der Einschätzung der Fremdwahrnehmung und hieven das Team auf ein neues Level. <br>
             <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
             </div>
         </div>
+        <div class="paw2">
+            <div class="paw1 wow fadeIn"></div>
+            <div class="paw2 wow fadeIn06" data-wow-delay=".2s"></div>
+            <div class="paw3 wow fadeIn06" data-wow-delay=".4s"></div>
+            <div class="paw4 wow fadeIn04" data-wow-delay=".6s"></div>
+        </div>
     </div>
+    <%= image_tag 'landing/shape.svg', class: 'shape s153', id: 'shape6' %>
+    <%= image_tag 'landing/shape.svg', class: 'shape s87', id: 'shape7' %>
     <div class="image-text left">
-        <div class="image wow fadeIn">
+        <div class="image wow fadeInLeft" data-wow-delay=".2s">
             <%= image_tag 'landing/performance.png' %>
         </div>
-        <div class="text wow fadeIn">
+        <div class="text wow fadeInRight" data-wow-delay=".2s">
             <div class="blue">Performance-boost!</div>
-            <div class="heading">Controlling - maximale Transparenz</div>
+            <div class="heading"><span class="green">Controlling</span> - maximale Transparenz</div>
             <div class="content">Wir machen Softskills erstmals messbar. Du behälst den Lernfortschritt deiner Mitarbeiter genau im Auge. Jede Pitch-Performance wird gespeichert und ist jederzeit abrufbar. Erkenne die Stärken und Schwächen und arbeite gezielt an den Fähigkeiten deines Teams. <br>
             <%= link_to 'Get early access!', contact_path, class: 'btn btn-green' %>
             </div>
@@ -126,9 +181,16 @@
     </div>
     </section>
     
-    <div class="testimonials wow fadeIn">
-       <div class="heading">
-           Testimonials
+    <div class="dots">
+        <div class="dot blue wow fadeIn"></div>
+        <div class="dot green wow fadeIn" data-wow-delay=".2s"></div>
+        <div class="dot wow fadeIn" data-wow-delay=".4s"></div>
+    </div>
+    
+    <%= image_tag 'landing/shape.svg', class: 'shape s310', id: 'shape8' %>
+    <div class="testimonials">
+       <div class="heading wow fadeIn" data-wow-delay=".2s">
+           Wir lieben Peter
        </div>
         <div class="slider">
             <div class="circle" id="test_circle1"></div>
@@ -146,7 +208,7 @@
                 <div class="reference">Tremoniamedia</div>
             </div>
         </div>
-        <div class="card" id="card1">
+        <div class="card wow zoomIn" data-wow-delay=".2s" id="card1">
             <div class="text">
                 "Die Mitarbeiter lieben es - unsere Schulungen avancieren mit Peter Pitch zu echten Highlights."
             </div>
@@ -157,9 +219,9 @@
             </div>
         </div>
         
-        <div class="card" id="card2">
+        <div class="card wow zoomIn" data-wow-delay=".4s" id="card2">
             <div class="text">
-                "Was mich von den anderen 8.000 Coaches in Deutschland unterscheided? Peter Pitch."
+                "Spaß und Vertrieb gehören zusammen. Peter Pitch trägt einen großen Teil zu unserer erfolgreichen Lernkultur bei."
             </div>
             <div class="people">
                 <%= image_tag 'people/seebener.png' %>
@@ -168,7 +230,7 @@
             </div>
         </div>
         
-        <div class="card" id="card3">
+        <div class="card wow zoomIn" data-wow-delay=".3s" id="card3">
             <div class="text">
                 "Erstmals sind Soft Skills messbar. Wir verbessern die wesentlichen Elemente der Kommunikation - spielen leicht."
             </div>
@@ -191,10 +253,7 @@
         </div>
         </div>
     </div>
-    <div class="startnow wow fadeIn">
-        Jetzt mit Peter Pitch durchstarten!
-        <%= link_to "Let's Pitch", contact_path, class: 'btn btn-white' %>
-    </div>
+    <%= image_tag 'landing/shape.svg', class: 'shape s310', id: 'shape9' %>
 <section id="faq">
     <div class="faq wow fadeIn">
         <div class="heading">Häufige Fragen</div>
@@ -248,6 +307,10 @@
         </div>
     </div>
 </section>
+<div class="startnow wow fadeIn">
+        Jetzt mit Peter Pitch durchstarten!
+        <%= link_to "Let's Pitch", contact_path, class: 'btn btn-white' %>
+    </div>
 </section>
 <section id="footer">
     <div class="logo">
@@ -277,17 +340,23 @@
 </section>
 
 <div class="fullscreen-modal" id="loginModal">
+    
     <div class="close"><%= link_to '', root_path, class: "fas fa-times" %></div>
     <div class="card">
     <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
         <h1>Login</h1>
         <div class="form-group ">
-            <%= f.email_field :email, class: 'form-field', id: 'loginEmail',placeholder:"E-Mail eingeben", required: true  %>
+            <label for="">Email</label>
+            <%= f.email_field :email, class: 'form-field', id: 'loginEmail', required: true  %>
+        </div>
+        <div class="form-group">
+            <label for="">Passwort</label>
+            <div class="right"><%= link_to "Passwort vergessen?", new_password_path(Admin) %></div>
+            <%= f.password_field :password, class: 'form-field',id: 'loginPassword', required: true  %>
             <br>
-            <%= f.password_field :password, class: 'form-field',id: 'loginPassword',placeholder:"Passwort eingeben", required: true  %>
-            <br>
+        </div>
+        <div class="form-group center">
             <%= f.submit 'Login', class: 'btn btn-green', id: "loginButton" %>
-            <br>
         </div>
     <% end %>
     </div>
@@ -295,7 +364,7 @@
 
 <div class="video-modal" id="videoModal">
     <div class="close"><i class="fas fa-times" onclick="showVideoModal()"></i></div>
-    <%= video_tag 'gameintro.mp4', id: 'modalVideo' %>
+    <%= video_tag 'landing.mp4', id: 'modalVideo', controls: true, preload: 'auto' %>
 </div>
 <script>
     /* Swiping through Testimonials */
@@ -419,6 +488,113 @@
                         TEST.querySelector('.cards').style.setProperty('left', '-400px');
                         $("#test_circle2").addClass('active');
                         $("#test_circle3").removeClass('active');
+                    }
+                }
+            }
+        }
+        /* reset values */
+        xDown = null;
+        yDown = null;                                             
+    };
+    /* Swiping through HIW */
+    const HIW = document.querySelector('#hiw');
+    HIW.addEventListener('touchstart', handleTouchStart, false);        
+    HIW.addEventListener('touchmove', handleTouchMoveHIW, false);
+
+    function handleTouchMoveHIW(evt) {
+
+
+        var xUp = evt.touches[0].clientX;                                    
+        var yUp = evt.touches[0].clientY;
+
+        var xDiff = xDown - xUp;
+        var yDiff = yDown - yUp;
+
+        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+            var left = HIW.querySelector('.categories').style.left;
+            var width = window.getComputedStyle(HIW).getPropertyValue("width");
+            if (width == '300px') {
+                if ( xDiff > 0 ) {
+                    if (left == '0px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '-460px');
+                        $("#hiw_circle2").addClass('active');
+                        $("#hiw_circle1").removeClass('active');
+                    } else if(left == '-460px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '-900px');
+                        $("#hiw_circle3").addClass('active');
+                        $("#hiw_circle2").removeClass('active');
+                    } else {
+                        HIW.querySelector('.categories').style.setProperty('left', '0px');
+                        $("#hiw_circle1").addClass('active');
+                        $("#hiw_circle3").removeClass('active');
+                    }
+                } else {
+                    if (left == '-900px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '-460px');
+                        $("#hiw_circle2").addClass('active');
+                        $("#hiw_circle3").removeClass('active');
+                    } else if(left == '-460px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '0px');
+                        $("#hiw_circle1").addClass('active');
+                        $("#hiw_circle2").removeClass('active');
+                    }
+                    else {
+                        HIW.querySelector('.categories').style.setProperty('left', '-900px');
+                        $("#hiw_circle3").addClass('active');
+                        $("#hiw_circle1").removeClass('active');
+                    }
+                } 
+            } else if (width == '500px') {
+                if ( xDiff > 0 ) {
+                    if (left == '100px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '-360px');
+                        $("#hiw_circle2").addClass('active');
+                        $("#hiw_circle1").removeClass('active');
+                    } else if(left == '-360px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '-800px');
+                        $("#hiw_circle3").addClass('active');
+                        $("#hiw_circle2").removeClass('active');
+                    } else {
+                        HIW.querySelector('.categories').style.setProperty('left', '100px');
+                        $("#hiw_circle1").addClass('active');
+                        $("#hiw_circle3").removeClass('active');
+                    }
+                } else {
+                    if (left == '-800px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '-360px');
+                        $("#hiw_circle2").addClass('active');
+                        $("#hiw_circle3").removeClass('active');
+                    } else if(left == '-360px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '100px');
+                        $("#hiw_circle1").addClass('active');
+                        $("#hiw_circle2").removeClass('active');
+                    }
+                    else {
+                        HIW.querySelector('.categories').style.setProperty('left', '-800px');
+                        $("#hiw_circle3").addClass('active');
+                        $("#hiw_circle1").removeClass('active');
+                    }
+                } 
+            } else if (width == '900px') {
+                if ( xDiff > 0 ) {
+                    if(left == '100px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '-360px');
+                        $("#hiw_circle3").addClass('active');
+                        $("#hiw_circle1").removeClass('active');
+                    } else {
+                        HIW.querySelector('.categories').style.setProperty('left', '100px');
+                        $("#hiw_circle1").addClass('active');
+                        $("#hiw_circle3").removeClass('active');
+                    }
+                } else {
+                    if(left == '-360px') {
+                        HIW.querySelector('.categories').style.setProperty('left', '100px');
+                        $("#hiw_circle1").addClass('active');
+                        $("#hiw_circle3").removeClass('active');
+                    } else {
+                        HIW.querySelector('.categories').style.setProperty('left', '-360px');
+                        $("#hiw_circle3").addClass('active');
+                        $("#hiw_circle1").removeClass('active');
                     }
                 }
             }

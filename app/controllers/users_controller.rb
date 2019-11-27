@@ -1,10 +1,7 @@
 class UsersController < ApplicationController
   include ApplicationHelper
-  before_action :authenticate_admin!, :set_vars, except: [:create]
-
-    
-  def new
-  end
+  before_action :authenticate, :set_admin
+  before_action :set_user, only: [:update, :destroy]
     
   def create
     if user_params[:email].empty?
@@ -12,31 +9,30 @@ class UsersController < ApplicationController
     elsif !Admin.find_by(email: user_params[:email]).nil? || !User.find_by(email: user_params[:email]).nil?
       flash[:user_email] = 'Schon vergeben!'
     end
-    if user_params[:email].empty? || !Admin.find_by(email: user_params[:email]).nil? || !User.find_by(email: user_params[:email]).nil?
-      redirect_to dash_admin_teams_path
-      return
-    end
-    @random_pass = random_pass
-    @user = User.new(user_params)
-    @user.encrypted_pw = @user.encrypt @random_pass
-    @user.save
-    if params[:user][:teams].present?
-      @user.teams.destroy_all
-      params[:user][:teams].each do |t|
-        @user.teams << Team.find_by(id: t)
+    if !user_params[:email].empty? || Admin.find_by(email: user_params[:email]).nil? || User.find_by(email: user_params[:email]).nil?
+      @random_pass = random_pass
+      @user = User.new(user_params)
+      @user.encrypted_pw = @user.encrypt @random_pass
+      @user.save
+      if params[:user][:teams].present?
+        @user.teams.destroy_all
+        params[:user][:teams].each do |t|
+          @user.teams << Team.find_by(id: t)
+        end
+      else
+        @user.teams.destroy_all
       end
-    else
-      @user.teams.destroy_all
+      if @user.save
+        SendInvitationJob.perform_later(@user, @random_pass)
+      else
+        flash[:danger] = "Konnte User nicht erstellen"
+      end
     end
-    if @user.save
-      SendInvitationJob.perform_later(@user, @random_pass)
+    if !current_root.nil?
+      redirect_to backoffice_edit_user_path(@user)
     else
-      flash[:danger] = "Konnte User nicht erstellen"
+      redirect_to dash_admin_teams_path
     end
-    redirect_to dash_admin_teams_path
-  end
-    
-  def edit
   end
     
   def update
@@ -51,26 +47,42 @@ class UsersController < ApplicationController
     else
       @user.teams.destroy_all
     end
-    redirect_to dash_admin_user_path(@user)
-  end
-    
-    
-  def destroy
-    if @user.destroy
-      redirect_to dash_admin_teams_path
+    if !current_root.nil?
+      redirect_to backoffice_edit_admin_path(@admin)
+      return
     else
-      flash[:danger] = 'Konnte Spieler nicht löschen!'
-      redirect_to dash_admin_users_path
+      redirect_to dash_admin_user_path(@user)
+      return
     end
   end
-  
-  
+    
+  def destroy
+    if !@user.destroy
+      flash[:danger] = 'Konnte Spieler nicht löschen!'
+    end
+    if !current_root.nil?
+      redirect_to backoffice_edit_admin_path(@admin)
+    else
+      redirect_to dash_admin_teams_path
+    end
+  end
 
-
-  
   private
-    def set_vars
-      @admin = current_admin
+    def authenticate
+      if current_admin.nil? && current_root.nil?
+          flash[:danger] = "Bitte logge dich ein!"
+          redirect_to new_session_path(admin)
+          return
+      end
+    end
+    def set_admin
+      if !current_admin.nil?
+        @admin = current_admin
+      else
+        @admin = Admin.find(params[:user][:admin_id])
+      end
+    end
+    def set_user
       @user = User.find(params[:user_id])
     end
 

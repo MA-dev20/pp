@@ -1,0 +1,59 @@
+<section id="navbar">
+    <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
+    <div class="navbar-links" id="navLinks">
+        <div class="link">
+            <%= link_to 'Produkt', '#product' %>
+        </div>
+        <div class="link">
+            <%= link_to 'FAQ', '#faq' %>
+        </div>
+        <div class="link">
+            <%= link_to 'Kontakt', contact_path %>
+        </div>
+        <div class="link">
+            <%= link_to 'Login', '#login', class: 'login-link', onclick: 'showLoginModal()' %> 
+        </div>
+        <div class="link">
+            <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
+        </div>
+    </div>
+    <div class="login">
+        <%= link_to 'Login', '#login', onclick: 'showLoginModal()', class: 'login-link' %>
+        <%= link_to 'Get early access', contact_path, class: 'btn btn-white' %>
+    </div>
+    <div class="navbar-mobile" onclick="showNavLinks()">
+        <i class="fas fa-bars"></i>
+    </div>
+</section>
+<section id="contact">
+    <h1>Bye, <%= params[:name] %>!</h1>
+    <h5>Vielen Dank, für dein Vertrauen. <br> Dein Account wurde erfolgreich gelöscht.  <br>Solltest du unzufrieden gewesen sein, gebe uns doch Feedback, was wir besser machen können. <br> Auf Wiedersehen <br> Dein Peter Pitch Team</h5>
+</section>
+<div class="fullscreen-modal" id="loginModal">
+    <div class="close"><%= link_to '', byebye_path(params[:name]), class: "fas fa-times" %></div>
+    <div class="card">
+    <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
+        <h1>Login</h1>
+        <div class="form-group ">
+            <%= f.email_field :email, class: 'form-field', id: 'loginEmail',placeholder:"E-Mail eingeben", required: true  %>
+            <br>
+            <%= f.password_field :password, class: 'form-field',id: 'loginPassword',placeholder:"Passwort eingeben", required: true  %>
+            <br>
+            <%= f.submit 'Login', class: 'btn btn-green', id: "loginButton" %>
+            <br>
+        </div>
+    <% end %>
+    </div>
+</div>
+<script>
+    function showNavLinks() {
+        if($('#navLinks').is(":hidden")) {
+            $('#navLinks').show();   
+        } else {
+            $('#navLinks').hide();
+        }
+    }
+    function showLoginModal() {
+        $('#loginModal').toggle();
+    }
+</script>

@@ -1,5 +1,6 @@
 class ObjectionsController < ApplicationController
     before_action :set_basket
+    before_action :set_objection, only: [:update, :destroy]
     
     def new
     end
@@ -13,18 +14,34 @@ class ObjectionsController < ApplicationController
       else
         flash[:objection_name] = 'Gib einen Namen an!'
       end
-      if params[:objection][:site] == 'admin_dash'
+      if !current_root.nil?
+        redirect_to backoffice_edit_objection_path(@basket)
+      else
+        redirect_to dash_admin_objections_path(@basket)
+      end
+    end
+    
+    def update
+      if !@objection.update(objection_params)
+        flash[:danger] = "Fehler!"
+      end
+      if !current_root.nil?
+        redirect_to backoffice_edit_objection_path(@basket)
+      else
         redirect_to dash_admin_objections_path(@basket)
       end
     end
     
     def destroy
-      @objection =  Objection.find(params[:objection_id])
-      if @objection.destroy
-        redirect_to dash_admin_objections_path(@basket.id)
-      else
+      if !@objection.destroy
         flash[:danger] = 'Konnte Objection NICHT löschen!'
+      end
+      if !current_root.nil?
+        redirect_to backoffice_edit_objection_path(@basket)
+        return
+      else
         redirect_to dash_admin_objections_path(@basket.id)
+        return
       end
     end
     private
@@ -33,5 +50,8 @@ class ObjectionsController < ApplicationController
       end
       def set_basket
         @basket = ObjectionsBasket.find(params[:basket_id])
+      end
+      def set_objection
+        @objection =  Objection.find(params[:objection_id])
       end
 end

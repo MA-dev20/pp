@@ -1,21 +1,51 @@
 class BackofficeController < ApplicationController
   before_action :if_root
   before_action :require_root, :set_root
-  before_action :set_admin, only: [:admin, :activate_admin, :destroy_admin]
+  before_action :set_admin, only: [:admin, :activate_admin, :destroy_admin, :edit_admin]
   before_action :if_basket, only: [:word_baskets]
   before_action :set_basket, only: [:words]
   layout 'backoffice'
       
   #GET backoffice_admins
   def index
-    @admins = Admin.where(activated: false).all
+    @admins = Admin.all
   end
 
   def admins
-    @admins = Admin.where(activated: true).all
+    @admins = Admin.all
   end
     
   def admin
+    @users = @admin.users.all
+    @cw_baskets = @admin.catchword_baskets.where(objection: false)
+    @ob_baskets = @admin.objection_baskets.all
+  end
+    
+  def edit_admin
+  end
+    
+  def edit_team
+    @team = Team.find(params[:team_id])
+    @admin = @team.admin
+  end
+
+  def edit_user
+    @user = User.find(params[:user_id])
+    @admin =  @user.admin
+  end
+    
+  def edit_catchword
+    @basket = CatchwordsBasket.find(params[:basket_id])
+    if params[:admin]
+      @admin = Admin.find(params[:admin])
+    end
+  end
+
+  def edit_objection
+    @basket = ObjectionsBasket.find(params[:basket_id])
+    if params[:admin]
+      @admin = Admin.find(params[:admin])
+    end
   end
     
   def activate_admin
