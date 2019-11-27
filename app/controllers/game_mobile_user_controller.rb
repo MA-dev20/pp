@@ -277,13 +277,14 @@ class GameMobileUserController < ApplicationController
   end
 
   def ended_game
-    # @game = current_game
-    if @game.state != 'ended_game'
-      @game.update(state: 'ended_game', active: false)
+    if @game
+      if @game.state != 'ended_game'
+        @game.update(state: 'ended_game', active: false)
+      end
+      sign_out(@game)
+      sign_out(@user)
     end
-    sign_out(@game)
-    sign_out(@user)
-    # redirect_to gma_ended_game_path
+    redirect_to landing_ended_game_path
   end
     
   private
