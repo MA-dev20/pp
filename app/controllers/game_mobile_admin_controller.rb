@@ -1,5 +1,5 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :ended_game, :youtube_video]
+  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :youtube_video]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email, :video_testings]
   before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
@@ -249,12 +249,16 @@ class GameMobileAdminController < ApplicationController
 
   def ended_game
     @game = current_game
-    if @game.state != 'ended_game'
-      @game.update(state: 'ended_game', active: true)
+    if @game
+      if @game.state != 'ended_game'
+        @game.update(state: 'ended_game', active: false)
+      end
+      sign_out(@game)
+      sign_out(@admin)
+    else
+      # redirect_to landing_index_path
+      redirect_to root_path
     end
-    sign_out(@game)
-    # sign_out(@admin)
-    # redirect_to gma_ended_game_path
   end
     
   def replay
