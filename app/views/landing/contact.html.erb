@@ -1,4 +1,4 @@
-<section id="navbar">
+<section id="navbar" class="contact-navbar">
     <%= image_tag 'landing/logo.png', class: 'logo'%>
     <div class="login">
         <%= link_to 'Login', '#login', onclick: 'showLoginModal()', class: 'login-link' %>
@@ -6,7 +6,6 @@
 </section>
 <section id="contact">
     <h1>Jetzt kostenlosen Zugang zu Peter Pitch erhalten!</h1>
-    <h5>Peter Pitch stellt Trainings auf den Kopf. Damit möglichst viele Unternehmen schnell von unserem Tool profitieren können, ist der Zugang für begrenzte Zeit kostenlos. Es gibt keinen Haken, nur eine Bitte: Teilt eure Erfahrungen mit uns und verratet uns was euch besonders gut gefällt oder was wir besse machen können. Liebt ihr Peter Pitch? Dann teilt es mit eurem Netzwerk und werdet Teil der nächsten Trainingsrevolution. Let's Pitch!</h5>
     <%= form_for(:admin, url: new_admin_path(Admin)) do |f| %>
         <div class="form-group l1">
             <label for="">Vorname <span class="red">*</span></label>
@@ -46,17 +45,23 @@
     <% end %>
 </section>
 <div class="fullscreen-modal" id="loginModal">
+    
     <div class="close"><%= link_to '', contact_path, class: "fas fa-times" %></div>
     <div class="card">
     <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
         <h1>Login</h1>
         <div class="form-group ">
-            <%= f.email_field :email, class: 'form-field', id: 'loginEmail',placeholder:"E-Mail eingeben", required: true  %>
+            <label for="">Email</label>
+            <%= f.email_field :email, class: 'form-field', id: 'loginEmail', required: true  %>
+        </div>
+        <div class="form-group">
+            <label for="">Passwort</label>
+            <div class="right"><%= link_to "Passwort vergessen?", new_password_path(Admin) %></div>
+            <%= f.password_field :password, class: 'form-field',id: 'loginPassword', required: true  %>
             <br>
-            <%= f.password_field :password, class: 'form-field',id: 'loginPassword',placeholder:"Passwort eingeben", required: true  %>
-            <br>
+        </div>
+        <div class="form-group center">
             <%= f.submit 'Login', class: 'btn btn-green', id: "loginButton" %>
-            <br>
         </div>
     <% end %>
     </div>

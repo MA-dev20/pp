@@ -43,10 +43,13 @@ label .red {
 }
 #contact {
     position: relative;
-    padding: 20px;
-    max-width: 600px;
+    max-width: 400px;
     min-height: calc(100vh - 500px);
-    margin: 0 auto;
+    margin: 0 50px;
+}
+#navbar.contact-navbar {
+	left: 50px;
+	width: calc(100vw - 100px);
 }
 .form-group {
     padding: 5px 0;
@@ -77,6 +80,7 @@ label .red {
     background-color: rgba(255,255,255,.8);
     margin: 0 20px;
 }
+
 #content {
     position: relative;
     left: calc(50vw - 150px);
@@ -770,11 +774,43 @@ label .red {
     font-size: 16px;
     border: 2px solid #16e2a5;
 }
+#content .faq .fa-minus {
+    display: none;
+}
 #content .faq .question .text {
     display: none;
     font-size: 14px;
     padding: 10px 0;
     color: #667093;
+}
+#content #secure {
+	position: relative;
+	height: auto;
+	margin: 20px 0px;
+	width: 300px;
+}
+#content #secure > .text {
+	width: 300px;
+	margin: 20px 0;
+	color: #667093;
+	text-align: center;
+}
+#content #secure h1 {
+	color: #0e0e0e;
+}
+#content #secure .daten,
+#content #secure .ssl,
+#content #secure .hosted {
+	position: relative;
+	width: 300px;
+	margin: 50px 0;
+	color: #667093;
+}
+#content #secure .daten img,
+#content #secure .ssl img,
+#content #secure .hosted img {
+	height: 55px;
+	margin: 20px 0;
 }
 @media (min-width: 500px) {
     #navbar {
@@ -855,6 +891,18 @@ label .red {
     #content .faq .question .q {
         font-size: 16px;
     }
+	#content #secure {
+		width: 500px;
+	}
+	#content #secure > .text {
+		width: 400px;
+		margin: 20px 50px;
+	}
+	#content #secure .daten,
+	#content #secure .ssl,
+	#content #secure .hosted {
+		margin: 50px 100px;
+	}
 }
 @media (min-width: 700px) {
     #content .references h1 .line1,
@@ -1003,6 +1051,31 @@ label .red {
         margin: 0 100px;
         width: 500px;
     }
+	#content #secure {
+		width: 700px;
+	}
+	#content #secure > .text {
+		width: 600px;
+		margin: 20px 50px;
+	}
+	#content #secure .content {
+		width: 700px;
+	}
+	#content #secure .daten {
+		margin: 50px 200px;
+	}
+	#content #secure .daten img {
+		position: relative;
+		left: 0;
+	}
+	#content #secure .ssl {
+		margin: 50px 0 94px 50px;
+		float: right;
+	}
+	#content #secure .hosted {
+		margin: 50px 50px 50px 0;
+		float: left;
+	}
 }
 @media (min-width: 900px) {
     #navbar .navbar-links {
@@ -1197,6 +1270,28 @@ label .red {
         text-decoration: none;
         margin: 0 20px;
     }
+	#content #secure {
+		width: 900px;
+	}
+	#content #secure > .text {
+		width: 700px;
+		margin: 20px 100px;
+	}
+	#content #secure .content {
+		width: 900px;
+		display: flex;
+	}
+	#content #secure .daten {
+		margin: 50px 0 50px 25px;
+	}
+	#content #secure .ssl {
+		margin: 50px 25px;
+		float: none;
+	}
+	#content #secure .hosted {
+		margin: 50px 25px 50px 0;
+		float: none;
+	}
 }
 @media (min-width: 1100px) {
     #content .references h1 .line1,
@@ -1286,12 +1381,13 @@ label .red {
         position: relative;
         left: 0;
         width: 1100px;
+		margin: 0 0 100px;
     }
     #content #hiw .categories {
         position: relative;
         height: 500px;
         left: 0;
-        margin: 0 25px;
+        margin: 0 0 0 50px;
         width: 1050px;
     }
     #content #hiw .categories img {
@@ -1309,22 +1405,24 @@ label .red {
     #content #hiw #line1 {
         display: block;
         position: absolute;
-        top: 100px;
+        top: 170px;
+		left: 190px;
+		z-index: -100;
     }
     #content #hiw .categories .pitch {
         position: absolute;
-        top: 100px;
-        left: 370px;
+        top: 155px;
+        left: 350px;
     }
     #content #hiw .categories #line2 {
         display: block;
         position: absolute;
         left: 550px;
-        top: 100px;
+        top: 170px;
     }
     #content #hiw .categories .rating {
         position: absolute;
-        top: 0px;
+        top: 50px;
         left: 750px;
     }
     #content .testimonials {
@@ -1339,6 +1437,27 @@ label .red {
     #content .faq {
         padding: 0 100px;
     }
+	#content #secure {
+		width: 1100px;
+	}
+	#content #secure > .text {
+		width: 800px;
+		margin: 20px 150px;
+	}
+	#content #secure .content {
+		width: 1100px;
+	}
+	#content #secure .daten {
+		margin: 50px 0 50px 50px;
+	}
+	#content #secure .ssl {
+		margin: 50px 50px;
+		float: none;
+	}
+	#content #secure .hosted {
+		margin: 50px 50px 50px 0;
+		float: none;
+	}
 }
 @media (min-width: 1300px) {
     #content .references h1 {
@@ -1534,7 +1653,7 @@ label .red {
         left: 50px;
     }
     #content .image-text.right .image {
-        left: 700px;
+        left: 650px;
     }
     #content .image-text .text {
         margin-top: 80px;
@@ -1547,17 +1666,12 @@ label .red {
         left: 650px;
     }
     #content .image-text.right .text {
-        left: 200px;
+        left: 150px;
         text-align: right;
     }
     #content #hiw {
-        left: 0;
-        width: 1300px;
-        height: 600px;
-    }
-    #content #hiw .categories {
-        left: 80px;
-    }
+        left: 100px;
+	}
     #content .references .logo-wheel {
         margin: 0 150px;
         width: auto;
@@ -1636,6 +1750,21 @@ label .red {
     #content .faq .question .text {
         font-size: 16px;
     }
+	#content #secure {
+		margin: 20px 50px;
+		width: 1200px;
+	}
+	#content #secure > .text {
+		margin: 20px 200px;
+	}
+	#content #secure .content {
+		width: 1300px;
+	}
+	#content #secure .daten,
+	#content #secure .ssl,
+	#content #secure .hosted {
+		margin: 50px;
+	}
     #footer {
         left: calc(50vw - 600px);
         width: 1200px;
