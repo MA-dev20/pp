@@ -1,3 +1,5 @@
+
+<div>
 <%= video_tag 'countdown.mp4', id: 'video-bg', autoplay: true %>
 
 <section id="gd_play">
@@ -32,34 +34,27 @@
 <%= audio_tag('play/Quatsch.mp3', id: 'sound_8') %>
 <%= audio_tag('play/Referenzen.mp3', id: 'sound_9') %>
 
-
-
-<style>
-    .countdown-timer {
-        position: absolute;
-        top: 42vh;
-        left: 0;
-        width: 100%;
-        height: 15vh;
-        line-height: 15vh;
-        text-align: center;
-        color: white;
-        font-size: 15vh;
-    }
-    .custom-blur {
-        -webkit-filter: blur(5px);
-        -moz-filter: blur(5px);
-        -ms-filter: blur(5px);
-        -o-filter: blur(5px);
-        filter: blur(5px);
-        height: 100vh;
-    }
-</style>
-
+</div>
 <script type="text/javascript">
-
-    $('#navbar').hide();
+// var video_toggle = <%= @video_toggle %>
+// if (!video_toggle)
+// {
+//     $('#navbar').hide();
+//     textanim();
+//     document.getElementById('intro').play();
+//     document.getElementById("intro").volume = 0.67;
+//     document.getElementById("theme").volume = 0.67;
+//     document.getElementById("word_sound").volume = 1.0;
     
+//     function callback() {
+//         document.getElementById('video-bg').currentTime = 9;
+//         document.getElementById('video-bg').play();
+//         document.getElementById('intro').pause();
+//         document.getElementById('word_sound').play();
+//         MyApp.timer = startTimer('<%=@game.wait_seconds.to_i - 1 %>', document.getElementById('timerall'));
+//         document.getElementById('theme').play();
+//     };
+// }
 
     // var video_toggle = <%= @video_toggle %>
     // if (video_toggle) {
@@ -71,89 +66,9 @@
     //     time = startTimerModal('5', document.getElementById('timeralli'), true);
     // }
 
-    var video_toggle = <%= @video_toggle %>
-    if (video_toggle) {
-        var countdown_timer = $('<div class="countdown-timer"></div>')
-        $("body").append(countdown_timer);
-        pauseGame();
+        
 
-        var current_progress = 5;
-        var interval = setInterval(function() {
-            console.log(current_progress)
-            $('.countdown-timer').text(current_progress)
-            current_progress -= 1;
-            if (current_progress <= -1){
-            clearInterval(interval);
-            textanim();
-            resumeGame();
-            callback1();
-            }
-        }, 1000);
-
-        function pauseGame(){
-            $('#logo').css('display','none');
-            $('#avatar').css('display','none');
-            $('.countdown').css('display','none');
-            $('#word').css('display','none');
-            $('.countdown-timer').css('display','block');
-            $("#play-contant").addClass("custom-blur");
-            document.getElementById('video-bg').pause()
-            document.getElementById('theme').pause();
-        }
-
-        function resumeGame(){
-            $('#logo').css('display','block');
-            $('#avatar').css('display','block');
-            $('.countdown').css('display','block');
-            $('#word').css('display','block');
-            $('.countdown-timer').css('display','none');
-            $("#play-contant").removeClass("custom-blur");
-            $('.countdown-timer').remove();
-
-            document.getElementById('intro').play();
-            document.getElementById("intro").volume = 0.67;
-            document.getElementById("theme").volume = 0.67;
-            document.getElementById("word_sound").volume = 1.0;
-        }
-
-        function callback() {}
-        function callback1() {
-            document.getElementById('video-bg').currentTime = 9;
-            document.getElementById('video-bg').play();
-            document.getElementById('intro').pause();
-            document.getElementById('word_sound').play();
-            MyApp.timer = startTimer('<%=@game.wait_seconds.to_i - 1 %>', document.getElementById('timerall'));
-            document.getElementById('theme').play();
-        };
-    } else {
-        textanim();
-        document.getElementById('intro').play();
-        document.getElementById("intro").volume = 0.67;
-        document.getElementById("theme").volume = 0.67;
-        document.getElementById("word_sound").volume = 1.0;
-        document.getElementById('video-bg').pause()
-        document.getElementById('theme').pause();
-
-        callback();
-        function callback() {
-            document.getElementById('video-bg').currentTime = 9;
-            document.getElementById('video-bg').play();
-            document.getElementById('intro').pause();
-            document.getElementById('word_sound').play();
-            MyApp.timer = startTimer('<%=@game.wait_seconds.to_i - 1 %>', document.getElementById('timerall'));
-            document.getElementById('theme').play();
-        };
-
-    }
     
-    // function callback() {
-    //         document.getElementById('video-bg').currentTime = 9;
-    //         document.getElementById('video-bg').play();
-    //         document.getElementById('intro').pause();
-    //         document.getElementById('word_sound').play();
-    //         MyApp.timer = startTimer('<%=@game.wait_seconds.to_i - 1 %>', document.getElementById('timerall'));
-    //         document.getElementById('theme').play();
-    //     };
     function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
         var setTimer = setInterval(function () {
