@@ -412,6 +412,12 @@ body {
   height: 100%;
   background-color: pink;
 }
+.custom-in {
+  animation: fill 5s linear 1;
+  animation-fill-mode: forwards;
+  height: 100%;
+  background-color: pink;
+}
 @keyframes fill {
   0% {
     width: 100%;

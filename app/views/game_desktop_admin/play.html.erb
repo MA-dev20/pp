@@ -47,9 +47,19 @@
         document.getElementById('word_sound').play();
         MyApp.timer = startTimer('<%=@game.wait_seconds.to_i - 1 %>', document.getElementById('timerall'));
         document.getElementById('theme').play();
-        
+
+        var video_toggle = <%= @video_toggle %>
+        if (video_toggle) {
+            $("#myModal").remove();
+            var modal = '<div class="modal objection-modal d-flex align-items-center justify-content-center" id="myModal"><div class=""><div class="modal-content"><div class="modal-body text-center" ><div id="objection-text">' + 'Bei der Konkurrenz' + '</div> <div class="countdown animated flipInX d-flex align-items-center justify-content-center"><div class="progress"><div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span id="current-progress"></span></div></div><span class="timer" id="timeralli"></span></div></div></div></div></div>';
+            $("body").append(modal);
+            $("#play-contant").addClass("blur");
+            $("#myModal").show();
+            time = startTimerModal('5', document.getElementById('timeralli'), true);
+        }
     };
-    
+
+        
 
     
     function startTimer(duration, display) {
@@ -116,7 +126,7 @@
         $(element).css("animation-iteration-count", "infinite");
     }
 
-    function startTimerModal(duration, display) {
+    function startTimerModal(duration, display, video_param) {
         $(function() {
           if ($('#objection-text').text().trim() == 'Auf den Punkt kommen') {
             document.getElementById('sound_1').play();
@@ -142,8 +152,12 @@
           stopAnimation($("#avatar"))
           var current_progress = 0;
           var interval = setInterval(function() {
-              current_progress += 10;
-              $("#dynamic").addClass("in")
+              current_progress += 20;
+              if (video_param) {
+                $("#dynamic").addClass("custom-in")
+              } else {
+                $("#dynamic").addClass("in")
+              }
               if (current_progress >= 100){
                 clearInterval(interval);
               }
@@ -151,6 +165,7 @@
         });
         MyApp.timer.pause()
         var timer = duration, minutes, seconds;
+        console.log(timer)
         var executed = false;
         var interval =  duration;
         var t = parseInt(duration);
@@ -185,6 +200,7 @@
         return {pause: pause, time: t}
 
     };
+
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_rate_path %>');
