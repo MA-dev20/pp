@@ -169,7 +169,13 @@ class GameMobileAdminController < ApplicationController
   end
     
   def play
-    session[:video_record] = params[:video]  if params[:video].present?
+    if params[:video] == "true"
+      @game.video_toggle = true
+      session[:video_record] = params[:video]
+    else
+      @game.video_toggle = false
+      session[:video_record] = params[:video]
+    end
     @record = eval session[:video_record] 
     @game.video_uploading = true if @record
     if @game.state != 'play'

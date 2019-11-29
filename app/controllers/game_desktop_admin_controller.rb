@@ -72,11 +72,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def play
-    if session[:video_record] == 'true'
-      @video_toggle = true
-    else
-      @video_toggle = false
-    end
+    @video_toggle = @game.video_toggle
     if @game.state != 'play'
       @game.update(state: 'play')
     end
