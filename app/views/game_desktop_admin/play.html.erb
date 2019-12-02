@@ -53,6 +53,7 @@
         -o-filter: blur(5px);
         filter: blur(5px);
         height: 100vh;
+        overflow: hidden;
     }
 </style>
 
@@ -73,6 +74,36 @@
         document.getElementById('word_sound').play();
         document.getElementById('theme').play();
     };
+
+
+    function pauseGame(){
+        $('#logo').css('display','none');
+        $('#avatar').css('display','none');
+        $('.countdown').css('display','none');
+        $('#word').css('display','none');
+        $('.penta-img').css('display', 'none');
+        $('.countdown-timer').css('display','block');
+        $("#play-contant").addClass("custom-blur");
+        document.getElementById('video-bg').pause()
+        // document.getElementById('theme').pause();
+    }
+
+    function resumeGame(){
+        $('#logo').css('display','block');
+        $('#avatar').css('display','block');
+        $('.countdown').css('display','block');
+        $('#word').css('display','block');
+        $('.penta-img').css('display', 'inline-flex');
+        $('.countdown-timer').css('display','none');
+        $("#play-contant").removeClass("custom-blur");
+        $('.countdown-timer').remove();
+
+        document.getElementById('intro').play();
+        document.getElementById("intro").volume = 0.67;
+        document.getElementById("theme").volume = 0.67;
+        document.getElementById("word_sound").volume = 1.0;
+    }
+    
 
     var video_toggle = <%= @video_toggle %>
     if (video_toggle) {
@@ -96,34 +127,6 @@
 
             }
         }, 1000);
-
-        function pauseGame(){
-            $('#logo').css('display','none');
-            $('#avatar').css('display','none');
-            $('.countdown').css('display','none');
-            $('#word').css('display','none');
-            $('.penta-img').css('display', 'none');
-            $('.countdown-timer').css('display','block');
-            $("#play-contant").addClass("custom-blur");
-            document.getElementById('video-bg').pause()
-            // document.getElementById('theme').pause();
-        }
-
-        function resumeGame(){
-            $('#logo').css('display','block');
-            $('#avatar').css('display','block');
-            $('.countdown').css('display','block');
-            $('#word').css('display','block');
-            $('.penta-img').css('display', 'inline-flex');
-            $('.countdown-timer').css('display','none');
-            $("#play-contant").removeClass("custom-blur");
-            $('.countdown-timer').remove();
-
-            document.getElementById('intro').play();
-            document.getElementById("intro").volume = 0.67;
-            document.getElementById("theme").volume = 0.67;
-            document.getElementById("word_sound").volume = 1.0;
-        }
     } else {
         textanim();
         callback();
