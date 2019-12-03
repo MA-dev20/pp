@@ -111,35 +111,26 @@
     }
     
 
-    var video_toggle = <%= @video_toggle %>
-    if (video_toggle) {
-        var countdown_timer = $('<div class="countdown-timer">5</div>')
-        $("body").append(countdown_timer);
-        pauseGame();
+    
+    var countdown_timer = $('<div class="countdown-timer">5</div>')
+    $("body").append(countdown_timer);
+    pauseGame();
 
-        var current_progress = 4;
-        var interval = setInterval(function() {
-            console.log(current_progress)
-            $('.countdown-timer').text(current_progress)
-            current_progress -= 1;
-            if (current_progress <= -1){
-            clearInterval(interval);
-            resumeGame();
-            textanim();
-            callback();
-            document.getElementById('theme').pause();
-            play_sound();
-            MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
-
-            }
-        }, 1000);
-    } else {
+    var current_progress = 4;
+    var interval = setInterval(function() {
+        $('.countdown-timer').text(current_progress)
+        current_progress -= 1;
+        if (current_progress <= -1){
+        clearInterval(interval);
+        resumeGame();
         textanim();
         callback();
         document.getElementById('theme').pause();
         play_sound();
         MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
-    }
+
+        }
+    }, 1000);
     
     
     function startTimer(duration, display) {
