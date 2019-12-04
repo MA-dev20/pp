@@ -84,9 +84,6 @@ class GameMobileAdminController < ApplicationController
     @turn.update(status: 'ended') if @turn.present?
     params[:play] = params[:play] == 'rate' ? false : true
     create_turn_method(params[:play])
-    # if @turn
-    #   redirect_to gma_intro_path
-    # end
   end
     
   def create_turn
@@ -94,9 +91,14 @@ class GameMobileAdminController < ApplicationController
   end
     
   def intro
-    if @game.state == 'wait'
-      redirect_to gma_wait_path
+	@turns = @game.turns.where(status: "accepted").playable.sample(2)  
+    if @game.state != 'choose' && @turns.count <= 1
+      redirect_to gea_mobile_path
+      return
+    else
+      ActionCable.server.broadcast "game_#{@game.id}_channel",desktop: "intro", game_admin_id: @game.admin_id
     end
+	@game.update(active: false, state: 'intro')
   end
     
   def wait
@@ -318,12 +320,12 @@ class GameMobileAdminController < ApplicationController
         @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
         sign_in(@game)
         ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, user_pic: @admin.avatar.quad.url, new: 'true'
-        redirect_to gma_intro_path
+        redirect_to gma_wait_path
       elsif @turn.present? 
         @game.catchword_basket.words.delete(@word) if @game.uses_peterwords && @game.catchword_basket.present? && @game.catchword_basket.words.include?(@word)
         sign_in(@game)
         ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'true', counter: @game.turns.where(status: "accepted").playable.count.to_s, user_pic: @admin.avatar.quad.url, new: 'true'
-        redirect_to gma_intro_path
+        redirect_to gma_wait_path
       else
         redirect_to gma_new_turn_path
       end

@@ -39,18 +39,7 @@
             <%= f.text_field :password, class: 'custom-url-field' %>
         </div>
     </div>
-    <!-- <div class="switch-box">
-        <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="ownrules-toggle" onchange="ownRulesCheck()" value=0>
-            <label for="ownrules-toggle" class="custom-control-label">Nach eigenen Regeln pitchen</label>
-        </div>
-    </div> -->
-    <div class="toggle-my-ratings toggle-my-ratings-1">
-        <div class="toggle left" onclick="ownRulesCheck()"><div class="dot"></div></div>
-        <div class="text">Nach eigenen Regeln pitchen</div>
-    </div>
     <button id="rules-button" class="btn btn-green" onclick="showRules()">weiter</button>
-    <%= f.submit 'Pitch starten!', class: 'btn btn-green', id: 'play-button' %>
 </div>
 <div class="karte letsplay" id="ownrules">
     <i class="back small fas fa-arrow-left" onclick="hideRules()"></i>
@@ -119,16 +108,42 @@
             </div>
         </div>
         <div class="youtube">
-            <label for="">Youtube Link <div class="add" onclick="openYoutube()"><i class="fas fa-plus"></i></div>
-            </label>
-            <input type="text" class="field" name="game[youtube_url]" id="youtube-link">
+            <label for="" onclick="openYoutube()">Youtube Link</label>
+            <input type="text" class="field" name="game[youtube_url]" id="youtube-link" placeholder="Youtube-Link">
+            <input type="checkbox" name="game[video_is_pitch][]" value="true" id="game_video_is_pitch">
+            <% @admin.videos.each do |v| %>
+            	<input type="radio" name="game[video][]" value="<%= v.id %>" id="game_videos_<%= v.id %>">
+            <% end %>
+            <% @turns.each do |t| %>
+            	<input type="radio" name="game[video_turn][]" value="<%= t.id %>" id="game_videos_turns_<%= t.id %>">
+            <% end %>
+            <input type="text" class="field" name="game[video_name]" id="video_selection" placeholder="Select Video" onclick="toggleSelectVideo()">
         </div>
     </div>
     <button class="btn btn-green" onclick="submitForm()">Pitch starten!</button>
     <% end %>
 </div>
 
-
+<div class="karte letsplay" id="selectVideos">
+	<i class="back small fas fa-arrow-left" onclick="toggleSelectVideo()"></i>
+	<div class="head small">Video auswählen!</div>
+	<div class="body">
+		<% @admin.videos.each do |v| %>
+        <label for="game_videos_<%= v.id %>" class="video-karte videoSearch" onclick="selectVideo('<%= v.name %>', false)" style="background-image: url('<%= v.file.thumb.url.present? ? asset_path(v.file.thumb.url) : '' %>')">
+          <div class="overlay"></div>
+          <div class="title"><%= v.name %></div>
+          <div class="duration"></div>
+        </label>
+        <% end %>
+        <% @turns.each do |t| %>
+        <label for="game_videos_turns_<%= t.id %>" class="video-karte videoSearch" onclick="selectVideo('<%= t.user.fname + " " + t.user.lname %>', false)" style="background-image: url('<%= t.recorded_pitch.thumb.url.present? ? asset_path(t.recorded_pitch.thumb.url) : '' %>')">
+          <div class="overlay"></div>
+          <div class="title"><%= t.user.fname + " " + t.user.lname %></div>
+          <div class="duration"></div>
+        </label>
+        <% end %>
+	</div>
+</div>
 <div class="karte letsplay" id="newteam">
     <i class="back small fas fa-arrow-left" onclick="hideTeam()"></i>
     <div class="head small">
@@ -228,30 +243,24 @@
     }
 </style>
 <script>
-    function ownRulesCheck() {
-        var toggle = $('.toggle');
-        if (toggle.hasClass('left')) {
-            toggle.removeClass('left');
-            toggle.addClass('right');
-            $('#play-button').hide();
-            $('#rules-button').show();
-            $('#rules-button').addClass('pulse');
-        } else {
-            toggle.removeClass('right');
-            toggle.addClass('left');
-            $('#play-button').show();
-            $('#rules-button').hide();
-        }
-    }
     new PerfectScrollbar('.karte-content');
     flash();
-    // ownRulesCheck();
+	function selectVideo(name, isPitch) {
+		$('#youtube-link').val('')
+		$('#selectVideos').toggle();
+		$("#video_selection").val(name);
+	}
+	function toggleSelectVideo() {
+		$('#selectVideos').toggle();
+	}
     function openYoutube() {
         if ($('#youtube-link').css('display') == 'none') {
             $('#youtube-link').show();
+			$('#video_selection').show();
             document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
         } else {
             $('#youtube-link').hide();
+			$('#video_selection').hide();
             document.querySelector('.karte-content').scrollTo(0, 0);
         }
     }
@@ -347,16 +356,6 @@
         $('#game-form').unbind('submit');
         $('#game-form').submit();
     }
-    // function ownRulesCheck() {
-    //     if ($('#ownrules-toggle').is(':checked')) {
-    //         $('#play-button').hide();
-    //         $('#rules-button').show();
-    //         $('#rules-button').addClass('pulse');
-    //     } else {
-    //         $('#play-button').show();
-    //         $('#rules-button').hide();
-    //     }
-    // }
     function showRules() {
         $("#game-form").submit(function (e) {
             e.preventDefault();

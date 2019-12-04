@@ -30,23 +30,23 @@ class GamesController < ApplicationController
       @game.turns.update_all(status: 'ended')
       set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
       set_objections_for_game(@game, params[:game][:objections])
+	  set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
       sign_in(@game)
       # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
-      redirect_to gda_intro_path
+      redirect_to gda_wait_path
     elsif @game && @game.admin_id != @admin.id
         flash[:pop_up] = "Ups, diese URL ist schon vergeben!;- Sei kreativ und wähle eine ander aus. -"
         redirect_to dash_admin_games_path(params[:game][:team_id])
     else
       @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
       if @game.save
-        @game[:youtube_url] = params[:game][:youtube_url]
-        @game.save!
         set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
         set_objections_for_game(@game, params[:game][:objections])
+		set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
         sign_in(@game)
         # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
         session[:game_session_id] = @game.id
-        redirect_to gda_intro_path
+        redirect_to gda_wait_path
       else
         flash[:danger] = 'Konnte Spiel nicht speichern'
         redirect_to dash_admin_games_path(params[:game][:team_id])
@@ -89,6 +89,30 @@ class GamesController < ApplicationController
       game.save!
       end
     end
+	
+	def set_video_for_game(game, video_name, video, video_turn, youtube)
+	  if !video.nil?
+	  	@video = Video.find_by(id: video.first)
+	  end
+	  if !video_turn.nil?
+	  	@pitch = Turn.find_by(id: video_turn.first)
+	  end
+	  if youtube != ''
+		game.youtube_url = youtube
+	  elsif @video && @video.name == video_name
+		game.youtube_url = nil
+		game.video = @video.id
+		game.video_is_pitch = false
+	  elsif @pitch
+		game.youtube_url = nil
+		game.video = @pitch.id
+		game.video_is_pitch = true
+	  else
+		game.video = nil
+		game.youtube_url = nil
+	  end
+	  game.save!
+	end
 
     def set_admin
       @admin = current_admin

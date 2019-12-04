@@ -46,12 +46,12 @@ Rails.application.routes.draw do
 # Admin Desktop #
 #################
 
-  get 'games/intro', to: 'game_desktop_admin#intro', as: 'gda_intro'
   get 'games/wait', to: 'game_desktop_admin#wait', as: 'gda_wait'
+  get 'games/intro', to: 'game_desktop_admin#intro', as: 'gda_intro'
+  get 'games/youtube_video', to: 'game_desktop_admin#youtube_video', as: 'gda_youtube'
   get 'games/choose', to: 'game_desktop_admin#choose', as: 'gda_choose'
   get 'games/turn', to: 'game_desktop_admin#turn', as: 'gda_turn'
   get 'games/error', to: 'game_desktop_admin#error', as: 'gea_turn'
-  get 'games/youtube_video', to: 'game_desktop_admin#youtube_video', as: 'gda_youtube'
   get 'video_testing', to: 'game_mobile_admin#video_testing'
   get 'games/play', to: 'game_desktop_admin#play', as: 'gda_play'
   get 'games/rate', to: 'game_desktop_admin#rate', as: 'gda_rate'
@@ -75,8 +75,8 @@ Rails.application.routes.draw do
   get 'mobile/admin/new_turn', to: 'game_mobile_admin#new_turn', as: 'gma_new_turn'
   post 'mobile/admin/new_turn', to: 'game_mobile_admin#create_turn'
     
-  get 'mobile/admin/intro', to: 'game_mobile_admin#intro', as: 'gma_intro'
   get 'mobile/admin/wait', to: 'game_mobile_admin#wait', as: 'gma_wait'
+  get 'mobile/admin/intro', to: 'game_mobile_admin#intro', as: 'gma_intro'
   get 'mobile/admin/youtube_video', to: 'game_mobile_admin#youtube_video', as: 'gma_youtube'
   get 'mobile/admin/error', to: 'game_mobile_admin#error', as: 'gea_mobile'
   get 'mobile/admin/choose', to: 'game_mobile_admin#choose', as: 'gma_choose'
@@ -115,6 +115,7 @@ Rails.application.routes.draw do
   post 'mobile/user/game/new_turn', to: 'game_mobile_user#create_turn'
   get 'mobile/user/game/vidoe_uploading', to: 'game_mobile_user#video_uploading', as: 'gmu_video_check'
   get 'mobile/user/game/wait', to: 'game_mobile_user#wait', as: 'gmu_wait'
+  get 'mobile/user/game/intro', to: 'game_mobile_user#intro', as: 'gmu_intro'
   get 'mobile/user/game/choose', to: 'game_mobile_user#choose', as: 'gmu_choose'
   get 'mobile/user/game/choosen/:turn_id', to: 'game_mobile_user#choosen', as: 'gmu_choosen'
   get 'mobile/user/game/turn', to: 'game_mobile_user#turn', as: 'gmu_turn'

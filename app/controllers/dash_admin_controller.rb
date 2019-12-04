@@ -13,6 +13,7 @@ class DashAdminController < ApplicationController
     if params[:team_id]
       @team = Team.find(params[:team_id])
     end
+	@turns = @admin.turns.where.not(recorded_pitch: nil, favorite: false).order('created_at ASC')
   end
     
   #User

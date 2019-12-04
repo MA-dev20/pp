@@ -3,9 +3,6 @@ class GameDesktopAdminController < ApplicationController
   before_action :set_turn, only: [:play, :rate, :rating]
     
   layout 'game_desktop'
-
-  def intro
-  end
     
   def wait
     @handy = true
@@ -17,7 +14,23 @@ class GameDesktopAdminController < ApplicationController
     @count = @game.turns.where(status: "accepted").playable.count 
     @pending_users = @users.select{|user| user if user.status=="pending"}
   end
-
+  
+  def intro
+	@turns = @game.turns.where(status: "accepted").playable.sample(2)
+	if @turns.count <= 1
+      redirect_to gea_turn_path
+      return
+	end
+	if @game.youtube_url.present?
+	  redirect_to gda_youtube_path
+	  return
+	elsif !@game.video.nil? && !@game.video_is_pitch
+	  @video = Video.find_by(id: @game.video).file
+	elsif !@game.video.nil? && @game.video_is_pitch
+	  @video = Turn.find_by(id: @game.video).recorded_pitch
+	end
+	@game.update(active: false, state: 'intro')
+  end
   def youtube_video
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
     if @turns.count <= 1
@@ -33,10 +46,7 @@ class GameDesktopAdminController < ApplicationController
   def choose
     @handy = true
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
-    if @turns.count <= 1
-      redirect_to gea_turn_path
-      return
-    elsif @game.state != 'choose'
+    if @game.state != 'choose'
       @turn1 = @turns.first
       @turn2 = @turns.second
       @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')

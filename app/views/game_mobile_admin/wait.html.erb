@@ -13,7 +13,7 @@
     <% end %>
 </div>
 <div class="bottom">
-    <%= link_to 'weiter!', @game.youtube_url.present? ? gma_youtube_path : gma_choose_path, class: 'nunito-regular' %>
+    <%= link_to 'weiter!', @game.youtube_url.present? ? gma_youtube_path : gma_intro_path, class: 'nunito-regular' %>
 </div>
 </section>
 <%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>
