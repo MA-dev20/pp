@@ -3,12 +3,78 @@
  *= require barack
  *= require main/animations
  *= require main/animate
+ *= require main/countdown
  */
 
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
 
+#agb {
+	position: absolute;
+	left: 100px;
+	width: calc(100vw - 200px);
+}
+.switch-box {
+	width: 100%;
+	line-height: 20px;
+}
+.switch-box input[type='checkbox'] {
+	position: absolute;
+	opacity: 0;
+}
+.switch-box .custom-control-label {
+	background-color: white;
+	position: relative;
+	float: left;
+	width: 18px;
+	height: 18px;
+	border-radius: 5px;
+	border: 1px solid #dfe1e5;
+	margin-right: 5px;
+	cursor: pointer;
+}
+.switch-box .custom-control-label .fas {
+	display: none;
+	color: white;
+	text-align: center;
+	line-height: 18px;
+}
+.switch-box .custom-control-input:checked ~ .custom-control-label {
+	background-color: #16e2a5;
+}
+.switch-box .custom-control-input:checked ~ .custom-control-label .fas {
+	display: block;
+}
+.register-pop-up {
+	animation-name: fadeOut;
+	animation-duration: 1s;
+	animation-delay: 5s;
+	animation-fill-mode: forwards;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, .5);
+	z-index: 2000;
+}
+.register-pop-up .karte {
+	position: relative;
+	top: calc(50% - 100px);
+	height: auto;
+	width: 500px;
+	max-width: 80vw;
+	background-color: white;
+	border-radius: 8px;
+	box-shadow: 0px 0.6vh 2.2vh 0 rgba(172, 172, 172, 0.1);
+	text-align: center;
+	padding: 10px 10px 40px;
+	margin: auto;
+}
+.register-pop-up .karte h1 {
+	border-bottom: 1px solid #dfe1e5;
+}
 .bounceInLeft,
 .bounceInRight {
     -webkit-animation-name: fadeIn;
@@ -26,6 +92,30 @@ body {
     background-color: #fff;
     margin: 0;
 }
+.bg-image {
+	background-image: asset_url('landing/bg-contact.png');
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	filter: brightness(50%);
+}
+#bgVideo {
+	display: none;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	min-height: 100vh;
+	min-width: 100vw;
+	width: auto;
+	height: auto;
+	background-size: cover;
+
+}
 .form-field {
     position: relative;
     width: calc(100% - 20px);
@@ -42,14 +132,51 @@ label .red {
     color: #ff5f58;
 }
 #contact {
-    position: relative;
+    position: fixed;
+	top: 0;
+	left: 0;
     max-width: 400px;
-    min-height: calc(100vh - 500px);
-    margin: 0 50px;
+    height: 650px;
+    margin: 130px 100px;
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+}
+#contact h1 {
+	margin-bottom: 40px;
+}
+.overlay-text {
+	font-family: 'BarackPro-Solid';
+	position: fixed;
+	right: 250px;
+	top: calc(50vh - 180px);
+	color: white;
+	font-size: 100px;
+	line-height: 90px;
+	text-align: left;
+	width: 200px;
+}
+.overlay-text span {
+	font-weight: bold;
+}
+.overlay-play {
+	position: fixed;
+	right: 500px;
+	top: calc(50vh - 50px);
+	text-align: center;
+	font-size: 100px;
+	color: white;
+	cursor: pointer;
+}
+.overlay-play:hover {
+	top: calc(50vh - 51px);
+	right: 499px;
+	font-size: 102px;
 }
 #navbar.contact-navbar {
-	left: 50px;
-	width: calc(100vw - 100px);
+	left: 100px;
+	width: calc(100vw - 200px);
+	background-color: transparent;
 }
 .form-group {
     padding: 5px 0;
@@ -219,13 +346,15 @@ label .red {
 
 .btn {
     display: inline-block !important;
+	font-family: 'Nunito', sans-serif;
+	box-sizing: border-box;
     height: 35px !important;
     line-height: 35px !important;
     border-radius: 17.5px !important;
     font-size: 14px !important;
     padding: 0 24px !important;
     text-decoration: none !important;
-    font-weight: 600 !important;
+    font-weight: 900 !important;
 }
 .btn-green,
 .btn-white:hover {
@@ -729,7 +858,7 @@ label .red {
 #content .startnow a {
     bottom: 30px;
     margin: 19px 10px 0 10px;
-    width: 152px;
+    width: 200px;
 }
 #content .faq {
     margin-bottom: 50px;
@@ -1060,21 +1189,22 @@ label .red {
 	}
 	#content #secure .content {
 		width: 700px;
+		height: 700px;
 	}
 	#content #secure .daten {
-		margin: 50px 200px;
+		margin: 50px 0 94px 50px;
+		float: right;
 	}
 	#content #secure .daten img {
 		position: relative;
 		left: 0;
 	}
 	#content #secure .ssl {
-		margin: 50px 0 94px 50px;
-		float: right;
-	}
-	#content #secure .hosted {
 		margin: 50px 50px 50px 0;
 		float: left;
+	}
+	#content #secure .hosted {
+		margin: 50px 200px;
 	}
 }
 @media (min-width: 900px) {
@@ -1280,6 +1410,7 @@ label .red {
 	#content #secure .content {
 		width: 900px;
 		display: flex;
+		height: auto;
 	}
 	#content #secure .daten {
 		margin: 50px 0 50px 25px;
@@ -1385,7 +1516,7 @@ label .red {
     }
     #content #hiw .categories {
         position: relative;
-        height: 500px;
+        height: 600px;
         left: 0;
         margin: 0 0 0 50px;
         width: 1050px;

@@ -7,6 +7,13 @@ class LandingController < ApplicationController
   respond_to :html, :json
 
 
+  def agb
+  end
+  def datenschutz
+  end
+  def impressum
+  end
+	
   def index
   end
 
@@ -21,7 +28,6 @@ class LandingController < ApplicationController
   end
     
   def after_register
-    @admin = Admin.find(params[:admin_id])
   end
     
   def byebye

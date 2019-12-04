@@ -17,12 +17,17 @@ Rails.application.routes.draw do
   get 'dash/account', to: 'user/dash_user#account', as: 'dash_user_account'
   put 'dash/account', to: 'user/dash_user#update_user', as: 'dash_user_account_update'
  
-
-  get 'landing/index'
+###########
+# Landing #
+###########
   root 'landing#index'
-  get 'landing/ended_game', to: 'landing#ended_game', as: 'landing_ended_game'
   get '/contact', to: 'landing#contact', as: 'contact'
-  get '/after_register/:admin_id', to: 'landing#after_register', as: 'after_register'
+  get 'agb', to: 'landing#agb', as: 'agb'
+  get 'datenschutz', to: 'landing#datenschutz', as: 'datenschutz'
+  get 'impressum', to: 'landing#impressum', as: 'impressum'
+	
+  get 'landing/ended_game', to: 'landing#ended_game', as: 'landing_ended_game'
+
   get '/byebye', to: 'landing#byebye', as: 'byebye'
   # patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'

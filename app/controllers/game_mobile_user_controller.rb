@@ -304,7 +304,6 @@ class GameMobileUserController < ApplicationController
 
     def create_turn_against_user(user, admin, status, play=true)
       @game1 = current_game
-      @word = CatchwordsBasket.find_by(name: 'PetersFreeWords').words.all.sample(5).first if CatchwordsBasket.find_by(name: 'PetersFreeWords').present? &&  @game1.admin.admin_subscription_id.nil?
       @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
       @word = Word.all.sample(5).first if @word.nil?
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).playable.first
@@ -319,7 +318,6 @@ class GameMobileUserController < ApplicationController
       @game = Game.find(session[:game_session_id])
       @admin = @game.admin
       if @admin.admin_subscription_id.nil?
-        @word = CatchwordsBasket.find_by(name: 'PetersFreeWords').words.all.sample(5).first
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
         @word = Word.all.sample(5).first if @word.nil?
       end

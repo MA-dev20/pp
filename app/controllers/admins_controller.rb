@@ -21,7 +21,8 @@ class AdminsController < ApplicationController
       if !current_root.nil?
         redirect_to backoffice_admin_path(@admin)
       else
-        redirect_to after_register_path(@admin)
+        flash[:thanks_for_register] = 'Wir haben deine Nachricht erhalten! Einer unserer Wölfe wird sich zeitnah mir Dir in Verbindung setzen.'
+        redirect_to root_path
       end
     end
   end

@@ -17,12 +17,12 @@
             <%= link_to 'Login', '#login', class: 'login-link', onclick: 'showLoginModal()' %> 
         </div>
         <div class="link">
-            <%= link_to 'Demo vereinbaren', contact_path, class: 'btn btn-white' %>
+            <%= link_to 'Demo vereinbaren', contact_path("", subject: "demo"), class: 'btn btn-white' %>
         </div>
     </div>
     <div class="login">
         <%= link_to 'Login', '#login', onclick: 'showLoginModal()', class: 'login-link' %>
-        <%= link_to 'Demo vereinbaren', contact_path, class: 'btn btn-white' %>
+        <%= link_to 'Demo vereinbaren', contact_path("", subject: "demo"), class: 'btn btn-white' %>
     </div>
     <div class="navbar-mobile" onclick="showNavLinks()">
         <i class="fas fa-bars"></i>
@@ -76,7 +76,7 @@
     
     <div class="wie-geil-ist-das wow fadeIn" data-wow-delay=".2s">
         <h1>Wie geil ist das denn?</h1>
-        <h5>Nimm den Spaß in deinem Unternehmen ernst und verwandel dein Meetings in wahre Performance-Booster. Mit Peter Pitch treibst du das Mitarbeiter-Rudel zusammen und machst sogar aus den wackeligsten Welpen wahre Wölfe. Stage is yours!</h5>
+        <h5>Nimm den Spaß in deinem Unternehmen ernst und verwandel deine Meetings in wahre Performance-Booster. Mit Peter Pitch treibst du das Mitarbeiter-Rudel zusammen und machst sogar aus den wackeligsten Welpen wahre Wölfe. Stage is yours!</h5>
         <div class="play-video pulse-shadow"><i class="fas fa-play" onclick="showVideoModal()"></i></div>
     </div>
     <%= image_tag 'landing/shape.svg', class: 'shape s310', id: 'shape3' %>
@@ -314,7 +314,7 @@
 </section>
 <div class="startnow wow fadeIn">
     Jetzt mit Peter Pitch durchstarten!
-    <%= link_to "Demo vereinbaren", contact_path, class: 'btn btn-white' %>
+    <%= link_to "Demo vereinbaren", contact_path("", subject: "demo"), class: 'btn btn-white' %>
 </div>
 <section id="secure">
     <div class="heading">Sicherheit &#38; Datenschutz</div>
@@ -364,9 +364,9 @@
     <div class="legal">
         <div class="heading">Rechtliches</div>
         <div class="links">
-            <%= link_to 'Impressum', '' %>
-            <%= link_to 'Datenschutz', '' %>
-            <%= link_to 'AGB', '' %>
+            <%= link_to 'Impressum', impressum_path %>
+            <%= link_to 'Datenschutz', datenschutz_path %>
+            <%= link_to 'AGB', agb_path %>
         </div>
     </div>
     <div class="social">
@@ -374,7 +374,14 @@
         <%= link_to '', '#', class: "fab fa-youtube" %>
     </div>
 </section>
-
+<% if flash[:thanks_for_register] %>
+<div class="register-pop-up">
+	<div class="karte">
+	<h1>Anfrage erhalten</h1>
+	<div class="text"><%= flash[:thanks_for_register] %></div>
+	</div>
+</div>
+<% end %>
 <div class="fullscreen-modal" id="loginModal">
     
     <div class="close"><%= link_to '', root_path, class: "fas fa-times" %></div>
