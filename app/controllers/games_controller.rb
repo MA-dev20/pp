@@ -22,7 +22,7 @@ class GamesController < ApplicationController
       redirect_to dash_admin_path()
       return
     elsif params[:game][:password].empty? || params[:game][:baskets].nil? || params[:game][:objections].nil?
-      redirect_to dash_admin_games_path(params[:game][:team_id])
+      render dash_admin_games_path(params[:game][:team_id])
       return
     end
     if @game && @game.admin_id == @admin.id

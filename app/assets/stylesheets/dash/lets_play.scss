@@ -147,6 +147,68 @@ option:focus {
     font-size: 16px;
     font-weight: 300;
 }
+.karte.letsplay .user-list {
+	height: auto;
+	z-index: 1000;
+	box-shadow: 0px 0px 0px 0 rgba(172, 172, 172, 0.1);
+}
+.karte.letsplay .selected_user {
+	position: absolute;
+	bottom: 10vh;
+	height: 15vh;
+	width: 40vh;
+	border-radius: .8vh;
+	border: 1px solid #dfe1e5;
+	padding: 2px;
+	overflow: auto;
+}
+.karte.letsplay .selected_user label {
+	display: flex !important;
+}
+.karte.letsplay .user-list .unselected_user {
+	display: none;
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	max-height: 16vh;
+}
+.karte.letsplay .selected_user label,
+.karte.letsplay .user-list .unselected_user label {
+	position: relative;
+	display: flex;
+	top: 0;
+	left: 0;
+	height: 45px;
+	width: 100%;
+	border-bottom: 1px solid #dfe1e5;
+	line-height: 45px;
+	font-size: 16px;
+	cursor: pointer;
+	
+}
+.karte.letsplay .selected_user label .fas,
+.karte.letsplay .user-list .unselected_user label .fas {
+	font-size: 20px;
+	line-height: 40px;
+	margin: 2.5px;
+	color: #16e2a5;
+}
+.karte.letsplay .selected_user label img,
+.karte.letsplay .selected_user label .circle,
+.karte.letsplay .user-list .unselected_user label img,
+.karte.letsplay .user-list .unselected_user label .circle {
+	position: relative;
+	height: 40px;
+	width: 40px;
+	border-radius: 20px;
+	margin: 2.5px 5px;
+	background-color: aquamarine;
+}
+.karte.letsplay .selected_user label .fas.fa-minus-circle {
+	color: #ff5f58;
+}
+
 .karte.letsplay .custom-control-label::before {
     border-color: lightgray;
      background-color: white;

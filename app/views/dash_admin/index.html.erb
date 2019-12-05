@@ -161,22 +161,29 @@
     <% end %>
 
     <label>Search for Users</label><br>
-    <div class="index-list user-list">
+    <div class="user-list">
         <div class="search-field">
             <%= image_tag 'dash/icons/search.png', class: 'search' %>
             <input type="text" placeholder="Search Users" id='searchField'>
         </div>
-        <% @users.each do |u| %>
-        <div class="user">
-            <!-- <input type="checkbox" name="team[users][]" value="<%= u.id %>"> -->
-            <label class="usercheck">
-                <input type="checkbox"  name="team[users][]" value="<%= u.id %>">
-                <span class="checkmark"></span>
-            </label>
-            <% if u.avatar.present? %>
-            <%= image_tag u.avatar.quad.url %><% end %><%= u.fname %>
+        <div class="unselected_user">
+        	<% @users.each do |u| %>
+        	<label for="team_users_<%= u.id %>" class="user" onclick="moveUser(this)">
+        		<i class="fas fa-plus-circle"></i>
+        		<% if u.avatar.present? %>
+        			<%= image_tag u.avatar.quad.url %>
+        		<% else %>
+        			<div class="circle"></div>
+        		<% end %>
+        		<%= (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : '') %>
+        	</label>
+        	<% end %>
         </div>
-        <% end %>
+    </div>
+    <% @users.each do |u| %>
+    		<input type="checkbox" id="team_users_<%= u.id %>" value="<%= u.id %>">
+    <% end %>
+    <div class="selected_user">
     </div>
     <%= f.hidden_field :url, value: 'letsplay' %>
     <%= f.submit 'Team erstellen!', class: 'btn btn-green' %>
@@ -305,6 +312,19 @@
             document.querySelector('.catchwords > .checked-field').appendChild(e);
         }
     }
+	function moveUser(e) {
+        var id = e.getAttribute('for');
+        var checkbox = document.getElementById(id);
+        if (checkbox.checked) {
+            e.querySelector('.fas').className = "fas fa-plus-circle";
+            document.querySelector('.unselected_user').appendChild(e);
+        } else {
+            e.querySelector('.fas').className = "fas fa-minus-circle";
+            document.querySelector('.selected_user').appendChild(e);
+			$('.unselected_user').hide();
+			$('.user-list').attr('style', 'box-shadow: 0 0 0 0 rgba(172, 172, 172, 0.1);')
+        }
+    }
 
 
     function flash() {
@@ -319,19 +339,16 @@
         $('#letsplay').show();
         $('#newteam').hide();
     }
-    $('.index-list').attr('style','height: 5.5vh !important');
-    $('.index-list .search-field').attr('style','border-bottom: 0 !important');
-    var $rows = $('.user');
+    var $rows = $('.unselected_user .user');
     $('#searchField').keyup(function () {
         let element_exist = false    
-            $(".user").each(function () {
+            $(".unselected_user .user").each(function () {
                 if (($(this).css("display") == "block") || ($(this).css("display") == "flex")) {
                     element_exist = true
                 }
             });
         if ((this.value && !element_exist) || !this.value) {
-            $('.index-list').attr('style','height: 5.5vh !important');
-            $('.user').attr('style', 'display: none !important');
+            $('.unselected_user .user').attr('style', 'display: none !important');
             $('.index-list .search-field').attr('style','border-bottom: 0 !important');
         }
         var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
@@ -341,12 +358,15 @@
         $rows.show().filter(function () {
             text = $(this).text().replace(/\s+/g, ' ');
             if(!(!reg.test(text)) && ($('#searchField').val() != "")){
-                $('.user').attr('style', 'display: flex !important');
+				$('.unselected_user').show();
+				$('.user-list').attr('style', 'box-shadow: 0px 6px 10px 0 rgba(172, 172, 172, 0.1);')
+                $('.unselected_user .user').attr('style', 'display: flex !important');
                 $('.index-list').attr('style','height: 18vh !important');
                 $('.index-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
             } else if (!reg.test(text) && ($('#searchField').val() == "")) {
-                $('.index-list').attr('style','height: 5.5vh !important');
-                $('.user').attr('style', 'display: none !important');
+				$('.unselected_user').hide();
+                $('.unselected_user .user').attr('style', 'display: none !important');
+				$('.user-list').attr('style', 'box-shadow: 0 0 0 0 rgba(172, 172, 172, 0.1);')
                 $('.index-list .search-field').attr('style','border-bottom: 0 !important');
             }
             return !reg.test(text);
