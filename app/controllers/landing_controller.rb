@@ -7,6 +7,10 @@ class LandingController < ApplicationController
   respond_to :html, :json
 
 
+  def accept_cookies
+	cookies[:accepted] = 'true'
+	redirect_to root_path
+  end
   def agb
   end
   def datenschutz

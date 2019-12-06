@@ -10,6 +10,32 @@
 @import 'font-awesome';
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
 
+.cookie-pop-up {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0,0,0,.5);
+	z-index: 1000;
+}
+.cookie-pop-up .karte {
+	position: absolute;
+	top: calc(50vh - 100px);
+	left: calc(50vw - 250px);
+	width: 500px;
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+	text-align: center;
+}
+.cookie-pop-up .karte .bottom {
+	margin: 20px 0 0;
+}
+.cookie-pop-up .karte .bottom .btn {
+	width: 50%;
+	margin: auto;
+}
 #agb {
 	position: absolute;
 	left: 100px;
