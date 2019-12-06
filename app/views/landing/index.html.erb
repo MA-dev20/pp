@@ -376,16 +376,11 @@
 </section>
 <% if cookies[:accepted] != 'true' %>
 	<div class="cookie-pop-up">
-		<div class="karte">
-			<h1>Cookies</h1>
-			<div class="text">
-				Hi, wir benutzen Cookies.
-				Mit den Klick auf weiter akzeptierst du unsere <%= link_to "Cookie Richtlinien", datenschutz_path %>.
-			</div>
-			<div class="bottom">
-				<%= link_to 'weiter!', accept_cookies_path, class: 'btn btn-green' %>
-			</div>
+		<div class="text">
+			Hi, wir benutzen Cookies.
+			Mit den Klick auf ok akzeptierst du unsere <%= link_to "Cookie Richtlinien", datenschutz_path %>.
 		</div>
+		<%= link_to 'OK', accept_cookies_path, class: 'cookie-btn' %>
 	</div>
 <% end %>
 <% if flash[:thanks_for_register] %>

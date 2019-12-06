@@ -12,29 +12,38 @@
 
 .cookie-pop-up {
 	position: fixed;
-	top: 0;
+	bottom: 0;
 	left: 0;
-	height: 100vh;
-	width: 100vw;
+	line-height: 50px;
+	width: calc(100vw - 2vh);
 	background-color: rgba(0,0,0,.5);
 	z-index: 1000;
+	text-align: left;
+	color: white;
+	font-weight: bold;
+	padding: 0 1vh;
 }
-.cookie-pop-up .karte {
-	position: absolute;
-	top: calc(50vh - 100px);
-	left: calc(50vw - 250px);
-	width: 500px;
+.cookie-pop-up .text {
+	float: left;
+}
+.cookie-pop-up a {
+	color: white;
+}
+.cookie-pop-up .cookie-btn {
+	float: right;
+	margin: 1vh;
+	border-radius: 0;
 	background-color: white;
-	padding: 20px;
-	border-radius: 10px;
-	text-align: center;
+	color: black;
+	padding: 0 20px;
+	height: 30px;
+	line-height: 30px;
+	font-size: 10px;
+	text-decoration: none;
 }
-.cookie-pop-up .karte .bottom {
-	margin: 20px 0 0;
-}
-.cookie-pop-up .karte .bottom .btn {
-	width: 50%;
-	margin: auto;
+.cookie-pop-up .cookie-btn:hover {
+	color: white;
+	background-color: darkgray;
 }
 #agb {
 	position: absolute;
@@ -46,6 +55,7 @@
 	line-height: 20px;
 }
 .switch-box input[type='checkbox'] {
+	position: absolute;
 	position: absolute;
 	opacity: 0;
 }

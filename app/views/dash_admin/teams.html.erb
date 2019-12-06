@@ -22,7 +22,14 @@
                     <tr class="teamname <% if @team && @team.id == t.id %> active <% end %>" >
                         <td onclick="selectTeam(<%= t.id %>)" id="search" ><%= t.name %></td>
                         <td onclick="selectTeam(<%= t.id %>)"><%= t.users.count %></td>
-                        <td onclick="selectTeam(<%= t.id %>)"><div class="rating"><%= if TeamRating.find_by(team_id: t.id) then TeamRating.find_by(team_id: t.id).ges / 10.0 else 0 end%></div></td>
+                        <td onclick="selectTeam(<%= t.id %>)">
+                        	<% if t.team_rating.present? %>
+                        		<div class="circle" id="team_<%= t.id %>"></div>
+                        		<div class="rating"><%= t.team_rating.ges / 10.0 %></div>
+                        	<% else %>
+                        		<div class="rating">0</div>
+                        	<% end %>
+                        </td>
                         <td><%= link_to '', dash_admin_team_path(t.id, query: 'edit'), class: 'far fa-edit edit'%></td>
                         <td><%= link_to image_tag('dash/icons/stats.png'), dash_admin_team_stats_path(t.id) %></td>
                     </tr>
@@ -179,10 +186,17 @@
                         <% if u.avatar.present? %>
                         <td><a class="username-link" href="<%= dash_admin_user_stats_path(u.id) %>"><%= image_tag u.avatar.quad.url %><%= (u.fname.present? ? u.fname : "") + " " + (u.lname.present? ? u.lname : "") %></a></td>
                         <% else %>
-                        <td><a class="username-link" href="<%= dash_admin_user_stats_path(u.id) %>"><div class="circle"></div><%= u.fname %><%= u.lname %></a></td>
+                        <td><a class="username-link" href="<%= dash_admin_user_stats_path(u.id) %>"><div class="circle"></div><%= (u.fname.present? ? u.fname : "") + " " + (u.lname.present? ? u.lname : "") %></a></td>
                         <% end %>
                         <td><%= u.turns.count %></td>
-                        <td><div class="rating"><%= if UserRating.find_by(user_id: u.id) then UserRating.find_by(user_id: u.id).ges / 10.0 else 0 end%></div></td>
+                        <td>
+                        	<% if u.user_rating.present? %>
+                        		<div class="circle" id="user_<%= u.id %>"></div>
+                        		<div class="rating"><%= u.user_rating.ges / 10.0 %></div>
+                        	<% else %>
+                        		<div class="rating">0</div>
+                        	<% end %>
+                        </td>
                         <td><%= link_to '', dash_admin_user_path(u.id), class: 'far fa-edit' %></td>
                         <td><%= link_to image_tag('dash/icons/stats.png'), dash_admin_user_stats_path(u.id) %></td>
                     </tr>
@@ -328,6 +342,33 @@
     }
 </style>
 <script>
+	function myColor(val) {
+		if (val < 0.5 ) {
+			return '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+		} else {
+			return '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+		}
+	}
+	function drawCircle(value, circle_id) {
+		var bar = new ProgressBar.Circle(circle_id, {
+			strokeWidth: 8,
+			easing: 'linear',
+			duration: 0,
+			color: myColor(value),
+			svgStyle: null,
+		});
+		bar.animate(value);
+	}
+	<% @teams.each do |t| %>
+		<% if t.team_rating.present? %>
+			drawCircle(<%= t.team_rating.ges / 100.0 %>, '#team_<%= t.id %>');
+		<% end %>
+	<% end %>
+	<% @users.each do |u| %>
+		<% if u.user_rating.present? %>
+			drawCircle(<%= u.user_rating.ges / 100.0 %>, '#user_<%= u.id %>');
+		<% end %>
+	<% end %>
 	function toggleDeleteUserModal() {
 		$('#deleteUser').toggle();
 	}

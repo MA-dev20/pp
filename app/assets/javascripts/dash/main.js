@@ -8,4 +8,5 @@
  *= require dash/Chart.min
  *= require dash/perfect-scrollbar.min
  *= require dropzone
+ *= require game_desktop/progressbar.min
  */
