@@ -44,26 +44,32 @@
                 <label>Teamname</label>
                 <%= f.text_field :name, class: 'field', value: ''%>
             <% end %>
-        
+        	<% @admin.users.all.each do |u| %>
+               	<input type="checkbox"  name="team[users][]" value="<%= u.id %>" id="team_users_<%= u.id %>">
+            <% end %>
             <label>Search for Users</label><br>
             <div class="user-list">
                 <div class="search-field">
                     <%= image_tag 'dash/icons/search.png', class: 'search' %>
                     <input type="text" placeholder="Search Users" id='searchNewTeam' autocomplete="off">
                 </div>
-                <% @admin.users.all.each do |u| %>
-                    <div class="user">
-                        <label class="usercheck">
-                            <input type="checkbox"  name="team[users][]" value="<%= u.id %>">
-                            <span class="checkmark"></span>
-                        </label>
-                        <!-- <input type="checkbox" name="team[users][]" value="<%= u.id %>"> -->
-                        <% if u.avatar.present? %>
-                            <%= image_tag u.avatar.quad.url %>
-                        <% end %>
-                        <%= (u.fname.present? ? u.fname : "") + ' ' + (u.lname.present? ? u.lname : "") %>
-                    </div>
-                <% end %>
+                
+                <div class="unselected_users">
+                	<% @admin.users.all.each do |u| %>
+                		<label for="team_users_<%= u.id %>" class="user" onclick="moveUserNew(this)">
+                			<i class="fas fa-plus-circle"></i>
+                			<% if u.avatar.present? %>
+                				<%= image_tag u.avatar.quad.url %>
+                			<% else %>
+                				<div class="circle"></div>
+                			<% end %>
+                			<%= (u.fname.present? ? u.fname : "") + ' ' + (u.lname.present? ? u.lname : "") %>
+                		</label>
+                	<% end %>
+                </div>
+            </div>
+            <div class="selected_users">
+            	
             </div>
             <%= f.hidden_field :url, value: 'teams' %>
             <%= f.submit 'Team erstellen!', class: 'btn half btn-green' %>
@@ -84,6 +90,13 @@
                 <label>Teamname</label>
                 <%= f.text_field :name, class: 'field', value: @team.name%>
             <% end %>
+            <% @admin.users.all.each do |u| %>
+              	<% if TeamUser.where(team_id: @team.id, user_id: u.id).count == 1 %>
+               	<input type="checkbox"  name="team[users][]" value="<%= u.id %>" id="team_users_edit_<%= u.id %>" checked>
+               	<% else %>
+               	<input type="checkbox"  name="team[users][]" value="<%= u.id %>" id="team_users_edit_<%= u.id %>">
+               	<% end %>
+            <% end %>
         
             <label>Search for Users</label><br>
             <div class="user-list">
@@ -91,28 +104,35 @@
                     <%= image_tag 'dash/icons/search.png', class: 'search' %>
                     <input type="text" placeholder="Search Users" id='searchEditTeam'>
                 </div>
-                <% @admin.users.all.each do |u| %>
-                    <div class="user editTeam">
-                        <% if TeamUser.where(team_id: @team.id, user_id: u.id).count == 1 %>
-                        <!-- <input type="checkbox" name="team[users][]" value="<%= u.id %>"  checked> -->
-                        <label class="usercheck">
-                            <input type="checkbox"  name="team[users][]" value="<%= u.id %>" checked="checked">
-                            <span class="checkmark"></span>
-                        </label>
-                        <% else %>
-                        <label class="usercheck">
-                            <input type="checkbox"  name="team[users][]" value="<%= u.id %>">
-                            <span class="checkmark"></span>
-                        </label>
-                        <!-- <input type="checkbox" name="team[users][]" value="<%= u.id %>"> -->
-                        <% end %>
-                        <% if u.avatar.present? %>
-                            <%= image_tag u.avatar.quad.url %>
-                         <% else %>
-                             <div class="circle"></div>
-                         <% end %>
-                        <%= (u.fname.present? ? u.fname : "") + " " + (u.lname.present? ? u.lname : "") %>
-                    </div>
+                <div class="unselected_users">
+                	<% @admin.users.all.each do |u| %>
+                		<% if TeamUser.where(team_id: @team.id, user_id: u.id).count == 0 %>
+                			<label for="team_users_edit_<%= u.id %>" class="user edituser" onclick="moveUserEdit(this)">
+                				<i class="fas fa-plus-circle"></i>
+                				<% if u.avatar.present? %>
+                					<%= image_tag u.avatar.quad.url %>
+                				<% else %>
+                					<div class="circle"></div>
+                				<% end %>
+                				<%= (u.fname.present? ? u.fname : "") + ' ' + (u.lname.present? ? u.lname : "") %>
+                			</label>
+                		<% end %>
+                	<% end %>
+                </div>
+            </div>
+            <div class="selected_users">
+            	<% @admin.users.all.each do |u| %>
+            		<% if TeamUser.where(team_id: @team.id, user_id: u.id).count == 1 %>
+            			<label for="team_users_edit_<%= u.id %>" class="user edituser" onclick="moveUserEdit(this)">
+                			<i class="fas fa-minus-circle"></i>
+                			<% if u.avatar.present? %>
+                				<%= image_tag u.avatar.quad.url %>
+                			<% else %>
+                				<div class="circle"></div>
+                			<% end %>
+                			<%= (u.fname.present? ? u.fname : "") + ' ' + (u.lname.present? ? u.lname : "") %>
+                		</label>
+                	<% end %>
                 <% end %>
             </div>
             <%= f.submit 'Daten updaten!', class: 'btn half btn-green' %>
@@ -290,7 +310,6 @@
         }).hide();
         })
     
-        $('.user-list').attr('style','height: auto !important');
         $('.user-list .search-field').attr('style','border-bottom: 0 !important');
         $('#searchNewTeam').keydown(function(){
             var element_exist = false    
@@ -303,17 +322,16 @@
     /* search newTeam */
         $('#searchNewTeam').keyup(function() {
             let element_exist = false    
-            $(".user").each(function () {
+            $(".unselected_users .user").each(function () {
                 if (($(this).css("display") == "block") || ($(this).css("display") == "flex")) {
                     element_exist = true
                 }
             });
             if ((this.value && !element_exist) || (!this.value)) {
-                $('.user-list').attr('style','height: auto !important');
-                $('.user').attr('style', 'display: none !important');
+                $('.unselected_users .user').attr('style', 'display: none !important');
                 $('.user-list .search-field').attr('style','border-bottom: 0 !important');
             }
-            $rows = $('.user');
+            $rows = $('.unselected_users .user');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
             reg = RegExp(val, 'i'),
             text;
@@ -321,12 +339,12 @@
             text = $(this).text().replace(/\s+/g, ' ');
             console.log(!reg.test(text))
             if(!(!reg.test(text)) && ($('#searchNewTeam').val() != "")){
-                $('.user').attr('style', 'display: flex !important');
-                $('.user-list').attr('style','height: 18vh !important');
+                $('.unselected_users .user').attr('style', 'display: flex !important');
+                $('#newteam .unselected_user').show();
                 $('.user-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
             } else if (!reg.test(text) && ($('#searchNewTeam').val() == "")) {
-                $('.user-list').attr('style','height: auto !important');
-                $('.user').attr('style', 'display: none !important');
+                $('#newteam .unselected_user').hide();
+                $('.unselected_users .user').attr('style', 'display: none !important');
                 $('.user-list .search-field').attr('style','border-bottom: 0 !important');
             }
             return !reg.test(text);
@@ -336,29 +354,29 @@
     /* search EditTeam */
         $('#searchEditTeam').keyup(function() {
             let element_exist = false    
-            $(".user").each(function () {
+            $(".unselected_users .user").each(function () {
                 if (($(this).css("display") == "block") || ($(this).css("display") == "flex")) {
                     element_exist = true
                 }
             });
             if ((this.value && !element_exist) || (!this.value)) {
-                $('.user-list').attr('style','height: auto !important');
-                $('.editTeam').attr('style', 'display: none !important');
+                $('.unselected_users .user').attr('style', 'display: none !important');
                 $('.user-list .search-field').attr('style','border-bottom: 0 !important');
             }
-            $rows = $('.editTeam');
+            $rows = $('.unselected_users .user');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
             reg = RegExp(val, 'i'),
             text;
         $rows.show().filter(function() {
             text = $(this).text().replace(/\s+/g, ' ');
+            console.log(!reg.test(text))
             if(!(!reg.test(text)) && ($('#searchEditTeam').val() != "")){
-                $('.editTeam').attr('style', 'display: flex !important');
-                $('.user-list').attr('style','height: 18vh !important');
+                $('.unselected_users .user').attr('style', 'display: flex !important');
+                $('#newteam .unselected_user').show();
                 $('.user-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
             } else if (!reg.test(text) && ($('#searchEditTeam').val() == "")) {
-                $('.user-list').attr('style','height: auto !important');
-                $('.editTeam').attr('style', 'display: none !important');
+                $('#newteam .unselected_user').hide();
+                $('.unselected_users .user').attr('style', 'display: none !important');
                 $('.user-list .search-field').attr('style','border-bottom: 0 !important');
             }
             return !reg.test(text);
@@ -432,7 +450,32 @@
         }).hide();
         })
     
-    
+    function moveUserNew(e) {
+		var selected = document.querySelector('#newteam .selected_users');
+		var unselected = document.querySelector('#newteam .unselected_users');
+		var id = e.getAttribute('for');
+		var checkbox = document.getElementById(id);
+		if(checkbox.checked) {
+			e.querySelector('.fas').className = "fas fa-plus-circle";
+			unselected.appendChild(e);
+		} else {
+			e.querySelector('.fas').className = "fas fa-minus-circle";
+			selected.appendChild(e);
+		}
+	}
+	function moveUserEdit(e) {
+		var selected = document.querySelector('#editteam .selected_users');
+		var unselected = document.querySelector('#editteam .unselected_users');
+		var id = e.getAttribute('for');
+		var checkbox = document.getElementById(id);
+		if(checkbox.checked) {
+			e.querySelector('.fas').className = "fas fa-plus-circle";
+			unselected.appendChild(e);
+		} else {
+			e.querySelector('.fas').className = "fas fa-minus-circle";
+			selected.appendChild(e);
+		}
+	}
     function moveNewTeam(e) {
         var selected = document.getElementById('selected_new_teams');
         var unselected = document.getElementById('unselected_new_teams');

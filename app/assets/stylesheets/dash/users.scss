@@ -47,7 +47,58 @@
 #newUser {
     display: none;
 }
-
+#editteam form .user-list,
+#newteam form .user-list {
+	height: auto !important;
+	max-height: 25vh;
+	z-index: 1000;
+}
+#newteam form .user-list .unselected_users label i,
+#editteam form .user-list .unselected_users label i {
+	line-height: 5.3vh;
+	color: #16e2a5;
+	font-size: 2.5vh;
+}
+#editteam .selected_users,
+#newteam .selected_users {
+	position: absolute;
+	bottom: 12vh;
+	height: 20vh;
+	width: 56vh;
+	border-radius: 0.8vh;
+	border: 0.1vh solid #dfe1e5;
+	padding: 0 1.2vh;
+	overflow: auto;
+}
+#editteam .selected_users .user,
+#newteam .selected_users .user {
+	position: relative;
+	width: 100%;
+	height: 5.3vh;
+	border-bottom: 0.1vh solid #dfe1e5;
+	line-height: 5.3vh;
+	display: flex !important;
+}
+#editteam .selected_users .user i,
+#newteam .selected_users .user i {
+	line-height: 5.3vh;
+	color: #ff5f58;
+}
+#editteam .selected_users .user img,
+#editteam .selected_users .user .circle,
+#newteam .selected_users .user img,
+#newteam .selected_users .user .circle {
+	margin: 0.7vh;
+	height: 3.8vh;
+	width: 3.8vh;
+	border-radius: 50%;
+	background-color: #d7eeff;
+	line-height: 3.8vh;
+	text-align: center;
+	font-size: 1.3vh;
+}
+#newteam input[type='checkbox'],
+#editteam input[type='checkbox'],
 #newUser input[type='checkbox'],
 #editUser input[type='checkbox'] {
     position: absolute;
