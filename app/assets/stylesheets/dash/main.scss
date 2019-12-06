@@ -17,6 +17,30 @@
 @import "social-share-button";
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
 
+.fullscreen-blur {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 2000;
+}
+.fullscreen-blur .karte {
+	position: absolute;
+	width: 500px;
+	top:  calc(50vh - 100px);
+	left: calc(50vw - 250px);
+	text-align: center;
+}
+.fullscreen-blur .karte .body,
+.fullscreen-blur .karte .bottom, 
+.fullscreen-blur .karte .bottom .btn {
+	position: relative;
+}
+.fullscreen-blur .karte .bottom .btn {
+	margin: 1vh;
+}
 body {
     font-family: 'Nunito', sans-serif;
     font-weight: normal;
@@ -197,14 +221,16 @@ body {
     background-color: #16e2a5;
     color: white;
     height: 5.5vh !important;
+	line-height: 5.5vh;
     font-size: 1.7vh;
     border-radius: 6vh;
     width: 14vh;
     padding: 0;
+	border: 1px solid #16e2a5;
 }
 .btn-green:hover {
-    opacity: .8;
-    color: white;
+    color: #16e2a5;
+	background-color: white;
 }
 .red {
     border-color: #ff5f58 !important;

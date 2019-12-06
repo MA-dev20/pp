@@ -137,7 +137,7 @@
             </div>
             <%= f.submit 'Daten updaten!', class: 'btn half btn-green' %>
         <% end %>
-        <%= link_to '', destroy_team_path(@team), class: 'remove far fa-trash-alt' %>
+        <div onclick="toggleDeleteTeamModal()" class="remove far fa-trash-alt"></div>
     </div>
     <% end %>
 </div>
@@ -272,10 +272,55 @@
             </div>
             <%= f.submit 'Daten updaten!', class: 'btn half btn-green' %>
         <% end %>
-        <%= link_to '', destroy_user_path(@user), class: 'remove far fa-trash-alt' %>
+        <div onclick="toggleDeleteUserModal()" class="remove far fa-trash-alt"></div>
     </div>
     <% end %>
 </div>
+<% if flash[:pop_up] %>
+	<div class="fullscreen-blur" onclick="closeModal()">
+		<div class="karte">
+			<div class="head small">Keine Stats!</div>
+			<div class="body">
+				<%= flash[:pop_up] %>
+				<% if flash[:pop_up2] %>
+				<br>
+				<%= flash[:pop_up2] %>
+				<% end %>
+			</div>
+			<div class="bottom">
+			<button class="btn btn-green">Close</button>
+			</div>
+		</div>
+	</div>
+<% end %>
+<% if @user %>
+<div class="fullscreen-blur" id="deleteUser">
+    <div class="karte">
+    	<div class="head">Spieler löschen?</div>
+    	<div class="body">
+    		Bist du sicher das du den Spieler unwiederuflich löschen möchtest?
+    	</div>
+    	<div class="bottom" style="display: flex;">
+    		<%= link_to 'löschen', destroy_user_path(@user), class: 'btn btn-green' %>
+    		<button class="btn btn-green" onclick="toggleDeleteUserModal()">Close</button>
+    	</div>
+	</div>
+</div>
+<% end %>
+<% if @team %>
+<div class="fullscreen-blur" id="deleteTeam">
+    <div class="karte">
+    	<div class="head">Team löschen?</div>
+    	<div class="body">
+    		Bist du sicher das du das Team unwiederuflich löschen möchtest?
+    	</div>
+    	<div class="bottom" style="display: flex;">
+    		<%= link_to 'löschen', destroy_team_path(@team), class: 'btn btn-green' %>
+    		<button class="btn btn-green" onclick="toggleDeleteTeamModal()">Close</button>
+    	</div>
+	</div>
+</div>
+<% end %>
 
 <style>
     .user, .newUser {
@@ -283,6 +328,15 @@
     }
 </style>
 <script>
+	function toggleDeleteUserModal() {
+		$('#deleteUser').toggle();
+	}
+	function toggleDeleteTeamModal() {
+		$('#deleteTeam').toggle();
+	}
+	function closeModal() {
+		$('.fullscreen-blur').hide();
+	}
     new PerfectScrollbar('#teams-table');
     new PerfectScrollbar('#users-table');
     /* search Teams */

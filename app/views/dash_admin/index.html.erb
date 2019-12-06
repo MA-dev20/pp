@@ -190,6 +190,23 @@
     <% end %>
 </div>
 
+<% if flash[:pop_up] %>
+	<div class="fullscreen-blur">
+		<div class="karte">
+			<div class="head small">Url Vergeben!</div>
+			<div class="body">
+				<%= flash[:pop_up] %>
+				<% if flash[:pop_up2] %>
+				<br>
+				<%= flash[:pop_up2] %>
+				<% end %>
+			</div>
+			<div class="bottom">
+			<button class="btn btn-green" onclick="closeModal()">Close</button>
+			</div>
+		</div>
+	</div>
+<% end %>
 
 
 <style>
@@ -250,6 +267,9 @@
     }
 </style>
 <script>
+	function closeModal() {
+		$('.fullscreen-blur').hide();
+	}
     new PerfectScrollbar('.karte-content');
     flash();
 	function selectVideo(name, isPitch) {

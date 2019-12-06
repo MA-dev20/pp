@@ -33,6 +33,7 @@ class DashAdminController < ApplicationController
     
   def user_stats
     if @user.turns.count == 0 || !@user.user_rating.present?
+	  flash[:pop_up] = 'Der Spieler hat noch keine Statisiken!'
       redirect_to dash_admin_teams_path
       return
     end
@@ -92,6 +93,7 @@ class DashAdminController < ApplicationController
   def user_stats_compare
     @user2 = User.find(params[:user2_id])
     if @user.turns.count == 0 || @user2.turns.count == 0
+	  flash[:pop_up] = 'Der Spieler hat noch keine Statisiken!'
       redirect_to dash_admin_teams_path
       return
     end
@@ -157,6 +159,7 @@ class DashAdminController < ApplicationController
   def team_stats
     @team_rating = TeamRating.find_by(team_id: @team.id)
     if @team_rating.nil?
+	  flash[:pop_up] = 'Das Team hat noch keine Statisiken!'
       redirect_to dash_admin_teams_path
       return
     end

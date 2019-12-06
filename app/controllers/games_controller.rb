@@ -22,7 +22,7 @@ class GamesController < ApplicationController
       redirect_to dash_admin_path()
       return
     elsif params[:game][:password].empty? || params[:game][:baskets].first.empty? || params[:game][:objections].first.empty?
-      render dash_admin_games_path(params[:game][:team_id])
+      redirect_to dash_admin_games_path(params[:game][:team_id])
       return
     end
     if @game && @game.admin_id == @admin.id
@@ -35,7 +35,8 @@ class GamesController < ApplicationController
       # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
       redirect_to gda_wait_path
     elsif @game && @game.admin_id != @admin.id
-        flash[:pop_up] = "Ups, diese URL ist schon vergeben!;- Sei kreativ und wähle eine ander aus. -"
+        flash[:pop_up] = "Ups, diese URL ist schon vergeben!;-"
+		flash[:pop_up2] = "Sei kreativ und wähle eine andere aus."
         redirect_to dash_admin_games_path(params[:game][:team_id])
     else
       @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])

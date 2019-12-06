@@ -79,6 +79,10 @@
 	line-height: 5.3vh;
 	display: flex !important;
 }
+#deleteTeam,
+#deleteUser {
+	display: none;
+}
 #editteam .selected_users .user i,
 #newteam .selected_users .user i {
 	line-height: 5.3vh;
