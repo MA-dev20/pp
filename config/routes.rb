@@ -187,6 +187,9 @@ Rails.application.routes.draw do
     #add video
     get 'admin/dash/turns/:turn_id/video/new', to: 'dash_admin#add_video_to_turn', as: 'add_video_to_turn'
     post 'admin/dash/turns/:turn_id/video/new', to: 'dash_admin#save_video_to_turn'
+	
+	#edit video
+	get 'admin/dash/videos/:video_id/edit', to: 'dash_admin#video_edit', as: 'dash_admin_video_edit'
     
     
     get 'admin/dash/statistics', to: 'dash_admin#statistics', as: 'dash_admin_statistics'
@@ -304,6 +307,8 @@ Rails.application.routes.draw do
     
   get 'videos/new', to: 'videos#new', as: 'video_upload'
   post 'videos/new', to: 'videos#create'
+  post 'videos/:video_id/edit', to: 'videos#update', as: 'edit_video'
+  get 'videos/:video_id/destroy', to: 'videos#destroy', as: 'destroy_video'
     
 ###########
 # Comment #

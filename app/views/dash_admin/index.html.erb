@@ -321,6 +321,7 @@
         } else {
             e.querySelector('.fas').className = "fas fa-minus-circle";
             document.querySelector('.selected_user').appendChild(e);
+			$('#searchField').val('');
 			$('.unselected_user').hide();
 			$('.user-list').attr('style', 'box-shadow: 0 0 0 0 rgba(172, 172, 172, 0.1);')
         }

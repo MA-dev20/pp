@@ -12,16 +12,16 @@ class GamesController < ApplicationController
     if params[:game][:password].empty?
       flash[:missing_password] = 'Gib eine Url an!'
     end
-    if params[:game][:baskets].nil?
+    if params[:game][:baskets].first.empty?
       flash[:select_catchword] = 'Wähle zumindest eine Liste'
     end
-    if params[:game][:objections].nil?
+    if params[:game][:objections].first.empty?
       flash[:select_objection] = 'Wähle zumindest eine Liste'
     end
     if params[:game][:team_id].nil?
       redirect_to dash_admin_path()
       return
-    elsif params[:game][:password].empty? || params[:game][:baskets].nil? || params[:game][:objections].nil?
+    elsif params[:game][:password].empty? || params[:game][:baskets].first.empty? || params[:game][:objections].first.empty?
       render dash_admin_games_path(params[:game][:team_id])
       return
     end

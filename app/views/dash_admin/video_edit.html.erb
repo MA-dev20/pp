@@ -1,0 +1,9 @@
+<div class="karte" id="editVideo">
+	<%= link_to '', dash_admin_video_tool_path, class: 'fas fa-arrow-left back' %>
+	<div class="head left">Video bearbeiten!</div>
+	<%= form_for(:video, url: edit_video_path(@video)) do |f| %>
+		<%= f.text_field :name, value: @video.name, placeholder: 'Enter Video title!', class: 'field' %>
+		<%= f.submit 'speichern!', class: 'btn btn-green' %>
+	<% end %>
+	<%= video_tag @video.file.url, controls: true, autplay: false %>
+</div>

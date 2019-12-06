@@ -269,8 +269,15 @@ option:focus {
 	margin: 0 1vh 1vh;
 	border-radius: 0.8vh;
 }
-.karte.letsplay#selectVideos .body .video-karte {
-	
+.karte.letsplay#selectVideos .body .video-karte .title {
+	position: absolute;
+	bottom: 0;
+	width: calc(100% - 2vh);
+	line-height: 2vh;
+	margin: 0 1vh .8vh;
+	color: white;
+	font-size: 1.2vh;
+	font-weight: 600;
 }
 .karte.letsplay .add .fas {
     font-size: 1.9vh;

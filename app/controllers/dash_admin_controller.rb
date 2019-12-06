@@ -282,6 +282,10 @@ class DashAdminController < ApplicationController
       @result = @result.sort{|a,b| a[:date] <=> b[:date]}
     end
   end
+	
+  def video_edit
+	@video = Video.find_by(id: params[:video_id])
+  end
     
   def video_details
     @turn = Turn.find(params[:turn_id])
