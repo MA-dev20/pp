@@ -8,10 +8,14 @@
  *= require game_desktop/ended
  *= require bootstrap.min
  *= require omnes
+ *= require main/animate
  */
-@import '../nunito-fonts.scss';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 
+.animat {
+	animation-duration: 1s;
+	animation-iteration-count: 5;
+}
 body {
     font-family: 'BarackPro-Solid';
     margin: 0;

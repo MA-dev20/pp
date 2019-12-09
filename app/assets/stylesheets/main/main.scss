@@ -147,9 +147,7 @@ body {
 	right: 0;
 	min-height: 100vh;
 	min-width: 100vw;
-	width: auto;
-	height: auto;
-	background-size: cover;
+	transform: translateX(calc((100% - 100vw) / 2));
 
 }
 .form-field {
@@ -1268,6 +1266,10 @@ label .red {
 	.overlay-play {
 		right: 350px;
 	}
+	.overlay-play:hover {
+		right: 349px;
+		font-size: 102px;
+	}
     #navbar .navbar-links {
         width: 300px;
     }
@@ -1672,6 +1674,11 @@ label .red {
     	font-size: 100px;
     	color: white;
     	cursor: pointer;
+	}
+	.overlay-play:hover {
+		top: calc(50vh - 51px);
+		right: 499px;
+		font-size: 102px;
 	}
     #content .references h1 {
         font-size: 26px;
