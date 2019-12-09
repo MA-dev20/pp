@@ -2759,7 +2759,7 @@
         -webkit-transform: scale3d(0.3, 0.3, 0.3);
         transform: scale3d(0.3, 0.3, 0.3);
     }
-    50% {
+    100% {
         visibility: visible;
 		-webkit-transform: scale3d(1, 1, 1);
 		transform: scale3d(1, 1, 1);
@@ -2772,7 +2772,7 @@
         -webkit-transform: scale3d(0, 0, 0);
         transform: scale3d(0, 0, 0);
     }
-    50% {
+    100% {
         visibility: visible;
 		-webkit-transform: scale3d(1, 1, 1);
 		transform: scale3d(1, 1, 1);

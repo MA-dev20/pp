@@ -251,12 +251,9 @@
     overflow: hidden;
     border-radius: 0.8vh;
 }
-#statistic .right .video-list:hover .top {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-}
 #statistic .right .video-list:hover .top .play{
-    background-color: #16e2a5;
+	-webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 #statistic {
