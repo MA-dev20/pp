@@ -1,11 +1,11 @@
 <section id="navbar" class="contact-navbar">
     <%= image_tag 'landing/logo.png', class: 'logo'%>
 </section>
-<div class="bg-image">
+<div class="bg-image contact-hidden">
 </div>
-<%= video_tag 'landing.mp4', id: 'bgVideo', controls: false, preload: 'auto', autoplay: false, muted: false, onended: 'videoEnd()' %>
-<i class="fas fa-play-circle overlay-play" onclick="videoAction()"></i>
-<div class="overlay-text">
+<%= video_tag 'landing.mp4', class: 'contact-hidden', id: 'bgVideo', controls: false, preload: 'auto', autoplay: false, muted: false, onended: 'videoEnd()' %>
+<i class="fas fa-play-circle overlay-play contact-hidden" onclick="videoAction()"></i>
+<div class="overlay-text contact-hidden">
 <span>Y</span>OU <br>
 <span>O</span>NLY <br>
 <span>W</span>ORK <br>
