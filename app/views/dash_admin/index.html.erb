@@ -136,9 +136,13 @@
         </label>
         <% end %>
         <% @turns.each do |t| %>
-        <label for="game_videos_turns_<%= t.id %>" class="video-karte videoSearch" onclick="selectVideo('<%= t.user.fname + " " + t.user.lname %>', false)" style="background-image: url('<%= t.recorded_pitch.thumb.url.present? ? asset_path(t.recorded_pitch.thumb.url) : '' %>')">
+        <% 
+        first_name = t.user&.fname ? t.user.fname : '' 
+        last_name = t.user&.lname ? t.user.lname : '' 
+        %>
+        <label for="game_videos_turns_<%= t.id %>" class="video-karte videoSearch" onclick="selectVideo('<%= first_name + " " + last_name %>', false)" style="background-image: url('<%= t.recorded_pitch.thumb.url.present? ? asset_path(t.recorded_pitch.thumb.url) : '' %>')">
           <div class="overlay"></div>
-          <div class="title"><%= t.user.fname + " " + t.user.lname %></div>
+          <div class="title"><%= first_name + " " + last_name %></div>
           <div class="duration"></div>
         </label>
         <% end %>

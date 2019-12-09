@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_29_114336) do
+ActiveRecord::Schema.define(version: 2019_12_04_103251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -146,8 +146,14 @@ ActiveRecord::Schema.define(version: 2019_11_29_114336) do
     t.boolean "use_peterobjections", default: false
     t.string "youtube_url"
     t.boolean "video_toggle", default: false
+    t.bigint "video_id"
+    t.boolean "peter_sound", default: true
+    t.boolean "game_sound", default: true
+    t.integer "video"
+    t.boolean "video_is_pitch"
     t.index ["admin_id"], name: "index_games_on_admin_id"
     t.index ["team_id"], name: "index_games_on_team_id"
+    t.index ["video_id"], name: "index_games_on_video_id"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -367,6 +373,7 @@ ActiveRecord::Schema.define(version: 2019_11_29_114336) do
   add_foreign_key "game_ratings", "teams"
   add_foreign_key "games", "admins"
   add_foreign_key "games", "teams"
+  add_foreign_key "games", "videos"
   add_foreign_key "ratings", "turns"
   add_foreign_key "root_admins", "admins"
   add_foreign_key "root_admins", "roots"
