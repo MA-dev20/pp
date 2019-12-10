@@ -12,10 +12,10 @@ class GamesController < ApplicationController
     if params[:game][:password].empty?
       flash[:missing_password] = 'Gib eine Url an!'
     end
-    if params[:game][:baskets].first.empty?
+    if params[:game][:baskets]&.first&.empty?
       flash[:select_catchword] = 'Wähle zumindest eine Liste'
     end
-    if params[:game][:objections].first.empty?
+    if params[:game][:objections]&.first&.empty?
       flash[:select_objection] = 'Wähle zumindest eine Liste'
     end
     if params[:game][:team_id].nil?
