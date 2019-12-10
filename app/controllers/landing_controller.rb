@@ -19,7 +19,6 @@ class LandingController < ApplicationController
   end
 	
   def index
-    render 'index1'
   end
 
   def ended_game
