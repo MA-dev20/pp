@@ -1,202 +1,276 @@
-#gd_users .top .select-text{
+.teams, .users {
     position: absolute;
-    top: 4vh;
-    left: 5vw;
-    font-size: 3vh;
-    width: calc(30vw - 8vh);
-    color: #858585;
+    top: calc(50vh - 42.1vh);
+    // width: 58.7vh;
+    height: 62.7vh;
+    width: 64.55vh;
 }
-#myTable_filter {
+.teams {
+    // right: calc(50% + 1.9vh);
+    right: calc(50% + 3vh);
+}
+.users {
+    left: calc(50% + 3vh);
+}
+.teams .searchbar,
+.users .searchbar {
+    position: absolute;
+    top: 1vh;
+    left: 0;
+    height: 5.6vh;
+    border-radius: 1vh;
+    box-shadow: 0 0.5vh 2vh 0 rgba(107, 107, 107, 0.1);
+    background-color: #ffffff;
+    width: 35vh;
+    display: flex;
+}
+
+.teams > .btn,
+.users > .btn {
+    position: absolute;
+    top: 1vh;
+    right: 0;
+    border-radius: 4vh;
+    width: 17.5vh;
+}
+.teams .karte,
+.users .karte {
+    position: absolute;
+    // width: 58.7vh;
+    height: 64vh;
+    // height: 68.5vh;
+    top: 8.5vh;
+    width: 100%;
+}
+#newteam,
+.editteam,
+#newUser {
     display: none;
 }
-#gd_users .top .select{
+#editteam form .user-list,
+#newteam form .user-list {
+	height: auto !important;
+	max-height: 25vh;
+	z-index: 1000;
+}
+#newteam form .user-list .unselected_users label i,
+#editteam form .user-list .unselected_users label i {
+	line-height: 5.3vh;
+	color: #16e2a5;
+	font-size: 2.5vh;
+}
+#editteam .selected_users,
+#newteam .selected_users {
+	position: absolute;
+	bottom: 12vh;
+	height: 20vh;
+	width: 56vh;
+	border-radius: 0.8vh;
+	border: 0.1vh solid #dfe1e5;
+	padding: 0 1.2vh;
+	overflow: auto;
+}
+#editteam .selected_users .user,
+#newteam .selected_users .user {
+	position: relative;
+	width: 100%;
+	height: 5.3vh;
+	border-bottom: 0.1vh solid #dfe1e5;
+	line-height: 5.3vh;
+	display: flex !important;
+}
+#deleteTeam,
+#deleteUser {
+	display: none;
+}
+#editteam .selected_users .user i,
+#newteam .selected_users .user i {
+	line-height: 5.3vh;
+	color: #ff5f58;
+}
+#editteam .selected_users .user img,
+#editteam .selected_users .user .circle,
+#newteam .selected_users .user img,
+#newteam .selected_users .user .circle {
+	margin: 0.7vh;
+	height: 3.8vh;
+	width: 3.8vh;
+	border-radius: 50%;
+	background-color: #d7eeff;
+	line-height: 3.8vh;
+	text-align: center;
+	font-size: 1.3vh;
+}
+#newteam input[type='checkbox'],
+#editteam input[type='checkbox'],
+#newUser input[type='checkbox'],
+#editUser input[type='checkbox'] {
     position: absolute;
-    top: 6vh;
-    left: 5vw;
-    width: calc(20vw - 2.5vh);
-    height: 10vh;
-    border-radius: 5vh;
-    line-height: 10vh;
+    opacity: 0;
+    height: 0;
+    width: 0;
 }
-
-#gd_users .top #searchField {
+.users .karte #select-team {
     position: absolute;
-    bottom: 74vh;
-    left: 25vw;
-    width: 20vw;
-    height: 6vh;
-    background-color: white;
-    padding-right: 3vh;
-    padding-left: 3vh;
-    color: black;
-    border-radius: 4vh;
-    border: 2px solid #ededed;
-    font-size: 2vh;
-    padding-top: 0.6vh;
+    right: 4.3vh;
+    top: 3vh;   
 }
-#gd_users .top #searchField:focus {
-    border-color: rgba(29, 218, 175, 1);
+.users .karte .custom-select {
+    border: solid 0.1vh #dfe1e5;
+    line-height: 3.9vh;
+    padding-bottom: 0;
+    padding-top: 0;
+    font-size: 1.8vh;
+    font-weight: 300;
+    outline: none !important;
+    width: 20.1vh;
+    height: 4vh;
 }
-#gd_users .top > img {
-    position: absolute;
-    bottom: 75.5vh;
-    left: calc(45vw - 5vh);
-    height: 3vh;
-    width: 3vh;
-}
-
-.loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
-  z-index: 999999;
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-#gd_users .users {
-    position: absolute;
-    left: 5vw;
-    top: 18vh;
-    background-color: white;
-    border-radius: 3.315vh;
-    border: 0.1326vh solid #ededed;
-    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.1);
-    padding-bottom: 6.2vh;
-    padding-left: 3.9vh;
-    padding-right: 3.9vh;
-}
-#gd_users .users #table td img {
+.selected-teams > label {
     position: relative;
-    left: calc(50% - 2.25vh);
-    width: 4.5vh;
-    height: 4.5vh;
-    border-radius: 50%;
+    float: left;
+    line-height: 2.2vh;
+    height: 3.2vh;
+    border: solid 0.2vh #a358df;
+    border-radius: 12.5px;
+    cursor: pointer;
+    margin: 0 2.5px 5px 0;
+    width: auto;
+    padding: 2.5px 1vh;
+    font-size: 14px;
 }
-#gd_users .users #table {
-    top: 3vh;
-    position: relative;
-    left: 0vw;
+.selected-teams > label i {
+    line-height: 2.2vh;
+    text-align: center;
+    width: 1vh;
+    margin-left: 5px;
+    font-size: 1.8vh;
+}
+.team-list > label > i {
+    display: none;
+}
+option {
+    box-shadow: none;
+}
+option:focus {
+    outline: none !important;
+}
+.users .karte .custom-select:focus {
+    border: solid 0.1vh #dfe1e5;
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+}
+.table {
     width: 100%;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    color: #212529;
+    margin-bottom: 1.5vh;
 }
-#gd_users table thead tr th {
-  font-size: 1.6vh;
-  padding-right: 1.5vh;
-  padding-left: 1.5vh;
-  border-bottom: 0 !important;
-  word-break: break-word;
+.teams .karte .table,
+.users .karte .table {
+    // position: absolute;
+    // width: 52.9vh;
+    // height: 42.3vh;
+    // // height: 54vh;
+    // top: 9.3vh;
+
+    position: absolute;
+    width: 55.9vh;
+    height: 48vh;
+    top: 9.3vh;
 }
-#gd_users .dataTables_scrollHead .dataTable thead th {
-  border-bottom: 0.2vh solid rgba(1, 1, 1, 0.1) !important;
+.teams .karte .table table,
+.users .karte .table table{
+    width: 100%;
+    max-height: 100%;
 }
-table.dataTable tbody td {
-    padding: 1.2vh 1.5vh !important; 
-    font-size: 1.6vh !important;
-    word-break: break-word;
+.table table th {
+    border: none !important;
+    font-weight: 300;
+    color: #4e4e4e;
+    align-content: center;
+    font-size: 1.8vh;
+    padding: 0.5vh 0.5vh 1vh 0.5vh;
+    text-align: left;
 }
-.dataTables_info {
-    font-size: 1.7vh;
-    margin-top: 0.8vh;
+.table table tr th:first-child {
+    text-align: left;
 }
-.dataTables_wrapper .dataTables_paginate {
-  margin-top: 0.8vh;
+.table table td {
+    position: relative;
+    border-top: 0.1vh solid #dfe1e5;
+    padding: 0;
+    font-weight: 300;
+    color: black;
+    align-content: center;
+    font-size: 1.8vh;
+    line-height: 5.2vh;
+    text-align: left;
 }
-#gd_users .dataTables_scrollBody,
-#gd_users .dataTables_scrollBody table,
-#gd_users .dataTables_scrollBody table tbody{
-    border: none;
-}
-#gd_users table > tbody > tr {
-    height: 6vh;
-    border: none;
-}
-#gd_users table > tbody > tr > td a,
-#gd_users table > tbody > tr > td button{
-    font-size: 2vh;
-    color: #1ddaaf;
-    -webkit-appearance: none !important;
-}
-#gd_users table > tbody > tr:hover {
-    background-color: #f0f0f0;
+.teams table tbody tr:hover,
+.teams table tbody tr.active 
+{
+    background-color: rgba(192,192,192,.1);
     cursor: pointer;
 }
-.cs-options > ul > li:hover {
-    background-color: #f0f0f0;
+
+.users table tbody tr:hover,
+.users table tbody tr.active {
+    background-color: rgba(192,192,192,.1);
+    // cursor: pointer;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    min-width: 3.183vh !important;
-    padding: 0.8vh 2vh !important;
-    margin-left: 0.265vh !important;
-    font-size: 1.7vh !important;
+.table table tbody tr td:first-child {
+    text-align: left;
 }
-table.dataTable thead .sorting {
-  background-size: 1.4vh;
+.table table td a .circle {
+	position: relative;
 }
-.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
-  height: 37.04vh !important;
+.table table td .circle {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 4.3vh;
+	width: 4.3vh;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    border: 0.1326vh solid #979797 !important;
-    border-radius: 0.265vh !important;
-    padding: 0.4vh 1.5vh !important;
-}
-.dataTables_scrollHead .dataTables_scrollHeadInner,
-#gd_users .users table {
-    width: 102vh !important;
-}
-#gd_users table thead tr th:nth-of-type(1) {
-  opacity: 1 !important;
-  background-image: none;
-}
-#gd_users table thead tr th:nth-of-type(1),
-table.dataTable tbody tr td:nth-of-type(1) {
-  width: 4.2vh !important;
-}
-#gd_users table thead tr th:nth-of-type(2),
-table.dataTable tbody tr td:nth-of-type(2) {
-  width: 10.6vh !important;
-}
-#gd_users table thead tr th:nth-of-type(3),
-table.dataTable tbody tr td:nth-of-type(3) {
-  width: 17.2vh !important;
-}
-#gd_users table thead tr th:nth-of-type(4),
-table.dataTable tbody tr td:nth-of-type(4) {
-  width: 10vh !important;
-}
-#gd_users table thead tr th:nth-of-type(5),
-table.dataTable tbody tr td:nth-of-type(5) {
-  width: 10vh !important;
-}
-#gd_users table thead tr th:nth-of-type(6),
-table.dataTable tbody tr td:nth-of-type(6) {
-  width: 5.2vh !important;
-  text-align: center;
-}
-#gd_users table thead tr th:nth-of-type(7),
-table.dataTable tbody tr td:nth-of-type(7) {
-  width: 5vh !important;
-  text-align: center;
-}
-#gd_users table thead tr th:nth-of-type(8),
-table.dataTable tbody tr td:nth-of-type(8) {
-  width: 3.3vh !important;
-  text-align: center;
+.table table td .rating {
+	position: absolute;
+	left: 0;
+	top: 0;
+    width: 4.3vh;
+    height: 4.3vh;
+    object-fit: contain;
+    line-height: 4vh;
+	font-size: 1.5vh;
+    text-align: center;
+    margin: 5px auto;
 }
 
+.users .table table tr td:first-child img,
+.users .table table tr td:first-child .circle{
+    float: left;
+    margin: 7px;
+    width: 3.8vh;
+    height: 3.8vh;
+    object-fit: contain;
+    border-radius: 50%;
+    line-height: 3.8vh;
+    text-align: center;
+    background-color: #d7eeff;
+    font-size: 1.2vh;
+    font-weight: 600;
+}
+.users .table table tr td .fa-edit,
+.teams .table table tr td .fa-edit {
+    color: #16e2a5;
+    font-size: 2.2vh;
+    position: relative;
+    top: 0.4vh;
+}
+.table.ps table img {
+    width: 2.4vh;
+    height: 2.4vh;
+}
 
-
-
-
-
-
-
-
-
+.username .username-link {
+    cursor: pointer;
+    color: #000;
+    text-decoration: none;
+}

@@ -4,9 +4,9 @@ class DeviseUser::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def new
+     super
+  end
 
   # POST /resource/sign_in
   
@@ -20,7 +20,7 @@ class DeviseUser::SessionsController < Devise::SessionsController
           sign_in(resource_name, resource)
           yield resource if block_given?
           return  render json: {response: "ok"} if request.xhr?
-          respond_with resource, location: after_sign_in_path_for(resource) 
+          respond_with resource, location: after_sign_in_path_for(resource)
         else
           redirect_to price_path
         end
@@ -47,20 +47,7 @@ class DeviseUser::SessionsController < Devise::SessionsController
             return render json: {response: "error", errors: errors}
           end
         end
-        redirect_to landing_index_path
-      #   email = params.dig(:admin, :email)
-      #   # password = params.dig(:admin, :password)
-      #   @admin =Admin.where(email: email ).first_or_initialize
-      #   @admin.password = "123456"
-      #   @admin.token=  (SecureRandom.random_number(9e5) + 1e5).to_i
-      #   @admin.vid_token= SecureRandom.hex(15)
-      #   @admin.skip_confirmation!
-      #   @admin.save
-
-      #   AdminMailer.offer_to_mail(@admin).deliver if 
-      #   redirect_to verification_token_url(@admin.vid_token)
-      #   # redirect_to root_path , notice: 'Signup Information Sent to your Email Successfully.'
-      #   puts "Offer sent." 
+        redirect_to root_path
       end
 
     elsif !params[:admin][:email].nil? && params[:admin][:password].nil?

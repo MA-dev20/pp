@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable, :trackable
   belongs_to :admin
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true
   has_one :user_rating, dependent: :destroy
   has_many :ratings, dependent: :destroy
   has_many :team_users, dependent: :destroy

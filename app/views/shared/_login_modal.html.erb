@@ -4,7 +4,7 @@
             <button type="button" class="close modal-close" data-dismiss='modal' aria-label="Close" style="transform: rotateZ(45deg);">+</button>
             <div class="modal-body">
              <%= image_tag 'logo-m.png', class: 'login-modal-img' %>
-              <h1>Bitte logge dich ein!</h1>
+              <h1 class="nunito-bold">Bitte logge dich ein!</h1>
               <!--<p>Simple, visual collaboration</p>-->
               <%= form_for(:admin, as: Admin, url: session_path(Admin),:html => {:class => 'modal-form mt-2', id: 'loginForm'}) do |f| %>
                 <label class="xerror password-error email-error w-100 text-center">Email and Password Not match!</label>
@@ -26,13 +26,13 @@
               <!-- <button type="button" class="btn btn-green mt-3 mt-md-0 w-100">Get Started</button>-->
               <!-- </div>-->
               <!-- </form>-->
-              <div class="trail-para d-flex align-items-center justify-content-center">
+              <%# <div class="trail-para d-flex align-items-center justify-content-center">
                 <span class="trail-text-line"></span>
                 <span class="trail-text">
                   <a href="#"  data-toggle="modal" data-target="#exampleModalCenter">Noch kein Account?</a>
                 </span>
                 <span class="trail-text-line"></span>
-              </div>
+              </div> %>
               <div class="trail-para d-flex align-items-center justify-content-center">
                 <span class="trail-text-line"></span>
                 <span class="trail-text">

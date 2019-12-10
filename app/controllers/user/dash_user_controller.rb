@@ -1,4 +1,4 @@
-class User::DashUserController < UserController
+class User::DashUserController < UsersController
 	include ApplicationHelper
   include ActionView::Helpers::NumberHelper
 

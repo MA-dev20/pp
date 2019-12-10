@@ -1,6 +1,6 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :video_uploading]
-  before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user, :video_uploading]
+  before_action :authenticate_game!, :set_game, only: [:wait, :intro, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :video_uploading]
+  before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user, :video_uploading, :ended_game]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
   before_action :reset_session_of_already_user, only: [:new, :welcome]
@@ -219,7 +219,12 @@ class GameMobileUserController < ApplicationController
       end
     end
   end
-    
+     
+  def intro
+	@admin = Admin.find(@game.admin_id)
+    turn =  Turn.where(user_id:  current_user.id, game_id:  @game.id, admin_id: @admin.id).first
+	render "wait"
+  end
   def choose
     @turn1 = Turn.find_by(id: @game.turn1)
     @turn2 = Turn.find_by(id: @game.turn2)
@@ -272,7 +277,16 @@ class GameMobileUserController < ApplicationController
   def ended
     sign_out(@game)
     sign_out(@user)
-    redirect_to root_path
+    # redirect_to gmu_ended_game_path
+    # redirect_to root_path
+  end
+
+  def ended_game
+    if @game
+      sign_out(@game)
+      sign_out(@user)
+    end
+    redirect_to landing_ended_game_path
   end
     
   private
@@ -295,7 +309,6 @@ class GameMobileUserController < ApplicationController
 
     def create_turn_against_user(user, admin, status, play=true)
       @game1 = current_game
-      @word = CatchwordsBasket.find_by(name: 'PetersFreeWords').words.all.sample(5).first if CatchwordsBasket.find_by(name: 'PetersFreeWords').present? &&  @game1.admin.admin_subscription_id.nil?
       @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
       @word = Word.all.sample(5).first if @word.nil?
       turn =  Turn.where(user_id:  user.id, game_id:  @game.id, admin_id: admin.id).playable.first
@@ -310,7 +323,6 @@ class GameMobileUserController < ApplicationController
       @game = Game.find(session[:game_session_id])
       @admin = @game.admin
       if @admin.admin_subscription_id.nil?
-        @word = CatchwordsBasket.find_by(name: 'PetersFreeWords').words.all.sample(5).first
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
         @word = Word.all.sample(5).first if @word.nil?
       end

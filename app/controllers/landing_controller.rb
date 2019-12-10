@@ -1,21 +1,41 @@
 class LandingController < ApplicationController
 
-  skip_before_action :check_expiration_date, only: :price
+  # skip_before_action :check_expiration_date, only: :price
   before_action :check_sessions, only: [:index,:price, :product]
 
   layout 'main'
   respond_to :html, :json
 
 
+  def accept_cookies
+	cookies[:accepted] = 'true'
+	redirect_to root_path
+  end
+  def agb
+  end
+  def datenschutz
+  end
+  def impressum
+  end
+	
   def index
     render 'index1'
   end
+
+  def ended_game
+  end
     
-  def coach
+  def contact
   end
     
   def register
     @admin = Admin.new
+  end
+    
+  def after_register
+  end
+    
+  def byebye
   end
 
   def update_admin

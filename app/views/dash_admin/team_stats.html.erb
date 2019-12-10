@@ -1,210 +1,558 @@
-<section id="dash_stats" class="dash_stats-head dash-stats-set">
-    
-     <div class="head">
-         <%= render partial: 'select_team_user_dropdown', locals: {users: @users, teams: @teams, user: @user,team: @team, teams_page: true} %>
-    </div>
-    
-    <div class="stats_overview">
-        <div class="gesamt active">
-            <button class="circle" id="chart_gesamt"><span><%= @rating.ges.nil? ? 0 : @rating.ges / 10.0 %></span></button>
-            <div class="text" id="t_gesamt">Gesamt</div>
-        </div>
-        
-        <div class="spontan">
-            <button class="circle" id="chart_spontan"><%= @rating.spontan.nil? ? 0 : @rating.spontan/10.0 %></button>
-            <div class="text" id="t_spontan">Spontanität</div>
-        </div>
-        
-        <div class="kreativ">
-            <button class="circle" id="chart_kreativ"><%= @rating.creative.nil? ? 0 : @rating.creative/10.0 %></button>
-            <div class="text" id="t_kreativ">Kreativität</div>
-        </div>
-        
-        <div class="body">
-            <button class="circle" id="chart_body"><%= @rating.body.nil? ? 0 : @rating.body/10.0 %></button>
-            <div class="text" id='t_body'>Körpersprache</div>
-        </div>
-        
-        <div class="rhetorik">
-            <button class="circle" id="chart_rhetorik"><%= @rating.rhetoric.nil? ? 0 : @rating.rhetoric/10.0 %></button>
-            <div class="text" id="t_rhetorik">Rhetorik</div>
-        </div>
-        
-        <ul class="places-ratings">
-          <% @result.first(3).each.with_index(1) do |v ,i| %>
-               <% if v.present? %>
-                   <li class="<%= 'current' if v[:user].id == current_admin.id %>">  
-                       <% if v[:user].id == current_admin.id or i.to_s == "2" %>
-                           <%= image_tag "current.png", id: "open-team-scores", style: 'cursor: pointer;'%>
-                       <% end %>
-                       <div class="rating-c"><%= i %>. <%= v[:user].fname%></div>
-                       <div class="rating-d"><%= number_with_precision(v[:rating][:average] / 10, precision: 1)  %></div>
-                   </li>
-               <% end %>
-          <% end %> 
-       </ul>       
-    
-    <div class="compare">
-            
-        <select class="cs-select cs-skin-underline form-field">
-            <% if @team2 %>
-            <option value="" disabled selected><%= @team2.name %></option>
-            <% else %>
-            <option value="" disabled selected>Vergleiche mit</option>
-            <% end %>
+<div class="scrollable-content" id="scrollbar" onclick="teamSelectHide()">
+<div class="heading">
+    <%= @team.name + "'s Ratings" %>
+    <div class="select-team custom-select" onclick="teamSelect()">Alle Teams
+        <div class="teams" id="scrollTeams" >
             <% @teams.each do |t| %>
-                    <% if @team2 && t.id == @team2.id %>
-                        <option value="<%= t.id %>" data-link="<%= dash_admin_compare_team_stats_path(@team.id, @team2.id) %>" data-class="cs-selected"><%= t.name %></option>
-                    <% elsif @team.id != t.id %>
-                    <option value="<%= t.id %>" data-link="<%= dash_admin_compare_team_stats_path(@team.id, t.id) %>">
-                         <%= t.name %>
-                    </option>
-                    <% end %>
-            <% end %>
-        </select>
-        
-    </div>
-    <div class="video-content">
-            <h5><%= @team.name.to_s + "'s"%> Aufnahmen</h5>
-            <a href="/admins/dash/video_tool">Alle sehen</a>
-            <% count = 0 %>
-            <% @reviewed_videos.each do |video| %>
-                <% if video.turn_rating.present? %>
-                    <a href="<%= "/admins/dash/stats/turns/#{video.turn_rating.id}"%>">
-                        <div class="overview-block overview-block-n">
-                            <div class="overviewBlock-video">
-                                <img src="<%= video.recorded_pitch.thumb.url %>"/>
-                                <span class="overview-video-play"></span>
-                                <span class="overview-video-rating ov-span"><%= number_with_precision(video.turn_rating.slice("creative", "body","rhetoric", "spontan").values.map(&:to_f).inject(:+) / 40, precision: 1) if video.turn_rating.present?%></span>
-                                <span class="overview-video-time ov-span"><%= video.recorded_pitch_duration.to_minutes if video.recorded_pitch_duration.present? %> </span>
-                            </div>
+                <% if t.team_rating %>
+                    <div class="team" onmouseover="teamSelectUser(this)" onmouseout="teamSelectUserHide(this)"><%= link_to t.name, dash_admin_team_stats_path(t.id) %> <i class="fas fa-caret-left"></i>
+                        <div class="users" id="scrollUsers">
+                            <% t.users.each do |u| %>
+                                <% if u.user_rating %>
+                                    <div class="user"><%= link_to (u.fname.present? ? u.fname : "") + ' ' + (u.lname.present? ? u.lname : ""), dash_admin_user_stats_path(u.id) %></div>
+                                <% end %>
+                            <% end %>
                         </div>
-                    </a>
-                    <% count+=1%>
+                    </div>
                 <% end %>
-                <% break if count == 2 %>
-            <% end %>
+            <% end %>  
         </div>
     </div>
-    <div class="stats_chart">
-        <div class="stats_chart-cont" id='chart_scroll'>
-            <div class="chart-container" style="width:<%= 8*@gameratings.count %>vw">
-                <canvas id="Chart"></canvas>
+</div>
+
+<div class="rating-overview">
+    <div class="karte active" onclick="ratingGes()" id="gesamt">
+        <div class="icon-circle">
+            <i class="fas fa-star"></i>
+        </div>
+        <!-- <div class="rating">
+            <%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %>
+        </div> -->
+        <% ges = @team_rating.ges.present? ? @team_rating.ges : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id="chart_ges" class="c100 p<%= ges %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
             </div>
         </div>
+        
+        <label>Gesamt</label>
+        <% if @team_rating.change_ges.present? %>
+        <% if @team_rating.change_ges > 0 %>
+            <div class="change up">
+                <i class="fas fa-caret-up"></i>
+                <%= (@team_rating.change_ges / 10.0).round(1) %>
+            </div>
+        <% elsif @team_rating.change_ges < 0 %>
+            <div class="change down">
+                <i class="fas fa-caret-down"></i>
+                <%= (@team_rating.change_ges / 10.0).round(1) %>
+            </div>
+        <% else %>
+            <div class="change equal">
+                <i class="fas fa-equals"></i>
+                <%= (@team_rating.change_ges / 10.0).round(1) %>
+            </div>
+        <% end %>
+        <% end %>
     </div>
-</section>
+    
+    <div class="karte" onclick="ratingSpontan()" id="spontan">
+        <div class="icon-circle">
+            <i class="fas fa-bolt"></i>
+        </div>
+        <!-- <div class="rating">
+            <%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '0.0' %>
+        </div> -->
+        <% spontan = @team_rating.spontan.present? ? @team_rating.spontan : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id="chart_spontan" class="c100 p<%= spontan %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label>Spontanität</label>
+        <% if @team_rating.change_spontan.present? %>
+        <% if @team_rating.change_spontan > 0 %>
+            <div class="change up">
+                <i class="fas fa-caret-up"></i>
+                <%= (@team_rating.change_spontan / 10.0).round(1) %>
+            </div>
+        <% elsif @team_rating.change_spontan < 0 %>
+            <div class="change down">
+                <i class="fas fa-caret-down"></i>
+                <%= (@team_rating.change_spontan / 10.0).round(1) %>
+            </div>
+        <% else %>
+            <div class="change equal">
+                <i class="fas fa-equals"></i>
+                <%= (@team_rating.change_spontan / 10.0).round(1) %>
+            </div>
+        <% end %>
+        <% end %>
+    </div>
+    
+    <div class="karte" onclick="ratingCreative()" id="creative">
+        <div class="icon-circle">
+            <%= image_tag 'dash/icons/creative.png' %>
+        </div>
+        <!-- <div class="rating">
+            <%= @team_rating.creative.present? ? ((@team_rating.creative / 10.0 == 10.0) ? '10' : (@team_rating.creative / 10.0)) : '0.0' %>
+        </div> -->
+        <% creative = @team_rating.creative.present? ? @team_rating.creative : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id="chart_creative" class="c100 p<%= creative %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @team_rating.creative.present? ? ((@team_rating.creative / 10.0 == 10.0) ? '10' : (@team_rating.creative / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label>Kreativität</label>
+        <% if @team_rating.change_creative.present? %>
+        <% if @team_rating.change_creative > 0 %>
+            <div class="change up">
+                <i class="fas fa-caret-up"></i>
+                <%= (@team_rating.change_creative / 10.0).round(1) %>
+            </div>
+        <% elsif @team_rating.change_creative < 0 %>
+            <div class="change down">
+                <i class="fas fa-caret-down"></i>
+                <%= (@team_rating.change_creative / 10.0).round(1) %>
+            </div>
+        <% else %>
+            <div class="change equal">
+                <i class="fas fa-equals"></i>
+                <%= (@team_rating.change_creative / 10.0).round(1) %>
+            </div>
+        <% end %>
+        <% end %>
+    </div>
+    
+    <div class="karte" onclick="ratingBody()" id="body">
+        <div class="icon-circle">
+            <i class="fas fa-child"></i>
+        </div>
+        <!-- <div class="rating">
+            <%= @team_rating.body.present? ? ((@team_rating.body / 10.0 == 10.0) ? '10' : (@team_rating.body / 10.0)) : '' %>
+        </div> -->
+        <% body = @team_rating.body.present? ? @team_rating.body : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id="chart_body" class="c100 p<%= body %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @team_rating.body.present? ? ((@team_rating.body / 10.0 == 10.0) ? '10' : (@team_rating.body / 10.0)) : '' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label>Körpersprache</label>
+        <% if @team_rating.change_body.present? %>
+        <% if @team_rating.change_body > 0 %>
+            <div class="change up">
+                <i class="fas fa-caret-up"></i>
+                <%= (@team_rating.change_body / 10.0).round(1) %>
+            </div>
+        <% elsif @team_rating.change_body < 0 %>
+            <div class="change down">
+                <i class="fas fa-caret-down"></i>
+                <%= (@team_rating.change_body / 10.0).round(1) %>
+            </div>
+        <% else %>
+            <div class="change equal">
+                <i class="fas fa-equals"></i>
+                <%= (@team_rating.change_body / 10.0).round(1) %>
+            </div>
+        <% end %>
+        <% end %>
+    </div>
+    
+    <div class="karte" onclick="ratingRhet()" id="rhetoric">
+        <div class="icon-circle">
+            <%= image_tag 'dash/icons/megaphone.png' %>
+        </div>
+        <!-- <div class="rating">
+            <%= @team_rating.rhetoric.present? ? ((@team_rating.rhetoric / 10.0 == '10.0') ? '10' : (@team_rating.rhetoric / 10.0)) : '' %>
+        </div> -->
+        <% rhetoric = @team_rating.rhetoric.present? ? @team_rating.rhetoric : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id="chart_rhetorik" class="c100 p<%= rhetoric %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @team_rating.rhetoric.present? ? ((@team_rating.rhetoric / 10.0 == '10.0') ? '10' : (@team_rating.rhetoric / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label>Rhetorik</label>
+        <% if @team_rating.change_rhetoric.present? %>
+        <% if @team_rating.change_rhetoric > 0 %>
+            <div class="change up">
+                <i class="fas fa-caret-up"></i>
+                <%= (@team_rating.change_rhetoric / 10.0).round(1) %>
+            </div>
+        <% elsif @team_rating.change_rhetoric < 0 %>
+            <div class="change down">
+                <i class="fas fa-caret-down"></i>
+                <%= (@team_rating.change_rhetoric / 10.0).round(1) %>
+            </div>
+        <% else %>
+            <div class="change equal">
+                <i class="fas fa-equals"></i>
+                <%= (@team_rating.change_rhetoric / 10.0).round(1) %>
+            </div>
+        <% end %>
+        <% end %>
+    </div>
+</div>
 
-<%= render partial: 'statistics_table', locals: {result: @result} %>
+<div class="heading">Statistics</div>
 
-<% content_for(:body_attributes) do %>
-    data-turbolinks="false"
-<% end %>
+<div class="stats-overview">
+    <div class="karte">
+        <label>Activity Days</label>
+        <div class="number"><%= @days %></div>
+    </div>
+    <div class="karte">
+        <label>Pitches</label>
+        <div class="number"><%= @games.count %></div>
+    </div>
+    <!-- <div class="karte">
+        <label>% of victories</label>
+        <div class="number">?</div>
+    </div> -->
+    <div class="karte">
+        <label for="">Best rating</label>
+        <% best_rating = number_with_precision(@game_ratings.reorder('ges DESC').first.ges.present? ? @game_ratings.reorder('ges DESC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
+        <div class="number best-rating"><%= (@game_ratings.reorder('ges DESC').first.ges.present? ? (@game_ratings.reorder('ges DESC').first.ges / 10.0) : 0.0) %></div>
+    </div>
+    <div class="karte">
+        <label for="">Worst rating</label>
+        <% worst_rating = number_with_precision(@game_ratings.reorder('ges ASC').first.ges.present? ? @game_ratings.reorder('ges ASC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
+        <div class="number worst-rating"><%= (@game_ratings.reorder('ges ASC').first.ges.present? ?  (@game_ratings.reorder('ges ASC').first.ges / 10.0) : 0.0) %></div>
+    </div>
+</div>
+
+<div class="karte" id="statistic">
+    <div class="head left">Details</div>
+    <div class="chart">
+        <canvas id="myChart" width="814px" height="280px"></canvas>
+    </div>
+    <div class="divider"></div>
+    <div class="right">
+        <div class="karte bestlist small">
+            <div class="table">
+                <div class="table-line">
+                    <div class="name">
+                       1.<%=  @user_ratings.first[:fname] %>
+                    </div>
+                    <div class="points">
+                       <%=  @user_ratings.first[:rating] / 10.0 %>
+                    </div>
+                </div>
+                <% if @user_ratings.length > 1 %>
+                <div class="table-line">
+                    <div class="name">
+                        2.<%=  @user_ratings.second[:fname] %>
+                    </div>
+                    <div class="points">
+                        <%=  @user_ratings.second[:rating] / 10.0 %>
+                    </div>
+                </div>
+                <% if @user_ratings.length > 2 %>
+                <div class="table-line">
+                    <div class="name">
+                        3.<%=  @user_ratings.third[:fname] %>
+                    </div>
+                    <div class="points">
+                        <%= @user_ratings.third[:rating] / 10.0 %>
+                    </div>
+                </div>
+                <% else %>
+                <div class="table-line">
+                    <div class="name">
+                    </div>
+                    <div class="points">
+                    </div>
+                </div>
+                <% end %>
+                <% else %>
+                <div class="table-line">
+                    <div class="name">
+                    </div>
+                    <div class="points">
+                    </div>
+                </div>
+                <% end %>
+            </div>
+            <%= image_tag 'current.png', class: 'rating-record' %>
+        </div>
+        <% video = @reviewed_videos.first %>
+        <% if video.present? %>
+        <div class="video-box">
+        <h6><%= @team.name.to_s + "'s"%> Aufnahmen</h6>
+        <div class="video-list" id="videoList">
+        <div class="video-karte pitches" onclick="redirect('<%= dash_admin_video_details_url(video.id) %>')">
+            <div class="top">
+            <div class="video-img" style="background-image: url('<%= asset_path(video.recorded_pitch.thumb.url) %>')"></div>
+            <div class="overlay"></div>
+            <%
+                total_time = video.recorded_pitch_duration.to_minutes if video.recorded_pitch_duration.present? 
+            %>
+            <!-- <div class="timer"><%= total_time %></div> -->
+            <div class="play"><i class="fas fa-play"></i></div>
+            <div class="heart"><%= total_time%></div>
+            </div>
+            <div class="player">
+            <%#= (r[:user_fname].present? ? r[:user_fname] : '') + " " + (r[:user_lname].present? ? r[:user_lname] : '') %>
+            </div>
+        </div>
+        </div>
+        <% end %>
+        <a href="/admins/dash/video_tool">Alle sehen</a>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+
+
+<%= render partial: 'stats_modal', locals: {team_id: @team.id, team_users: @team_users} %>
+
+
+<style>
+
+    .video-list {
+        cursor: pointer;
+    }
+
+    #videoList .top .video-img {
+        top: -1.5vh;
+        right: 0;
+        bottom: -1.5vh;
+        left: 0;
+    }
+
+    #videoList .fa-play {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 1.7vh;
+    }
+
+    #videoList .top .play {
+        position: absolute;
+        top: 4.5vh;
+        left: 6.2vh;
+        height: 5.2vh;
+        width: 5.2vh;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        line-height: 6.2vh;
+        text-align: center;
+        color: white;
+        font-size: 1.8vh;
+        align-items: center;
+    }
+
+    #videoList .top {
+        position: relative;
+        border-top-left-radius: 0.8vh;
+        border-top-right-radius: 0.8vh;
+        height: 14.5vh;
+        width: auto;
+        overflow: hidden;
+        border-radius: 0.8vh;
+    }
+
+    .video-box {
+        padding-top: 2vh;
+        text-align: center;
+    }
+
+    .video-box h6,
+    .video-box {
+        font-size: 1.8vh;
+    }
+
+    .video-box a {
+        padding-top: 1vh;
+        display: flex; 
+        justify-content: center; 
+        text-decoration: none; 
+        color: #16e2a5;
+    }
+
+    .rating-record {
+        cursor: pointer;
+        position: absolute;
+        right: -6.5vh;
+        top: 3vh;
+        width: 4vh;
+        height: 4vh;
+    }
+
+    
+</style>
 
 <script>
-$( document ).ready(function() {
-    new PerfectScrollbar("#chart_scroll");
-});
-function myColor(div) {
-    if(div == 'chart_gesamt') {
-        var val = <%= number_with_precision(@rating.ges.to_f / 100.0, precision:1) %>;
-    } else if(div == 'chart_spontan') {
-        var val = <%= number_with_precision(@rating.spontan.to_f / 100.0, precision:1) %>;
-    } else if(div == 'chart_kreativ') {
-        var val = <%= number_with_precision(@rating.creative.to_f / 100.0, precision:1) %>;
-    } else if(div == 'chart_body') {
-        var val = <%= number_with_precision(@rating.body.to_f / 100.0, precision:1) %>;
-    } else if(div == 'chart_rhetorik') {
-        var val = <%= number_with_precision(@rating.rhetoric.to_f / 100.0, precision:1) %>;
+
+    function redirect(url) {
+        window.location.replace(url);
     }
-    if (val < 0.5 ) {
-        document.getElementById(div).style.borderColor = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
-    } else {
-        document.getElementById(div).style.borderColor = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+
+    function myColor(div) {
+        var class_name = 0
+        var val = 0
+    if(div == 'chart_ges') {
+        val = <%= number_with_precision(@team_rating.ges.present? ? @team_rating.ges.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= ges %>
+    } else if(div == 'chart_spontan') {
+        val = <%= number_with_precision(@team_rating.spontan.present? ? @team_rating.spontan.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= spontan %>
+    } else if(div == 'chart_creative') {
+        val = <%= number_with_precision(@team_rating.creative.present? ? @team_rating.creative.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= creative %>
+    } else if(div == 'chart_body') {
+        val = <%= number_with_precision(@team_rating.body.present? ? @team_rating.body.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= body %>
+    } else if(div == 'chart_rhetorik') {
+        val = <%= number_with_precision(@team_rating.rhetoric.present? ? @team_rating.rhetoric.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= rhetoric %>
+    }
+    if (val != 0.0) {
+        if (val < 0.5 ) {
+            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+        } else {
+            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+        }
+        $(`.rating-overview .c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`.rating-overview .c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`.rating-overview .c100.p${class_name} .rating-1`).attr('style',`color: ${color_value}`);
     }
 }
-myColor('chart_gesamt');
+
+myColor('chart_ges');
 myColor('chart_spontan');
-myColor('chart_kreativ');
+myColor('chart_creative');
 myColor('chart_body');
 myColor('chart_rhetorik');
-(function() {
-[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach(
-    function(el) {	
-	   new SelectFx(el);
-       newTab: false;
-    } );
-})();
-$("#open-team-scores").on("click", function(){
-    $('#new_team_pop').modal("show");
 
-})
-function closeTeamPop(){
-    $('#new_team_pop').modal("hide");
-
+function ratingColor(class_name, rating) {
+    if (rating < 0.5 ) {
+        var color_value = '#'+(Math.round(255-(rating*2))).toString(16)+(Math.round(107+(rating*288))).toString(16)+(Math.round(108+(rating*180))).toString(16);
+    } else {
+        var color_value = '#'+(Math.round(29+((1-rating)*450))).toString(16)+(Math.round(218+((1-rating)*66))).toString(16)+(Math.round(175+((1-rating)*46))).toString(16);
+    }
+    $(`.${class_name}`).attr('style',`color: ${color_value}`);
 }
-var ctx = document.getElementById("Chart");
+
+var best_rating = <%= best_rating %>
+var worst_rating = <%= worst_rating %>
+ratingColor('best-rating', best_rating);
+ratingColor('worst-rating', worst_rating);
+
+    
+    new PerfectScrollbar('#team-users');
+    $(".rating-record").on('click',function(){
+        $('#myModal').modal('show');
+    });
+
+    console.log('<%= @chartdata.count %>')
+    new PerfectScrollbar('#scrollbar');
+function teamSelect() {
+    setTimeout(function() {
+        $('.heading .select-team .teams').show();
+    }, 100);
+}
+function teamSelectHide() {
+    $('.heading .select-team .teams').hide();
+}
+function teamSelectUser(elem) {
+    $(elem).children().show();
+}
+function teamSelectUserHide(elem) {
+    $(elem).find('.users').hide();
+}
+var ctx = document.getElementById("myChart");
 var datapoints = [NaN, NaN, NaN, NaN, NaN, NaN ];
 var datapoints2 = [NaN, NaN, NaN, NaN, NaN, NaN ];
 var label = [NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
-<% @gameratings.each do |g| %>
-    datapoints[i] = <%= g.ges.nil? ? 0 : g.ges/10.0 %> ;
-    label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
+var team = '<%= '' + @team.name %>';
+<% @chartdata.last(6).each do |cd| %>
+    var json_data = <%= cd.to_json.html_safe %>;
+    console.log(json_data)
+    label[i] = "<%= cd[:date].to_s %>";
+    datapoints[i] = {value: <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>, data: json_data};
     i++;
 <% end %>
-<% if @gameratings2 %>
-  i = 1;
-  <% @gameratings2.each do |g| %>
-    datapoints2[i] = <%= g.ges.nil? ? 0 : g.ges/10.0 %>;
-    i++;
-  <% end %>
-<% end %>
-var team1 = '<%= @team.name %>'
-<% if @team2 %>
-var team2 = '<%= @team2.name %>'
-<% end %>
-var gesamtChart = new Chart(ctx, {
+var data1 = [], pointStyles = [];
+i = 0;
+datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+        if(el.data.turn_pitch){
+            var play = new Image();
+            play.src = '<%= asset_path "dash/icons/play-shadow.png" %>';
+            play.width = 35
+            play.height = 35
+            pointStyles[i] = play
+        }else{
+            var play = new Image();
+            play.src = '<%= asset_path "dash/icons/dot.png" %>';
+            play.width = 25
+            play.height = 25
+            pointStyles[i] = play
+            // pointStyles[i] = 'circle'
+        }
+    }
+    i++;        
+})
+
+
+var myChart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: label,
         datasets: [{
-            label: team1,
-            data: datapoints,
-            fill:false,
-            borderColor:"rgba(255,255,255,1.0)",
-            borderWidth: 5,
-            pointBorderColor:"rgba(255,255,255,1.0)",
-            pointBackgroundColor:"rgba(255,255,255,1.0)",
-            pointHoverBackgroundColor:"rgba(255,255,255,1.0)",
-            pointHoverBorderColor:"rgba(255,255,255,1.0)",
-            pointBorderWidth: 5,
-            pointRadius: 5,
-            pointHoverRadius: 8,
-            lineTension:0,
-        }<% if @team2 %>
-        ,{
-            label: team2,
-            data: datapoints2,
+            label: team,
+            data: data1,
             fill: false,
-            borderColor:"rgba(255,255,255,0.5)",
-            borderWidth: 5,
-            pointBorderColor:"rgba(255,255,255,0.5)",
-            pointBackgroundColor:"rgba(255,255,255,0.5)",
-            pointHoverBackgroundColor:"rgba(255,255,255,0.5)",
-            pointHoverBorderColor:"rgba(255,255,255,0.5)",
-            pointBorderWidth: 5,
-            pointRadius: 5,
-            pointHoverRadius: 8,
             lineTension:0,
-        }<% end %>]
+            spanGaps: true,
+            borderWidth: 3,
+            borderColor: "rgba(67, 148, 236, 1)",
+            pointBackgroundColor: "#4394ec",
+            pointBorderColor: "#fafafa",
+            pointBorderWidth: 3,
+            pointRadius: 9,
+            hoverRadius: 9,
+            pointStyle: pointStyles,
+            datapoints: datapoints,
+            extra: datapoints
+        }],
     },
     options: {
-        responsive: true,
-        maintainAspectRatio: false,
         layout: {
             padding: {
-                top: 10
+                top: 25,
+                left: 25,
             }
         },
         legend: {
@@ -213,22 +561,21 @@ var gesamtChart = new Chart(ctx, {
         title: {
             display: false,
         },
-        tooltips: {
-            mode: 'index'
-        },
         scales: {
             yAxes: [{
                 gridLines: {
                     display: true,
-                    color:"rgba(255,255,255,1.0)",
+                    color:"rgba(94, 94, 94, 0.15)",
                     lineWidth: 0.2,
-                    zeroLineColor: "rgba(255,255,255,0)",
+                    zeroLineColor: "rgba(94, 94, 94, 0.15)",
                 },
                 ticks: {
                     suggestedMin: 0,
                     suggestedMax: 10,
                     stepSize: 1,
-                    fontColor:"rgba(255,255,255,1.0)",
+                    fontColor:"rgba(0,0,0,1.0)",
+                    fontSize: 14,
+                    fontFamily: 'Nunito',
                 }
             }],
             xAxes: [{
@@ -236,116 +583,241 @@ var gesamtChart = new Chart(ctx, {
                     display: false,
                     color:"rgba(255,255,255,1.0)",
                     lineWidth: 0.2,
+                    zeroLineBorderDashOffset: 1.0,
                 },
                 ticks: {
-                    fontColor:"rgba(255,255,255,1.0)",
+                    fontColor:"rgba(0,0,0,1.0)",
+                    fontSize: 14,
+                    fontFamily: 'Nunito',
                 }
             }],
         },
+        tooltips: {
+            yAlign: 'center',
+            mode: 'single',
+            onlyShowForDatasetIndex: [0],
+            enabled: false,
+            position: 'nearest',
+            intersect: true,
+            dataPoints: datapoints,
+            custom: function(tooltipModel) {
+                var tooltipEl = document.getElementById('chartjs-tooltip');
+                
+                if (!tooltipEl) {
+                    tooltipEl = document.createElement('div');
+                    tooltipEl.id = 'chartjs-tooltip';
+                    tooltipEl.class = 'chart-tooltip';
+                    tooltipEl.innerHTML = ''
+                    document.body.appendChild(tooltipEl);
+                }
+                if (tooltipModel.opacity === 0) {
+                    tooltipEl.style.opacity = 0;
+                    return;
+                }
+                
+                tooltipEl.classList.remove('above', 'below', 'no-transform');
+                if (tooltipModel.yAlign) {
+                    tooltipEl.classList.add(tooltipModel.yAlign, 'small');
+                } else {
+                    tooltipEl.classList.add('no-transform');
+                }
+                
+                function getBody(bodyItem) {
+                    return bodyItems.lines;
+                }
+                if (tooltipModel.body) {
+                    var titleLines = tooltipModel.title || '';
+                    
+                    var innerHtml = '';
+                    titleLines.forEach(function(title){
+                        innerHtml += title;
+                    });
+                    
+                    var tableRoot = tooltipEl;
+                    tableRoot.innerHTML = innerHtml;
+                }
+                var position = this._chart.canvas.getBoundingClientRect();
+                
+                tooltipEl.style.opacity = 1;
+                tooltipEl.style.position = 'absolute';
+                // debugger
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 140 + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 460 + 'px';
+                // tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 950 + 'px';
+                // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 690 + 'px';
+                
+                // tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()*3.45))+ 'px';
+                // tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight()*1.73)) + 'px';
+                tooltipEl.style.pointerEvents = 'none';
+            },
+            callbacks: {
+                title: function(tooltipItem, data) {
+                    var innerHtml = '<div class="head">';
+                        innerHtml += '<div class="date">'+tooltipItem[0]["xLabel"]+'</div>';
+                        innerHtml += '<div class="word">'+team+'</div></div>';
+
+                        innerHtml += '<div class= "body">';
+                        
+                        // innerHtml += '<div class="rating">';
+                        // innerHtml += '<div class="circle">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"]/ 10.0+'</div>';
+                        // innerHtml += '<div class="text">Gesamt</div>';
+                        // innerHtml += '</div>';
+                        var ges_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"];
+                        var val =  ges_value / 100
+                        val = val.toPrecision(1)
+                        if (val < 0.5 ) {
+                            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+                        } else {
+                            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+                        }
+
+                        innerHtml += '<div class="inner-content text-center">';
+                        innerHtml += '<div class="right-border">';
+                        innerHtml += `<div class="c100 p${ges_value} center" style="font-size: 9vh;">`;
+                        innerHtml += '<span>'+ges_value/ 10.0+'</span>';
+                        innerHtml += '<div class="slice">';
+                        innerHtml += `<div class="bar" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
+                        innerHtml += `<div class="fill" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label">Gesamt</label>';
+
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Spontanität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Kreativität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Körpersprache</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Rhetorik</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric"] / 10.0+'</div></div>'
+                    
+                    return innerHtml
+                },
+            },
+        },
     }
 });
-$( ".modal" ).on('shown', function(){
-    alert("I want this to appear after the modal has opened!");
-});
-document.getElementById('chart_gesamt').addEventListener('click', function() {
-    $('.active').removeClass('active');
-    $('.gesamt').addClass('active');
-    var i = 1;
-    <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.ges.nil? ? 0 : g.ges/10.0 %>;
-        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
-        i++;
-    <% end %>
-    <% if @gameratings2 %>
-        i = 1;
-        <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.ges.nil? ? 0 : g.ges/10.0 %>;
-            i++;
-        <% end %>
-    <% end %>
-    window.gesamtChart.update();
-});
-document.getElementById('chart_spontan').addEventListener('click', function() {
-    $('.active').removeClass('active');
-    $('.spontan').addClass('active');
-    var i = 1;
-    <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.spontan.nil? ? 0 : g.spontan/10.0 %>;
-        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
-        i++;
-    <% end %>
-    <% if @gameratings2 %>
-        i = 1;
-        <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.spontan.nil? ? 0 : g.spontan/10.0 %>;
-            i++;
-        <% end %>
-    <% end %>
-    window.gesamtChart.update();
-});
-document.getElementById('chart_kreativ').addEventListener('click', function() {
-    $('.active').removeClass('active');
-    $('.kreativ').addClass('active');
-    var i = 1;
-    <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.creative.nil? ? 0 : g.creative/10.0 %>;
-        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
-        i++;
-    <% end %>
-    <% if @gameratings2 %>
-        i = 1;
-        <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.creative.nil? ? 0 : g.creative/10.0 %>;
-            i++;
-        <% end %>
-    <% end %>
-    window.gesamtChart.update();
-});
-document.getElementById('chart_body').addEventListener('click', function() {
-    $('.active').removeClass('active');
-    $('.body').addClass('active');
-    var i = 1;
-    <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.body.nil? ? 0 : g.body/10.0 %>;
-        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
-        i++;
-    <% end %>
-    <% if @gameratings2 %>
-        i = 1;
-        <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.body.nil? ? 0 : g.body/10.0 %>;
-            i++;
-        <% end %>
-    <% end %>
-    window.gesamtChart.update();
-});
-document.getElementById('chart_rhetorik').addEventListener('click', function() {
-    $('.active').removeClass('active');
-    $('.rhetorik').addClass('active');
-    var i = 1;
-    <% @gameratings.each do |g| %>
-        datapoints[i] = <%= g.rhetoric.nil? ? 0 : g.rhetoric/10.0 %>;
-        label[i] = '<%= g.created_at.strftime("%d.%m.%Y") %>';
-        i++;
-    <% end %>
-    <% if @gameratings2 %>
-        i = 1;
-        <% @gameratings2.each do |g| %>
-            datapoints2[i] = <%= g.rhetoric.nil? ? 0 : g.rhetoric/10.0 %>;
-            i++;
-        <% end %>
-    <% end %>
-    window.gesamtChart.update();
-});
 
- 
+var canvas = document.getElementById('myChart')
+canvas.onclick = function (evt) {
+    var points = myChart.getElementAtEvent(evt);
+    var current_point = datapoints[points[0]._index];
+    var turn_id = current_point.data.turn_id,
+    recorded_pitch = current_point.data.turn_pitch;
+    if(recorded_pitch){
+        window.location  = `/admins/dash/turns/${turn_id}/video`;
+    }
+};
 
-<%if current_admin.admin_subscription_id.nil? %>
-$(document).ready(function(){
-
-  setTimeout(function(){
-      $('#pop_up').modal({backdrop: 'static', keyboard: false});
-  }, 3000);
-});
-<% end %>
+function ratingGes() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#gesamt').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i].value = <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>;
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    })
+    window.myChart.update();
+}
+function ratingSpontan() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#spontan').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i].value = <%= (cd[:spontan].present? ? cd[:spontan] : 0) / 10.0 %>;
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    })
+    window.myChart.update();
+}
+function ratingCreative() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#creative').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i].value = <%= (cd[:creative].present? ? cd[:creative] : 0) / 10.0 %>;
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    })
+    window.myChart.update();
+}
+function ratingBody() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#body').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i].value = <%= (cd[:body].present? ? cd[:body] : 0) / 10.0 %>;
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    })
+    window.myChart.update();
+}
+function ratingRhet() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#rhetoric').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i].value = <%= (cd[:rhetoric].present? ? cd[:rhetoric] : 0) / 10.0 %>;
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    })
+    window.myChart.update();
+}
 </script>

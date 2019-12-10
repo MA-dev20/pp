@@ -9,9 +9,17 @@
 </svg>
 <section id="count_channel" data-game-id="<%= @game.id %>">
 <section id="head_wait">
-    <h1>Jetzt Spiel beitreten!</h1>
-    <h5>peterpitch.com/<%= @game.password %></h5>
+    <h1 class="nunito-bold">Jetzt Spiel beitreten!</h1>
+    <h5 class="nunito-regular">peterpitch.com/<%= @game.password %></h5>
 </section>
+
+<div class="qr-code-wrapper">
+    <div class="qr-img-div">
+        <img src='<%= generate_qr("#{request.host_with_port}/#{@game.password}") %>' alt="" class="qr-code">
+    </div>
+</div>
+
+
 <section id="count" class="count">
     <%= @count %>
 </section>
@@ -32,7 +40,7 @@
 </section>
 <section id="user-rain">
 </section>
-<section id="skip">
+<section id="skip" class="nunito-bold">
    Skip mit Leertaste
 </section>
 
@@ -52,7 +60,7 @@
     $(window).keypress(function (e) {
 
         if (e.key === ' ' || e.key === 'Spacebar') {
-            window.location.replace('<%= gda_choose_path %>');
+            window.location.replace('<%= @game.youtube_url.present? ? gda_youtube_path : gda_intro_path %>');
         };
     });
 </script>

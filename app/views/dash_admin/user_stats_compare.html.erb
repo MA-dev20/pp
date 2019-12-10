@@ -1,0 +1,1013 @@
+<div class="scrollable-content" id="scrollbar" onclick="teamSelectHide()">
+<div class="heading">
+    <% if @user.avatar.present? %>
+        <%= image_tag @user.avatar.quad.url %>
+        <%= @user.fname + ' ' + @user.lname + "'s Ratings" %>
+    <% else %>
+        <div class="circle">
+            <%= @user.fname.to(0).upcase_first() + @user.lname.to(0).upcase_first() %>
+        </div>
+        <%= @user.fname + ' ' + @user.lname + "'s Ratings" %>
+    <% end %>
+    <div class="select-team custom-select" onclick="teamSelect()">Alle Teams
+        <div class="teams" id="scrollTeams" >
+            <% @teams.each do |t| %>
+                <% if t.team_rating %>
+                    <div class="team" onmouseover="teamSelectUser(this)" onmouseout="teamSelectUserHide(this)"><%= link_to t.name, dash_admin_team_stats_path(t.id) %> <i class="fas fa-caret-right"></i>
+                        <div class="users" id="scrollUsers">
+                            <% t.users.order("lname ASC").order("fname ASC").each do |u| %>
+                                <% if u.user_rating %>
+                                    <div class="user"><%= link_to u.fname + ' ' + u.lname, dash_admin_user_stats_path(u.id) %></div>
+                                <% end %>
+                            <% end %>
+                        </div>
+                    </div>
+                <% end %>
+            <% end %>  
+        </div>
+    </div>
+</div>
+<div class="rating-overview">
+    <div class="karte active" onclick="ratingGes()" id="gesamt">
+        <div class="icon-circle">
+            <i class="fas fa-star"></i>
+        </div>
+        <!-- <div class="rating">
+            <%= @user_rating.ges.present? ? ((@user_rating.ges / 10.0 == 10.0 ? '10' : (@user_rating.ges / 10.0)))  : '' %>
+        </div> -->
+        <% ges = @user_rating.ges.present? ? @user_rating.ges : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id='chart_ges' class="c100 p<%= ges %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.ges.present? ? ((@user_rating.ges / 10.0 == 10.0 ? '10' : (@user_rating.ges / 10.0)))  : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label>Gesamt</label>
+        <% if @user_rating.change_ges.present? %>
+            <% if @user_rating.change_ges > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_ges / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_ges < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_ges / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_ges / 10.0).round(1) %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+    
+    <div class="karte" onclick="ratingSpontan()" id="spontan">
+        <div class="icon-circle">
+            <i class="fas fa-bolt"></i>
+        </div>
+        <!-- <div class="rating">
+            <%= @user_rating.spontan.present? ? ((@user_rating.spontan / 10.0 == 10.0) ? '10' : (@user_rating.spontan / 10.0)) : '' %>
+        </div> -->
+        <% spontan = @user_rating.spontan.present? ? @user_rating.spontan : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id='chart_spontan' class="c100 p<%= spontan %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.spontan.present? ? ((@user_rating.spontan / 10.0 == 10.0) ? '10' : (@user_rating.spontan / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label>Spontanität</label>
+        <% if @user_rating.change_spontan.present? %>
+            <% if @user_rating.change_spontan > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_spontan / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_spontan < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_spontan / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_spontan / 10.0).round(1) %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+    
+    <div class="karte" onclick="ratingCreative()" id="creative">
+        <div class="icon-circle">
+            <%= image_tag 'dash/icons/creative.png' %>
+        </div>
+        <!-- <div class="rating">
+            <%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '' %>
+        </div> -->
+        <% creative = @user_rating.creative.present? ? @user_rating.creative : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id='chart_creative' class="c100 p<%= creative %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label>Kreativität</label>
+        <% if @user_rating.change_creative.present? %>
+            <% if @user_rating.change_creative > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_creative / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_creative < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_creative / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_creative / 10.0).round(1) %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+    
+    <div class="karte" onclick="ratingBody()" id="body">
+        <div class="icon-circle">
+            <i class="fas fa-child"></i>
+        </div>
+        <!-- <div class="rating">
+            <%= @user_rating.body.present? ? ((@user_rating.body / 10.0 == 10.0) ? '10' : (@user_rating.body / 10.0)) : '' %>
+        </div> -->
+        <% body = @user_rating.body.present? ? @user_rating.body : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id='chart_body' class="c100 p<%= body %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.body.present? ? ((@user_rating.body / 10.0 == 10.0) ? '10' : (@user_rating.body / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label>Körpersprache</label>
+        <% if @user_rating.change_body.present? %>
+            <% if @user_rating.change_body > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_body / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_body < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_body / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_body / 10.0).round(1) %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+    
+    <div class="karte" onclick="ratingRhet()" id="rhetoric">
+        <div class="icon-circle">
+            <%= image_tag 'dash/icons/megaphone.png' %>
+        </div>
+        <!-- <div class="rating">
+            <%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '' %>
+        </div> -->
+        <% rhetoric = @user_rating.rhetoric.present? ? @user_rating.rhetoric : 0 %>
+        <div>
+            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                <div class="right-border">
+                    <div id='chart_rhetorik' class="c100 p<%= rhetoric %> center" style="font-size: 12vh;">
+                        <span class="rating-1"><%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '0.0' %></span>
+                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label>Rhetorik</label>
+        <% if @user_rating.change_rhetoric.present? %>
+            <% if @user_rating.change_rhetoric > 0 %>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
+                    <%= (@user_rating.change_rhetoric / 10.0).round(1) %>
+                </div>
+            <% elsif @user_rating.change_rhetoric < 0 %>
+                <div class="change down">
+                    <i class="fas fa-caret-down"></i>
+                    <%= (@user_rating.change_rhetoric / 10.0).round(1) %>
+                </div>
+            <% else %>
+                <div class="change equal">
+                    <i class="fas fa-equals"></i>
+                    <%= (@user_rating.change_rhetoric / 10.0).round(1) %>
+                </div>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+
+<div class="heading">Statistics</div>
+
+<div class="stats-overview">
+    <div class="karte">
+        <label>Activity Days</label>
+        <div class="number"><%= @days %></div>
+    </div>
+    <div class="karte">
+        <label>Pitches</label>
+        <div class="number"><%= @turn_ratings.count %></div>
+    </div>
+    <div class="karte">
+        <label>% of victories</label>
+        <div class="number"><%= ((@turns.where(place: 1).count.to_f / @turns.count.to_f) * 100.0).round(1) %>%</div>
+    </div>
+    <div class="karte">
+        <label for="">Best rating</label>
+        <% best_rating = number_with_precision(@turn_ratings.reorder('ges DESC').first.ges.present? ? @turn_ratings.reorder('ges DESC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
+        <div class="number best-rating"><%= (@turn_ratings.reorder('ges DESC').first.ges.present? ? (@turn_ratings.reorder('ges DESC').first.ges / 10.0) : 0.0) %></div>
+    </div>
+    <div class="karte">
+        <label for="">Worst rating</label>
+        <% worst_rating = number_with_precision(@turn_ratings.reorder('ges ASC').first.ges.present? ? @turn_ratings.reorder('ges ASC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
+        <div class="number worst-rating"><%= (@turn_ratings.reorder('ges ASC').first.ges.present? ? (@turn_ratings.reorder('ges ASC').first.ges / 10.0) : 0.0) %></div>
+    </div>
+</div>
+
+<div class="karte" id="statistic">
+    <div class="head left">Details
+        <select name="team" id="select-team" class="custom-select">
+            <option value="" selected>Vergleich mit</option>
+            <% @users.each do |u| %>
+                <% if u.id != @user.id && u.user_rating %>
+                    <option class="option<%= u.id %>"value="<%= u.id %>"  data-redirect-value="<%= dash_admin_user_stats_compare_path(@user, u.id) %>"><%= u.fname + ' ' + u.lname %></option>
+                <% end %>
+            <% end %>
+        </select>
+    </div>
+    <div class="chart">
+        <canvas id="myChart" width="814px" height="280px"></canvas>
+    </div>
+    <div class="divider"></div>
+    <div class="right">
+        <div class="karte bestlist">
+            <div class="place gold">
+                <%= image_tag 'dash/icons/gold.png' %>
+                <%= @turns.where(place: 1).count %>
+            </div>
+            <div class="place silver">
+                <%= image_tag 'dash/icons/silver.png' %>
+                <%= @turns.where(place: 2).count %>
+            </div>
+            <div class="place bronze">
+                <%= image_tag 'dash/icons/bronze.png' %>
+                <%= @turns.where(place: 3).count %>
+            </div> <br>
+            <div class="divider"></div>
+            <div class="table">
+                <div class="table-line <% if @user_ratings.first[:user_id] == @user.id %>highlighted<% end %> ">
+                    <div class="name">
+                       1.<%=  @user_ratings.first[:fname] %>
+                    </div>
+                    <div class="points">
+                       <%=  @user_ratings.first[:rating] / 10.0 %>
+                    </div>
+                </div>
+                <% if @user_ratings.length > 1 %>
+                <div class="table-line <% if @user_ratings.second[:user_id] == @user.id %>highlighted<% end %>">
+                    <div class="name">
+                        2.<%=  @user_ratings.second[:fname] %>
+                    </div>
+                    <div class="points">
+                        <%=  @user_ratings.second[:rating] / 10.0 %>
+                    </div>
+                </div>
+                <% if @user_ratings.length > 2 %>
+                <div class="table-line <% if @user_ratings.third[:user_id] == @user.id %>highlighted<% end %>">
+                    <div class="name">
+                        3.<%=  @user_ratings.third[:fname] %>
+                    </div>
+                    <div class="points">
+                        <%= @user_ratings.third[:rating] / 10.0 %>
+                    </div>
+                </div>
+                <% else %>
+                <div class="table-line">
+                    <div class="name">
+                    </div>
+                    <div class="points">
+                    </div>
+                </div>
+                <% end %>
+                <% else %>
+                <div class="table-line">
+                    <div class="name">
+                    </div>
+                    <div class="points">
+                    </div>
+                </div>
+                <% end %>
+            </div>
+            <%= image_tag 'current.png', class: 'rating-record' %>
+        </div>
+        <% video = @reviewed_videos.first %>
+        <% if video.present? %>
+        <div class="video-box">
+        <h6><%= @team.name.to_s + "'s"%> Aufnahmen</h6>
+        <div class="video-list" id="videoList">
+        <div class="video-karte pitches" onclick="redirect_video('<%= dash_admin_video_details_url(video.id) %>')">
+            <div class="top">
+            <div class="video-img" style="background-image: url('<%= asset_path(video.recorded_pitch.thumb.url) %>')"></div>
+            <div class="overlay"></div>
+            <%
+                total_time = video.recorded_pitch_duration.to_minutes if video.recorded_pitch_duration.present? 
+            %>
+            <!-- <div class="timer"><%= total_time %></div> -->
+            <div class="play"><i class="fas fa-play"></i></div>
+            <div class="heart"><%= total_time%></div>
+            </div>
+            <div class="player">
+            <%#= (r[:user_fname].present? ? r[:user_fname] : '') + " " + (r[:user_lname].present? ? r[:user_lname] : '') %>
+            </div>
+        </div>
+        </div>
+        <% end %>
+        <a href="/admins/dash/video_tool">Alle sehen</a>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<%= render partial: 'stats_modal', locals: {team_id: @team.id, team_users: @team_users} %>
+
+<style>
+    .video-list {
+        cursor: pointer;
+    }
+
+    #videoList .top .video-img {
+        top: -1.5vh;
+        right: 0;
+        bottom: -1.5vh;
+        left: 0;
+    }
+
+    #videoList .fa-play {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 1.7vh;
+    }
+
+    #videoList .top .play {
+        position: absolute;
+        top: 4.5vh;
+        left: 6.2vh;
+        height: 5.2vh;
+        width: 5.2vh;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        line-height: 6.2vh;
+        text-align: center;
+        color: white;
+        font-size: 1.8vh;
+        align-items: center;
+    }
+
+    #videoList .top {
+        position: relative;
+        border-top-left-radius: 0.8vh;
+        border-top-right-radius: 0.8vh;
+        height: 14.5vh;
+        width: auto;
+        overflow: hidden;
+        border-radius: 0.8vh;
+    }
+
+    .video-box {
+        padding-top: 2vh;
+        text-align: center;
+    }
+
+    .video-box h6,
+    .video-box {
+        font-size: 1.8vh;
+    }
+
+    .video-box a {
+        padding-top: 1vh;
+        display: flex; 
+        justify-content: center; 
+        text-decoration: none; 
+        color: #16e2a5;
+    }
+        .rating-record {
+            cursor: pointer;
+            position: absolute;
+            right: -6.5vh;
+            top: 8vh;
+            width: 4vh;
+            height: 4vh;
+        }
+    </style>
+
+<script>
+
+function myColor(div) {
+    var val = 0
+    var class_name = 0
+    if(div == 'chart_ges') {
+        val = <%= number_with_precision(@user_rating.ges.present? ? @user_rating.ges.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= ges %>
+    } else if(div == 'chart_spontan') {
+        val = <%= number_with_precision(@user_rating.spontan.present? ? @user_rating.spontan.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= spontan %>
+    } else if(div == 'chart_creative') {
+        val = <%= number_with_precision(@user_rating.creative.present? ? @user_rating.creative.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= creative %>
+    } else if(div == 'chart_body') {
+        val = <%= number_with_precision(@user_rating.body.present? ? @user_rating.body.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= body %>
+    } else if(div == 'chart_rhetorik') {
+        val = <%= number_with_precision(@user_rating.rhetoric.present? ? @user_rating.rhetoric.to_f / 100.0 : 0.0, precision:1) %>;
+        class_name = <%= rhetoric %>
+    }
+    if (val != 0.0) {
+        if (val < 0.5 ) {
+            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+        } else {
+            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+        }
+        $(`.rating-overview .c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`.rating-overview .c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
+        $(`.rating-overview .c100.p${class_name} .rating-1`).attr('style',`color: ${color_value}`);
+    }
+}
+
+myColor('chart_ges');
+myColor('chart_spontan');
+myColor('chart_creative');
+myColor('chart_body');
+myColor('chart_rhetorik');
+
+
+function ratingColor(class_name, rating) {
+    if (rating < 0.5 ) {
+        var color_value = '#'+(Math.round(255-(rating*2))).toString(16)+(Math.round(107+(rating*288))).toString(16)+(Math.round(108+(rating*180))).toString(16);
+    } else {
+        var color_value = '#'+(Math.round(29+((1-rating)*450))).toString(16)+(Math.round(218+((1-rating)*66))).toString(16)+(Math.round(175+((1-rating)*46))).toString(16);
+    }
+    $(`.${class_name}`).attr('style',`color: ${color_value}`);
+}
+
+var best_rating = <%= best_rating %>
+var worst_rating = <%= worst_rating %>
+ratingColor('best-rating', best_rating);
+ratingColor('worst-rating', worst_rating);
+
+    function redirect_video(url) {
+        window.location.replace(url);
+    }
+    var comapre_user = "<%= @user2.id %>"
+    $(`.option${comapre_user}`).attr('selected','selected');
+
+    $('#select-team').on('change',function(e){
+        if ($('option:selected',this).data('redirect-value') == undefined) {
+        } else {
+            window.location.replace($('option:selected',this).data('redirect-value'));
+        }
+    })
+    new PerfectScrollbar('#scrollbar');
+function teamSelect() {
+    setTimeout(function() {
+        $('.heading .select-team .teams').show();
+    }, 100);
+}
+function teamSelectHide() {
+    $('.heading .select-team .teams').hide();
+}
+function teamSelectUser(elem) {
+    $(elem).children().show();
+}
+function teamSelectUserHide(elem) {
+    $(elem).find('.users').hide();
+}
+function redirect(teamId) {
+    if (teamId == 0) {
+        window.location.replace("<%= dash_admin_user_stats_path(@user) %>");
+    } else {
+        window.location.replace('/admin/dash/teams/'+teamId+"/users/"+<%= @user.id %>+"/stats");
+    }
+}
+function redirectURL(URL) {
+    window.location.replace(URL);
+}
+    
+var ctx = document.getElementById("myChart");
+var datapoints = [NaN, NaN, NaN, NaN, NaN, NaN ];
+var datapoints2 = [NaN, NaN, NaN, NaN, NaN, NaN ];
+var label = [NaN, NaN, NaN, NaN, NaN, NaN];
+var i = 0;
+var user = '<%= @user.fname + ' ' + @user.lname %>';
+<% @chartdata.last(6).each do |cd| %>
+    var json_data = <%= cd.to_json.html_safe %>;
+    json_data['word'] = "<%= Word.find(Turn.find(cd[:turn_id]).word_id).name %>";
+    label[i] = "<%= cd[:date].to_s %>";
+    datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+    <% if cd[:ges2] %>
+    datapoints2[i] = {value: <%= cd[:ges2] / 10.0 %>, data: json_data};
+    <% else %>
+    datapoints2[i] = {value: NaN, data: json_data};
+    <% end %>
+    i++;
+<% end %>
+var data1 = [];
+var data2 = [], pointStyles = [];
+i = 0;
+datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+        if(el.data.turn_pitch){
+            var play = new Image();
+            play.src = '<%= asset_path "dash/icons/play-shadow.png" %>';
+            play.width = 35
+            play.height = 35
+            pointStyles[i] = play
+        }else{
+            var play = new Image();
+            play.src = '<%= asset_path "dash/icons/dot.png" %>';
+            play.width = 25
+            play.height = 25
+            pointStyles[i] = play
+            // pointStyles[i] = 'circle'
+        }
+    }
+    i++;        
+});
+i = 0;
+datapoints2.forEach(function(el){
+    if(el.value == undefined){
+        data2[i] = el
+    }else{
+        data2[i] = el.value
+    }
+    i++;        
+});
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: label,
+        datasets: [{
+            label: user,
+            data: data1,
+            fill: false,
+            lineTension:0,
+            spanGaps: true,
+            borderWidth: 3,
+            borderColor: "rgba(67, 148, 236, 1)",
+            pointBackgroundColor: "#4394ec",
+            pointBorderColor: "#fafafa",
+            pointBorderWidth: 3,
+            pointStyle: pointStyles,
+            pointRadius: 9,
+            hoverRadius: 9,
+            datapoints: datapoints,
+            extra: datapoints
+        }, {
+            label: user,
+            data: data2,
+            fill: false,
+            lineTension:0,
+            spanGaps: true,
+            borderWidth: 3,
+            borderColor: "rgba(67, 148, 236, .5)",
+            pointBackgroundColor: "rgba(67, 148, 236, .5)",
+            pointBorderColor: "#fafafa",
+            pointBorderWidth: 3,
+            pointRadius: 9,
+            hoverRadius: 9,
+            datapoints: datapoints2,
+            extra: datapoints2
+        }],
+    },
+    options: {
+        layout: {
+            padding: {
+                top: 25,
+                left: 25,
+            }
+        },
+        legend: {
+            display: false,
+        },
+        title: {
+            display: false,
+        },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    display: true,
+                    color:"rgba(94, 94, 94, 0.15)",
+                    lineWidth: 0.2,
+                    zeroLineColor: "rgba(94, 94, 94, 0.15)",
+                },
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 10,
+                    stepSize: 1,
+                    fontColor:"rgba(0,0,0,1.0)",
+                    fontSize: 14,
+                    fontFamily: 'Nunito',
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display: false,
+                    color:"rgba(255,255,255,1.0)",
+                    lineWidth: 0.2,
+                    zeroLineBorderDashOffset: 1.0,
+                },
+                ticks: {
+                    fontColor:"rgba(0,0,0,1.0)",
+                    fontSize: 14,
+                    fontFamily: 'Nunito',
+                }
+            }],
+        },
+        tooltips: {
+            yAlign: 'left',
+            mode: 'single',
+            onlyShowForDatasetIndex: [0],
+            enabled: false,
+            position: 'nearest',
+            intersect: true,
+            dataPoints: datapoints,
+            custom: function(tooltipModel) {
+                var tooltipEl = document.getElementById('chartjs-tooltip');
+                
+                if (!tooltipEl) {
+                    tooltipEl = document.createElement('div');
+                    tooltipEl.id = 'chartjs-tooltip';
+                    tooltipEl.class = 'chart-tooltip';
+                    tooltipEl.innerHTML = ''
+                    document.body.appendChild(tooltipEl);
+                }
+                if (tooltipModel.opacity === 0) {
+                    tooltipEl.style.opacity = 0;
+                    return;
+                }
+                
+                tooltipEl.classList.remove('above', 'below', 'no-transform');
+                if (tooltipModel.yAlign) {
+                    tooltipEl.classList.add(tooltipModel.yAlign);
+                } else {
+                    tooltipEl.classList.add('no-transform');
+                }
+                
+                function getBody(bodyItem) {
+                    return bodyItems.lines;
+                }
+                if (tooltipModel.body) {
+                    var titleLines = tooltipModel.title || '';
+                    
+                    var innerHtml = '';
+                    titleLines.forEach(function(title){
+                        innerHtml += title;
+                    });
+                    
+                    var tableRoot = tooltipEl;
+                    tableRoot.innerHTML = innerHtml;
+                }
+                var position = this._chart.canvas.getBoundingClientRect();
+                
+                tooltipEl.style.opacity = 1;
+                tooltipEl.style.position = 'absolute';
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 280 + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 460 + 'px';
+                // tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()*1.73))+ 'px';
+                // tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight()*1.7)) - 18 + 'px';
+                tooltipEl.style.pointerEvents = 'none';
+            },
+            callbacks: {
+                title: function(tooltipItem, data) {
+                    var innerHtml = '<div class="head">';
+                        innerHtml += '<div class="date">'+tooltipItem[0]["xLabel"]+'</div>';
+                        innerHtml += '<div class="word">'+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word"]+'</div></div>';
+
+                        innerHtml += '<div class= "body">';
+                        innerHtml += '<div class="left">';
+
+                        var ges_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"];
+                        var val =  ges_value / 100
+                        val = val.toPrecision(1)
+                        if (val < 0.5 ) {
+                            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+                        } else {
+                            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+                        }
+
+                        innerHtml += '<div class="inner-content text-center">';
+                        innerHtml += '<div class="right-border">';
+                        innerHtml += `<div class="c100 p${ges_value} center" style="font-size: 9vh;">`;
+                        innerHtml += '<span>'+ges_value/ 10.0+'</span>';
+                        innerHtml += '<div class="slice">';
+                        innerHtml += `<div class="bar" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
+                        innerHtml += `<div class="fill" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label"><%= @user.fname + ' ' + @user.lname %></label>';
+
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Spontanität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Kreativität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Körpersprache</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Rhetorik</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric"] / 10.0+'</div></div>'
+                    
+                        if (data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges2"]) {
+                        
+                        innerHtml += '</div><div class="right">'
+                    
+
+                        var ges2_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges2"];
+                        var val =  ges2_value / 100
+                        val = val.toPrecision(1)
+                        if (val < 0.5 ) {
+                            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+                        } else {
+                            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+                        }
+
+                        innerHtml += '<div class="inner-content text-center">';
+                        innerHtml += '<div class="right-border">';
+                        innerHtml += `<div class="c100 p${ges2_value} center" style="font-size: 9vh;">`;
+                        innerHtml += '<span>'+ges2_value / 10.0+'</span>';
+                        innerHtml += '<div class="slice">';
+                        innerHtml += `<div class="bar" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
+                        innerHtml += `<div class="fill" style="border-color: ${color_value}">`;
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label"><%= @user2.fname + ' ' + @user2.lname %></label>';
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Spontanität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan2"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan2"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Kreativität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative2"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative2"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Körpersprache</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body2"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body2"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Rhetorik</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric2"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric2"] / 10.0+'</div></div>'
+                        } else {
+                        innerHtml += '</div><div class="right">'
+                        innerHtml += '<div class="inner-content text-center">';
+                        innerHtml += '<div class="right-border">';
+                        innerHtml += `<div class="c100 p0 center" style="font-size: 9vh;">`;
+                        innerHtml += '<span>'+0+'</span>';
+                        innerHtml += '<div class="slice">';
+                        innerHtml += `<div class="bar" style="border-color: white">`;
+                        innerHtml += '</div>';
+                        innerHtml += `<div class="fill" style="border-color: white">`;
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label">Nicht bewertet!</label>';
+                        }
+                        innerHtml += '</div></div>';
+                    return innerHtml
+                },
+            },
+        },
+    }
+});
+var canvas = document.getElementById('myChart')
+canvas.onclick = function (evt) {
+    var points = myChart.getElementAtEvent(evt);
+    var current_point = datapoints[points[0]._index];
+    var turn_id = current_point.data.turn_id,
+    recorded_pitch = current_point.data.turn_pitch;
+    if(recorded_pitch){
+        window.location  = `/admins/dash/turns/${turn_id}/video`;
+    }
+};
+function ratingGes() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#gesamt').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+        <% if cd[:ges2] != nil %>
+            datapoints2[i] = {value: <%= cd[:ges2] / 10.0 %>, data: json_data};
+        <% else %>
+            datapoints2[i] = {value: NaN, data: json_data};
+        <% end %>
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    });
+    i = 0;
+    datapoints2.forEach(function(el){
+    if(el.value == undefined){
+        data2[i] = el
+    }else{
+        data2[i] = el.value
+    }
+        i++;        
+    });
+    window.myChart.update();
+}
+function ratingSpontan() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#spontan').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i] = {value: <%= cd[:spontan] / 10.0 %>, data: json_data};
+        <% if cd[:spontan2] != nil %>
+            datapoints2[i] = {value: <%= cd[:spontan2] / 10.0 %>, data: json_data};
+        <% else %>
+            datapoints2[i] = {value: NaN, data: json_data};
+        <% end %>
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    });
+    i = 0;
+    datapoints2.forEach(function(el){
+    if(el.value == undefined){
+        data2[i] = el
+    }else{
+        data2[i] = el.value
+    }
+        i++;        
+    });
+    window.myChart.update();
+}
+function ratingCreative() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#creative').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i] = {value: <%= cd[:creative] / 10.0 %>, data: json_data};
+        <% if cd[:creative2] != nil %>
+            datapoints2[i] = {value: <%= cd[:creative2] / 10.0 %>, data: json_data};
+        <% else %>
+            datapoints2[i] = {value: NaN, data: json_data};
+        <% end %>
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    });
+    i = 0;
+    datapoints2.forEach(function(el){
+    if(el.value == undefined){
+        data2[i] = el
+    }else{
+        data2[i] = el.value
+    }
+        i++;        
+    });
+    window.myChart.update();
+}
+function ratingBody() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#body').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i] = {value: <%= cd[:body] / 10.0 %>, data: json_data};
+        <% if cd[:body2] != nil %>
+            datapoints2[i] = {value: <%= cd[:body2] / 10.0 %>, data: json_data};
+        <% else %>
+            datapoints2[i] = {value: NaN, data: json_data};
+        <% end %>
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    });
+    i = 0;
+    datapoints2.forEach(function(el){
+    if(el.value == undefined){
+        data2[i] = el
+    }else{
+        data2[i] = el.value
+    }
+        i++;        
+    });
+    window.myChart.update();
+}
+function ratingRhet() {
+    i = 0;
+    $('.active').removeClass('active');
+    $('#rhetoric').addClass('active');
+    <% @chartdata.first(6).each do |cd| %>
+        datapoints[i] = {value: <%= cd[:rhetoric] / 10.0 %>, data: json_data};
+        <% if cd[:rhetoric2] != nil %>
+            datapoints2[i] = {value: <%= cd[:rhetoric2] / 10.0 %>, data: json_data};
+        <% else %>
+            datapoints2[i] = {value: NaN, data: json_data};
+        <% end %>
+        i++;
+    <% end %>
+    i = 0;
+    datapoints.forEach(function(el){
+    if(el.value == undefined){
+        data1[i] = el
+    }else{
+        data1[i] = el.value
+    }
+        i++;        
+    });
+    i = 0;
+    datapoints2.forEach(function(el){
+    if(el.value == undefined){
+        data2[i] = el
+    }else{
+        data2[i] = el.value
+    }
+        i++;        
+    });
+    window.myChart.update();
+}
+</script>

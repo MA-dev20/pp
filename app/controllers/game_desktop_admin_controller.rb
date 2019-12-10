@@ -1,11 +1,8 @@
 class GameDesktopAdminController < ApplicationController
-  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :ended]
+  before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :ended, :ended_game]
   before_action :set_turn, only: [:play, :rate, :rating]
     
   layout 'game_desktop'
-
-  def intro
-  end
     
   def wait
     @handy = true
@@ -17,14 +14,39 @@ class GameDesktopAdminController < ApplicationController
     @count = @game.turns.where(status: "accepted").playable.count 
     @pending_users = @users.select{|user| user if user.status=="pending"}
   end
-    
-  def choose
-    @handy = true
+  
+  def intro
+	@turns = @game.turns.where(status: "accepted").playable.sample(2)
+	if @turns.count <= 1
+      redirect_to gea_turn_path
+      return
+	end
+	if @game.youtube_url.present?
+	  redirect_to gda_youtube_path
+	  return
+	elsif !@game.video.nil? && !@game.video_is_pitch
+	  @video = Video.find_by(id: @game.video).file
+	elsif !@game.video.nil? && @game.video_is_pitch
+	  @video = Turn.find_by(id: @game.video).recorded_pitch
+	end
+	@game.update(active: false, state: 'intro')
+  end
+  def youtube_video
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
     if @turns.count <= 1
       redirect_to gea_turn_path
       return
-    elsif @game.state != 'choose'
+    else
+      # @video_id = @game.youtube_url.split('/').last
+      @video_url = @game.youtube_url
+      ActionCable.server.broadcast "game_#{@game.id}_channel",desktop: "youtube_video", game_admin_id: @game.admin_id
+    end
+  end
+    
+  def choose
+    @handy = true
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    if @game.state != 'choose'
       @turn1 = @turns.first
       @turn2 = @turns.second
       @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
@@ -60,6 +82,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def play
+    @video_toggle = @game.video_toggle
     if @game.state != 'play'
       @game.update(state: 'play')
     end
@@ -71,7 +94,7 @@ class GameDesktopAdminController < ApplicationController
       @game.update(state: 'rate')
     end
   end
-    
+   
   def rating
     if @game.state != 'rating' && @turn.ratings.where(disabled: false).count == 0
       @turn.update(status: 'ended')
@@ -82,7 +105,9 @@ class GameDesktopAdminController < ApplicationController
       @game.update(state: 'rating')
     end
     update_turn_rating @turn
-    update_user_rating @user
+    if @user != @admin
+      update_user_rating @user
+    end
     @rating = @turn.turn_rating
   end
     
@@ -126,6 +151,19 @@ class GameDesktopAdminController < ApplicationController
     end
     redirect_to dash_admin_path
   end
+
+  def ended_game
+    @game = current_game
+    if @game.state != 'ended_game'
+      @game.update(state: 'ended_game', active: false)
+    end
+    sign_out(@game)
+    if @game.turns.where(status: "accepted").playable.count == 0
+      # @game.destroy
+    end
+    redirect_to dash_admin_path
+  end
+
 
   def objection
     params[:objection]

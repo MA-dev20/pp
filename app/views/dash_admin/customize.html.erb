@@ -1,0 +1,543 @@
+<%= image_tag 'dash/icons/stop.png', class: 'stop-img-icon' %>
+<%= image_tag 'dash/icons/record.png', class: 'record-img-icon' %>
+<div class="customize">
+<% if @catchword %>
+<div class="customize-sm" id="editCatchword">
+    <div class="karte">
+        <%= link_to '', dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
+        <div class="head small left">Catchword Liste bearbeiten</div>
+        <%= form_for(:basket, url: edit_basket_path(@catchword)) do |f| %>
+            <% if flash[:basket_name] %>
+            <label>Name
+            <div class="alert alert-label"><%= flash[:basket_name] %></div>
+            </label>
+            <%= f.text_field :name, class: 'field red', value: @catchword.name %>
+            <% else %>
+            <label>Name</label>
+            <%= f.text_field :name, class: 'field', value: @catchword.name %>
+            <% end %>
+            <%= f.hidden_field :admin_id, value: @admin.id %>
+            <%= f.hidden_field :site, value: 'admin_dash' %>
+            <div class="divider"></div>
+            <%= f.submit 'speichern', class: 'btn btn-green' %>
+        <% end %>
+        <%= form_for(:word, url: new_word_path(@catchword)) do |f| %>
+           <label>Add new Catchword
+           <% if flash[:word_name] %>
+            <div class="alert alert-label"><%= flash[:word_name] %></div>
+           <% end %>
+           </label>
+           <div class="field <% if flash[:word_name] %>red<% end %>">
+               <%= f.text_field :name, class: 'custom-submit-field', autofocus: true %>
+               <%= f.hidden_field :site, value: 'admin_dash' %>
+               <%= f.submit "+", class: 'custom-submit' %>
+           </div>
+        <% end %>
+        <table>
+            <thead>
+                <tr onclick="sortTable('catchword-table', 'catchword-sorter')">
+                    <th>Catchwords <i class="fas fa-sort" id="catchword-sorter"></i></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+        <div class="table-content" id="table_content">
+        <table id="catchword-table">
+            <tbody>
+                <% @catchword.words.each do |word| %>
+                <tr>
+                    <td><%= word.name %></td>
+                    <td id="recording<%= word.id %>" class="record" onclick="recordAudio(<%=word.id %>, 'word')"><%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %></td>
+                    <td id="word<%= word.id %>" class="record" data-url="<%= word.sound.url %>" onclick="playWord(<%=word.id %>, 'word')"><%= image_tag 'dash/icons/play.png', class: 'play' %></td>
+                    <td><%= link_to image_tag('dash/icons/minus.png'), destroy_word_path(@catchword, word) %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+        </div>
+        <%= link_to '',  destroy_basket_admin_path(@catchword, 'dash_admin'), class: 'remove far fa-trash-alt' %>
+    </div>
+</div>
+<script>
+new PerfectScrollbar('#table_content');
+</script>
+<% else %>
+<div class="customize-sm" id="catchwords">
+    <div class="searchbar">
+        <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        <input type="text" placeholder="Search Catchwords" id="searchCW">
+    </div>
+    <button class="btn btn-green" onclick="showNewCatchword()">Liste erstellen</button>
+    <div class="karte" id="catchwords">
+        <div class="head left">Catchwords Listen</div>
+        <div class="list" id="catchword-list">
+            <% @catchwords.each do |c| %>
+                <div class="list-karte CWsearch" onclick="redirect('<%= dash_admin_catchwords_url(c.id) %>')">
+                    <% 
+                        cw_img = c.image.present? ? c.image : 1
+                        img_url = "dash/randomBGpics/Catchwords/#{cw_img}.jpg"
+                    %>
+                    <div class="pic" style="background-image: url(<%= image_url(img_url) %>)">
+                    </div>
+                    <div class="bottom">
+                        <div class="name"><%= c.name %></div>
+                        <div class="count"><%= c.words.count %></div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+<script>new PerfectScrollbar('#catchword-list');</script>
+<div class="customize-sm" id="newCatchword">
+    <div class="karte">
+        <i class="back small fas fa-arrow-left" onclick="hideNewCatchword()"></i>
+        <div class="head left small">Catchword Liste hinzufügen</div>
+        <%= form_for(:basket, url: new_basket_path()) do |f| %>
+            <% if flash[:basket_name] %>
+            <label>Name
+            <div class="alert alert-newCW"><%= flash[:basket_name] %></div>
+            </label>
+            <%= f.text_field :name, class: 'field red', autofocus: true  %>
+            <% else %>
+            <label>Name</label>
+            <%= f.text_field :name, class: 'field', autofocus: true  %>
+            <% end %>
+            <%= f.hidden_field :admin_id, value: @admin.id %>
+            <%= f.hidden_field :site, value: 'admin_dash' %>
+            <div class="divider"></div>
+            <%= f.submit 'speichern', class: 'btn btn-green' %>
+        <% end %>
+    </div>
+</div>
+<% end %>
+
+<% if @objection %>
+<div class="customize-sm" id="editObjection">
+    <div class="karte">
+        <%= link_to "", dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
+        <div class="head small left">Objection Liste bearbeiten</div>
+        <%= form_for(:basket, url: edit_basket_path(@objection)) do |f| %>
+            <% if flash[:basket_name] %>
+                <label for="">Name
+                <div class="alert"><%= flash[:basket_name] %></div>
+                </label>
+                <%= f.text_field :name, class: 'field red', value: @objection.name %>
+            <% else %>
+                <label for="">Name</label>
+                <%= f.text_field :name, class: 'field', value: @objection.name %>
+            <% end %>
+            <%= f.hidden_field :admin_id, value: @admin.id %>
+            <%= f.hidden_field :site, value: 'admin_dash' %>
+            <%= f.hidden_field :type, value: 'objection' %>
+            <div class="divider"></div>
+            <%= f.submit 'speichern', class: 'btn btn-green' %>
+        <% end %>
+        <%= form_for(:objection, url: new_objection_path(@objection)) do |f| %>
+           <label>Add new Objection
+           <% if flash[:objection_name] %>
+            <div class="alert alert-label"><%= flash[:objection_name] %></div>
+           <% end %>
+           </label>
+           <div class="field <% if flash[:objection_name] %>red<% end %>">
+               <%= f.text_field :name, class: 'custom-submit-field', value: '', autofocus: true %>
+               <%= f.hidden_field :site, value: 'admin_dash' %>
+               <%= f.submit "+", class: 'custom-submit' %>
+           </div>
+        <% end %>
+        <table>
+            <thead>
+                <tr onclick="sortTable('objection-table', 'objection-sorter')">
+                    <th>Objection <i class="fas fa-sort" id="objection-sorter"></i></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+        <div class="table-content" id="table_content">
+        <table id='objection-table'>
+            <tbody>
+                <% @objection.objections.each do |o| %>
+                <tr>
+                    <td><%= o.name %></td>
+                    <td id="orecording<%= o.id %>" class="record" onclick="recordAudio(<%= o.id %>, 'objection')"><%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %></td>
+                    <td id="objectionWord<%= o.id %>" class="record" data-url="<%= o.sound.url %>" onclick="playWord(<%= o.id %>, 'objection')"><%= image_tag 'dash/icons/play.png', class: 'play' %></td>
+                    <td><%= link_to image_tag('dash/icons/minus.png'), destroy_objection_path(@objection, o.id) %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+        </div>
+        <%= link_to '',  destroy_basket_admin_path(@objection, 'dash_admin'), class: 'remove far fa-trash-alt' %>
+    </div>
+</div>
+<script>
+new PerfectScrollbar('#table_content');
+</script>
+<% else %>
+<div class="customize-sm" id="objections">
+    <div class="searchbar">
+        <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        <input type="text" placeholder="Search Objections" id="searchOB">
+    </div>
+    <button class="btn btn-green" onclick="showNewObjection()">Liste erstellen</button>
+    <div class="karte">
+        <div class="head left">Objections</div>
+        <div class="list" id="objection-list">
+            <% @objections.each do |o| %>
+                <% 
+                    obj_img = o.image.present? ? o.image : 1
+                    img_url = "dash/randomBGpics/Objections/#{obj_img}.jpg"
+                %>
+                <div class="list-karte OBsearch" onclick="redirect('<%= dash_admin_objections_url(o.id) %>')">
+                    <div class="pic" style="background-image: url(<%= image_url(img_url) %>)">
+                    </div>
+                    <div class="bottom">
+                        <div class="name"><%= o.name %></div>
+                        <div class="count"><%= o.objections.count %></div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+<script>new PerfectScrollbar('#objection-list');</script>
+<div class="customize-sm" id="newObjection">
+    <div class="karte">
+        <i class="back small fas fa-arrow-left" onclick="hideNewObjection()"></i>
+        <div class="head left small">Objection hinzufügen</div>
+        <%= form_for(:basket, url: new_basket_path()) do |f| %>
+            <% if flash[:obasket_name] %>
+                <label for="">Name
+                <div class="alert"><%= flash[:obasket_name] %></div>
+                </label>
+                <%= f.text_field :name, class: 'field red' %>
+            <% else %>
+                <label for="">Name</label>
+                <%= f.text_field :name, class: 'field' %>
+            <% end %>
+            <%= f.hidden_field :admin_id, value: @admin.id %>
+            <%= f.hidden_field :site, value: 'admin_dash' %>
+            <%= f.hidden_field :type, value: 'objection' %>
+            <div class="divider"></div>
+            <%= f.submit 'speichern', class: 'btn btn-green' %>
+        <% end %>
+    </div>
+</div>
+<% end %>
+
+
+<style>
+    .record-img {
+        height: 2.35vh;
+        width: 2.35vh;
+    }
+
+    .record {
+        cursor: pointer;
+    }
+
+    .opacity-class {
+        opacity: 0.6;
+    }
+
+    .stop-img-icon, 
+    .record-img-icon {
+        display: none;
+    }
+
+    .table-content button {
+    margin: 1vh 0.5vh;
+    height: 2vh;
+    width: 2vh;
+	font-size: 0;
+	background-color: red;
+	border: 0;
+	border-radius: 35px;
+	outline: none;
+}
+
+/* .notRec{
+	background-color: darkred !important;
+} */
+.stop-img,
+.Rec{
+	animation-name: pulse;
+	animation-duration: 1.3s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes pulse{
+	0%{
+		box-shadow: 0 0 0.3vh 0 rgba(173,0,0,.3);
+	}
+	65%{
+		box-shadow: 0 0 0.5vh 0.6vh rgba(173,0,0,.3);
+	}
+	90%{
+		box-shadow: 0 0 0.5vh 0.9vh rgba(173,0,0,0);
+	}
+}
+</style>
+
+<script>
+
+
+var stream, form, globalForm,recorder, audio, timer;
+  globalForm = new FormData();
+  var processing= false;
+  audio = new Audio();
+
+    function recordAudio(id, type) {
+        if (type == 'word') {
+            if ($("#recording" + id).children().hasClass('record-img')) {
+                if (!processing) {
+                    $('#word'+ id).addClass('opacity-class');
+                    if ($("#recording" + id).children().hasClass('record-img')) {
+                        $("#recording" + id).children().removeClass('record-img').addClass('stop-img');
+                        // record_img = $("#recording" + id).children()[0]
+                        // $(record_img).attr('src', $('.stop-img-icon').attr('src'))
+                    }
+                    requestAudio(id, 'word')
+                    processing = true
+                }
+            } else {
+                stopRecording(id, 'word')
+            }
+        } else {
+            if ($("#orecording" + id).children().hasClass('record-img')) {
+                if (!processing) {
+                    $('#objectionWord'+ id).addClass('opacity-class');
+                    if ($("#orecording" + id).children().hasClass('record-img')) {
+                        $("#orecording" + id).children().removeClass('record-img').addClass('stop-img');
+                        $('#recButton').removeClass("Rec");
+                        // record_img = $("#orecording" + id).children()[0]
+                        // $(record_img).attr('src', $('.stop-img-icon').attr('src'))
+                    }
+                    requestAudio(id, 'objection')
+                    processing = true
+                }
+            } else {
+                stopRecording(id, 'objection')
+            }
+        }
+    }
+
+    function playWord(id, type) {
+        if (type == 'word') {
+            var url = $("#word" + id).data("url")
+            if (!$("#word" + id).hasClass("opacity-class")) {
+                if (!audio.paused) {
+                    audio.pause()
+                }
+                audio = new Audio(url)
+                audio.play()
+            }
+        } else {
+            var url = $("#objectionWord" + id).data("url")
+            if (!$("#objectionWord" + id).hasClass("opacity-class")) {
+                if (!audio.paused) {
+                    audio.pause()
+                }
+                audio = new Audio(url)
+                audio.play()
+            }
+        }
+
+    }
+
+    function createObjection(id, globalForm, type) {
+            var url = ''
+            if (type == 'word') {
+                url = '/admin/dash/words/'
+            } else {
+                url = '/admin/dash/objections/'
+            }
+            $.ajax({
+                url: url + id,
+                type: 'put',
+                cache: false,
+                async: true,
+                contentType: false,
+                processData: false,
+                data: globalForm,
+                beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+                success: function (res) {
+                    globalForm = new FormData();
+                    if (type == 'word') {
+                        $("#word" + id).data("url", res.sound)
+                        $('#word'+ id).removeClass('opacity-class');
+                    } else {
+                        $("#objectionWord" + id).data("url", res.sound)
+                        $('#objectionWord'+ id).removeClass('opacity-class');
+                    }
+                }
+            })
+        }
+
+
+
+    function requestAudio(id, type) {
+        var seconds = 10;
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(str => {
+            const chunks = [];
+            stream = str;
+            recorder = new MediaRecorder(stream);
+            recorder.ondataavailable = e => {
+                seconds -= 1
+                chunks.push(e.data);
+                // $("#word"+id).parent().addClass("opacity-class")
+                if (recorder.state == 'inactive') {
+                    const blob = new Blob(chunks, { type: 'audio/webm' });
+                    var file = new window.File([blob], ['audio', (new Date() + '').slice(4, 28), '.mp3'].join(''))
+                    globalForm.append("file", file);
+                    if (type == 'word') {
+                        if ($("#recording" + id).children().hasClass('stop-img')) {
+                            $("#recording" + id).children().removeClass('stop-img').addClass('record-img');
+                            record_img = $("#recording" + id).children()[0]
+                            $(record_img).attr('src', $('.record-img-icon').attr('src'))
+                            $('#word'+ id).removeClass('opacity-class');
+                        }
+                        createObjection(id, globalForm, 'word')
+                    } else {
+                        if ($("#orecording" + id).children().hasClass('stop-img')) {
+                            $("#orecording" + id).children().removeClass('stop-img').addClass('record-img');
+                            record_img = $("#orecording" + id).children()[0]
+                            $(record_img).attr('src', $('.record-img-icon').attr('src'))
+                            $('#objectionWord'+ id).removeClass('opacity-class');
+                        }
+                        createObjection(id, globalForm, 'objection')
+                    }
+                    processing = false;
+                }
+            };
+            recorder.start(1000);
+            timer = setTimeout(() => {
+                stopRecording(id, type)
+            }, 11000);
+        }).catch(console.error);
+    }
+
+    function stopRecording(id, type) {
+        clearTimeout(timer);
+        if (recorder.state != 'inactive') {
+            recorder.stop()
+        }
+        if (type == 'word') {
+            if ($("#recording" + id).children().hasClass('stop-img')) {
+                $("#recording" + id).children().removeClass('stop-img').addClass('record-img');
+                record_img = $("#recording" + id).children()[0]
+                $(record_img).attr('src', $('.record-img-icon').attr('src'))
+                $('#word'+ id).removeClass('opacity-class');
+            }
+        } else {
+            if ($("#orecording" + id).children().hasClass('stop-img')) {
+                $("#orecording" + id).children().removeClass('stop-img').addClass('record-img');
+                record_img = $("#orecording" + id).children()[0]
+                $(record_img).attr('src', $('.record-img-icon').attr('src'))
+                $('#objectionWord'+ id).removeClass('opacity-class');
+            }
+        }
+        stream.getTracks()[0].stop()
+    }
+
+
+
+
+/* search Catchwords */
+        $('#searchCW').keyup(function() {
+            $rows = $('.CWsearch');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).find('.name').text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
+        })
+    /* search Objections */
+        $('#searchOB').keyup(function() {
+            $rows = $('.OBsearch');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).find('.name').text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
+        })
+function sortTable(tableId, sorter) {
+  var table, rows, switching, i, x, y, shouldSwitch, sorter;
+  table = document.getElementById(tableId);
+  sorter = document.getElementById(sorter);
+  if (sorter.className == 'fas fa-sort' || sorter.className == 'fas fa-sort-up') {
+      switching = true;
+      while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 0; i < (rows.length - 1); i++) {
+          shouldSwitch = false;
+          x = rows[i].getElementsByTagName("TD")[0];
+          y = rows[i + 1].getElementsByTagName("TD")[0];
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+        }
+      }
+      sorter.className = 'fas fa-sort-down';
+  } else if (sorter.className == 'fas fa-sort-down') {
+      switching = true;
+      while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 0; i < (rows.length - 1); i++) {
+          shouldSwitch = false;
+          x = rows[i].getElementsByTagName("TD")[0];
+          y = rows[i + 1].getElementsByTagName("TD")[0];
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+        }
+      }
+      sorter.className = 'fas fa-sort-up';
+  }
+}
+    <% if flash[:cbasket_name] %>
+        showNewCatchword();
+    <% elsif flash[:obasket_name] %>
+        showNewObjection();
+    <% end %>
+    function showNewCatchword() {
+        $('#newCatchword').show();
+        $('#catchwords').hide();
+    }
+    function hideNewCatchword() {
+        $('#newCatchword').hide();
+        $('#catchwords').show();
+    }
+    function showNewObjection() {
+        $('#newObjection').show();
+        $('#objections').hide();
+    }
+    function hideNewObjection() {
+        $('#newObjection').hide();
+        $('#objections').show();
+    }
+    function redirect(path) {
+        window.location.replace(path);
+    }
+</script>

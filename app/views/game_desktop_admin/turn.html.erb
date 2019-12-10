@@ -1,9 +1,9 @@
 <% if @turns.count == 1 %>
 <section id="head" class="bounce_in">
-<h1><%= @user.fname %>, du bist dran!</h1>
+<h1 class="nunito-bold"><%= @user.fname %>, du bist dran!</h1>
 <% else %>
 <section id="head">
-    <h1 id="heading"></h1>
+    <h1 id="heading" class="nunito-bold"></h1>
 <% end %>
 </section>
 
@@ -31,7 +31,7 @@
   <% end %>
 <% end %>
 </section>
-<section id="skip">
+<section id="skip" class="nunito-bold">
    Skip mit Leertaste
 </section>
 <%= audio_tag('turn/besonderescatchword.mp3', id: 'tag1') %>

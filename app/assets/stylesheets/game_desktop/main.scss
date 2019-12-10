@@ -8,9 +8,14 @@
  *= require game_desktop/ended
  *= require bootstrap.min
  *= require omnes
+ *= require main/animate
  */
-
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+.animat {
+	animation-duration: 1s;
+	animation-iteration-count: 5;
+}
 body {
     font-family: 'BarackPro-Solid';
     margin: 0;
@@ -411,6 +416,12 @@ body {
   height: 100%;
   background-color: pink;
 }
+.custom-in {
+  animation: fill 5s linear 1;
+  animation-fill-mode: forwards;
+  height: 100%;
+  background-color: pink;
+}
 @keyframes fill {
   0% {
     width: 100%;
@@ -492,4 +503,21 @@ body {
   padding: 1.5vh;
   align-items: center;
   justify-content: center;
+}
+
+.qr-code-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 8vh;
+  right: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.qr-img-div {
+  border: 2px solid #145daa;
+  padding: 2vh;
+  background-color: white;
 }

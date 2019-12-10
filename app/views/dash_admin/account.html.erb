@@ -1,70 +1,100 @@
-<%= form_for(:admin, as: Admin, url: registration_path(Admin), html: { method: :put }) do |f| %>
-
-    <div class="row_1">
-        <%= f.label :company_name, 'Firmenname', class: 'form-label' %>
-        <%= f.text_field :company_name, class: 'account-form-field p1' %>
+<div class="karte account">
+    <div class="head left">Account Settings</div>
+    <%= form_for(:admin, url: edit_admin_path(@admin)) do |f|%>
+    <div class="img-upload" onclick="showAvatar()">
+        <label for="">Nutzerbild</label>
+        <% if @admin.avatar? %>
+        <%= image_tag @admin.avatar.quad.url %>
+        <% else %>
+        <% end %>
+        <i class="fas fa-plus-circle"></i>
     </div>
-    
-    <div class="row_1">
-        <%= f.label :fname, 'Name', class: 'form-label' %>
-        <%= f.text_field :fname, placeholder: 'Vorname', class: 'account-form-field p1' %>
-        <%= f.text_field :lname, placeholder: 'Nachname', class: 'account-form-field p2' %>
+    <div class="img-upload" onclick="showLogo()">
+        <label for="">Logo</label>
+        <% if @admin.logo? %>
+        <span class="poligon">
+        <%= image_tag @admin.logo.quad.url %>
+        </span>
+        <% else %>
+        <% end %>
+        <i class="fas fa-plus-circle"></i>
+    </div><br>
+    <div class="fields">
+    <div class="half-1">
+        <label for="">Firmenname</label>
+        <%= f.text_field :company_name, class: 'field' %>
     </div>
-    
-    <div class="row_1">
-        <%= f.label :street, 'Adresse', class: 'form-label' %>
-        <%= f.text_field :street, placeholder: 'Straße / Hsnr', class: 'account-form-field p1' %>
-        <%= f.number_field :zipcode, placeholder: 'PLZ', class: 'account-form-field p3_1' %>
-        <%= f.text_field :city, placeholder: 'Stadt', class: 'account-form-field p3_2' %>
+    <div class="half-2">
+        <label for="">E-Mail</label>
+        <%= f.email_field :email, class: 'field' %>
     </div>
-    
-    <div class="row_1">
-        <%= f.label :email, 'E-Mail', class: 'form-label' %>
-        <%= f.email_field :email, placeholder: 'E-Mail', class: 'account-form-field p1' %>
     </div>
-
-    <div class="row_1">
-        <%= f.label :password, 'Passwort', class: 'form-label' %>
-        <%= f.password_field :password, placeholder: 'Passwort', class: 'account-form-field p1' %>
-        <%= f.password_field :password_confirmation, placeholder: 'Passwort wiederholen', class: 'account-form-field p2' %>
-    </div>
-    
-    <div class="row_2">
-        <%= f.label 'Nutzerbild', class: 'form-label' %>
-        <%= image_tag(@admin.avatar.quad.url || 'defaults/wolf.jpg', id: 'ava_pic') %>
-        <label for="admin_avatar" id='submit-label'>
-            <i class="fas fa-upload"></i>
-        </label>
-        <%= f.file_field :avatar, onchange: "readURL(this, 'ava_pic');" %>
-    </div>
-    <%if !@admin.plan_id.nil? %>
-        <div class="row_2">
-            <%= f.label 'Logo', class: 'form-label' %>
-            <%= image_tag(@admin.logo.quad.url || 'defaults/company.jpg', id: 'logo_pic') %>
-            <label for="admin_logo" id='submit-label'>
-                <i class="fas fa-upload"></i>
-            </label>
-            <%= f.file_field :logo, onchange: "readURL(this, 'logo_pic');" %>
+    <div class="fields">
+        <div class="half-1-1">
+            <label for="">Vorname</label>
+            <%=  f.text_field :fname, class: 'field' %>
         </div>
-    <%end%>
-
-    <div id="base_line">
-    <%= f.submit 'Änderungen speichern', class: 'form-submit' %>
+        <div class="half-1-2">
+            <label for="">Nachname</label>
+            <%= f.text_field :lname, class: 'field' %>
+        </div>
+        <div class="half-1-3">
+            <label for="">Passwort</label>
+            <%= f.password_field :password, class: 'field' %>
+        </div>
+        <div class="half-1-2">
+            <label for="">Passwort wdhl</label>
+            <%= f.password_field :password_confirmation, class: 'field' %>
+        </div>
     </div>
-<% end %>
-
-
+    <div class="fields">
+        <div class="half-1">
+            <label for="">Straße / Hausnr.</label>
+            <%= f.text_field :street, class: 'field' %>
+        </div>
+        <div class="half-1-3">
+            <label for="">PLZ</label>
+            <%= f.text_field :zipcode, class: 'field' %>
+        </div>
+        <div class="half-1-2">
+            <label for="">Ort</label>
+            <%= f.text_field :city, class: 'field' %>
+        </div>
+    </div>
+    <%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
+    <% end %>
+</div>
+<div class="popup" id="popup-avatar">
+    <%= form_for(:admin, url: edit_admin_avatar_path(@admin), html: {class: 'dropzone'}) do |f|%>
+        <div class="dz-message">Drop files here or click to upload.</div>
+        <div class="fallback">
+        <%= f.file_field :avatar %>
+        </div>
+    <% end %>
+    <div class="close" onclick="hidePopup()"><i class="fas fa-times"></i></div>
+</div>
+<div class="popup" id="popup-logo">
+    <%= form_for(:admin, url: edit_admin_logo_path(@admin), html: {class: 'dropzone'}) do |f|%>
+        <div class="dz-message">Drop files here or click to upload.</div>
+        <div class="fallback">
+        <%= f.file_field :avatar %>
+        </div>
+    <% end %>
+    <div class="close" onclick="hidePopup()"><i class="fas fa-times"></i></div>
+</div>
 <script>
-function readURL(input, outputID) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#'+outputID)
-                    .attr('src', e.target.result);
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
+    function showAvatar() {
+        $('#popup-avatar').show();
     }
+    function showLogo() {
+        $('#popup-logo').show();
+    }
+    function hidePopup() {
+        $('#popup-avatar').hide();
+        $('#popup-logo').hide();
+        window.location.reload(true);
+    }
+    Dropzone.options.myAwesomeDropzone = {
+        paramName: "params[:admin][:avatar]",
+    };
 </script>

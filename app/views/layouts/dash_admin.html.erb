@@ -6,6 +6,8 @@
     
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag    'dash/main', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.js"></script>
     <%= javascript_include_tag 'dash/main', 'https://js.stripe.com/v2/' %>
@@ -43,252 +45,82 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </head>
 
-<body class="body-open" 
-  <% if content_for?(:body_attributes) %>
-    <%= yield(:body_attributes) %> 
-  <% end %>>
-   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WZWWH8V"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<body class="body-open"
+<% if content_for?(:body_attributes) %>
+<%= yield(:body_attributes) %>
+<% end %>>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WZWWH8V" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
 <!-- End Google Tag Manager (noscript) -->
-    <div class="section">
-      <section id="navbar">
-          Hallo, <%= @admin.fname %> <%= @admin.lname %>!
-      </section>
-      
-      <section id="sidebar" >
-          <% if @admin.avatar? %>
-              <%= image_tag @admin.avatar.quad.url %>
-          <% else %>
-              <%= image_tag 'defaults/wolf.jpg' %>
-          <% end %>
-          <div class="links">
-              <div class="link">
-              <% if current_page?(dash_admin_path) %>
-                  <%= link_to "Let's Play", dash_admin_path, class: 'active' %>
-              <% elsif @team && current_page?(dash_admin_games_path(@team)) %>
-                  <%= link_to "Let's Play", dash_admin_path, class: 'active' %>
-              <% else %>
-                  <%= link_to "Let's Play", dash_admin_path %>
-              <% end %>
-              </div>
-
-              
-              <div class="link">
-              <% if current_page?( dash_admin_teams_path ) %>
-                  <%= link_to "Teams", dash_admin_teams_path, class: 'active' %>
-              <% elsif @team && current_page?(dash_admin_team_stats_path(@team)) %>
-                  <%= link_to "Teams", dash_admin_teams_path, class: 'active' %>
-              <% else %>
-                  <%= link_to "Teams", dash_admin_teams_path %>
-              <% end %>
-              </div>
-              
-              <div class="link">
-              <% if current_page?(dash_admin_users_path) %>
-                  <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
-              <% elsif @team && current_page?(dash_admin_team_users_path(@team)) %>
-                  <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
-              <% elsif @team && @user && current_page?(dash_admin_user_stats_path(@team, @user)) %>
-                  <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
-              <% elsif @team && @user && @user1 && current_page?(dash_admin_compare_user_stats_path(@team, @user, @user1)) %>
-                  <%= link_to "Nutzer", dash_admin_users_path, class: 'active' %>
-              <% else %>
-                  <%= link_to 'Nutzer', dash_admin_users_path %>
-              <% end %>
-              </div>
-              
-              <div class="link">
-              <% if current_page?( dash_admin_catchwords_path ) %>
-                <%= link_to "Catchwords", dash_admin_catchwords_path, class: 'active' %>
-              <% else %>
-                <%= link_to "Catchwords", dash_admin_catchwords_path %>
-              <% end %>
-              </div>
-              <div class="link">
-              <% if current_page?( dash_admin_objections_path ) %>
-                <%= link_to "Einwände", dash_admin_objections_path, class: 'active' %>
-              <% else %>
-                <%= link_to "Einwände", dash_admin_objections_path %>
-              <% end %>
-              </div>
-              
-              
-              <div class="link">
-                  <%= link_to "Video Tool", dash_admin_video_tool_path , class: "#{current_page?(dash_admin_video_tool_path) ? 'active' : ''} "%>
-              </div>
-              <div class="link">
-
-              </div>
-          </div>
-      </section>
-      
-    <section id="content" onclick="closeModal()">
-        <% flash.each do |name, msg| %>
-        <% if msg.is_a?(String) && name.to_s != 'pop_up' %>
-        <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
-        </div>
-        <% end %>
-        <% end %>
-        <%= yield %>
-    </section>
-
-    <div class="modal-games" id="new_basket">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button type="button" class="close modal-close" onclick="closeBakset()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
-                <div class="modal-body" id="pop_up-body">
-                    <h1>
-                        <span>List of words hinzufügen</span>
-                        <%= form_for(:basket, url: dash_admin_new_basket_path) do |f| %>
-                            <%= f.text_field :name, placeholder: 'Listname', class: 'form-control' , required: true%>
-                            <%= f.hidden_field :type , value: 'catchword' %>
-                            <%= f.submit 'Erstellen', class: 'btn btn-green' %>
-                        <% end %>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-games" id="new_Objection_basket">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button type="button" class="close modal-close" onclick="closeBakset()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
-                <div class="modal-body" id="pop_up-body">
-                    <h1>
-                        <span>List of objections hinzufügen</span>
-                        <%= form_for(:basket, url: dash_admin_new_basket_path) do |f| %>
-                            <%= f.text_field :name, placeholder: 'Listname', class: 'form-control' , required: true, id: 'basket_name_objection'%>
-                            <%= f.hidden_field :type , value: 'objection' %>
-                            <%= f.submit 'Erstellen', class: 'btn btn-green' %>
-                        <% end %>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal-games" id="new_team">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button type="button" class="close modal-close" onclick="closeTeam()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
-                <div class="modal-body" id="pop_up-body">
-                    <h1>
-                        <span>Team hinzufügen</span>
-                        <%= form_for(:team, url: new_team_path(@admin)) do |f| %>
-                            <%= f.text_field :name, placeholder: 'Teamname', class: 'form-control' %>
-                            <%= f.submit 'Erstellen', class: 'btn btn-green' %>
-                        <% end %>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <%= yield :modal_show %>
-
-     <% flash.each do |name, msg| %>
-            <% if msg.is_a?(String) && name.to_s == 'pop_up' %>
-                <div class="modal-games" id="pop_up_flash" tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <button type="button" class="close modal-close" onclick="closeModal()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
-                            <div class="modal-body" id="pop_up-body">
-                                <h1>
-                                <span><%= msg.split(';')[0].to_s %></span><br><br><br>
-                                <%= msg.split(';')[1].to_s %>
-                                <% if msg.split(';')[2] %>
-                                  <br> <br> <br>
-                                  <%= link_to msg.split(';')[2].to_s, dash_admin_path, class: 'btn btn-green' %>
-                                <% end %>
-                                </h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <% end %>
-        <% end %>
-         
-      <div class="dropdown">
-              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <% if @admin.avatar? %>
-                      <%= image_tag @admin.avatar.quad.url %>
-                  <% else %>
-                      <%= image_tag 'defaults/wolf.jpg' %>
-                  <% end %>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <%= link_to "Account", dash_admin_account_path , class: 'dropdown-item'%>
-                <%= link_to "Abrechnungsdaten", dash_admin_billing_path, class: 'dropdown-item'  %>
-                <% if @admin.admin_subscription_id.nil? %>
-                  <%= link_to "Select Package", dash_admin_price_path , class: 'dropdown-item'%>
-                <% end %>
-                <%= link_to 'Logout', destroy_admin_session_path, class: 'dropdown-item red' %>
-              </div>
-          </div>
-         
-  </div>
   
+<section id="navbar">
+    <div class="dropdown" onclick="openDropdown()">
+    Hallo, <%= @admin.fname %> <%= @admin.lname %>
+    <%= image_tag 'dash/arrow-down.png', class: 'dropdown-img' %>
+    </div>
+</section>
 
-  <%= yield :modal %>
+<section id="sidebar">
+    <div class="avatar">
+        <% if @admin.avatar? %>
+            <%= image_tag @admin.avatar.quad.url %>
+        <% else %>
+            <%= image_tag 'defaults/wolf.jpg' %>
+        <% end %>
+    </div>
+    <div class="links">
+        <div class="link <% if current_page?(dash_admin_path) %> active<% end %>">
+            <i class="fas fa-gamepad"></i>
+            <div class="text">Let's Pitch</div>
+            <%= link_to '', dash_admin_path %>
+        </div>
+        
+        <div class="link <% if current_page?(dash_admin_teams_path) || @team.present? && current_page?(dash_admin_team_path(@team)) || @user.present? && current_page?(dash_admin_user_stats_path(@user)) || @user2.present?|| @user.present? && current_page?(dash_admin_user_path(@user)) || @team.present? && current_page?(dash_admin_team_stats_path(@team)) %> active<% end %>">
+            <i class="fas fa-user-friends"></i>
+            <div class="text">User</div>
+            <%= link_to "", dash_admin_teams_path %>
+        </div>
+        <div class="link <% if current_page?(dash_admin_customize_path) || @catchword && current_page?(dash_admin_catchwords_path(@catchword)) || @objection && current_page?(dash_admin_objections_path(@objection))%> active <% end %>">
+            <i class="far fa-list-alt"></i>
+            <div class="text">Customize</div>
+            <%= link_to "", dash_admin_customize_path %>
+        </div>
+        <div class="link <% if current_page?(dash_admin_video_tool_path) || @turn && current_page?(dash_admin_video_details_path(@turn)) %> active <% end %>">
+            <i class="fab fa-youtube"></i>
+            <div class="text">Video Tool</div>
+            <%= link_to "", dash_admin_video_tool_path %>
+        </div>
+    </div>
+</section>
+      
+<section id="content">
+    <% flash.each do |name,msg| %>
+        <% if name == 'danger' %>
+        <div class="alert alert-<%= name %>">
+            <%= msg %>
+        </div>
+        <% end %>
+    <% end %>
+    <%= yield %>
+</section>
+    
+<div class="dropdown-content">
+   <div class="link"><%= link_to 'Account', dash_admin_account_path %></div>
+   <div class="link"><%= link_to "Cancel my account", registration_path(current_admin), data: { confirm: "Are you sure?" }, method: :delete %></div>
+   <div class="link"><%= link_to('Logout', destroy_admin_session_path, class: 'red') %></div>
+</div>
 </body>
 <script>
-    $(document).ready(function() {
-        window.setTimeout(function() {
-           $('.alert').slideUp(500);
-        }, 4000);
-    });
-    
-    $(document).ready( function () {
-        if ($('#pop_up_flash').length != 0){
-            $('#pop_up_flash').show();
-            $('#content').addClass('backgroundblur');
-        }
-    } );
-    function openTeam() {
-        $('#new_team').show();
-        $('#content').addClass('backgroundblur');
-        $('#team_name').focus();
-    };
-    function openBasket() {
-        $('#new_basket').show();
-        $('#content').addClass('backgroundblur');
-        $('#basket_name').focus();
-    };
-
-     function openObjectionBasket() {
-        $('#new_Objection_basket').show();
-        $('#content').addClass('backgroundblur');
-        $('#basket_name_objection').focus();
-    };
-
-    function openCatchword() {
-        $('#new_catchword').show();
-        $('#content').addClass('backgroundblur');
-        $('#catchword_name').focus();
-    };
-    function closeTeam() {
-        $('#new_team').hide();
-        $('#content').removeClass('backgroundblur');
-    }
-    function closeBakset() {
-        $('#new_basket').hide();
-        $('#new_Objection_basket').hide();
-        $('#content').removeClass('backgroundblur');
-    }
-
-    function closeCatchword() {
-        $('.catchword-modal').modal("hide");
-    }
-    function closeOwnRule() {
-        $('#own-rules-modal').modal("hide");
-        $(".switch").click()
-        $('#content').removeClass('backgroundblur');
-    }
-    function closeModal() {
-        if($('#pop_up_flash').is(':visible')) {
-        $('#pop_up_flash').hide();
-        $('#content').removeClass('backgroundblur');
+    function openDropdown(){
+        if ($('.dropdown-img').hasClass('rotated')) {
+            $('.dropdown-content').hide();
+            $('.dropdown-img').removeClass('rotated');
+        } else {
+            $('.dropdown-content').show();
+            $('.dropdown-img').addClass('rotated');
         }
     }
 </script>

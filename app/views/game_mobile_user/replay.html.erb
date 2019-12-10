@@ -1,6 +1,6 @@
 <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
 <div class="head">
-    <h1>Hi, <%= @user.fname %></h1>
+    <h1 class="nunito-bold">Hi, <%= @user.fname %></h1>
 </div>
 <div class="middle">
     <%= image_tag @user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse' %>
@@ -8,9 +8,9 @@
 <div class="bottom bottom-play">
     <%= form_for(:user, url: gmu_new_turn_path, method: 'get') do |f| %>
         <%= render partial: 'toggle_for_rate' %>
-        <%= f.submit "Play again", class: 'link pulse' %>
+        <%= f.submit "Play again", class: 'link pulse nunito-regular' %>
     <% end %>
-    <%= link_to "Leave Game", logout_root_path , class: 'link', id: 'fake' %>
+    <%= link_to "Leave Game", logout_root_path , class: 'link nunito-regular', id: 'fake' %>
 </div>
 
 <script>

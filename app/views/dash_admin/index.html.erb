@@ -1,175 +1,439 @@
-<section id="game-container">
-<% if @team %>
-<%= image_tag 'dash/game-arrow-top.png', id: 'arrow-top' %>
-<% else %>
-<%= image_tag 'dash/game-arrow-top.png', id: 'arrow-top', style: 'display: none'%>
-<% end %>
-<%= image_tag 'dash/game-arrow-bottom.png', id: 'arrow-bottom', style: 'display: none'%>
-<h1>Jetzt Spiel starten!</h1>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.js"></script>
-<%= form_for(:game, url: new_game_path(@admin), html: {id: 'game_form'}) do |f| %>
-  
-  <div class="col1"> 
-      <%= f.label 'Team', class: 'row1' %>
-      
-      <div class="row2 cs-select-row">
-      <%= f.label "Bitte Team wählen",id: 'team_error', class: 'error', style: "display: none; margin-bottom: 0;"  %>
-      <select id='game_team_id' name="game[team_id]" class="cs-select cs-skin-underline team-select form-field" required>
-          <option value='' disabled selected>Team wählen</option>
-          <% @teams.each do |t| %>
-              <% if @team && t == @team %>
-              <option value="<%= t.id %>" ><%= t.name %></option>
-              <% else %>
-              <option value="<%= t.id %>"><%= t.name %></option>
-              <% end %>
-          <% end %>
-      </select>
-      </div>
-      <div class="row3">
-          -oder-
-      </div>
-  </div>
-  
-  <div class="col2">
-  <%= f.label :password, 'Spiel-URL', class: 'row2' %>
-  <div class="row3">
-    <div class="form-field-text">
-        peterpitch.com/
-        <% if @team %>
-        <%= f.text_field :password, class: 'field2', id: 'url-field', autofocus: true, required: true, onchange: 'set_arrow()' %>
-        <% else %>
-        <%= f.text_field :password, class: 'field2', id: 'url-field', required: true, onchange: 'set_arrow()' %>
-        <% end %>
-        
+<%= image_tag 'dash/lets-pitch1.png', class: 'lets-pitch-img1' %>
+<%= image_tag 'dash/lets-pitch2.png', class: 'lets-pitch-img2' %>
+<div class="karte letsplay" id="letsplay">
+    <div class="head">
+        Jetzt Pitch starten!
     </div>
-    <div class="switch-box">
-      <label class="switch">
-        <input type="checkbox" id="own_rules_check" value="is" >
-        <span class="slider round"></span>
-      </label>
-      <p class="text-for-switch">Nach eignenen Regein spielen</p>
+    <%= form_for(:game, url: new_game_path(@admin), html: {id: 'game-form'}) do |f| %>
+    <div class="team">
+        <label>
+            Team
+            <% if flash[:select_team] %>
+            <div class="alert alert-game1"><%= flash[:select_team] %></div>
+            <% else %>
+            <div class="newteam-link" onclick="showTeam()">Team erstellen</div>
+            <% end %>
+        </label>
+        <select name="game[team_id]" id="game_team_id"
+            class="custom-select custom-select-lg <% if flash[:select_team] %>red<% end %>">
+            <% if !@team %>
+            <option value="" selected disabled>Team wählen</option>
+            <% end %>
+            <% @teams.each do |t| %>
+            <% if @team && t.id == @team.id %>
+            <option value="<%= t.id %>" selected><%= t.name %></option>
+            <% else %>
+            <option value="<%= t.id %>"><%= t.name %></option>
+            <% end %>
+            <% end %>
+        </select>
     </div>
-    </div>
-  </div>
-  
-  <div class="col3">
-     <div class="row3">
-      <%= f.submit 'Spiel starten!', id: 'anim_but' %>
-      </div>
-  </div>
-<% end %>
-
-<%= form_for(:team, url: new_team_game_path(@admin)) do |f| %>
-
-    <div class="col1">
-        <div class="row4">
-        <% if @team %>
-        <%= f.text_field :name, placeholder: 'Team erstellen', class: 'form-field', required: true %>
-        <% else %>
-        <%= f.text_field :name, placeholder: 'Team erstellen', class: 'form-field', autofocus: true, required: true %>
-        <% end %>
+    <div class="url">
+        <label>Pitch-URL
+            <% if flash[:missing_password] %>
+            <div class="alert alert-game1"><%= flash[:missing_password] %></div>
+            <% end %>
+        </label>
+        <div class="url-field <% if flash[:missing_password] %>red<% end %>">
+            <div class="text">peterpitch.com/</div>
+            <%= f.text_field :password, class: 'custom-url-field' %>
         </div>
-        <%= f.submit '+' %>
     </div>
-<% end %>
-
-</section>
-<%= content_for :modal do %>
-  <div class="modal pop_up2 modal-teams" id="pop_up" style='position: relative;' tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body">
-          <h1>You do not want to be bored. Upgrade to Pro and get unlimited Catchwords<br> <%= link_to "Continue", "", class: "btn btn-green mt-4 ml-0", id: "continue" %> </h1>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+    <button id="rules-button" class="btn btn-green" onclick="showRules()">weiter</button>
 </div>
-    <%= render partial: 'popup_for_own_rules' %>
+<div class="karte letsplay" id="ownrules">
+    <i class="back small fas fa-arrow-left" onclick="hideRules()"></i>
+    <div class="head small">Pitche nach deinen Regeln</div>
+    <div class="karte-content">
+        <div class="time">
+            <label>Deine Zeit</label><br>
+            <div class="field">
+                <input id="game-time" type="number" name="game[seconds]" value="80" style="display: none;">
+                <div class="time" id="game-time-input">1:20</div>
+                <div class="up" onclick="timeUp()"><i class="fa fa-angle-up"></i></div>
+                <div class="down" onclick="timeDown()"><i class="fa fa-angle-down"></i></div>
+            </div>
+        </div>
+
+        <div class="catchwords">
+            <label>Deine Catchwords
+                <% if flash[:select_catchword] %>
+                <div class="alert alert-game2">
+                    <%= flash[:select_catchword] %>
+                </div>
+                <% end %>
+            </label>
+            <input type="checkbox" name="game[baskets][]" value="pp" multiple id="game_baskets_pp" checked>
+            <% @admin.catchword_baskets.where(objection: false).each do |b| %>
+            <input type="checkbox" name="game[baskets][]" value="<%= b.id %>" multiple id="game_baskets_<%= b.id %>">
+            <% end %>
+            <div class="checked-field <% if flash[:select_catchword] %>red<% end %>">
+                <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_pp">
+                    <label for="game_baskets_pp">PetersWords<i class="fas fa-times"></i></label>
+                </div>
+                <div class="add" onclick="catchwordsShow()"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="unchecked-field">
+                <% @admin.catchword_baskets.where(objection: false).each do |b| %>
+                <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_<%= b.id %>">
+                    <label for="game_baskets_<%= b.id %>"><%= b.name %> <i class="fas fa-plus"></i></label>
+                </div>
+                <% end %>
+            </div>
+        </div>
+
+        <div class="objections">
+            <label>Deine Objections
+                <% if flash[:select_objection] %>
+                <div class="alert alert-game2"><%= flash[:select_objection] %></div>
+                <% end %>
+            </label>
+            <input type="checkbox" name="game[objections][]" value="pp" multiple id="game_objections_pp" checked>
+            <% @admin.catchword_baskets.where(objection: true).each do |b| %>
+            <input type="checkbox" name="game[objections][]" value="<%= b.id %>" multiple
+                id="game_objections_<%= b.id %>">
+            <% end %>
+            <div class="checked-field <% if flash[:select_objection] %>red<% end %>">
+                <div class="checkbox" onclick="moveObjections(this)" data-value="game_objections_pp">
+                    <label for="game_objections_pp">PetersObjection <i class="fas fa-times"></i></label>
+                </div>
+                <div class="add" onclick="objectionsShow()"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="unchecked-field">
+                <% @admin.catchword_baskets.where(objection: true).each do |b| %>
+                <div class="checkbox" onclick="moveObjections(this)" data-value="game_objections_<%= b.id %>">
+                    <label for="game_objections_<%= b.id %>"><%= b.name %> <i class="fas fa-plus"></i></label>
+                </div>
+                <% end %>
+            </div>
+        </div>
+        <div class="youtube">
+            <label for="" onclick="openYoutube()">Video hinzufügen</label>
+            <input type="text" class="field" name="game[youtube_url]" id="youtube-link" placeholder="Youtube-Link">
+            <input type="checkbox" name="game[video_is_pitch][]" value="true" id="game_video_is_pitch">
+            <% @admin.videos.each do |v| %>
+            	<input type="radio" name="game[video][]" value="<%= v.id %>" id="game_videos_<%= v.id %>">
+            <% end %>
+            <% @turns.each do |t| %>
+            	<input type="radio" name="game[video_turn][]" value="<%= t.id %>" id="game_videos_turns_<%= t.id %>">
+            <% end %>
+            <input type="text" class="field" name="game[video_name]" id="video_selection" placeholder="Select Video" onclick="toggleSelectVideo()">
+        </div>
+    </div>
+    <button class="btn btn-green" onclick="submitForm()">Pitch starten!</button>
+    <% end %>
+</div>
+
+<div class="karte letsplay" id="selectVideos">
+	<i class="back small fas fa-arrow-left" onclick="toggleSelectVideo()"></i>
+	<div class="head small">Video auswählen!</div>
+	<div class="body">
+		<% @admin.videos.each do |v| %>
+        <label for="game_videos_<%= v.id %>" class="video-karte videoSearch" onclick="selectVideo('<%= v.name %>', false)" style="background-image: url('<%= v.file.thumb.url.present? ? asset_path(v.file.thumb.url) : '' %>')">
+          <div class="overlay"></div>
+          <div class="title"><%= v.name %></div>
+          <div class="duration"></div>
+        </label>
+        <% end %>
+        <% @turns.each do |t| %>
+        <% 
+        first_name = t.user&.fname ? t.user.fname : '' 
+        last_name = t.user&.lname ? t.user.lname : '' 
+        %>
+        <label for="game_videos_turns_<%= t.id %>" class="video-karte videoSearch" onclick="selectVideo('<%= first_name + " " + last_name %>', false)" style="background-image: url('<%= t.recorded_pitch.thumb.url.present? ? asset_path(t.recorded_pitch.thumb.url) : '' %>')">
+          <div class="overlay"></div>
+          <div class="title"><%= first_name + " " + last_name %></div>
+          <div class="duration"></div>
+        </label>
+        <% end %>
+	</div>
+</div>
+<div class="karte letsplay" id="newteam">
+    <i class="back small fas fa-arrow-left" onclick="hideTeam()"></i>
+    <div class="head small">
+        Team erstellen!
+    </div>
+    <%= form_for(:team, url: new_team_path()) do |f| %>
+    <% if flash[:team_name] %>
+    <label>Teamname
+        <div class="alert alert-team"><%= flash[:team_name] %></div>
+    </label>
+    <%= f.text_field :name, class: 'field red' %>
+    <% else %>
+    <label>Teamname</label>
+    <%= f.text_field :name, class: 'field' %>
+    <% end %>
+
+    <label>Search for Users</label><br>
+    <div class="user-list">
+        <div class="search-field">
+            <%= image_tag 'dash/icons/search.png', class: 'search' %>
+            <input type="text" placeholder="Search Users" id='searchField'>
+        </div>
+        <div class="unselected_user">
+        	<% @users.each do |u| %>
+        	<label for="team_users_<%= u.id %>" class="user" onclick="moveUser(this)">
+        		<i class="fas fa-plus-circle"></i>
+        		<% if u.avatar.present? %>
+        			<%= image_tag u.avatar.quad.url %>
+        		<% else %>
+        			<div class="circle"></div>
+        		<% end %>
+        		<%= (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : '') %>
+        	</label>
+        	<% end %>
+        </div>
+    </div>
+    <% @users.each do |u| %>
+    		<input type="checkbox" id="team_users_<%= u.id %>" value="<%= u.id %>">
+    <% end %>
+    <div class="selected_user">
+    </div>
+    <%= f.hidden_field :url, value: 'letsplay' %>
+    <%= f.submit 'Team erstellen!', class: 'btn btn-green' %>
+    <% end %>
+</div>
+
+<% if flash[:pop_up] %>
+	<div class="fullscreen-blur">
+		<div class="karte">
+			<div class="head small">Url Vergeben!</div>
+			<div class="body">
+				<%= flash[:pop_up] %>
+				<% if flash[:pop_up2] %>
+				<br>
+				<%= flash[:pop_up2] %>
+				<% end %>
+			</div>
+			<div class="bottom">
+			<button class="btn btn-green" onclick="closeModal()">Close</button>
+			</div>
+		</div>
+	</div>
 <% end %>
 
+
+<style>
+
+    .lets-pitch-img1 {
+        position: absolute;
+        width: 47vh;
+        top: 4vh;
+        left: 4vh;
+    }
+    .lets-pitch-img2 {
+        position: absolute;
+        width: 47vh;
+        top: 18vh;
+        right: 4vh;
+    }
+    .custom-switch {
+        padding-left: 3.8vh;
+    }
+    .custom-switch .custom-control-label::before {
+        width: 3.2vh;
+        height: 1.9vh;
+        left: -3.8vh;
+        border-radius: 1.5vh;
+    }
+    .custom-control-label::before {
+        top: 0.7vh;
+    }
+    .custom-control {
+        position: relative;
+        display: block;
+        min-height: 2.6vh;
+    }
+
+    .custom-switch .custom-control-label::after {
+    top: calc(0.8vh + 0.2vh);
+    margin: 0.1vh 0.1vh;
+    height: 1.27vh;
+    width: 1.27vh;
+}
+
+    .custom-control-label::after {
+        top: 0.45rem;
+    }
+
+    .custom-control-label::before {
+        top: 0.45rem;
+    }
+
+    .karte.letsplay .time .field .time {
+        text-align: inherit;
+        padding-left: 1.6vh;
+        line-height: 4.3vh;
+    }
+
+    .karte.letsplay .add .fas {
+        font-size: 1.8vh;
+    }
+</style>
 <script>
-
-$("#continue").click(function(e){
-  e.preventDefault();
-  $("#game_form").submit();
-});
-(function() {
-    [].slice.call( document.querySelectorAll( 'form select.cs-select' ) ).forEach( 
-        function(el) {
-            new SelectFx(el, {
-						onChange: function(val){
-							$('#arrow-top').show();
-              $('#url-field').focus();
-              $(".team-select").removeClass("error-border")
-              $("#team_error").hide()
-						}
-					});
-
-        });
-})();
-
-$("#own_rules_check").on("change", function(e){
-  var that = $(this);
-  if(that.is(":checked")){
-    $(".text-for-switch").addClass("green");
-    setTimeout(function() {
-        $("#own-rules-modal").modal({backdrop: 'static', keyboard: false});
-    },500)
-  }else{
-    $(".text-for-switch").removeClass("green")
-  }
-})
-function createNewGame(){
-
-  if($("#url-field").val() != "" && document.getElementById("game_team_id").value !=""){
-    var fields = $( ":input" ).serializeArray();
-    var seconds = $("input[name='game[seconds]']:checked").val()
-    fields << {seconds: seconds}
-    fields << {own_rules: true}
-    $.ajax({
-      url: '/games/new',
-      type: 'post',
-      data: fields
-    })
-  }else{
-    if(document.getElementById("game_team_id").value == ""){
-      $(".team-select").addClass("error-border")
-      $("#team_error").show()
+	function closeModal() {
+		$('.fullscreen-blur').hide();
+	}
+    new PerfectScrollbar('.karte-content');
+    flash();
+	function selectVideo(name, isPitch) {
+		$('#youtube-link').val('')
+		$('#selectVideos').toggle();
+		$("#video_selection").val(name);
+	}
+	function toggleSelectVideo() {
+		$('#selectVideos').toggle();
+	}
+    function openYoutube() {
+        if ($('#youtube-link').css('display') == 'none') {
+            $('#youtube-link').show();
+			$('#video_selection').show();
+            document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
+        } else {
+            $('#youtube-link').hide();
+			$('#video_selection').hide();
+            document.querySelector('.karte-content').scrollTo(0, 0);
+        }
     }
-    if($("#url-field").val() == ""){
-      $("#url-field").parent().addClass("error-border")
-    } 
-  }
-}
-$("#url-field").on("change", function(e){
-  var $this = $(this);
-  if($this.val != ""){
-    $this.parent().removeClass("error-border")
-  }else{
-    $this.parent().addClass("error-border")
-  }
-})
-<% if @admin.admin_subscription_id.nil? %>
-  $("#anim_but").on("click", function(e){
-    e.preventDefault()
-    if(($("#url-field").val() != "") && $("#game_team_id").val() != ""){
-      $('#pop_up').modal({backdrop: 'static', keyboard: false});
+    function objectionsShow() {
+        if ($(".objections > .unchecked-field").css('display') == 'none') {
+            $(".objections > .unchecked-field").show();
+            $(".catchwords > .unchecked-field").hide();
+            document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
+        } else {
+            $(".objections > .unchecked-field").hide();
+            document.querySelector('.karte-content').scrollTo(0, 0);
+        }
     }
-    $("#continue").click(function(e){
-      e.preventDefault();
-      createNewGame()
+    function moveObjections(e) {
+        var checkbox = document.getElementById(e.getAttribute('data-value'));
+        if (checkbox.checked) {
+            e.querySelector('.fas').className = "fas fa-plus";
+            document.querySelector('.objections > .unchecked-field').appendChild(e);
+        } else {
+            e.querySelector('.fas').className = "fas fa-times";
+            document.querySelector('.objections > .checked-field').appendChild(e);
+        }
+    }
+    function catchwordsShow() {
+        if ($(".catchwords > .unchecked-field").css('display') == 'none') {
+            $(".catchwords > .unchecked-field").show();
+            $(".objections > .unchecked-field").hide();
+            document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
+        } else {
+            $(".catchwords > .unchecked-field").hide();
+            document.querySelector('.karte-content').scrollTo(0, 0);
+        }
+    }
+    function moveCatchwords(e) {
+        var id = e.getAttribute('data-value');
+        var checkbox = document.getElementById(id);
+        if (checkbox.checked) {
+            e.querySelector('.fas').className = "fas fa-plus";
+            document.querySelector('.catchwords > .unchecked-field').appendChild(e);
+        } else {
+            e.querySelector('.fas').className = "fas fa-times";
+            document.querySelector('.catchwords > .checked-field').appendChild(e);
+        }
+    }
+	function moveUser(e) {
+        var id = e.getAttribute('for');
+        var checkbox = document.getElementById(id);
+        if (checkbox.checked) {
+            e.querySelector('.fas').className = "fas fa-plus-circle";
+            document.querySelector('.unselected_user').appendChild(e);
+        } else {
+            e.querySelector('.fas').className = "fas fa-minus-circle";
+            document.querySelector('.selected_user').appendChild(e);
+			$('#searchField').val('');
+			$('.unselected_user').hide();
+			$('.user-list').attr('style', 'box-shadow: 0 0 0 0 rgba(172, 172, 172, 0.1);')
+        }
+    }
+
+
+    function flash() {
+        if ($('.alert-team')[0]) { showTeam(); }
+        if (!$('.alert-game1')[0] && $('.alert-game2')[0]) { showRules(); }
+    }
+    function showTeam() {
+        $('#letsplay').hide();
+        $('#newteam').show();
+    }
+    function hideTeam() {
+        $('#letsplay').show();
+        $('#newteam').hide();
+    }
+    var $rows = $('.unselected_user .user');
+    $('#searchField').keyup(function () {
+        let element_exist = false    
+            $(".unselected_user .user").each(function () {
+                if (($(this).css("display") == "block") || ($(this).css("display") == "flex")) {
+                    element_exist = true
+                }
+            });
+        if ((this.value && !element_exist) || !this.value) {
+            $('.unselected_user .user').attr('style', 'display: none !important');
+            $('.index-list .search-field').attr('style','border-bottom: 0 !important');
+        }
+        var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+
+        $rows.show().filter(function () {
+            text = $(this).text().replace(/\s+/g, ' ');
+            if(!(!reg.test(text)) && ($('#searchField').val() != "")){
+				$('.unselected_user').show();
+				$('.user-list').attr('style', 'box-shadow: 0px 6px 10px 0 rgba(172, 172, 172, 0.1);')
+                $('.unselected_user .user').attr('style', 'display: flex !important');
+                $('.index-list').attr('style','height: 18vh !important');
+                $('.index-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
+            } else if (!reg.test(text) && ($('#searchField').val() == "")) {
+				$('.unselected_user').hide();
+                $('.unselected_user .user').attr('style', 'display: none !important');
+				$('.user-list').attr('style', 'box-shadow: 0 0 0 0 rgba(172, 172, 172, 0.1);')
+                $('.index-list .search-field').attr('style','border-bottom: 0 !important');
+            }
+            return !reg.test(text);
+        }).hide();
     });
-  })
-<% else %>
-  $("#anim_but").on("click", function(e){
-    e.preventDefault()
-    createNewGame()
-  })
-<% end %>
-function set_arrow(){
-    $('#arrow-bottom').show();
-    $('#anim_but').addClass( "anim" );
-}
+    function submitForm() {
+        $('#game-form').unbind('submit');
+        $('#game-form').submit();
+    }
+    function showRules() {
+        $("#game-form").submit(function (e) {
+            e.preventDefault();
+        });
+        $('#letsplay').hide();
+        $('#ownrules').show();
+        setTimeout(function () {
+            $('#game-form').unbind('submit');
+        }, 500)
+    }
+    function hideRules() {
+        $('#letsplay').show();
+        $('#ownrules').hide();
+    }
+    function timeUp() {
+        $('#game-form').unbind('submit');
+        if ($('#game-time').val() == 80) {
+            $('#game-time').val(150);
+            $('#game-time-input').text('2:30');
+        } else if ($('#game-time').val() == 150) {
+            $('#game-time').val(300);
+            $('#game-time-input').text('5:00');
+        }
+    }
+    function timeDown() {
+        if ($('#game-time').val() == 150) {
+            $('#game-time').val(80);
+            $('#game-time-input').text('1:20');
+        } else if ($('#game-time').val() == 300) {
+            $('#game-time').val(150);
+            $('#game-time-input').text('2:30');
+        }
+    }
+
+
 </script>

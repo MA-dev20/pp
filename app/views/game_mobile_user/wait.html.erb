@@ -1,6 +1,6 @@
 <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
 <div class="head">
-    <h1>SPIEL BEIGETRETEN!</h1>
+    <h1 class="nunito-bold">SPIEL BEIGETRETEN!</h1>
 </div>
 <div class="middle">
     <%if @user.avatar.quad.url%>
@@ -10,6 +10,6 @@
     <%end%>
 </div>
 
-<div class="bottom">
+<div class="bottom nunito-regular">
     Gleich geht's los...
 </div>

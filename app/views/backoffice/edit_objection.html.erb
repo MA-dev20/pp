@@ -1,0 +1,56 @@
+<div class="card" id="editCW">
+    <h3>Edit Objections</h3>
+    <%= form_for(:basket, url: edit_basket_path(@basket)) do |f| %>
+        <div class="form-group">
+            <label for="">Name</label>
+            <%= f.text_field :name, class: 'form-field' %>
+        </div>
+        <div class="form-group center">
+            <%= f.submit 'speichern', class: 'btn btn-green' %>
+        </div>
+        <div class="form-group center">
+            <%= link_to 'löschen', destroy_basket_path(@basket), class: 'btn btn-white' %>
+            <%= link_to 'zurück', backoffice_edit_admin_path(@basket.admin), class: 'btn btn-white' %>
+        </div>
+    <% end %>
+</div>
+<div class="card-big">
+<%= form_for(:objection, url: new_objection_path(@basket)) do |f| %>
+    <%= f.text_field :name %>
+    <%= f.file_field :sound %>
+    <%= f.submit 'Upload!' %>
+<% end %>
+<div class="table">
+<table>
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Sound</th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+    <% @basket.objections.each do |w| %>
+    <tr>
+        <td>
+            <%= form_for(:objection, url: edit_objection_path(@basket, w.id)) do |f| %>
+                <%= f.text_field :name, value: w.name %>
+            <% end %>
+        </td>
+        <td>
+            <% if w.sound? %>
+                <%= audio_tag w.sound.url, controls: true %>
+            <% else %>
+                <%= form_for(:objection, url: edit_objection_path(@basket, w.id)) do |f| %>
+                    <%= f.file_field :sound %>
+                    <%= f.submit 'upload' %>
+                <% end %>
+            <% end %>
+        </td>
+        <td><%= link_to '', destroy_objection_path(@basket, w.id), class: 'far fa-trash-alt' %></td>
+    </tr>
+    <% end %>
+</tbody>
+</table>
+</div>
+</div>

@@ -1,8 +1,8 @@
 <%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
-    <h1>Nicht genug Spieler,</h1>
-    <h3>um das Spiel zu starten!</h3>
+    <h1 class="nunito-bold">Nicht genug Spieler,</h1>
+    <h3 class="nunito-regular">um das Spiel zu starten!</h3>
 </div>
 <div class="bottom">
-    <%= link_to 'zurück!', gma_wait_path %>
+    <%= link_to 'zurück!', gma_wait_path, class: 'nunito-regular' %>
 </div>

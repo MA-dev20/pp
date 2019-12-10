@@ -8,6 +8,9 @@
 @import 'bootstrap';
 @import "social-share-button";
 
+body {
+	font-family: 'BarackPro-Solid' !important;
+}
 #content {
     position: absolute;
     top: 0;
@@ -87,6 +90,15 @@
   left: 2vh;
   top: 1vh;
 }
+
+// .menu-logo {
+//   height: 10vh;
+// }
+// .menu-logo img {
+//   max-width: 100%;
+//   max-height: 100%;
+// }
+
 .menu-position .company {
     position: absolute;
     right: 2vh;
@@ -138,6 +150,7 @@
 .head h1 {
     padding-top: 15px;
     font-size: 70px;
+    font-weight: 700;
 }
 .head h3 {
     font-size: 40px;
@@ -365,7 +378,9 @@
     text-align: center;
     line-height: 10vh;
     font-size: 4vh;
+    
 }
+
 .form-field,
 .form-field:-webkit-autofill {
     color: white !important;
@@ -407,18 +422,24 @@
     top: 5vh;
     background-color: #1ddaaf;
     color: white;
-    border-radius: 3vh;
+    border-radius: 4.013vh;
     border: none;
-    font-size: 3vh;
-    height: 6vh;
-    line-height: 3vh;
+    font-size: 2.67vh;
+    height: 7.1vh;
+    line-height: 2.67vh;
+    line-height: normal;
     padding-left: 50px;
     padding-right: 50px;
     box-shadow: 0 0 0 0 rgba(29, 218, 175, 1);
     text-decoration: none;
     padding-top: 1vh;
     padding-bottom: 1vh;
+    display: inline-flex;
+    min-width: 30vh;
+    align-items: center;
+    justify-content: center;
 }
+
 .bottom > .pol-bg {
     background-color: transparent;
     background-image: image-url('social_share/polygon.png');

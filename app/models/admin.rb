@@ -1,5 +1,6 @@
 class Admin < ApplicationRecord
   include Basket
+  attr_accessor :skip_password_validation
   # Include default devise modules. Others available are:
   # :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable, :lockable, :recoverable, :rememberable, :validatable, :trackable
@@ -17,6 +18,7 @@ class Admin < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_many :catchword_baskets , class_name: "CatchwordsBasket", dependent: :destroy
   has_many :objection_baskets , class_name: "ObjectionsBasket", dependent: :destroy
+  has_many :videos, dependent: :destroy
 
 
   enum plan_type: [:year , :month, :trial]
@@ -148,7 +150,10 @@ Stripe.api_key = 'sk_test_zPJA7u8PtoHc4MdDUsTQNU8g'
       break random_token unless self.class.where(reset_pw_token: random_token).exists?
     end
   end
-
-
+    
+  def password_required?
+    return false if skip_password_validation
+    super
   end
+end
 

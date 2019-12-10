@@ -1,0 +1,43 @@
+<div class="card" id="admins">
+    <h3>Stats</h3>
+    <table>
+        <tr>
+            <th>Admins (<span class="red">Inactiv</span>)</th>
+            <td><%= @admins.count %> / <span class="red"><%= @admins.where(activated: false).count %></span></td>
+        </tr>
+        <tr>
+            <th>Nutzer</th>
+            <td><%= User.count %></td>
+        </tr>
+        <tr>
+            <th>Spiele</th>
+            <td><%= Game.count %></td>
+        </tr>
+    </table>
+</div>
+<div class="card" id="words">
+    <h3>Worte</h3>
+    <table>
+        <tr>
+            <th>Listen</th>
+            <td><%= CatchwordsBasket.where(objection: false).count %></td>
+        </tr>
+        <tr>
+            <th>Worte</th>
+            <td><%= Word.count %></td>
+        </tr>
+    </table>
+</div>
+<div class="card" id="objcetion">
+    <h3>Einwände</h3>
+    <table>
+        <tr>
+            <th>Listen</th>
+            <td><%= CatchwordsBasket.where(objection: true).count %></td>
+        </tr>
+        <tr>
+            <th>Einwände</th>
+            <td><%= Objection.count %></td>
+        </tr>
+    </table>
+</div>

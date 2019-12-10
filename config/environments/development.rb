@@ -28,7 +28,7 @@ Rails.application.configure do
   end
 
   config.action_cable.url = "ws://localhost:3334/cable"
-  config.action_cable.allowed_request_origins = [ 'http://localhost:3000']
+  config.action_cable.allowed_request_origins = [ 'http://localhost:3000', 'https://61efd6b6.ngrok.io']
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
 

@@ -1,7 +1,7 @@
 <div id="count_channel" data-game-id="<%= @game.id %>" >
 <%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
-    <h1>
+    <h1 class="nunito-bold">
     <% if @admin == @cur_user %>
         <%= @admin.fname %>, du wirst bewertet!
     <% else %>
@@ -10,9 +10,9 @@
     </h1>
 </div>
 <div class="middle" id="middle">
-    <div class="row"><div class="col-12"><%= @count %></div></div>
+    <div class="row"><div class="col-12 nunito-regular"><%= @count %></div></div>
 </div>
 <div class="bottom">
-    <%= link_to 'weiter!', gma_rating_path %>
+    <%= link_to 'weiter!', gma_rating_path, class: 'nunito-regular' %>
 </div>
 </div>

@@ -1,9 +1,0 @@
-<li id="word-id-<%=word.id%>"> <%= word.name %> 
-  <div class="catchword-list-options">
-    <span class="rounded-record" onclick="recordAudio(<%=word.id %>, <%= id %>)">
-        <i class="fas fa-dot-circle remove-word<%=id%>" id="recording<%=word.id %>"></i>
-    </span>
-    <span class="rounded-play <%='opacity-class' if !word.sound.url.present?%>" onclick="playWord(<%=word.id %>, <%= id %>)"><i class="fas fa-play-circle remove-word" id="word<%=word.id%>" data-url="<%= word.sound.url %>"></i></span>
-    <span class="remove-word rounded-minus-linear" onclick="removeWord(<%=word.id %>, <%= id %>)"><i class="fas fa-minus remove-word"></i></span>
-  </div>
-</li>

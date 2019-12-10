@@ -1,4 +1,5 @@
 class WordsController < ApplicationController
+  before_action :authenticate
   before_action :set_word, only: [:edit, :update, :destroy]
     
   def new
@@ -6,26 +7,40 @@ class WordsController < ApplicationController
     
   def create
     @basket = CatchwordsBasket.find_by(id: params[:basket_id])
-    params[:word][:sounds].each do |sound|
-      @word = @basket.words.create(sound: sound)
-      @word.name = @word.sound_identifier.remove('.mp3')
-      if @word.save
-        flash[:success] = 'Wort gespeichert!'
-      else
-        flash[:danger] = 'Konnte Wort nicht speichern!'
-      end
+    if params[:word][:sound]
+        params[:word][:sound].each do |sound|
+            @word = Word.find_by(name: sound.original_filename.split(".mp3").first)
+            if @word
+              if @word.update(sound: sound) && @basket.words.where(name: @word.name).count == 0
+                @basket.words << @word
+              else
+                flash[:danger] = 'Konnte Wort nicht speichern'
+              end
+            else
+              @word = @basket.words.create(sound: sound, name: sound.original_filename.split(".mp3").first)
+              if !@word.save
+                flash[:danger] = 'Konnte Wort nicht speichern!'
+              end
+            end
+        end
+    elsif params[:word][:name] && params[:word][:name] != ''
+        @word = Word.find_by(name: params[:word][:name])
+        if @word && @basket.words.where(name: @word.name).count == 0
+          @basket.words << @word
+        else
+          @word = Word.new(name: params[:word][:name])
+          if @word.save
+            @basket.words << @word
+          end
+        end
+    else
+        flash[:word_name] = 'Gib einen Namen an!'
     end
-    redirect_to backoffice_words_path
-#    @word = Word.create(word_params)
-#    @word.name = @word.sound_identifier.remove('.mp3')
-#    @word.free = false
-#    if @word.save
-#      flash[:success] = 'Wort gespeichert!'
-#      redirect_to backoffice_words_path
-#    else
-#      flash[:danger] = 'Konnte Wort nicht speichern!'
-#      redirect_to backoffice_words_path
-#    end
+    if !current_admin.nil?
+      redirect_to dash_admin_catchwords_path(@basket.id)
+    else
+      redirect_to backoffice_edit_catchword_path(@basket)
+    end
   end
     
   def edit
@@ -34,10 +49,10 @@ class WordsController < ApplicationController
   def update
     if @word.update(word_params)
       flash[:success] = 'Wort geupdated!'
-      redirect_to backoffice_words_path
+      redirect_to backoffice_edit_catchword_path(@basket)
     else
       flash[:danger] = 'Konnte Wort NICHT updaten!'
-      redirect_to backoffice_words_path
+      redirect_to backoffice_edit_catchword_path(@basket)
     end
   end
     
@@ -45,17 +60,27 @@ class WordsController < ApplicationController
     if @word.catchword_baskets.count > 1
       @basket.words.delete(@word)
       flash[:success] = 'Wort aus Liste gelöscht!'
-      redirect_to backoffice_words_path(@basket.id)
     elsif @word.destroy
       flash[:success] = 'Wort gelöscht!'
-      redirect_to backoffice_words_path(@basket.id)
     else
       flash[:danger] = 'Konnte Wort NICHT löschen!'
-      redirect_to backoffice_words_path(@basket.id)
+      redirect_to dash_admin_catchwords_path(@basket.id)
+    end
+    if !current_root.nil?
+        redirect_to backoffice_edit_catchword_path(@basket)
+    else
+        redirect_to dash_admin_catchwords_path(@basket.id)
     end
   end
     
   private
+    def authenticate
+      if current_admin.nil? && current_root.nil?
+          flash[:danger] = "Bitte logge dich ein!"
+          redirect_to new_session_path(admin)
+          return
+      end
+    end
     def set_word
       @word = Word.find(params[:word_id])
       @basket = CatchwordsBasket.find(params[:basket_id])

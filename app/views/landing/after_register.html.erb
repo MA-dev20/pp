@@ -1,0 +1,56 @@
+<section id="navbar">
+    <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
+    <div class="navbar-links" id="navLinks">
+        <div class="link">
+            <%= link_to 'Produkt', '#product' %>
+        </div>
+        <div class="link">
+            <%= link_to 'FAQ', '#faq' %>
+        </div>
+        <div class="link">
+            <%= link_to 'Kontakt', contact_path %>
+        </div>
+        <div class="link">
+            <%= link_to 'Login', '#login', class: 'login-link', onclick: 'showLoginModal()' %> 
+        </div>
+        <div class="link">
+            <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
+        </div>
+    </div>
+    <%= link_to '', '#login', class: 'login fas fa-sign-in-alt', onclick: 'showLoginModal()' %>
+    <div class="navbar-mobile" onclick="showNavLinks()">
+        <i class="fas fa-bars"></i>
+    </div>
+</section>
+<section id="contact">
+    <h1>Hi, <%= @admin.fname + ' ' + @admin.lname %>!</h1>
+    <h3>Vielen Dank, für deine Anfrage. Unser Team wird diese schnellstmöglich bearbeiten! Sobald es News gibt werden wir dir schreiben. Achte also auf dein Postfach.</h3>
+</section>
+<div class="fullscreen-modal" id="loginModal">
+    <div class="close"><%= link_to '', contact_path, class: "fas fa-times" %></div>
+    <div class="card">
+    <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
+        <h1>Login</h1>
+        <div class="form-group ">
+            <%= f.email_field :email, class: 'form-field', id: 'loginEmail',placeholder:"E-Mail eingeben", required: true  %>
+            <br>
+            <%= f.password_field :password, class: 'form-field',id: 'loginPassword',placeholder:"Passwort eingeben", required: true  %>
+            <br>
+            <%= f.submit 'Login', class: 'btn btn-green', id: "loginButton" %>
+            <br>
+        </div>
+    <% end %>
+    </div>
+</div>
+<script>
+    function showNavLinks() {
+        if($('#navLinks').is(":hidden")) {
+            $('#navLinks').show();   
+        } else {
+            $('#navLinks').hide();
+        }
+    }
+    function showLoginModal() {
+        $('#loginModal').toggle();
+    }
+</script>

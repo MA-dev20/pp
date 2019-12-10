@@ -1,161 +1,260 @@
 <%= render partial: 'header' , locals: {can: true}%>
 <div class="head head-play">
-    <div style="display: none" id="current_user_id" data-id='<%= @turn.to_json.to_s.html_safe %>'></div>
-    <h1><%= @cur_user.fname %> Pitcht!</h1>
+  <div style="display: none" id="current_user_id" data-id='<%= @turn.to_json.to_s.html_safe %>'></div>
+  <h1><%= @cur_user.fname %> Pitcht!</h1>
 </div>
+
 <div class="middle middle-play middlePlay-top">
-    <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: #{@record == true ? 'none' : 'block'}" %>
-    <div class="middle-content">
-        <video id="preview" autoplay width="600" height="600" style="display: <%= @record == true ? 'block' : 'none' %>;" muted></video>
-        <video id="recording" width="600" height="600"  controls style="display: none;"></video>
+  <% if !params[:wait] %>
+  <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: block" %>
+  <div class="middle-content">
+    <video id="preview" width="600" height="600" style="display: none" controls></video>
+    <video id="recording" width="600" height="600" controls style="display: none;"></video>
+  </div>
+  <label id="timer" style="display: none">00:00:00</label>
+  <div class="buttons buttons-play mt-0">
+    <div class="play-check-time" style="display: none">
+      <button id='uploaded' class="button-check"><i class="fa fa-check"></i></button>
+      <p class="play-time-para">Video erfolgreich hochgeladen</p>
     </div>
-    <label id="timer" style="display: <%= @record == true ? 'block' : 'none' %>">00:00:00</label>
-    <div class="buttons buttons-play">
-        <button id='stop' class="button-stop" style="display: <%= @record == true ? 'block' : 'none' %>;"><i class="fa fa-stop"></i></button>
-        <div class="play-check-time" style="display: none">
-            <button id='uploaded' class="button-check" ><i class="fa fa-check"></i></button>
-            <p class="play-time-para">Video erfolgreich hochgeladen</p>
-        </div>
-        <div class="cancel play-cancel-time" id="upload" style="display: none">
-            <button id="button-cancel" class="button-cancel">
-                <svg class="progress-ring" width="98" height="98">
-                    <circle class="progress-ring__circe" stroke="white" stroke-width="4" fill="transparent" r="39" cx="49" cy="49"/>
-                </svg>
-                <i class="fa fa-times"></i>
-            </button>
-            <p class="play-time-para" >Video wird gespiehert...</p>
-        </div>
+    <div class="cancel play-cancel-time" id="upload" style="display: none">
+      <button id="button-cancel" class="button-cancel">
+        <svg class="progress-ring" width="98" height="98">
+          <circle class="progress-ring__circe" stroke="white" stroke-width="4" fill="transparent" r="39" cx="49"
+            cy="49" />
+        </svg>
+        <i class="fa fa-times"></i>
+      </button>
+      <p class="play-time-para nunito-regular">Video wird gespiehert...</p>
     </div>
+  </div>
+  <% else %>
+  <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', style: "display: block" %>
+  <div class="middle-content">
+    <div class="bottom spinner-div">
+      <%= image_tag 'spinner.gif', class: 'spinner mid-img pulse' %>
+    </div>
+  </div>
+  <% end %>
 </div>
-<div class="bottom bottom-play" style="top: <%= @record ? '88% !important' : '66%'%>;">
-    <%= link_to 'weiter!', gma_rate_path %>
+<% if params[:video] == 'true' && !params[:wait] %>
+<div class="bottom bottom-play video-upload-wrapper">
+  <div class="upload-btn-wrapper">
+    <button class="video-btn nunito-regular">Open Camera</button>
+    <input id="video" type="file" name="video" accept="video/*" capture="environment" class="video-file">
+  </div>
+</div>
+<% end %>
+<div class="bottom">
+  <%= link_to 'weiter!', gma_rate_path, class: 'nunito-regular' %>
 </div>
 
 <div class="modal modal-choice" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <!-- Modal body -->
-        <div class="modal-body">
-          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal body -->
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 
-        	<ul>
-              <% if @game.objection_basket.present? && @game.objection_basket.objections.present? %>
-                <% @game.objection_basket.objections.each do |obj|%>
-                  <li>
-                    <a type="a" class=" objection -primary" data-url="<%=obj.sound.url%>" data-toggle="modal" data-target="#myModal">
-                      <%= obj.name %>
-                    </a>
-                  </li>
-                <% end %>
-              <% else %>
-                <% ObjectionsBasket.peter_objections.each do |obj| %>
-                    <li>
-                      <a type="a" class=" objection -primary" data-url="<%=obj.sound.url%>" data-toggle="modal" data-target="#myModal">
-                        <%= obj.name %>
-                      </a>
-                    </li>
-                <% end %>
-              <% end %>
-        	</ul>
-        </div>
+        <ul>
+          <% if @game.objection_basket.present? && @game.objection_basket.objections.present? %>
+          <% @game.objection_basket.objections.each do |obj|%>
+          <li>
+            <a type="a" class=" objection -primary" data-url="<%=obj.sound.url%>" data-toggle="modal"
+              data-target="#myModal">
+              <%= obj.name %>
+            </a>
+          </li>
+          <% end %>
+          <% else %>
+          <% ObjectionsBasket.peter_objections.each do |obj| %>
+          <li>
+            <a type="a" class=" objection -primary" data-url="<%=obj.sound.url%>" data-toggle="modal"
+              data-target="#myModal">
+              <%= obj.name %>
+            </a>
+          </li>
+          <% end %>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
+</div>
+
+
+
+
+<style>
+  .spinner-div {
+    top: 45% !important;
+    position: absolute;
+  }
+
+  .spinner {
+    height: auto !important;
+    width: auto !important;
+    left: calc(60% - 200px) !important;
+  }
+
+  input[type='file'] {
+    display: block !important;
+  }
+
+  .video-upload-wrapper {
+    top: 78%;
+  }
+
+  .upload-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-btn {
+    border: 2px solid #1ddaaf;
+    color: white;
+    background-color: #1ddaaf;
+    padding: 8px 20px;
+    border-radius: 4.013vh;
+    min-width: 30vh;
+    font-size: 20px;
+    font-size: 2.5vh;
+    height: auto;
+    line-height: 4vh;
+    font-weight: bold;
+  }
+
+  .upload-btn-wrapper input[type=file] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    opacity: 0;
+  }
+</style>
 
 <script>
   var uploadingprogress = 0;
-var timer = document.getElementById("timer");
-var seconds = 0, minutes = 0, hours = 0, secondsCount = 0;
-const preview = document.querySelector('video#preview');
-const recording = document.querySelector('video#recording');
-var video, reqBtn, startBtn,jqxhr, stopBtn, ul, stream, recorder,form, uploadBtn, file;
-video = document.getElementById('video');
-reqBtn = document.getElementById('request');
-startBtn = document.getElementById('start');
-stopBtn = document.getElementById('stop');
-uploadBtn = document.getElementById('upload');
-ul = document.getElementById('ul');
-var timertime;
-var videoStopped = false;
-$(document).ready(function(){
-  $("#start").change(function(){
-    if( $(this).is(':checked')){
-      requestVideo()
-      setTimeout(startRecording(), 200)
-    }
-  })
-})
-$("#stop").on('click', function(){
-  stopRecording("nothing", function(x){console.log(x)})
-})
+  var timer = document.getElementById("timer");
+  var seconds = 0, minutes = 0, hours = 0, secondsCount = 0;
+  const preview = document.querySelector('video#preview');
+  const recording = document.querySelector('video#recording');
+  var video, reqBtn, startBtn, jqxhr, stopBtn, ul, stream, recorder, form, uploadBtn, file;
+  video = document.getElementById('video');
+  reqBtn = document.getElementById('request');
+  startBtn = document.getElementById('start');
+  stopBtn = document.getElementById('stop');
+  uploadBtn = document.getElementById('upload');
+  ul = document.getElementById('ul');
+  var timertime;
+  var videoStopped = false;
+  $(document).ready(function () {
+    $("#video").on("change", function (e) {
+      let file = e.target.files[0];
+      let blobURL = URL.createObjectURL(file);
+      uploadVideo(blobURL, file)
+    })
 
-function add() {
+    $("#start").change(function () {
+      if ($(this).is(':checked')) {
+        requestVideo()
+        setTimeout(startRecording(), 200)
+      }
+    })
+  })
+  $("#stop").on('click', function () {
+    stopRecording("nothing", function (x) { console.log(x) })
+  })
+
+
+  function uploadVideo(blobUrl, file) {
+
+    $('#preview').attr('style', 'display: block !important');
+    var sourceMP4 = document.createElement("source");
+    sourceMP4.type = "video/mp4";
+    sourceMP4.src = blobUrl;
+    $('#preview').append(sourceMP4);
+
+    var file1 = new window.File([file], ['video_', (new Date() + '').slice(4, 28), '.mp4'].join(''))
+    form = new FormData();
+    form.append("file", file1);
+    uploadRecording(form, '', location)
+    $('.video-upload-wrapper').attr('style', 'display: none !important');
+    $('#img-dp').attr('style', 'display: none !important');
+    $('#upload').attr('style', 'display: block !important');
+    // $("#upload").show()
+    // $("#img-dp").hide()
+  }
+
+
+  function add() {
     seconds++;
     secondsCount++;
     if (seconds >= 60) {
-        seconds = 0;
-        minutes++;
-        if (minutes >= 60) {
-            minutes = 0;
-            hours++;
-        }
+      seconds = 0;
+      minutes++;
+      if (minutes >= 60) {
+        minutes = 0;
+        hours++;
+      }
     }
-    
+
     timer.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
 
     setTimer();
-}
-function setTimer() {
+  }
+  function setTimer() {
     timertime = setTimeout(add, 1000);
-}
-var Devices = []
-<% if @record == true  %>
-  requestVideo()
-<% end %>
-function requestVideo() {
-  
-  var constraints = {
-    audio:{
+  }
+  var Devices = []
+  // <% if @record == true  %>
+  //   requestVideo()
+  // <% end %>
+  function requestVideo() {
+
+    var constraints = {
+      audio: {
         sampleRate: 48000,
         volume: 1.0,
         echoCancellation: true,
         noiseSuppression: true,
-    }
-    ,
-    video:{
-        facingMode: { exact: "environment" },
-        height: {min: 720, ideal: 1080},
-        width: {min: 1280, ideal: 1920},
-        frameRate: {min: 30, ideal: 60}
-    },
-      facingMode: { exact: "environment" },
-
-  };
-  if(navigator.mediaDevices != undefined){
-    navigator.mediaDevices.getUserMedia(constraints)
-      .then(stm => {
-        stream = stm;
-        preview.srcObject = stream;
-        preview.captureStream = preview.captureStream(5) || preview.mozCaptureStream(5);
-      }).then(()=>{
-        const options = {};
-        setTimeout(function(){
-          recorder = new MediaRecorder(stream, options);
-          recorder.start();
-          $("#stop").show()
-          $("#timer").show()
-          setTimer();
-        },1000)
-      }).catch(e => {
-        requestServerForCanceling()
-        console.log(e.message)
-        $("#recording").hide()
-        $("#timer").hide()
-        $(".buttons-play").hide()
-        $("#img-dp").show()
-        $(".bottom-play")
-      });
-    }else{
+      }
+      ,
+      video: {
+        // facingMode: { exact: "environment" },
+        height: { min: 720, ideal: 1280 },
+        width: { min: 1280, ideal: 1920 }
+      },
+      // facingMode: { exact: "environment" },
+    };
+    if (navigator.mediaDevices != undefined) {
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then(stm => {
+          stream = stm;
+          preview.srcObject = stream;
+          preview.captureStream = preview.captureStream(5) || preview.mozCaptureStream(5);
+        }).then(() => {
+          const options = {};
+          setTimeout(function () {
+            recorder = new MediaRecorder(stream, options);
+            recorder.start();
+            $("#stop").show()
+            $("#timer").show()
+            setTimer();
+          }, 1000)
+        }).catch(e => {
+          requestServerForCanceling()
+          // alert(e)
+          $("#recording").hide()
+          $("#timer").hide()
+          $(".buttons-play").hide()
+          $("#img-dp").show()
+          $(".bottom-play")
+        });
+    } else {
       requestServerForCanceling()
       $("#recording").hide()
       $("#timer").hide()
@@ -163,132 +262,137 @@ function requestVideo() {
       $("#img-dp").show()
       $(".bottom-play")
     }
-  
+
   }
-  
-var circle = document.querySelector('circle');
-var radius = circle.r.baseVal.value;
-var circumference = radius * 2 * Math.PI;
 
-circle.style.strokeDasharray = `${circumference} ${circumference}`;
-circle.style.strokeDashoffset = `${circumference}`;
+  var circle = document.querySelector('circle');
+  var radius = circle.r.baseVal.value;
+  var circumference = radius * 2 * Math.PI;
 
-function setProgress(percent) {
-  const offset = circumference - percent / 100 * circumference;
-  circle.style.strokeDashoffset = offset;
-}
+  circle.style.strokeDasharray = `${circumference} ${circumference}`;
+  circle.style.strokeDashoffset = `${circumference}`;
 
-
-
-function startRecording() {
-  $("#switch").hide()
-  $("#img-dp").hide()
-  $(".bottom-play").hide()
-  $(".middle-play").addClass("middlePlay-top")
-}
-function stopRecording(location,callback) {
-  $("#timer").hide()
-  $(".bottom").hide()
-  videoStopped = true;
-  if(recorder != undefined){
-    recorder.ondataavailable = e => {
-      recording.src = URL.createObjectURL(e.data);
-      $('#preview').hide();
-      clearTimeout(timertime);
-      $('#recording').show();
-      var blob = e.data;
-      var file = new window.File([blob], ['video_', (new Date() + '').slice(4, 28), '.webm'].join(''))
-      form = new FormData();
-      form.append("file",file);
-      form.append("duration",secondsCount);
-      uploadRecording(form, callback, location)
-    };
-
-    $("#stop").hide()
-    $("#upload").show()
-    recorder.stop();
-    stopBtn.disabled = true;
-    stream.getTracks()[0].stop()
-    stream.getTracks()[1].stop()
-    $("#cancel").show()
-  }else{
-    callback(location)
+  function setProgress(percent) {
+    const offset = circumference - percent / 100 * circumference;
+    circle.style.strokeDashoffset = offset;
   }
-}
-$("#button-cancel").click(function(){
-  jqxhr.abort()
-  requestServerForCanceling()
-  showInSequence($(this).parent())
-})
 
-function requestServerForCanceling(){
-  $.ajax({
-    url: '/mobile/admin/video_cancel'
-  })
-}
-var completed_ajax= false;
-function uploadRecording(form, callback, location){
-  jqxhr = $.ajax({
-    url: '/mobile/admin/upload',
-    type: 'POST',
-    data: form,
-    cache: false,
-    async: true,
-    contentType: false,
-    processData: false,
-    xhr: function () {
-      var myXhr = $.ajaxSettings.xhr();
-      if (myXhr.upload) {
-        myXhr.upload.addEventListener('progress', function (e) {
-          if (e.lengthComputable) {
-            console.log(e.loaded/e.total*100)
-            setProgress(e.loaded/e.total*100)
-            uploadingprogress = e.loaded/e.total*100
-            if(uploadingprogress== 100){
-              $("#uploaded").parent().fadeIn()
-              showInSequence($("#uploaded").parent());
-              $("#upload").hide()
-              completed_ajax= true
-              callback(location)
-            }
-          }
-        }, false);
-      }
-      return myXhr;
+
+
+  function startRecording() {
+    $("#switch").hide()
+    $("#img-dp").hide()
+    $(".bottom-play").hide()
+    $(".middle-play").addClass("middlePlay-top")
+  }
+  function stopRecording(location, callback) {
+    $("#timer").hide()
+    $(".bottom").hide()
+    videoStopped = true;
+    if (recorder != undefined) {
+      recorder.ondataavailable = e => {
+        recording.src = URL.createObjectURL(e.data);
+        $('#preview').hide();
+        clearTimeout(timertime);
+        $('#recording').show();
+        debugger
+        var blob = e.data;
+        var file = new window.File([blob], ['video_', (new Date() + '').slice(4, 28), '.webm'].join(''))
+        form = new FormData();
+        form.append("file", file);
+        form.append("duration", secondsCount);
+        uploadRecording(form, callback, location)
+      };
+
+      $("#stop").hide()
+      $("#upload").show()
+      recorder.stop();
+      stopBtn.disabled = true;
+      stream.getTracks()[0].stop()
+      stream.getTracks()[1].stop()
+      $("#cancel").show()
+    } else {
+      callback(location)
     }
-  });
-}
-function showInSequence(div){
-  div.fadeOut(1000)
-  setTimeout(function(){$(".bottom").fadeIn(1000)},1500)
-}
+  }
+  $("#button-cancel").click(function () {
+    jqxhr.abort()
+    requestServerForCanceling()
+    showInSequence($(this).parent())
+  })
+
+  function requestServerForCanceling() {
+    $.ajax({
+      url: '/mobile/admin/video_cancel'
+    })
+  }
+  var completed_ajax = false;
+  function uploadRecording(form, callback, location) {
+    App.games.unsubscribe();
+    window.open(window.location.href + "&wait=true", '_blank');
+    jqxhr = $.ajax({
+      url: '/mobile/admin/upload',
+      type: 'POST',
+      data: form,
+      cache: false,
+      async: true,
+      contentType: false,
+      processData: false,
+      xhr: function () {
+        console.log(11111111)
+        var myXhr = $.ajaxSettings.xhr();
+        if (myXhr.upload) {
+          myXhr.upload.addEventListener('progress', function (e) {
+            if (e.lengthComputable) {
+              console.log(e.loaded / e.total * 100)
+              setProgress(e.loaded / e.total * 100)
+              uploadingprogress = e.loaded / e.total * 100
+              if (uploadingprogress == 100) {
+                $("#uploaded").parent().fadeIn()
+                showInSequence($("#uploaded").parent());
+                $("#upload").hide()
+                window.close();
+                completed_ajax = true
+                // callback(location)
+              }
+            }
+          }, false);
+        }
+        return myXhr;
+      }
+    });
+  }
+  function showInSequence(div) {
+    div.fadeOut(1000)
+    // setTimeout(function(){$(".bottom").fadeIn(1000)},1500)
+  }
 </script>
 <% if @game %>
-  <div id='game_channel' data-game-id="<%= @game.id %>"></div>
+<div id='game_channel' data-game-id="<%= @game.id %>"></div>
 <% end %>
 <script type="text/javascript">
-  $("#list").on("click", function(e){
-    if(objectionTime == true){
-      $("#myModal").show()      
+  $("#list").on("click", function (e) {
+    if (objectionTime == true) {
+      $("#myModal").show()
     }
   })
-  $(".close").on("click", function(){
-      $("#myModal").hide()     
+  $(".close").on("click", function () {
+    $("#myModal").hide()
   })
   var objectionTime = true;
-  $(".objection").on("click", function(e){
+  $(".objection").on("click", function (e) {
     e.preventDefault()
     var objection = $(this).text();
     var url = $(this).data("url");
     $.ajax({
       url: "<%= gda_objection_path %>",
       type: 'post',
-      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-      data: {objection:  objection, url},
-      success: function(res){
+      beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+      data: { objection: objection, url },
+      success: function (res) {
         objectionTime = false
         document.getElementById("list").disabled = true;
-        setTimeout(function(){
+        setTimeout(function () {
           objectionTime = true;
           $("#list").removeAttr("disabled");
         }, 10000)

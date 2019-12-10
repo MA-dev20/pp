@@ -7,7 +7,7 @@ class Turn < ApplicationRecord
   has_many :ratings, dependent: :destroy
   has_many :comments, dependent: :destroy  
   mount_uploader :recorded_pitch, PitchUploader
-
+  after_save :save_duration_for_pitch
   
   TURN_QUERY = 'users.*,(select count(*) from turns t1 where t1.user_id=users.id and place=1) as gold_count, (select count(*) from turns t1 where t1.user_id=users.id and place=2) as silver_count, (select count(*) from turns t1 where t1.user_id=users.id and place=3) as bronze_count'
     
@@ -20,7 +20,16 @@ class Turn < ApplicationRecord
       Admin.find(admin_id)
     end
   end
+  def save_duration_for_pitch
+    if self.recorded_pitch.present? && self.recorded_pitch_duration.nil?
+      movie = FFMPEG::Movie.new(self.recorded_pitch.path)
+      self.recorded_pitch_duration = movie.duration
+      self.save!
+    end
+  end
 end
+
+
 
 Turn.class_eval do
   def review

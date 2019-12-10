@@ -1,0 +1,364 @@
+.karte.letsplay {
+    position: fixed;
+    top: calc(50vh - 25vh);
+    left: 25.6vh;
+    right: 0;
+    margin: auto;
+    height: 50.69vh;
+    width: 48.64vh;
+}
+// .karte#letsplay {
+//     position: fixed;
+//     top: calc(50vh - 27vh);
+//     height: 54.67vh;
+//     width: 53.5vh;
+//     padding-left: 5vh;
+//     padding-right: 5vh;
+// }
+.karte#letsplay .btn{
+    width: calc(100% - 10vh);
+    margin-left: 5vh;
+}
+#ownrules,
+#newteam{
+    display: none;
+}
+.karte-content {
+    position: absolute;
+    top: 8.1vh;
+    left: 4.3vh;
+    padding-right: 2.25vh;
+    max-height: 34vh;
+}
+.karte.letsplay .team {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 11.5vh;
+    width: 100%;
+}
+
+.karte.letsplay .team .newteam-link {
+    float: right;
+    color: #16e2a5;
+    font-weight: 600;
+    cursor: pointer;
+}
+.karte.letsplay .team .alert-team_name {
+    float: right;
+    color: #ff5f58;
+    font-weight: 600;
+}
+.karte.letsplay .team select {
+    width: 100%;
+    outline: none !important;
+}
+.karte.letsplay .team .custom-select {
+    width: 100%;
+    border-radius: 0.8vh;
+    border: solid 0.1vh #dfe1e5;
+    padding-bottom: 0;
+    padding-top: 0;
+    font-weight: 300;
+    outline: none !important;
+    height: 5.5vh;
+    line-height: 5.5vh;
+    font-size: 1.8vh;
+}
+option:focus {
+    outline: none !important;
+}
+.karte.letsplay .team .custom-select:focus {
+    border: solid 0.1vh #dfe1e5;
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+}
+.karte.letsplay .time .field{
+    position: relative;
+    border: solid 0.1vh #dfe1e5;
+    border-radius: 0.8vh;
+    width: 15.6vh;
+    height: 5.57vh;
+}
+.karte.letsplay .time .field .up,
+.karte.letsplay .time .field .down{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 50%;
+    border-left: 0.1vh solid #dfe1e5;
+    text-align: center;
+    cursor: pointer;
+    z-index: 100;
+    width: 4.55vh;
+    line-height: 2.44vh;
+}
+.karte.letsplay .time .field .down {
+    top: 50%;
+    border-top: 0.1vh solid #dfe1e5;
+}
+.karte.letsplay .time .field .time {
+    text-align: inherit;
+    padding-left: 1.6vh;
+    line-height: 4.6vh;
+    width: 10.5vh;
+    font-size: 2.2vh;
+    left: 0;
+    height: 100%;
+}
+.karte.letsplay .team input {
+    padding: 1.3vh;
+}
+
+
+.karte.letsplay .switch-box {
+    height: 5.82vh;
+    width: 100%;
+    font-weight: 300;
+}
+.karte.letsplay .users {
+    position: relative;
+    left: 0;
+    top: 0;
+    
+}
+
+.karte.letsplay .team .red {
+    border-color: #ff5f58;
+}
+.karte.letsplay .users .field .search {
+    padding-top: 1.3vh;
+    padding-right: 1.3vh;
+}
+.karte.letsplay .users .field{
+    float: left;
+    width: 100%;
+    height: 45px;
+    border-bottom: solid 1px #dfe1e5;
+    line-height: 45px;
+    font-size: 16px;
+    font-weight: 300;
+}
+.karte.letsplay .users .user-list .user {
+    float: left;
+    width: 100%;
+    height: 45px;
+    border-bottom: solid 1px #dfe1e5;
+    line-height: 45px;
+    font-size: 16px;
+    font-weight: 300;
+}
+.karte.letsplay .user-list {
+	height: auto;
+	z-index: 1000;
+	box-shadow: 0px 0px 0px 0 rgba(172, 172, 172, 0.1);
+}
+.karte.letsplay .selected_user {
+	position: absolute;
+	bottom: 10vh;
+	height: 15vh;
+	width: 40vh;
+	border-radius: .8vh;
+	border: 1px solid #dfe1e5;
+	padding: 2px;
+	overflow: auto;
+}
+.karte.letsplay .selected_user label {
+	display: flex !important;
+}
+.karte.letsplay .user-list .unselected_user {
+	display: none;
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	max-height: 16vh;
+}
+.karte.letsplay .selected_user label,
+.karte.letsplay .user-list .unselected_user label {
+	position: relative;
+	display: flex;
+	top: 0;
+	left: 0;
+	height: 45px;
+	width: 100%;
+	border-bottom: 1px solid #dfe1e5;
+	line-height: 45px;
+	font-size: 16px;
+	cursor: pointer;
+	
+}
+.karte.letsplay .selected_user label .fas,
+.karte.letsplay .user-list .unselected_user label .fas {
+	font-size: 20px;
+	line-height: 40px;
+	margin: 2.5px;
+	color: #16e2a5;
+}
+.karte.letsplay .selected_user label img,
+.karte.letsplay .selected_user label .circle,
+.karte.letsplay .user-list .unselected_user label img,
+.karte.letsplay .user-list .unselected_user label .circle {
+	position: relative;
+	height: 40px;
+	width: 40px;
+	border-radius: 20px;
+	margin: 2.5px 5px;
+	background-color: aquamarine;
+}
+.karte.letsplay .selected_user label .fas.fa-minus-circle {
+	color: #ff5f58;
+}
+
+.karte.letsplay .custom-control-label::before {
+    border-color: lightgray;
+     background-color: white;
+}
+.karte.letsplay .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #16e2a5;
+    background-color: #16e2a5;
+}
+.karte.letsplay .custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+    border-color: lightgray !important;
+}
+.custom-control-label {
+    cursor: pointer;
+}
+
+.karte.letsplay .catchwords, 
+.karte.letsplay .objections {
+    position: relative;
+    float: left;
+}
+.karte.letsplay .youtube {
+    position: relative;
+    float: left;
+    width: 100%;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
+}
+.karte.letsplay .youtube input {
+    width: 40.2vh;
+	margin: 1vh 0;
+}
+.karte.letsplay .youtube label {
+    line-height: 4vh;
+	font-weight: bold;
+	color: #16e2a5;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.karte.letsplay .youtube input[type='radio'] {
+	opacity: 0;
+}
+
+.karte.letsplay#selectVideos {
+	display: none;
+}
+.karte.letsplay#selectVideos .body {
+	top: 10vh;
+	width: 100%;
+	height: 40vh;
+	overflow: auto;
+}
+.karte.letsplay#selectVideos .body .video-karte {
+	position: relative;
+	float: left;
+	height: 10vh;
+	width: 10vh;
+	margin: 0 1vh 1vh;
+	border-radius: 0.8vh;
+}
+.karte.letsplay#selectVideos .body .video-karte .title {
+	position: absolute;
+	bottom: 0;
+	width: calc(100% - 2vh);
+	line-height: 2vh;
+	margin: 0 1vh .8vh;
+	color: white;
+	font-size: 1.2vh;
+	font-weight: 600;
+}
+.karte.letsplay .add .fas {
+    font-size: 1.9vh;
+}
+.karte.letsplay .youtube input {
+    display: none;
+}
+.karte.letsplay .checked-field,
+.karte.letsplay .unchecked-field {
+    position: relative;
+    float: left;
+    border-radius: 0.8vh;
+    border: solid 0.1vh #dfe1e5;
+    line-height: 5.5vh;
+    font-size: 1.8vh;
+    width: 40.2vh;
+}
+.karte.letsplay .checked-field {
+    padding-bottom: 1.3vh;
+    min-height: 5.5vh;
+    padding-left: 0.5vh;
+	padding-right: 5vh;
+}
+.karte.letsplay .unchecked-field {
+    display: none;
+    border: none;
+}
+
+.karte.letsplay .add{
+    position: absolute;
+    top: 1.3vh;
+    right: 1.3vh;
+    border-radius: 50%;
+    background-color: #16e2a5;
+    color: white;
+    text-align: center;
+    font-weight: 900;
+    cursor: pointer;
+    height: 2.96vh;
+    width: 2.96vh;
+    font-size: 2.2vh;
+    line-height: 3vh;
+}
+.karte.letsplay .checkbox {
+    position: relative;
+    float: left;
+    top: 1.3vh;
+    left: 0.5vh;
+    border-radius: 1.6vh;
+    border: solid 0.2vh #a358df;
+    cursor: pointer;
+    margin: 0 0.5vh 1vh 0;
+    padding: 0 0.5vh 0 1.3vh;
+    height: 3.21vh;
+    line-height: 2.88vh;
+}
+.karte.letsplay .checkbox label {
+    text-align: center;
+    padding: 0 0.5vh;
+    line-height: 1.8vh;
+}
+.karte.letsplay .checkbox label .fas {
+    margin-left: 0.5vh;
+    width: 2.12vh;
+    line-height: 1.9vh;
+}
+.karte.letsplay .checked-field label .fas {
+    float: right;
+}
+
+.karte.letsplay .unchecked-field label .fas {
+    float: left;
+    margin-left: 0;
+    position: relative;
+    left: -7px;
+    top: 0px;
+}
+
+.karte.letsplay input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}

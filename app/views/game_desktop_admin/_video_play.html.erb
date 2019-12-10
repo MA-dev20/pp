@@ -1,0 +1,217 @@
+
+<div>
+<%= video_tag 'countdown.mp4', id: 'video-bg', autoplay: true %>
+
+<section id="gd_play">
+    <div class="top">
+        <%= image_tag 'defaults/logo-no_shadow.png', id: 'logo', class: 'fly_in_left' %>
+        <%= image_tag @user.avatar.quad.url || '', id: 'avatar' %>
+        <% if @admin.logo.present? %>
+            <span class="penta-img fly_in_right">
+                <%= image_tag @admin.logo.url || '', id: 'cust-logo' %>
+            </span>
+        <% end %>
+    </div>
+    <div class="mid">
+        <div class="countdown fly_in_bottom"><span class="timer animated flipInX" id='timerall'>01:20</span></div>
+        <div id="word" data-target-resolver><%= @word.name %></div>
+    </div>
+</section>
+<section id="skip" class="nunito-bold">
+   Skip mit Leertaste
+</section>
+
+<%= audio_tag("play/intro.mp3", autoplay: false, loop: true, id: 'intro') %>
+<%= audio_tag(@word.sound, id: "word_sound") %>
+<%= audio_tag('play/theme.mp3', id: 'theme') %>
+<%= audio_tag('play/AufdenPunkt.mp3', id: 'sound_1') %>
+<%= audio_tag('play/BeiderKonkurrenz.mp3', id: 'sound_2') %>
+<%= audio_tag('play/ChefFragen.mp3', id: 'sound_3') %>
+<%= audio_tag('play/KeinBudget.mp3', id: 'sound_4') %>
+<%= audio_tag('play/KeineZeit.mp3', id: 'sound_5') %>
+<%= audio_tag('play/KeinInteresse.mp3', id: 'sound_6') %>
+<%= audio_tag('play/Mail.mp3', id: 'sound_7') %>
+<%= audio_tag('play/Quatsch.mp3', id: 'sound_8') %>
+<%= audio_tag('play/Referenzen.mp3', id: 'sound_9') %>
+
+</div>
+<script type="text/javascript">
+// var video_toggle = <%= @video_toggle %>
+// if (!video_toggle)
+// {
+//     $('#navbar').hide();
+//     textanim();
+//     document.getElementById('intro').play();
+//     document.getElementById("intro").volume = 0.67;
+//     document.getElementById("theme").volume = 0.67;
+//     document.getElementById("word_sound").volume = 1.0;
+    
+//     function callback() {
+//         document.getElementById('video-bg').currentTime = 9;
+//         document.getElementById('video-bg').play();
+//         document.getElementById('intro').pause();
+//         document.getElementById('word_sound').play();
+//         MyApp.timer = startTimer('<%=@game.wait_seconds.to_i - 1 %>', document.getElementById('timerall'));
+//         document.getElementById('theme').play();
+//     };
+// }
+
+    // var video_toggle = <%= @video_toggle %>
+    // if (video_toggle) {
+    //     $("#myModal").remove();
+    //     var modal = '<div class="modal objection-modal d-flex align-items-center justify-content-center" id="myModal"><div class=""><div class="modal-content"><div class="modal-body text-center" ><div id="objection-text">' + 'Bei der Konkurrenz' + '</div> <div class="countdown animated flipInX d-flex align-items-center justify-content-center"><div class="progress"><div id="dynamic" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span id="current-progress"></span></div></div><span class="timer" id="timeralli"></span></div></div></div></div></div>';
+    //     $("body").append(modal);
+    //     $("#play-contant").addClass("blur");
+    //     $("#myModal").show();
+    //     time = startTimerModal('5', document.getElementById('timeralli'), true);
+    // }
+
+        
+
+    
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        var setTimer = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+        
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+            
+            if (timer <= 0) {
+               window.location = "<%= gda_rate_path%> "
+            }
+            timer--;
+        }, 1000);
+        
+        var pause = function(){
+            clearInterval(setTimer);
+        }
+        var resume = function(){
+            var executed = false;
+            setTimer = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+            
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                if(executed== false){
+                    $("#play-contant").removeClass("blur")
+                    $("#myModal").remove()
+                    startAnimation($("#avatar"))
+                    document.getElementById('video-bg').play()
+                    document.getElementById('theme').play();
+                    executed = true;
+                }
+                display.textContent = minutes + ":" + seconds;
+                
+                if (timer <= 0) {
+                    window.location = "<%= gda_rate_path%> "
+                }
+                timer--;
+            }, 1000);
+
+        }
+        return {pause: pause , resume: resume }
+    };
+    function stopAnimation(element){
+        $(element).css("-webkit-animation-name", "none");
+        $(element).css("animation-name", "none");
+        $(element).css("-webkit-animation-duration", "none");
+        $(element).css("animation-duration", "none");
+        $(element).css("-webkit-animation-iteration-count", "none");
+        $(element).css("animation-iteration-count", "none");
+    }
+    function startAnimation(element){
+        $(element).css("-webkit-animation-name", "pulse");
+        $(element).css("animation-name", "pulse");
+        $(element).css("-webkit-animation-duration", "1.5s");
+        $(element).css("animation-duration", "1.5s");
+        $(element).css("-webkit-animation-iteration-count", "infinite");
+        $(element).css("animation-iteration-count", "infinite");
+    }
+
+    function startTimerModal(duration, display, video_param) {
+        $(function() {
+          if ($('#objection-text').text().trim() == 'Auf den Punkt kommen') {
+            document.getElementById('sound_1').play();
+          } else if ($('#objection-text').text().trim() == 'Bei der Konkurrenz') {
+              document.getElementById('sound_2').play();
+          } else if ($('#objection-text').text().trim() == 'Muss ich den Chef Fragen') {
+              document.getElementById('sound_3').play();
+          } else if ($('#objection-text').text().trim() == 'Kein Budget') {
+              document.getElementById('sound_4').play();
+          } else if ($('#objection-text').text().trim() == 'Keine Zeit') {
+              document.getElementById('sound_5').play();
+          } else if ($('#objection-text').text().trim() == 'Kein Interesse') {
+              document.getElementById('sound_6').play();
+          } else if ($('#objection-text').text().trim() == 'Schick mir eine Mail') {
+              document.getElementById('sound_7').play();
+          } else if ($('#objection-text').text().trim() == 'Ist Quatsch') {
+              document.getElementById('sound_8').play();
+          } else if ($('#objection-text').text().trim() == 'Referenzen') {
+            document.getElementById('sound_9').play();
+          }
+          document.getElementById('video-bg').pause()
+          document.getElementById('theme').pause();
+          stopAnimation($("#avatar"))
+          var current_progress = 0;
+          var interval = setInterval(function() {
+              current_progress += 10;
+              if (video_param) {
+                $("#dynamic").addClass("custom-in")
+              } else {
+                $("#dynamic").addClass("in")
+              }
+              if (current_progress >= 100){
+                clearInterval(interval);
+              }
+          }, 1000);
+        });
+        MyApp.timer.pause()
+        var timer = duration, minutes, seconds;
+        console.log(timer)
+        var executed = false;
+        var interval =  duration;
+        var t = parseInt(duration);
+        var setTimeri = setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+        
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            // if(minutes == "00"){
+            //     display.textContent = seconds;
+            // }else{
+            //     display.textContent = minutes + ":" + seconds;
+            // }
+
+            if (timer <= 0) {
+                if(executed == false){
+                    MyApp.timer.resume()
+                    // $("#myModal").hide()
+                    clearInterval(setTimeri);
+                    interval = false
+                    executed = true
+                }
+            } 
+            t -- ;
+            timer--;
+        }, 1000);
+        var pause = function(){
+            clearInterval(setTimer);
+        }
+        return {pause: pause, time: t}
+
+    };
+
+    $(window).keypress(function (e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+            window.location.replace('<%= gda_rate_path %>');
+        };
+    })
+    
+</script>

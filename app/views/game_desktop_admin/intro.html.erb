@@ -1,12 +1,17 @@
-<%= video_tag 'game_intro.mp4', id: 'video-bg', autoplay: false, controls: false, onended: 'redir()' %>
-<section id="skip" style="color: black">
+
+<% if @video %>
+<%= video_tag @video, id: 'video-bg', autoplay: false, controls: false, onended: 'redir()' %>
+<% else %>
+<%= video_tag 'gameintro.mp4', id: 'video-bg', autoplay: false, controls: false, onended: 'redir()' %>
+<% end %>
+<section id="skip" style="color: black" class="nunito-bold">
    Skip mit Leertaste
 </section>
 <script>
     $('#navbar').hide();
     document.getElementById('video-bg').play();
     function redir() {
-        window.location.replace('<%= gda_wait_path %>');
+        window.location.replace('<%= gda_choose_path %>');
     }
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {

@@ -1,0 +1,354 @@
+label {
+    font-weight: 300;
+    margin-bottom: 0;
+    width: 100%;
+    font-size: 1.8vh;
+    line-height: 2.6vh;
+}
+label .alert {
+    float: right;
+    color: #ff5f58;
+    font-weight: 600;
+}
+.field {
+    position: relative;
+    width: 100%;
+    border-radius: 0.8vh;
+    border: solid 0.1vh #dfe1e5;
+    line-height: 5.6vh;
+    font-size: 1.8vh;
+    font-weight: 300;
+    padding: 0.5vh 1.2vh;
+    margin: 0;
+    height: 5.6vh;
+}
+.field .custom-submit-field {
+    position: absolute;
+    left: 1vh;
+    top: 0.9vh;
+    border: none;
+    line-height: 3.8vh;
+    width: calc(100% - 6vh);
+    padding: 0;
+    font-size: 1.9vh;
+}
+// .karte form {
+//     display: flex;
+//     flex-direction: column;
+// }
+.field .custom-submit {
+    line-height: 2.4vh;
+    font-size: 2.4vh;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #16e2a5;
+    border: none;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    right: 1.16vh;
+    top: 1.16vh;
+    height: 3.3vh;
+    width: 3.3vh;
+    padding: 0 0 0.1vh 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.half-field {
+    padding: 1vh;
+    width: calc(50% - 1vh);
+    height: 5.6vh;
+    border-radius: 0.8vh;
+    border: solid 0.1vh #dfe1e5;
+    line-height: 5.6vh;
+    font-size: 1.8vh;
+    font-weight: 300;
+}
+.searchbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 35vh;
+    height: 5.6vh;
+    border-radius: 0.8vh;
+    box-shadow: 0px 6px 20px 0 rgba(107, 107, 107, 0.1);
+    background-color: #ffffff;
+    display: flex;
+}
+.searchbar img {
+    position: relative;
+    margin: 1.5vh;
+    width: 2.35vh;
+    height: 2.35vh;
+
+}
+.searchbar input[type='text'] {
+    width: 80%;
+    position: relative;
+    border: none;
+    font-size: 1.9vh;
+}
+
+.user-list,
+.team-list {
+    position: relative;
+    left: 0;
+    height: 18vh;
+    width: 100%;
+    border: 0.1vh solid #dfe1e5;
+    background-color: #fff;
+    overflow: hidden;
+    padding: 0 1.2vh;
+    border-radius: 0.8vh;
+    overflow-y: auto;
+}
+.team-list {
+    height: 12.9vh;
+}
+.team-list .search-field {
+    padding-top: 0.2vh;
+}
+
+.user-list .search-field,
+.team-list .search-field {
+    position: relative;
+    left: 0;
+    top: 0;
+    height: 5.5vh;
+    width: 100%;
+    border-bottom: 0.1vh solid #dfe1e5;
+}
+.team-list .search-field {
+    height: 5vh;
+}
+.user-list .search-field img,
+.team-list .search-field img {
+    position: relative;
+    float: left;
+    margin: 1.4vh;
+    height: 2.2vh;
+    width: 2.2vh;
+}
+.team-list .search-field img {
+    margin: 1vh;
+    margin-right: 1.9vh;
+}
+.user-list .search-field input[type='text'],
+.team-list .search-field input[type='text'] {
+    padding-top: 0.5vh;
+    border: none;
+    width: calc(100% - 7vh);
+    // height: 3.8vh;
+    height: 4vh;
+    line-height: 3.8vh;
+    margin: 0.5vh;
+    font-size: 1.8vh;
+}
+.team-list .search-field input[type='text'] {
+    margin: 0;
+    height: 3.8vh;
+    padding-top: 0.8vh;
+}
+.user-list .user,
+.team-list .team {
+    position: relative;
+    width: 100%;
+    height: 5.3vh;
+    border-bottom: 0.1vh solid #dfe1e5;
+    line-height: 5.3vh;
+    display: flex;
+}
+.team-list .team {
+    height: 3.2vh;
+    line-height: 3.2vh;
+    cursor: pointer;
+}
+.user-list .user img,
+.user-list .user .circle {
+    margin: 0.7vh;
+    height: 3.8vh;
+    width: 3.8vh;
+    border-radius: 50%;
+    background-color: #d7eeff;
+    line-height: 3.8vh;
+    text-align: center;
+    font-size: 1.3vh;
+}
+.switch-box label {
+    line-height: 3.6vh;
+}
+.url-field {
+    position: relative;
+    width: 100%;
+    height: 5.6vh;
+    border-radius: 0.8vh;
+    border: solid 0.1vh #dfe1e5;
+    line-height: 3.8vh;
+    font-size: 1.8vh;
+    font-weight: 300;
+    padding: 0.5vh 1vh;
+    margin: 0;
+}
+.url-field .text {
+    float: left;
+}
+.url-field .custom-url-field {
+    float: left;
+    width: 65%;
+    border: none;
+    height: 3.8vh;
+}
+.checkbox label {
+    width: auto;
+}
+.img-upload {
+    position: relative;
+    float: left;
+    cursor: pointer;
+    height: 14.38vh;
+    width: 10.5vh;
+    margin-right: 4.3vh;
+}
+.img-upload label {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: left;
+    height: 3.8vh;
+    line-height: 3.8vh;
+}
+.img-upload img {
+    position: relative;
+    margin: 0 auto;
+    border-radius: 50%;
+    height: 10.5vh;
+    width: 10.5vh;
+}
+.img-upload i {
+    position: absolute;
+    font-size: 2.8vh;
+    color: #16e2a5;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 50%;
+}
+.fields {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    margin: 2.2vh 0;
+}
+.half-1 {
+    position: relative;
+    width: calc(50% - 1vh);
+}
+.half-1-1 {
+    position: relative;
+    width: calc(25% - 1vh);
+}
+.half-1-2 {
+    position: relative;
+    width: calc(25% - 1vh);
+    margin-left: 1vh;
+    
+}
+.half-1-3 {
+    position: relative;
+    width: calc(25% - 1vh);
+    margin-left: 2.2vh;
+}
+.half-2 {
+    position: relative;
+    left: 2.2vh;
+    width: calc(50% - 1vh);
+}
+
+.btn.half {
+    left: 0;
+    right: 0;
+    width: 50% !important;
+    margin: 4.3vh auto !important;
+}
+.remove {
+    position: absolute;
+    bottom: 6vh;
+    right: 4.3vh;
+    font-size: 2.2vh;
+    color: #c1c1c1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.usercheck {
+    display: inline-block;
+    position: relative;
+    padding-left: 3vh;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    float: left;
+    width: 3vh;
+    margin-top: 1.5vh;
+}
+.usercheck input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2.2vh;
+    width: 2.2vh;
+    border-radius: 0.4vh;
+    background-color: #fff;
+    border: 0.1vh solid #ccc;
+}
+// .usercheck:hover input ~ .checkmark {
+//     background-color: #ccc;
+// }
+.usercheck input:checked ~ .checkmark {
+    background-color: #16e2a5;
+    border-color: #16e2a5;
+}
+.checkmark:after {
+content: "";
+    position: absolute;
+    display: none;
+}
+.usercheck input:checked ~ .checkmark:after {
+    display: block;
+}
+.usercheck .checkmark:after {
+    left: 0.6vh;
+    top: 0.1vh;
+    width: 0.7vh;
+    height: 1.3vh;
+    border: solid white;
+    border-width: 0 0.2vh 0.2vh 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

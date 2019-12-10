@@ -12,9 +12,10 @@ module DatabaseHelper
   def update_user_rating(user)
     @ratings = TurnRating.where(user_id: user.id)
     if UserRating.find_by(user_id: user.id)
-      UserRating.find_by(user_id: user.id).update(ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
+      @ratings_alt = @ratings.where.not(id: @ratings.last.id)
+      UserRating.find_by(user_id: user.id).update(ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan), change_ges: @ratings.average(:ges) - @ratings_alt.average(:ges), change_body: @ratings.average(:body) - @ratings_alt.average(:body), change_creative: @ratings.average(:creative) - @ratings_alt.average(:creative), change_rhetoric: @ratings.average(:rhetoric) - @ratings_alt.average(:rhetoric), change_spontan: @ratings.average(:spontan) - @ratings_alt.average(:spontan))
     else
-      UserRating.create(user_id: user.id, ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
+      UserRating.create(user_id: user.id, ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan), change_ges: @ratings.average(:ges), change_body: @ratings.average(:body), change_creative: @ratings.average(:creative), change_rhetoric: @ratings.average(:rhetoric), change_spontan: @ratings.average(:spontan))
     end
   end
 
@@ -30,9 +31,10 @@ module DatabaseHelper
   def update_team_rating(team)
     @ratings = GameRating.where(team_id: team.id)
     if TeamRating.find_by(team_id: team.id)
-      TeamRating.find_by(team_id: team.id).update(ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
+      @ratings_alt = @ratings.where.not(id: @ratings.last.id)
+      TeamRating.find_by(team_id: team.id).update(ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan), change_ges: @ratings.average(:ges) - @ratings_alt.average(:ges), change_body: @ratings.average(:body) - @ratings_alt.average(:body), change_creative: @ratings.average(:creative) - @ratings_alt.average(:creative), change_rhetoric: @ratings.average(:rhetoric) - @ratings_alt.average(:rhetoric), change_spontan: @ratings.average(:spontan) - @ratings_alt.average(:spontan))
     else
-      TeamRating.create(team_id: team.id, ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
+      TeamRating.create(team_id: team.id, ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan), change_ges: @ratings.average(:ges), change_body: @ratings.average(:body), change_creative: @ratings.average(:creative), change_rhetoric: @ratings.average(:rhetoric), change_spontan: @ratings.average(:spontan))
     end
   end
 end

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :games
   devise_for :users
-  devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'devise_user/sessions', passwords: 'admins/passwords' }
+  devise_for :admins, controllers: { registrations: 'admins/registrations', sessions: 'admins/sessions', passwords: 'admins/passwords', confirmations: 'admins/confirmations', unlocks: 'admins/unlocks'}
   resource :cards
   resource :plans
 
@@ -17,22 +17,27 @@ Rails.application.routes.draw do
   get 'dash/account', to: 'user/dash_user#account', as: 'dash_user_account'
   put 'dash/account', to: 'user/dash_user#update_user', as: 'dash_user_account_update'
  
-
-
-  get 'landing/index'
-  get 'landing/price', to: 'landing#price', as: 'price'
-  get 'dash_admin/dash_admin_price', to: 'dash_admin#dash_admin_price', as: 'dash_admin_price'
-  get 'landing/product', to: 'landing#product', as: 'product'
+###########
+# Landing #
+###########
   root 'landing#index'
-  patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
+  get 'cookies', to: 'landing#accept_cookies', as: 'accept_cookies'
+  get '/contact', to: 'landing#contact', as: 'contact'
+  get 'agb', to: 'landing#agb', as: 'agb'
+  get 'datenschutz', to: 'landing#datenschutz', as: 'datenschutz'
+  get 'impressum', to: 'landing#impressum', as: 'impressum'
+	
+  get 'landing/ended_game', to: 'landing#ended_game', as: 'landing_ended_game'
+
+  get '/byebye', to: 'landing#byebye', as: 'byebye'
+  # patch 'verification/verify_token' ,to: 'verification#verify_token' , as:'verify_token'
   get 'admins/register', to: 'landing#register', as: 'register'
-  get 'admins/sign_up/:v_id', to: 'landing#sign_up', as: 'edit_admin'
   get 'admins/signup/:v_id', to: 'landing#signup' , as: 'edit_next_admin'
   patch 'admins/update_admin/:v_id', to: 'landing#update_admin', as: 'update_admin'
   patch 'admins/update_admin_details/:v_id', to: 'landing#update_admin_details', as: 'update_admin_details'
 
   get 'coaches/info', to: 'landing#coach', as: 'coach_info'
-  get '/verfication/:token' , to: 'verification#token' , as: 'verification_token'
+  # get '/verfication/:token' , to: 'verification#token' , as: 'verification_token'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 ########
 # Game #
@@ -42,16 +47,19 @@ Rails.application.routes.draw do
 # Admin Desktop #
 #################
 
-  get 'games/intro', to: 'game_desktop_admin#intro', as: 'gda_intro'
   get 'games/wait', to: 'game_desktop_admin#wait', as: 'gda_wait'
+  get 'games/intro', to: 'game_desktop_admin#intro', as: 'gda_intro'
+  get 'games/youtube_video', to: 'game_desktop_admin#youtube_video', as: 'gda_youtube'
   get 'games/choose', to: 'game_desktop_admin#choose', as: 'gda_choose'
   get 'games/turn', to: 'game_desktop_admin#turn', as: 'gda_turn'
   get 'games/error', to: 'game_desktop_admin#error', as: 'gea_turn'
+  get 'video_testing', to: 'game_mobile_admin#video_testing'
   get 'games/play', to: 'game_desktop_admin#play', as: 'gda_play'
   get 'games/rate', to: 'game_desktop_admin#rate', as: 'gda_rate'
   get 'games/rating', to: 'game_desktop_admin#rating', as: 'gda_rating'
   get 'games/bestlist', to: 'game_desktop_admin#bestlist', as: 'gda_bestlist'
   get 'games/ended', to: 'game_desktop_admin#ended', as: 'gda_ended'
+  get 'games/ended_game', to: 'game_desktop_admin#ended_game', as: 'gda_ended_game'
   get 'games/replay', to: 'game_desktop_admin#replay', as: 'gda_replay'
     
   get 'games/after_rating', to: 'game_desktop_admin#after_rating', as: 'gda_after_rating'
@@ -60,6 +68,7 @@ Rails.application.routes.draw do
 # Admin Mobile #
 ################
 
+  
   get 'mobile/admins/:password', to: 'game_mobile_admin#new', as: 'gma_start'
   post 'mobile/admins/:password', to: 'game_mobile_admin#create'
   get 'mobile/admin/avatar', to: 'game_mobile_admin#new_avatar', as: 'gma_new_avatar'
@@ -67,8 +76,9 @@ Rails.application.routes.draw do
   get 'mobile/admin/new_turn', to: 'game_mobile_admin#new_turn', as: 'gma_new_turn'
   post 'mobile/admin/new_turn', to: 'game_mobile_admin#create_turn'
     
-  get 'mobile/admin/intro', to: 'game_mobile_admin#intro', as: 'gma_intro'
   get 'mobile/admin/wait', to: 'game_mobile_admin#wait', as: 'gma_wait'
+  get 'mobile/admin/intro', to: 'game_mobile_admin#intro', as: 'gma_intro'
+  get 'mobile/admin/youtube_video', to: 'game_mobile_admin#youtube_video', as: 'gma_youtube'
   get 'mobile/admin/error', to: 'game_mobile_admin#error', as: 'gea_mobile'
   get 'mobile/admin/choose', to: 'game_mobile_admin#choose', as: 'gma_choose'
   get 'mobile/admin/choosen/:turn_id', to: 'game_mobile_admin#choosen', as: 'gma_choosen'
@@ -82,6 +92,7 @@ Rails.application.routes.draw do
   get 'mobile/admin/bestlist', to: 'game_mobile_admin#bestlist', as: 'gma_bestlist'
   get 'mobile/admin/replay', to: 'game_mobile_admin#replay', as: 'gma_replay'
   get 'mobile/admin/ended', to: 'game_mobile_admin#ended', as: 'gma_ended'
+  get 'mobile/admin/ended_game', to: 'game_mobile_admin#ended_game', as: 'gma_ended_game'
     
   get 'mobile/admin/after_rating', to: 'game_mobile_admin#after_rating', as: 'gma_after_rating'
     
@@ -105,6 +116,7 @@ Rails.application.routes.draw do
   post 'mobile/user/game/new_turn', to: 'game_mobile_user#create_turn'
   get 'mobile/user/game/vidoe_uploading', to: 'game_mobile_user#video_uploading', as: 'gmu_video_check'
   get 'mobile/user/game/wait', to: 'game_mobile_user#wait', as: 'gmu_wait'
+  get 'mobile/user/game/intro', to: 'game_mobile_user#intro', as: 'gmu_intro'
   get 'mobile/user/game/choose', to: 'game_mobile_user#choose', as: 'gmu_choose'
   get 'mobile/user/game/choosen/:turn_id', to: 'game_mobile_user#choosen', as: 'gmu_choosen'
   get 'mobile/user/game/turn', to: 'game_mobile_user#turn', as: 'gmu_turn'
@@ -115,6 +127,7 @@ Rails.application.routes.draw do
   get 'mobile/user/game/bestlist', to: 'game_mobile_user#bestlist', as: 'gmu_bestlist'
   get 'mobile/user/game/replay', to: 'game_mobile_user#replay', as: 'gmu_replay'
   get 'mobile/user/game/ended', to: 'game_mobile_user#ended', as: 'gmu_ended'
+  get 'mobile/user/game/ended_game', to: 'game_mobile_user#ended_game', as: 'gmu_ended_game'
   
     
 ####################################################################################
@@ -125,20 +138,20 @@ Rails.application.routes.draw do
 ##############
 # Backoffice #
 ##############
-    
+  
   get 'backoffice', to: 'backoffice#index', as: 'backoffice'
   get 'backoffice/admins', to: 'backoffice#admins', as: 'backoffice_admins'
-  get 'backoffice/baskets/', to: 'backoffice#baskets', as: 'backoffice_baskets'
-  get 'backoffice/baskets/:admin_id', to: 'backoffice#baskets', as: 'backoffice_admin_baskets'
-  get 'backoffice/words/:basket_id', to: 'backoffice#words', as: 'backoffice_words'
     
-  # Catchword Basket #
-    
-  get 'catchword_basket/new', to: 'catchwords_basket#new', as: 'new_basket'
-  post 'catchword_basket/new', to: 'catchwords_basket#create'
-  get 'catchword_basket/:basket_id/edit', to: 'catchwords_basket#edit', as: 'edit_basket'
-  post 'catchword_basket/:basket_id/update', to: 'catchwords_basket#update'
-  get 'catchword_basket/:basket_id/destroy', to: 'catchwords_basket#destroy', as: 'destroy_basket'
+  get 'backoffice/admins/:admin_id', to: 'backoffice#admin', as: 'backoffice_admin'
+  get 'backoffice/admins/:admin_id/edit', to: 'backoffice#edit_admin', as: 'backoffice_edit_admin'
+  get 'backoffice/teams/:team_id', to: 'backoffice#edit_team', as: 'backoffice_edit_team'
+  get 'backoffice/users/:user_id', to: 'backoffice#edit_user', as: 'backoffice_edit_user'
+  get 'backoffice/catchwords/:basket_id', to: 'backoffice#edit_catchword', as: 'backoffice_edit_catchword'
+  get 'backoffice/objections/:basket_id', to: 'backoffice#edit_objection', as: 'backoffice_edit_objection'
+  get 'backoffice/admins/:admin_id/activate', to: 'backoffice#activate_admin', as: 'backoffice_admin_activate'
+  get 'backoffice/admins/:admin_id/destroy', to: 'backoffice#destroy_admin', as: 'backoffice_admin_destroy'
+  get 'backoffice/word_baskets', to: 'backoffice#word_baskets', as: 'backoffice_word_baskets'
+  get 'backoffice/word_baskets/:basket_id/words', to: 'backoffice#words', as: 'backoffice_words'
 
 #########
 # Admin #
@@ -148,29 +161,57 @@ Rails.application.routes.draw do
     post 'admin/dash/teams/:team_id/generate_img_from_html', to: 'dash_admin#generate_img_from_html', as: 'dash_admin_generate_img_from_html'
     get 'admin/dash/games/:game_id/turns', to: 'dash_admin#turns', as: 'dash_admin_turns'
     
+    #User
+    get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
+    get 'admin/dash/teams/:team_id', to: 'dash_admin#teams', as: 'dash_admin_team'
+    get 'admin/dash/users/:user_id', to: 'dash_admin#teams', as: 'dash_admin_user'
+    
+    #Stats
+    get 'admin/dash/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_user_stats'
+    get 'admin/dash/users/:user_id/stats/compare/:user2_id', to: 'dash_admin#user_stats_compare', as: 'dash_admin_user_stats_compare'
+    get 'admin/dash/teams/:team_id/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_team_user_stats'
+    
+    #Customize
+    get 'admin/dash/customize', to: 'dash_admin#customize', as: 'dash_admin_customize'
+    get 'admin/dash/customize/catchwords/:cbasket_id', to: 'dash_admin#customize', as: 'dash_admin_catchwords'
+    get 'admin/dash/customize/objections/:obasket_id', to: 'dash_admin#customize', as: 'dash_admin_objections'
+    #Video Tool
+    get 'admins/dash/video_tool', to: 'dash_admin#video_tool', as: 'dash_admin_video_tool'
+    get 'admins/dash/turns/:turn_id/video', to: 'dash_admin#video_details', as: 'dash_admin_video_details'
+    
+    post 'admins/dash/add_favorite', to: 'dash_admin#add_favorite', as: 'dash_admin_add_favorite'
+    post 'admins/dash/remove_favorite', to: 'dash_admin#remove_favorite', as: 'dash_admin_remove_favorite'
+    #Let's Play
+    get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
+    get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_game'
+    
+    #add video
+    get 'admin/dash/turns/:turn_id/video/new', to: 'dash_admin#add_video_to_turn', as: 'add_video_to_turn'
+    post 'admin/dash/turns/:turn_id/video/new', to: 'dash_admin#save_video_to_turn'
+	
+	#edit video
+	get 'admin/dash/videos/:video_id/edit', to: 'dash_admin#video_edit', as: 'dash_admin_video_edit'
+    
+    
     get 'admin/dash/statistics', to: 'dash_admin#statistics', as: 'dash_admin_statistics'
     get 'admin/dash/statistics/compare_with_team/:team_id', to: 'dash_admin#compare_with_team', as: 'dash_admin_comapre_with_team'
     get 'admin/dash/statistics/compare_with_user/:compare_user_id', to: 'dash_admin#compare_with_user', as: 'dash_admin_comapre_with_user'
-    get 'admin/dash/teams', to: 'dash_admin#teams', as: 'dash_admin_teams'
     get 'admin/dash/teams/:team_id/stats', to: 'dash_admin#team_stats', as: 'dash_admin_team_stats'
     get 'admin/dash/teams/:team_id/stats/share', to: 'dash_admin#team_stats_share', as: 'dash_admin_team_stats_share'
     get 'admin/dash/teams/:team_id/stats/:team2_id', to: 'dash_admin#team_stats', as: 'dash_admin_compare_team_stats'
     
-    get 'admin/dash/users', to: 'dash_admin#users', as: 'dash_admin_users'
+    
     get 'admin/dash/user_list', to: 'dash_admin#user_list', as: 'dash_admin_user_list'
     get 'admin/dash/users/:team_id', to: 'dash_admin#users', as: 'dash_admin_team_users'
     post 'admins/dash/filter_videos', to:  'dash_admin#filter_videos', as: 'admin_filter_videos'
-    get 'admins/dash/teams/:team_id/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_user_stats'
     get 'admins/dash/stats/turns/:turn_id', to: 'dash_admin#turn_show', as: 'dash_admin_show_turn'
     delete 'admins/dash/stats/turns/:turn_id', to: 'dash_admin#delete_video', as: 'dash_admin_delete_video'
     get 'admins/teams/:team_id/users/:user_id/compare/:compare_user_id', to: 'dash_admin#compare_user_stats', as: 'dash_admin_compare_user_stats'
-    get 'admins/dash/video_tool', to: 'dash_admin#video_tool', as: 'dash_admin_video_tool'
+    
     get 'admins/dash/account', to: 'dash_admin#account', as: 'dash_admin_account'
     get 'admins/dash/billing', to: 'dash_admin#billing', as: 'dash_admin_billing'
     
-    get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
-    get 'admin/dash/catchwords', to: 'dash_admin#catchwords', as: 'dash_admin_catchwords'
-    get 'admin/dash/objections', to: 'dash_admin#objections', as: 'dash_admin_objections'
+    
     post 'admin/dash/catchwords/add', to: 'dash_admin#add_word', as: "dash_admin_add_word"
     post 'admin/dash/objections/add', to: 'dash_admin#add_objection', as: "dash_admin_add_objection"
     put 'admin/dash/objections/:id', to: 'dash_admin#update_objection', as: "dash_admin_update_objection"
@@ -186,12 +227,7 @@ Rails.application.routes.draw do
 # Sessions #
 ############
 
-
-############
-# User dashboard #
-############
-
-
+# Admin #
 
 ########
 # Root #
@@ -210,18 +246,19 @@ Rails.application.routes.draw do
 # Admin #
 #########
     
+  post 'admins/new', to: 'admins#create', as: 'new_admin'
+  post 'admins/:admin_id/edit', to: 'admins#update', as: 'edit_admin'
+  post 'admins/:admin_id/activate', to: 'admins#activate', as: 'activate_admin'
+  post 'admins/:admin_id/avatar/edit', to: 'admins#update_avatar', as: 'edit_admin_avatar'
+  post 'admins/:admin_id/logo/edit', to: 'admins#update_logo', as: 'edit_admin_logo'
   get 'admins/:admin_id/destroy', to: 'admins#destroy', as: 'destroy_admin'
 
 ########
 # Team #
 ########
     
-  get 'teams/new', to: 'teams#new', as: 'new_team'
-  post 'teams/new', to: 'teams#create'
-    
-  get 'teams/new_game', to: 'teams#new_game', as: 'new_team_game'
-  post 'teams/new_game', to: 'teams#create_game'
-    
+  post 'teams/new', to: 'teams#create', as: 'new_team'
+  post 'teams/:team_id/edit', to: 'teams#update', as: 'edit_team'  
   get 'teams/:team_id/destroy', to: 'teams#destroy', as: 'destroy_team'
 
 ########
@@ -235,6 +272,8 @@ Rails.application.routes.draw do
 # User #
 ########
     
+  post 'users/new', to: 'users#create', as: 'new_user'
+  post 'user/:user_id/edit', to: 'users#update', as: 'edit_user'
   get 'users/:user_id/destroy', to: 'users#destroy', as: 'destroy_user'
   put 'users/:user_id/update', to: 'users#update', as: 'update_user'
   post 'users/create', to: 'users#create', as: 'create_user'
@@ -262,6 +301,41 @@ Rails.application.routes.draw do
     
   get 'words/:basket_id/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
   mount ActionCable.server => '/cable'
+
+#########
+# Video #
+#########
+    
+  get 'videos/new', to: 'videos#new', as: 'video_upload'
+  post 'videos/new', to: 'videos#create'
+  post 'videos/:video_id/edit', to: 'videos#update', as: 'edit_video'
+  get 'videos/:video_id/destroy', to: 'videos#destroy', as: 'destroy_video'
+    
+###########
+# Comment #
+###########
+    
+  get 'turns/:turn_id/comments/new', to: 'comments#new', as: 'new_comment'
+  post 'turns/:turn_id/comments/new', to: 'comments#create'
+#############
+# Objection #
+#############
+
+  get 'objections/:basket_id/new', to: 'objections#new', as: 'new_objection'
+  post 'objections/:basket_id/new', to: 'objections#create'
+  post 'objections/:basket_id/:objection_id/edit', to: 'objections#update', as: 'edit_objection'
+  get "baskets/:basket_id/objections/:objection_id", to: "objections#destroy", as: 'destroy_objection'
+  
+##########
+# Basket #
+##########
+    
+  get 'basket/new', to: 'basket#new', as: 'new_basket'
+  post 'basket/new', to: 'basket#create'
+  get 'basket/:basket_id/edit', to: 'basket#edit', as: 'edit_basket'
+  post 'basket/:basket_id/edit', to: 'basket#update'
+  get 'basket/:basket_id/destroy', to: 'basket#destroy', as: 'destroy_basket'
+  get 'basket/:basket_id/destroy/:site', to: 'basket#destroy', as: 'destroy_basket_admin'
     
 ##############
 # Enter Game #
@@ -278,3 +352,4 @@ Rails.application.routes.draw do
   get '/:password', to: 'game_mobile_user#welcome', as: 'gmu_start'
 
 end
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_085724) do
+ActiveRecord::Schema.define(version: 2019_12_04_103251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,10 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.string "admin_subscription_id"
     t.boolean "verification_code_confirm", default: false
     t.string "reset_pw_token"
+    t.string "telephone"
+    t.string "company_position"
+    t.boolean "activated"
+    t.string "message"
     t.index ["confirmation_token"], name: "index_admins_on_confirmation_token", unique: true
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
@@ -94,6 +98,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.string "name"
     t.string "type"
     t.boolean "objection", default: false
+    t.integer "image"
     t.index ["admin_id"], name: "index_catchwords_baskets_on_admin_id"
     t.index ["game_id"], name: "index_catchwords_baskets_on_game_id"
   end
@@ -139,8 +144,16 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.integer "turn1"
     t.integer "turn2"
     t.boolean "use_peterobjections", default: false
+    t.string "youtube_url"
+    t.boolean "video_toggle", default: false
+    t.bigint "video_id"
+    t.boolean "peter_sound", default: true
+    t.boolean "game_sound", default: true
+    t.integer "video"
+    t.boolean "video_is_pitch"
     t.index ["admin_id"], name: "index_games_on_admin_id"
     t.index ["team_id"], name: "index_games_on_team_id"
+    t.index ["video_id"], name: "index_games_on_video_id"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -228,6 +241,11 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "change_ges"
+    t.integer "change_body"
+    t.integer "change_creative"
+    t.integer "change_rhetoric"
+    t.integer "change_spontan"
     t.index ["team_id"], name: "index_team_ratings_on_team_id"
   end
 
@@ -282,6 +300,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.integer "recorded_pitch_duration"
     t.datetime "click_time"
     t.integer "counter"
+    t.boolean "favorite", default: false
     t.index ["game_id"], name: "index_turns_on_game_id"
   end
 
@@ -294,6 +313,11 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.integer "spontan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "change_ges"
+    t.integer "change_body"
+    t.integer "change_creative"
+    t.integer "change_rhetoric"
+    t.integer "change_spontan"
     t.index ["user_id"], name: "index_user_ratings_on_user_id"
   end
 
@@ -322,6 +346,15 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "videos", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.string "name"
+    t.string "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_videos_on_admin_id"
+  end
+
   create_table "words", force: :cascade do |t|
     t.string "name"
     t.string "sound"
@@ -340,6 +373,7 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
   add_foreign_key "game_ratings", "teams"
   add_foreign_key "games", "admins"
   add_foreign_key "games", "teams"
+  add_foreign_key "games", "videos"
   add_foreign_key "ratings", "turns"
   add_foreign_key "root_admins", "admins"
   add_foreign_key "root_admins", "roots"
@@ -352,4 +386,5 @@ ActiveRecord::Schema.define(version: 2019_07_15_085724) do
   add_foreign_key "turns", "games"
   add_foreign_key "user_ratings", "users"
   add_foreign_key "users", "admins"
+  add_foreign_key "videos", "admins"
 end

@@ -15,7 +15,7 @@
         <div id="word" data-target-resolver><%= @word.name %></div>
     </div>
 </section>
-<section id="skip">
+<section id="skip" class="nunito-bold">
    Skip mit Leertaste
 </section>
 
@@ -32,25 +32,106 @@
 <%= audio_tag('play/Quatsch.mp3', id: 'sound_8') %>
 <%= audio_tag('play/Referenzen.mp3', id: 'sound_9') %>
 
+
+
+<style>
+    body {
+        background-color: #1a8ed6 !important;
+    }
+
+    .countdown-timer {
+        position: absolute;
+        top: 42vh;
+        left: 0;
+        width: 100%;
+        height: 15vh;
+        line-height: 15vh;
+        text-align: center;
+        color: white;
+        font-size: 15vh;
+    }
+
+    .custom-blur {
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -ms-filter: blur(5px);
+        -o-filter: blur(5px);
+        filter: blur(5px);
+        height: 100vh;
+        overflow: hidden;
+    }
+</style>
+
 <script type="text/javascript">
+
     $('#navbar').hide();
-    textanim();
-    document.getElementById('intro').play();
-    document.getElementById("intro").volume = 0.67;
-    document.getElementById("theme").volume = 0.67;
-    document.getElementById("word_sound").volume = 1.0;
     
+    function play_sound(){
+        document.getElementById('intro').play();
+        document.getElementById("intro").volume = 0.67;
+        document.getElementById("theme").volume = 0.67;
+        document.getElementById("word_sound").volume = 1.0;
+    }
+
     function callback() {
         document.getElementById('video-bg').currentTime = 9;
         document.getElementById('video-bg').play();
         document.getElementById('intro').pause();
         document.getElementById('word_sound').play();
-        MyApp.timer = startTimer('<%=@game.wait_seconds.to_i - 1 %>', document.getElementById('timerall'));
         document.getElementById('theme').play();
-        
     };
+
+
+    function pauseGame(){
+        $('#logo').css('display','none');
+        $('#avatar').css('display','none');
+        $('.countdown').css('display','none');
+        $('#word').css('display','none');
+        $('.penta-img').css('display', 'none');
+        $('.countdown-timer').css('display','block');
+        $("#play-contant").addClass("custom-blur");
+        document.getElementById('video-bg').pause()
+        // document.getElementById('theme').pause();
+    }
+
+    function resumeGame(){
+        $('#logo').css('display','block');
+        $('#avatar').css('display','block');
+        $('.countdown').css('display','block');
+        $('#word').css('display','block');
+        $('.penta-img').css('display', 'inline-flex');
+        $('.countdown-timer').css('display','none');
+        $("#play-contant").removeClass("custom-blur");
+        $('.countdown-timer').remove();
+
+        document.getElementById('intro').play();
+        document.getElementById("intro").volume = 0.67;
+        document.getElementById("theme").volume = 0.67;
+        document.getElementById("word_sound").volume = 1.0;
+    }
     
 
+    
+    var countdown_timer = $('<div class="countdown-timer zoomIn">5</div>')
+    $("body").append(countdown_timer);
+    pauseGame();
+
+    var current_progress = 4;
+	$('.countdown-timer').addClass('animat');
+    var interval = setInterval(function() {
+		$('.countdown-timer').text(current_progress);
+		current_progress -= 1;
+		if (current_progress <= -1){
+			clearInterval(interval);
+			resumeGame();
+			textanim();
+			callback();
+			document.getElementById('theme').pause();
+			play_sound();
+			MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
+		}
+	}, 1000);
+    
     
     function startTimer(duration, display) {
         var timer = duration, minutes, seconds;
@@ -81,7 +162,7 @@
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
                 if(executed== false){
-                    $("#play-contant").removeClass("blur")
+                    $("#play-contant").removeClass("play-content-blur")
                     $("#myModal").remove()
                     startAnimation($("#avatar"))
                     document.getElementById('video-bg').play()
@@ -151,6 +232,7 @@
         });
         MyApp.timer.pause()
         var timer = duration, minutes, seconds;
+        console.log(timer)
         var executed = false;
         var interval =  duration;
         var t = parseInt(duration);
@@ -185,6 +267,7 @@
         return {pause: pause, time: t}
 
     };
+
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_rate_path %>');
