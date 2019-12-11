@@ -94,6 +94,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'whenever', require: false
 
 # QR code generator
-# gem 'barby'
-# gem 'cairo'
-# gem 'rqrcode'
+gem 'barby'
+gem 'cairo'
+gem 'rqrcode'
