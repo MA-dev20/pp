@@ -123,7 +123,6 @@
 			document.getElementById('theme').pause();
             play_sound();
             document.getElementById('intro').play();
-            document.getElementById('word_sound').play();
             MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
             MyApp.timer.pause()
 		}

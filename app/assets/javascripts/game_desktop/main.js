@@ -105,6 +105,7 @@ const resolver = {
             if (partialString.length == options.resolveString.length){
               document.getElementById('intro').pause();
               document.getElementById('theme').play();
+              document.getElementById('word_sound').play();
               MyApp.timer.resume()
               return
             }
