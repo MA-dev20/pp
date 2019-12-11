@@ -76,7 +76,7 @@
     function callback() {
         document.getElementById('video-bg').currentTime = 9;
         document.getElementById('video-bg').play();
-        document.getElementById('intro').pause();
+        // document.getElementById('intro').pause();
         // document.getElementById('word_sound').play();
         document.getElementById('theme').play();
     };
@@ -125,9 +125,8 @@
             play_sound();
             document.getElementById('intro').play();
             document.getElementById('word_sound').play();
-			MyApp.timer = function(){
-                startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
-            }
+            MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
+            MyApp.timer.pause()
 		}
 	}, 1000);
     
@@ -154,6 +153,7 @@
         }
         var resume = function(){
             var executed = false;
+            console.log('hi')
             setTimer = setInterval(function () {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);

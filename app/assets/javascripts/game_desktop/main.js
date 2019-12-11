@@ -103,7 +103,9 @@ const resolver = {
             element.textContent = partialString;
 
             if (partialString.length == options.resolveString.length){
-              MyApp.timer()
+              document.getElementById('intro').pause();
+              MyApp.timer.resume()
+              return
             }
           } else {
 
