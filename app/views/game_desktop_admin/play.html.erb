@@ -19,7 +19,7 @@
    Skip mit Leertaste
 </section>
 
-<%= audio_tag("play/intro.mp3", autoplay: false, loop: true, id: 'intro') %>
+<%= audio_tag("play/intro.mp3", autoplay: false, loop: false, id: 'intro') %>
 <%= audio_tag(@word.sound, id: "word_sound") %>
 <%= audio_tag('play/theme.mp3', id: 'theme') %>
 <%= audio_tag('play/AufdenPunkt.mp3', id: 'sound_1') %>
@@ -67,7 +67,7 @@
     $('#navbar').hide();
     
     function play_sound(){
-        document.getElementById('intro').play();
+        // document.getElementById('intro').play();
         document.getElementById("intro").volume = 0.67;
         document.getElementById("theme").volume = 0.67;
         document.getElementById("word_sound").volume = 1.0;
@@ -77,7 +77,7 @@
         document.getElementById('video-bg').currentTime = 9;
         document.getElementById('video-bg').play();
         document.getElementById('intro').pause();
-        document.getElementById('word_sound').play();
+        // document.getElementById('word_sound').play();
         document.getElementById('theme').play();
     };
 
@@ -103,11 +103,6 @@
         $('.countdown-timer').css('display','none');
         $("#play-contant").removeClass("custom-blur");
         $('.countdown-timer').remove();
-
-        // document.getElementById('intro').play();
-        // document.getElementById("intro").volume = 0.67;
-        // document.getElementById("theme").volume = 0.67;
-        // document.getElementById("word_sound").volume = 1.0;
     }
     
 
@@ -125,10 +120,14 @@
 			clearInterval(interval);
 			resumeGame();
 			textanim();
-			callback();
+            callback();
 			document.getElementById('theme').pause();
-			play_sound();
-			MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
+            play_sound();
+            document.getElementById('intro').play();
+            document.getElementById('word_sound').play();
+			MyApp.timer = function(){
+                startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
+            }
 		}
 	}, 1000);
     

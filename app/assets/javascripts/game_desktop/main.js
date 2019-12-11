@@ -92,7 +92,6 @@ const resolver = {
       const timeout = options.timeout;
       const element = options.element;
       const partialString = options.partialString;
-
       let iterations = options.iterations;
 
       setTimeout(() => {
@@ -100,16 +99,21 @@ const resolver = {
           const nextOptions = Object.assign({}, options, {iterations: iterations - 1});
 
           // Ensures partialString without the random character as the final state.
-          if (iterations === 0) {
+          if (iterations == 0) {
             element.textContent = partialString;
+
+            if (partialString.length == options.resolveString.length){
+              MyApp.timer()
+            }
           } else {
-            // Replaces the last character of partialString with a random character
+
             element.textContent = partialString.substring(0, partialString.length - 1) + randomCharacter(characters);
           }
 
           doRandomiserEffect(nextOptions, callback)
         } else if (typeof callback === "function") {
           callback(); 
+        }else{
         }
       }, options.timeout);
     };
