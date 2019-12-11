@@ -104,6 +104,7 @@ const resolver = {
 
             if (partialString.length == options.resolveString.length){
               document.getElementById('intro').pause();
+              document.getElementById('theme').play();
               MyApp.timer.resume()
               return
             }
