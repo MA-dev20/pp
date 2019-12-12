@@ -272,8 +272,8 @@ class GameMobileAdminController < ApplicationController
   end
     
   def replay
-    @admin = current_admin
-    @game = current_game
+    @game.replay = true
+    @game.save!
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
       @game.turns.update_all(status: "ended")

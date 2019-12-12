@@ -31,6 +31,7 @@ class GameDesktopAdminController < ApplicationController
 	end
 	@game.update(active: false, state: 'intro')
   end
+  
   def youtube_video
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
     if @turns.count <= 1

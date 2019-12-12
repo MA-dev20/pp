@@ -43,7 +43,7 @@ class GamesController < ApplicationController
       if @game.save
         set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
         set_objections_for_game(@game, params[:game][:objections])
-		set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
+		    set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
         sign_in(@game)
         # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
         session[:game_session_id] = @game.id
