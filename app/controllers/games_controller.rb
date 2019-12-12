@@ -21,7 +21,7 @@ class GamesController < ApplicationController
     if params[:game][:team_id].nil?
       redirect_to dash_admin_path()
       return
-    elsif params[:game][:password].empty? || params[:game][:baskets].first.empty? || params[:game][:objections].first.empty?
+    elsif params[:game][:password].empty? || params[:game][:baskets]&.first&.empty? || params[:game][:objections]&.first&.empty?
       redirect_to dash_admin_games_path(params[:game][:team_id])
       return
     end
@@ -30,7 +30,7 @@ class GamesController < ApplicationController
       @game.turns.update_all(status: 'ended')
       set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
       set_objections_for_game(@game, params[:game][:objections])
-	  set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
+	    set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
       sign_in(@game)
       # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
       redirect_to gda_wait_path
