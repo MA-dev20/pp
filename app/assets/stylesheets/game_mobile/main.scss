@@ -150,7 +150,8 @@ body {
 .head h1 {
     padding-top: 15px;
     font-size: 70px;
-    font-weight: 700;
+    font-weight: 500;
+	font-family: 'Barack-Medium';
 }
 .head h3 {
     font-size: 40px;
@@ -418,7 +419,7 @@ body {
 .link,
 .bottom > a,
 .bottom > input[type=submit],
-.bottom > button {
+.bottom button {
     top: 5vh;
     background-color: #1ddaaf;
     color: white;
@@ -858,6 +859,12 @@ input[type='radio'] {
   height: 100%;
   min-height: 100%;
   width: 115vh;
+}
+.middle-content .text {
+	position: absolute;
+	bottom: 0;
+	font-size: 40px;
+	line-height: 45px;
 }
 .middlePlay-top {
   top: 22vh;

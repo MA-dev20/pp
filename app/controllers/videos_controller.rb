@@ -21,12 +21,12 @@ class VideosController < ApplicationController
   end
 	
   def destroy
-	if !@video.destroy
-	  flash[:danger] = 'Konnte Video nicht löschen!'
-	  redirect_to dash_admin_video_edit_path(@video)
-	  return
-	else
+	if @video.destroy
 	  redirect_to dash_admin_video_tool_path
+	else
+	  flash[:danger] = 'Konnte Video nicht löschen!'
+	  redirect_to dash_admin_video_tool_path
+	  return
 	end
 	
   end

@@ -13,8 +13,8 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 
 .animat {
-	animation-duration: 1s;
-	animation-iteration-count: 5;
+	animation-duration: 0.5s;
+	animation-name: zoomIn;
 }
 body {
     font-family: 'BarackPro-Solid';
@@ -199,6 +199,30 @@ body {
     font-size: 58px;
     font-weight: bold;
     color: white;
+}
+.video-bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100vw;
+}
+.video-bg #video-blur {
+	position: absolute;
+	bottom: -20px;
+	left: -20px;
+	object-fit: fill;
+	min-height: calc(100% + 40px);
+	min-width: calc(100% + 40px);
+	filter: blur(10px);
+}
+.video-bg #video {
+	position: relative;
+	top: 0;
+	left: 50%;
+	height: 100%;
+	margin: 0 auto;
+	transform: translateX(-50%);
 }
 #video-bg {
     position: fixed;

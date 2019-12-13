@@ -36,7 +36,7 @@
     animation-fill-mode: forwards;
 }
 #bottom .progress {    
-    height: 2.545vh;
+    height: 5vh;
     max-width: 109.7vh;
     width: 100%;
     animation-name: fadefill;

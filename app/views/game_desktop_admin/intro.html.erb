@@ -1,6 +1,9 @@
-
 <% if @video %>
-<%= video_tag @video, id: 'video-bg', autoplay: false, controls: false, onended: 'redir()' %>
+<div class="video-bg">
+	<%= video_tag @video, id: 'video-blur', autoplay: false, controls: false, muted: true %>
+	<%= video_tag @video, id: 'video', autoplay: false, controls: false, onended: 'redir()' %>	
+</div>
+
 <% else %>
 <%= video_tag 'gameintro.mp4', id: 'video-bg', autoplay: false, controls: false, onended: 'redir()' %>
 <% end %>
@@ -9,7 +12,12 @@
 </section>
 <script>
     $('#navbar').hide();
+	<% if @video %>
+	document.getElementById('video-blur').play();
+	document.getElementById('video').play();
+	<% else %>
     document.getElementById('video-bg').play();
+	<% end %>
     function redir() {
         window.location.replace('<%= gda_choose_path %>');
     }

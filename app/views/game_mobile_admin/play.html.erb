@@ -25,29 +25,30 @@
         </svg>
         <i class="fa fa-times"></i>
       </button>
-      <p class="play-time-para nunito-regular">Video wird gespiehert...</p>
+      <p class="play-time-para nunito-regular">Video wird gespeichert...</p>
     </div>
   </div>
   <% else %>
   <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', style: "display: block" %>
   <div class="middle-content">
-    <div class="bottom spinner-div">
-      <%= image_tag 'spinner.gif', class: 'spinner mid-img pulse' %>
+    <div class="text">
+      Dein Video wird in anderem Tab hochgeladen!
     </div>
   </div>
   <% end %>
 </div>
 <% if params[:video] == 'true' && !params[:wait] %>
-<div class="bottom bottom-play video-upload-wrapper">
+<div class="bottom video-upload-wrapper">
   <div class="upload-btn-wrapper">
     <button class="video-btn nunito-regular">Open Camera</button>
     <input id="video" type="file" name="video" accept="video/*" capture="environment" class="video-file">
   </div>
 </div>
-<% end %>
-<div class="bottom bottom-play" style="display: block !important; top: <%= @record ? '88% !important' : '66% !important'%>;">
+<% else %>
+<div class="bottom" style="display: block !important">
   <%= link_to 'weiter!', gma_rate_path, class: 'nunito-regular' %>
 </div>
+<% end %>
 
 <div class="modal modal-choice" id="myModal">
   <div class="modal-dialog modal-dialog-centered">

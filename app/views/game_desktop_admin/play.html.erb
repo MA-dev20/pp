@@ -31,8 +31,7 @@
 <%= audio_tag('play/Mail.mp3', id: 'sound_7') %>
 <%= audio_tag('play/Quatsch.mp3', id: 'sound_8') %>
 <%= audio_tag('play/Referenzen.mp3', id: 'sound_9') %>
-
-
+<%= audio_tag('play/countdown.mp3', id: 'countdown') %>
 
 <style>
     body {
@@ -41,14 +40,14 @@
 
     .countdown-timer {
         position: absolute;
-        top: 42vh;
+        top: 35vh;
         left: 0;
         width: 100%;
-        height: 15vh;
-        line-height: 15vh;
+        height: 30vh;
+        line-height: 30vh;
         text-align: center;
         color: white;
-        font-size: 15vh;
+        font-size: 30vh;
     }
 
     .custom-blur {
@@ -106,27 +105,33 @@
     
 
     
-    var countdown_timer = $('<div class="countdown-timer zoomIn">5</div>')
+    var countdown_timer = $('<div class="countdown-timer">5</div>')
     $("body").append(countdown_timer);
     pauseGame();
+	document.getElementById('countdown').play();
 
-    var current_progress = 4;
-	$('.countdown-timer').addClass('animat');
+    var current_progress = 9;
     var interval = setInterval(function() {
-		$('.countdown-timer').text(current_progress);
+		if(current_progress % 2 == 0) {
+			$('.countdown-timer').text(current_progress / 2);	
+			$('.countdown-timer').addClass('animat');
+		} else {
+			$('.countdown-timer').removeClass('animat');
+		}
 		current_progress -= 1;
-		if (current_progress <= -1){
+		if (current_progress <= 0){
 			clearInterval(interval);
 			resumeGame();
 			textanim();
             callback();
+			document.getElementById('countdown').pause();
 			document.getElementById('theme').pause();
             play_sound();
             document.getElementById('intro').play();
             MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
             MyApp.timer.pause()
 		}
-	}, 1000);
+	}, 500);
     
     
     function startTimer(duration, display) {

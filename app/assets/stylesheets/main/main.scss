@@ -655,6 +655,9 @@ label .red {
     width: 100%;
     padding: 30px 0;
 }
+.dots.margin-top {
+	padding: 20px 0 40px;
+}
 .dots .dot {
     position: relative;
     left: calc(50% - 25px);
@@ -785,6 +788,79 @@ label .red {
 }
 #content .image-text .text .content .btn {
     margin: 20px 0 0 0;
+}
+#smartphone {
+	position: relative;
+	width: 100%;
+}
+#smartphone .head {
+	line-height: 32px;
+	height: 32px !important;
+	font-size: 26px;
+	font-weight: bold;
+	text-align: center;
+}
+#smartphone .head-text {
+	text-align: center;
+	max-width: 400px;
+	margin: 20px auto;
+	color: #667093;
+}
+#smartphone .text {
+	width: 100%;
+	color: #667093;
+	margin-bottom: 10px;
+}
+#smartphone .text h5 {
+	color: #4394ec;
+	font-size: 13px;
+	line-height: 20px;
+	font-weight: 600;
+	margin: 20px 0 0 0;
+}
+#smartphone .left,
+#smartphone .left,
+#smartphone .right {
+	width: 240px;
+	margin: 0 auto;
+	color: #667093;
+}
+#smartphone .left {
+	text-align: center;
+}
+#smartphone .right {
+	text-align: center;
+}
+#smartphone .line {
+	position: relative;
+	height: 3px;
+	background-color: #16e2a5;
+	display: none;
+}
+#smartphone .line .dot {
+	position: absolute;
+	top: -3px;
+	height: 9px;
+	width: 9px;
+	border-radius: 50%;
+	background-color: #16e2a5;
+}
+
+#smartphone .left .line .dot {
+	right: -3px;
+}
+#smartphone .right .line .dot {
+	left: -3px;
+}
+#smartphone .shadow {
+	display: none;
+	height: 80px;
+	background-image: linear-gradient(to top, rgba(155,165,235,0), rgba(155,165,235,0.1) )
+}
+#smartphone .image {
+	position: relative;
+	width: 257px;
+	margin: 0 auto;
 }
 
 #content .testimonials {
@@ -1215,6 +1291,31 @@ label .red {
         margin: 0 100px;
         width: 500px;
     }
+	#smartphone .left {
+		position: absolute;
+		left: 0;
+		top: 250px;
+		text-align: left;
+	}
+	#smartphone .right {
+		position: absolute;
+		right: 0;
+		top: 400px;
+		text-align: right;
+	}
+	#smartphone .left,
+	#smartphone .right {
+		width: 220px;
+	}
+	#smartphone .text {
+		width: 200px;
+	}
+	#smartphone .line {
+		display: block;
+	}
+	#smartphone .shadow {
+		display: block;
+	}
 	#content #secure {
 		width: 700px;
 	}
@@ -1383,6 +1484,19 @@ label .red {
     #content .image-text.right .text {
         left: 100px;
     }
+	#smartphone .left,
+	#smartphone .right {
+		width: 240px;
+	}
+	#smartphone .left {
+		margin-left: 70px;
+	}
+	#smartphone .right {
+		margin-right: 70px;
+	}
+	#smartphone .right .text {
+		margin-left: 40px;
+	}
     #content #hiw {
         left: 0;
         width: 900px;
@@ -1570,6 +1684,12 @@ label .red {
     #content .image-text.right .text {
         left: 100px;
     }
+	#smartphone .left {
+		margin-left: 170px;
+	}
+	#smartphone .right {
+		margin-right: 170px;
+	}
     #content #hiw {
         position: relative;
         left: 0;
@@ -1755,13 +1875,13 @@ label .red {
     }
     #shape8 {
         display: block;
-        top: 3400px;
+        top: 3200px;
         left: -50px;
         z-index: -10;
     }
     #shape9 {
         display: block;
-        top: 3800px;
+        top: 4200px;
         left: 1100px;
         z-index: -10;
     }
@@ -1889,6 +2009,12 @@ label .red {
         left: 150px;
         text-align: right;
     }
+	#smartphone .left {
+		margin-left: 270px;
+	}
+	#smartphone .right {
+		margin-right: 270px;
+	}
     #content #hiw {
         left: 100px;
 	}
