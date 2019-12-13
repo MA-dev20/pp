@@ -655,6 +655,9 @@ label .red {
     width: 100%;
     padding: 30px 0;
 }
+.dots.margin-top {
+	padding: 20px 0 40px;
+}
 .dots .dot {
     position: relative;
     left: calc(50% - 25px);
@@ -804,13 +807,18 @@ label .red {
 	color: #667093;
 }
 #smartphone .text {
-	width: 200px;
+	width: 100%;
 	color: #667093;
 	margin-bottom: 10px;
 }
-#smartphone .right .text {
-	margin-left: 40px;
+#smartphone .text h5 {
+	color: #4394ec;
+	font-size: 13px;
+	line-height: 20px;
+	font-weight: 600;
+	margin: 20px 0 0 0;
 }
+#smartphone .left,
 #smartphone .left,
 #smartphone .right {
 	width: 240px;
@@ -818,15 +826,16 @@ label .red {
 	color: #667093;
 }
 #smartphone .left {
-	text-align: left;
+	text-align: center;
 }
 #smartphone .right {
-	text-align: right;
+	text-align: center;
 }
 #smartphone .line {
 	position: relative;
 	height: 3px;
 	background-color: #16e2a5;
+	display: none;
 }
 #smartphone .line .dot {
 	position: absolute;
@@ -846,7 +855,7 @@ label .red {
 #smartphone .shadow {
 	display: none;
 	height: 80px;
-	background-image: linear-gradient(to bottom, rgba(155,165,235,.1), rgba(155,165,235,0) )
+	background-image: linear-gradient(to top, rgba(155,165,235,0), rgba(155,165,235,0.1) )
 }
 #smartphone .image {
 	position: relative;
@@ -1286,18 +1295,23 @@ label .red {
 		position: absolute;
 		left: 0;
 		top: 250px;
+		text-align: left;
 	}
 	#smartphone .right {
 		position: absolute;
 		right: 0;
-		top: 450px;
+		top: 400px;
+		text-align: right;
 	}
 	#smartphone .left,
 	#smartphone .right {
 		width: 220px;
 	}
-	#smartphone .right .text {
-		margin-left: 20px;
+	#smartphone .text {
+		width: 200px;
+	}
+	#smartphone .line {
+		display: block;
 	}
 	#smartphone .shadow {
 		display: block;
