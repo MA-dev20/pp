@@ -63,7 +63,7 @@ class GamesController < ApplicationController
 
     def set_words_for_game(game, baskets, seconds)
       game.wait_seconds = seconds
-      game.uses_peterwords = true if baskets.include?("pp")
+      game.uses_peterwords = true if baskets&.include?("pp")
       baskets-= ["pp"]
       game.own_words = true if !baskets.empty?
       game.save!
