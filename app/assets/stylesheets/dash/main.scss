@@ -199,7 +199,16 @@ body {
 #sidebar .links .link:hover .text{
     color: #0e0e0e;
 }
-
+#sidebar .logo {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 25.6vh;
+}
+#sidebar .logo img {
+	width: 10vh;
+	margin: 2.8vh;
+}
 
 #content {
     position: fixed;
