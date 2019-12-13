@@ -65,7 +65,7 @@ class GamesController < ApplicationController
       game.wait_seconds = seconds
       game.uses_peterwords = true if baskets&.include?("pp")
       baskets-= ["pp"] if baskets.present?
-      game.own_words = true if !baskets.empty?
+      game.own_words = true if !baskets&.empty?
       game.save!
       words = CatchwordsBasket.includes(:words).where('id IN (?)', baskets).map(&:words).flatten!
       game.build_catchword_basket.save! if game.catchword_basket.nil?
