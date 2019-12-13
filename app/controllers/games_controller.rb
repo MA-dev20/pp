@@ -41,7 +41,9 @@ class GamesController < ApplicationController
     else
       @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
       if @game.save
-        set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
+        # set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
+        set_words_for_game(@game, nil, params[:game][:seconds])
+
         set_objections_for_game(@game, params[:game][:objections])
 		    set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
         sign_in(@game)
@@ -64,8 +66,8 @@ class GamesController < ApplicationController
     def set_words_for_game(game, baskets, seconds)
       game.wait_seconds = seconds
       game.uses_peterwords = true if baskets&.include?("pp")
-      baskets-= ["pp"]
-      game.own_words = true if !baskets.empty?
+      baskets-= ["pp"] if baskets.present?
+      game.own_words = true if !baskets&.empty?
       game.save!
       words = CatchwordsBasket.includes(:words).where('id IN (?)', baskets).map(&:words).flatten!
       game.build_catchword_basket.save! if game.catchword_basket.nil?
