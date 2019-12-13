@@ -46,21 +46,9 @@ module ApplicationHelper
     end
     return @show_three
   end
-  
-  # def generate_qr(text)
-  #   require 'barby'
-  #   require 'rqrcode'
-  #   require 'barby/barcode/qr_code'
-  #   require 'barby/outputter/svg_outputter'
-  #   require 'barby/outputter/cairo_outputter'
 
-  #   qr = Barby::QrCode.new(text, level: :q, size: 15)
-  #   svg = Barby::CairoOutputter.new(qr).to_svg({ xdim: 5, margin: 0 })
-  #   svg.sub!('<svg ', '<svg preserveAspectRatio="none" ')
-  #   svg.sub!('rgb(100%,100%,100%)', 'white')
-  #   svg.sub!('rgb(0%,0%,0%)', 'rgb(20, 93, 170)')
-  #   svg.sub!('385', '200')
-  #   svg.sub!('385', '200')
-  #   "data:image/svg+xml;utf8,#{svg.gsub(/\n/, '')}"
-  # end
+  def generate_qr(text)
+    RQRCode::QRCode.new( text, :size => 15, :level => :h )
+  end
+
 end
