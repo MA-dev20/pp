@@ -295,7 +295,6 @@
         $('#preview').hide();
         clearTimeout(timertime);
         $('#recording').show();
-        debugger
         var blob = e.data;
         var file = new window.File([blob], ['video_', (new Date() + '').slice(4, 28), '.webm'].join(''))
         form = new FormData();
