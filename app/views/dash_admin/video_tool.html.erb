@@ -84,8 +84,8 @@
       <div class="head left">Video Uploads</div>
       <div class="body" id='videouploadList'>
         <% @admin.videos.each do |v| %>
-        <div class="video-karte videoSearch" style="background-image: url('<%= v.file.thumb.url.present? ? asset_path(v.file.thumb.url) : '' %>'", onclick='editVideo(<%= v.id %>)')>
-          <div class="overlay"></div>
+        <div class="video-karte videoSearch" style="background-image: url('<%= v.file.thumb.url.present? ? asset_path(v.file.thumb.url) : '' %>'")>
+          <div class="overlay" onclick='editVideo(<%= v.id %>)'></div>
           <div class="title"><%= v.name %></div>
           <div class="duration"></div>
           <%= link_to '', destroy_video_path(v), data: {confirm: 'Bist du sicher das du dieses Video löschen möchtest?'}, class: 'far fa-trash-alt remove' %>
