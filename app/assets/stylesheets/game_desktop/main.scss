@@ -538,10 +538,30 @@ body {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-}
 
-.qr-img-div {
-  border: 2px solid #145daa;
-  padding: 2vh;
-  background-color: white;
+  .qr-img-div {
+    border: 2px solid #145daa;
+    padding: 2vh;
+    background-color: white;
+  }
+
+
+  table {
+    border-width: 0;
+    border-style: none;
+    border-color: #145daa;
+    border-collapse: collapse;
+  }
+
+  td {
+    border-left: solid 0.2em #145daa;
+    padding: 0; 
+    margin: 0; 
+    width: 0; 
+    height: 0.2em; 
+  }
+
+  td.black { border-color: #145daa; }
+  td.white { border-color: #fff; }
+
 }

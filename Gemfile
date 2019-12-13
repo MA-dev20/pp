@@ -95,5 +95,4 @@ gem 'whenever', require: false
 
 # QR code generator
 gem 'barby'
-gem 'cairo'
 gem 'rqrcode'
