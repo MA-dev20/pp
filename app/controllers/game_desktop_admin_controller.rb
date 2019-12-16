@@ -3,6 +3,8 @@ class GameDesktopAdminController < ApplicationController
   before_action :set_turn, only: [:play, :rate, :rating]
     
   layout 'game_desktop'
+	
+  include GameSoundHelper
     
   def wait
     @handy = true
