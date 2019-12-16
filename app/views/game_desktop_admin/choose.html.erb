@@ -22,20 +22,10 @@
     </div>
 </section>
 </section>
-<%= audio_tag("choose/2kandidaten.mp3", id: 'tag1') %>
-<%= audio_tag("choose/2woelfe.mp3", id: 'tag2') %>
-<%= audio_tag("choose/fingerauficons.mp3", id: 'tag3') %>
-<%= audio_tag("choose/handesmartphones.mp3", id: 'tag4') %>
-<%= audio_tag("choose/hatbegonnen.mp3", id: 'tag5') %>
-<%= audio_tag("choose/ichhabefavoriten.mp3", id: 'tag6') %>
-<%= audio_tag("choose/jetztabstimmen.mp3", id: 'tag7') %>
-<%= audio_tag("choose/tipptaufden.mp3", id: 'tag8') %>
-<%= audio_tag("choose/wahlehre.mp3", id: 'tag9') %>
-<%= audio_tag("choose/werpitcht.mp3", id: 'tag10') %>
+<%= audio_tag(choose_sound, autoplay: true) %>
 <%= audio_tag("choose/ping.mp3", id: 'vote_sound') %>
 
 <script>
-    pick(10);
     startTimerModal('14', document.getElementById('timeralli'))
     var left = document.getElementById('left-img');
     var right = document.getElementById('right-img');

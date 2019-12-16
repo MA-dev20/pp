@@ -34,15 +34,9 @@
 <section id="skip" class="nunito-bold">
    Skip mit Leertaste
 </section>
-<%= audio_tag('turn/besonderescatchword.mp3', id: 'tag1') %>
-<%= audio_tag('turn/glaskugel.mp3', id: 'tag2') %>
-<%= audio_tag('turn/lettheshow.mp3', id: 'tag3') %>
-<%= audio_tag('turn/naechstevertriebsleiter.mp3', id: 'tag4') %>
-<%= audio_tag('turn/shakkaduschaffst.mp3', id: 'tag5') %>
-<%= audio_tag('turn/wow.mp3', id: 'tag6') %>
+<%= audio_tag(turn_sound, autoplay: true) %>
 
 <script>
-    pick(6);
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_play_path %>');

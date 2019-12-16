@@ -61,11 +61,7 @@
 <div class="confetti" id="confetti"></div>
 
 
-
-<%= audio_tag('ended/runde.mp3', id: 'tag1') %>
-<%= audio_tag('ended/trommelwirbel.mp3', id: 'tag2') %>
-<%= audio_tag('ended/vorne.mp3', id: 'tag3') %>
-<%= audio_tag('ended/ueberzeugt.mp3', id: 'tag4') %>
+<%= audio_tag(ended_sound, autoplay: true) %>
 
 <script type="text/javascript">
     function confetti(){
@@ -78,7 +74,6 @@
     }
         document.getElementById('confetti').innerHTML = flakes;
     };
-    pick(4);
     setTimeout(function() {
         $('#avatar3').show();
         $('#text3').show();
