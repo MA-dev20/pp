@@ -112,14 +112,14 @@
 
     var current_progress = 9;
     var interval = setInterval(function() {
-		if(current_progress % 2 == 0) {
+		if(current_progress % 2 == 0 && current_progress != 0) {
 			$('.countdown-timer').text(current_progress / 2);	
 			$('.countdown-timer').addClass('animat');
 		} else {
 			$('.countdown-timer').removeClass('animat');
 		}
 		current_progress -= 1;
-		if (current_progress <= 0){
+		if (current_progress <= -2){
 			clearInterval(interval);
 			resumeGame();
 			textanim();
