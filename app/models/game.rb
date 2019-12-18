@@ -22,6 +22,7 @@ class Game < ApplicationRecord
   }
 
   def callback
-      NotificationBroadcastJob.perform_later(self)
+    ActionCable.server.broadcast "game_#{self.id}_channel",
+        game_state: self.state, game_admin_id: self.admin_id
   end
 end
