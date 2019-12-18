@@ -96,3 +96,11 @@ gem 'whenever', require: false
 # QR code generator
 gem 'barby'
 gem 'rqrcode'
+
+# Google api's
+gem 'google-cloud-storage'
+gem 'google-cloud-speech'
+
+# background job
+gem 'delayed_job_active_record'
+gem 'daemons'

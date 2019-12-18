@@ -27,4 +27,96 @@ module VideosHelper
 	  result.each_slice(6)
 	end
 
+	def translate_video(video_path, wait_seconds)
+		require "google/cloud/speech"
+		require "google/cloud/storage"
+
+		project_id = "clean-evening-261613"
+		key_file   = "clean-evening-project-credentials.json"
+		
+		# Convert video to audio
+		video_name = video_path.split('/').last.split('.mp4').first
+		system "ffmpeg -i #{video_path} #{video_name}.flac"
+		video_name_mono = video_name + '-mono'
+		system "ffmpeg -i #{video_name}.flac -ac 1 #{video_name_mono}.flac"
+
+
+		# Upload audio to Google Storage
+		storage = Google::Cloud::Storage.new project: project_id, keyfile: key_file
+		bucket_name = storage.buckets.first.name
+		puts bucket_name
+		bucket  = storage.bucket bucket_name
+		file = bucket.create_file "#{video_name_mono}.flac", "#{video_name_mono}.flac"
+		puts "Uploaded #{file.name}"
+		File.delete("#{video_name_mono}.flac")
+		File.delete("#{video_name}.flac")
+
+
+		# Translate audio to text
+		speech = Google::Cloud::Speech.new
+		storage_path = "gs://audio_bucket-1/#{video_name_mono}.flac"
+		config = { encoding: :FLAC,
+				language_code: "de-DE" }
+		audio = { uri: storage_path }
+		operation = speech.long_running_recognize config, audio
+
+		audio_text = ''
+		puts "Operation started"
+		if !operation.nil?
+			operation.wait_until_done!
+			raise operation.results.message if operation.error?
+			results = operation.response.results
+			results.each do |result|
+				audio_text << result.alternatives.first.transcript
+				puts "Transcription: #{result.alternatives.first.transcript}"
+			end
+		end
+
+		if audio_text.present?
+			# return words_count(audio_text)
+			do_words_count = 0
+			dont_words_count = 0
+			do_words = ['hello', 'hallo']
+			dont_words = ['friends', 'so']
+
+			audio_text_array = audio_text.split()
+			audio_text_array.map!(&:downcase)
+			do_words.each do |word|
+				do_words_count += audio_text_array.count(word.downcase)
+			end
+			dont_words.each do |word|
+				dont_words_count += audio_text_array.count(word.downcase)
+			end
+			if wait_seconds == 80
+				wpm = audio_text.length/1.34
+			elsif wait_seconds == 150
+				wpm = audio_text.length/2.5
+			else
+				wpm = audio_text.length/5
+			end
+			return do_words_count, dont_words_count, wpm.round
+		else
+			return 0, 0, 0
+		end
+	end
+
+	# def words_count(audio_text)
+	# 	# Do words and Don't words count
+	# 	do_words_count = 0
+	# 	dont_words_count = 0
+	# 	do_words = ['promotes', 'the']
+	# 	dont_words = ['friends', 'so']
+
+	# 	audio_text_array = audio_text.split()
+
+	# 	do_words.each do |word|
+	# 	  do_words_count += audio_text_array.count(word)
+	# 	end
+
+	# 	dont_words.each do |word|
+	# 	  dont_words_count += audio_text_array.count(word)
+	# 	end
+	# 	return do_words_count, dont_words_count, 0
+	# end
+
 end
