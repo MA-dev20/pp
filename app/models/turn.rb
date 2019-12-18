@@ -1,4 +1,6 @@
 class Turn < ApplicationRecord
+  include VideosHelper
+
   belongs_to :game
   belongs_to :user, required: false
   belongs_to :admin, required: false
@@ -25,7 +27,16 @@ class Turn < ApplicationRecord
       movie = FFMPEG::Movie.new(self.recorded_pitch.path)
       self.recorded_pitch_duration = movie.duration
       self.save!
+      TranslateVideoJob.perform_later(self)  
     end
+  end
+
+  def video_to_text
+    values = translate_video(self.recorded_pitch.path, self.game.wait_seconds)
+    self.do_words = values[0]
+    self.dont_words = values[1]
+    self.words_count = values[2]
+    self.save!
   end
 end
 

@@ -50,4 +50,5 @@ module ApplicationHelper
   def generate_qr(text)
     RQRCode::QRCode.new( text, :size => 15, :level => :h )
   end
+
 end
