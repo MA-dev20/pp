@@ -55,6 +55,8 @@ module VideosHelper
 		# Translate audio to text
 		speech = Google::Cloud::Speech.new
 		storage_path = "gs://audio_bucket-1/#{video_name_mono}.flac"
+		# storage_path = "gs://audio_bucket-1/sandra-mono.flac"
+
 		config = { encoding: :FLAC,
 				language_code: "de-DE" }
 		audio = { uri: storage_path }
@@ -76,8 +78,8 @@ module VideosHelper
 			# return words_count(audio_text)
 			do_words_count = 0
 			dont_words_count = 0
-			do_words = ['hello', 'hallo']
-			dont_words = ['friends', 'so']
+			do_words = ['hello', 'hallo', 'hi', 'the', 'hye', 'good', 'word']
+			dont_words = ['bad', 'wrong', 'false']
 
 			audio_text_array = audio_text.split()
 			audio_text_array.map!(&:downcase)

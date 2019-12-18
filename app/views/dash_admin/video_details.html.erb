@@ -120,6 +120,14 @@
             <div class="mute" onclick="muteVideo()"><i class="fas fa-volume-up" id="videoMute"></i></div>
         </div>
     </div>
+    <div class="text" style="display: flex">
+        <p>Do Words Count: <%= @turn.do_words %>,</p>
+        <p>Dont Words Count: <%= @turn.dont_words %>,</p>
+        <p>Words per minute: <%= @turn.words_count %>,</p>
+        <% if @turn.video_text.present? %>
+            <p>Video text: <%= @turn.video_text[0,10] %></p>
+        <% end %>
+    </div>
     <div class="right-part">
         <div class="karte" id="commentCard">
             <% @comments.each do |c| %>
