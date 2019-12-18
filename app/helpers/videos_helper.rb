@@ -94,9 +94,9 @@ module VideosHelper
 			else
 				wpm = audio_text.length/5
 			end
-			return do_words_count, dont_words_count, wpm.round
+			return audio_text, do_words_count, dont_words_count, wpm.round
 		else
-			return 0, 0, 0
+			return '', 0, 0, 0
 		end
 	end
 
