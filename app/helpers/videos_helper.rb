@@ -66,8 +66,8 @@ module VideosHelper
 	def text_parsing(audio_text, wait_seconds)
 		do_words_count = 0
 		dont_words_count = 0
-		do_words = ['hello', 'hallo', 'hi', 'the', 'hye', 'good', 'word']
-		dont_words = ['bad', 'wrong', 'false']
+		do_words = ['hello', 'hallo', 'hi', 'the', 'hye', 'good', 'word', 'Guten Tag', 'Danke', 'Wie geht es']
+		dont_words = ['bad', 'wrong', 'false', 'würde', 'hätte', 'könnte', 'teuer', 'blöd']
 
 		audio_text_array = audio_text.split()
 		audio_text_array.map!(&:downcase)
