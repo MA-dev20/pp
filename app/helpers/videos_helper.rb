@@ -35,27 +35,27 @@ module VideosHelper
 		key_file   = "clean-evening-project-credentials.json"
 		
 		# Convert video to audio
-		video_name = video_path.split('/').last.split('.mp4').first
-		system "ffmpeg -i #{video_path} #{video_name}.flac"
-		video_name_mono = video_name + '-mono'
-		system "ffmpeg -i #{video_name}.flac -ac 1 #{video_name_mono}.flac"
+		# video_name = video_path.split('/').last.split('.mp4').first
+		# system "ffmpeg -i #{video_path} #{video_name}.flac"
+		# video_name_mono = video_name + '-mono'
+		# system "ffmpeg -i #{video_name}.flac -ac 1 #{video_name_mono}.flac"
 
 
-		# Upload audio to Google Storage
-		storage = Google::Cloud::Storage.new project: project_id, keyfile: key_file
-		bucket_name = storage.buckets.first.name
-		puts bucket_name
-		bucket  = storage.bucket bucket_name
-		file = bucket.create_file "#{video_name_mono}.flac", "#{video_name_mono}.flac"
-		puts "Uploaded #{file.name}"
-		File.delete("#{video_name_mono}.flac")
-		File.delete("#{video_name}.flac")
+		# # Upload audio to Google Storage
+		# storage = Google::Cloud::Storage.new project: project_id, keyfile: key_file
+		# bucket_name = storage.buckets.first.name
+		# puts bucket_name
+		# bucket  = storage.bucket bucket_name
+		# file = bucket.create_file "#{video_name_mono}.flac", "#{video_name_mono}.flac"
+		# puts "Uploaded #{file.name}"
+		# File.delete("#{video_name_mono}.flac")
+		# File.delete("#{video_name}.flac")
 
 
 		# Translate audio to text
 		speech = Google::Cloud::Speech.new
-		storage_path = "gs://audio_bucket-1/#{video_name_mono}.flac"
-		# storage_path = "gs://audio_bucket-1/sandra-mono.flac"
+		# storage_path = "gs://audio_bucket-1/#{video_name_mono}.flac"
+		storage_path = "gs://audio_bucket-1/video_Dec_19_2019_11_02_33_GMT-mono.flac"
 
 		config = { encoding: :FLAC,
 				language_code: "de-DE" }
