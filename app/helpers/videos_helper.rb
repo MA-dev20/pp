@@ -35,27 +35,62 @@ module VideosHelper
 		key_file   = "clean-evening-project-credentials.json"
 		
 		# Convert video to audio
-		# video_name = video_path.split('/').last.split('.mp4').first
-		# system "ffmpeg -i #{video_path} #{video_name}.flac"
-		# video_name_mono = video_name + '-mono'
-		# system "ffmpeg -i #{video_name}.flac -ac 1 #{video_name_mono}.flac"
+		video_name = video_path.split('/').last.split('.mp4').first
+		system "ffmpeg -i #{video_path} #{video_name}.flac"
+		video_name_mono = video_name + '-mono'
+		system "ffmpeg -i #{video_name}.flac -ac 1 #{video_name_mono}.flac"
 
 
-		# # Upload audio to Google Storage
-		# storage = Google::Cloud::Storage.new project: project_id, keyfile: key_file
-		# bucket_name = storage.buckets.first.name
-		# puts bucket_name
-		# bucket  = storage.bucket bucket_name
-		# file = bucket.create_file "#{video_name_mono}.flac", "#{video_name_mono}.flac"
-		# puts "Uploaded #{file.name}"
-		# File.delete("#{video_name_mono}.flac")
-		# File.delete("#{video_name}.flac")
+		# Upload audio to Google Storage
+		storage = Google::Cloud::Storage.new project: project_id, keyfile: key_file
+		bucket_name = storage.buckets.first.name
+		puts bucket_name
+		bucket  = storage.bucket bucket_name
+		file = bucket.create_file "#{video_name_mono}.flac", "#{video_name_mono}.flac"
+		puts "Uploaded #{file.name}"
+		File.delete("#{video_name_mono}.flac")
+		File.delete("#{video_name}.flac")
 
 
 		# Translate audio to text
+		audio_text = encode_text video_name_mono
+		if audio_text.present?
+			return text_parsing(audio_text, wait_seconds)
+		else
+			audio_text = encode_text video_name_mono
+			return text_parsing(audio_text, wait_seconds) if audio_text.present?
+			return '', 0, 0, 0
+		end
+	end
+
+	def text_parsing(audio_text, wait_seconds)
+		do_words_count = 0
+		dont_words_count = 0
+		do_words = ['hello', 'hallo', 'hi', 'the', 'hye', 'good', 'word']
+		dont_words = ['bad', 'wrong', 'false']
+
+		audio_text_array = audio_text.split()
+		audio_text_array.map!(&:downcase)
+		do_words.each do |word|
+			do_words_count += audio_text_array.count(word.downcase)
+		end
+		dont_words.each do |word|
+			dont_words_count += audio_text_array.count(word.downcase)
+		end
+		if wait_seconds == 80
+			wpm = audio_text.length/1.34
+		elsif wait_seconds == 150
+			wpm = audio_text.length/2.5
+		else
+			wpm = audio_text.length/5
+		end
+		return audio_text, do_words_count, dont_words_count, wpm.round
+	end
+	
+	def encode_text video_name_mono
 		speech = Google::Cloud::Speech.new
-		# storage_path = "gs://audio_bucket-1/#{video_name_mono}.flac"
-		storage_path = "gs://audio_bucket-1/video_Dec_19_2019_11_02_33_GMT-mono.flac"
+		storage_path = "gs://audio_bucket-1/#{video_name_mono}.flac"
+		# storage_path = "gs://audio_bucket-1/video_Dec_19_2019_11_02_33_GMT-mono.flac"
 
 		config = { encoding: :FLAC,
 				language_code: "de-DE" }
@@ -73,52 +108,7 @@ module VideosHelper
 				puts "Transcription: #{result.alternatives.first.transcript}"
 			end
 		end
-
-		if audio_text.present?
-			# return words_count(audio_text)
-			do_words_count = 0
-			dont_words_count = 0
-			do_words = ['hello', 'hallo', 'hi', 'the', 'hye', 'good', 'word']
-			dont_words = ['bad', 'wrong', 'false']
-
-			audio_text_array = audio_text.split()
-			audio_text_array.map!(&:downcase)
-			do_words.each do |word|
-				do_words_count += audio_text_array.count(word.downcase)
-			end
-			dont_words.each do |word|
-				dont_words_count += audio_text_array.count(word.downcase)
-			end
-			if wait_seconds == 80
-				wpm = audio_text.length/1.34
-			elsif wait_seconds == 150
-				wpm = audio_text.length/2.5
-			else
-				wpm = audio_text.length/5
-			end
-			return audio_text, do_words_count, dont_words_count, wpm.round
-		else
-			return '', 0, 0, 0
-		end
+		audio_text
 	end
-
-	# def words_count(audio_text)
-	# 	# Do words and Don't words count
-	# 	do_words_count = 0
-	# 	dont_words_count = 0
-	# 	do_words = ['promotes', 'the']
-	# 	dont_words = ['friends', 'so']
-
-	# 	audio_text_array = audio_text.split()
-
-	# 	do_words.each do |word|
-	# 	  do_words_count += audio_text_array.count(word)
-	# 	end
-
-	# 	dont_words.each do |word|
-	# 	  dont_words_count += audio_text_array.count(word)
-	# 	end
-	# 	return do_words_count, dont_words_count, 0
-	# end
-
+	
 end
