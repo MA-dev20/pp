@@ -71,26 +71,30 @@
 </section>
 </section>
 
-<%= audio_tag(rated_sound, autoplay: true) %>
+<%= audio_tag(rated_sound, oncanplaythrough: 'startAnimation()', id: 'rateSound', preload: "auto" ) %>
 <script>
-    setTimeout(function() {
-        ratecircle('#spontan', 'spontan_text', <%= @rating.spontan / 100.0 %>);
-    }, 2000);
-    setTimeout(function() {
-        ratecircle('#creativ', 'creativ_text', <%= @rating.creative / 100.0 %>);
-    }, 4000);
-    setTimeout(function() {
-        ratecircle('#body', 'body_text', <%= @rating.body / 100.0 %>);
-    }, 6000);
-    setTimeout(function() {
-        ratecircle('#rhetoric', 'rhetoric_text', <%= @rating.rhetoric / 100.0 %>);
-    }, 8000);
-    setTimeout(function() {
-        ratecircleg('#ges', 'ges_text', <%= @rating.ges / 100.0 %>);
-    }, 10000);
+	function startAnimation() {
+		document.getElementById('rateSound').play();
+		setTimeout(function() {
+			ratecircle('#spontan', 'spontan_text', <%= @rating.spontan / 100.0 %>);
+		}, 2000);
+		setTimeout(function() {
+			ratecircle('#creativ', 'creativ_text', <%= @rating.creative / 100.0 %>);
+		}, 4000);
+		setTimeout(function() {
+			ratecircle('#body', 'body_text', <%= @rating.body / 100.0 %>);
+		}, 6000);
+		setTimeout(function() {
+			ratecircle('#rhetoric', 'rhetoric_text', <%= @rating.rhetoric / 100.0 %>);
+		}, 8000);
+		setTimeout(function() {
+			ratecircleg('#ges', 'ges_text', <%= @rating.ges / 100.0 %>);
+		}, 10000);
+	}
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_after_rating_path %>');
         };
     })
+	
 </script>
