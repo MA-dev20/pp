@@ -1,5 +1,3 @@
-<%= image_tag 'dash/icons/stop.png', class: 'stop-img-icon' %>
-<%= image_tag 'dash/icons/record.png', class: 'record-img-icon' %>
 <div class="customize">
 <% if @catchword %>
 <div class="customize-sm" id="editCatchword">
@@ -50,7 +48,8 @@
                 <tr>
                     <td><%= word.name %></td>
                     <td id="recording<%= word.id %>" class="record" onclick="recordAudio(<%=word.id %>, 'word')">
-                    	<%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %>
+                    	<%= image_tag 'dash/icons/record.png', class: 'recButton record' %>
+                    	<%= image_tag 'dash/icons/stop.png', class: 'recButton pause' %>
                     </td>
                     <td id="word<%= word.id %>" class="record" data-url="<%= word.sound.url %>" onclick="playWord(<%=word.id %>, 'word')">
                     	<%= image_tag 'dash/icons/play.png', class: 'play' %>
@@ -169,7 +168,8 @@ new PerfectScrollbar('#table_content');
                 <tr>
                     <td><%= o.name %></td>
                     <td id="orecording<%= o.id %>" class="record" onclick="recordAudio(<%= o.id %>, 'objection')">
-                    	<%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %>
+                    	<%= image_tag 'dash/icons/record.png', class: 'recButton record' %>
+                    	<%= image_tag 'dash/icons/stop.png', class: 'recButton pause' %>
                     </td>
                     <td id="objectionWord<%= o.id %>" class="record" data-url="<%= o.sound.url %>" onclick="playWord(<%= o.id %>, 'objection')">
                     	<%= image_tag 'dash/icons/play.png', class: 'play' %>
@@ -304,33 +304,22 @@ var stream, form, globalForm,recorder, audio, timer;
 
     function recordAudio(id, type) {
         if (type == 'word') {
-            if ($("#recording" + id).children().hasClass('record-img')) {
-                if (!processing) {
-                    $('#word'+ id).addClass('opacity-class');
-                    if ($("#recording" + id).children().hasClass('record-img')) {
-                        $("#recording" + id).children().removeClass('record-img').addClass('stop-img');
-                        // record_img = $("#recording" + id).children()[0]
-                        // $(record_img).attr('src', $('.stop-img-icon').attr('src'))
-                    }
-                    requestAudio(id, 'word')
-                    processing = true
-                }
+            if (!processing) {
+            	$('#word'+ id).addClass('opacity-class');
+                $("#recording" + id + ' > .record').hide();
+				$("#recording" + id + ' > .pause').show();
+                requestAudio(id, 'word')
+                processing = true
             } else {
                 stopRecording(id, 'word')
             }
         } else {
-            if ($("#orecording" + id).children().hasClass('record-img')) {
-                if (!processing) {
-                    $('#objectionWord'+ id).addClass('opacity-class');
-                    if ($("#orecording" + id).children().hasClass('record-img')) {
-                        $("#orecording" + id).children().removeClass('record-img').addClass('stop-img');
-                        $('#recButton').removeClass("Rec");
-                        // record_img = $("#orecording" + id).children()[0]
-                        // $(record_img).attr('src', $('.stop-img-icon').attr('src'))
-                    }
-                    requestAudio(id, 'objection')
-                    processing = true
-                }
+            if (!processing) {
+            	$('#objectionWord'+ id).addClass('opacity-class');
+                $("#orecording" + id + ' > .record').hide();
+				$("#orecording" + id + ' > .pause').show();
+                requestAudio(id, 'objection');
+                processing = true;
             } else {
                 stopRecording(id, 'objection')
             }
@@ -456,19 +445,13 @@ var stream, form, globalForm,recorder, audio, timer;
             recorder.stop()
         }
         if (type == 'word') {
-            if ($("#recording" + id).children().hasClass('stop-img')) {
-                $("#recording" + id).children().removeClass('stop-img').addClass('record-img');
-                record_img = $("#recording" + id).children()[0]
-                $(record_img).attr('src', $('.record-img-icon').attr('src'))
-                $('#word'+ id).removeClass('opacity-class');
-            }
+            $("#recording" + id + ' > .record').show();
+			$("#recording" + id + ' > .pause').hide();
+			$('#word'+ id).removeClass('opacity-class');
         } else {
-            if ($("#orecording" + id).children().hasClass('stop-img')) {
-                $("#orecording" + id).children().removeClass('stop-img').addClass('record-img');
-                record_img = $("#orecording" + id).children()[0]
-                $(record_img).attr('src', $('.record-img-icon').attr('src'))
-                $('#objectionWord'+ id).removeClass('opacity-class');
-            }
+            $("#orecording" + id + ' > .record').show();
+			$("#orecording" + id + ' > .pause').hide();
+			$('#objectionWord'+ id).removeClass('opacity-class');
         }
         stream.getTracks()[0].stop()
     }
