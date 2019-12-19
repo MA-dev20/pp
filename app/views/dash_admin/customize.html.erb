@@ -49,8 +49,13 @@
                 <% @catchword.words.each do |word| %>
                 <tr>
                     <td><%= word.name %></td>
-                    <td id="recording<%= word.id %>" class="record" onclick="recordAudio(<%=word.id %>, 'word')"><%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %></td>
-                    <td id="word<%= word.id %>" class="record" data-url="<%= word.sound.url %>" onclick="playWord(<%=word.id %>, 'word')"><%= image_tag 'dash/icons/play.png', class: 'play' %></td>
+                    <td id="recording<%= word.id %>" class="record" onclick="recordAudio(<%=word.id %>, 'word')">
+                    	<%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %>
+                    </td>
+                    <td id="word<%= word.id %>" class="record" data-url="<%= word.sound.url %>" onclick="playWord(<%=word.id %>, 'word')">
+                    	<%= image_tag 'dash/icons/play.png', class: 'play' %>
+                    	<i class="far fa-pause-circle pause"></i>
+                    </td>
                     <td><%= link_to image_tag('dash/icons/minus.png'), destroy_word_path(@catchword, word) %></td>
                 </tr>
                 <% end %>
@@ -163,8 +168,13 @@ new PerfectScrollbar('#table_content');
                 <% @objection.objections.each do |o| %>
                 <tr>
                     <td><%= o.name %></td>
-                    <td id="orecording<%= o.id %>" class="record" onclick="recordAudio(<%= o.id %>, 'objection')"><%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %></td>
-                    <td id="objectionWord<%= o.id %>" class="record" data-url="<%= o.sound.url %>" onclick="playWord(<%= o.id %>, 'objection')"><%= image_tag 'dash/icons/play.png', class: 'play' %></td>
+                    <td id="orecording<%= o.id %>" class="record" onclick="recordAudio(<%= o.id %>, 'objection')">
+                    	<%= image_tag 'dash/icons/record.png', class: 'recButton record-img' %>
+                    </td>
+                    <td id="objectionWord<%= o.id %>" class="record" data-url="<%= o.sound.url %>" onclick="playWord(<%= o.id %>, 'objection')">
+                    	<%= image_tag 'dash/icons/play.png', class: 'play' %>
+                    	<i class="far fa-pause-circle pause"></i>
+                    </td>
                     <td><%= link_to image_tag('dash/icons/minus.png'), destroy_objection_path(@objection, o.id) %></td>
                 </tr>
                 <% end %>
@@ -332,19 +342,37 @@ var stream, form, globalForm,recorder, audio, timer;
             var url = $("#word" + id).data("url")
             if (!$("#word" + id).hasClass("opacity-class")) {
                 if (!audio.paused) {
-                    audio.pause()
-                }
-                audio = new Audio(url)
-                audio.play()
+                    audio.pause();
+					$('#word' + id + " > .pause").hide();
+					$('#word' + id + " > .play").show();
+                } else {
+                  	audio = new Audio(url);
+                	audio.play();
+					$('#word' + id + " > .play").hide();
+					$('#word' + id + " > .pause").show();
+					audio.addEventListener('ended',function() {
+						$('#word' + id + " > .pause").hide();
+						$('#word' + id + " > .play").show();
+					});
+				}
             }
         } else {
             var url = $("#objectionWord" + id).data("url")
             if (!$("#objectionWord" + id).hasClass("opacity-class")) {
                 if (!audio.paused) {
                     audio.pause()
-                }
-                audio = new Audio(url)
-                audio.play()
+					$("#objectionWord" + id + " > .pause").hide();
+					$("#objectionWord" + id + " > .play").show();
+                } else {
+                	audio = new Audio(url)
+                	audio.play()
+					$("#objectionWord" + id + " > .play").hide();
+					$("#objectionWord" + id + " > .pause").show();
+					audio.addEventListener('ended',function() {
+						$("#objectionWord" + id + " > .play").show();
+						$("#objectionWord" + id + " > .pause").hide();
+					});
+				}
             }
         }
 
