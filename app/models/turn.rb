@@ -33,7 +33,6 @@ class Turn < ApplicationRecord
 
   def video_to_text
     values = translate_video(self.recorded_pitch.path, self.game.wait_seconds)
-    # values = translate_video("sdfs", 80)
     self.video_text = values[0]
     self.do_words = values[1]
     self.dont_words = values[2]

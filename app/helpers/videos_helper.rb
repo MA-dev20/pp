@@ -53,11 +53,11 @@ module VideosHelper
 
 
 		# Translate audio to text
-		audio_text = encode_text video_name_mono
+		audio_text = encode_text(video_name_mono)
 		if audio_text.present?
 			return text_parsing(audio_text, wait_seconds)
 		else
-			audio_text = encode_text video_name_mono
+			audio_text = encode_text(video_name_mono)
 			return text_parsing(audio_text, wait_seconds) if audio_text.present?
 			return '', 0, 0, 0
 		end
@@ -87,11 +87,9 @@ module VideosHelper
 		return audio_text, do_words_count, dont_words_count, wpm.round
 	end
 	
-	def encode_text video_name_mono
+	def encode_text(video_name_mono)
 		speech = Google::Cloud::Speech.new
 		storage_path = "gs://audio_bucket-1/#{video_name_mono}.flac"
-		# storage_path = "gs://audio_bucket-1/video_Dec_19_2019_11_02_33_GMT-mono.flac"
-
 		config = { encoding: :FLAC,
 				language_code: "de-DE" }
 		audio = { uri: storage_path }
