@@ -261,7 +261,8 @@ class DashAdminController < ApplicationController
   def video_tool
     @sort_by = params[:sort_by]
     @turn = @admin.turns.where(recorded_pitch: nil).first
-    @turn.video_to_text
+    TranslateVideoJob.perform_later(@turn)
+    # @turn.video_to_text
     # debugger
     @users = @admin.users
     @turns = @admin.turns.where.not(recorded_pitch: nil).order('created_at ASC')
