@@ -78,11 +78,11 @@ module VideosHelper
 			dont_words_count += audio_text_array.count(word.downcase)
 		end
 		if wait_seconds == 80
-			wpm = audio_text.length/1.34
+			wpm = audio_text_array.length/1.34
 		elsif wait_seconds == 150
-			wpm = audio_text.length/2.5
+			wpm = audio_text_array.length/2.5
 		else
-			wpm = audio_text.length/5
+			wpm = audio_text_array.length/5
 		end
 		return audio_text, do_words_count, dont_words_count, wpm.round
 	end
