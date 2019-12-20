@@ -12,27 +12,28 @@ class GamesController < ApplicationController
     if params[:game][:password].empty?
       flash[:missing_password] = 'Gib eine Url an!'
     end
-    if params[:game][:baskets]&.first&.empty?
-      flash[:select_catchword] = 'Wähle zumindest eine Liste'
-    end
-    if params[:game][:objections]&.first&.empty?
-      flash[:select_objection] = 'Wähle zumindest eine Liste'
-    end
     if params[:game][:team_id].nil?
       redirect_to dash_admin_path()
       return
-    elsif params[:game][:password].empty? || params[:game][:baskets]&.first&.empty? || params[:game][:objections]&.first&.empty?
+    elsif params[:game][:password].empty?
       redirect_to dash_admin_games_path(params[:game][:team_id])
       return
     end
     if @game && @game.admin_id == @admin.id
       session[:game_session_id] = @game.id
       @game.turns.update_all(status: 'ended')
-      set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
-      set_objections_for_game(@game, params[:game][:objections])
-	    set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
+	  if params[:game][:basket].present?
+        set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
+	  else
+	    set_words_for_game(@game, ["pp"], params[:game][:seconds])
+	  end
+	  if params[:game][:objections].present?
+      	set_objections_for_game(@game, params[:game][:objections])
+	  else
+		set_objections_for_game(@game, ["pp"])
+	  end
+	  set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
       sign_in(@game)
-      # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
       redirect_to gda_wait_path
     elsif @game && @game.admin_id != @admin.id
         flash[:pop_up] = "Ups, diese URL ist schon vergeben!;-"

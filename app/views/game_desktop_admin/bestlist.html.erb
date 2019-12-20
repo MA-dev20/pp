@@ -61,7 +61,7 @@
 <div class="confetti" id="confetti"></div>
 
 
-<%= audio_tag(ended_sound, autoplay: true) %>
+<%= audio_tag(ended_sound, oncanplaythrough: 'startAnimation()', id: 'bestSound', preload: "auto" ) %>
 
 <script type="text/javascript">
     function confetti(){
@@ -74,31 +74,34 @@
     }
         document.getElementById('confetti').innerHTML = flakes;
     };
-    setTimeout(function() {
-        $('#avatar3').show();
-        $('#text3').show();
-        $('.crown3').show();
-        $('#pol3').show();
-        $('#rat3').show();
-        $('#wolf3').hide();
-    }, 4000);
-    setTimeout(function() {
-        $('#avatar2').show();
-        $('#text2').show();
-        $('.crown2').show();
-        $('#pol2').show();
-        $('#rat2').show();
-        $('#wolf2').hide();
-    }, 6000);
-    setTimeout(function() {
-        $('#avatar1').show();
-        $('#text1').show();
-        $('.crown1').show();
-        $('#pol1').show();
-        $('#rat1').show();
-        $('#wolf1').hide();
-        confetti();
-    }, 8000);
+	function startAnimation() {
+		document.getElementById('bestSound').play();
+		setTimeout(function() {
+			$('#avatar3').show();
+			$('#text3').show();
+			$('.crown3').show();
+			$('#pol3').show();
+			$('#rat3').show();
+			$('#wolf3').hide();
+		}, 4000);
+		setTimeout(function() {
+			$('#avatar2').show();
+			$('#text2').show();
+			$('.crown2').show();
+			$('#pol2').show();
+			$('#rat2').show();
+			$('#wolf2').hide();
+		}, 6000);
+		setTimeout(function() {
+			$('#avatar1').show();
+			$('#text1').show();
+			$('.crown1').show();
+			$('#pol1').show();
+			$('#rat1').show();
+			$('#wolf1').hide();
+			confetti();
+		}, 8000);
+	}
     
     
 $(window).keypress(function (e) {

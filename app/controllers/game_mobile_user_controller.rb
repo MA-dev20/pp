@@ -271,14 +271,12 @@ class GameMobileUserController < ApplicationController
     @game = current_game
     @admin = Admin.find(@game.admin_id)
     session[:game_session_id] = @game.id
-    # redirect_to gmu_new_turn_path
   end
     
   def ended
     sign_out(@game)
     sign_out(@user)
-    # redirect_to gmu_ended_game_path
-    # redirect_to root_path
+	redirect_to landing_ended_game_path
   end
 
   def ended_game

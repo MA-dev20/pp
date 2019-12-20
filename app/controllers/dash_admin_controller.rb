@@ -279,10 +279,10 @@ class DashAdminController < ApplicationController
       @result = @result.sort{|a,b| a[:rating].to_i <=> b[:rating].to_i}
     elsif @sort_by == 'ratingDSC'
       @result = @result.sort{|b,a| a[:rating] <=> b[:rating]}
-    elsif @sort_by == 'dateDSC'
-      @result = @result.sort{|b,a| a[:date] <=> b[:date]}
-    else
+    elsif @sort_by == 'dateASC'
       @result = @result.sort{|a,b| a[:date] <=> b[:date]}
+    else
+      @result = @result.sort{|b,a| a[:date] <=> b[:date]}
     end
   end
 	

@@ -129,16 +129,20 @@
     cursor: pointer;
 }
 .customize-sm > .karte table tr td i {
-    font-size: 2.2vh;
+    font-size: 2vh;
     line-height: 3.3vh;
     margin: 0.5vh;
     color: #16e2a5;
 }
 .customize-sm > .karte table tr td img {
+	display: inline;
     margin: 1vh 0.5vh;
     height: 2vh;
     width: 2vh;
     border-radius: 2vh;
+}
+.customize-sm > .karte table tr td .pause {
+	display: none;
 }
 .customize-sm > .karte table thead tr th {
     font-weight: 300;

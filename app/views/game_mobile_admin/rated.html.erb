@@ -10,7 +10,12 @@
     </h1>
 </div>
 <div class="middle" id="middle">
-    <div class="row"><div class="col-12 nunito-regular"><%= @count %></div></div>
+    <div class="row">
+    	<div class="col-12 nunito-regular">
+    		<%= @count.to_s + "/" + @turnCount.to_s %><br>
+    		haben bewertet!
+    	</div>
+    </div>
 </div>
 <div class="bottom">
     <%= link_to 'weiter!', gma_rating_path, class: 'nunito-regular' %>
