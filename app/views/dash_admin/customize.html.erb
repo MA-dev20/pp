@@ -1,203 +1,203 @@
 <div class="customize">
-<% if @catchword %>
-<div class="customize-sm" id="editCatchword">
-    <div class="karte">
-        <%= link_to '', dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
-        <div class="head small left">Catchword Liste bearbeiten</div>
-        <%= form_for(:basket, url: edit_basket_path(@catchword)) do |f| %>
-            <% if flash[:basket_name] %>
-            <label>Name
-            <div class="alert alert-label"><%= flash[:basket_name] %></div>
-            </label>
-            <%= f.text_field :name, class: 'field red', value: @catchword.name %>
-            <% else %>
-            <label>Name</label>
-            <%= f.text_field :name, class: 'field', value: @catchword.name %>
-            <% end %>
-            <%= f.hidden_field :admin_id, value: @admin.id %>
-            <%= f.hidden_field :site, value: 'admin_dash' %>
-            <div class="divider"></div>
-            <%= f.submit 'speichern', class: 'btn btn-green' %>
-        <% end %>
-        <%= form_for(:word, url: new_word_path(@catchword)) do |f| %>
-           <label>Add new Catchword
-           <% if flash[:word_name] %>
-            <div class="alert alert-label"><%= flash[:word_name] %></div>
-           <% end %>
-           </label>
-           <div class="field <% if flash[:word_name] %>red<% end %>">
-               <%= f.text_field :name, class: 'custom-submit-field', autofocus: true %>
-               <%= f.hidden_field :site, value: 'admin_dash' %>
-               <%= f.submit "+", class: 'custom-submit' %>
-           </div>
-        <% end %>
-        <table>
-            <thead>
-                <tr onclick="sortTable('catchword-table', 'catchword-sorter')">
-                    <th>Catchwords <i class="fas fa-sort" id="catchword-sorter"></i></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-        </table>
-        <div class="table-content" id="table_content">
-        <table id="catchword-table">
-            <tbody>
-                <% @catchword.words.each do |word| %>
-                <tr>
-                    <td><%= word.name %></td>
-                    <td id="recording<%= word.id %>" class="record" onclick="recordAudio(<%=word.id %>, 'word')">
-                    	<%= image_tag 'dash/icons/record.png', class: 'recButton record' %>
-                    	<%= image_tag 'dash/icons/stop.png', class: 'recButton pause' %>
-                    </td>
-                    <td id="word<%= word.id %>" class="record" data-url="<%= word.sound.url %>" onclick="playWord(<%=word.id %>, 'word')">
-                    	<%= image_tag 'dash/icons/play.png', class: 'play' %>
-                    	<i class="far fa-pause-circle pause"></i>
-                    </td>
-                    <td><%= link_to image_tag('dash/icons/minus.png'), destroy_word_path(@catchword, word) %></td>
-                </tr>
-                <% end %>
-            </tbody>
-        </table>
-        </div>
-        <%= link_to '',  destroy_basket_admin_path(@catchword, 'dash_admin'), class: 'remove far fa-trash-alt' %>
-    </div>
-</div>
-<script>
-new PerfectScrollbar('#table_content');
-</script>
-<% else %>
-<div class="customize-sm" id="catchwords">
-    <div class="searchbar">
-        <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-        <input type="text" placeholder="Search Catchwords" id="searchCW">
-    </div>
-    <button class="btn btn-green" onclick="showNewCatchword()">Liste erstellen</button>
-    <div class="karte" id="catchwords">
-        <div class="head left">Catchwords Listen</div>
-        <div class="list" id="catchword-list">
-            <% @catchwords.each do |c| %>
+	<% if @catchword %>
+	<div class="customize-sm" id="editCatchword">
+    	<div class="karte">
+        	<%= link_to '', dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
+        	<div class="head small left">Catchword Liste bearbeiten</div>
+        	<%= form_for(:basket, url: edit_basket_path(@catchword)) do |f| %>
+            	<% if flash[:basket_name] %>
+            		<label>Name
+            			<div class="alert alert-label"><%= flash[:basket_name] %></div>
+            		</label>
+            		<%= f.text_field :name, class: 'field red', value: @catchword.name %>
+            	<% else %>
+            		<label>Name</label>
+            		<%= f.text_field :name, class: 'field', value: @catchword.name %>
+            	<% end %>
+            	<%= f.hidden_field :admin_id, value: @admin.id %>
+            	<%= f.hidden_field :site, value: 'admin_dash' %>
+            	<div class="divider"></div>
+            	<%= f.submit 'speichern', class: 'btn btn-green' %>
+        	<% end %>
+        	<%= form_for(:word, url: new_word_path(@catchword)) do |f| %>
+           		<label>Add new Catchword
+					<% if flash[:word_name] %>
+						<div class="alert alert-label"><%= flash[:word_name] %></div>
+					<% end %>
+           		</label>
+           		<div class="field <% if flash[:word_name] %>red<% end %>">
+               		<%= f.text_field :name, class: 'custom-submit-field', autofocus: true %>
+               		<%= f.hidden_field :site, value: 'admin_dash' %>
+               		<%= f.submit "+", class: 'custom-submit' %>
+           		</div>
+        	<% end %>
+        	<table>
+            	<thead>
+                	<tr onclick="sortTable('catchword-table', 'catchword-sorter')">
+                    	<th>Catchwords <i class="fas fa-sort" id="catchword-sorter"></i></th>
+                    	<th></th>
+                    	<th></th>
+                    	<th></th>
+                	</tr>
+            	</thead>
+        	</table>
+        	<div class="table-content" id="table_content">
+				<table id="catchword-table">
+					<tbody>
+						<% @catchword.words.each do |word| %>
+							<tr>
+								<td><%= word.name %></td>
+								<td id="recording<%= word.id %>" class="record" onclick="recordAudio(<%=word.id %>, 'word')">
+									<%= image_tag 'dash/icons/record.png', class: 'recButton record' %>
+									<%= image_tag 'dash/icons/stop.png', class: 'recButton pause' %>
+								</td>
+								<td id="word<%= word.id %>" class="record" data-url="<%= word.sound.url %>" onclick="playWord(<%=word.id %>, 'word')">
+									<%= image_tag 'dash/icons/play.png', class: 'play' %>
+									<i class="far fa-pause-circle pause"></i>
+								</td>
+								<td>
+									<%= link_to image_tag('dash/icons/minus.png'), destroy_word_path(@catchword, word) %>
+								</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+        	</div>
+        	<%= link_to '',  destroy_basket_admin_path(@catchword, 'dash_admin'), class: 'remove far fa-trash-alt' %>
+    	</div>
+	</div>
+	
+<script> new PerfectScrollbar('#table_content'); </script>
+	<% else %>
+	<div class="customize-sm" id="catchwords">
+    	<div class="searchbar">
+        	<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        	<input type="text" placeholder="Search Catchwords" id="searchCW">
+    	</div>
+    	<button class="btn btn-green" onclick="showNewCatchword()">Liste erstellen</button>
+    	<div class="karte" id="catchwords">
+        	<div class="head left">Catchwords Listen</div>
+        	<div class="list" id="catchword-list">
+            	<% @catchwords.each do |c| %>
                 <div class="list-karte CWsearch" onclick="redirect('<%= dash_admin_catchwords_url(c.id) %>')">
                     <% 
                         cw_img = c.image.present? ? c.image : 1
                         img_url = "dash/randomBGpics/Catchwords/#{cw_img}.jpg"
                     %>
-                    <div class="pic" style="background-image: url(<%= image_url(img_url) %>)">
-                    </div>
-                    <div class="bottom">
-                        <div class="name"><%= c.name %></div>
-                        <div class="count"><%= c.words.count %></div>
+                <div class="pic" style="background-image: url(<%= image_url(img_url) %>)"></div>
+                <div class="bottom">
+                	<div class="name"><%= c.name %></div>
+                    	<div class="count"><%= c.words.count %></div>
                     </div>
                 </div>
-            <% end %>
-        </div>
-    </div>
-</div>
+            	<% end %>
+        	</div>
+    	</div>
+	</div>
 <script>new PerfectScrollbar('#catchword-list');</script>
-<div class="customize-sm" id="newCatchword">
-    <div class="karte">
-        <i class="back small fas fa-arrow-left" onclick="hideNewCatchword()"></i>
-        <div class="head left small">Catchword Liste hinzufügen</div>
-        <%= form_for(:basket, url: new_basket_path()) do |f| %>
-            <% if flash[:basket_name] %>
-            <label>Name
-            <div class="alert alert-newCW"><%= flash[:basket_name] %></div>
-            </label>
-            <%= f.text_field :name, class: 'field red', autofocus: true  %>
-            <% else %>
-            <label>Name</label>
-            <%= f.text_field :name, class: 'field', autofocus: true  %>
-            <% end %>
-            <%= f.hidden_field :admin_id, value: @admin.id %>
-            <%= f.hidden_field :site, value: 'admin_dash' %>
-            <div class="divider"></div>
-            <%= f.submit 'speichern', class: 'btn btn-green' %>
-        <% end %>
-    </div>
-</div>
-<% end %>
+	<div class="customize-sm" id="newCatchword">
+    	<div class="karte">
+	        <i class="back small fas fa-arrow-left" onclick="hideNewCatchword()"></i>
+        	<div class="head left small">Catchword Liste hinzufügen</div>
+        	<%= form_for(:basket, url: new_basket_path()) do |f| %>
+            	<% if flash[:basket_name] %>
+            	<label>Name
+            		<div class="alert alert-newCW"><%= flash[:basket_name] %></div>
+            	</label>
+            	<%= f.text_field :name, class: 'field red', autofocus: true  %>
+            	<% else %>
+            	<label>Name</label>
+            	<%= f.text_field :name, class: 'field', autofocus: true  %>
+            	<% end %>
+            	<%= f.hidden_field :admin_id, value: @admin.id %>
+            	<%= f.hidden_field :site, value: 'admin_dash' %>
+            	<div class="divider"></div>
+            	<%= f.submit 'speichern', class: 'btn btn-green' %>
+        	<% end %>
+    	</div>
+	</div>
+	<% end %>
 
-<% if @objection %>
-<div class="customize-sm" id="editObjection">
-    <div class="karte">
-        <%= link_to "", dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
-        <div class="head small left">Objection Liste bearbeiten</div>
-        <%= form_for(:basket, url: edit_basket_path(@objection)) do |f| %>
-            <% if flash[:basket_name] %>
-                <label for="">Name
-                <div class="alert"><%= flash[:basket_name] %></div>
-                </label>
-                <%= f.text_field :name, class: 'field red', value: @objection.name %>
-            <% else %>
-                <label for="">Name</label>
-                <%= f.text_field :name, class: 'field', value: @objection.name %>
-            <% end %>
-            <%= f.hidden_field :admin_id, value: @admin.id %>
-            <%= f.hidden_field :site, value: 'admin_dash' %>
-            <%= f.hidden_field :type, value: 'objection' %>
-            <div class="divider"></div>
-            <%= f.submit 'speichern', class: 'btn btn-green' %>
-        <% end %>
-        <%= form_for(:objection, url: new_objection_path(@objection)) do |f| %>
-           <label>Add new Objection
-           <% if flash[:objection_name] %>
-            <div class="alert alert-label"><%= flash[:objection_name] %></div>
-           <% end %>
-           </label>
-           <div class="field <% if flash[:objection_name] %>red<% end %>">
-               <%= f.text_field :name, class: 'custom-submit-field', value: '', autofocus: true %>
-               <%= f.hidden_field :site, value: 'admin_dash' %>
-               <%= f.submit "+", class: 'custom-submit' %>
-           </div>
-        <% end %>
-        <table>
-            <thead>
-                <tr onclick="sortTable('objection-table', 'objection-sorter')">
-                    <th>Objection <i class="fas fa-sort" id="objection-sorter"></i></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-        </table>
-        <div class="table-content" id="table_content">
-        <table id='objection-table'>
-            <tbody>
-                <% @objection.objections.each do |o| %>
-                <tr>
-                    <td><%= o.name %></td>
-                    <td id="orecording<%= o.id %>" class="record" onclick="recordAudio(<%= o.id %>, 'objection')">
-                    	<%= image_tag 'dash/icons/record.png', class: 'recButton record' %>
-                    	<%= image_tag 'dash/icons/stop.png', class: 'recButton pause' %>
-                    </td>
-                    <td id="objectionWord<%= o.id %>" class="record" data-url="<%= o.sound.url %>" onclick="playWord(<%= o.id %>, 'objection')">
-                    	<%= image_tag 'dash/icons/play.png', class: 'play' %>
-                    	<i class="far fa-pause-circle pause"></i>
-                    </td>
-                    <td><%= link_to image_tag('dash/icons/minus.png'), destroy_objection_path(@objection, o.id) %></td>
-                </tr>
-                <% end %>
-            </tbody>
-        </table>
-        </div>
-        <%= link_to '',  destroy_basket_admin_path(@objection, 'dash_admin'), class: 'remove far fa-trash-alt' %>
-    </div>
-</div>
-<script>
-new PerfectScrollbar('#table_content');
-</script>
-<% else %>
-<div class="customize-sm" id="objections">
-    <div class="searchbar">
-        <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-        <input type="text" placeholder="Search Objections" id="searchOB">
-    </div>
-    <button class="btn btn-green" onclick="showNewObjection()">Liste erstellen</button>
-    <div class="karte">
-        <div class="head left">Objections</div>
-        <div class="list" id="objection-list">
-            <% @objections.each do |o| %>
+	<% if @objection %>
+	<div class="customize-sm" id="editObjection">
+    	<div class="karte">
+        	<%= link_to "", dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
+        	<div class="head small left">Objection Liste bearbeiten</div>
+        	<%= form_for(:basket, url: edit_basket_path(@objection)) do |f| %>
+            	<% if flash[:basket_name] %>
+                	<label for="">Name
+                		<div class="alert"><%= flash[:basket_name] %></div>
+                	</label>
+                	<%= f.text_field :name, class: 'field red', value: @objection.name %>
+            	<% else %>
+                	<label for="">Name</label>
+                	<%= f.text_field :name, class: 'field', value: @objection.name %>
+            	<% end %>
+            	<%= f.hidden_field :admin_id, value: @admin.id %>
+            	<%= f.hidden_field :site, value: 'admin_dash' %>
+            	<%= f.hidden_field :type, value: 'objection' %>
+            	<div class="divider"></div>
+            	<%= f.submit 'speichern', class: 'btn btn-green' %>
+        	<% end %>
+        	<%= form_for(:objection, url: new_objection_path(@objection)) do |f| %>
+           		<label>Add new Objection
+					<% if flash[:objection_name] %>
+					<div class="alert alert-label"><%= flash[:objection_name] %></div>
+					<% end %>
+           		</label>
+           		<div class="field <% if flash[:objection_name] %>red<% end %>">
+               		<%= f.text_field :name, class: 'custom-submit-field', value: '', autofocus: true %>
+               		<%= f.hidden_field :site, value: 'admin_dash' %>
+               		<%= f.submit "+", class: 'custom-submit' %>
+           		</div>
+        	<% end %>
+        	<table>
+            	<thead>
+                	<tr onclick="sortTable('objection-table', 'objection-sorter')">
+                    	<th>Objection <i class="fas fa-sort" id="objection-sorter"></i></th>
+                    	<th></th>
+                    	<th></th>
+                    	<th></th>
+                	</tr>
+            	</thead>
+        	</table>
+        	<div class="table-content" id="table_content">
+        		<table id='objection-table'>
+            		<tbody>
+                		<% @objection.objections.each do |o| %>
+                		<tr>
+                    		<td><%= o.name %></td>
+                    		<td id="orecording<%= o.id %>" class="record" onclick="recordAudio(<%= o.id %>, 'objection')">
+								<%= image_tag 'dash/icons/record.png', class: 'recButton record' %>
+								<%= image_tag 'dash/icons/stop.png', class: 'recButton pause' %>
+                    		</td>
+                    		<td id="objectionWord<%= o.id %>" class="record" data-url="<%= o.sound.url %>" onclick="playWord(<%= o.id %>, 'objection')">
+                    			<%= image_tag 'dash/icons/play.png', class: 'play' %>
+                    			<i class="far fa-pause-circle pause"></i>
+                    		</td>
+                    		<td>
+                    			<%= link_to image_tag('dash/icons/minus.png'), destroy_objection_path(@objection, o.id) %>
+                    		</td>
+                		</tr>
+                		<% end %>
+            		</tbody>
+        		</table>
+        	</div>
+        	<%= link_to '',  destroy_basket_admin_path(@objection, 'dash_admin'), class: 'remove far fa-trash-alt' %>
+    	</div>
+	</div>
+<script> new PerfectScrollbar('#table_content'); </script>
+	<% else %>
+		<div class="customize-sm" id="objections">
+    	<div class="searchbar">
+        	<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        	<input type="text" placeholder="Search Objections" id="searchOB">
+    	</div>
+    	<button class="btn btn-green" onclick="showNewObjection()">Liste erstellen</button>
+    	<div class="karte">
+        	<div class="head left">Objections</div>
+        	<div class="list" id="objection-list">
+            	<% @objections.each do |o| %>
                 <% 
                     obj_img = o.image.present? ? o.image : 1
                     img_url = "dash/randomBGpics/Objections/#{obj_img}.jpg"
@@ -210,36 +210,86 @@ new PerfectScrollbar('#table_content');
                         <div class="count"><%= o.objections.count %></div>
                     </div>
                 </div>
-            <% end %>
-        </div>
-    </div>
-</div>
+            	<% end %>
+        	</div>
+    	</div>
+	</div>
 <script>new PerfectScrollbar('#objection-list');</script>
-<div class="customize-sm" id="newObjection">
-    <div class="karte">
-        <i class="back small fas fa-arrow-left" onclick="hideNewObjection()"></i>
-        <div class="head left small">Objection hinzufügen</div>
-        <%= form_for(:basket, url: new_basket_path()) do |f| %>
-            <% if flash[:obasket_name] %>
-                <label for="">Name
-                <div class="alert"><%= flash[:obasket_name] %></div>
-                </label>
-                <%= f.text_field :name, class: 'field red' %>
-            <% else %>
-                <label for="">Name</label>
-                <%= f.text_field :name, class: 'field' %>
-            <% end %>
-            <%= f.hidden_field :admin_id, value: @admin.id %>
-            <%= f.hidden_field :site, value: 'admin_dash' %>
-            <%= f.hidden_field :type, value: 'objection' %>
-            <div class="divider"></div>
-            <%= f.submit 'speichern', class: 'btn btn-green' %>
-        <% end %>
-    </div>
-</div>
-<% end %>
+	<div class="customize-sm" id="newObjection">
+    	<div class="karte">
+        	<i class="back small fas fa-arrow-left" onclick="hideNewObjection()"></i>
+        	<div class="head left small">Objection hinzufügen</div>
+        	<%= form_for(:basket, url: new_basket_path()) do |f| %>
+            	<% if flash[:obasket_name] %>
+                	<label for="">Name
+                		<div class="alert"><%= flash[:obasket_name] %></div>
+                	</label>
+                	<%= f.text_field :name, class: 'field red' %>
+            	<% else %>
+                	<label for="">Name</label>
+                	<%= f.text_field :name, class: 'field' %>
+            	<% end %>
+            	<%= f.hidden_field :admin_id, value: @admin.id %>
+            	<%= f.hidden_field :site, value: 'admin_dash' %>
+            	<%= f.hidden_field :type, value: 'objection' %>
+            	<div class="divider"></div>
+            	<%= f.submit 'speichern', class: 'btn btn-green' %>
+        	<% end %>
+    	</div>
+	</div>
+	<% end %>
 
-
+	<div class="customize-sm" id="words">
+		<div class="karte">
+			<div class="head left">Wortwahl</div>
+			<div class="custom-select custom-select-lg" onclick="toggleDoSelect()">
+				<div class="selected" id="selected_word">Does</div>
+				<div class="links" id="doWordSelect">
+					<div class="do" onclick="showDoes()">Does</div>
+					<div class="dont" onclick="showDonts()">Donts</div>
+				</div>
+			</div>
+			<div class="do" id="do_words">
+				<%= form_for(:words, url: do_words_path()) do |f| %>
+					<%= f.text_field :word, placeholder: 'Do Wort hinzufügen', class: 'field half' %>
+					<%= f.hidden_field :do, value: true %>
+				<% end %>
+				<div class="table" id="do_table">
+				<table>
+					<% if !@admin.does.nil? %>
+					<% @admin.does.each do |w| %>
+					<tr>
+						<td><%= w %></td>
+						<td><%= link_to image_tag('dash/icons/minus.png'), delete_do_word_path(w) %></td>
+					</tr>
+					<% end %>
+					<% end %>
+				</table>
+				</div>
+			</div>
+			<script>new PerfectScrollbar('#do_table');</script>
+			<div class="donts" style="display: none" id="dont_words">
+				<%= form_for(:words, url: do_words_path()) do |f| %>
+					<%= f.text_field :word, placeholder: 'Dont Wort hinzufügen',class: 'field half' %>
+					<%= f.hidden_field :do, value: false %>
+				<% end %>
+				<div class="table" id="dont_table">
+				<table>
+					<% if !@admin.donts.nil? %>
+					<% @admin.donts.each do |w| %>
+					<tr>
+						<td><%= w %></td>
+						<td><%= link_to image_tag('dash/icons/minus.png'), delete_dont_word_path(w) %></td>
+					</tr>
+					<% end %>
+					<% end %>
+				</table>
+				</div>
+				<script>new PerfectScrollbar('#dont_table');</script>
+			</div>
+			
+		</div>
+	</div>
 <style>
     .record-img {
         height: 2.35vh;
@@ -551,4 +601,17 @@ function sortTable(tableId, sorter) {
     function redirect(path) {
         window.location.replace(path);
     }
+	function showDoes() {
+		$('#do_words').show();
+		$('#dont_words').hide();
+		$('#selected_word').text('Does');
+	}
+	function showDonts() {
+		$('#do_words').hide();
+		$('#dont_words').show();
+		$('#selected_word').text('Donts');
+	}
+	function toggleDoSelect() {
+		$('#doWordSelect').toggle();
+	}
 </script>

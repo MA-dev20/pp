@@ -175,6 +175,9 @@ Rails.application.routes.draw do
     get 'admin/dash/customize', to: 'dash_admin#customize', as: 'dash_admin_customize'
     get 'admin/dash/customize/catchwords/:cbasket_id', to: 'dash_admin#customize', as: 'dash_admin_catchwords'
     get 'admin/dash/customize/objections/:obasket_id', to: 'dash_admin#customize', as: 'dash_admin_objections'
+	post 'admin/dash/do_words', to: 'dash_admin#create_do_words', as: 'do_words'
+	get 'admin/dash/do_words/:word/delete', to: 'dash_admin#destroy_do_word', as: "delete_do_word"
+	get 'admin/dash/dont_words/:word/delete', to: 'dash_admin#destroy_dont_word', as: "delete_dont_word"
     #Video Tool
     get 'admins/dash/video_tool', to: 'dash_admin#video_tool', as: 'dash_admin_video_tool'
     get 'admins/dash/turns/:turn_id/video', to: 'dash_admin#video_details', as: 'dash_admin_video_details'

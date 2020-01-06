@@ -257,6 +257,30 @@ class DashAdminController < ApplicationController
     @objections = @admin.objection_baskets
   end
     
+	
+  def create_do_words
+	if params[:words][:do] == "true" && !@admin.does.include?(params[:words][:word])
+	  @admin.does ||= []
+	  @admin.does << params[:words][:word]
+	elsif !@admin.donts.include?(params[:words][:word])
+	  @admin.donts ||= []
+	  @admin.donts << params[:words][:word]
+	end
+	@admin.save
+	redirect_to dash_admin_customize_path
+  end
+	
+  def destroy_do_word
+	@admin.does.delete(params[:word])
+	@admin.save
+	redirect_to dash_admin_customize_path
+  end
+
+  def destroy_dont_word
+	@admin.donts.delete params[:word]
+	@admin.save
+	redirect_to dash_admin_customize_path
+  end
   #Video Tool
   def video_tool
     @sort_by = params[:sort_by]

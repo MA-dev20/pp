@@ -4,7 +4,9 @@ class Admin < ApplicationRecord
   # Include default devise modules. Others available are:
   # :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable, :lockable, :recoverable, :rememberable, :validatable, :trackable
-    
+  
+  serialize :does
+  serialize :donts
   #########Associations##################
   has_many :games, dependent: :destroy
   has_many :ratings, dependent: :destroy

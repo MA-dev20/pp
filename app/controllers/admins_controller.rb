@@ -2,7 +2,7 @@ class AdminsController < ApplicationController
 
   before_action :set_admin, :authenticate, except: [:new, :create]
   before_action :authenticate_root, only: [:activate]
-    
+   
   def create
     @admin = Admin.find_by(email: admin_params[:email])
     if @admin

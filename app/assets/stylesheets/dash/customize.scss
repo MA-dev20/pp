@@ -8,29 +8,65 @@
 }
 .customize {
     margin: 0 auto;
-    width: 136.05vh;
+    width: 150vh;
     height: 62.6vh;
 }
 .customize-sm {
     float: left;
     position: relative;
-    width: 64.55vh;
+    width: 44.55vh;
     height: 75.35vh;
     top: 8.6vh;
 }
-.customize-sm:first-child {
+.customize-sm {
     margin-right: 6.3vh;
+}
+.customize-sm#words {
+	margin-right: 0;
+}
+.customize-sm#words .custom-select {
+	position: absolute;
+	top: 11vh;
+	right: 2vh;
+	width: 15vh;
+	cursor: pointer;
+}
+.customize-sm#words .custom-select .links{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: white;
+	border: 1px solid #ced4da;
+	width: 15vh;
+	height: 10vh;
+	z-index: 1000;
+	border-radius: .25rem;
+}
+.customize-sm#words .custom-select .links .do, 
+.customize-sm#words .custom-select .links .dont {
+	line-height: 5vh;
+	text-align: center;
+	height: 5vh;
+	border-bottom: 1px solid #ced4da;
+	
+}
+.customize-sm .head.small {
+	font-size: 2.7vh;
 }
 .customize-sm .searchbar {
     position: absolute;
     display: flex;
     top: 0;
     left: 0;
-    width: 35vh;
+    width: 25vh;
     height: 5.6vh;
     border-radius: 1vh;
     box-shadow: 0px 0.8vh 2vh 0 rgba(107, 107, 107, 0.1);
     background-color: #fff;
+}
+.customize-sm .searchbar input {
+	width: 75%;
 }
 .customize-sm > .btn {
     position: absolute;
@@ -110,6 +146,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+.customize-sm#words .table {
+	position: relative;
+	height: 40vh;
+}
+.customize-sm#words .table table {
+	margin: 0 1vh 0 0;
+	width: calc(100% - 1vh);
+}
+.customize-sm#words .table table tbody tr:first-child td {
+	border-top: none;
 }
 .fas.fa-sort {
     font-size: 1.8vh;

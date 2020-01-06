@@ -49,11 +49,14 @@
 .video-tool .karte {
     width: 79.3vh;
 }
+.video-details .karte {
+	box-shadow: 0px 0.2vh 1vh 0 rgba(172, 172, 172, 0.5);
+}
 .video-details.karte {
     position: relative;
     margin: 0 auto;
     top: 3.2vh;
-    width: 120.51vh;
+    width: 117vh;
     height: 70vh;
 }
 .video-details .left-part {
@@ -63,6 +66,11 @@
     height: 60.5vh;
     width: 34.9vh;
 }
+.video-details .left-part .head.small {
+	line-height: 4vh;
+	height: 6vh;
+	font-weight: bold;
+}
 .video-details .left-part .name-date {
     position: relative;
     left: 0;
@@ -71,15 +79,23 @@
     font-size: 1.6vh;
     text-align: left;
     font-weight: normal;
-    margin: 0 0 2.2vh 0;
+    margin: 0 0 2vh 0;
 }
-.video-details .left-part .name-date img {
+.video-details .left-part .name-date img,
+.video-details .left-part .name-date .circle {
     height: 2.35vh;
     width: 2.35vh;
     border-radius: 50%;
     margin: 0 0.5vh 0 0;
 }
-.video-details .left-part .divider {
+.video-details .left-part .name-date .circle {
+	background-color: rgba(22,226,165,.2);
+	font-size: 1vh;
+	line-height: 2.35vh;
+	text-align: center;
+	float: left;
+}
+.video-details .divider {
     position: relative;
     height: 0.1vh;
     width: 100%;
@@ -87,55 +103,61 @@
 }
 .video-details .left-part .counters {
 	display: flex;
-}
-.video-details .left-part .counters .karte:first-child {
-	margin-left: 0%;
-}
-.video-details .left-part .counters .karte:last-child {
-	margin-right: 0;
-}
-.video-details .left-part .counters .karte {
-	width: 30%;
-	margin: 5% 5%;
 	padding: 0;
-	text-align: center;
+	margin: 0 0 1vh 0;
 }
-.video-details .left-part .counters .karte.do {
-	background-color: rgba(22,226,165,.2);
+.video-details .left-part .counters .do,
+.video-details .left-part .counters .dont,
+.video-details .left-part .counters .wpm {
+	width: 33%;
 }
-.video-details .left-part .counters .karte.dont {
-	background-color: rgba(204,51,51,.2);
+.video-details .left-part .counters .do .count {
+	color: rgba(22,226,165,.8);
 }
-.video-details .left-part .counters .karte .head {
+.video-details .left-part .counters .dont .count {
+	color: rgba(204,51,51,.8);
+}
+.video-details .left-part .counters .head {
 	font-size: 1.5vh;
-	line-height: 4vh;
+	line-height: 3vh;
+	height: 3vh;
 	width: 100%;
 	margin: 1vh 0 0;
-	height: 4vh;
 }
-.video-details .left-part .counters .karte:last-child .head {
+.video-details .left-part .counters .count {
+	line-height: 4vh;
+	font-size: 4vh;
+	text-align: center;
+}
+.video-details .left-part .counters .count .word {
+	font-size: 1vh;
 	line-height: 2vh;
 }
-.video-details .left-part .counters .karte .count {
-	line-height: 5vh;
-	font-size: 4vh;
+.video-details .left-part .head.transcript,
+.video-details .right-part .head.comments {
+	line-height: 3vh;
+	font-size: 2vh;
+	font-weight: bold;
+	height: 3vh;
+	text-align: left;
+	margin-bottom: .5vh;
 }
 .video-details .left-part > .karte.text {
 	position: relative;
 	top: 0;
 	left: 0;
-	height: 30vh;
+	height: 31.5vh;
 	width: 100%;
 }
 .video-details .right-part .toggle-my-ratings {
-    position: absolute;
-    left: 0;
+	position: absolute;
     bottom: 0;
     height: 3.4vh;
     line-height: 24px;
-    width: 100%;
-    border-top: 0.1vh solid #dfe1e5;
+    width: 9.4vh;
+	margin: 0 auto;
     padding-top: 0.8vh;
+	border-top: none;
 }
 .video-details .right-part .toggle-my-ratings .left {
     background-color: #16E2a5;
@@ -160,14 +182,14 @@
     // cursor: pointer;
     // top: 0.2vh;
     position: relative;
-    float: left;
-    width: 3vh;
+    width: 3vh !important;
     height: 2vh;
     border-radius: 1.2vh;
     border: 0.1vh solid #dfe1e5;
-    margin: 0 0.8vh 0 0;
+    margin: 0 auto !important;
     cursor: pointer;
     top: 0.1vh;
+	float: none !important;
 }
 .video-details .right-part .toggle-my-ratings .toggle .dot {
     // margin: 0.24vh 0.2vh;
@@ -189,15 +211,15 @@
 }
 .video-details .right-part .rating {
     position: relative;
-    margin: 2.2vh 0;
+    margin: 0 0 2.2vh 0;
     height: 17vh;
 }
 .video-details .right-part .rating .left {
     width: 9.6vh;
-    float: left;
+    float: right;
     text-align: center;
     line-height: 2.35vh;
-    margin: 0 2.2vh 0 0;
+    margin: 0 0 0 2.2vh;
 }
 .video-details .right-part .rating .left .text {
     font-size: 1.6vh;
@@ -221,7 +243,7 @@
 .video-details .right-part .rating .right {
     position: relative;
     width: 23vh;
-    float: right;
+    float: left;
 }
 .video-details .right-part .rating .right .category {
     line-height: 2.2vh;
@@ -264,9 +286,9 @@
 }
 .video-details .middle-part {
     position: absolute;
-    left: 46vh;
+    left: 42vh;
     top: 3.6vh;
-    height: 55.5vh;
+    height: 60vh;
     width: 34.9vh;
     padding: 0;
 }
@@ -275,7 +297,7 @@
     margin: 1.7vh 1.7vh 0 1.7vh;
     left: 0;
     top: 0;
-    height: 44.4vh;
+    height: 50vh;
     width: 31.8vh;
     border-radius: 0.8vh;
     background-color: black;
@@ -383,7 +405,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 20.41vh;
+    height: 27.5vh;
     padding: 0 1.7vh;
 }
 .video-details .right-part .karte .comment {
@@ -485,7 +507,7 @@
 }
 .video-details .right-part label#neutral input:checked ~ .checkbox > .dot,
 .video-details .right-part .karte .comment .comment-title .neutral {
-    background-color: #d1ac19;
+    background-color: #ffcc00;
 }
 
 .video-details .right-part label#negative input:checked ~ .checkbox > .dot,
@@ -495,8 +517,8 @@
 
 .video-details .right-part label#neutral,
 .video-details .right-part label#neutral .checkbox{
-    color: #d1ac19;
-    border-color: #d1ac19;
+    color: #ffcc00;
+    border-color: #ffcc00;
 }
 .video-details .right-part label#negative, 
 .video-details .right-part label#negative .checkbox{
