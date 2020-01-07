@@ -257,8 +257,11 @@
 			</div>
 			<div class="do" id="do_words" <% if params[:words] == 'dont' %> style="display: none" <% end %>>
 				<%= form_for(:words, url: do_words_path()) do |f| %>
-					<%= f.text_field :word, placeholder: 'Do Wort hinzufügen', class: 'field half' %>
+					<div class="field">
+					<%= f.text_field :word, placeholder: 'Do Wort hinzufügen', class: 'custom-submit-field' %>
 					<%= f.hidden_field :do, value: true %>
+					<%= f.submit "+", class: 'custom-submit' %>
+					</div>
 				<% end %>
 				<div class="table" id="do_table">
 				<table>
@@ -276,8 +279,11 @@
 			<script>new PerfectScrollbar('#do_table');</script>
 			<div class="donts" id="dont_words" <% if params[:words] != 'dont' %> style="display: none" <% end %>>
 				<%= form_for(:words, url: do_words_path()) do |f| %>
-					<%= f.text_field :word, placeholder: 'Dont Wort hinzufügen',class: 'field half' %>
+					<div class="field">
+					<%= f.text_field :word, placeholder: 'Dont Wort hinzufügen',class: 'custom-submit-field' %>
 					<%= f.hidden_field :do, value: false %>
+					<%= f.submit "+", class: 'custom-submit' %>
+					</div>
 				<% end %>
 				<div class="table" id="dont_table">
 				<table>
