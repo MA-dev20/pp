@@ -2,6 +2,12 @@
 #editCatchword {
     margin-right: 6.3vh;
 }
+.remove {
+	cursor: pointer;
+}
+#deleteCatchword {
+	display: none;
+}
 #newObjection,
 #newCatchword {
     display: none;
