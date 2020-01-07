@@ -23,7 +23,7 @@
                         <td onclick="selectTeam(<%= t.id %>)" id="search" ><%= t.name %></td>
                         <td onclick="selectTeam(<%= t.id %>)"><%= t.users.count %></td>
                         <td onclick="selectTeam(<%= t.id %>)">
-                        	<% if t.team_rating.present? %>
+                        	<% if t.team_rating.present? && !t.team_rating.ges.nil? %>
                         		<div class="circle" id="team_<%= t.id %>"></div>
                         		<div class="rating"><%= t.team_rating.ges / 10.0 %></div>
                         	<% else %>
@@ -190,7 +190,7 @@
                         <% end %>
                         <td><%= u.turns.count %></td>
                         <td>
-                        	<% if u.user_rating.present? %>
+                        	<% if u.user_rating.present? && !u.user_rating.ges.nil? %>
                         		<div class="circle" id="user_<%= u.id %>"></div>
                         		<div class="rating"><%= u.user_rating.ges / 10.0 %></div>
                         	<% else %>
@@ -360,12 +360,12 @@
 		bar.animate(value);
 	}
 	<% @teams.each do |t| %>
-		<% if t.team_rating.present? %>
+		<% if t.team_rating.present? && !t.team_rating.ges.nil? %>
 			drawCircle(<%= t.team_rating.ges / 100.0 %>, '#team_<%= t.id %>');
 		<% end %>
 	<% end %>
 	<% @users.each do |u| %>
-		<% if u.user_rating.present? %>
+		<% if u.user_rating.present? && !u.user_rating.ges.nil? %>
 			drawCircle(<%= u.user_rating.ges / 100.0 %>, '#user_<%= u.id %>');
 		<% end %>
 	<% end %>
