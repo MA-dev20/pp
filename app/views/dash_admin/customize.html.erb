@@ -243,13 +243,19 @@
 		<div class="karte">
 			<div class="head left">Wortwahl</div>
 			<div class="custom-select custom-select-lg" onclick="toggleDoSelect()">
-				<div class="selected" id="selected_word">Does</div>
+				<div class="selected" id="selected_word">
+					<% if params[:words] == 'dont' %>
+						Donts
+					<% else %>
+						Does
+					<% end %>
+				</div>
 				<div class="links" id="doWordSelect">
 					<div class="do" onclick="showDoes()">Does</div>
 					<div class="dont" onclick="showDonts()">Donts</div>
 				</div>
 			</div>
-			<div class="do" id="do_words">
+			<div class="do" id="do_words" <% if params[:words] == 'dont' %> style="display: none" <% end %>>
 				<%= form_for(:words, url: do_words_path()) do |f| %>
 					<%= f.text_field :word, placeholder: 'Do Wort hinzufügen', class: 'field half' %>
 					<%= f.hidden_field :do, value: true %>
@@ -268,7 +274,7 @@
 				</div>
 			</div>
 			<script>new PerfectScrollbar('#do_table');</script>
-			<div class="donts" style="display: none" id="dont_words">
+			<div class="donts" id="dont_words" <% if params[:words] != 'dont' %> style="display: none" <% end %>>
 				<%= form_for(:words, url: do_words_path()) do |f| %>
 					<%= f.text_field :word, placeholder: 'Dont Wort hinzufügen',class: 'field half' %>
 					<%= f.hidden_field :do, value: false %>

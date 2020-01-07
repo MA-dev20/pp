@@ -259,15 +259,22 @@ class DashAdminController < ApplicationController
     
 	
   def create_do_words
+	if params[:words][:word].empty?
+	  redirect_to dash_admin_customize_path
+	  return
+	end
 	if params[:words][:do] == "true" && !@admin.does.include?(params[:words][:word])
 	  @admin.does ||= []
 	  @admin.does << params[:words][:word]
+	  @admin.save
+	  redirect_to dash_admin_customize_path
 	elsif !@admin.donts.include?(params[:words][:word])
 	  @admin.donts ||= []
 	  @admin.donts << params[:words][:word]
+	  @admin.save
+	  redirect_to dash_admin_customize_path(words: 'dont')
 	end
-	@admin.save
-	redirect_to dash_admin_customize_path
+	
   end
 	
   def destroy_do_word
@@ -279,7 +286,7 @@ class DashAdminController < ApplicationController
   def destroy_dont_word
 	@admin.donts.delete params[:word]
 	@admin.save
-	redirect_to dash_admin_customize_path
+	redirect_to dash_admin_customize_path(words: 'dont')
   end
   #Video Tool
   def video_tool
