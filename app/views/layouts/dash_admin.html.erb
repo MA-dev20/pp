@@ -80,7 +80,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         
         <div class="link <% if current_page?(dash_admin_teams_path) || @team.present? && current_page?(dash_admin_team_path(@team)) || @user.present? && current_page?(dash_admin_user_stats_path(@user)) || @user2.present?|| @user.present? && current_page?(dash_admin_user_path(@user)) || @team.present? && current_page?(dash_admin_team_stats_path(@team)) %> active<% end %>">
             <i class="fas fa-user-friends"></i>
-            <div class="text">User</div>
+            <div class="text">Nutzer</div>
             <%= link_to "", dash_admin_teams_path %>
         </div>
         <div class="link <% if current_page?(dash_admin_customize_path) || @catchword && current_page?(dash_admin_catchwords_path(@catchword)) || @objection && current_page?(dash_admin_objections_path(@objection))%> active <% end %>">

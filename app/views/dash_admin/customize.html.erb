@@ -3,15 +3,15 @@
 	<div class="customize-sm" id="editCatchword">
     	<div class="karte">
         	<%= link_to '', dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
-        	<div class="head small left">Catchword Liste bearbeiten</div>
+        	<div class="head small left">Catchwords bearbeiten</div>
         	<%= form_for(:basket, url: edit_basket_path(@catchword)) do |f| %>
             	<% if flash[:basket_name] %>
-            		<label>Name
+            		<label>Name der Liste
             			<div class="alert alert-label"><%= flash[:basket_name] %></div>
             		</label>
             		<%= f.text_field :name, class: 'field red', value: @catchword.name %>
             	<% else %>
-            		<label>Name</label>
+            		<label>Name der Liste</label>
             		<%= f.text_field :name, class: 'field', value: @catchword.name %>
             	<% end %>
             	<%= f.hidden_field :admin_id, value: @admin.id %>
@@ -20,7 +20,7 @@
             	<%= f.submit 'speichern', class: 'btn btn-green' %>
         	<% end %>
         	<%= form_for(:word, url: new_word_path(@catchword)) do |f| %>
-           		<label>Add new Catchword
+           		<label>Catchword hinzufügen
 					<% if flash[:word_name] %>
 						<div class="alert alert-label"><%= flash[:word_name] %></div>
 					<% end %>
@@ -72,11 +72,11 @@
 	<div class="customize-sm" id="catchwords">
     	<div class="searchbar">
         	<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-        	<input type="text" placeholder="Search Catchwords" id="searchCW">
+        	<input type="text" placeholder="Liste suchen" id="searchCW">
     	</div>
     	<button class="btn btn-green" onclick="showNewCatchword()">Liste erstellen</button>
     	<div class="karte" id="catchwords">
-        	<div class="head left">Catchwords Listen</div>
+        	<div class="head left">Catchwords</div>
         	<div class="list" id="catchword-list">
             	<% @catchwords.each do |c| %>
                 <div class="list-karte CWsearch" onclick="redirect('<%= dash_admin_catchwords_url(c.id) %>')">
@@ -98,15 +98,15 @@
 	<div class="customize-sm" id="newCatchword">
     	<div class="karte">
 	        <i class="back small fas fa-arrow-left" onclick="hideNewCatchword()"></i>
-        	<div class="head left small">Catchword Liste hinzufügen</div>
+        	<div class="head left small">Catchwords hinzufügen</div>
         	<%= form_for(:basket, url: new_basket_path()) do |f| %>
             	<% if flash[:basket_name] %>
-            	<label>Name
+            	<label>Name der Liste
             		<div class="alert alert-newCW"><%= flash[:basket_name] %></div>
             	</label>
             	<%= f.text_field :name, class: 'field red', autofocus: true  %>
             	<% else %>
-            	<label>Name</label>
+            	<label>Name der Liste</label>
             	<%= f.text_field :name, class: 'field', autofocus: true  %>
             	<% end %>
             	<%= f.hidden_field :admin_id, value: @admin.id %>
@@ -122,15 +122,15 @@
 	<div class="customize-sm" id="editObjection">
     	<div class="karte">
         	<%= link_to "", dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
-        	<div class="head small left">Objection Liste bearbeiten</div>
+        	<div class="head small left">Einwände bearbeiten</div>
         	<%= form_for(:basket, url: edit_basket_path(@objection)) do |f| %>
             	<% if flash[:basket_name] %>
-                	<label for="">Name
+                	<label for="">Name der Liste
                 		<div class="alert"><%= flash[:basket_name] %></div>
                 	</label>
                 	<%= f.text_field :name, class: 'field red', value: @objection.name %>
             	<% else %>
-                	<label for="">Name</label>
+                	<label for="">Name der Liste</label>
                 	<%= f.text_field :name, class: 'field', value: @objection.name %>
             	<% end %>
             	<%= f.hidden_field :admin_id, value: @admin.id %>
@@ -140,7 +140,7 @@
             	<%= f.submit 'speichern', class: 'btn btn-green' %>
         	<% end %>
         	<%= form_for(:objection, url: new_objection_path(@objection)) do |f| %>
-           		<label>Add new Objection
+           		<label>Einwand hinzufügen
 					<% if flash[:objection_name] %>
 					<div class="alert alert-label"><%= flash[:objection_name] %></div>
 					<% end %>
@@ -154,7 +154,7 @@
         	<table>
             	<thead>
                 	<tr onclick="sortTable('objection-table', 'objection-sorter')">
-                    	<th>Objection <i class="fas fa-sort" id="objection-sorter"></i></th>
+                    	<th>Einwände <i class="fas fa-sort" id="objection-sorter"></i></th>
                     	<th></th>
                     	<th></th>
                     	<th></th>
@@ -191,11 +191,11 @@
 		<div class="customize-sm" id="objections">
     	<div class="searchbar">
         	<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-        	<input type="text" placeholder="Search Objections" id="searchOB">
+        	<input type="text" placeholder="Liste suchen" id="searchOB">
     	</div>
     	<button class="btn btn-green" onclick="showNewObjection()">Liste erstellen</button>
     	<div class="karte">
-        	<div class="head left">Objections</div>
+        	<div class="head left">Einwände</div>
         	<div class="list" id="objection-list">
             	<% @objections.each do |o| %>
                 <% 
@@ -218,15 +218,15 @@
 	<div class="customize-sm" id="newObjection">
     	<div class="karte">
         	<i class="back small fas fa-arrow-left" onclick="hideNewObjection()"></i>
-        	<div class="head left small">Objection hinzufügen</div>
+        	<div class="head left small">Einwand hinzufügen</div>
         	<%= form_for(:basket, url: new_basket_path()) do |f| %>
             	<% if flash[:obasket_name] %>
-                	<label for="">Name
+                	<label for="">Name der Liste
                 		<div class="alert"><%= flash[:obasket_name] %></div>
                 	</label>
                 	<%= f.text_field :name, class: 'field red' %>
             	<% else %>
-                	<label for="">Name</label>
+                	<label for="">Name der Liste</label>
                 	<%= f.text_field :name, class: 'field' %>
             	<% end %>
             	<%= f.hidden_field :admin_id, value: @admin.id %>
@@ -245,20 +245,20 @@
 			<div class="custom-select custom-select-lg" onclick="toggleDoSelect()">
 				<div class="selected" id="selected_word">
 					<% if params[:words] == 'dont' %>
-						Donts
+						Don't say
 					<% else %>
-						Does
+						Do say
 					<% end %>
 				</div>
 				<div class="links" id="doWordSelect">
-					<div class="do" onclick="showDoes()">Does</div>
-					<div class="dont" onclick="showDonts()">Donts</div>
+					<div class="do" onclick="showDoes()">Do say</div>
+					<div class="dont" onclick="showDonts()">Don't say</div>
 				</div>
 			</div>
 			<div class="do" id="do_words" <% if params[:words] == 'dont' %> style="display: none" <% end %>>
 				<%= form_for(:words, url: do_words_path()) do |f| %>
 					<div class="field">
-					<%= f.text_field :word, placeholder: 'Do Wort hinzufügen', class: 'custom-submit-field' %>
+					<%= f.text_field :word, placeholder: 'Do say hinzufügen', class: 'custom-submit-field' %>
 					<%= f.hidden_field :do, value: true %>
 					<%= f.submit "+", class: 'custom-submit' %>
 					</div>
@@ -280,7 +280,7 @@
 			<div class="donts" id="dont_words" <% if params[:words] != 'dont' %> style="display: none" <% end %>>
 				<%= form_for(:words, url: do_words_path()) do |f| %>
 					<div class="field">
-					<%= f.text_field :word, placeholder: 'Dont Wort hinzufügen',class: 'custom-submit-field' %>
+					<%= f.text_field :word, placeholder: "Don't say hinzufügen",class: 'custom-submit-field' %>
 					<%= f.hidden_field :do, value: false %>
 					<%= f.submit "+", class: 'custom-submit' %>
 					</div>
@@ -307,7 +307,7 @@
 		<div class="karte">
 			<div class="head">Liste löschen?</div>
 			<div class="body">
-				Bist du sicher das du die Catchwort Liste unwiederuflich löschen möchtest?
+				Bist du sicher das du die Catchwords unwiederuflich löschen möchtest?
 			</div>
 			<div class="bottom" style="display: flex;">
 				<%= link_to 'löschen', destroy_basket_admin_path(@catchword, 'dash_admin'), class: 'btn btn-green' %>
@@ -321,7 +321,7 @@
 		<div class="karte">
 			<div class="head">Liste löschen?</div>
 			<div class="body">
-				Bist du sicher das du die Objection Liste unwiederuflich löschen möchtest?
+				Bist du sicher das du die Einwände unwiederuflich löschen möchtest?
 			</div>
 			<div class="bottom" style="display: flex;">
 				<%= link_to 'löschen', destroy_basket_admin_path(@objection, 'dash_admin'), class: 'btn btn-green' %>
@@ -646,12 +646,12 @@ function sortTable(tableId, sorter) {
 	function showDoes() {
 		$('#do_words').show();
 		$('#dont_words').hide();
-		$('#selected_word').text('Does');
+		$('#selected_word').text('Do say');
 	}
 	function showDonts() {
 		$('#do_words').hide();
 		$('#dont_words').show();
-		$('#selected_word').text('Donts');
+		$('#selected_word').text("Don't say");
 	}
 	function toggleDoSelect() {
 		$('#doWordSelect').toggle();

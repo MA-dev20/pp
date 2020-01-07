@@ -218,35 +218,31 @@
     </div>
 </div>
 
-<div class="heading">Statistics</div>
+<div class="heading">Details</div>
 
 <div class="stats-overview">
     <div class="karte">
-        <label>Activity Days</label>
+        <label>aktive Tage</label>
         <div class="number"><%= @days %></div>
     </div>
     <div class="karte">
         <label>Pitches</label>
         <div class="number"><%= @games.count %></div>
     </div>
-    <!-- <div class="karte">
-        <label>% of victories</label>
-        <div class="number">?</div>
-    </div> -->
     <div class="karte">
-        <label for="">Best rating</label>
+        <label for="">best score</label>
         <% best_rating = number_with_precision(@game_ratings.reorder('ges DESC').first.ges.present? ? @game_ratings.reorder('ges DESC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
         <div class="number best-rating"><%= (@game_ratings.reorder('ges DESC').first.ges.present? ? (@game_ratings.reorder('ges DESC').first.ges / 10.0) : 0.0) %></div>
     </div>
     <div class="karte">
-        <label for="">Worst rating</label>
+        <label for="">worst score</label>
         <% worst_rating = number_with_precision(@game_ratings.reorder('ges ASC').first.ges.present? ? @game_ratings.reorder('ges ASC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
         <div class="number worst-rating"><%= (@game_ratings.reorder('ges ASC').first.ges.present? ?  (@game_ratings.reorder('ges ASC').first.ges / 10.0) : 0.0) %></div>
     </div>
 </div>
 
 <div class="karte" id="statistic">
-    <div class="head left">Details</div>
+    <div class="head left">Fortschritt</div>
     <div class="chart">
         <canvas id="myChart" width="814px" height="280px"></canvas>
     </div>
@@ -321,7 +317,7 @@
         </div>
         </div>
         <% end %>
-        <a href="/admins/dash/video_tool">Alle sehen</a>
+        <a href="/admins/dash/video_tool">alle Aufnahmen</a>
         </div>
     </div>
     </div>

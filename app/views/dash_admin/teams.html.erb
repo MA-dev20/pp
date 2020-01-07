@@ -1,7 +1,7 @@
 <div class="teams">
     <div class="searchbar">
         <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-        <input type="text" placeholder="Search Teams" id="searchTeams" onkeyup="search(this, $('.teamname'))">
+        <input type="text" placeholder="Team suchen" id="searchTeams" onkeyup="search(this, $('.teamname'))">
     </div>
     <button class="btn btn-green" onclick="showNewteam()">Team erstellen</button>
     <div class="karte" id="teams">
@@ -11,8 +11,8 @@
                 <thead>
                     <tr>
                         <th>Teamname</th>
-                        <th>Users</th>
-                        <th>Rating</th>
+                        <th>Nutzer</th>
+                        <th>Score</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -40,7 +40,7 @@
     </div>
     <div class="karte" id="newteam">
         <i class="back fas fa-arrow-left" onclick="hideNewteam()"></i>
-        <div class="head left">Team erstellen!</div>
+        <div class="head left">Team erstellen</div>
         <%= form_for(:team, url: new_team_path()) do |f| %>
             <% if flash[:team_name] %>
                 <label>Teamname
@@ -54,11 +54,11 @@
         	<% @admin.users.all.each do |u| %>
                	<input type="checkbox"  name="team[users][]" value="<%= u.id %>" id="team_users_<%= u.id %>">
             <% end %>
-            <label>Search for Users</label><br>
+            <label>Nach Nutzer suchen</label><br>
             <div class="user-list">
                 <div class="search-field">
                     <%= image_tag 'dash/icons/search.png', class: 'search' %>
-                    <input type="text" placeholder="Search Users" id='searchNewTeam' autocomplete="off">
+                    <input type="text" placeholder="Nutzer Suchen" id='searchNewTeam' autocomplete="off">
                 </div>
                 
                 <div class="unselected_users">
@@ -79,14 +79,14 @@
             	
             </div>
             <%= f.hidden_field :url, value: 'teams' %>
-            <%= f.submit 'Team erstellen!', class: 'btn half btn-green' %>
+            <%= f.submit 'Team erstellen', class: 'btn half btn-green' %>
         <% end %>
     </div>
     
     <%  if @team %>
     <div class="karte editteam" id="editteam">
         <i class="back fas fa-arrow-left" onclick="hideEditteam()"></i>
-        <div class="head left">Team bearbeiten!</div>
+        <div class="head left">Team bearbeiten</div>
         <%= form_for(:team, url: edit_team_path(@team)) do |f| %>
             <% if flash[:team_name] %>
                 <label>Teamname
@@ -105,11 +105,11 @@
                	<% end %>
             <% end %>
         
-            <label>Search for Users</label><br>
+            <label>Nach Nutzer suchen</label><br>
             <div class="user-list">
                 <div class="search-field">
                     <%= image_tag 'dash/icons/search.png', class: 'search' %>
-                    <input type="text" placeholder="Search Users" id='searchEditTeam'>
+                    <input type="text" placeholder="Nutzer suchen" id='searchEditTeam'>
                 </div>
                 <div class="unselected_users">
                 	<% @admin.users.all.each do |u| %>
@@ -142,7 +142,7 @@
                 	<% end %>
                 <% end %>
             </div>
-            <%= f.submit 'Daten updaten!', class: 'btn half btn-green' %>
+            <%= f.submit 'speichern', class: 'btn half btn-green' %>
         <% end %>
         <div onclick="toggleDeleteTeamModal()" class="remove far fa-trash-alt"></div>
     </div>
@@ -153,12 +153,12 @@
     <% if !@user %>
     <div class="searchbar">
         <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-        <input type="text" placeholder="Search Users" id="searchUsers">
+        <input type="text" placeholder="Nutzer suchen" id="searchUsers">
     </div>
     <% end %>
     <button class="btn btn-green" onclick="showNewUser()">User erstellen</button>
     <div class="karte" id="users">
-        <div class="head left">Users</div>
+        <div class="head left">Nutzer</div>
         <select name="team" id="select-team" class="custom-select custom-select-lg">
             <option value="" <% if !@team %> selected <% end %> onclick="unselectTeams()">Alle Teams</option>
             <% @teams.each do |t| %>
@@ -175,7 +175,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Pitches</th>
-                        <th>Rating</th>
+                        <th>Score</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -208,7 +208,7 @@
     
     <div class="karte" id="newUser">
         <i class="back fas fa-arrow-left" onclick="hideNewUser()"></i>
-        <div class="head left">Nutzer erstellen!</div>
+        <div class="head left">Nutzer erstellen</div>
         <%= form_for(:user, url: new_user_path) do |f| %>
             <label class="half left">Unternehmen</label>
             <label class="half right">E-Mail
@@ -237,13 +237,13 @@
             <div class="team-list" id="unselected_new_teams">
                 <div class="search-field">
                     <%= image_tag 'dash/icons/search.png', class: 'search' %>
-                    <input type="text" placeholder="Search Users" id='searchNewUser' autocomplete="off">
+                    <input type="text" placeholder="Team suchen" id='searchNewUser' autocomplete="off">
                 </div>
                 <% @admin.teams.each do |t| %>
                     <label for="new_user_teams_<%= t.id %>" class="team newUser" onclick="moveNewTeam(this)"><%= t.name %> <i class="fas fa-times"></i></label>
                 <% end %>
             </div>
-            <%= f.submit 'User erstellen!', class: 'btn half btn-green' %>
+            <%= f.submit 'Nutzer erstellen', class: 'btn half btn-green' %>
         <% end %>
     </div>
     <% if @user %>
@@ -276,7 +276,7 @@
             <div class="team-list" id="unselected_edit_teams">
                 <div class="search-field">
                     <%= image_tag 'dash/icons/search.png', class: 'search' %>
-                    <input type="text" placeholder="Search Users" id='searchEditUser'>
+                    <input type="text" placeholder="Nutzer suchen" id='searchEditUser'>
                 </div>
                 <% @admin.teams.each do |t| %>
                     <% if TeamUser.where(team_id: t.id, user_id: @user.id).count == 0 %>
@@ -284,7 +284,7 @@
                     <% end %>
                 <% end %>
             </div>
-            <%= f.submit 'Daten updaten!', class: 'btn half btn-green' %>
+            <%= f.submit 'speichern', class: 'btn half btn-green' %>
         <% end %>
         <div onclick="toggleDeleteUserModal()" class="remove far fa-trash-alt"></div>
     </div>
@@ -380,7 +380,7 @@
 	}
     new PerfectScrollbar('#teams-table');
     new PerfectScrollbar('#users-table');
-    /* search Teams */
+    /* Team suchen */
         $('#searchTeams').keyup(function() {
             var $rows = $('.teamname');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
@@ -393,7 +393,7 @@
         }).hide();
         })
     
-    /* search Users */
+    /* Nutzer suchen */
         $('#searchUsers').keyup(function() {
             $rows = $('.username');
             var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',

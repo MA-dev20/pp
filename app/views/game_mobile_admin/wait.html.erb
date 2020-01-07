@@ -17,7 +17,7 @@
       url = (@game.replay ? gma_choose_path :  (@game.youtube_url.present? ? gma_youtube_path : gma_intro_path))
     %>
     
-    <%= link_to 'weiter!', url, class: 'nunito-regular' %>
+    <%= link_to "Los geht's!", url, class: 'nunito-regular' %>
 </div>
 </section>
 <%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>

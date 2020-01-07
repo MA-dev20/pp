@@ -2,7 +2,7 @@
   <div class="video-tool">
     <div class="searchbar">
       <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-      <input type="text" placeholder="Search" id="searchPitch">
+      <input type="text" placeholder="Suchen" id="searchPitch">
     </div>
     <% if Turn.where(recorded_pitch: nil).first %>
     <!-- <div class="add" onclick="openDropzone2()">
@@ -10,7 +10,7 @@
     </div> -->
     <% end %>
     <div class="karte">
-      <div class="head left">Video Tool</div>
+      <div class="head left">Pitch Videos</div>
       <div class="sort_by">
         <label for="" style="padding-right: 10px;">Sortieren nach:</label>
         <select name="sortBy" id="sortBy" class="custom-select" onchange="redirectUrl()">
@@ -75,13 +75,13 @@
   <div class="video-uploads">
     <div class="searchbar">
       <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-      <input type="text" placeholder="Search" id="searchVideo">
+      <input type="text" placeholder="Suchen" id="searchVideo">
     </div>
     <div class="add" onclick="openDropzone()">
       <i class="fas fa-plus"></i>
     </div>
     <div class="karte">
-      <div class="head left">Video Uploads</div>
+      <div class="head left">Eigene Videos</div>
       <div class="body" id='videouploadList'>
         <% @admin.videos.each do |v| %>
         <div class="video-karte videoSearch" style="background-image: url('<%= v.file.thumb.url.present? ? asset_path(v.file.thumb.url) : '' %>'")>
@@ -100,8 +100,8 @@
 
   <%= form_for(:video, url: video_upload_path(), html: {class: 'dropzone'}) do |f|%>
   <%= f.hidden_field :admin_id, value: @admin.id %>
-  <%= f.text_field :name, placeholder: 'Enter name here', class: 'field' %>
-  <div class="dz-message">Drop files here or click to upload.</div>
+  <%= f.text_field :name, placeholder: 'Video Name einfügen', class: 'field' %>
+  <div class="dz-message">Datei hier hinziehen oder klicken zum Hochladen.</div>
   <div class="fallback">
     <%= f.file_field :file %>
   </div>
@@ -111,7 +111,7 @@
 <% if Turn.where(recorded_pitch: nil).first %>
 <div class="popup" id="dropzone2">
   <%= form_for(:turn, url: add_video_to_turn_path(Turn.where(recorded_pitch: nil).first), html: {class: 'dropzone'}) do |f| %>
-  <div class="dz-message">Drop files here or click to upload.</div>
+  <div class="dz-message">Datei hier hinziehen oder klicken zum Hochladen.</div>
   <div class="fallback">
     <%= f.file_field :recorded_pitch %>
     <%= f.submit 'save' %>
