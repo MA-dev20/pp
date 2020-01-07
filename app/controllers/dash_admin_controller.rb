@@ -262,7 +262,7 @@ class DashAdminController < ApplicationController
 	if params[:words][:word].empty?
 	  redirect_to dash_admin_customize_path
 	  return
-	end
+  end
 	if params[:words][:do] == "true" && !@admin.does.include?(params[:words][:word])
 	  @admin.does ||= []
 	  @admin.does << params[:words][:word]

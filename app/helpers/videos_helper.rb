@@ -27,7 +27,7 @@ module VideosHelper
 	  result.each_slice(6)
 	end
 
-	def translate_video(video_path, wait_seconds)
+	def translate_video(video_path, wait_seconds, do_words, dont_words)
 		require "google/cloud/speech"
 		require "google/cloud/storage"
 
@@ -55,26 +55,26 @@ module VideosHelper
 		# Translate audio to text
 		audio_text = encode_text(video_name_mono)
 		if audio_text.present?
-			return text_parsing(audio_text, wait_seconds)
+			return text_parsing(audio_text, wait_seconds, do_words, dont_words)
 		else
 			audio_text = encode_text(video_name_mono)
-			return text_parsing(audio_text, wait_seconds) if audio_text.present?
+			return text_parsing(audio_text, wait_seconds, do_words, dont_words) if audio_text.present?
 			return '', 0, 0, 0
 		end
 	end
 
-	def text_parsing(audio_text, wait_seconds)
+	def text_parsing(audio_text, wait_seconds, do_words, dont_words)
 		do_words_count = 0
 		dont_words_count = 0
-		do_words = ['hello', 'hallo', 'hi', 'the', 'hye', 'good', 'word', 'Guten Tag', 'Danke', 'Wie geht es']
-		dont_words = ['bad', 'wrong', 'false', 'würde', 'hätte', 'könnte', 'teuer', 'blöd']
+		# do_words = ['hello', 'hallo', 'hi', 'the', 'hye', 'good', 'word', 'Guten Tag', 'Danke', 'Wie geht es']
+		# dont_words = ['bad', 'wrong', 'false', 'würde', 'hätte', 'könnte', 'teuer', 'blöd']
 
 		audio_text_array = audio_text.split()
 		audio_text_array.map!(&:downcase)
-		do_words.each do |word|
+		do_words&.each do |word|
 			do_words_count += audio_text_array.count(word.downcase)
 		end
-		dont_words.each do |word|
+		dont_words&.each do |word|
 			dont_words_count += audio_text_array.count(word.downcase)
 		end
 		if wait_seconds == 80
