@@ -63,7 +63,7 @@
 					</tbody>
 				</table>
         	</div>
-        	<%= link_to '',  destroy_basket_admin_path(@catchword, 'dash_admin'), class: 'remove far fa-trash-alt' %>
+        	<i class="remove far fa-trash-alt" onclick="toggleDeleteCatchwordModal()"></i>
     	</div>
 	</div>
 	
@@ -183,7 +183,7 @@
             		</tbody>
         		</table>
         	</div>
-        	<%= link_to '',  destroy_basket_admin_path(@objection, 'dash_admin'), class: 'remove far fa-trash-alt' %>
+        	<i class="remove far fa-trash-alt" onclick="toggleDeleteCatchwordModal()"></i>
     	</div>
 	</div>
 <script> new PerfectScrollbar('#table_content'); </script>
@@ -296,6 +296,34 @@
 			
 		</div>
 	</div>
+	<% if @catchword %>
+	<div class="fullscreen-blur" id="deleteCatchword">
+		<div class="karte">
+			<div class="head">Liste löschen?</div>
+			<div class="body">
+				Bist du sicher das du die Catchwort Liste unwiederuflich löschen möchtest?
+			</div>
+			<div class="bottom" style="display: flex;">
+				<%= link_to 'löschen', destroy_basket_admin_path(@catchword, 'dash_admin'), class: 'btn btn-green' %>
+				<button class="btn btn-green" onclick="toggleDeleteCatchwordModal()">Close</button>
+			</div>
+		</div>
+	</div>
+	<% end %>
+	<% if @objection %>
+	<div class="fullscreen-blur" id="deleteCatchword">
+		<div class="karte">
+			<div class="head">Liste löschen?</div>
+			<div class="body">
+				Bist du sicher das du die Objection Liste unwiederuflich löschen möchtest?
+			</div>
+			<div class="bottom" style="display: flex;">
+				<%= link_to 'löschen', destroy_basket_admin_path(@objection, 'dash_admin'), class: 'btn btn-green' %>
+				<button class="btn btn-green" onclick="toggleDeleteCatchwordModal()">Close</button>
+			</div>
+		</div>
+	</div>
+	<% end %>
 <style>
     .record-img {
         height: 2.35vh;
@@ -351,7 +379,9 @@
 </style>
 
 <script>
-
+	function toggleDeleteCatchwordModal() {
+		$("#deleteCatchword").toggle();
+	}
 
 var stream, form, globalForm,recorder, audio, timer;
   globalForm = new FormData();
