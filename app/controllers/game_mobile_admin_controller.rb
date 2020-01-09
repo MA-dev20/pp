@@ -91,7 +91,10 @@ class GameMobileAdminController < ApplicationController
   end
     
   def intro
-	@turns = @game.turns.where(status: "accepted").playable.sample(2)  
+	@turns = @game.turns.where(status: "accepted").playable.sample(2)
+	if !@game.video.nil?
+		@video = true
+	end
     if @game.state != 'choose' && @turns.count <= 1
       redirect_to gea_mobile_path
       return
