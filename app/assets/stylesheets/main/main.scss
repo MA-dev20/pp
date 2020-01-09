@@ -749,6 +749,7 @@ label .red {
 }
 #content .references .logo-wheel img:hover {
     filter: grayscale(0%);
+	opacity: .8;
 }
 
 #content .image-text {
@@ -910,10 +911,11 @@ label .red {
 }
 #content .testimonials .card .people img {
     position: absolute;
-    left: 61px;
+    left: 61spx;
     top: 1px;
-    height: 48px;
-    width: 48px;
+    margin: 5px;
+	height: 38px;
+	width: 38px;
     border-radius: 50%;
 }
 #content .testimonials .card .people .name {
@@ -2023,7 +2025,7 @@ label .red {
         left: 100px;
 	}
     #content .references .logo-wheel {
-        margin: 0 150px;
+        margin: 0 140px;
         width: auto;
     }
     #content .references .logo-wheel img {
@@ -2068,8 +2070,9 @@ label .red {
         position: absolute;
         left: 81px;
         top: 1px;
-        height: 48px;
-        width: 48px;
+        height: 38px;
+        width: 38px;
+		margin: 5px;
         border-radius: 50%;
     }
     #content .testimonials .card .people .name {

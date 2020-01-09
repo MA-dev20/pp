@@ -116,7 +116,7 @@ body {
 .menu-position .btn-menu {
   position: absolute;
   right: 1.4vh;
-  top: 1.5vh;
+  top: calc(50% - 44px);
   width: 84px;
   height: 84px;
 }

@@ -137,8 +137,8 @@
         <% end %>
         <% @turns.each do |t| %>
         <% 
-        first_name = t.user&.fname ? t.user.fname : '' 
-        last_name = t.user&.lname ? t.user.lname : '' 
+        first_name = t.user&.fname ? t.user.fname : 'no' 
+        last_name = t.user&.lname ? t.user.lname : 'name' 
         %>
         <label for="game_videos_turns_<%= t.id %>" class="video-karte videoSearch" onclick="selectVideo('<%= first_name + " " + last_name %>', false)" style="background-image: url('<%= t.recorded_pitch.thumb.url.present? ? asset_path(t.recorded_pitch.thumb.url) : '' %>')">
           <div class="overlay"></div>

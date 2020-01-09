@@ -73,10 +73,11 @@ class GameDesktopAdminController < ApplicationController
       @turn1 = Turn.find_by(id: @game.turn1)
       @turn2 = Turn.find_by(id: @game.turn2)
       if @turn1.counter > @turn2.counter
-        @game.update(state: 'turn', current_turn: @turn1.id)
+		@game.update(state: 'turn', current_turn: @turn1.id)
       else
         @game.update(state: 'turn', current_turn: @turn2.id)
       end
+	  ActionCable.server.broadcast "game_#{@game.id}_channel",game_state: "turn", game_admin_id: @game.admin_id
     end
     @turn1 = Turn.find_by(id: @game.turn1)
     @turn2 = Turn.find_by(id: @game.turn2)
