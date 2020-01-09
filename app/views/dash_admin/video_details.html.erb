@@ -11,14 +11,14 @@
             <% end %>
             <%= @user.fname + ' ' + @user.lname + ' - ' + @turn.created_at.strftime("%d.%m.%Y") %>
         </div>
-        <div class="head transcript">Does &amp; Donts</div>
+        <div class="head transcript">Do say &amp; Don't say</div>
         <div class="karte counters">
         	<div class="do">
-        		<div class="head">Does</div>
+        		<div class="head">Do say</div>
         		<div class="count"><%= @turn.do_words %></div>
         	</div>
         	<div class="dont">
-        		<div class="head">Donts</div>
+        		<div class="head">Don't say</div>
         		<div class="count"><%= @turn.dont_words %></div>
         	</div>
         	<div class="wpm">
@@ -29,7 +29,7 @@
         		</div>
         	</div>
         </div>
-        <div class="head transcript">Transcript</div>
+        <div class="head transcript">Transkript</div>
         <div class="karte text" id="video-text">
         	<% if @turn.video_text.present? %>
             	<%= @turn.video_text %>
@@ -190,12 +190,13 @@
                     <span class="checkbox"><span class="dot"></span></span>
                     Positiv
                 </label>
-            <input class="field" placeholder="Kommentiere hier ..." type="text" name="title" id="comment_title"> 
+            <input class="field" placeholder="Kommentar hinzufügen" type="text" name="title" id="comment_title"> 
         </form>
        
         
     </div>
 </div>
+
 
 <style>
     .video-play,
@@ -206,6 +207,7 @@
 
 
 <script>
+	
     var admin_img = '<%= @admin.avatar.quad.url %>'
     var admin_fname = '<%= @admin.fname %>'
     var admin_lname = '<%= @admin.lname %>'

@@ -1,23 +1,78 @@
 <!DOCTYPE html>
-<html lang="de">
-  <head>
-    <title>Peterpitch</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%= stylesheet_link_tag    'main/main', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'main/main'%>
-    <meta property="og:url"           content="http://www.peterpitch.com" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="Peterpitch" />
-    <meta property="og:description"   content="Das erste Gamification Tool" />
-    <meta property="og:image"         content="<%= image_url('defaults/wolf.jpg') %>" />
-    <meta property="og:site_name"     content="Peterpitch" >
-    <meta property="og:locale"        content="de_DE" />
-    
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@peterpitch" />
-  </head>
-
-  <body class="modal-open">
-    <%= yield %>
-  </body>
+<html>
+	<head>
+		<title>Peterpitch</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<style>
+			@import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
+			body {
+				font-family: 'Nunito', sans-serif;
+    			font-weight: normal;
+    			font-style: normal;
+    			font-stretch: normal;
+    			letter-spacing: normal;
+				margin: 0;
+				height: 100%;
+				width: 100%;
+			}
+			.header {
+				position: relative;
+				width: 100%;
+				height: 150px;
+			}
+			.header img {
+				position: relative;
+				left: calc(50% - 80px);
+				top: 19px;
+				width: 190px;
+			}
+			.text {
+				min-height: 300px;
+				width: 100%;
+				text-align: left;
+			}
+			.footer {
+				position: relative;
+				width: 100%;
+				height: 130px;
+				border-top: 1px solid #dfe1e5;
+				text-align: center;
+				font-size: 12px;
+				line-height: 12px;
+				padding: 10px 0;
+			}
+			.footer p {
+				margin: 0;
+			}
+			.btn {
+				margin: 10px 0;
+				height: 35px;
+				line-height: 35px !important;
+				border-radius: 17.5px;
+				font-size: 14px;
+				padding: 8px 24px;
+				text-decoration: none;
+				font-weight: 900;
+				background-color: #16e2a5;
+				border: 1px solid #16e2a5;
+				color: white;
+			}
+			.btn:hover {
+				color: #16e2a5;
+				background-color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header"><%= image_tag "logo-m.png" %></div>
+		<div class="text">
+			<%= yield %>
+		</div>
+		<div class="footer">
+			<p>Peterpitch GmbH</p>
+			<p>Straße 123</p>
+			<p>44137 Dortmund</p>
+			<p>HReg. 1234</p>
+		</div>
+	</body>
 </html>

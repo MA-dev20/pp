@@ -636,6 +636,7 @@
     color: white;
     font-size: 1.8vh;
 }
+
 .video-tool .video-list .video-karte:hover .play {
     transform: scale(1.1);
 }
@@ -646,6 +647,19 @@
     font-size: 2.2vh;
     color: white;
     line-height: 2.2vh;
+}
+.top .remove {
+	position: absolute;
+	bottom: 1vh;
+	left: 1.2vh;
+	font-size: 2.2vh;
+	color: white;
+	line-height: 2.2vh;
+	width: 2.2vh;
+}
+.top .remove:hover,
+.top .heart:hover {
+	opacity: 0.5;
 }
 .video-uploads .video-karte .remove {
 	position: absolute;

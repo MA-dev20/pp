@@ -1308,7 +1308,11 @@ label .red {
 		width: 220px;
 	}
 	#smartphone .text {
+		font-size: 14px;
 		width: 200px;
+	}
+	#smartphone .right .text {
+		margin-left: 20px;
 	}
 	#smartphone .line {
 		display: block;

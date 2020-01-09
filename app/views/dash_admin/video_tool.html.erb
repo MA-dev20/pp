@@ -2,7 +2,7 @@
   <div class="video-tool">
     <div class="searchbar">
       <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-      <input type="text" placeholder="Search" id="searchPitch">
+      <input type="text" placeholder="Suchen" id="searchPitch">
     </div>
     <% if Turn.where(recorded_pitch: nil).first %>
     <!-- <div class="add" onclick="openDropzone2()">
@@ -10,7 +10,7 @@
     </div> -->
     <% end %>
     <div class="karte">
-      <div class="head left">Video Tool</div>
+      <div class="head left">Pitch Videos</div>
       <div class="sort_by">
         <label for="" style="padding-right: 10px;">Sortieren nach:</label>
         <select name="sortBy" id="sortBy" class="custom-select" onchange="redirectUrl()">
@@ -47,17 +47,18 @@
       </div>
       <div class="video-list" id="videoList">
         <% @result.each do |r| %>
-        <div class="video-karte pitches" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')">
+        <div class="video-karte pitches">
           <div class="top">
             <div class="video-img" style="background-image: url('<%= asset_path(r[:pitch_url]) %>')"></div>
-            <div class="overlay"></div>
+            <div class="overlay" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')"></div>
             <div class="rating"><%= r[:rating].present? ? r[:rating] / 10.0 : 0 %></div>
             <% turn = Turn.find(r[:turn_id])
               total_time = turn.recorded_pitch_duration.to_minutes if turn.recorded_pitch_duration.present? 
             %>
             <div class="timer"><%= total_time %></div>
-            <div class="play"><i class="fas fa-play"></i></div>
+            <div class="play" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')"><i class="fas fa-play"></i></div>
             <div class="heart" data-id="<%= r[:turn_id] %>" id="<%= r[:turn_id] %>_heart"><i class="<%= r[:favorite] ? 'fa active' : 'far' %> fa-heart"></i></div>
+            <%= link_to '', dash_admin_video_tool_path(turn: r[:turn_id]), class: 'remove far fa-trash-alt'%>
           </div>
           <div class="word">
             <%= r[:word] %>
@@ -75,13 +76,13 @@
   <div class="video-uploads">
     <div class="searchbar">
       <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-      <input type="text" placeholder="Search" id="searchVideo">
+      <input type="text" placeholder="Suchen" id="searchVideo">
     </div>
     <div class="add" onclick="openDropzone()">
       <i class="fas fa-plus"></i>
     </div>
     <div class="karte">
-      <div class="head left">Video Uploads</div>
+      <div class="head left">Eigene Videos</div>
       <div class="body" id='videouploadList'>
         <% @admin.videos.each do |v| %>
         <div class="video-karte videoSearch" style="background-image: url('<%= v.file.thumb.url.present? ? asset_path(v.file.thumb.url) : '' %>'")>
@@ -100,8 +101,8 @@
 
   <%= form_for(:video, url: video_upload_path(), html: {class: 'dropzone'}) do |f|%>
   <%= f.hidden_field :admin_id, value: @admin.id %>
-  <%= f.text_field :name, placeholder: 'Enter name here', class: 'field' %>
-  <div class="dz-message">Drop files here or click to upload.</div>
+  <%= f.text_field :name, placeholder: 'Video Name einfügen', class: 'field' %>
+  <div class="dz-message">Datei hier hinziehen oder klicken zum Hochladen.</div>
   <div class="fallback">
     <%= f.file_field :file %>
   </div>
@@ -111,13 +112,28 @@
 <% if Turn.where(recorded_pitch: nil).first %>
 <div class="popup" id="dropzone2">
   <%= form_for(:turn, url: add_video_to_turn_path(Turn.where(recorded_pitch: nil).first), html: {class: 'dropzone'}) do |f| %>
-  <div class="dz-message">Drop files here or click to upload.</div>
+  <div class="dz-message">Datei hier hinziehen oder klicken zum Hochladen.</div>
   <div class="fallback">
     <%= f.file_field :recorded_pitch %>
     <%= f.submit 'save' %>
   </div>
   <% end %>
   <div class="close" onclick="closeDropzone2()"><i class="fas fa-times"></i></div>
+</div>
+<% end %>
+
+<% if @rturn %>
+<div class="fullscreen-blur" id="deletePitch">
+	<div class="karte">
+		<div class="head">Pitch löschen?</div>
+		<div class="body">
+			Bist du sicher das du den Pitch unwiederuflich löschen möchtest?
+		</div>
+		<div class="bottom" style="display: flex;">
+			<%= link_to 'löschen', dash_admin_delete_pitch_path(@rturn), class: 'btn btn-green' %>
+			<button class="btn btn-green" onclick="toggleDeletePitch()">Close</button>
+		</div>
+	</div>
 </div>
 <% end %>
 
@@ -131,6 +147,9 @@
 </style>
 
 <script>
+  function toggleDeletePitch() {
+	$("#deletePitch").toggle();
+  }
   function editVideo(videoId) {
 	  window.location.replace('/admin/dash/videos/'+ videoId +'/edit');
   }

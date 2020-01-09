@@ -2,12 +2,12 @@
 <div class="heading">
     <% if @user.avatar.present? %>
         <%= image_tag @user.avatar.quad.url %>
-        <%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') + "'s Ratings" %>
+        <%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') + "'s Statistik" %>
     <% else %>
         <div class="circle">
             <%= (@user.fname.present? ? @user.fname.to(0).upcase_first() : '') + ' ' + (@user.lname.present? ? @user.lname.to(0).upcase_first() : '')  %>
         </div>
-        <%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') + "'s Ratings" %>
+        <%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') + "'s Statistik" %>
     <% end %>
     <div class="select-team custom-select" onclick="teamSelect()">Alle Teams
         <div class="teams" id="scrollTeams" >
@@ -222,11 +222,11 @@
     </div>
 </div>
 
-<div class="heading">Statistics</div>
+<div class="heading">Details</div>
 
 <div class="stats-overview">
     <div class="karte">
-        <label>Activity Days</label>
+        <label>aktive Tage</label>
         <div class="number"><%= @days %></div>
     </div>
     <div class="karte">
@@ -234,23 +234,23 @@
         <div class="number"><%= @turn_ratings.count %></div>
     </div>
     <div class="karte">
-        <label>% of victories</label>
+        <label>Siegrate</label>
         <div class="number"><%= ((@turns.where(place: 1).count.to_f / @turns.count.to_f) * 100.0).round(1) %>%</div>
     </div>
     <div class="karte">
-        <label for="">Best rating</label>
+        <label for="">best score</label>
         <% best_rating = number_with_precision(@turn_ratings.reorder('ges DESC').first.ges.present? ? @turn_ratings.reorder('ges DESC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
         <div class="number best-rating"><%= (@turn_ratings.reorder('ges DESC').first.ges.present? ? (@turn_ratings.reorder('ges DESC').first.ges / 10.0) : 0.0) %></div>
     </div>
     <div class="karte">
-        <label for="">Worst rating</label>
+        <label for="">worst score</label>
         <% worst_rating = number_with_precision(@turn_ratings.reorder('ges ASC').first.ges.present? ? @turn_ratings.reorder('ges ASC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
         <div class="number worst-rating"><%= (@turn_ratings.reorder('ges ASC').first.ges.present? ? (@turn_ratings.reorder('ges ASC').first.ges / 10.0) : 0.0) %></div>
     </div>
 </div>
 
 <div class="karte" id="statistic">
-    <div class="head left">Details
+    <div class="head left">Fortschritt
         <select name="team" id="select-team" class="custom-select">
             <option value="" selected onclick="">Vergleich mit</option>
             <% @users.each do |u| %>
@@ -347,7 +347,7 @@
         </div>
         </div>
         <% end %>
-        <a href="/admins/dash/video_tool">Alle sehen</a>
+        <a href="/admins/dash/video_tool">alle Aufnahmen</a>
         </div>
     </div>
 </div>

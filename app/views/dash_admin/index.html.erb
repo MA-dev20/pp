@@ -83,7 +83,7 @@
         </div>
 
         <div class="objections">
-            <label>Deine Objections
+            <label>Deine Einwände
                 <% if flash[:select_objection] %>
                 <div class="alert alert-game2"><%= flash[:select_objection] %></div>
                 <% end %>
@@ -95,7 +95,7 @@
             <% end %>
             <div class="checked-field <% if flash[:select_objection] %>red<% end %>">
                 <div class="checkbox" onclick="moveObjections(this)" data-value="game_objections_pp">
-                    <label for="game_objections_pp">PetersObjection <i class="fas fa-times"></i></label>
+                    <label for="game_objections_pp">PetersEinwände <i class="fas fa-times"></i></label>
                 </div>
                 <div class="add" onclick="objectionsShow()"><i class="fas fa-plus"></i></div>
             </div>
@@ -109,7 +109,7 @@
         </div>
         <div class="youtube">
             <label for="" onclick="openYoutube()">Video hinzufügen</label>
-            <input type="text" class="field" name="game[youtube_url]" id="youtube-link" placeholder="Youtube-Link">
+            <input type="text" class="field" name="game[youtube_url]" id="youtube-link" placeholder="Youtube-Link einfügen">
             <input type="checkbox" name="game[video_is_pitch][]" value="true" id="game_video_is_pitch">
             <% @admin.videos.each do |v| %>
             	<input type="radio" name="game[video][]" value="<%= v.id %>" id="game_videos_<%= v.id %>">
@@ -117,7 +117,7 @@
             <% @turns.each do |t| %>
             	<input type="radio" name="game[video_turn][]" value="<%= t.id %>" id="game_videos_turns_<%= t.id %>">
             <% end %>
-            <input type="text" class="field" name="game[video_name]" id="video_selection" placeholder="Select Video" onclick="toggleSelectVideo()">
+            <input type="text" class="field" name="game[video_name]" id="video_selection" placeholder="Video auswählen" onclick="toggleSelectVideo()">
         </div>
     </div>
     <button class="btn btn-green" onclick="submitForm()">Pitch starten!</button>
@@ -164,11 +164,11 @@
     <%= f.text_field :name, class: 'field' %>
     <% end %>
 
-    <label>Search for Users</label><br>
+    <label>Nutzer suchen</label><br>
     <div class="user-list">
         <div class="search-field">
             <%= image_tag 'dash/icons/search.png', class: 'search' %>
-            <input type="text" placeholder="Search Users" id='searchField'>
+            <input type="text" placeholder="Nutzer suchen" id='searchField'>
         </div>
         <div class="unselected_user">
         	<% @users.each do |u| %>
@@ -190,7 +190,7 @@
     <div class="selected_user">
     </div>
     <%= f.hidden_field :url, value: 'letsplay' %>
-    <%= f.submit 'Team erstellen!', class: 'btn btn-green' %>
+    <%= f.submit 'Team erstellen', class: 'btn btn-green' %>
     <% end %>
 </div>
 
