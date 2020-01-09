@@ -6,7 +6,9 @@ class LandingController < ApplicationController
   layout 'main'
   respond_to :html, :json
 
-
+  def after_confirm
+	@admin = Admin.find(params[:admin_id])
+  end
   def accept_cookies
 	cookies[:accepted] = 'true'
 	redirect_to root_path

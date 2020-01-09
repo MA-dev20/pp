@@ -1,0 +1,10 @@
+<h1>Hallo <%= @admin.fname + ' ' + @admin.lname %></h1>
+
+<p>Schön das du dich bei uns registriert hast!</p>
+<p>Um direkt zu starten logge dich direkt ein.</p>
+
+<p><%= link_to 'Einloggen!', root_url, class: 'btn btn-green' %></p>
+
+<p>Dein Password lautet: <%= @password %></p>
+
+<p>Viel Spaß <br> Dein Peter Pitch-Team</p>
