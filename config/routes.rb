@@ -194,6 +194,7 @@ Rails.application.routes.draw do
 	
 	#edit video
 	get 'admin/dash/videos/:video_id/edit', to: 'dash_admin#video_edit', as: 'dash_admin_video_edit'
+	get 'admin/dash/turns/:turn_id/video/destroy', to: "dash_admin#delete_pitch", as: 'dash_admin_delete_pitch'
     
     
     get 'admin/dash/statistics', to: 'dash_admin#statistics', as: 'dash_admin_statistics'

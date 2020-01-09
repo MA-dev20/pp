@@ -47,17 +47,18 @@
       </div>
       <div class="video-list" id="videoList">
         <% @result.each do |r| %>
-        <div class="video-karte pitches" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')">
+        <div class="video-karte pitches">
           <div class="top">
             <div class="video-img" style="background-image: url('<%= asset_path(r[:pitch_url]) %>')"></div>
-            <div class="overlay"></div>
+            <div class="overlay" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')"></div>
             <div class="rating"><%= r[:rating].present? ? r[:rating] / 10.0 : 0 %></div>
             <% turn = Turn.find(r[:turn_id])
               total_time = turn.recorded_pitch_duration.to_minutes if turn.recorded_pitch_duration.present? 
             %>
             <div class="timer"><%= total_time %></div>
-            <div class="play"><i class="fas fa-play"></i></div>
+            <div class="play" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')"><i class="fas fa-play"></i></div>
             <div class="heart" data-id="<%= r[:turn_id] %>" id="<%= r[:turn_id] %>_heart"><i class="<%= r[:favorite] ? 'fa active' : 'far' %> fa-heart"></i></div>
+            <%= link_to '', dash_admin_video_tool_path(turn: r[:turn_id]), class: 'remove far fa-trash-alt'%>
           </div>
           <div class="word">
             <%= r[:word] %>
@@ -121,6 +122,21 @@
 </div>
 <% end %>
 
+<% if @rturn %>
+<div class="fullscreen-blur" id="deletePitch">
+	<div class="karte">
+		<div class="head">Pitch löschen?</div>
+		<div class="body">
+			Bist du sicher das du den Pitch unwiederuflich löschen möchtest?
+		</div>
+		<div class="bottom" style="display: flex;">
+			<%= link_to 'löschen', dash_admin_delete_pitch_path(@rturn), class: 'btn btn-green' %>
+			<button class="btn btn-green" onclick="toggleDeletePitch()">Close</button>
+		</div>
+	</div>
+</div>
+<% end %>
+
 <style>
   .fa-plus {
     line-height: unset;
@@ -131,6 +147,9 @@
 </style>
 
 <script>
+  function toggleDeletePitch() {
+	$("#deletePitch").toggle();
+  }
   function editVideo(videoId) {
 	  window.location.replace('/admin/dash/videos/'+ videoId +'/edit');
   }

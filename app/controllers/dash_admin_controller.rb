@@ -290,8 +290,10 @@ class DashAdminController < ApplicationController
   end
   #Video Tool
   def video_tool
+	if params[:turn]
+	  @rturn = Turn.find(params[:turn])
+	end
     @sort_by = params[:sort_by]
-    @turn = @admin.turns.where(recorded_pitch: nil).first
     @users = @admin.users
     @turns = @admin.turns.where.not(recorded_pitch: nil).order('created_at ASC')
     @result = []
@@ -328,6 +330,13 @@ class DashAdminController < ApplicationController
     @user = @turn.findUser
     @rating = @turn.turn_rating
     @my_rating = @turn.ratings.find_by(admin_id: @admin.id)
+  end
+	
+  def delete_pitch
+	@turn = Turn.find(params[:turn_id])
+	@turn.remove_recorded_pitch = true
+	@turn.save
+	redirect_to dash_admin_video_tool_path
   end
 
   def add_favorite
