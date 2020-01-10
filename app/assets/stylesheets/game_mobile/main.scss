@@ -482,6 +482,25 @@ input[type='radio'] {
     line-height: 5vh;
 }
 .modal-email {
+
+    .modal-content, .modal-header {
+        border: 0;
+    }
+    .btn-green-reject {
+        margin-left: 0.2em;
+    }
+    .btn-green:hover {
+      color: #fff !important;
+    }
+    .x-btn {
+        line-height: 1 !important;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        right: 6px !important;
+        top: -2px !important;
+        opacity: .5;
+    }
+
     .mail-box-main {
         position: relative;
         padding-left: 44px;
