@@ -49,9 +49,11 @@ class BackofficeController < ApplicationController
   end
     
   def activate_admin
+	password = SecureRandom.urlsafe_base64(8)
+	@admin.password = password
     if @admin.update(activated: true)
       flash[:success] = 'Admin aktiviert'
-      @admin.send_reset_password_instructions
+	  AdminMailer.after_activate(@admin, password).deliver
     else
       flash[:danger] = 'FEHLER!'
     end

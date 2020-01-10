@@ -10,6 +10,43 @@
 @import 'font-awesome';
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
 
+#confirm {
+	text-align: center;
+}
+#confirm .checkmark {
+	position: fixed;
+	top: calc(50vh - 150px);
+	left: calc(50vw - 150px);
+	height: 300px;
+	width: 300px;
+}
+.checkmark path {
+	animation: checkmark 0.25s ease-in-out 0.7s backwards;
+	animation-delay: 3s;
+}
+.checkmark circle {
+	animation: checkmark-circle 0.6s ease-in-out backwards;
+	animation-delay: 2s;
+}
+@keyframes checkmark {
+    0% {
+        stroke-dashoffset: 208px
+    }
+
+    100% {
+        stroke-dashoffset: 0
+    }
+}
+@keyframes checkmark-circle {
+    0% {
+        stroke-dashoffset: 960px
+    }
+
+    100% {
+        stroke-dashoffset: 1920px
+    }
+}
+
 .cookie-pop-up {
 	position: fixed;
 	bottom: 0;
@@ -749,6 +786,7 @@ label .red {
 }
 #content .references .logo-wheel img:hover {
     filter: grayscale(0%);
+	opacity: .8;
 }
 
 #content .image-text {
@@ -910,10 +948,11 @@ label .red {
 }
 #content .testimonials .card .people img {
     position: absolute;
-    left: 61px;
+    left: 61spx;
     top: 1px;
-    height: 48px;
-    width: 48px;
+    margin: 5px;
+	height: 38px;
+	width: 38px;
     border-radius: 50%;
 }
 #content .testimonials .card .people .name {
@@ -2023,7 +2062,7 @@ label .red {
         left: 100px;
 	}
     #content .references .logo-wheel {
-        margin: 0 150px;
+        margin: 0 140px;
         width: auto;
     }
     #content .references .logo-wheel img {
@@ -2068,8 +2107,9 @@ label .red {
         position: absolute;
         left: 81px;
         top: 1px;
-        height: 48px;
-        width: 48px;
+        height: 38px;
+        width: 38px;
+		margin: 5px;
         border-radius: 50%;
     }
     #content .testimonials .card .people .name {

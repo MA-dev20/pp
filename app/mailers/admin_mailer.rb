@@ -5,4 +5,10 @@ class AdminMailer < ApplicationMailer
         @admin = admin
         mail to: @admin.email , subject:"Token Verification Email"
     end
+	
+	def after_activate(admin, password)
+	  @admin = admin
+	  @password = password
+	  mail to: @admin.email, subject: "Du wurdest freigeschaltet!"
+	end
 end
