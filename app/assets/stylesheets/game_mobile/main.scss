@@ -804,10 +804,12 @@ input[type='radio'] {
     }
     .modal-email .modal-header .close {
         font-size: 2.5rem;
-        right: 12px;
+        right: 20px;
+        top: 5px;
     }
     .modal-email .modal-header {
       padding-bottom: 2rem !important;
+      padding-top: 1rem !important
     }
 
     .modal-email .modal-body {
