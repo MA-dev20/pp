@@ -466,11 +466,19 @@ body {
   }
 
   .btn-green-reject {
-      margin-left: 0.2em;
+      margin-left: 0.5em;
   }
 
   .btn-green:hover {
-    color: #fff !important;
+    color: #16e2a5;
+  background-color: white;
+  }
+
+  .btn-green {
+    min-height: 30px;
+    min-width: 110px;
+    color: #fff;
+    font-size: 0.9rem;
   }
 
   .x-btn {
