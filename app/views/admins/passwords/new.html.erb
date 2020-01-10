@@ -2,30 +2,29 @@
     <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">
         <div class="link">
-            <%= link_to 'Produkt', '#product' %>
+            <%= link_to 'Produkt', root_path(anchor: 'product') %>
         </div>
         <div class="link">
-            <%= link_to 'FAQ', '#faq' %>
+            <%= link_to 'FAQ', root_path(anchor: 'faq') %>
         </div>
         <div class="link">
             <%= link_to 'Kontakt', contact_path %>
         </div>
         <div class="link">
-            <%= link_to 'Login', '#login', class: 'login-link', onclick: 'showLoginModal()' %> 
+            <%= link_to 'Login', root_path(anchor: 'login'), class: 'login-link' %> 
         </div>
         <div class="link">
             <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
         </div>
     </div>
     <div class="login">
-        <%= link_to 'Login', '#login', onclick: 'showLoginModal()', class: 'login-link' %>
-        <%= link_to 'Get early access', contact_path, class: 'btn btn-white' %>
+        <%= link_to 'Login', root_path(anchor: 'login'), class: 'login-link' %>
     </div>
     <div class="navbar-mobile" onclick="showNavLinks()">
         <i class="fas fa-bars"></i>
     </div>
 </section>
-<section id="contact">
+<section id="devise_form">
     <h1>Passwort vergessen?</h1>
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post}) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
@@ -36,32 +35,7 @@
             <%= f.submit 'Passwort zurücksetzen!', class: 'btn btn-green' %>
         </div>
     <% end %>
-    <%= render "admins/shared/links" %>
-</section>
-<section id="footer">
-    <div class="logo">
-        <%= image_tag 'landing/logo.png' %>
-    </div>
-    <div class="company">
-        <div class="heading">Unternehmen</div>
-        <div class="links">
-            <%= link_to 'Registrieren', contact_path %>
-            <%= link_to 'Preise', contact_path %>
-            <%= link_to 'FAQ', '#faq' %>
-            <%= link_to 'Login', '#login', onclick: 'showLoginModal()' %>
-            <%= link_to 'Backoffice', login_root_path %>
-        </div>
-    </div>
-    <div class="legal">
-        <div class="heading">Rechtliches</div>
-        <div class="links">
-            <%= link_to 'Impressum', '' %>
-            <%= link_to 'Datenschutz', '' %>
-            <%= link_to 'AGB', '' %>
-        </div>
-    </div>
-    <div class="social">
-        <%= link_to '', '#', class: "fab fa-facebook-f" %>
-        <%= link_to '', '#', class: "fab fa-youtube" %>
+    <div class="links">
+    	<%= render "admins/shared/links" %>
     </div>
 </section>

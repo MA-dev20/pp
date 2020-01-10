@@ -10,6 +10,67 @@
 @import 'font-awesome';
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
 
+#datenschutz {
+	text-align: center;
+	margin-bottom: 100px;
+}
+#datenschutz .head h5 {
+	font-weight: normal;
+}
+#datenschutz .head h1 {
+	font-size: 36px;
+}
+#datenschutz .links,
+#datenschutz section {
+	margin: 0 auto;
+	width: 300px;
+	text-align: left;
+}
+#datenschutz .links a {
+	color: #54b7ff;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 20px;
+}
+#datenschutz section h1 {
+	font-size: 24px;
+}
+#datenschutz .point {
+	position: relative;
+	margin: 10px 0;
+}
+#datenschutz .point .point {
+	position: absolute;
+	top: 6px;
+	left: 6px;
+	height: 8px;
+	width: 8px;
+	border-radius: 4px;
+	background-color: black;
+	margin: 0;
+}
+#datenschutz .point .text {
+	padding-left: 20px;
+	line-height: 20px;
+}
+#datenschutz h3 {
+	margin-bottom: 0;
+}
+#devise_form {
+	text-align: center;
+}
+#devise_form .form-group {
+	width: 300px;
+	margin: 0 auto;
+}
+#devise_form .form-group label {
+	line-height: 18px;
+	text-align: center;
+}
+#devise_form .links {
+	width: 300px;
+	margin: 0 auto;
+}
 #confirm {
 	text-align: center;
 }
@@ -20,17 +81,24 @@
 	height: 300px;
 	width: 300px;
 }
+#confirm h1,
+#devise_form h1 {
+	font-size: 32px;
+}
+#confirm .text {
+	font-size: 20px;
+}
 .checkmark path {
 	animation: checkmark 0.25s ease-in-out 0.7s backwards;
-	animation-delay: 3s;
+	animation-delay: 1s;
 }
 .checkmark circle {
 	animation: checkmark-circle 0.6s ease-in-out backwards;
-	animation-delay: 2s;
+	animation-delay: 0s;
 }
 @keyframes checkmark {
     0% {
-        stroke-dashoffset: 208px
+        stroke-dashoffset: 150px
     }
 
     100% {
@@ -39,11 +107,11 @@
 }
 @keyframes checkmark-circle {
     0% {
-        stroke-dashoffset: 960px
+        stroke-dashoffset: 720px
     }
 
     100% {
-        stroke-dashoffset: 1920px
+        stroke-dashoffset: 1440px
     }
 }
 
@@ -948,7 +1016,7 @@ label .red {
 }
 #content .testimonials .card .people img {
     position: absolute;
-    left: 61spx;
+    left: 61px;
     top: 1px;
     margin: 5px;
 	height: 38px;
@@ -1091,6 +1159,10 @@ label .red {
 	margin: 20px 0;
 }
 @media (min-width: 500px) {
+	#datenschutz .links,
+	#datenschutz section {
+		width: 500px;
+	}
     #navbar {
         left: 0;
         width: calc(100vw - 40px);
@@ -1183,6 +1255,10 @@ label .red {
 	}
 }
 @media (min-width: 700px) {
+	#datenschutz .links,
+	#datenschutz section {
+		width: 700px;
+	}
     #content .references h1 .line1,
     #content .references h1 .line2 {
         display: block;
@@ -1387,6 +1463,10 @@ label .red {
 	}
 }
 @media (min-width: 900px) {
+	#datenschutz .links,
+	#datenschutz section {
+		width: 900px;
+	}
 	.contact-hidden {
 		display: block;
 	}

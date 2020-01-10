@@ -2,24 +2,23 @@
     <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">
         <div class="link">
-            <%= link_to 'Produkt', '#product' %>
+            <%= link_to 'Produkt', root_path(anchor: 'product') %>
         </div>
         <div class="link">
-            <%= link_to 'FAQ', '#faq' %>
+            <%= link_to 'FAQ', root_path(anchor: 'faq') %>
         </div>
         <div class="link">
             <%= link_to 'Kontakt', contact_path %>
         </div>
         <div class="link">
-            <%= link_to 'Login', '#login', class: 'login-link', onclick: 'showLoginModal()' %> 
+            <%= link_to 'Login', root_path(anchor: 'login'), class: 'login-link' %> 
         </div>
         <div class="link">
             <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
         </div>
     </div>
     <div class="login">
-        <%= link_to 'Login', '#login', onclick: 'showLoginModal()', class: 'login-link' %>
-        <%= link_to 'Get early access', contact_path, class: 'btn btn-white' %>
+        <%= link_to 'Login', root_path(anchor: 'login'), class: 'login-link' %>
     </div>
     <div class="navbar-mobile" onclick="showNavLinks()">
         <i class="fas fa-bars"></i>
