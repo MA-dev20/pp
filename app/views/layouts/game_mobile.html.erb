@@ -55,6 +55,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </body>
   <script type="text/javascript">
       setTimeout(function() {$(".alert" ).fadeOut(3000);}, 5000)
-      
+      function runModalJS(){
+        $(".modal-email .close").on('click', function(e){
+            let id = $(this).attr('data-id');
+            $(`#myModalAction${id}`).hide()
+        })
+      }
   </script>
 </html>

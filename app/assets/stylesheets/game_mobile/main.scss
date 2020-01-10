@@ -513,13 +513,11 @@ input[type='radio'] {
     //   color: #fff !important;
     // }
     .x-btn {
-        line-height: 1 !important;
-        color: #000;
-        text-shadow: 0 1px 0 #fff;
-        right: 6px !important;
-        top: -2px !important;
-        opacity: .5;
-        font-family: initial !important;
+      cursor: pointer;
+      color: #000;
+      text-shadow: 0 1px 0 #fff;
+      opacity: .5;
+      font-family: initial !important;
     }
 
     .modal-content {
@@ -527,9 +525,21 @@ input[type='radio'] {
     }
 
     .close {
-      font-size: 3.5rem !important;
-      margin-right: 0.4rem !important;
+      // font-size: 3.5rem !important;
+      // margin-right: 0.4rem !important;
       font-family: sans-serif !important;
+      position: relative;
+      cursor: pointer !important;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
+      border-radius: 50%;
+      position: absolute;
+      right: 7px;
+      top: 0;
+      color: #fff;
+      font-weight: 100;
+      opacity: 1;
     }
 
     .mail-box-main {
@@ -793,10 +803,16 @@ input[type='radio'] {
         margin-bottom: 10px;
     }
     .modal-email .modal-header .close {
-        font-size: 3.5rem;
+        font-size: 2.5rem;
+        right: 12px;
     }
+    .modal-email .modal-header {
+      padding-bottom: 2rem !important;
+    }
+
     .modal-email .modal-body {
         padding: 2rem;
+        padding-top: 0;
     }
 
 }

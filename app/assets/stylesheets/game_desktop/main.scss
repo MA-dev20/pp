@@ -486,40 +486,50 @@ body {
   }
 
   .x-btn {
-      line-height: 1 !important;
+    cursor: pointer;
       color: #000;
       text-shadow: 0 1px 0 #fff;
-      right: 6px !important;
-      top: -2px !important;
+      // right: 6px !important;
+      // top: -2px !important;
       opacity: .5;
       font-family: initial !important;
   }
 
   .modal-header {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
     position: relative;
     .close {
-      // width: 30px;
-      // height: 30px;
+      cursor: pointer !important;
+      margin: 0;
+      padding: 0;
+      cursor: pointer;
       border-radius: 50%;
       position: absolute;
-      right: 0;
-      top: 0;
+      right: 10px;
+      top: 3px;
+      // width: 30px;
+      // height: 30px;
+      // border-radius: 50%;
+      // position: absolute;
+      // right: 0;
+      // top: 0;
       // background-color: #1ddaaf;
       color: #fff;
       opacity: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 1.75em;
-      span {
-        line-height: 10px;
-        position: relative;
-        top: -5px;
-      }
+      // font-weight: 600;
+      // font-size: 1.75em;
+      // span {
+      //   line-height: 10px;
+      //   position: relative;
+      //   top: -5px;
+      // }
     }
   }
   .modal-body {
+    padding: 1rem;
+    padding-bottom: 0.5rem;
+    padding-top: 0;
     .mail-box {
       display: flex;
       align-items: center;
