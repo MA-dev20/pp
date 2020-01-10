@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 # Landing #
 ###########
   root 'landing#index'
+  get 'admins/:admin_id/confirm', to: "landing#after_confirm", as: 'admin_after_confirm'
   get 'cookies', to: 'landing#accept_cookies', as: 'accept_cookies'
   get '/contact', to: 'landing#contact', as: 'contact'
   get 'agb', to: 'landing#agb', as: 'agb'
