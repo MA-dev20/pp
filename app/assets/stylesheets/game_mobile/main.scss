@@ -783,6 +783,14 @@ input[type='radio'] {
         height: 150px;
         margin-bottom: 20px;
     }
+
+    .btn-green {
+      min-height: 30px;
+      min-width: 110px;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    
     .btn-green-reject {
       margin-top: 0.5em;
       margin-left: 0 !important;
