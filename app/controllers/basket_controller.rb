@@ -8,21 +8,9 @@ class BasketController < ApplicationController
     rand_img = Random.new.rand(1..8)
     if(params[:basket][:type] == "objection")
         @basket = ObjectionsBasket.new(basket_params)
-        (1..8).each do |i|
-          if !current_admin.objection_baskets.select{|o| o.image === i}.present?
-            rand_img = i
-            break
-          end
-        end
         @basket.image = rand_img
     else
         @basket = CatchwordsBasket.new(basket_params)
-        (1..8).each do |i|
-          if !current_admin.catchword_baskets.where(objection: false).select{|c| c.image === i}.present?
-            rand_img = i
-            break
-          end
-        end
         @basket.image = rand_img
     end
     if params[:basket][:name] == ""
@@ -97,10 +85,12 @@ class BasketController < ApplicationController
     if !@basket.destroy
       flash[:danger] = 'Konnte Liste NICHT löschen!'
     end
-    if !current_admin.nil?
-      redirect_to  dash_admin_customize_path
-    else
+    if !current_root.nil? && @basket.admin
       redirect_to backoffice_edit_admin_path(@basket.admin)
+	elsif !current_root.nil?
+      redirect_to backoffice_word_baskets_path
+    else
+      redirect_to  dash_admin_customize_path
     end
   end
     

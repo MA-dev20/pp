@@ -23,6 +23,6 @@
     <% end %>
 </div>
 <div class="card" id="destroyTeam">
-    <%= link_to 'löschen', destroy_team_path(@team), class: 'btn btn-green', data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'löschen', destroy_team_path(@team, "team"=>{"admin_id"=>@admin.id}), class: 'btn btn-green', data: { confirm: 'Are you sure?' } %>
     <%= link_to 'zurück', backoffice_edit_admin_path(@admin), class: 'btn btn-green' %>
 </div>

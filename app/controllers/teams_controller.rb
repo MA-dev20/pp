@@ -96,7 +96,7 @@ class TeamsController < ApplicationController
       if !current_admin.nil?
         @admin = current_admin
       elsif !current_root.nil?
-        @admin = Admin.find_by(params[team][:admin_id])
+        @admin = Admin.find(params[:team][:admin_id])
       end
     end
     

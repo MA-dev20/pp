@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            <% @admins.where(activated: false).each do |a| %>
+            <% @admins.where(activated: false, activated: nil).each do |a| %>
             <tr onclick="redirect(<%= a.id %>)" class="red">
                 <td><%= a.fname + ' ' + a.lname %></td>
                 <td><%= a.company_name %></td>

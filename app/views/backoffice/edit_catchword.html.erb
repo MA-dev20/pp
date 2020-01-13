@@ -10,7 +10,11 @@
         </div>
         <div class="form-group center">
             <%= link_to 'löschen', destroy_basket_path(@basket), class: 'btn btn-white' %>
-            <%= link_to 'zurück', backoffice_edit_admin_path(@basket.admin), class: 'btn btn-white' %>
+            <% if @basket.admin %>
+            	<%= link_to 'zurück', backoffice_edit_admin_path(@basket.admin), class: 'btn btn-white' %>
+            <% else %>
+            	<%= link_to 'zurück', backoffice_word_baskets_path(), class: 'btn btn-white' %>
+            <% end %>
         </div>
     <% end %>
 </div>
