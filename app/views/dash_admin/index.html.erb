@@ -88,9 +88,97 @@
     <%= f.submit 'Team erstellen', class: 'btn btn-green' %>
     <% end %>
 </div>
+<% elsif @game && @team %>
+<div class="karte letsplay" id="letsplay">
+    <div class="head">
+        Jetzt Pitch starten!
+    </div>
+    <%= form_for(:game, url: update_game_path(@game), html: {id: 'game-form'}) do |f| %>
+    <div class="team">
+        <label>
+            Team
+            <% if flash[:select_team] %>
+            <div class="alert alert-game1"><%= flash[:select_team] %></div>
+            <% else %>
+            <div class="newteam-link" onclick="showTeam()">Team erstellen</div>
+            <% end %>
+        </label>
+        <select name="game[team_id]" id="game_team_id"
+            class="custom-select custom-select-lg <% if flash[:select_team] %>red<% end %>">
+            <% if !@team %>
+            <option value="" selected disabled>Team wählen</option>
+            <% end %>
+            <% @teams.each do |t| %>
+            <% if @team && t.id == @team.id %>
+            <option value="<%= t.id %>" selected><%= t.name %></option>
+            <% else %>
+            <option value="<%= t.id %>"><%= t.name %></option>
+            <% end %>
+            <% end %>
+        </select>
+    </div>
+    <div class="url">
+        <label>Pitch-URL
+            <% if flash[:missing_password] %>
+            <div class="alert alert-game1"><%= flash[:missing_password] %></div>
+            <% end %>
+        </label>
+        <div class="url-field <% if flash[:missing_password] %>red<% end %>">
+            <div class="text">peterpitch.com/</div>
+            <%= f.text_field :password, class: 'custom-url-field' %>
+        </div>
+    </div>
+    <button class="btn btn-green" onclick="submitForm()">weiter!</button>
+    <% end %>
+</div>
+<div class="karte letsplay" id="newteam">
+    <i class="back small fas fa-arrow-left" onclick="hideTeam()"></i>
+    <div class="head small">
+        Team erstellen!
+    </div>
+    <%= form_for(:team, url: new_team_path()) do |f| %>
+    <% if flash[:team_name] %>
+    <label>Teamname
+        <div class="alert alert-team"><%= flash[:team_name] %></div>
+    </label>
+    <%= f.text_field :name, class: 'field red' %>
+    <% else %>
+    <label>Teamname</label>
+    <%= f.text_field :name, class: 'field' %>
+    <% end %>
+
+    <label>Nutzer suchen</label><br>
+    <div class="user-list">
+        <div class="search-field">
+            <%= image_tag 'dash/icons/search.png', class: 'search' %>
+            <input type="text" placeholder="Nutzer suchen" id='searchField'>
+        </div>
+        <div class="unselected_user">
+        	<% @users.each do |u| %>
+        	<label for="team_users_<%= u.id %>" class="user" onclick="moveUser(this)">
+        		<i class="fas fa-plus-circle"></i>
+        		<% if u.avatar.present? %>
+        			<%= image_tag u.avatar.quad.url %>
+        		<% else %>
+        			<div class="circle"></div>
+        		<% end %>
+        		<%= (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : '') %>
+        	</label>
+        	<% end %>
+        </div>
+    </div>
+    <% @users.each do |u| %>
+    		<input type="checkbox" id="team_users_<%= u.id %>" value="<%= u.id %>">
+    <% end %>
+    <div class="selected_user">
+    </div>
+    <%= f.hidden_field :url, value: 'letsplay' %>
+    <%= f.submit 'Team erstellen', class: 'btn btn-green' %>
+    <% end %>
+</div>
 <% else %>
 <div class="karte letsplay" id="ownrules">
-    <i class="back small fas fa-arrow-left" onclick="hideRules()"></i>
+   	<%= link_to '', dash_admin_game_2_path(@game, @game.team), class: "back small fas fa-arrow-left" %>
     <div class="head small">Pitche nach deinen Regeln</div>
     <%= form_for(:game, url: new_game_2_path(@game), html: {id: 'game-form'}) do |f| %>
     <div class="karte-content">

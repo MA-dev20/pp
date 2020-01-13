@@ -188,6 +188,7 @@ Rails.application.routes.draw do
     #Let's Play
     get 'admin/dash/', to: 'dash_admin#index', as: 'dash_admin'
     get 'admin/dash/:team_id', to: 'dash_admin#index', as: 'dash_admin_game'
+	get 'admin/dash/games/:game_id/team/:team_id', to: 'dash_admin#index', as: 'dash_admin_game_2'
 	get 'admin/dash/games/:game_id', to: 'dash_admin#index', as: 'dash_admin_create_game_2'
     
     #add video
@@ -274,6 +275,7 @@ Rails.application.routes.draw do
   get 'games/new', to: 'games#new', as: 'new_game'
   post 'games/new', to: 'games#create'
   post 'games/:game_id/new', to: 'games#create_2', as: 'new_game_2'
+  post 'games/:game_id/update', to: 'games#update', as: 'update_game'
 
 ########
 # User #

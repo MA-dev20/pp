@@ -50,6 +50,36 @@ class GamesController < ApplicationController
 	session[:game_session_id] = @game.id
     redirect_to gda_wait_path
   end
+	
+  def update
+	@game1 = Game.where(active: true, password: params[:game][:password]).first
+	@game = Game.find(params[:game_id])
+	if params[:game][:team_id].nil?
+      flash[:select_team] = 'Wähle ein Team!'
+    end
+    if params[:game][:password].empty?
+      flash[:missing_password] = 'Gib eine Url an!'
+    end
+    if params[:game][:team_id].nil?
+      redirect_to dash_admin_path()
+      return
+    elsif params[:game][:password].empty?
+      redirect_to dash_admin_games_path(params[:game][:team_id])
+      return
+    end
+	if @game1 && @game1.admin_id != @admin.id
+        flash[:pop_up] = "Ups, diese URL ist schon vergeben!;-"
+		flash[:pop_up2] = "Sei kreativ und wähle eine andere aus."
+        redirect_to dash_admin_games_path(params[:game][:team_id])
+    else
+      if @game.update(team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
+        redirect_to dash_admin_create_game_2_path(@game)
+      else
+        flash[:danger] = 'Konnte Spiel nicht speichern'
+        redirect_to dash_admin_games_path(params[:game][:team_id])
+      end
+    end
+  end
    
   def show
     @messages = Message.all
