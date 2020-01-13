@@ -837,7 +837,17 @@ input[type='radio'] {
 
 @media (max-width: 768px) {
   .modal-body .mail-box .mail-btn {
+    width: 50%;
+  }
+
+  .modal-body .mail-box .mail-btn a {
     width: 100%;
+    font-size: 2.2vh !important;
+    height: 4vh !important;
+    line-height: 4vh;
+  }
+  .btn-green-reject {
+    margin-top: 0.5em;
   }
 }
 
