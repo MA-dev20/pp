@@ -20,21 +20,8 @@ class GamesController < ApplicationController
       return
     end
     if @game && @game.admin_id == @admin.id
-      session[:game_session_id] = @game.id
       @game.turns.update_all(status: 'ended')
-	  if params[:game][:basket].present?
-        set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
-	  else
-	    set_words_for_game(@game, ["pp"], params[:game][:seconds])
-	  end
-	  if params[:game][:objections].present?
-      	set_objections_for_game(@game, params[:game][:objections])
-	  else
-		set_objections_for_game(@game, ["pp"])
-	  end
-	  set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
-      sign_in(@game)
-      redirect_to gda_wait_path
+      redirect_to dash_admin_create_game_2_path(@game)
     elsif @game && @game.admin_id != @admin.id
         flash[:pop_up] = "Ups, diese URL ist schon vergeben!;-"
 		flash[:pop_up2] = "Sei kreativ und wähle eine andere aus."
@@ -42,20 +29,26 @@ class GamesController < ApplicationController
     else
       @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
       if @game.save
-        # set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
-        set_words_for_game(@game, nil, params[:game][:seconds])
-
-        set_objections_for_game(@game, params[:game][:objections])
-		    set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
-        sign_in(@game)
-        # send_invitation_emails_to_team_members(Team.find(params[:game][:team_id]), @game) if params[:game][:team_id].present?
-        session[:game_session_id] = @game.id
-        redirect_to gda_wait_path
+        redirect_to dash_admin_create_game_2_path(@game)
       else
         flash[:danger] = 'Konnte Spiel nicht speichern'
         redirect_to dash_admin_games_path(params[:game][:team_id])
       end
     end
+  end
+	
+  def create_2
+	@game = Game.find(params[:game_id])
+	if !params[:game][:baskets].nil?
+	  set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
+	elsif params[:game][:baskets].nil?
+	  set_words_for_game(@game, ["pp"], params[:game][:seconds])
+	end
+	set_objections_for_game(@game, params[:game][:objections])
+	set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
+	sign_in(@game)
+	session[:game_session_id] = @game.id
+    redirect_to gda_wait_path
   end
    
   def show
@@ -65,7 +58,7 @@ class GamesController < ApplicationController
   private
 
     def set_words_for_game(game, baskets, seconds)
-      game.wait_seconds = seconds
+	  game.wait_seconds = seconds
       game.uses_peterwords = true if baskets&.include?("pp")
       baskets-= ["pp"] if baskets.present?
       game.own_words = true if !baskets&.empty?
