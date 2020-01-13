@@ -7,7 +7,4 @@
  *= require main/bootstrap.bundle.min
  *= require main/script
  *= require cable
- *= require main/interaction
- *= require main/gamification
- *= require main/performance
  */
