@@ -507,6 +507,15 @@ input[type='radio'] {
     color: #16e2a5;
   background-color: white;
   }
+
+  .btn-green-reject {
+    background-color: #D7605E;
+    border: 1px solid #D7605E;
+  }
+  .btn-green-reject:hover {
+    color: #D7605E;
+  background-color: white;
+  }
     .modal-content, .modal-header {
         border: 0;
     }
@@ -785,31 +794,10 @@ input[type='radio'] {
     }
 
     .btn-green-reject {
-      margin-top: 0.5em;
+      margin-top: 0.25em;
       margin-left: 0 !important;
     }
 
-    // .mail-btn {
-    //   display: flex;
-    //   justify-content: center;
-    // }
-
-  //   .modal-email .btn-green {
-  //   width: 15vh !important;
-  //   border-radius: 4.013vh;
-  //   font-size: 2.67vh;
-  //   height: 6vh !important;
-  //   // padding-left: 40px;
-  //   // padding-right: 40px;
-  //   // text-align: center;
-  //   justify-content: center;
-  //   // padding-top: 1vh;
-  //   // padding-bottom: 1vh;
-  //   display: inline-flex;
-  //   line-height: 2.67vh !important;
-  //   line-height: normal;
-  //   align-items: center;
-  // }
     .mail-box-main span {
         font-size: 2.75rem;
         margin-bottom: 1rem;
@@ -819,15 +807,13 @@ input[type='radio'] {
         margin-right: 1rem !important;
     }
     .modal-body .mail-box .mail-btn {
-        width: 50%;
+        width: 40%;
     }
     .modal-body .mail-box .mail-btn a {
-        // font-size: 2rem !important;
-        // padding: 0.65rem 0.75rem 0.65rem 0.75rem !important;
         width: 100%;
-        font-size: 2.67vh !important;
-        height: 4.5vh !important;
-        line-height: 4.5vh;
+        font-size: 2vh !important;
+        height: 3.5vh !important;
+        line-height: 3.5vh;
     }
     .modal-body .mail-box .mail-btn .btn-accept {
         margin-bottom: 10px;
