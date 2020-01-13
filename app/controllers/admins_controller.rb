@@ -7,8 +7,15 @@ class AdminsController < ApplicationController
     @admin = Admin.find_by(email: admin_params[:email])
     if @admin
       flash[:admin_email] = 'Email schon vergeben!'
+	  if !current_root.nil?
+		redirect_to backoffice_admin_path(@admin)
+	  else
+		redirect_to contact_path
+	  end
     else
       @admin = Admin.new(admin_params)
+	  password = SecureRandom.urlsafe_base64(8)
+	  @admin.password = password
       if !current_root.nil?
         @admin.activated = true
       else
@@ -19,6 +26,7 @@ class AdminsController < ApplicationController
         flash[:admin_error] = 'Konnte Anfrage nicht bearbeiten!'
       end
       if !current_root.nil?
+		AdminMailer.after_activate(@admin, password).deliver
         redirect_to backoffice_admin_path(@admin)
       else
         flash[:thanks_for_register] = 'Wir haben deine Nachricht erhalten! Einer unserer Wölfe wird sich zeitnah mir Dir in Verbindung setzen.'

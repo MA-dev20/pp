@@ -1,21 +1,15 @@
 <section id="navbar">
     <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
-    <div class="navbar-links" id="navLinks">
-    </div>
-    <%= link_to '', '#login', class: 'login fas fa-sign-in-alt', onclick: 'showLoginModal()' %>
-    <div class="navbar-mobile" onclick="showNavLinks()">
-        <i class="fas fa-bars"></i>
-    </div>
 </section>
 <section id="confirm">
 	<h1>Hallo, <%= @admin.fname + ' ' + @admin.lname %></h1>
 	<div class="text">E-Mail erfolgreich bestätigt. Sobald dein Account freigeschaltet wurde, erhältst du eine Benachrichtigung.</div>
 	<div class="checkmark">
-		<svg xmlns="http://www.w3.org/2000/svg" width="300px" height="290px">
-            <g fill="none" stroke="#8EC343" stroke-width="2">
-            	<circle cx="145" cy="145" r="144" style="stroke-dasharray:960px, 960px; stroke-dashoffset: 1920px;"></circle>
-				<path d="M72.57,157.41l41.375,41.2875l106.017-105.804" style="stroke-dasharray:208px, 208px; stroke-dashoffset: 0px;"></path>
-        	</g>
+		<svg xmlns="http://www.w3.org/2000/svg" width="216px" height="216px">
+			<g fill="none" stroke="#54b7ff" stroke-width="2">
+				<circle cx="108" cy="108" r="105" style="stroke-dasharray:720px, 720px; stroke-dashoffset: 1440px;"></circle>
+				<path d="M52.251,113.334l29.79,29.727l76.332-76.179" style="stroke-dasharray:150px, 150px; stroke-dashoffset: 0px;"></path>
+			</g>
 		</svg>
 	</div>
 </section>
