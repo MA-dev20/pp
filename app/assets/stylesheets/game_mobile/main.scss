@@ -426,17 +426,21 @@ body {
     border-radius: 4.013vh;
     border: none;
     font-size: 2.67vh;
-    height: 7.1vh;
+    // height: 7.1vh;
+    height: 6.8vh;
     line-height: 2.67vh;
     line-height: normal;
-    padding-left: 50px;
-    padding-right: 50px;
+    // padding-left: 50px;
+    // padding-right: 50px;
+    padding-left: 40px;
+    padding-right: 40px;
     box-shadow: 0 0 0 0 rgba(29, 218, 175, 1);
     text-decoration: none;
     padding-top: 1vh;
     padding-bottom: 1vh;
     display: inline-flex;
-    min-width: 30vh;
+    // min-width: 30vh;
+    min-width: 25vh;
     align-items: center;
     justify-content: center;
 }
