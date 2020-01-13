@@ -16,7 +16,9 @@
     <% @words.each do |w| %>
     <tr>
         <td><%= w.name %></td>
-        <td><%= audio_tag w.sound.url, controls: true %></td>
+        <td>
+			<% if !w.sound.file.nil? %><%= audio_tag w.sound.url, controls: true %><% end %>
+        </td>
     </tr>
     <% end %>
 </tbody>

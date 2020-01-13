@@ -1,6 +1,6 @@
 class Admins::SessionsController < Devise::SessionsController
     def new
-      super
+      redirect_to root_path(anchor: 'login')
     end
     protected
     def after_sign_in_path_for(resource)
