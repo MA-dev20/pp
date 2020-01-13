@@ -795,16 +795,16 @@ input[type='radio'] {
     }
 
     .modal-email .btn-green {
-    width: 20vh;
+    width: 15vh !important;
     border-radius: 4.013vh;
     font-size: 2.67vh;
     height: 6vh !important;
-    padding-left: 40px;
-    padding-right: 40px;
-    text-align: center;
+    // padding-left: 40px;
+    // padding-right: 40px;
+    // text-align: center;
     justify-content: center;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    // padding-top: 1vh;
+    // padding-bottom: 1vh;
     display: inline-flex;
     line-height: 2.67vh !important;
     line-height: normal;
