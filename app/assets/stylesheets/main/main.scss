@@ -453,6 +453,7 @@ label .red {
     font-size: 40px;
     text-align: center;
     color: #667093;
+	cursor: pointer;
 }
 .fullscreen-modal .close a {
     color: #667093;
@@ -574,10 +575,12 @@ label .red {
     background-color: rgba(255,255,255,1);
     font-size: 30px;
 }
-#navbar .navbar-links a.login-link {
+#navbar .navbar-links a.login-link,
+#navbar .navbar-links i.login-link {
     color: #16e2a5;
     font-weight: bold;
     font-size: 20px;
+	cursor: pointer;
 }
 #navbar .navbar-links .btn-white {
     position: relative;
@@ -1299,7 +1302,8 @@ label .red {
         animation-duration: 2s;
         animation-fill-mode: forwards;
     }
-    #navbar .navbar-links a.login-link {
+    #navbar .navbar-links a.login-link,
+	#navbar .navbar-links i.login-link {
         display: none;
     }
     #navbar .navbar-links .link a {

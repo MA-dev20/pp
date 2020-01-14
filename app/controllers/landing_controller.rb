@@ -13,8 +13,7 @@ class LandingController < ApplicationController
 	cookies[:accepted] = 'true'
 	redirect_to root_path
   end
-  def agb
-  end
+
   def datenschutz
   end
   def impressum
