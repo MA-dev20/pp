@@ -106,7 +106,7 @@
     
     <div class="karte" onclick="ratingCreative()" id="creative">
         <div class="icon-circle">
-            <%= image_tag 'dash/icons/creative.png' %>
+        	<%= image_tag 'dash/icons/creative.svg', style: "height: 2.5vh; width: 2.5vh; margin: 0 auto .5vh;" %>
         </div>
         <!-- <div class="rating">
             <%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '' %>
@@ -184,7 +184,7 @@
     
     <div class="karte" onclick="ratingRhet()" id="rhetoric">
         <div class="icon-circle">
-            <%= image_tag 'dash/icons/megaphone.png' %>
+            <i class="fas fa-microphone"></i>
         </div>
         <!-- <div class="rating">
             <%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '' %>
@@ -840,7 +840,7 @@ function ratingGes() {
     i = 0;
     $('.active').removeClass('active');
     $('#gesamt').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
+    <% @chartdata.last(6).each do |cd| %>
         datapoints[i].value = <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>;
         i++;
     <% end %>
@@ -859,7 +859,7 @@ function ratingSpontan() {
     i = 0;
     $('.active').removeClass('active');
     $('#spontan').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
+    <% @chartdata.last(6).each do |cd| %>
         datapoints[i].value = <%= (cd[:spontan].present? ? cd[:spontan] : 0) / 10.0 %>;
         i++;
     <% end %>
@@ -878,7 +878,7 @@ function ratingCreative() {
     i = 0;
     $('.active').removeClass('active');
     $('#creative').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
+    <% @chartdata.last(6).each do |cd| %>
         datapoints[i].value = <%= (cd[:creative].present? ? cd[:creative] : 0) / 10.0 %>;
         i++;
     <% end %>
@@ -897,7 +897,7 @@ function ratingBody() {
     i = 0;
     $('.active').removeClass('active');
     $('#body').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
+    <% @chartdata.last(6).each do |cd| %>
         datapoints[i].value = <%= (cd[:body].present? ? cd[:body] : 0) / 10.0 %>;
         i++;
     <% end %>
@@ -916,7 +916,7 @@ function ratingRhet() {
     i = 0;
     $('.active').removeClass('active');
     $('#rhetoric').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
+    <% @chartdata.last(6).each do |cd| %>
         datapoints[i].value = <%= (cd[:rhetoric].present? ? cd[:rhetoric] : 0) / 10.0 %>;
         i++;
     <% end %>

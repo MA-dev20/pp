@@ -108,7 +108,7 @@
     
     <div class="karte" onclick="ratingCreative()" id="creative">
         <div class="icon-circle">
-            <%= image_tag 'dash/icons/creative.png' %>
+           	<i class="fas fa-lightbulb"></i>
         </div>
         <!-- <div class="rating">
             <%= @user_rating.creative.present? ? ((@user_rating.creative / 10.0 == 10.0) ? '10' : (@user_rating.creative / 10.0)) : '' %>
@@ -186,7 +186,7 @@
     
     <div class="karte" onclick="ratingRhet()" id="rhetoric">
         <div class="icon-circle">
-            <%= image_tag 'dash/icons/megaphone.png' %>
+           	<i class="fas fa-microphone"></i>
         </div>
         <!-- <div class="rating">
             <%= @user_rating.rhetoric.present? ? ((@user_rating.rhetoric / 10.0 == 10.0) ? '10' : (@user_rating.rhetoric / 10.0)) : '' %>
@@ -531,6 +531,9 @@ var user = '<%= @user.fname + ' ' + @user.lname %>';
 <% @chartdata.last(6).each do |cd| %>
     var json_data = <%= cd.to_json.html_safe %>;
     json_data['word'] = "<%= Word.find(Turn.find(cd[:turn_id]).word_id).name %>";
+	<% if cd[:turn2_id] %>
+	json_data['word2'] = "<%= Word.find(Turn.find(cd[:turn2_id]).word_id).name %>";
+	<% end %>
     label[i] = "<%= cd[:date].to_s %>";
     datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
     <% if cd[:ges2] %>
@@ -712,9 +715,16 @@ var myChart = new Chart(ctx, {
             callbacks: {
                 title: function(tooltipItem, data) {
                     var innerHtml = '<div class="head">';
-                        innerHtml += '<div class="date">'+tooltipItem[0]["xLabel"]+'</div>';
-                        innerHtml += '<div class="word">'+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word"]+'</div></div>';
-
+						if (data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["date2"]) {
+							innerHtml += '<div class="date">'+tooltipItem[0]["xLabel"]+" / "+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["date2"]+'</div>';	
+						} else {
+							innerHtml += '<div class="date">'+tooltipItem[0]["xLabel"]+'</div>';	
+						}
+                        if (data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word2"]) {
+							innerHtml += '<div class="word">'+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word"]+" / "+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word2"]+'</div></div>';	
+						} else {
+							innerHtml += '<div class="word">'+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word"]+'</div></div>';
+						}
                         innerHtml += '<div class= "body">';
                         innerHtml += '<div class="left">';
 
@@ -849,14 +859,20 @@ function ratingGes() {
     i = 0;
     $('.active').removeClass('active');
     $('#gesamt').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
-        datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
-        <% if cd[:ges2] != nil %>
-            datapoints2[i] = {value: <%= cd[:ges2] / 10.0 %>, data: json_data};
-        <% else %>
-            datapoints2[i] = {value: NaN, data: json_data};
-        <% end %>
-        i++;
+    <% @chartdata.last(6).each do |cd| %>
+        var json_data = <%= cd.to_json.html_safe %>;
+		json_data['word'] = "<%= Word.find(Turn.find(cd[:turn_id]).word_id).name %>";
+		<% if cd[:turn2_id] %>
+		json_data['word2'] = "<%= Word.find(Turn.find(cd[:turn2_id]).word_id).name %>";
+		<% end %>
+		label[i] = "<%= cd[:date].to_s %>";
+		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+		<% if cd[:ges2] %>
+		datapoints2[i] = {value: <%= cd[:ges2] / 10.0 %>, data: json_data};
+		<% else %>
+		datapoints2[i] = {value: NaN, data: json_data};
+		<% end %>
+		i++;
     <% end %>
     i = 0;
     datapoints.forEach(function(el){
@@ -882,14 +898,20 @@ function ratingSpontan() {
     i = 0;
     $('.active').removeClass('active');
     $('#spontan').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
-        datapoints[i] = {value: <%= cd[:spontan] / 10.0 %>, data: json_data};
-        <% if cd[:spontan2] != nil %>
-            datapoints2[i] = {value: <%= cd[:spontan2] / 10.0 %>, data: json_data};
-        <% else %>
-            datapoints2[i] = {value: NaN, data: json_data};
-        <% end %>
-        i++;
+    <% @chartdata.last(6).each do |cd| %>
+        var json_data = <%= cd.to_json.html_safe %>;
+		json_data['word'] = "<%= Word.find(Turn.find(cd[:turn_id]).word_id).name %>";
+		<% if cd[:turn2_id] %>
+		json_data['word2'] = "<%= Word.find(Turn.find(cd[:turn2_id]).word_id).name %>";
+		<% end %>
+		label[i] = "<%= cd[:date].to_s %>";
+		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+		<% if cd[:spontan2] %>
+		datapoints2[i] = {value: <%= cd[:spontan2] / 10.0 %>, data: json_data};
+		<% else %>
+		datapoints2[i] = {value: NaN, data: json_data};
+		<% end %>
+		i++;
     <% end %>
     i = 0;
     datapoints.forEach(function(el){
@@ -915,14 +937,20 @@ function ratingCreative() {
     i = 0;
     $('.active').removeClass('active');
     $('#creative').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
-        datapoints[i] = {value: <%= cd[:creative] / 10.0 %>, data: json_data};
-        <% if cd[:creative2] != nil %>
-            datapoints2[i] = {value: <%= cd[:creative2] / 10.0 %>, data: json_data};
-        <% else %>
-            datapoints2[i] = {value: NaN, data: json_data};
-        <% end %>
-        i++;
+    <% @chartdata.last(6).each do |cd| %>
+        var json_data = <%= cd.to_json.html_safe %>;
+		json_data['word'] = "<%= Word.find(Turn.find(cd[:turn_id]).word_id).name %>";
+		<% if cd[:turn2_id] %>
+		json_data['word2'] = "<%= Word.find(Turn.find(cd[:turn2_id]).word_id).name %>";
+		<% end %>
+		label[i] = "<%= cd[:date].to_s %>";
+		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+		<% if cd[:creative2] %>
+		datapoints2[i] = {value: <%= cd[:creative2] / 10.0 %>, data: json_data};
+		<% else %>
+		datapoints2[i] = {value: NaN, data: json_data};
+		<% end %>
+		i++;
     <% end %>
     i = 0;
     datapoints.forEach(function(el){
@@ -948,14 +976,20 @@ function ratingBody() {
     i = 0;
     $('.active').removeClass('active');
     $('#body').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
-        datapoints[i] = {value: <%= cd[:body] / 10.0 %>, data: json_data};
-        <% if cd[:body2] != nil %>
-            datapoints2[i] = {value: <%= cd[:body2] / 10.0 %>, data: json_data};
-        <% else %>
-            datapoints2[i] = {value: NaN, data: json_data};
-        <% end %>
-        i++;
+    <% @chartdata.last(6).each do |cd| %>
+        var json_data = <%= cd.to_json.html_safe %>;
+		json_data['word'] = "<%= Word.find(Turn.find(cd[:turn_id]).word_id).name %>";
+		<% if cd[:turn2_id] %>
+		json_data['word2'] = "<%= Word.find(Turn.find(cd[:turn2_id]).word_id).name %>";
+		<% end %>
+		label[i] = "<%= cd[:date].to_s %>";
+		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+		<% if cd[:body2] %>
+		datapoints2[i] = {value: <%= cd[:body2] / 10.0 %>, data: json_data};
+		<% else %>
+		datapoints2[i] = {value: NaN, data: json_data};
+		<% end %>
+		i++;
     <% end %>
     i = 0;
     datapoints.forEach(function(el){
@@ -981,14 +1015,20 @@ function ratingRhet() {
     i = 0;
     $('.active').removeClass('active');
     $('#rhetoric').addClass('active');
-    <% @chartdata.first(6).each do |cd| %>
-        datapoints[i] = {value: <%= cd[:rhetoric] / 10.0 %>, data: json_data};
-        <% if cd[:rhetoric2] != nil %>
-            datapoints2[i] = {value: <%= cd[:rhetoric2] / 10.0 %>, data: json_data};
-        <% else %>
-            datapoints2[i] = {value: NaN, data: json_data};
-        <% end %>
-        i++;
+    <% @chartdata.last(6).each do |cd| %>
+        var json_data = <%= cd.to_json.html_safe %>;
+		json_data['word'] = "<%= Word.find(Turn.find(cd[:turn_id]).word_id).name %>";
+		<% if cd[:turn2_id] %>
+		json_data['word2'] = "<%= Word.find(Turn.find(cd[:turn2_id]).word_id).name %>";
+		<% end %>
+		label[i] = "<%= cd[:date].to_s %>";
+		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+		<% if cd[:rhetoric2] %>
+		datapoints2[i] = {value: <%= cd[:rhetoric2] / 10.0 %>, data: json_data};
+		<% else %>
+		datapoints2[i] = {value: NaN, data: json_data};
+		<% end %>
+		i++;
     <% end %>
     i = 0;
     datapoints.forEach(function(el){

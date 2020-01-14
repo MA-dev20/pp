@@ -144,18 +144,20 @@ class DashAdminController < ApplicationController
 
     @user_ratings.sort_by{|e| -e[:rating]}
     @chartdata = []
+	@turnrating2 = @user2.turn_ratings.order('created_at ASC')
+	i = 0
     @turn_ratings.each do |t|
-      @turnrating2 = TurnRating.where(game_id: t.game_id, user_id: @user2.id).first
       if t.present?
         turn_pitch = t.turn.recorded_pitch?
       else
         turn_pitch = false
       end
-      if @turnrating2
-        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, ges2: @turnrating2.ges,  spontan2: @turnrating2.spontan, creative2: @turnrating2.creative, body2: @turnrating2.body, rhetoric2: @turnrating2.rhetoric, turn_pitch: turn_pitch}
+      if @turnrating2[i]
+        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn2_id: @turnrating2[i].turn_id, date2: @turnrating2[i].created_at.strftime("%d.%m.%Y"), ges2: @turnrating2[i].ges,  spontan2: @turnrating2[i].spontan, creative2: @turnrating2[i].creative, body2: @turnrating2[i].body, rhetoric2: @turnrating2[i].rhetoric, turn_pitch: turn_pitch}
       else
         @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn_pitch: turn_pitch}
       end
+	  i = i + 1
     end
   end
     
@@ -167,7 +169,7 @@ class DashAdminController < ApplicationController
       return
     end
     @games = Game.where(team_id: @team.id)
-    @game_ratings = GameRating.where(team_id: @team.id)
+    @game_ratings = GameRating.where(team_id: @team.id).all.order('created_at ASC')
     @date = @games.first.created_at.beginning_of_day
     @days = 1
     @games.each do |g|
