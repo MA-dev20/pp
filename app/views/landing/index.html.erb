@@ -1,4 +1,6 @@
- <section id="navbar">
+<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+<section id="navbar">
     <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">
         <div class="link">
@@ -246,7 +248,7 @@
     <section id="smartphone">
     	<div class="head wow fadeIn">KI Videoanalyse</div>
     	<div class="head-text wow fadeIn">
-    		Der beste Ausgangspunkt für eine kommunikative Entwicklung ist unsere KI Videonalyse. Stärken und Schwächen werden sicht- und hörbar aufgedeckt, sodass die individuellen Fähigkeiten gezielt <br> trainiert und verbessert werden.
+    		Der beste Ausgangspunkt für eine kommunikative Entwicklung ist unsere KI Videonalyse. Stärken und Schwächen werden sicht- und hörbar aufgedeckt, sodass die individuellen Fähigkeiten gezielt trainiert und verbessert werden.
     	</div>
     	<div class="image wow fadeIn">
     	<%= image_tag 'landing/smartphone.png' %>
@@ -280,65 +282,47 @@
        <div class="heading">
            Wir lieben Peter
        </div>
-        <div class="slider">
-            <div class="circle" id="test_circle1"></div>
-            <div class="circle active" id="test_circle2"></div>
-            <div class="circle" id="test_circle3"></div>
-        </div>
-        <div class="cards">
-        <div class="card c500">
-            <div class="text">
-                "Spaß und Vertrieb gehören zusammen. Peter Pitch trägt einen großen Teil zu unserer erfolgreichen Lernkultur bei."
-            </div>
-            <div class="people">
-                <%= image_tag 'people/storms.jpg' %>
-                <div class="name">Julian Storms</div>
-                <div class="reference">Ergo Group</div>
-            </div>
-        </div>
-        <div class="card" id="card1">
-            <div class="text">
-                "Die Mitarbeiter lieben es - unsere Schulungen avancieren mit diesem Tool zu echten Highlights."
-            </div>
-            <div class="people">
-                <%= image_tag 'people/stechert.png' %>
-                <div class="name">Julian Stechert</div>
-                <div class="reference">MySecondEar</div>
-            </div>
-        </div>
-        
-        <div class="card" id="card2">
-            <div class="text">
-                "Kreative und nachhaltige Lernmethoden sind ein wichtiger Bestandteil unserer DNA. Als Gründungspartner von Peter Pitch profitieren wir von einem hoch innovativen, digitalen Trainingstool."
-            </div>
-            <div class="people">
-                <%= image_tag 'people/michallik.png' %>
-                <div class="name">Sabrina Michallik</div>
-                <div class="reference">Lensing Media</div>
-            </div>
-        </div>
-        
-        <div class="card" id="card3">
-            <div class="text">
-                "Spaß und Vertrieb gehören zusammen. Peter Pitch trägt einen großen Teil zu unserer erfolgreichen Lernkultur bei."
-            </div>
-            <div class="people">
-                <%= image_tag 'people/storms.jpg' %>
-                <div class="name">Julian Storms</div>
-                <div class="reference">Ergo Group</div>
-            </div>
-        </div>
-        
-        <div class="card c500">
-            <div class="text">
-                "Die Mitarbeiter lieben es - unsere Schulungen avancieren mit diesem Tool zu echten Highlights."
-            </div>
-            <div class="people">
-                <%= image_tag 'people/stechert.png' %>
-                <div class="name">Julian Stechert</div>
-                <div class="reference">MySecondEar</div>
-            </div>
-        </div>
+        <div class="swiper-container">
+        	<div class="swiper-wrapper">
+        		<div class="swiper-slide">
+					<div class="card" id="card1">
+						<div class="text">
+							"Die Mitarbeiter lieben es - unsere Schulungen avancieren mit diesem Tool zu echten Highlights."
+						</div>
+						<div class="people">
+							<%= image_tag 'people/stechert.png' %>
+							<div class="name">Julian Stechert</div>
+							<div class="reference">MySecondEar</div>
+						</div>
+					</div>
+				</div>
+				<div class="swiper-slide">
+					<div class="card" id="card2">
+						<div class="text">
+							"Kreative und nachhaltige Lernmethoden sind ein wichtiger Bestandteil unserer DNA. Als Gründungspartner von Peter Pitch profitieren wir von einem hoch innovativen, digitalen Trainingstool."
+						</div>
+						<div class="people">
+							<%= image_tag 'people/michallik.png' %>
+							<div class="name">Sabrina Michallik</div>
+							<div class="reference">Lensing Media</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="swiper-slide">
+					<div class="card" id="card3">
+						<div class="text">
+							"Spaß und Vertrieb gehören zusammen. Peter Pitch trägt einen großen Teil zu unserer erfolgreichen Lernkultur bei."
+						</div>
+						<div class="people">
+							<%= image_tag 'people/storms.jpg' %>
+							<div class="name">Julian Storms</div>
+							<div class="reference">Ergo Group</div>
+						</div>
+					</div>
+				</div>
+        	</div>
+        	<div class="swiper-pagination"></div>
         </div>
     </div>
     <%= image_tag 'landing/shape.svg', class: 'shape s310', id: 'shape9' %>
@@ -509,242 +493,22 @@
 	if(window.location.hash == '#login') {
 		showLoginModal();
 	}
-    /* Swiping through Testimonials */
-    const TEST = document.querySelector('.testimonials');
-    TEST.addEventListener('touchstart', handleTouchStart, false);        
-    TEST.addEventListener('touchmove', handleTouchMove, false);
+    if($(window).width() <= '900') {
+		var mySwiper = new Swiper ('.swiper-container', {
+    		// Optional parameters
+    		direction: 'horizontal',
+    		loop: true,
+			initialSlide: 1,
+			centeredSlides: true,
 
-    var xDown = null;                                                        
-    var yDown = null;
-
-    function getTouches(evt) {
-      return evt.touches ||             // browser API
-             evt.originalEvent.touches; // jQuery
-    }                                                     
-
-    function handleTouchStart(evt) {
-        const firstTouch = getTouches(evt)[0];                                      
-        xDown = firstTouch.clientX;                                      
-        yDown = firstTouch.clientY;                                      
-    };                                                
-
-    function handleTouchMove(evt) {
-        if ( ! xDown || ! yDown ) {
-            return;
-        }
-
-        var xUp = evt.touches[0].clientX;                                    
-        var yUp = evt.touches[0].clientY;
-
-        var xDiff = xDown - xUp;
-        var yDiff = yDown - yUp;
-
-        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-            var left = TEST.querySelector('.cards').style.left;
-            var width = window.getComputedStyle(TEST).getPropertyValue("width");
-            if (width == '300px') {
-                if ( xDiff > 0 ) {
-                    if (left == '-300px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-600px');
-                        $("#test_circle3").addClass('active');
-                        $("#test_circle2").removeClass('active');
-                    } else if (left == '-600px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '0px');
-                        $("#test_circle1").addClass('active');
-                        $("#test_circle3").removeClass('active');
-                    } else {
-                        TEST.querySelector('.cards').style.setProperty('left', '-300px');
-                        $("#test_circle2").addClass('active');
-                        $("#test_circle1").removeClass('active');
-                    }
-                } else {
-                    if (left == '-300px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '0px');
-                        $("#test_circle1").addClass('active');
-                        $("#test_circle2").removeClass('active');
-                    } else if (left == '0px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-600px');
-                        $("#test_circle3").addClass('active');
-                        $("#test_circle1").removeClass('active');
-                    } else {
-                        TEST.querySelector('.cards').style.setProperty('left', '-300px');
-                        $("#test_circle2").addClass('active');
-                        $("#test_circle3").removeClass('active');
-                    }
-                }
-            } else if (width == '500px') {
-                if ( xDiff > 0 ) {
-                    if (left == '-500px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-800px');
-                        $("#test_circle3").addClass('active');
-                        $("#test_circle2").removeClass('active');
-                    } else if (left == '-800px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-200px');
-                        $("#test_circle1").addClass('active');
-                        $("#test_circle3").removeClass('active');
-                    } else {
-                        TEST.querySelector('.cards').style.setProperty('left', '-500px');
-                        $("#test_circle2").addClass('active');
-                        $("#test_circle1").removeClass('active');
-                    }
-                } else {
-                    if (left == '-500px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-200px');
-                        $("#test_circle1").addClass('active');
-                        $("#test_circle2").removeClass('active');
-                    } else if (left == '-200px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-800px');
-                        $("#test_circle3").addClass('active');
-                        $("#test_circle1").removeClass('active');
-                    } else {
-                        TEST.querySelector('.cards').style.setProperty('left', '-500px');
-                        $("#test_circle2").addClass('active');
-                        $("#test_circle3").removeClass('active');
-                    }
-                }
-            } else if (width == '700px') {
-                if ( xDiff > 0 ) {
-                    if (left == '-400px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-700px');
-                        $("#test_circle3").addClass('active');
-                        $("#test_circle2").removeClass('active');
-                    } else if (left == '-700px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-100px');
-                        $("#test_circle1").addClass('active');
-                        $("#test_circle3").removeClass('active');
-                    } else {
-                        TEST.querySelector('.cards').style.setProperty('left', '-400px');
-                        $("#test_circle2").addClass('active');
-                        $("#test_circle1").removeClass('active');
-                    }
-                } else {
-                    if (left == '-400px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-100px');
-                        $("#test_circle1").addClass('active');
-                        $("#test_circle2").removeClass('active');
-                    } else if (left == '-100px') {
-                        TEST.querySelector('.cards').style.setProperty('left', '-700px');
-                        $("#test_circle3").addClass('active');
-                        $("#test_circle1").removeClass('active');
-                    } else {
-                        TEST.querySelector('.cards').style.setProperty('left', '-400px');
-                        $("#test_circle2").addClass('active');
-                        $("#test_circle3").removeClass('active');
-                    }
-                }
-            }
-        }
-        /* reset values */
-        xDown = null;
-        yDown = null;                                             
-    };
-    /* Swiping through HIW */
-    const HIW = document.querySelector('#hiw');
-    HIW.addEventListener('touchstart', handleTouchStart, false);        
-    HIW.addEventListener('touchmove', handleTouchMoveHIW, false);
-
-    function handleTouchMoveHIW(evt) {
-
-
-        var xUp = evt.touches[0].clientX;                                    
-        var yUp = evt.touches[0].clientY;
-
-        var xDiff = xDown - xUp;
-        var yDiff = yDown - yUp;
-
-        if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-            var left = HIW.querySelector('.categories').style.left;
-            var width = window.getComputedStyle(HIW).getPropertyValue("width");
-            if (width == '300px') {
-                if ( xDiff > 0 ) {
-                    if (left == '0px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '-460px');
-                        $("#hiw_circle2").addClass('active');
-                        $("#hiw_circle1").removeClass('active');
-                    } else if(left == '-460px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '-900px');
-                        $("#hiw_circle3").addClass('active');
-                        $("#hiw_circle2").removeClass('active');
-                    } else {
-                        HIW.querySelector('.categories').style.setProperty('left', '0px');
-                        $("#hiw_circle1").addClass('active');
-                        $("#hiw_circle3").removeClass('active');
-                    }
-                } else {
-                    if (left == '-900px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '-460px');
-                        $("#hiw_circle2").addClass('active');
-                        $("#hiw_circle3").removeClass('active');
-                    } else if(left == '-460px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '0px');
-                        $("#hiw_circle1").addClass('active');
-                        $("#hiw_circle2").removeClass('active');
-                    }
-                    else {
-                        HIW.querySelector('.categories').style.setProperty('left', '-900px');
-                        $("#hiw_circle3").addClass('active');
-                        $("#hiw_circle1").removeClass('active');
-                    }
-                } 
-            } else if (width == '500px') {
-                if ( xDiff > 0 ) {
-                    if (left == '100px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '-360px');
-                        $("#hiw_circle2").addClass('active');
-                        $("#hiw_circle1").removeClass('active');
-                    } else if(left == '-360px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '-800px');
-                        $("#hiw_circle3").addClass('active');
-                        $("#hiw_circle2").removeClass('active');
-                    } else {
-                        HIW.querySelector('.categories').style.setProperty('left', '100px');
-                        $("#hiw_circle1").addClass('active');
-                        $("#hiw_circle3").removeClass('active');
-                    }
-                } else {
-                    if (left == '-800px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '-360px');
-                        $("#hiw_circle2").addClass('active');
-                        $("#hiw_circle3").removeClass('active');
-                    } else if(left == '-360px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '100px');
-                        $("#hiw_circle1").addClass('active');
-                        $("#hiw_circle2").removeClass('active');
-                    }
-                    else {
-                        HIW.querySelector('.categories').style.setProperty('left', '-800px');
-                        $("#hiw_circle3").addClass('active');
-                        $("#hiw_circle1").removeClass('active');
-                    }
-                } 
-            } else if (width == '900px') {
-                if ( xDiff > 0 ) {
-                    if(left == '100px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '-360px');
-                        $("#hiw_circle3").addClass('active');
-                        $("#hiw_circle1").removeClass('active');
-                    } else {
-                        HIW.querySelector('.categories').style.setProperty('left', '100px');
-                        $("#hiw_circle1").addClass('active');
-                        $("#hiw_circle3").removeClass('active');
-                    }
-                } else {
-                    if(left == '-360px') {
-                        HIW.querySelector('.categories').style.setProperty('left', '100px');
-                        $("#hiw_circle1").addClass('active');
-                        $("#hiw_circle3").removeClass('active');
-                    } else {
-                        HIW.querySelector('.categories').style.setProperty('left', '-360px');
-                        $("#hiw_circle3").addClass('active');
-                        $("#hiw_circle1").removeClass('active');
-                    }
-                }
-            }
-        }
-        /* reset values */
-        xDown = null;
-        yDown = null;                                             
-    };
+    		// If we need pagination
+    		pagination: {
+      			el: '.swiper-pagination',
+    		},
+  		})	
+	}
+  	
+  
     function showVideoModal() {
         if($('#videoModal').is(":hidden")) {
             $('#videoModal').show();

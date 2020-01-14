@@ -911,7 +911,7 @@ label .red {
 }
 #smartphone .head-text {
 	text-align: center;
-	max-width: 400px;
+	max-width: 367px;
 	margin: 20px auto;
 	color: #667093;
 }
@@ -983,24 +983,18 @@ label .red {
 #content .testimonials .heading {
     margin-bottom: 10px;
 }
-#content .testimonials .cards {
-    position: absolute;
-    left: -300px;
-    width: 900px;
-    display: flex;
+#content .testimonials .swiper-container {
+	height: 350px;
+	width: 300px;
 }
 #content .testimonials .card {
     position: relative;
     width: 276px;
     height: 253px;
-    margin: 10px;
     border-radius: 4px;
     border: 2px solid #16e2a5;
     box-shadow: 0 10px 10px 0 rgba(172, 172, 172, .4);
-    pointer-events: none;
-}
-#content .testimonials .card.c500 {
-    display: none;
+	margin: 10px;
 }
 #content .testimonials .card .text {
     text-align: center;
@@ -1154,6 +1148,7 @@ label .red {
 	width: 300px;
 	margin: 50px 0;
 	color: #667093;
+	text-align: center;
 }
 #content #secure .daten img,
 #content #secure .ssl img,
@@ -1224,16 +1219,10 @@ label .red {
     #content .testimonials {
         width: 500px;
     }
-    #content .testimonials .cards {
-        left: -500px;
-        width: 1200px;
-    }
-    #content .testimonials .slider {
-        left: 220px;
-    }
-    #content .testimonials .cards .card.c500 {
-        display: block;
-    }
+    #content .testimonials .swiper-container {
+		height: 350px;
+		width: 300px;
+	}
     #content .startnow {
         margin: 10px 0;
         width: 440px;
@@ -1389,16 +1378,10 @@ label .red {
         width: 700px;
         text-align: center;
     }
-    #content .testimonials .cards {
-        left: -400px;
-        width: 1200px;
-    }
-    #content .testimonials .slider {
-        left: 320px;
-    }
-    #content .testimonials .cards .card.c500 {
-        display: block;
-    }
+    #content .testimonials .swiper-container {
+		height: 350px;
+		width: 300px;
+	}
     #content .startnow {
         width: 620px;
         margin: 10px;  
@@ -1453,6 +1436,7 @@ label .red {
 	#content #secure .daten {
 		margin: 50px 0 94px 50px;
 		float: right;
+		text-align: left;
 	}
 	#content #secure .daten img {
 		position: relative;
@@ -1461,6 +1445,7 @@ label .red {
 	#content #secure .ssl {
 		margin: 50px 50px 50px 0;
 		float: left;
+		text-align: left;
 	}
 	#content #secure .hosted {
 		margin: 50px 200px;
@@ -1641,16 +1626,13 @@ label .red {
     #content .testimonials {
         width: 900px;
     }
-    #content .testimonials .cards {
-        left: 0;
-        width: 900px;
-    }
-    #content .testimonials .slider {
-        display: none
-    }
-    #content .testimonials .cards .card.c500 {
-        display: none;
-    }
+    #content .testimonials .swiper-container {
+		height: 350px;
+		width: 900px;
+	}
+	#content .testimonials .swiper-slide {
+		width: 300px;
+	}
     #content .startnow {
         width: 820px;
         margin: 10px;
@@ -1725,6 +1707,7 @@ label .red {
 	#content #secure .hosted {
 		margin: 50px 25px 50px 0;
 		float: none;
+		text-align: left;
 	}
 }
 @media (min-width: 1100px) {
@@ -2162,10 +2145,13 @@ label .red {
         height: 600px;
         width: 1300px;
     }
-    #content .testimonials .cards {
-        margin: 20px 11px;
-        width: 1278px;
-    }
+	#content .testimonials .swiper-container {
+		height: 550px;
+		width: 1300px;
+	}
+	#content .testimonials .swiper-slide {
+		width: 426px;
+	}
     #content .testimonials .card {
         width: 350px;
         height: 340px;
@@ -2238,6 +2224,7 @@ label .red {
 	#content #secure .ssl,
 	#content #secure .hosted {
 		margin: 50px;
+		text-align: left;
 	}
     #footer {
         left: calc(50vw - 600px);
