@@ -16,12 +16,15 @@ class BackofficeController < ApplicationController
   end
     
   def admin
-    @users = @admin.users.all
+    @users = @admin.users.order(:fname)
+	@users.order(:lname)
     @cw_baskets = @admin.catchword_baskets.where(objection: false)
     @ob_baskets = @admin.objection_baskets.all
   end
     
   def edit_admin
+	@users = @admin.users.order(:fname)
+	@users.order(:lname)
   end
     
   def edit_team
@@ -48,6 +51,31 @@ class BackofficeController < ApplicationController
     if params[:admin]
       @admin = Admin.find(params[:admin])
     end
+  end
+	
+  def edit_game
+	@game = Game.find(params[:game_id])
+	@team = Team.find(@game.team_id)
+	@admin = Admin.find(@game.admin_id)
+	@gamerating = @game.game_rating
+	@teamrating = @team.team_rating
+	@users = @game.users.order(:fname)
+	@users.order(:lname)
+	
+  end
+	
+  def sim_turn
+	@game = Game.find(params[:game_id])
+	@turn = Turn.find(params[:turn_id])
+	@user = @turn.findUser
+  end
+	
+  def create_turn_rating
+	@turn = Turn.find(params[:turn_id])
+	@game = Game.find(params[:game_id])
+	@turn.update(played: true)
+	@turns = @game.turns.where(played: false)
+	
   end
     
   def activate_admin

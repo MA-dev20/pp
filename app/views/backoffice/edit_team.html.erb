@@ -12,7 +12,7 @@
             <% else %>
                 <input type="checkbox" name="team[users][]" value="<%= u.id %>" id="team_users_<%=u.id%>">
             <% end %>
-            <label for="team_users_<%=u.id%>"><%= u.fname + ' ' + u.lname %></label>
+            <label for="team_users_<%=u.id%>"><%= u.fname %> <%= u.lname %></label>
             </div>
         <% end %>
         <div class="form-group submit">
@@ -22,7 +22,105 @@
         </div>
     <% end %>
 </div>
+<div class="card" id="teamrating">
+	<h3><%= @team.name %>'s Bewertung</h3>
+	<table style="width: 100%">
+		<tr>
+			<th>Gesamt</th>
+			<td><% if @team.team_rating %><%= @team.team_rating.ges %><% end %></td>
+		</tr>
+		<tr>
+			<th>Körpersprache</th>
+			<td><% if @team.team_rating %><%= @team.team_rating.body %><% end %></td>
+		</tr>
+		<tr>
+			<th>Kreativität</th>
+			<td><% if @team.team_rating %><%= @team.team_rating.creative %><% end %></td>
+		</tr>
+		<tr>
+			<th>Rhetorik</th>
+			<td><% if @team.team_rating %><%= @team.team_rating.rhetoric %><% end %></td>
+		</tr>
+		<tr>
+			<th>Spontanität</th>
+			<td><% if @team.team_rating %><%= @team.team_rating.spontan %><% end %></td>
+		</tr>
+	</table>
+</div>
 <div class="card" id="destroyTeam">
     <%= link_to 'löschen', destroy_team_path(@team, "team"=>{"admin_id"=>@admin.id}), class: 'btn btn-green', data: { confirm: 'Are you sure?' } %>
     <%= link_to 'zurück', backoffice_edit_admin_path(@admin), class: 'btn btn-green' %>
+   	<div class="btn btn-green" onclick="toggleModal('games')">Simulate Game</div>
 </div>
+<div class="card" id="games" style="width: auto;">
+	<h3>Spiele</h3>
+	<table>
+		<tr>
+			<th>Datum</th>
+			<th>Körpersprache</th>
+			<th>Kreativität</th>
+			<th>Rhetorik</th>
+			<th>Spontanität</th>
+			<th>Gesamt</th>
+		</tr>
+		<% @team.games.each do |g| %>
+		<tr onclick="redirect('game', <%= g.id %>)">
+			<td><%= g.created_at.strftime("%d.%m.%Y") %></td>
+			<td><% if g.game_rating %><%= g.game_rating.body %><% end %></td>
+			<td><% if g.game_rating %><%= g.game_rating.creative %><% end %></td>
+			<td><% if g.game_rating %><%= g.game_rating.rhetoric %><% end %></td>
+			<td><% if g.game_rating %><%= g.game_rating.spontan %><% end %></td>
+			<td><% if g.game_rating %><%= g.game_rating.ges %><% end %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+<div class="fullscreen-modal" id="newGamesModal">
+    <div class="close" onclick="toggleModal('games')">
+        <i class="fas fa-times"></i>
+    </div>
+    <div class="card">
+        <h3>Neues Spiel anlegen</h3>
+        <%= form_for(:game, url: new_game_bo_path()) do |f| %>
+            <h3>Users</h3>
+            <% @team.users.each do |u| %>
+                <input type="checkbox" name="game[users][]" value="<%= u.id %>" checked id="game_users_<%= u.id %>">
+               	<label for="game_users_<%= u.id %>"><%= u.fname %> <%= u.lname %></label>
+			<% end %>
+            <div class="form-group submit">
+            <%= f.hidden_field :team_id, value: @team.id %>
+            <%= f.hidden_field :admin_id, value: @admin.id %>
+            <%= f.submit 'weiter', class: 'btn btn-green' %>
+            </div>
+        <% end %>   
+    </div>
+</div>
+
+<script>
+	function redirect(model, model_id) {
+        if(model == 'team') {
+            location.replace('/backoffice/teams/'+model_id);
+        } else if(model == 'user') {
+            location.replace('/backoffice/users/'+model_id);
+        } else if(model == 'catchword') {
+            location.replace('/backoffice/catchwords/'+model_id);
+        } else if(model == 'objection') {
+            location.replace('/backoffice/objections/'+model_id);
+        } else if(model == 'game') {
+			location.replace('/backoffice/games/'+model_id);
+		}
+    }
+	function toggleModal(model) {
+        if(model == 'team') {
+            $('#newTeamModal').toggle();
+        } else if(model == 'user') {
+            $('#newUserModal').toggle();
+        } else if(model == 'words') {
+            $('#newWordsModal').toggle();
+        } else if(model == 'objections') {
+            $('#newObjectionsModal').toggle();
+        } else if(model == 'games') {
+			$('#newGamesModal').toggle();
+		}
+    }
+</script>

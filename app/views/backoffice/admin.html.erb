@@ -1,4 +1,4 @@
-<h1><%= @admin.fname ||= '' + ' ' + @admin.lname ||= '' %></h1>
+<h1><%= @admin.fname %> <%= @admin.lname %></h1>
 
 <div class="card" id="contact">
     <h3>Kontakt</h3>
@@ -94,7 +94,7 @@
         </thead>
         <tbody>
             <% @users.each do |u| %>
-            <tr>
+            <tr onclick="redirect('user', <%= u.id %>)">
                 <td><%= u.fname %> <%= u.lname %></td>
                 <td><%= u.email %></td>
                 <td><%= u.turns.count %></td>
@@ -110,3 +110,18 @@
         </tbody>
     </table>
 </div>
+<script>
+	function redirect(model, model_id) {
+        if(model == 'team') {
+            location.replace('/backoffice/teams/'+model_id);
+        } else if(model == 'user') {
+            location.replace('/backoffice/users/'+model_id);
+        } else if(model == 'catchword') {
+            location.replace('/backoffice/catchwords/'+model_id);
+        } else if(model == 'objection') {
+            location.replace('/backoffice/objections/'+model_id);
+        } else if(model == 'game') {
+			location.replace('/backoffice/games/'+model_id);
+		}
+    }
+</script>

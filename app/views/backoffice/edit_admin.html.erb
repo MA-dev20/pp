@@ -1,6 +1,11 @@
-<h1><%= @admin.fname + ' ' + @admin.lname %></h1>
+<h1><%= @admin.fname %> <%= @admin.lname %></h1>
 <div class="card" id="edit_admin">
-    <h3>Edit Admin</h3>
+    <h3>
+    	<% if @admin.avatar? %>
+    		<%= image_tag @admin.avatar.quad.url %>
+    	<% end %>
+    	<span class="text">Edit Admin</span>
+    </h3>
     <%= form_for(:admin, url: edit_admin_path(@admin)) do |f| %>
         <div class="form-group l1">
             <label for="">Vorname</label>
@@ -46,6 +51,10 @@
             <label for="">Passwort</label>
             <%= f.password_field :password, class: "form-field" %>
         </div>
+        <div class="form-group">
+            <label for="">Avatar</label>
+            <%= f.file_field :avatar, class: "form-field" %>
+        </div>
         <div class="form-group submit">
             <%= f.hidden_field :site, value: 'backoffice' %>
             <%= f.submit 'speichern!', class: 'btn btn-green' %>
@@ -55,7 +64,7 @@
 
 <div class="card" id="teams">
     <h3>Teams</h3>
-    <table>
+    <table style="width: 100%;">
     <tr>
         <th>Name</th>
         <th>Users</th>
@@ -92,14 +101,14 @@
 
 <div class="card" id="users">
     <h3>Users</h3>
-    <table>
+    <table style="width: 100%;">
         <tr>
             <th>Name</th>
             <th>Teams</th>
         </tr>
-        <% @admin.users.each do |u| %>
+        <% @users.each do |u| %>
             <tr onclick="redirect('user', <%= u.id %>)">
-                <th><%= u.fname + ' ' + u.lname %></th>
+                <th><%= u.fname %> <%= u.lname %></th>
                 <td><%= u.teams.count %></td>
             </tr>
         <% end %>
@@ -138,7 +147,7 @@
 
 <div class="card" id="words">
     <h3>Catchwords</h3>
-    <table>
+    <table style="width: 100%;">
         <tr>
             <th>Name</th>
             <th>Worte</th>
@@ -176,7 +185,7 @@
 
 <div class="card" id="objections">
     <h3>Objections</h3>
-    <table>
+    <table style="width: 100%;">
        <tr>
            <th>Name</th>
            <th>Einwände</th>
@@ -212,6 +221,22 @@
         <% end %>   
     </div>
 </div>
+<div class="card" id="games">
+	<h3>Games</h3>
+	<table style="width: 100%;">
+		<tr>
+			<th>Datum</th>
+			<th>Team</th>
+		</tr>
+		<% @admin.games.each do |g| %>
+			<tr onclick="redirect('game', <%= g.id %>)">
+				<td><%= g.created_at.strftime("%d.%m.%Y") %></td>
+				<td><%= Team.find(g.team_id).name %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>
+
 <script>
     function redirect(model, model_id) {
         if(model == 'team') {
@@ -222,7 +247,9 @@
             location.replace('/backoffice/catchwords/'+model_id);
         } else if(model == 'objection') {
             location.replace('/backoffice/objections/'+model_id);
-        }
+        } else if(model == 'game') {
+			location.replace('/backoffice/games/'+model_id);
+		}
     }
     function toggleModal(model) {
         if(model == 'team') {
@@ -233,6 +260,8 @@
             $('#newWordsModal').toggle();
         } else if(model == 'objections') {
             $('#newObjectionsModal').toggle();
-        }
+        } else if(model == 'games') {
+			$('#newGamesModal').toggle();
+		}
     }
 </script>

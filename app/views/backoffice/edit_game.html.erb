@@ -1,0 +1,104 @@
+<h1><%= @game.created_at.strftime("%d.%m.%Y") %> - <%= @team.name %></h1>
+<div class="card" id="game_rating">
+	<h3>Spielbewertung</h3>
+	<table style="width: 100%;">
+		<tr>
+			<th>Gesamt</th>
+			<td><% if @gamerating %><%= @gamerating.ges %><% end %></td>
+		</tr>
+		<tr>
+			<th>Körpersprache</th>
+			<td><% if @gamerating %><%= @gamerating.body %><% end %></td>
+		</tr>
+		<tr>
+			<th>Kreativität</th>
+			<td><% if @gamerating %><%= @gamerating.creative %><% end %></td>
+		</tr>
+		<tr>
+			<th>Rhetorik</th>
+			<td><% if @gamerating %><%= @gamerating.rhetoric %><% end %></td>
+		</tr>
+		<tr>
+			<th>Spontanität</th>
+			<td><% if @gamerating %><%= @gamerating.spontan %><% end %></td>
+		</tr>
+	</table>
+</div>
+<% @adminturn = Turn.where(game_id: @game.id, admin_id: @admin.id).first %>
+<% if @adminturn %>
+<div class="card" id="admin">
+	<% @adminturn = Turn.where(game_id: @game.id, admin_id: @admin.id).first %>
+	<% @word = Word.find_by(id: @adminturn.word_id) %>
+	<% @rating = @adminturn.turn_rating %>
+	<h3><%= @admin.fname %> <%= @admin.lname %> - Admin</h3>
+	<table style="width: 100%;">
+		<tr>
+			<th>Wort</th>
+			<td>
+				<% if @word %>
+					<%= @word.name %>
+				<% else %>
+					<div class="red">Wort gelöscht</div>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<th>Körpersprache</th>
+			<td><% if @rating %><%= @rating.body %><% end %></td>
+		</tr>
+		<tr>
+			<th>Kreativität</th>
+			<td><% if @rating %><%= @rating.creative %><% end %></td>
+		</tr>
+		<tr>
+			<th>Rhetorik</th>
+			<td><% if @rating %><%= @rating.rhetoric %><% end %></td>
+		</tr>
+		<tr>
+			<th>Spontanität</th>
+			<td><% if @rating %><%= @rating.spontan %><% end %></td>
+		</tr>
+		<tr>
+			<th>Gesamt</th>
+			<td><% if @rating %><%= @rating.ges %><% end %></td>
+		</tr>
+	</table>
+</div>
+<% end %>
+<div class="card" id="destroyUser">
+    <%= link_to 'löschen', destroy_game_path(@game), class: 'btn btn-green', data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'zurück', backoffice_edit_admin_path(@admin), class: 'btn btn-green' %>
+</div>
+<div class="card" id="users" style="width: auto; min-width: 50vw">
+	<h3>Users</h3>
+	<table style="width: 100%;">
+		<tr>
+			<th>Name</th>
+			<th>Wort</th>
+			<th>Körpersprache</th>
+			<th>Kreativität</th>
+			<th>Rhetorik</th>
+			<th>Spontanität</th>
+			<th>Bewertung</th>
+		</tr>
+		<% @users.each do |u| %>
+		<% @turn = Turn.where(user_id: u.id, game_id: @game.id).first %>
+		<% @word = Word.find_by(id: @turn.word_id) %>
+		<tr>
+			<td><%= u.fname %> <%= u.lname %></td>
+			<td>
+				<% if @word %>
+				<%= @word.name %>
+				<% else %>
+				<div class="red">Wort gelöscht</div>
+				<% end %>
+			</td>
+			<td><% if @turn.turn_rating %><%= @turn.turn_rating.body %><% end %></td>
+			<td><% if @turn.turn_rating %><%= @turn.turn_rating.creative %><% end %></td>
+			<td><% if @turn.turn_rating %><%= @turn.turn_rating.rhetoric %><% end %></td>
+			<td><% if @turn.turn_rating %><%= @turn.turn_rating.spontan %><% end %></td>
+			<td><% if @turn.turn_rating %><%= @turn.turn_rating.ges %><% end %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>

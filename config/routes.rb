@@ -148,6 +148,8 @@ Rails.application.routes.draw do
   get 'backoffice/users/:user_id', to: 'backoffice#edit_user', as: 'backoffice_edit_user'
   get 'backoffice/catchwords/:basket_id', to: 'backoffice#edit_catchword', as: 'backoffice_edit_catchword'
   get 'backoffice/objections/:basket_id', to: 'backoffice#edit_objection', as: 'backoffice_edit_objection'
+  get 'backoffice/games/:game_id', to: 'backoffice#edit_game', as: 'backoffice_edit_game'
+  get 'backoffice/games/:game_id/turns/:turn_id', to: 'backoffice#sim_turn', as: 'backoffice_sim_turn'
   get 'backoffice/admins/:admin_id/activate', to: 'backoffice#activate_admin', as: 'backoffice_admin_activate'
   get 'backoffice/admins/:admin_id/destroy', to: 'backoffice#destroy_admin', as: 'backoffice_admin_destroy'
   get 'backoffice/word_baskets', to: 'backoffice#word_baskets', as: 'backoffice_word_baskets'
@@ -272,9 +274,11 @@ Rails.application.routes.draw do
 ########
     
   get 'games/new', to: 'games#new', as: 'new_game'
+  post 'backoffice/games/new', to: "games#create_bo", as: "new_game_bo"
   post 'games/new', to: 'games#create'
   post 'games/:game_id/new', to: 'games#create_2', as: 'new_game_2'
   post 'games/:game_id/update', to: 'games#update', as: 'update_game'
+  get 'games/:game_id/destroy', to: 'games#destroy', as: 'destroy_game'
 
 ########
 # User #

@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
-  before_action :authenticate_admin!, :set_admin
+  before_action :authenticate_admin!, :set_admin, except: [:destroy, :create_bo]
+  before_action :require_root, :set_root, only: [:destroy, :create_bo]
 
   def new
   end
@@ -80,9 +81,54 @@ class GamesController < ApplicationController
       end
     end
   end
+	
+  def create_bo
+	@game = Game.create(game_params)
+	params[:game][:users].each do |u|
+      @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first
+	  @game.turns.create(user_id: u, word_id: @word.id, play: true, played: false, counter: 0)
+	end
+	@team = Team.find(params[:game][:team_id])
+	@game.turns.each do |t|
+	  @user = User.find(t.user_id)
+	  @turn = t
+	  @body = rand(50..100)
+	  @creative = rand(50..100)
+	  @rhetoric = rand(50..100)
+	  @spontan = rand(50..100)
+	  @ges = (@body + @creative + @rhetoric + @spontan) / 4
+	  t.ratings.create(turn_id: t.id, admin_id: @game.admin_id, ges: @ges, body: @body, creative: @creative, rhetoric: @rhetoric, spontan: @spontan)
+	  @game.turns.each do |u|
+		if u.user_id != @turn.user_id
+		  @body = rand(50..100)
+	  	  @creative = rand(50..100)
+	      @rhetoric = rand(50..100)
+	      @spontan = rand(50..100)
+	      @ges = (@body + @creative + @rhetoric + @spontan) / 4
+	      t.ratings.create(turn_id: @turn.id, user_id: u.user_id, ges: @ges, body: @body, creative: @creative, rhetoric: @rhetoric, spontan: @spontan)
+		end
+	  end
+	  update_turn_rating(t)
+	  update_user_rating(User.find(t.user_id))
+	  t.update(played: true)
+	end
+	update_game_rating(@game)
+	update_team_rating(@team)
+	redirect_to backoffice_edit_team_path(@team)
+  end
    
   def show
     @messages = Message.all
+  end
+	
+  def destroy
+	@game = Game.find(params[:game_id])
+	@admin = @game.admin
+	if @game.destroy
+	  redirect_to backoffice_edit_admin_path(@admin.id)
+	else
+	  redirect_to backoffice_edit_game_path(@game.id)
+	end
   end
 
   private
@@ -148,4 +194,12 @@ class GamesController < ApplicationController
     def set_admin
       @admin = current_admin
     end
+	
+	def set_root
+	  @root = current_root
+	end
+	
+	def game_params
+	  params.require(:game).permit(:team_id, :admin_id)
+	end
 end

@@ -490,6 +490,9 @@
     <%= video_tag 'landing.mp4', id: 'modalVideo', controls: true, preload: 'auto' %>
 </div>
 <script>
+	<% if flash[:thanks_for_register] %>
+		setTimeout(function(){$('.register-pop-up').hide();}, 5100);
+	<% end %>
 	if(window.location.hash == '#login') {
 		showLoginModal();
 	}
