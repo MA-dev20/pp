@@ -36,6 +36,7 @@ class BackofficeController < ApplicationController
     
   def edit_catchword
     @basket = CatchwordsBasket.find(params[:basket_id])
+	@words = @basket.words.order("name")
     if params[:admin]
       @admin = Admin.find(params[:admin])
     end
@@ -43,6 +44,7 @@ class BackofficeController < ApplicationController
 
   def edit_objection
     @basket = ObjectionsBasket.find(params[:basket_id])
+	@objections = @basket.objections.order('name')
     if params[:admin]
       @admin = Admin.find(params[:admin])
     end
@@ -73,10 +75,6 @@ class BackofficeController < ApplicationController
   def word_baskets
     @baskets = CatchwordsBasket.where(admin_id: nil)
   end
-
-  def words
-    @words = @basket.words.all
-  end
     
   private
     def if_root
@@ -95,8 +93,11 @@ class BackofficeController < ApplicationController
     end
       
     def if_basket
-      if CatchwordsBasket.count == 0
+      if CatchwordsBasket.where(name: 'PetersWords').count == 0
         CatchwordsBasket.create(name: 'PetersWords')
+      end
+	  if ObjectionsBasket.where(name: 'PetersObjections').count == 0
+        ObjectionsBasket.create(name: 'PetersObjections')
       end
     end
 

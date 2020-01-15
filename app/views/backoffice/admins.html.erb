@@ -13,7 +13,9 @@
         <tbody>
             <% @admins.where(activated: false, activated: nil).each do |a| %>
             <tr onclick="redirect(<%= a.id %>)" class="red">
-                <td><%= a.fname + ' ' + a.lname %></td>
+                <td>
+                	<%= a.fname ||= '' + ' ' + a.lname ||= '' %>
+                </td>
                 <td><%= a.company_name %></td>
                 <td class="center"><%= a.teams.count %></td>
                 <td class="center"><%= a.users.count %></td>
@@ -27,7 +29,7 @@
             <% end %>
             <% @admins.where(activated: true).each do |a| %>
             <tr onclick="redirect(<%= a.id %>)">
-                <td><%= a.fname + ' ' + a.lname %></td>
+                <td><%= a.fname ||= '' + ' ' + a.lname ||= '' %></td>
                 <td><%= a.company_name %></td>
                 <td class="center"><%= a.teams.count %></td>
                 <td class="center"><%= a.users.count %></td>

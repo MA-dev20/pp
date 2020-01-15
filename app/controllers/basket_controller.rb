@@ -52,8 +52,10 @@ class BasketController < ApplicationController
     end
     if (params[:basket][:site] == 'admin_dash' && params[:basket][:type] == "objection") || params[:basket][:site] == 'admin_dash'
         redirect_to dash_admin_customize_path
-    else
-        redirect_to backoffice_words_path(@basket.id)
+	elsif @basket.objection
+		redirect_to backoffice_edit_objection_path(@basket.id)
+	else
+        redirect_to backoffice_edit_catchword_path(@basket.id)
     end
     # if params[:basket][:site] == 'admin_dash' && params[:basket][:type] == "objection"
     #     redirect_to dash_admin_objections_path(@basket.id)

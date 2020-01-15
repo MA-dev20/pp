@@ -20,6 +20,7 @@
 </div>
 <div class="card-big">
 <%= form_for(:word, url: new_word_path(@basket)) do |f| %>
+    <%= f.text_field :name %>
     <%= f.file_field :sound, multiple: true %>
     <%= f.hidden_field :site, value: 'backoffice' %>
     <%= f.submit 'Upload!' %>
@@ -34,7 +35,7 @@
     </tr>
 </thead>
 <tbody>
-    <% @basket.words.each do |w| %>
+    <% @words.each do |w| %>
     <tr>
         <td>
             <%= form_for(:word, url: edit_word_path(@basket, w.id)) do |f| %>

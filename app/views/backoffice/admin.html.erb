@@ -1,4 +1,4 @@
-<h1><%= @admin.fname + ' ' + @admin.lname %></h1>
+<h1><%= @admin.fname ||= '' + ' ' + @admin.lname ||= '' %></h1>
 
 <div class="card" id="contact">
     <h3>Kontakt</h3>
