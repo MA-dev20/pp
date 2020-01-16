@@ -528,7 +528,7 @@ var user = '<%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.p
 <% @chartdata.last(6).each do |cd| %>
 	<% @word = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
     var json_data = <%= cd.to_json.html_safe %>;
-    json_data['word'] = "<% if @word %><%= @word.name %><% else %>Wort gelöscht<% end %>";
+    json_data['word'] = "<% if @word %><%= @word.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
     <% if !@admin.ratings.find_by(turn_id: cd[:turn_id]).nil? %>
         json_data['admin_ges'] = <%= @admin.ratings.find_by(turn_id: cd[:turn_id]).ges %>;
         json_data['admin_body'] = <%= @admin.ratings.find_by(turn_id: cd[:turn_id]).body %>;

@@ -413,6 +413,10 @@
     line-height: 28px;
     text-align: center;
 }
+#chartjs-tooltip .head .red {
+	color: #ff5f58;
+	font-weight: lighter;
+}
 #chartjs-tooltip .head .close {
     font-size: 4.3vh;
     position: absolute;

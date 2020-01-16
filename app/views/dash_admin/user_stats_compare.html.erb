@@ -531,10 +531,10 @@ var user = '<%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.p
 <% @chartdata.last(6).each do |cd| %>
 	<% @word_1 = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
     var json_data = <%= cd.to_json.html_safe %>;
-    json_data['word'] = "<% if @word_1 %><%= @word_1.name %><% else %>Wort gelöscht<% end %>";
+    json_data['word'] = "<% if @word_1 %><%= @word_1.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 	<% if cd[:turn2_id] %>
 	<% @word_2 = Word.find_by(id: Turn.find(cd[:turn2_id]).word_id) %>
-	json_data['word2'] = "<% if @word_2 %><%= @word_2.name %><% else %>Wort gelöscht<% end %>";
+	json_data['word2'] = "<% if @word_2 %><%= @word_2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 	<% end %>
     label[i] = "<%= cd[:date].to_s %>";
     datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
@@ -865,10 +865,10 @@ function ratingGes() {
     <% @chartdata.last(6).each do |cd| %>
 		<% @word1 = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
         var json_data = <%= cd.to_json.html_safe %>;
-		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% if cd[:turn2_id] %>
 		<% @word2 = Word.find_by(id: Turn.find(cd[:turn2_id]).word_id) %>
-		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% end %>
 		label[i] = "<%= cd[:date].to_s %>";
 		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
@@ -906,10 +906,10 @@ function ratingSpontan() {
     <% @chartdata.last(6).each do |cd| %>
         <% @word1 = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
         var json_data = <%= cd.to_json.html_safe %>;
-		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% if cd[:turn2_id] %>
 		<% @word2 = Word.find_by(id: Turn.find(cd[:turn2_id]).word_id) %>
-		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% end %>
 		label[i] = "<%= cd[:date].to_s %>";
 		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
@@ -947,10 +947,10 @@ function ratingCreative() {
     <% @chartdata.last(6).each do |cd| %>
         <% @word1 = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
         var json_data = <%= cd.to_json.html_safe %>;
-		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% if cd[:turn2_id] %>
 		<% @word2 = Word.find_by(id: Turn.find(cd[:turn2_id]).word_id) %>
-		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% end %>
 		label[i] = "<%= cd[:date].to_s %>";
 		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
@@ -988,10 +988,10 @@ function ratingBody() {
     <% @chartdata.last(6).each do |cd| %>
         <% @word1 = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
         var json_data = <%= cd.to_json.html_safe %>;
-		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% if cd[:turn2_id] %>
 		<% @word2 = Word.find_by(id: Turn.find(cd[:turn2_id]).word_id) %>
-		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% end %>
 		label[i] = "<%= cd[:date].to_s %>";
 		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
@@ -1029,10 +1029,10 @@ function ratingRhet() {
     <% @chartdata.last(6).each do |cd| %>
         <% @word1 = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
         var json_data = <%= cd.to_json.html_safe %>;
-		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word'] = "<% if @word1 %><%= @word1.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% if cd[:turn2_id] %>
 		<% @word2 = Word.find_by(id: Turn.find(cd[:turn2_id]).word_id) %>
-		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %>Wort gelöscht<% end %>";
+		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% end %>
 		label[i] = "<%= cd[:date].to_s %>";
 		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
