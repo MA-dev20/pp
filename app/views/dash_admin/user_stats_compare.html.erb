@@ -17,7 +17,7 @@
                         <div class="users" id="scrollUsers">
                             <% t.users.order("lname ASC").order("fname ASC").each do |u| %>
                                 <% if u.user_rating %>
-                                    <div class="user"><%= link_to u.fname + ' ' + u.lname, dash_admin_user_stats_path(u.id) %></div>
+                                    <div class="user"><%= link_to (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : ''), dash_admin_user_stats_path(u.id) %></div>
                                 <% end %>
                             <% end %>
                         </div>
@@ -257,7 +257,7 @@
             <option value="" selected>Vergleich mit</option>
             <% @users.each do |u| %>
                 <% if u.id != @user.id && u.user_rating %>
-                    <option class="option<%= u.id %>"value="<%= u.id %>"  data-redirect-value="<%= dash_admin_user_stats_compare_path(@user, u.id) %>"><%= u.fname + ' ' + u.lname %></option>
+                    <option class="option<%= u.id %>"value="<%= u.id %>"  data-redirect-value="<%= dash_admin_user_stats_compare_path(@user, u.id) %>"><%= (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : '') %></option>
                 <% end %>
             <% end %>
         </select>
@@ -527,7 +527,7 @@ var datapoints = [NaN, NaN, NaN, NaN, NaN, NaN ];
 var datapoints2 = [NaN, NaN, NaN, NaN, NaN, NaN ];
 var label = [NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
-var user = '<%= @user.fname + ' ' + @user.lname %>';
+var user = '<%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') %>';
 <% @chartdata.last(6).each do |cd| %>
 	<%= @word_1 = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
 	<%= @word_2 = Word.find_by(id: Turn.find(cd[:turn2_id]).word_id) %>
@@ -753,7 +753,7 @@ var myChart = new Chart(ctx, {
                         innerHtml += '</div>';
                         innerHtml += '</div>';
                         innerHtml += '</div>';
-                        innerHtml += '<label class="gesamt-label"><%= @user.fname + ' ' + @user.lname %></label>';
+                        innerHtml += '<label class="gesamt-label"><%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') %></label>';
 
                     
                         innerHtml += '<div class="stats">';
@@ -803,7 +803,7 @@ var myChart = new Chart(ctx, {
                         innerHtml += '</div>';
                         innerHtml += '</div>';
                         innerHtml += '</div>';
-                        innerHtml += '<label class="gesamt-label"><%= @user2.fname + ' ' + @user2.lname %></label>';
+                        innerHtml += '<label class="gesamt-label"><%= (@user2.fname.present? ? @user2.fname : '') + ' ' + (@user2.lname.present? ? @user2.lname : '') %></label>';
                     
                         innerHtml += '<div class="stats">';
                         innerHtml += '<div class="text">Spontanität</div>';
