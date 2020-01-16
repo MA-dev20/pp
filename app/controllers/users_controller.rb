@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   include ApplicationHelper
-  before_action :authenticate, :set_admin
+  before_action :authenticate
   before_action :set_user, only: [:update, :destroy]
     
   def create
@@ -75,15 +75,13 @@ class UsersController < ApplicationController
           return
       end
     end
-    def set_admin
-      if !current_admin.nil?
-        @admin = current_admin
-      else
-        @admin = Admin.find(params[:user][:admin_id])
-      end
-    end
     def set_user
       @user = User.find(params[:user_id])
+	  if !current_admin.nil?
+        @admin = current_admin
+      else
+        @admin = Admin.find(@user.admin_id)
+      end
     end
 
     def user_params
