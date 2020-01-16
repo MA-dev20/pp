@@ -529,11 +529,11 @@ var label = [NaN, NaN, NaN, NaN, NaN, NaN];
 var i = 0;
 var user = '<%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') %>';
 <% @chartdata.last(6).each do |cd| %>
-	<%= @word_1 = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
+	<% @word_1 = Word.find_by(id: Turn.find(cd[:turn_id]).word_id) %>
     var json_data = <%= cd.to_json.html_safe %>;
     json_data['word'] = "<% if @word_1 %><%= @word_1.name %><% else %>Wort gelöscht<% end %>";
 	<% if cd[:turn2_id] %>
-	<%= @word_2 = Word.find_by(id: Turn.find(cd[:turn2_id]).word_id) %>
+	<% @word_2 = Word.find_by(id: Turn.find(cd[:turn2_id]).word_id) %>
 	json_data['word2'] = "<% if @word_2 %><%= @word_2.name %><% else %>Wort gelöscht<% end %>";
 	<% end %>
     label[i] = "<%= cd[:date].to_s %>";
