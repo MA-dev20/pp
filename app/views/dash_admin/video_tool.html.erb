@@ -61,7 +61,11 @@
             <%= link_to '', dash_admin_video_tool_path(turn: r[:turn_id]), class: 'remove far fa-trash-alt'%>
           </div>
           <div class="word">
-            <%= r[:word] %>
+           	<% if r[:word].present? %>
+            	<%= r[:word] %>
+            <% else %>
+            	<span class="red">Wort gelöscht</span>
+            <% end %>
           </div>
           <div class="player">
             <%= image_tag r[:user_avatar] %>
