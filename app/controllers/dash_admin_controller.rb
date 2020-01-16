@@ -23,12 +23,12 @@ class DashAdminController < ApplicationController
   def teams
     if params[:team_id]
       @team = Team.find(params[:team_id])
-      @users = @team.users.order("avatar ASC").limit(10)
+      @users = @team.users.order(:lname, :fname)
     elsif params[:user_id]
       @user = User.find(params[:user_id])
-      @users = @admin.users.order("avatar ASC").limit(10)
+      @users = @admin.users.order(:lname, :fname)
     else
-      @users = @admin.users.order("avatar ASC").limit(10)
+      @users = @admin.users.order(:lname, :fname)
     end
   end
     
@@ -145,8 +145,9 @@ class DashAdminController < ApplicationController
     @user_ratings.sort_by{|e| -e[:rating]}
     @chartdata = []
 	@turnrating2 = @user2.turn_ratings.order('created_at ASC')
+	@turnrating2 = @turnrating2.last(6)
 	i = 0
-    @turn_ratings.each do |t|
+    @turn_ratings.last(6).each do |t|
       if t.present?
         turn_pitch = t.turn.recorded_pitch?
       else

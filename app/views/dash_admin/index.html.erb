@@ -59,31 +59,30 @@
     <%= f.text_field :name, class: 'field' %>
     <% end %>
 
+  	<% @users.each do |u| %>
+    	<input type="checkbox"  name="team[users][]" value="<%= u.id %>" id="team_users_<%= u.id %>">
+    <% end %>
     <label>Nutzer suchen</label><br>
     <div class="user-list">
-        <div class="search-field">
-            <%= image_tag 'dash/icons/search.png', class: 'search' %>
-            <input type="text" placeholder="Nutzer suchen" id='searchField'>
-        </div>
+		<div class="search-field">
+			<%= image_tag 'dash/icons/search.png', class: 'search' %>
+            <input type="text" placeholder="Nutzer Suchen" id='searchNewTeam' value="" autocomplete="off">
+		</div>
         <div class="unselected_user">
         	<% @users.each do |u| %>
-        	<label for="team_users_<%= u.id %>" class="user" onclick="moveUser(this)">
-        		<i class="fas fa-plus-circle"></i>
-        		<% if u.avatar.present? %>
-        			<%= image_tag u.avatar.quad.url %>
-        		<% else %>
-        			<div class="circle"></div>
-        		<% end %>
-        		<%= (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : '') %>
-        	</label>
-        	<% end %>
-        </div>
-    </div>
-    <% @users.each do |u| %>
-    		<input type="checkbox" id="team_users_<%= u.id %>" value="<%= u.id %>">
-    <% end %>
-    <div class="selected_user">
-    </div>
+            <label for="team_users_<%= u.id %>" class="user" onclick="moveUser(this)">
+                <i class="fas fa-plus-circle"></i>
+                <% if u.avatar.present? %>
+                	<%= image_tag u.avatar.quad.url %>
+                <% else %>
+                	<div class="circle"></div>
+                <% end %>
+                <%= (u.fname.present? ? u.fname : "") + ' ' + (u.lname.present? ? u.lname : "") %>
+            </label>
+            <% end %>
+		</div>
+	</div>
+    <div class="selected_users" style="bottom: 8vh; height: 15vh; width: 40.04vh;"></div>
     <%= f.hidden_field :url, value: 'letsplay' %>
     <%= f.submit 'Team erstellen', class: 'btn btn-green' %>
     <% end %>
@@ -147,31 +146,30 @@
     <%= f.text_field :name, class: 'field' %>
     <% end %>
 
+  	<% @users.each do |u| %>
+    		<input type="checkbox"  name="team[users][]" value="<%= u.id %>" id="team_users_<%= u.id %>">
+    <% end %>
     <label>Nutzer suchen</label><br>
     <div class="user-list">
-        <div class="search-field">
-            <%= image_tag 'dash/icons/search.png', class: 'search' %>
-            <input type="text" placeholder="Nutzer suchen" id='searchField'>
-        </div>
+		<div class="search-field">
+			<%= image_tag 'dash/icons/search.png', class: 'search' %>
+            <input type="text" placeholder="Nutzer Suchen" id='searchNewTeam' autocomplete="off">
+		</div>
         <div class="unselected_user">
-        	<% @users.each do |u| %>
-        	<label for="team_users_<%= u.id %>" class="user" onclick="moveUser(this)">
-        		<i class="fas fa-plus-circle"></i>
-        		<% if u.avatar.present? %>
-        			<%= image_tag u.avatar.quad.url %>
-        		<% else %>
-        			<div class="circle"></div>
-        		<% end %>
-        		<%= (u.fname.present? ? u.fname : '') + ' ' + (u.lname.present? ? u.lname : '') %>
-        	</label>
-        	<% end %>
-        </div>
-    </div>
-    <% @users.each do |u| %>
-    		<input type="checkbox" id="team_users_<%= u.id %>" value="<%= u.id %>">
-    <% end %>
-    <div class="selected_user">
-    </div>
+        	<% @users.all.each do |u| %>
+            <label for="team_users_<%= u.id %>" class="user" onclick="moveUser(this)">
+                <i class="fas fa-plus-circle"></i>
+                <% if u.avatar.present? %>
+                	<%= image_tag u.avatar.quad.url %>
+                <% else %>
+                	<div class="circle"></div>
+                <% end %>
+                <%= (u.fname.present? ? u.fname : "") + ' ' + (u.lname.present? ? u.lname : "") %>
+            </label>
+            <% end %>
+		</div>
+	</div>
+    <div class="selected_users"></div>
     <%= f.hidden_field :url, value: 'letsplay' %>
     <%= f.submit 'Team erstellen', class: 'btn btn-green' %>
     <% end %>
@@ -368,8 +366,6 @@
 	function closeModal() {
 		$('.fullscreen-blur').hide();
 	}
-    new PerfectScrollbar('.karte-content');
-	new PerfectScrollbar('.selected_user');
     flash();
 	function selectVideo(name, isPitch) {
 		$('#youtube-link').val('')
@@ -432,18 +428,18 @@
         }
     }
 	function moveUser(e) {
-        var id = e.getAttribute('for');
-        var checkbox = document.getElementById(id);
-        if (checkbox.checked) {
-            e.querySelector('.fas').className = "fas fa-plus-circle";
-            document.querySelector('.unselected_user').appendChild(e);
-        } else {
-            e.querySelector('.fas').className = "fas fa-minus-circle";
-            document.querySelector('.selected_user').appendChild(e);
-			$('#searchField').val('');
-			$('.unselected_user').hide();
-			$('.user-list').attr('style', 'box-shadow: 0 0 0 0 rgba(172, 172, 172, 0.1);')
-        }
+        var selected = document.querySelector('#newteam .selected_users');
+		var unselected = document.querySelector('#newteam .unselected_user');
+		var id = e.getAttribute('for');
+		var checkbox = document.getElementById(id);
+		if(checkbox.checked) {
+			e.querySelector('.fas').className = "fas fa-plus-circle";
+			unselected.appendChild(e);
+		} else {
+			e.querySelector('.fas').className = "fas fa-minus-circle";
+			selected.appendChild(e);
+			$('#searchNewTeam').val("");
+		}
     }
 
 
@@ -454,44 +450,43 @@
     function showTeam() {
         $('#letsplay').hide();
         $('#newteam').show();
+		setTimeout(function(){$('#newteam .unselected_user').hide();}, 500);
     }
     function hideTeam() {
         $('#letsplay').show();
         $('#newteam').hide();
     }
-    var $rows = $('.unselected_user .user');
-    $('#searchField').keyup(function () {
-        let element_exist = false    
-            $(".unselected_user .user").each(function () {
-                if (($(this).css("display") == "block") || ($(this).css("display") == "flex")) {
-                    element_exist = true
-                }
-            });
-        if ((this.value && !element_exist) || !this.value) {
-            $('.unselected_user .user').attr('style', 'display: none !important');
-            $('.index-list .search-field').attr('style','border-bottom: 0 !important');
-        }
+	$('.user-list .search-field').attr('style','border-bottom: 0 !important');
+    /* search newTeam */
+    $('#searchNewTeam').keyup(function() {
+    	let element_exist = false;
+        $(".unselected_user .user").each(function () {
+			if (($(this).css("display") == "block") || ($(this).css("display") == "flex")) {
+				element_exist = true
+			}
+      	});
+		if ((this.value && !element_exist) || (!this.value)) {
+        	$('.unselected_user .user').attr('style', 'display: none !important');
+            $('.user-list .search-field').attr('style','border-bottom: 0 !important');
+		}
+        $rows = $('.unselected_user .user');
         var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-            reg = RegExp(val, 'i'),
+        	reg = RegExp(val, 'i'),
             text;
-
-        $rows.show().filter(function () {
-            text = $(this).text().replace(/\s+/g, ' ');
-            if(!(!reg.test(text)) && ($('#searchField').val() != "")){
-				$('.unselected_user').show();
-				$('.user-list').attr('style', 'box-shadow: 0px 6px 10px 0 rgba(172, 172, 172, 0.1);')
+        $rows.show().filter(function() {
+        	text = $(this).text().replace(/\s+/g, ' ');
+            if(!(!reg.test(text)) && ($('#searchNewTeam').val() != "")){
                 $('.unselected_user .user').attr('style', 'display: flex !important');
-                $('.index-list').attr('style','height: 18vh !important');
-                $('.index-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
-            } else if (!reg.test(text) && ($('#searchField').val() == "")) {
-				$('.unselected_user').hide();
+                $('#newteam .unselected_user').show();
+                $('.user-list .search-field').attr('style','border-bottom: 0.1vh solid #dfe1e5 !important');
+            } else if (($('#searchNewTeam').val() == "")) {
+                $('#newteam .unselected_user').hide();
                 $('.unselected_user .user').attr('style', 'display: none !important');
-				$('.user-list').attr('style', 'box-shadow: 0 0 0 0 rgba(172, 172, 172, 0.1);')
-                $('.index-list .search-field').attr('style','border-bottom: 0 !important');
+                $('.user-list .search-field').attr('style','border-bottom: 0 !important');
             }
             return !reg.test(text);
         }).hide();
-    });
+        })
     function submitForm() {
         $('#game-form').unbind('submit');
         $('#game-form').submit();

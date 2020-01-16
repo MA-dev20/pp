@@ -60,7 +60,6 @@
                     <%= image_tag 'dash/icons/search.png', class: 'search' %>
                     <input type="text" placeholder="Nutzer Suchen" id='searchNewTeam' autocomplete="off">
                 </div>
-                
                 <div class="unselected_users">
                 	<% @admin.users.all.each do |u| %>
                 		<label for="team_users_<%= u.id %>" class="user" onclick="moveUserNew(this)">
