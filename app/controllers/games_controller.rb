@@ -91,29 +91,28 @@ class GamesController < ApplicationController
 	@team = Team.find(params[:game][:team_id])
 	@game.turns.each do |t|
 	  @user = User.find(t.user_id)
-	  @turn = t
-	  @body = rand(50..100)
-	  @creative = rand(50..100)
-	  @rhetoric = rand(50..100)
-	  @spontan = rand(50..100)
+	  @body = rand(100)
+	  @creative = rand(100)
+	  @rhetoric = rand(100)
+	  @spontan = rand(100)
 	  @ges = (@body + @creative + @rhetoric + @spontan) / 4
 	  t.ratings.create(turn_id: t.id, admin_id: @game.admin_id, ges: @ges, body: @body, creative: @creative, rhetoric: @rhetoric, spontan: @spontan)
-	  @game.turns.each do |u|
-		if u.user_id != @turn.user_id
-		  @body = rand(50..100)
-	  	  @creative = rand(50..100)
-	      @rhetoric = rand(50..100)
-	      @spontan = rand(50..100)
-	      @ges = (@body + @creative + @rhetoric + @spontan) / 4
-	      t.ratings.create(turn_id: @turn.id, user_id: u.user_id, ges: @ges, body: @body, creative: @creative, rhetoric: @rhetoric, spontan: @spontan)
-		end
-	  end
-	  update_turn_rating(t)
-	  update_user_rating(User.find(t.user_id))
+	  @body = rand(100)
+	  @creative = rand(100)
+	  @rhetoric = rand(100)
+	  @spontan = rand(100)
+	  @ges = (@body + @creative + @rhetoric + @spontan) / 4
+	  TurnRating.create(turn_id: t.id, admin_id: @game.admin_id, user_id: t.user_id, game_id: t.game_id, ges: @ges, body: @body, creative: @creative, rhetoric: @rhetoric, spontan: @spontan)
+	  update_user_rating(@user)
 	  t.update(played: true)
 	end
 	update_game_rating(@game)
 	update_team_rating(@team)
+	place = 1
+	@game.turn_ratings.rating_order.each do |tr|
+	  Turn.find(tr.turn_id).update(place: place)
+	  place += 1
+	end
 	redirect_to backoffice_edit_team_path(@team)
   end
    

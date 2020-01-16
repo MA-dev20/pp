@@ -44,23 +44,23 @@
 	<table style="width: 100%">
 		<tr>
 			<th>Gesamt</th>
-			<td><%= @user.user_rating.ges %></td>
+			<td><% if @user.user_rating %><%= @user.user_rating.ges %><% end %></td>
 		</tr>
 		<tr>
 			<th>Körpersprache</th>
-			<td><%= @user.user_rating.body %></td>
+			<td><% if @user.user_rating %><%= @user.user_rating.body %><% end %></td>
 		</tr>
 		<tr>
 			<th>Kreativität</th>
-			<td><%= @user.user_rating.creative %></td>
+			<td><% if @user.user_rating %><%= @user.user_rating.creative %><% end %></td>
 		</tr>
 		<tr>
 			<th>Rhetorik</th>
-			<td><%= @user.user_rating.rhetoric %></td>
+			<td><% if @user.user_rating %><%= @user.user_rating.rhetoric %><% end %></td>
 		</tr>
 		<tr>
 			<th>Spontanität</th>
-			<td><%= @user.user_rating.spontan %></td>
+			<td><% if @user.user_rating %><%= @user.user_rating.spontan %><% end %></td>
 		</tr>
 	</table>
 </div>
