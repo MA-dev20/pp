@@ -2,12 +2,12 @@
 <div class="heading">
     <% if @user.avatar.present? %>
         <%= image_tag @user.avatar.quad.url %>
-        <%= @user.fname + ' ' + @user.lname + "'s Statistik" %>
+        <%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') + "'s Statistik" %>
     <% else %>
         <div class="circle">
-            <%= @user.fname.to(0).upcase_first() + @user.lname.to(0).upcase_first() %>
+            <%= (@user.fname.present? ? @user.fname.to(0).upcase_first() : '') + ' ' + (@user.lname.present? ? @user.lname.to(0).upcase_first() : '')  %>
         </div>
-        <%= @user.fname + ' ' + @user.lname + "'s Statistik" %>
+        <%= (@user.fname.present? ? @user.fname : '') + ' ' + (@user.lname.present? ? @user.lname : '') + "'s Statistik" %>
     <% end %>
     <div class="select-team custom-select" onclick="teamSelect()">Alle Teams
         <div class="teams" id="scrollTeams" >

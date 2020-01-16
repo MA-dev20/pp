@@ -91,11 +91,11 @@
 					<div class="red">Wort gelöscht</div>
 				<% end %>
 			</td>
-			<td><%= t.turn_rating.body %></td>
-			<td><%= t.turn_rating.creative %></td>
-			<td><%= t.turn_rating.rhetoric %></td>
-			<td><%= t.turn_rating.spontan %></td>
-			<td><%= t.turn_rating.ges %></td>
+			<td><% if t.turn_rating %><%= t.turn_rating.body %><% end %></td>
+			<td><% if t.turn_rating %><%= t.turn_rating.creative %><% end %></td>
+			<td><% if t.turn_rating %><%= t.turn_rating.rhetoric %><% end %></td>
+			<td><% if t.turn_rating %><%= t.turn_rating.spontan %><% end %></td>
+			<td><% if t.turn_rating %><%= t.turn_rating.ges %><% end %></td>
 		</tr>
 		<% end %>
 	</table>
