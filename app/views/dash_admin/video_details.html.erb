@@ -1,6 +1,12 @@
 <div class="video-details karte">
     <div class="left-part">
-        <div class="head left small"><%= @word.name %></div>
+        <div class="head left small">
+        	<% if @word %>
+        		<%= @word.name %>
+        	<% else %>
+        		<span class="red">Wort gelöscht</span>
+        	<% end%>
+        </div>
         <div class="name-date">
             <% if @user.avatar.present? %>
                 <%= image_tag @user.avatar.quad.url %>

@@ -303,7 +303,12 @@ class DashAdminController < ApplicationController
     @turns = @admin.turns.where.not(recorded_pitch: nil).order('created_at ASC')
     @result = []
     @turns.each do |t|
-      @result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, word: Word.find(t.word_id).name, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRating.find_by(turn_id: t.id)&.ges}
+	  @word = Word.find_by(id: t.word_id)
+	  if @word
+      	@result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, word: @word.name, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRating.find_by(turn_id: t.id)&.ges}
+	  else
+		@result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, word: 'Wort gelöscht', user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRating.find_by(turn_id: t.id)&.ges}
+	  end
     end
     if @sort_by == 'fnameASC'
       @result = @result.sort{|a,b| a[:user_fname].downcase <=> b[:user_fname].downcase}
@@ -331,7 +336,7 @@ class DashAdminController < ApplicationController
   def video_details
     @turn = Turn.find(params[:turn_id])
     @comments = @turn.comments.order('time_of_video ASC')
-    @word = Word.find(@turn.word_id)
+    @word = Word.find_by(id: @turn.word_id)
     @user = @turn.findUser
     @rating = @turn.turn_rating
     @my_rating = @turn.ratings.find_by(admin_id: @admin.id)

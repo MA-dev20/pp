@@ -17,6 +17,11 @@
 @import "social-share-button";
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
 
+.customize-sm#words .custom-select {
+	height: 5vh;
+	font-size: 1.5vh;
+	line-height: 3vh;
+}
 .fullscreen-blur {
 	position: fixed;
 	top: 0;
