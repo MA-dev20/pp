@@ -346,17 +346,16 @@
 //     height: 69px;
 //     width: 145px;
 // }
-#statistic .right .bestlist.small .table {
-    top: 2.2vh;
+#statistic .right .bestlist .table {
+    position: relative;
+	float: left
 }
 #statistic .bestlist .table .table-line {
     position: relative;
-    left: 0;
-    top: 3.4vh;
-    height: 1.4vh;
+    height: 3.4vh;
     line-height: 2.4vh;
     font-size: 1.8vh;
-    padding: 1vh 1.6vh;
+    padding: .5vh 1.6vh;
 }
 #statistic .right .bestlist.small .table-line {
     top: 0;
