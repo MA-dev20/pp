@@ -37,6 +37,7 @@
 <%= audio_tag(turn_sound, autoplay: true) %>
 
 <script>
+	$('#middle #middle_img').css("box-shadow", "0 0 0 0 rgba(29, 218, 175, 0.5)");
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_play_path %>');

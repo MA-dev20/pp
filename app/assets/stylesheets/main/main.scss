@@ -73,13 +73,15 @@
 }
 #confirm {
 	text-align: center;
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 0 10px;
 }
 #confirm .checkmark {
-	position: fixed;
-	top: calc(50vh - 150px);
-	left: calc(50vw - 150px);
+	position: relative;
 	height: 300px;
 	width: 300px;
+	margin: 20px auto;
 }
 #confirm h1,
 #devise_form h1 {

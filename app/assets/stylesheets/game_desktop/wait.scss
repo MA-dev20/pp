@@ -99,12 +99,11 @@
 	padding-top: 6px;
 	span {
 		width: 35px;
-		height: 35px;
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		position: absolute;
+		position: relative;
 		left: 0;
 		top: 0;
 		overflow: hidden;

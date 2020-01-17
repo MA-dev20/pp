@@ -236,12 +236,15 @@ body {
 }
 .middle .mid-img {
     left: calc(50% - 200px);
+	box-shadow: 0 0 0 0 rgba(29, 218, 175, 0.5);
 }
 .middle .mid-img-left {
     left: calc(25% - 200px);
+	box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
 }
 .middle .mid-img-right {
     left: calc(75% - 200px);
+	box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
 }
 .middle .mid-img .wolf {
     position: absolute;
