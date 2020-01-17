@@ -252,28 +252,28 @@
             <div class="table">
                 <div class="table-line">
                     <div class="name">
-                       1.<%=  @user_ratings.first[:fname] %>
+                       1.<%=  @team_users.first[:fname] %>
                     </div>
                     <div class="points">
-                       <%=  @user_ratings.first[:rating] / 10.0 %>
+                       <%= number_with_precision @team_users.first[:ges] / 10, precision: 1 %>
                     </div>
                 </div>
-                <% if @user_ratings.length > 1 %>
+                <% if @team_users.length > 1 %>
                 <div class="table-line">
                     <div class="name">
-                        2.<%=  @user_ratings.second[:fname] %>
+                        2.<%=  @team_users.second[:fname] %>
                     </div>
                     <div class="points">
-                        <%=  @user_ratings.second[:rating] / 10.0 %>
+                        <%= number_with_precision @team_users.second[:ges] / 10, precision: 1 %>
                     </div>
                 </div>
-                <% if @user_ratings.length > 2 %>
+                <% if @team_users.length > 2 %>
                 <div class="table-line">
                     <div class="name">
-                        3.<%=  @user_ratings.third[:fname] %>
+                       	3.<%=  @team_users.third[:fname] %>
                     </div>
                     <div class="points">
-                        <%= @user_ratings.third[:rating] / 10.0 %>
+                        <%= number_with_precision @team_users.third[:ges] / 10, precision: 1 %>
                     </div>
                 </div>
                 <% else %>
