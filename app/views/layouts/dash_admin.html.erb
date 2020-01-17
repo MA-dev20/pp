@@ -100,13 +100,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </section>
       
 <section id="content">
-    <% flash.each do |name,msg| %>
-        <% if name == 'danger' %>
-        <div class="alert alert-<%= name %>">
-            <%= msg %>
-        </div>
-        <% end %>
-    <% end %>
     <%= yield %>
 </section>
     

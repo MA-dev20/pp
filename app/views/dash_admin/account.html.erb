@@ -1,6 +1,6 @@
 <div class="karte account">
     <div class="head left">Account Daten</div>
-    <%= form_for(:admin, url: edit_admin_path(@admin)) do |f|%>
+    <%= form_for(:admin, as: Admin, url: registration_path(Admin), html: { method: :put }) do |f|%>
     <div class="img-upload" onclick="showAvatar()">
         <label for="">Nutzerbild</label>
         <% if @admin.avatar? %>

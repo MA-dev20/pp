@@ -36,14 +36,21 @@ class AdminsController < ApplicationController
   end
   
   def update
-    if !@admin.update(admin_params)
+    if @admin.update(admin_params)
+	  if !current_root.nil?
+        redirect_to backoffice_edit_admin_path(@admin)
+      else
+	    redirect_to dash_admin_account_path
+      end
+	else
       flash[:danger] = 'Konnte Admin nicht speichern!'
+	  if !current_root.nil?
+        redirect_to backoffice_edit_admin_path(@admin)
+      else
+	    redirect_to dash_admin_account_path
+      end
     end
-    if !current_root.nil?
-      redirect_to backoffice_edit_admin_path(@admin)
-    else
-      redirect_to dash_admin_account_path
-    end
+    
   end
 
   def destroy
