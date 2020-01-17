@@ -72,7 +72,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <% end %>
     </div>
     <div class="links">
-        <div class="link <% if current_page?(dash_admin_path) %> active<% end %>">
+        <div class="link <% if current_page?(dash_admin_path) || @game && current_page?(dash_admin_create_game_2_path(@game)) || @game && @team && current_page?(dash_admin_game_2_path(@game, @team)) %> active<% end %>">
             <i class="fas fa-gamepad"></i>
             <div class="text">Let's Pitch</div>
             <%= link_to '', dash_admin_path %>
@@ -88,7 +88,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <div class="text">Customize</div>
             <%= link_to "", dash_admin_customize_path %>
         </div>
-        <div class="link <% if current_page?(dash_admin_video_tool_path) || @turn && current_page?(dash_admin_video_details_path(@turn)) %> active <% end %>">
+        <div class="link <% if current_page?(dash_admin_video_tool_path) || @turn && current_page?(dash_admin_video_details_path(@turn)) || @video && current_page?(dash_admin_video_edit_path(@video)) %> active <% end %>">
             <i class="fab fa-youtube"></i>
             <div class="text">Video Tool</div>
             <%= link_to "", dash_admin_video_tool_path %>

@@ -101,7 +101,7 @@ class BackofficeController < ApplicationController
     
   #GET backoffice_words
   def word_baskets
-    @baskets = CatchwordsBasket.where(admin_id: nil)
+    @baskets = CatchwordsBasket.where(admin_id: nil, game_id: nil)
   end
     
   private
