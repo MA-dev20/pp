@@ -23,6 +23,15 @@ class LandingController < ApplicationController
   end
 
   def ended_game
+	if !current_admin.nil?
+	  sign_out(current_admin)
+	end
+	if !current_game.nil?
+	  sign_out(current_game)
+	end
+	if !current_user.nil?
+      sign_out(current_user)
+	end
   end
     
   def contact
