@@ -1,5 +1,10 @@
-<%= video_tag 'countdown.mp4', id: 'video-bg', autoplay: true %>
-
+<% if @game.wait_seconds == 80 %>
+<%= video_tag 'countdown_120.mp4', id: 'video-bg', autoplay: true %>
+<% elsif @game.wait_seconds == 150 %>
+<%= video_tag 'countdown_230.mp4', id: 'video-bg', autoplay: true %>
+<% else %>
+<%= video_tag 'countdown_5.mp4', id: 'video-bg', autoplay: true %>
+<% end %>
 <section id="gd_play">
     <div class="top">
         <%= image_tag 'defaults/logo-no_shadow.png', id: 'logo', class: 'fly_in_left' %>
@@ -11,7 +16,17 @@
         <% end %>
     </div>
     <div class="mid">
-        <div class="countdown fly_in_bottom"><span class="timer animated flipInX" id='timerall'>01:20</span></div>
+        <div class="countdown fly_in_bottom">
+        	<span class="timer animated flipInX" id='timerall'>
+        		<% if @game.wait_seconds == 80 %>
+        			01:20
+        		<% elsif @game.wait_seconds == 150 %>
+        			02:30
+        		<% else %>
+        			05:00
+        		<% end %>
+        	</span>
+        </div>
         <div id="word" data-target-resolver><%= @word.name %></div>
     </div>
 </section>
@@ -73,7 +88,7 @@
     }
 
     function callback() {
-        document.getElementById('video-bg').currentTime = 9;
+        document.getElementById('video-bg').currentTime = 0;
         document.getElementById('video-bg').play();
         // document.getElementById('intro').pause();
         // document.getElementById('word_sound').play();
@@ -123,7 +138,7 @@
 			clearInterval(interval);
 			resumeGame();
 			textanim();
-            callback();
+            
 			document.getElementById('countdown').pause();
 			document.getElementById('theme').pause();
             play_sound();
