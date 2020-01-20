@@ -666,7 +666,7 @@ label .red {
 #content .head .left .points .point {
     position: relative;
     left: 15px;
-    height: 50px;
+    height: 80px;
     width: 270px;
     
 }
@@ -674,18 +674,18 @@ label .red {
     position: absolute;
     left: 0;
     top: 0px;
-    height: 50px;
+    height: 80px;
+    width: 80px;
     line-height: 50px;
     font-size: 50px;
-    width: 50px;
     text-align: center;
     color: #4394ec;
 }
 #content .head .left .points .point h1 {
     position: absolute;
-    left: 50px;
-    top: 5px;
-    font-size: 15px;
+    left: 80px;
+    top: 20px;
+    font-size: 18px;
     font-weight: 600;
     text-align: left;
     width: 230px;
@@ -694,9 +694,9 @@ label .red {
 }
 #content .head .left .points .point h5 {
     position: absolute;
-    top: 25px;
-    left: 50px;
-    font-size: 13px;
+    top: 40px;
+    left: 80px;
+    font-size: 14px;
     font-weight: normal;
     text-align: left;
     width: 230px;
