@@ -1524,9 +1524,8 @@ label .red {
     #content .head .left .points {
         width: 400px;
     }
-    #content .head .left .points .point {
-        width: 200px;
-        float: left;
+  	#content .head .left .points .point {
+        width: 200px;   
     }
     #content .head .right {
         width: 400px;
@@ -1750,6 +1749,7 @@ label .red {
     }
     #content .head .left .points .point {
         width: 300px;
+		float: left;
     }
     .heading-big {
         font-size: 42px;
