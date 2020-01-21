@@ -143,7 +143,7 @@
 			document.getElementById('theme').pause();
             play_sound();
             document.getElementById('intro').play();
-            MyApp.timer = startTimer('10', document.getElementById('timerall'));
+            MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
             MyApp.timer.pause()
 		}
 	}, 500);
