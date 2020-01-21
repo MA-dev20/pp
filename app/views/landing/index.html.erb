@@ -139,7 +139,7 @@
 					renderer: 'svg',
 					loop: true,
 					autoplay: false,
-					path: "<%= asset_path('main/gamification.json') %>",
+					path: "<%= asset_url('main/gamification.json') %>",
 				};
 				var animGami;
 				animGami = bodymovin.loadAnimation(params);
@@ -171,7 +171,7 @@
 					renderer: 'svg',
 					loop: true,
 					autoplay: false,
-					path: "<%= asset_path('main/interaction.json') %>",
+					path: "<%= asset_url('main/interaction.json') %>",
 				};
 				var animInter;
 				animInter = bodymovin.loadAnimation(params);
@@ -204,7 +204,7 @@
 					renderer: 'svg',
 					loop: true,
 					autoplay: false,
-					path: "<%= asset_path('main/animPerformance.json') %>"
+					path: "<%= asset_url('main/animPerformance.json') %>"
 				};
 				var animPerf;
 				animPerf = bodymovin.loadAnimation(params);
@@ -240,7 +240,7 @@
         		renderer: 'svg',
         		loop: true,
         		autoplay: false,
-        		path: '<%= asset_path("main/animKI.json") %>'
+        		path: '<%= asset_url("main/animKI.json") %>'
     		};
     		var animKI;
     		animKI = bodymovin.loadAnimation(params);
