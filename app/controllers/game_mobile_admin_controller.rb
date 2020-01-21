@@ -1,5 +1,5 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :youtube_video]
+  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :youtube_video, :update_video_status]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email, :video_testings, :ended_game]
   before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
@@ -11,8 +11,6 @@ class GameMobileAdminController < ApplicationController
     @game1 = Game.where(password: params[:password], active: true).first
     session[:game_session_id] = @game1.id
   end
-
-
 
   def video_testing
     @cur_user = User.first
@@ -38,6 +36,7 @@ class GameMobileAdminController < ApplicationController
  
   def save_video
     @game.update(video_uploading: false)
+    @game.update(video_uploaded_start: false)
     @turn.recorded_pitch = params[:file]
     @turn.recorded_pitch_duration = params[:duration]
     @turn.save
@@ -287,6 +286,10 @@ class GameMobileAdminController < ApplicationController
     end
     session[:game_session_id] = @game.id
     redirect_to gma_new_avatar_path
+  end
+
+  def update_video_status
+    @game.update(video_uploaded_start: eval(params[:recording]))
   end
     
   private

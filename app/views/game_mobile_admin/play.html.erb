@@ -155,6 +155,27 @@
   ul = document.getElementById('ul');
   var timertime;
   var videoStopped = false;
+  var video_param = <%= params[:video] %>;
+  var wait_param = '<%= params[:wait] %>';
+ 
+  if (video_param && !wait_param) {
+    $.ajax({
+        url:'/mobile/admin/update_video_status',
+        type:'POST',
+        dataType:'json',
+        beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+        data:{
+          recording: true
+        },
+        success:function(data){
+            // console.log(data);
+        },
+        error:function(data){
+            // console.log(data);
+        }
+      });
+  }
+
   $(document).ready(function () {
     $("#video").on("change", function (e) {
       let file = e.target.files[0];
@@ -179,7 +200,6 @@
   $("#stop").on('click', function () {
     stopRecording("nothing", function (x) { console.log(x) })
   })
-
 
   function uploadVideo(blobUrl, file) {
 
@@ -340,6 +360,21 @@
   function uploadRecording(form, callback, location) {
     App.games.unsubscribe();
     window.open(window.location.href + "&wait=true", '_blank');
+    $.ajax({
+        url:'/mobile/admin/update_video_status',
+        type:'POST',
+        dataType:'json',
+        beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+        data:{
+            recording: false
+        },
+        success:function(data){
+            // console.log(data);
+        },
+        error:function(data){
+            // console.log(data);
+        }
+    });
     jqxhr = $.ajax({
       url: '/mobile/admin/upload',
       type: 'POST',

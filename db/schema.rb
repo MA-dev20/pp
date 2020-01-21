@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_130443) do
+ActiveRecord::Schema.define(version: 2020_01_21_052835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 2020_01_06_130443) do
     t.integer "video"
     t.boolean "video_is_pitch"
     t.boolean "replay", default: false
+    t.boolean "video_uploaded_start", default: false
     t.index ["admin_id"], name: "index_games_on_admin_id"
     t.index ["team_id"], name: "index_games_on_team_id"
     t.index ["video_id"], name: "index_games_on_video_id"
