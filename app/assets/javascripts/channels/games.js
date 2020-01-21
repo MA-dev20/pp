@@ -13,8 +13,10 @@ jQuery(document).ready(function() {
         return console.log("disconneted");
       },
       received: function(data) {
-
         var game_state = data['desktop'];
+        console.log(App.videoInProgress)
+        if (App.videoInProgress && location.pathname.split("admin")[0]=="/mobile/" && location.pathname.split("admin")[1]=="/play") {
+        } else {
         if ((game_state == "youtube_video") && (window.location.pathname.split("mobile").length == 1)) {
           return window.location.replace('youtube_video');
         } else if((game_state == "youtube_video") && (window.location.pathname.split("admin").length > 1)) {
@@ -47,7 +49,7 @@ jQuery(document).ready(function() {
             }
           }
         }
-        
+      }
       }
     });
     $(window).bind('beforeunload', function(){

@@ -40,7 +40,7 @@
 <% if params[:video] == 'true' && !params[:wait] %>
 <div class="bottom video-upload-wrapper">
   <div class="upload-btn-wrapper">
-    <button class="video-btn nunito-regular">Open Camera</button>
+    <button class="video-btn nunito-regular" id="video-button">Open Camera</button>
     <input id="video" type="file" name="video" accept="video/*" capture="environment" class="video-file">
   </div>
 </div>
@@ -96,6 +96,9 @@
     height: auto !important;
     width: auto !important;
     left: calc(60% - 200px) !important;
+  }
+  #video-button{
+    z-index: 555;
   }
 
   input[type='file'] {
@@ -155,10 +158,17 @@
   $(document).ready(function () {
     $("#video").on("change", function (e) {
       let file = e.target.files[0];
+      App.videoInProgress = false;
       let blobURL = URL.createObjectURL(file);
       uploadVideo(blobURL, file)
     })
-
+    $("#video-button").click(function(e){
+      e.preventDefault()
+      videoInProgress = true;
+      App.videoInProgress = true;
+      console.log(App)
+      $("#video").click()
+    })
     $("#start").change(function () {
       if ($(this).is(':checked')) {
         requestVideo()
