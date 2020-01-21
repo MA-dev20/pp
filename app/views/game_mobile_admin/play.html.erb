@@ -154,6 +154,21 @@
   var videoStopped = false;
   $(document).ready(function () {
     $("#video").on("change", function (e) {
+      $.ajax({
+        url:'/mobile/admin/update_video_status',
+        type:'POST',
+        dataType:'json',
+        beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+        data:{
+          recording: true
+        },
+        success:function(data){
+            // console.log(data);
+        },
+        error:function(data){
+            // console.log(data);
+        }
+      });
       let file = e.target.files[0];
       let blobURL = URL.createObjectURL(file);
       uploadVideo(blobURL, file)
@@ -161,21 +176,6 @@
 
     $("#start").change(function () {
       if ($(this).is(':checked')) {
-        $.ajax({
-          url:'/mobile/admin/update_video_status',
-          type:'POST',
-          dataType:'json',
-          beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
-          data:{
-            recording: true
-          },
-          success:function(data){
-              // console.log(data);
-          },
-          error:function(data){
-              // console.log(data);
-          }
-        });
         requestVideo()
         setTimeout(startRecording(), 200)
       }
