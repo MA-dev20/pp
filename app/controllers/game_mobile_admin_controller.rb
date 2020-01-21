@@ -187,8 +187,10 @@ class GameMobileAdminController < ApplicationController
     end
     @record = eval session[:video_record] 
     @game.video_uploading = true if @record
-    if @game.state != 'play'
-      @game.state ='play'
+    unless params[:wait].present? && params[:wait] == "true"
+      if @game.state != 'play'
+        @game.state ='play'
+      end
     end
     @game.save!
   end
