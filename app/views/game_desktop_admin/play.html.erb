@@ -79,8 +79,6 @@
 <script type="text/javascript">
 
     $('#navbar').hide();
-    
-    var video_toggle = <%= @game.video_toggle %>
 
     function play_sound(){
         // document.getElementById('intro').play();
@@ -160,29 +158,10 @@
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
+            display.textContent = minutes + ":" + seconds;
+
             if (timer <= 0) {
-                if (video_toggle) {
-                    $.ajax({
-                        url:'/games/video_uploaded_status',
-                        type:'GET',
-                        dataType:'json',
-                        success:function(data){
-                            if (data){
-                                display.textContent = "Video in Progress"
-                            } else {
-                                window.location = "<%= gda_rate_path%> "
-                            }
-                            console.log(`Video making: ${data}`);
-                        },
-                        error:function(data){
-                            console.log(data);
-                        }
-                    });
-                } else {
-                    window.location = "<%= gda_rate_path%> "
-                }
-            } else {
-                display.textContent = minutes + ":" + seconds;
+                window.location = "<%= gda_rate_path%> "
             }
             timer--;
         }, 1000);
@@ -208,30 +187,10 @@
                     executed = true;
                 }
                 
+                display.textContent = minutes + ":" + seconds;
                 
                 if (timer <= 0) {
-                    if (video_toggle) {
-                        $.ajax({
-                            url:'/games/video_uploaded_status',
-                            type:'GET',
-                            dataType:'json',
-                            success:function(data){
-                                if (data){
-                                    display.textContent = "Video in Progress"
-                                } else {
-                                    window.location = "<%= gda_rate_path%> "
-                                }
-                                console.log(`Video making: ${data}`);
-                            },
-                            error:function(data){
-                                console.log(data);
-                            }
-                        });
-                    } else {
-                        window.location = "<%= gda_rate_path%> "
-                    }                   
-                } else {
-                    display.textContent = minutes + ":" + seconds;
+                    window.location = "<%= gda_rate_path%> "
                 }
                 timer--;
             }, 1000);
@@ -334,3 +293,4 @@
     })
     
 </script>
+
