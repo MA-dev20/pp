@@ -153,22 +153,24 @@
   var timertime;
   var videoStopped = false;
   var video_param = <%= params[:video] %>;
-  if (video_param) {
+  var wait_param = '<%= params[:wait] %>';
+ 
+  if (video_param && !wait_param) {
     $.ajax({
-      url:'/mobile/admin/update_video_status',
-      type:'POST',
-      dataType:'json',
-      beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
-      data:{
-        recording: true
-      },
-      success:function(data){
-          // console.log(data);
-      },
-      error:function(data){
-          // console.log(data);
-      }
-    });
+        url:'/mobile/admin/update_video_status',
+        type:'POST',
+        dataType:'json',
+        beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+        data:{
+          recording: true
+        },
+        success:function(data){
+            // console.log(data);
+        },
+        error:function(data){
+            // console.log(data);
+        }
+      });
   }
 
   $(document).ready(function () {
@@ -188,7 +190,6 @@
   $("#stop").on('click', function () {
     stopRecording("nothing", function (x) { console.log(x) })
   })
-
 
   function uploadVideo(blobUrl, file) {
 
