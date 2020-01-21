@@ -15,17 +15,17 @@
             </span>
         <% end %>
     </div>
+    <% if @game.wait_seconds == 80
+        @context = '01:20'   
+        elsif @game.wait_seconds == 150
+        @context = '02:30'
+        else
+        @context = '05:00'
+        end
+    %>
     <div class="mid">
         <div class="countdown fly_in_bottom">
-            <span class="timer animated flipInX" id='timerall'>
-                <% if @game.wait_seconds == 80 %>
-                    01:20
-                <% elsif @game.wait_seconds == 150 %>
-                    02:30
-                <% else %>
-                    05:00
-                <% end %>
-            </span>
+          <span class="timer animated flipInX" id='timerall'><%= @context %></span>
         </div>
         <div id="word" data-target-resolver><%= @word.name %></div>
     </div>
