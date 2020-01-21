@@ -52,9 +52,9 @@ jQuery(document).ready(function() {
       }
       }
     });
-    // $(window).bind('beforeunload', function(){
-    //   App.games.unsubscribe()
-    // });
+    $(window).bind('beforeunload', function(){
+      App.games.unsubscribe()
+    });
   }
 });
 function ajaxRequestToCheck(state){
