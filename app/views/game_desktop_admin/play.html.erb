@@ -17,15 +17,15 @@
     </div>
     <div class="mid">
         <div class="countdown fly_in_bottom">
-        	<span class="timer animated flipInX" id='timerall'>
-        		<% if @game.wait_seconds == 80 %>
-        			01:20
-        		<% elsif @game.wait_seconds == 150 %>
-        			02:30
-        		<% else %>
-        			05:00
-        		<% end %>
-        	</span>
+            <span class="timer animated flipInX" id='timerall'>
+                <% if @game.wait_seconds == 80 %>
+                    01:20
+                <% elsif @game.wait_seconds == 150 %>
+                    02:30
+                <% else %>
+                    05:00
+                <% end %>
+            </span>
         </div>
         <div id="word" data-target-resolver><%= @word.name %></div>
     </div>
@@ -80,6 +80,8 @@
 
     $('#navbar').hide();
     
+    var video_toggle = <%= @game.video_toggle %>
+
     function play_sound(){
         // document.getElementById('intro').play();
         document.getElementById("intro").volume = 0.4;
@@ -123,30 +125,30 @@
     var countdown_timer = $('<div class="countdown-timer">5</div>')
     $("body").append(countdown_timer);
     pauseGame();
-	document.getElementById('countdown').play();
+    document.getElementById('countdown').play();
 
     var current_progress = 9;
     var interval = setInterval(function() {
-		if(current_progress % 2 == 0 && current_progress != 0) {
-			$('.countdown-timer').text(current_progress / 2);	
-			$('.countdown-timer').addClass('animat');
-		} else {
-			$('.countdown-timer').removeClass('animat');
-		}
-		current_progress -= 1;
-		if (current_progress <= -2){
-			clearInterval(interval);
-			resumeGame();
-			textanim();
+        if(current_progress % 2 == 0 && current_progress != 0) {
+            $('.countdown-timer').text(current_progress / 2);   
+            $('.countdown-timer').addClass('animat');
+        } else {
+            $('.countdown-timer').removeClass('animat');
+        }
+        current_progress -= 1;
+        if (current_progress <= -2){
+            clearInterval(interval);
+            resumeGame();
+            textanim();
             
-			document.getElementById('countdown').pause();
-			document.getElementById('theme').pause();
+            document.getElementById('countdown').pause();
+            document.getElementById('theme').pause();
             play_sound();
             document.getElementById('intro').play();
             MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
             MyApp.timer.pause()
-		}
-	}, 500);
+        }
+    }, 500);
     
     
     function startTimer(duration, display) {
@@ -158,10 +160,29 @@
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            display.textContent = minutes + ":" + seconds;
-            
             if (timer <= 0) {
-               window.location = "<%= gda_rate_path%> "
+                if (video_toggle) {
+                    $.ajax({
+                        url:'/games/video_uploaded_status',
+                        type:'GET',
+                        dataType:'json',
+                        success:function(data){
+                            if (data){
+                                display.textContent = "Video in Progress"
+                            } else {
+                                window.location = "<%= gda_rate_path%> "
+                            }
+                            console.log(`Video making: ${data}`);
+                        },
+                        error:function(data){
+                            console.log(data);
+                        }
+                    });
+                } else {
+                    window.location = "<%= gda_rate_path%> "
+                }
+            } else {
+                display.textContent = minutes + ":" + seconds;
             }
             timer--;
         }, 1000);
@@ -186,10 +207,31 @@
                     document.getElementById('theme').play();
                     executed = true;
                 }
-                display.textContent = minutes + ":" + seconds;
+                
                 
                 if (timer <= 0) {
-                    window.location = "<%= gda_rate_path%> "
+                    if (video_toggle) {
+                        $.ajax({
+                            url:'/games/video_uploaded_status',
+                            type:'GET',
+                            dataType:'json',
+                            success:function(data){
+                                if (data){
+                                    display.textContent = "Video in Progress"
+                                } else {
+                                    window.location = "<%= gda_rate_path%> "
+                                }
+                                console.log(`Video making: ${data}`);
+                            },
+                            error:function(data){
+                                console.log(data);
+                            }
+                        });
+                    } else {
+                        window.location = "<%= gda_rate_path%> "
+                    }                   
+                } else {
+                    display.textContent = minutes + ":" + seconds;
                 }
                 timer--;
             }, 1000);

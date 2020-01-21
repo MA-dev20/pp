@@ -63,6 +63,8 @@ Rails.application.routes.draw do
   get 'games/replay', to: 'game_desktop_admin#replay', as: 'gda_replay'
     
   get 'games/after_rating', to: 'game_desktop_admin#after_rating', as: 'gda_after_rating'
+  get 'games/video_uploaded_status', to: 'game_desktop_admin#video_uploaded_status', as: 'gda_video_uploaded_status'
+  
 
 ################
 # Admin Mobile #
@@ -93,8 +95,9 @@ Rails.application.routes.draw do
   get 'mobile/admin/replay', to: 'game_mobile_admin#replay', as: 'gma_replay'
   get 'mobile/admin/ended', to: 'game_mobile_admin#ended', as: 'gma_ended'
   get 'mobile/admin/ended_game', to: 'game_mobile_admin#ended_game', as: 'gma_ended_game'
-    
   get 'mobile/admin/after_rating', to: 'game_mobile_admin#after_rating', as: 'gma_after_rating'
+  post 'mobile/admin/update_video_status', to: 'game_mobile_admin#update_video_status', as: 'gma_update_video_status'
+
     
 ###############
 # User Mobile #

@@ -59,8 +59,7 @@ class GameDesktopAdminController < ApplicationController
     end
   end
 
-  def error
-    
+  def error 
   end
 
   def turn
@@ -189,6 +188,10 @@ class GameDesktopAdminController < ApplicationController
     end
     sign_in(@game)
     redirect_to gda_wait_path
+  end
+
+  def video_uploaded_status
+    render json: @game.video_uploaded_start
   end
     
   private
