@@ -152,23 +152,27 @@
   ul = document.getElementById('ul');
   var timertime;
   var videoStopped = false;
+  var video_param = <%= params[:video] %>;
+  if (video_param) {
+    $.ajax({
+      url:'/mobile/admin/update_video_status',
+      type:'POST',
+      dataType:'json',
+      beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+      data:{
+        recording: true
+      },
+      success:function(data){
+          // console.log(data);
+      },
+      error:function(data){
+          // console.log(data);
+      }
+    });
+  }
+
   $(document).ready(function () {
     $("#video").on("change", function (e) {
-      $.ajax({
-        url:'/mobile/admin/update_video_status',
-        type:'POST',
-        dataType:'json',
-        beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
-        data:{
-          recording: true
-        },
-        success:function(data){
-            // console.log(data);
-        },
-        error:function(data){
-            // console.log(data);
-        }
-      });
       let file = e.target.files[0];
       let blobURL = URL.createObjectURL(file);
       uploadVideo(blobURL, file)
