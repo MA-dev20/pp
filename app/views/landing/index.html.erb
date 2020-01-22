@@ -443,10 +443,9 @@
 <% if cookies[:accepted] != 'true' %>
 	<div class="cookie-pop-up">
 		<div class="text">
-			Hi, wir benutzen Cookies.
-			Mit den Klick auf ok akzeptierst du unsere <%= link_to "Cookie Richtlinien", datenschutz_path %>.
+			Wir nutzen Cookies um die Benutzerfreundlichkeit und Qualität unserer Webseite stetig zu verbessern. Durch die weiter Nutzung unserer Webseite stimmst du unserer Verwendung von Cookies zu.
 		</div>
-		<%= link_to 'OK', accept_cookies_path, class: 'cookie-btn' %>
+		<%= link_to 'Schließen', accept_cookies_path, class: 'cookie-btn' %>
 	</div>
 <% end %>
 <% if flash[:thanks_for_register] %>
