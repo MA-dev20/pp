@@ -14,6 +14,7 @@ jQuery(document).ready(function() {
       },
       received: function(data) {
         var game_state = data['desktop'];
+
         // console.log(App.videoInProgress)
         if (App.videoInProgress && location.pathname.split("admin")[0]=="/mobile/" && location.pathname.split("admin")[1]=="/play") {
         } else {
@@ -26,7 +27,7 @@ jQuery(document).ready(function() {
             return window.location.replace("replay");
           } else {
           if(data['game_state']){
-            if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
+            if((data['game_state'] == 'rate') && ((location.pathname.split("admin").length > 1) && location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
               ajaxRequestToCheck("rate")
             }else{
               if ($("#game_channel").data("turn") !== "replay") {
