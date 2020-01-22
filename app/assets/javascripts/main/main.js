@@ -6,6 +6,5 @@
  *= require main/scrollspy
  *= require main/bootstrap.bundle.min
  *= require main/bodymovin
- *= require main/script
  *= require cable
  */

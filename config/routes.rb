@@ -152,6 +152,8 @@ Rails.application.routes.draw do
   get 'backoffice/catchwords/:basket_id', to: 'backoffice#edit_catchword', as: 'backoffice_edit_catchword'
   get 'backoffice/objections/:basket_id', to: 'backoffice#edit_objection', as: 'backoffice_edit_objection'
   get 'backoffice/games/:game_id', to: 'backoffice#edit_game', as: 'backoffice_edit_game'
+  post 'games/:game_id/edit', to: 'backoffice#update_game', as: 'edit_game'
+  post 'ratings/:turn_id/edit', to: 'backoffice#update_rating', as: 'edit_rating'
   get 'backoffice/games/:game_id/turns/:turn_id', to: 'backoffice#sim_turn', as: 'backoffice_sim_turn'
   get 'backoffice/admins/:admin_id/activate', to: 'backoffice#activate_admin', as: 'backoffice_admin_activate'
   get 'backoffice/admins/:admin_id/destroy', to: 'backoffice#destroy_admin', as: 'backoffice_admin_destroy'

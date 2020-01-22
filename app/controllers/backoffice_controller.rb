@@ -61,7 +61,37 @@ class BackofficeController < ApplicationController
 	@teamrating = @team.team_rating
 	@users = @game.users.order(:fname)
 	@users.order(:lname)
+  end
 	
+  def update_game
+	@game = Game.find(params[:game_id])
+	@date = params[:game][:created_at].to_date
+	@game.created_at = @date
+	@game.save
+	@game.turns.each do |t|
+		t.update(created_at: @date)
+		if TurnRating.find_by(turn_id: t.id)
+		  TurnRating.find_by(turn_id: t.id).update(created_at: @date)
+		end
+	end
+	redirect_to backoffice_edit_game_path(@game)
+  end
+  def update_rating
+	@turn = Turn.find(params[:turn_id])
+	@game = Game.find(@turn.game_id)
+	@rating = TurnRating.find_by(turn_id: @turn.id)
+	@user = User.find(@turn.user_id)
+	@team = Team.find(@game.team_id)
+	@body = params[:rating][:body].to_i
+	@creative = params[:rating][:creative].to_i
+	@rhetoric = params[:rating][:rhetoric].to_i
+	@spontan = params[:rating][:spontan].to_i
+	@ges = (@body + @creative + @rhetoric + @spontan) / 4
+	@rating.update(ges: @ges, body: @body, creative: @creative,rhetoric: @rhetoric,spontan: @spontan)
+	update_user_rating(@user)
+	update_game_rating(@game)
+	update_team_rating(@team)
+	redirect_to backoffice_edit_game_path(@game)
   end
 	
   def sim_turn
