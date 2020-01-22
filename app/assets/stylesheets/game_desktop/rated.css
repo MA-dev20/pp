@@ -66,7 +66,7 @@
     position: absolute;
     background-color: #becee0;
     border-radius: 50%;
-    box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
+    box-shadow: 0 0 3rem 0 rgba(0,0,0,0.5);
     overflow: hidden;
 }
 .circle .bg_1 {

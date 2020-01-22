@@ -1177,9 +1177,11 @@ label .red {
     .fullscreen-modal .card {
         margin-top: calc(50vh - 150px);
         width: 300px;
-        padding: 10px 50px 50px;
+        padding: 10px 50px 20px;
     }
-    .fullscreen-modal .card
+	.fullscreen-modal#loginModal .card {
+		padding-bottom: 30px;	
+	}
     .video-modal video {
         width: 480px;
         height: 320px;

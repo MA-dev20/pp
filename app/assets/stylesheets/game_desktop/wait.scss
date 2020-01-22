@@ -123,6 +123,7 @@
     animation-name: rain;
     animation-duration: 8s;
     animation-iteration-count: 1;
+	box-shadow: 0 0 3rem 0 rgba(0,0,0,0.5);
 }
 @keyframes rain {
     0% {

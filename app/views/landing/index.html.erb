@@ -483,7 +483,26 @@
     <div class="close"><i class="fas fa-times" onclick="showVideoModal()"></i></div>
     <%= video_tag 'landing.mp4', id: 'modalVideo', controls: true, preload: 'auto' %>
 </div>
+<div class="fullscreen-modal" id="dontLeaveModal">
+	<div class="close" onclick="hideDontLeaveModal()"><i class="fas fa-times"></i></div>
+	<div class="card">
+	<h3>Verlass uns noch nicht.</h3>
+	<div class="text">Erhalte eine kostenlose Demo mit nur einem Klick.</div>
+	<div class="form-group center">
+	<%= link_to 'Zur Demo', contact_path("", subject: "demo"), class: 'btn btn-green' %>
+	</div>
+	</div>
+</div>
 <script>
+	setTimeout(function(){
+		$('body').on('mouseleave', function() {
+			$('#dontLeaveModal').show();
+			$('body').off('mouseleave');
+		})
+	}, 20000)
+	function hideDontLeaveModal() {
+		$('#dontLeaveModal').hide();
+	}
 	<% if flash[:thanks_for_register] %>
 		setTimeout(function(){$('.register-pop-up').hide();}, 5100);
 	<% end %>
