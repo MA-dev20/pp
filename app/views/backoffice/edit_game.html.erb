@@ -65,6 +65,12 @@
 	</table>
 </div>
 <% end %>
+<div class="card" id="editGame">
+	<%= form_for(:game, url: edit_game_path(@game)) do |f| %>
+		<%= f.date_field :created_at %>
+		<%= f.submit %>
+	<% end %>
+</div>
 <div class="card" id="destroyUser">
     <%= link_to 'löschen', destroy_game_path(@game), class: 'btn btn-green', data: { confirm: 'Are you sure?' } %>
     <%= link_to 'zurück', backoffice_edit_admin_path(@admin), class: 'btn btn-green' %>
@@ -80,12 +86,13 @@
 			<th>Rhetorik</th>
 			<th>Spontanität</th>
 			<th>Bewertung</th>
+			<th></th>
 		</tr>
 		<% @users.each do |u| %>
 		<% @turn = Turn.where(user_id: u.id, game_id: @game.id).first %>
 		<% @word = Word.find_by(id: @turn.word_id) %>
 		<tr>
-			<td><%= u.fname %> <%= u.lname %></td>
+			<td onclick="redirect('user', <%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
 			<td>
 				<% if @word %>
 				<%= @word.name %>
@@ -93,12 +100,41 @@
 				<div class="red">Wort gelöscht</div>
 				<% end %>
 			</td>
-			<td><% if @turn.turn_rating %><%= @turn.turn_rating.body %><% end %></td>
-			<td><% if @turn.turn_rating %><%= @turn.turn_rating.creative %><% end %></td>
-			<td><% if @turn.turn_rating %><%= @turn.turn_rating.rhetoric %><% end %></td>
-			<td><% if @turn.turn_rating %><%= @turn.turn_rating.spontan %><% end %></td>
-			<td><% if @turn.turn_rating %><%= @turn.turn_rating.ges %><% end %></td>
+			<% if @turn.turn_rating %>
+				<%= form_for(:rating, url: edit_rating_path(@turn)) do |f| %>
+					<td><%= f.number_field :body, value: @turn.turn_rating.body %></td>
+					<td><%= f.number_field :creative, value: @turn.turn_rating.creative %></td>
+					<td><%= f.number_field :rhetoric, value: @turn.turn_rating.rhetoric %></td>
+					<td><%= f.number_field :spontan, value: @turn.turn_rating.spontan %></td>
+					<td><%= @turn.turn_rating.ges %></td>
+					<td><%= f.submit 'speichern' %></td>
+				<% end %>
+			<% else %>
+				<%= form_for(:rating, url: edit_rating_path(@turn)) do |f| %>
+					<td><%= f.number_field :body %></td>
+					<td><%= f.number_field :creative %></td>
+					<td><%= f.number_field :rhetoric %></td>
+					<td><%= f.number_field :spontan %></td>
+					<td></td>
+					<td><%= f.submit 'speichern' %></td>
+				<% end %>
+			<% end %>
 		</tr>
 		<% end %>
 	</table>
 </div>
+<script>
+	function redirect(model, model_id) {
+        if(model == 'team') {
+            location.replace('/backoffice/teams/'+model_id);
+        } else if(model == 'user') {
+            location.replace('/backoffice/users/'+model_id);
+        } else if(model == 'catchword') {
+            location.replace('/backoffice/catchwords/'+model_id);
+        } else if(model == 'objection') {
+            location.replace('/backoffice/objections/'+model_id);
+        } else if(model == 'game') {
+			location.replace('/backoffice/games/'+model_id);
+		}
+    }
+</script>
