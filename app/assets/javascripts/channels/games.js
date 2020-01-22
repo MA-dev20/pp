@@ -14,46 +14,56 @@ jQuery(document).ready(function() {
       },
       received: function(data) {
         var game_state = data['desktop'];
-        console.log(App.videoInProgress)
+        // console.log(App.videoInProgress)
         if (App.videoInProgress && location.pathname.split("admin")[0]=="/mobile/" && location.pathname.split("admin")[1]=="/play") {
         } else {
-        if ((game_state == "youtube_video") && (window.location.pathname.split("mobile").length == 1)) {
-          return window.location.replace('youtube_video');
-        } else if((game_state == "youtube_video") && (window.location.pathname.split("admin").length > 1)) {
-          return window.location.replace('youtube_video');
-        }
-        if(data['game_state']){
-          if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
-            ajaxRequestToCheck("rate")
-          }else{
-            if ($("#game_channel").data("turn") !== "replay") {
-              if(location.pathname.split("admin")[1]=="/play"){
-                if(typeof completed_ajax !== 'undefined'){
-                  if (videoStopped != true){
-                    stopRecording(data['game_state'], function(x){
-                      window.location.replace(x)
-                    })
+          if ((game_state == "youtube_video") && (window.location.pathname.split("mobile").length == 1)) {
+            return window.location.replace('youtube_video');
+          } else if((game_state == "youtube_video") && (window.location.pathname.split("admin").length > 1)) {
+            return window.location.replace('youtube_video');
+          }
+          if(location.pathname.split("user")[0]=="/mobile/" && location.pathname.split("user")[1]=="/game/bestlist"){
+            return window.location.replace("replay");
+          } else {
+          if(data['game_state']){
+            if((data['game_state'] == 'rate') & (location.pathname.split("admin")[1]!="/play" && $("#admin").val() != true)){
+              ajaxRequestToCheck("rate")
+            }else{
+              if ($("#game_channel").data("turn") !== "replay") {
+                if(location.pathname.split("admin")[1]=="/play"){
+                  if(typeof completed_ajax !== 'undefined'){
+                    if (videoStopped != true){
+                      stopRecording(data['game_state'], function(x){
+                        window.location.replace(x)
+                      })
+                    }
+                  }else{
+                    if(typeof redirect == "undefined")
+                      return window.location.replace(data['game_state']);
                   }
                 }else{
                   if(typeof redirect == "undefined")
                     return window.location.replace(data['game_state']);
                 }
-              }else{
+              } else {
+                console.log("return to replay page");
                 if(typeof redirect == "undefined")
-                  return window.location.replace(data['game_state']);
+                  return window.location.replace("replay");
               }
-            } else {
-              console.log("return to replay page");
-              if(typeof redirect == "undefined")
-                return window.location.replace("replay");
             }
           }
         }
-      }
+        }
       }
     });
     $(window).bind('beforeunload', function(){
-      App.games.unsubscribe()
+      if(location.pathname.split("user")[0]=="/mobile/" && location.pathname.split("user")[1]=="/game/bestlist"){
+        console.log('nothing')
+      }
+      else {
+        console.log('unsubscribe')
+        App.games.unsubscribe()
+      }
     });
   }
 });
