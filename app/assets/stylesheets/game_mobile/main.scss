@@ -240,11 +240,11 @@ body {
 }
 .middle .mid-img-left {
     left: calc(25% - 200px);
-	box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
+	box-shadow: 0 0 3rem 0 rgba(0,0,0,0.5);
 }
 .middle .mid-img-right {
     left: calc(75% - 200px);
-	box-shadow: 0 1rem 3rem 0 rgba(0,0,0,0.5);
+	box-shadow: 0 0 3rem 0 rgba(0,0,0,0.5);
 }
 .middle .mid-img .wolf {
     position: absolute;
@@ -261,6 +261,9 @@ body {
     height: 440px;
     width: 440px;
     border-radius: 50%;
+}
+.middle .circle#ges {
+	box-shadow: 0 0 3rem 0 rgba(0,0,0,0.5);
 }
 .middle .circle .mid-img {
     position: absolute;
