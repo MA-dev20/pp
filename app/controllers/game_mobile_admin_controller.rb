@@ -288,9 +288,9 @@ class GameMobileAdminController < ApplicationController
     redirect_to gma_new_avatar_path
   end
 
-  def update_video_status
-    @game.update(video_uploaded_start: eval(params[:recording]))
-  end
+  # def update_video_status
+  #   @game.update(video_uploaded_start: eval(params[:recording]))
+  # end
     
   private
     def set_game
