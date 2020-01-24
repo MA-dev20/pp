@@ -496,8 +496,10 @@
 <script>
 	setTimeout(function(){
 		$('body').on('mouseleave', function() {
-			$('#dontLeaveModal').show();
-			$('body').off('mouseleave');
+			if($('#loginModal').is(':hidden')) {
+				$('#dontLeaveModal').show();
+			  	$('body').off('mouseleave');	
+			}
 		})
 	}, 20000)
 	function hideDontLeaveModal() {

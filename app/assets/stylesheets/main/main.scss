@@ -1344,7 +1344,7 @@ label .red {
         margin: 50px 0;
     }
     #content .head {
-        height: 400px;
+        height: 500px;
     }
     #content .head .left {
         position: relative;
@@ -1517,18 +1517,18 @@ label .red {
     }
     #content .head {
         height: 500px;
-        margin: 50px;
-        width: 800px;
+        margin: 50px 100px;
+        width: 700px;
     }
     #content .head .left {
-        margin-top: 50px;
-        width: 400px;
+        margin-top: 0;
+        width: 300px;
     }
     #content .head .left .points {
-        width: 400px;
+        width: 300px;
     }
   	#content .head .left .points .point {
-        width: 200px;
+        width: 300px;
 		float: left;
     }
     #content .head .right {
