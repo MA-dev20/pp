@@ -59,7 +59,7 @@ jQuery(document).ready(function() {
       }
     });
     $(window).bind('beforeunload', function(){
-      if((location.pathname.split("user")[0]=="/mobile/" && location.pathname.split("user")[1]=="/game/bestlist"){
+      if(location.pathname.split("user")[0]=="/mobile/" && location.pathname.split("user")[1]=="/game/bestlist"){
         console.log('nothing')
       }
       else {
