@@ -39,6 +39,10 @@
         <div class="karte text" id="video-text">
         	<% if @turn.video_text.present? %>
             	<%= @turn.video_text %>
+            <% else %>
+            	<div class="red">
+            		Unsere KI verarbeitet das Video gerade. Habe noch etwas Geduld.
+            	</div>
         	<% end %>
         </div>
     </div>
@@ -203,6 +207,8 @@
     </div>
 </div>
 
+<div class="fullscren-blur" id="help-popup">
+</div>
 
 <style>
     .video-play,
