@@ -45,7 +45,7 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
 
   # config.action_cable.url = "ws://lvps91-250-113-56.dedicated.hosteurope.de/cable"
-  config.action_cable.url = "wss://staging.peterpitch.com/cable"
+  config.action_cable.url = "ws://staging.peterpitch.com/cable"
   config.action_cable.allowed_request_origins = ['http://lvps91-250-113-56.dedicated.hosteurope.de', 'http://91.250.113.56','https://91.250.113.56', "https://staging.peterpitch.com","https://staging.peterpitch.de","http://staging.peterpitch.com","http://staging.peterpitch.de"]
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
