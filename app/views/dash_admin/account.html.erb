@@ -1,22 +1,20 @@
 <div class="karte account">
     <div class="head left">Account Daten</div>
     <%= form_for(:admin, as: Admin, url: registration_path(Admin), html: { method: :put }) do |f|%>
-    <div class="img-upload" onclick="showAvatar()">
+    <div class="img-upload">
         <label for="">Nutzerbild</label>
-        <% if @admin.avatar? %>
-        <%= image_tag @admin.avatar.quad.url %>
-        <% else %>
-        <% end %>
+        <label for="admin_avatar">
+        	<%= image_tag @admin.avatar ? @admin.avatar.quad.url : '', id: "avatar" %>
+        	<input type="file" id="admin_avatar" accept='image/*'>
+        </label>
         <i class="fas fa-plus-circle"></i>
     </div>
-    <div class="img-upload" onclick="showLogo()">
+    <div class="img-upload">
         <label for="">Logo</label>
-        <% if @admin.logo? %>
-        <span class="poligon">
-        <%= image_tag @admin.logo.quad.url %>
-        </span>
-        <% else %>
-        <% end %>
+        <label for="admin_logo" class="poligon">
+        	<%= image_tag @admin.logo ? @admin.logo.url : '', id: 'logo' %>
+        	<input type="file" id="admin_logo" accept='image/*'>
+        </label>
         <i class="fas fa-plus-circle"></i>
     </div><br>
     <div class="fields">
@@ -64,37 +62,147 @@
     <%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
     <% end %>
 </div>
-<div class="popup" id="popup-avatar">
-    <%= form_for(:admin, url: edit_admin_avatar_path(@admin), html: {class: 'dropzone'}) do |f|%>
-        <div class="dz-message">Drop files here or click to upload.</div>
-        <div class="fallback">
-        <%= f.file_field :avatar %>
-        </div>
-    <% end %>
-    <div class="close" onclick="hidePopup()"><i class="fas fa-times"></i></div>
-</div>
-<div class="popup" id="popup-logo">
-    <%= form_for(:admin, url: edit_admin_logo_path(@admin), html: {class: 'dropzone'}) do |f|%>
-        <div class="dz-message">Drop files here or click to upload.</div>
-        <div class="fallback">
-        <%= f.file_field :avatar %>
-        </div>
-    <% end %>
+<div class="popup" id="popup">
+   	<div class="img-container">
+   		<%= image_tag '', id: 'admin_image' %>
+   	</div>
+    <div class="form-group center">
+    	<div class="btn btn-green" id="crop">speichern</div>
+    </div>
     <div class="close" onclick="hidePopup()"><i class="fas fa-times"></i></div>
 </div>
 <script>
-    function showAvatar() {
-        $('#popup-avatar').show();
-    }
-    function showLogo() {
-        $('#popup-logo').show();
+    function showPopup() {
+        $('#popup').show();
     }
     function hidePopup() {
-        $('#popup-avatar').hide();
-        $('#popup-logo').hide();
-        window.location.reload(true);
+        $('#popup').hide();
     }
-    Dropzone.options.myAwesomeDropzone = {
-        paramName: "params[:admin][:avatar]",
-    };
+	(function ($) {
+	  $.each(['show', 'hide'], function (i, ev) {
+	    var el = $.fn[ev];
+	    $.fn[ev] = function () {
+	      this.trigger(ev);
+	      return el.apply(this, arguments);
+	    };
+	  });
+	})(jQuery);
+	var inputLogo = document.getElementById('admin_logo');
+	var inputAvatar = document.getElementById('admin_avatar');
+	var image = document.getElementById('admin_image');
+	var editLogo = false;
+	
+	inputLogo.addEventListener('change', function(e) {
+		var files = e.target.files;
+		var done = function(url) {
+			inputLogo.value = '';
+			image.src = url;
+			editLogo = true;
+			$('#popup').show();
+		};
+		var reader, file, url;
+		if(files && files.length > 0) {
+			file = files[0];
+			if(URL) {
+				done(URL.createObjectURL(file));
+			} else if(FileReader) {
+				reader = new FileReader();
+				reader.onload = function(e) {
+					done(reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+	})
+	inputAvatar.addEventListener('change', function(e) {
+		var files = e.target.files;
+		var done = function(url) {
+			inputLogo.value = '';
+			image.src = url;
+			editLogo = false;
+			$('#popup').show();
+		};
+		var reader, file, url;
+		if(files && files.length > 0) {
+			file = files[0];
+			if(URL) {
+				done(URL.createObjectURL(file));
+			} else if(FileReader) {
+				reader = new FileReader();
+				reader.onload = function(e) {
+					done(reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+	})
+	$('#popup').on('show', function() {
+		if(editLogo == true) {
+			cropper = new Cropper(image, {});
+		} else {
+			cropper = new Cropper(image, {
+				aspectRatio: 1,	
+			});	
+		}
+	})
+	$('#popup').on('hide', function() {
+		cropper.destroy();
+		cropper = null;
+	})
+	$('#crop').on('click', function() {
+		var initialURL, canvas;
+		if(cropper) {
+			canvas = cropper.getCroppedCanvas({
+				fillColor: "white"
+			});
+			if(editLogo == true) {
+				initalURL = logo.src;
+				logo.src = canvas.toDataURL();
+				canvas.toBlob(function(blob) {
+					var file = new window.File([blob], 'logo.jpg', {type: 'image/jpg'});
+					var formData = new FormData();
+					formData.append('file', file);
+					uploadImage('logo', formData);
+				});
+			} else {
+				initalURL = avatar.src;
+				avatar.src = canvas.toDataURL();
+				canvas.toBlob(function(blob) {
+					var file = new window.File([blob], 'avatar.jpg', {type: 'image/jpg'});
+					var formData = new FormData();
+					formData.append('file', file);
+					uploadImage('avatar', formData);
+				});
+			}
+		};
+	})
+	function uploadImage(img, formData) {
+		var url;
+		if(img == 'logo') {
+			url = '<%= update_logo_path() %>';
+		} else {
+			url = '<%= update_avatar_path() %>';
+		};
+		$.ajax({
+			url: url,
+			type: 'put',
+			cache: false,
+			async: true,
+			contentType: false,
+			processData: false,
+			data: formData,
+			beforeSend: function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+			success: function(res) {
+				formData = new FormData();
+				if(img == 'logo') {
+					$('#logo').data('url', res.file)
+				} else {
+					$('#avatar').data('url', res.file)
+					$('#sidebar .avatar img').data('url', res.file)
+				}
+				$('#popup').hide();
+			}
+		})
+		
+	}
 </script>

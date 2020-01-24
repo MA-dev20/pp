@@ -229,6 +229,8 @@ Rails.application.routes.draw do
     post 'admin/dash/objections/add', to: 'dash_admin#add_objection', as: "dash_admin_add_objection"
     put 'admin/dash/objections/:id', to: 'dash_admin#update_objection', as: "dash_admin_update_objection"
     put 'admin/dash/words/:id', to: 'dash_admin#update_word', as: "dash_admin_update_word"
+	put 'admin/dash/logo/update', to: 'dash_admin#update_logo', as: 'update_logo'
+	put 'admin/dash/avatar/update', to: 'dash_admin#update_avatar', as: 'update_avatar'
     post 'admin/dash/baskets', to: 'dash_admin#create_basket', as: "dash_admin_new_basket"
     post 'admin/dash/baskets/:basket_id', to: 'dash_admin#delete_basket', as: "dash_admin_delete_basket"
     post 'admin/dash/objections/:basket_id', to: 'dash_admin#delete_objection_basket', as: "dash_admin_delete_objection_basket"
