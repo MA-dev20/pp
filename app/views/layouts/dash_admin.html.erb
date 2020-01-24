@@ -71,7 +71,7 @@
 <section id="content">
     <%= yield %>
 </section>
-    
+<div class="help" onclick="toggleHelp()">?</div>
 <div class="dropdown-content">
    <div class="link"><%= link_to 'Account', dash_admin_account_path %></div>
    <div class="link"><%= link_to('Logout', destroy_admin_session_path, class: 'red') %></div>
@@ -87,6 +87,12 @@
             $('.dropdown-img').addClass('rotated');
         }
     }
+	function toggleHelp() {
+		$('#help-popup').toggle();
+	}
+	<% if @admin.last_sign_in_at == @admin.current_sign_in_at %>
+		$('#help-popup').show();
+	<% end %>
 </script>
 
 </html>

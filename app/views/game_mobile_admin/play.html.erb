@@ -6,7 +6,7 @@
 
 <div class="middle middle-play middlePlay-top">
   <% if !params[:wait] %>
-  <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: block" %>
+  <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: block" %>
   <div class="middle-content">
     <video id="preview" width="600" height="600" style="display: none" controls></video>
     <video id="recording" width="600" height="600" controls style="display: none;"></video>
@@ -29,7 +29,7 @@
     </div>
   </div>
   <% else %>
-  <%= image_tag @cur_user.avatar.quad330.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', style: "display: block" %>
+  <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', style: "display: block" %>
   <div class="middle-content">
     <div class="text">
       Dein Video wird in anderem Tab hochgeladen!
