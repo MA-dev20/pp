@@ -1,4 +1,4 @@
-<%= render partial: 'header' , locals: {can: false}%>
+<!-- <%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
     <% if @admin == @cur_user %>
         <h1 class="nunito-bold"><%= @cur_user.fname %>, du bist dran!</h1>
@@ -20,14 +20,67 @@
 </div>
 <div class="bottom">
 	<%= link_to 'Pitch starten!', gma_play_url , id: 'play', class: 'nunito-regular' %>
-</div>
+</div> -->
 
-<!-- <form action="/mobile/admin/upload" method="POST" enctype="multipart/form-data">
+<form action="/mobile/admin/upload" method="POST" enctype="multipart/form-data">
   
   <input id="video" type="file" name="file" accept="video/*"  class="video-file">
   <input type="submit" value="Submit">
-</form> -->
+</form>
 
+<style>
+    .spinner-div {
+      top: 45% !important;
+      position: absolute;
+    }
+  
+    .spinner {
+      height: auto !important;
+      width: auto !important;
+      left: calc(60% - 200px) !important;
+    }
+    #video-button{
+      z-index: 555;
+    }
+  
+    input[type='file'] {
+      display: block !important;
+    }
+  
+    .video-upload-wrapper {
+      top: 78%;
+    }
+  
+    .upload-btn-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+  
+    .video-btn {
+      border: 2px solid #1ddaaf;
+      color: white;
+      background-color: #1ddaaf;
+      padding: 8px 20px;
+      border-radius: 4.013vh;
+      min-width: 30vh;
+      font-size: 20px;
+      font-size: 2.5vh;
+      height: auto;
+      line-height: 4vh;
+      font-weight: bold;
+    }
+  
+    .upload-btn-wrapper input[type=file] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      opacity: 0;
+    }
+  </style>
 
 <script type="text/javascript">
     $("#start").on("change", function(e){
