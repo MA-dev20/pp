@@ -15,6 +15,7 @@ jQuery(document).ready(function() {
       received: function(data) {
         var game_state = data['desktop'];
 
+        console.log(data)
         // console.log(App.videoInProgress)
         if (App.videoInProgress && location.pathname.split("admin")[0]=="/mobile/" && location.pathname.split("admin")[1]=="/play") {
         } else {
@@ -23,7 +24,7 @@ jQuery(document).ready(function() {
           } else if((game_state == "youtube_video") && (window.location.pathname.split("admin").length > 1)) {
             return window.location.replace('youtube_video');
           }
-          if(location.pathname.split("user")[0]=="/mobile/" && location.pathname.split("user")[1]=="/game/bestlist"){
+          if((data['game_state'] != 'ended_game') && location.pathname.split("user")[0]=="/mobile/" && location.pathname.split("user")[1]=="/game/bestlist"){
             return window.location.replace("replay");
           } else {
           if(data['game_state']){
@@ -58,7 +59,7 @@ jQuery(document).ready(function() {
       }
     });
     $(window).bind('beforeunload', function(){
-      if(location.pathname.split("user")[0]=="/mobile/" && location.pathname.split("user")[1]=="/game/bestlist"){
+      if((data['game_state'] != 'ended_game') && location.pathname.split("user")[0]=="/mobile/" && location.pathname.split("user")[1]=="/game/bestlist"){
         console.log('nothing')
       }
       else {
