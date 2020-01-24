@@ -1,4 +1,4 @@
-<!-- <%= render partial: 'header' , locals: {can: false}%>
+<%= render partial: 'header' , locals: {can: false}%>
 <div class="head">
     <% if @admin == @cur_user %>
         <h1 class="nunito-bold"><%= @cur_user.fname %>, du bist dran!</h1>
@@ -20,9 +20,9 @@
 </div>
 <div class="bottom">
 	<%= link_to 'Pitch starten!', gma_play_url , id: 'play', class: 'nunito-regular' %>
-</div> -->
+</div>
 
-<form action="/mobile/admin/upload" method="POST" enctype="multipart/form-data">
+<!-- <form action="/mobile/admin/upload" method="POST" enctype="multipart/form-data">
   
   <input id="video" type="file" name="file" accept="video/*"  class="video-file">
   <input type="submit" value="Submit">
@@ -80,7 +80,7 @@
       right: 0;
       opacity: 0;
     }
-  </style>
+  </style> -->
 
 <script type="text/javascript">
     $("#start").on("change", function(e){
