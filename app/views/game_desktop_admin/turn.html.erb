@@ -1,11 +1,26 @@
 <% if @turns.count == 1 %>
 <section id="head" class="bounce_in">
-<h1 class="nunito-bold"><%= @user.fname %>, du bist dran!</h1>
+	<h1 class="nunito-bold"><%= @user.fname %>, du bist dran!</h1>
+</section>
 <% else %>
 <section id="head">
     <h1 id="heading" class="nunito-bold"></h1>
-<% end %>
 </section>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+            var typed = new Typed("#heading", {
+                strings: ['<%= @user.fname %>, du bist dran!'],
+                backSpeed: 0,
+                typeSpeed: 50,
+                fadeOut: true,
+                showCursor: true,
+                cursorChar: '',
+                smartBackspace: false,
+                loop: false,
+            })
+    })
+</script>
+<% end %>
 
 <% if @turns.count == 1 %>
 <section id="middle" class="fly_in_right">
@@ -29,6 +44,15 @@
       <%= image_tag @turn2.findUser.avatar.quad.url, class: 'blue middle', id: 'middle_img' %>
   </div>
   <% end %>
+  <script>
+	$('#middle #middle_img').css("box-shadow", "0 0 0 0 rgba(29, 218, 175, 0.5)");
+    var middle = document.getElementById('middle_img')
+    middle.addEventListener('animationend', function() {
+        $('#middle_img').removeClass('middle');
+        $('#middle_img').removeClass('blue');
+        $('#middle_img').addClass('pulse mid-img');
+    })
+  </script>
 <% end %>
 </section>
 <section id="skip" class="nunito-bold">
@@ -37,30 +61,9 @@
 <%= audio_tag(turn_sound, autoplay: true) %>
 
 <script>
-	$('#middle #middle_img').css("box-shadow", "0 0 0 0 rgba(29, 218, 175, 0.5)");
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_play_path %>');
         };
-    })
-    var middle = document.getElementById('middle_img')
-    middle.addEventListener('animationend', function() {
-        $('#middle_img').removeClass('middle');
-        $('#middle_img').removeClass('blue');
-        $('#middle_img').addClass('pulse mid-img');
-    })
-           
-    document.addEventListener('DOMContentLoaded', function() {
-            var typed = new Typed("#heading", {
-                strings: ['<%= @user.fname %>, du bist dran!'],
-                backSpeed: 0,
-                typeSpeed: 50,
-                fadeOut: true,
-                showCursor: true,
-                cursorChar: '',
-                smartBackspace: false,
-                loop: false,
-            })
-    })
-                            
+    })                            
 </script>
