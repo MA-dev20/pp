@@ -9,4 +9,5 @@
  *= require dash/perfect-scrollbar.min
  *= require dropzone
  *= require game_desktop/progressbar.min
+ *= require cropper.min
  */

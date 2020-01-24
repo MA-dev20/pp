@@ -6,7 +6,6 @@
     
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag    'dash/main', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.js"></script>
     <%= javascript_include_tag 'dash/main', 'https://js.stripe.com/v2/' %>
     <meta property="og:url"           content="http://www.peterpitch.com" />
@@ -17,36 +16,12 @@
     <meta property="og:site_name"     content="Peterpitch" >
     <meta property="og:locale"        content="de_DE" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@peterpitch" />
-    
-<!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-149270861-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-149270861-1');
-  </script>
-<!-- End Google Analytics -->
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WZWWH8V');</script>
-<!-- End Google Tag Manager -->
 </head>
 
 <body class="body-open" 
   <% if content_for?(:body_attributes) %>
     <%= yield(:body_attributes) %> 
   <% end %>>
-   <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WZWWH8V"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
     <div class="section">
       <section id="navbar">
           Hallo, <%= current_user.fname %> <%= current_user.lname %>!

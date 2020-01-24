@@ -666,26 +666,27 @@ label .red {
 #content .head .left .points .point {
     position: relative;
     left: 15px;
-    height: 80px;
-    width: 270px;
+    height: 60px;
+    width: 200px;
     
 }
 #content .head .left .points .point img {
     position: absolute;
     left: 0;
     top: 0px;
-    height: 80px;
-    width: 80px;
-    line-height: 50px;
-    font-size: 50px;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    font-size: 40px;
     text-align: center;
     color: #4394ec;
+	margin: 10px;
 }
 #content .head .left .points .point h1 {
     position: absolute;
-    left: 80px;
-    top: 20px;
-    font-size: 18px;
+    left: 60px;
+    top: 10px;
+    font-size: 15px;
     font-weight: 600;
     text-align: left;
     width: 230px;
@@ -694,9 +695,9 @@ label .red {
 }
 #content .head .left .points .point h5 {
     position: absolute;
-    top: 40px;
-    left: 80px;
-    font-size: 14px;
+    top: 30px;
+    left: 60px;
+    font-size: 13px;
     font-weight: normal;
     text-align: left;
     width: 230px;
@@ -1527,7 +1528,8 @@ label .red {
         width: 400px;
     }
   	#content .head .left .points .point {
-        width: 400px;   
+        width: 200px;
+		float: left;
     }
     #content .head .right {
         width: 400px;
@@ -1752,7 +1754,6 @@ label .red {
     }
     #content .head .left .points .point {
         width: 300px;
-		float: left;
     }
     .heading-big {
         font-size: 42px;

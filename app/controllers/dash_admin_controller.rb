@@ -465,6 +465,16 @@ class DashAdminController < ApplicationController
     @word.update(sound: params[:file]) if params[:file].present? &&  @word.present?
     render json: {sound:  @word.sound.url}
   end
+	
+  def update_logo
+	@admin.update(logo: params[:file]) if params[:file].present? && @admin.present?
+	render json: {file: @admin.logo.url}
+  end
+	
+  def update_avatar
+	@admin.update(avatar: params[:file]) if params[:file].present? && @admin.present?
+	render json: {file: @admin.avatar.url}
+  end
 
   def release_comments
     @turn = Turn.find(params[:turn_id])

@@ -45,11 +45,10 @@
     right: 5vw;
     top: 10vh;
     height: 10vh;*/
-    max-width: 10vh;
-    max-height: 9vh;
-    margin-right: 1.4vh;
+	height: auto;
+    width: 11vh;
+    max-height: 8vh;
     position: relative;
-    top: -0.8vh;
 }
 
 #gd_play .mid #word {

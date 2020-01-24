@@ -4,7 +4,13 @@
     height: 71.8vh;
     width: 82.5vh;
 }
-.poligon {
+.account .img-upload img#avatar {
+	border-radius: 50%;
+	height: 10vh;
+	width: 10vh;
+	border: .5vh solid gray;
+}
+.account .img-upload .poligon {
     background-image: image-url('polygon.companylogo.png');
     width: 100px;
     height: 100px;
@@ -14,16 +20,21 @@
     align-items: center;
     justify-content: center;
 }
-.poligon img{
-    height: 60px;
-    width: 60px;
+.account .img-upload .poligon img{
+	height: auto;
+	max-height: 40px;
+	width: 55px;
+	border-radius: 0;
+}
+.account .img-upload input[type='file'] {
+	display: none;
 }
 .popup {
     display: none;
     position: absolute;
     left: calc(50% - 500px);
-    top: calc(50% - 250px);
-    height: 500px;
+    top: calc(50% - 450px);
+    height: 750px;
     width: 1000px;
     background-color: #ffffff;
     border-radius: 10px;
@@ -31,16 +42,16 @@
     padding: 40px;
     z-index: 100;
 }
-.popup form {
-    border: 2px dashed #0087F7;
-    height: 100%;
-    width: 100%;
-    border-radius: 5px;
-    padding: 50px;
+.popup .img-container {
+	height: 600px;
+	width: 900px;
+	margin: 0 auto;
 }
-.popup form .dz-message {
-    font-size: 32px;
-    font-weight: bold;
+.popup .form-group.center {
+	margin: auto 0;
+	height: 10vh;
+	line-height: 10vh;
+	text-align: center;
 }
 .popup .close {
     cursor: pointer;
