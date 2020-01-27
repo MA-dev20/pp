@@ -25,4 +25,10 @@ class Game < ApplicationRecord
     ActionCable.server.broadcast "game_#{self.id}_channel",
         game_state: self.state, game_admin_id: self.admin_id
   end
+
+  def has_turn_of_user? current_user
+    turns = self.turns.where(user_id: current_user.id).where.not(status: "ended")
+    return false if turns.empty?
+    return true
+  end
 end

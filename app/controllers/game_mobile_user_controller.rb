@@ -5,6 +5,7 @@ class GameMobileUserController < ApplicationController
   # before_action :pop_up ,only: :create
   before_action :reset_session_of_already_user, only: [:new, :welcome]
   layout 'game_mobile'
+  before_action :check_for_turn, only: [:wait]
 
     
   def welcome
@@ -350,5 +351,10 @@ class GameMobileUserController < ApplicationController
 
     def reset_session_of_already_user
       session[:user_already] = nil
+    end
+
+    def check_for_turn
+      redirect_to gmu_replay_path if !@game.has_turn_of_user?(current_user)
+      return
     end
 end
