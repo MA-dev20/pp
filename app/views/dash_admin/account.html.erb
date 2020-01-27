@@ -3,19 +3,19 @@
     <%= form_for(:admin, as: Admin, url: registration_path(Admin), html: { method: :put }) do |f|%>
     <div class="img-upload">
         <label for="">Nutzerbild</label>
-        <label for="admin_avatar">
+        <label for="admin_avatar" style="cursor: pointer; height: 11vh; width: 11vh">
         	<%= image_tag @admin.avatar ? @admin.avatar.quad.url : '', id: "avatar" %>
         	<input type="file" id="admin_avatar" accept='image/*'>
+        	<i class="fas fa-plus-circle"></i>
         </label>
-        <i class="fas fa-plus-circle"></i>
     </div>
     <div class="img-upload">
         <label for="">Logo</label>
-        <label for="admin_logo" class="poligon">
+        <label for="admin_logo" class="poligon" style="cursor: pointer">
         	<%= image_tag @admin.logo ? @admin.logo.url : '', id: 'logo' %>
         	<input type="file" id="admin_logo" accept='image/*'>
+        	<i class="fas fa-plus-circle"></i>
         </label>
-        <i class="fas fa-plus-circle"></i>
     </div><br>
     <div class="fields">
     <div class="half-1">
