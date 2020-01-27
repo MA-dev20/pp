@@ -338,7 +338,13 @@
   var completed_ajax = false;
   function uploadRecording(form, callback, location) {
     App.games.unsubscribe();
-    window.open(window.location.href + "&wait=true", '_blank');
+    // window.open(window.location.href + "&wait=true", '_blank');
+    // window.location.assign(window.location.href + "&wait=true", '_blank')
+    var safariWindow = window.open();
+    safariWindow.location.href = window.location.href + "&wait=true"
+    // myService.getUrl().then(function(url) {
+    //     windowReference.location = url;
+    // });
     jqxhr = $.ajax({
       url: '/mobile/admin/upload',
       type: 'POST',
