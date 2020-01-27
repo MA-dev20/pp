@@ -319,6 +319,7 @@ option:focus {
     font-size: 2.2vh;
     line-height: 3vh;
 }
+
 .karte.letsplay .checkbox {
     position: relative;
     float: left;
@@ -331,6 +332,14 @@ option:focus {
     padding: 0 0.5vh 0 1.3vh;
     height: 3.21vh;
     line-height: 2.88vh;
+}
+.karte.letsplay .checked-field .text {
+	position: absolute;
+	opacity: .5;
+	line-height: 5.5vh;
+}
+.karte.letsplay .objections .checkbox {
+	border: solid 0.2vh #ffcc00;
 }
 .karte.letsplay .checkbox label {
     text-align: center;

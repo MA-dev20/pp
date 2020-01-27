@@ -198,14 +198,12 @@
                 </div>
                 <% end %>
             </label>
-            <input type="checkbox" name="game[baskets][]" value="pp" multiple id="game_baskets_pp" checked>
+            <input type="checkbox" name="game[baskets][]" value="pp" multiple id="game_baskets_pp">
             <% @admin.catchword_baskets.where(objection: false).each do |b| %>
             <input type="checkbox" name="game[baskets][]" value="<%= b.id %>" multiple id="game_baskets_<%= b.id %>">
             <% end %>
             <div class="checked-field <% if flash[:select_catchword] %>red<% end %>">
-                <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_pp">
-                    <label for="game_baskets_pp">PetersWords<i class="fas fa-times"></i></label>
-                </div>
+                <div class="text">Original Peter's Catchwords</div>
                 <div class="add" onclick="catchwordsShow()"><i class="fas fa-plus"></i></div>
             </div>
             <div class="unchecked-field">
@@ -214,6 +212,9 @@
                     <label for="game_baskets_<%= b.id %>"><%= b.name %> <i class="fas fa-plus"></i></label>
                 </div>
                 <% end %>
+                <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_pp" style="border-color: #54b7ff">
+                    <label for="game_baskets_pp">PetersWords<i class="fas fa-times"></i></label>
+                </div>
             </div>
         </div>
 
@@ -223,15 +224,13 @@
                 <div class="alert alert-game2"><%= flash[:select_objection] %></div>
                 <% end %>
             </label>
-            <input type="checkbox" name="game[objections][]" value="pp" multiple id="game_objections_pp" checked>
+            <input type="checkbox" name="game[objections][]" value="pp" multiple id="game_objections_pp">
             <% @admin.catchword_baskets.where(objection: true).each do |b| %>
             <input type="checkbox" name="game[objections][]" value="<%= b.id %>" multiple
                 id="game_objections_<%= b.id %>">
             <% end %>
             <div class="checked-field <% if flash[:select_objection] %>red<% end %>">
-                <div class="checkbox" onclick="moveObjections(this)" data-value="game_objections_pp">
-                    <label for="game_objections_pp">PetersEinwände <i class="fas fa-times"></i></label>
-                </div>
+               	<div class="text">Original Peter's Einwände</div>
                 <div class="add" onclick="objectionsShow()"><i class="fas fa-plus"></i></div>
             </div>
             <div class="unchecked-field">
@@ -240,6 +239,9 @@
                     <label for="game_objections_<%= b.id %>"><%= b.name %> <i class="fas fa-plus"></i></label>
                 </div>
                 <% end %>
+                <div class="checkbox" onclick="moveObjections(this)" data-value="game_objections_pp" style="border-color: #54b7ff">
+                    <label for="game_objections_pp">PetersEinwände <i class="fas fa-times"></i></label>
+                </div>
             </div>
         </div>
         <div class="youtube">
@@ -406,7 +408,11 @@
         if (checkbox.checked) {
             e.querySelector('.fas').className = "fas fa-plus";
             document.querySelector('.objections > .unchecked-field').appendChild(e);
+			if($('.objections .checked-field').children('.checkbox').length == 0) {
+				$('.objections .checked-field .text').show();	
+			}
         } else {
+			$('.objections > .checked-field .text').hide();
             e.querySelector('.fas').className = "fas fa-times";
             document.querySelector('.objections > .checked-field').appendChild(e);
         }
@@ -427,7 +433,11 @@
         if (checkbox.checked) {
             e.querySelector('.fas').className = "fas fa-plus";
             document.querySelector('.catchwords > .unchecked-field').appendChild(e);
+			if($('.catchwords .checked-field').children('.checkbox').length == 0) {
+				$('.catchwords > .checked-field .text').show();	
+			}
         } else {
+			$('.catchwords > .checked-field .text').hide();
             e.querySelector('.fas').className = "fas fa-times";
             document.querySelector('.catchwords > .checked-field').appendChild(e);
         }
