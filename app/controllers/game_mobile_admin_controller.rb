@@ -4,7 +4,6 @@ class GameMobileAdminController < ApplicationController
   before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
   skip_before_action :verify_authenticity_token, only: [:save_video]
-  before_action :check_for_turn, only: [:wait]
     
   def new
     session[:admin_email] = nil
