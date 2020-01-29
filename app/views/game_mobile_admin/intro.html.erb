@@ -7,7 +7,7 @@
     <% end %>
 </div>
 <div class="middle">
-    <%= image_tag 'game/wolf_button.png', class: 'mid-img green pulse' %>
+    <%= image_tag @admin.avatar.quad.url || 'game/wolf_button.png', class: 'mid-img green pulse' %>
 </div>
 <div class="bottom">
     <%= link_to 'skip', gma_choose_path, class: 'nunito-regular' %>
