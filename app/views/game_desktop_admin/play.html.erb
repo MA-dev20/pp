@@ -1,5 +1,5 @@
 <% if @game.wait_seconds == 80 %>
-<%= video_tag 'countdown_120.mp4', id: 'video-bg', autoplay: true %>
+<%= video_tag 'countdown.mp4', id: 'video-bg', autoplay: true %>
 <% elsif @game.wait_seconds == 150 %>
 <%= video_tag 'countdown_230.mp4', id: 'video-bg', autoplay: true %>
 <% else %>
@@ -88,8 +88,13 @@
     }
 
     function callback() {
-        document.getElementById('video-bg').currentTime = 0;
-        document.getElementById('video-bg').play();
+		<% if @game.wait_seconds == 80 %>
+			document.getElementById('video-bg').currentTime = 9;
+			document.getElementById('video-bg').play();
+		<% else %>
+			document.getElementById('video-bg').currentTime = 0;
+        	document.getElementById('video-bg').play();
+        <% end %>
         // document.getElementById('intro').pause();
         // document.getElementById('word_sound').play();
     };
