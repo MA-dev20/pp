@@ -67,6 +67,7 @@
     animation-delay: 1s;
     animation-name: pulse;
     animation-duration: 0.5s;
+	box-shadow: 0 0 0 0 rgba(29, 218, 175, 0.5);
 }
 @keyframes middle {
     to {
