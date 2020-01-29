@@ -341,14 +341,18 @@
   var completed_ajax = false;
   function uploadRecording(form, callback, location) {
     App.games.unsubscribe();
-    window.open(window.location.href + "&wait=true", '_blank');
+
+    var window_open = window.open(window.location.href + "&wait=true", '_blank');
+    if (window_open == null) {
+      $('.rate-btn').attr('style', 'display: block !important');
+    }
+    
     // window.location.assign(window.location.href + "&wait=true", '_blank')
     // var safariWindow = window.open();
     // safariWindow.location.href = window.location.href + "&wait=true"
     // myService.getUrl().then(function(url) {
     //     windowReference.location = url;
     // });
-    $('.rate-btn').attr('style', 'display: block !important');
 
     jqxhr = $.ajax({
       url: '/mobile/admin/upload',
@@ -371,7 +375,9 @@
                 $("#uploaded").parent().fadeIn()
                 showInSequence($("#uploaded").parent());
                 $("#upload").hide()
-                window.close();
+                if (window_open != null) {
+                  window.close();
+                }
                 completed_ajax = true
                 // callback(location)
               }
