@@ -25,7 +25,10 @@
         </svg>
         <i class="fa fa-times"></i>
       </button>
-      <p class="play-time-para nunito-regular">Video wird gespeichert...</p>
+      <p class="play-time-para play-time-text nunito-regular">Video wird gespeichert...</p>
+    </div>
+    <div class="bottom rate-btn" style="display: none">
+      <%= link_to 'Pitch beenden!', gma_rate_path, class: 'nunito-regular' %>
     </div>
   </div>
   <% else %>
@@ -338,13 +341,15 @@
   var completed_ajax = false;
   function uploadRecording(form, callback, location) {
     App.games.unsubscribe();
-    // window.open(window.location.href + "&wait=true", '_blank');
+    window.open(window.location.href + "&wait=true", '_blank');
     // window.location.assign(window.location.href + "&wait=true", '_blank')
-    var safariWindow = window.open();
-    safariWindow.location.href = window.location.href + "&wait=true"
+    // var safariWindow = window.open();
+    // safariWindow.location.href = window.location.href + "&wait=true"
     // myService.getUrl().then(function(url) {
     //     windowReference.location = url;
     // });
+    $('.rate-btn').attr('style', 'display: block !important');
+
     jqxhr = $.ajax({
       url: '/mobile/admin/upload',
       type: 'POST',
