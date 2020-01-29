@@ -93,24 +93,63 @@
     <section id="hiw">
         <h1 class="wow fadeIn" data-wow-delay=".2s">So funktioniert's</h1>
         <div class="categories wow fadeInUp" data-wow-delay=".2s">
-        <div class="rudel">
-            <%= image_tag 'landing/hiw/rudel.png'%>
+        <div class="rudel" onmouseover="startRudel()" onmouseout="stopRudel()" ontouchstart="startRudel()" ontouchend="stopRudel()">
+           	<div id="rudel"></div>
+           	<script>
+				var params = {
+					container: document.getElementById('rudel'),
+					renderer: 'svg',
+					loop: true,
+					autoplay: false,
+					path: "<%= asset_url('main/animRudel.json') %>",
+				};
+				var animRudel;
+				animRudel = bodymovin.loadAnimation(params);
+				function startRudel() {animRudel.play()}
+				function stopRudel() {animRudel.pause()}
+			</script>
             <div class="text">
                 <h1>Rudelbildung</h1>
                 Du trommelst das Rudel zusammen und erstellst online eine Spielgruppe. Sind alle Wölfe mit ihren Smartphones beigetreten? Dann kann es losgehen!
             </div>
         </div>
         <%= image_tag 'landing/hiw/line1.png', id: 'line1' %>
-        <div class="pitch">
-            <%= image_tag 'landing/hiw/pitchit.png' %>
+        <div class="pitch" onmouseover="startPitchit()" onmouseout="stopPitchit()" ontouchstart="startPitchit()" ontouchend="stopPitchit()">
+           	<div id="pitchit"></div>
+           	<script>
+				var params = {
+					container: document.getElementById('pitchit'),
+					renderer: 'svg',
+					loop: true,
+					autoplay: false,
+					path: "<%= asset_url('main/animPitchit.json') %>",
+				}
+				var animPitchit;
+				animPitchit = bodymovin.loadAnimation(params);
+				function startPitchit() {animPitchit.play()}
+				function stopPitchit() {animPitchit.pause()}
+			</script>
             <div class="text">
                 <h1>Pitch It</h1>
                 Jetzt wird es spannend! Das Voting entscheidet wer pitcht. Ab nach vorne um dem Team ein Catchword zu verkaufen… Produkt oder Dienstleistung?
             </div>
         </div>
         <%= image_tag 'landing/hiw/line2.png', id: 'line2' %>
-        <div class="rating">
-            <%= image_tag 'landing/hiw/rating.png' %>
+        <div class="rating" onmouseover="startRating()" onmouseout="stopRating()" ontouchstart="startRating()" ontouchend="stopRating()">
+            <div id="rating"></div>
+            <script>
+				var params = {
+					container: document.getElementById('rating'),
+					renderer: 'svg',
+					loop: true,
+					autoplay: false,
+					path: "<%= asset_url('main/animRating.json') %>",
+				}
+				var animRating;
+				animRating = bodymovin.loadAnimation(params);
+				function startRating() {animRating.play()}
+				function stopRating() {animRating.pause()}
+			</script>
             <div class="text">
                 <h1>Rating</h1>
                 Das Publikum bewertet den Pitch anschließend mit dem Smartphone in 4 Kategorien. Direktes Feedback und Interaktion auf ganzer Linie.
