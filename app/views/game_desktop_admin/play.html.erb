@@ -77,15 +77,10 @@
 </style>
 
 <script type="text/javascript">
-
+document.getElementById("intro").volume = 0.2;
+document.getElementById("countdown").volume = 0.5;
+document.getElementById("theme").volume = 0.1;
     $('#navbar').hide();
-
-    function play_sound(){
-        // document.getElementById('intro').play();
-        document.getElementById("intro").volume = 0.4;
-        document.getElementById("theme").volume = 0.4;
-        document.getElementById("word_sound").volume = 1.0;
-    }
 
     function callback() {
 		<% if @game.wait_seconds == 80 %>
@@ -146,7 +141,6 @@
             
             document.getElementById('countdown').pause();
             document.getElementById('theme').pause();
-            play_sound();
             document.getElementById('intro').play();
             MyApp.timer = startTimer('<%=@game.wait_seconds.to_i %>', document.getElementById('timerall'));
             MyApp.timer.pause()

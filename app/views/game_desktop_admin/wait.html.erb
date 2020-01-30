@@ -49,9 +49,12 @@
 
 <%= audio_tag('wait/ping.mp3', id: 'ping') %>
 <%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>
-<%= audio_tag(wait_sound, autoplay: true) %>
+<%= audio_tag(wait_sound, autoplay: true, id: "theme") %>
 </section>
 <script>
+	document.getElementById('theme').volume = 0.2;
+	document.getElementById('ringdoor').volume = 0.5;
+	document.getElementById('ping').volume = 0.5;
     $(window).keypress(function (e) {
 
         if (e.key === ' ' || e.key === 'Spacebar') {

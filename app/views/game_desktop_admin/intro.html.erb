@@ -14,8 +14,10 @@
     $('#navbar').hide();
 	<% if @video %>
 	document.getElementById('video-blur').play();
+	document.getElementById('video').volume = 0.5;
 	document.getElementById('video').play();
 	<% else %>
+	document.getElementById('video-bg').volume = 0.5;
     document.getElementById('video-bg').play();
 	<% end %>
     function redir() {
