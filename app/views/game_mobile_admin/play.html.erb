@@ -1,7 +1,7 @@
 <%= render partial: 'header' , locals: {can: true}%>
 <div class="head head-play">
   <div style="display: none" id="current_user_id" data-id='<%= @turn.to_json.to_s.html_safe %>'></div>
-  <h1><%= @cur_user.fname %> Pitcht!</h1>
+  <h1><%= @cur_user.fname %> Pitcht!</h1>  
 </div>
 
 <div class="middle middle-play middlePlay-top">
@@ -25,7 +25,7 @@
         </svg>
         <i class="fa fa-times"></i>
       </button>
-      <p class="play-time-para nunito-regular">Video wird gespeichert...</p>
+      <p class="play-time-para nunito-regular">Tab nicht schließen bis dein Pitch-Video vollständig hochgeladen ist</p>
     </div>
     <div class="bottom rate-btn" style="display: none">
       <%= link_to 'Pitch beenden!', gma_rate_path, class: 'nunito-regular' %>
@@ -345,6 +345,8 @@
     if (window_open == null) {
       $('.rate-btn').attr('style', 'display: block !important');
     }
+    $('.head-play h1').text('Video Upload');
+
     
     // window.location.assign(window.location.href + "&wait=true", '_blank')
     // var safariWindow = window.open();
