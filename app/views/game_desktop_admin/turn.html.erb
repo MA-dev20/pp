@@ -58,9 +58,10 @@
 <section id="skip" class="nunito-bold">
    Skip mit Leertaste
 </section>
-<%= audio_tag(turn_sound, autoplay: true) %>
+<%= audio_tag(turn_sound, autoplay: true, id: 'theme') %>
 
 <script>
+	document.getElementById('theme').volume = 0.2;
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_play_path %>');

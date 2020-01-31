@@ -22,10 +22,12 @@
     </div>
 </section>
 </section>
-<%= audio_tag(choose_sound, autoplay: true) %>
+<%= audio_tag(choose_sound, autoplay: true, id: 'theme') %>
 <%= audio_tag("choose/ping.mp3", id: 'vote_sound') %>
 
 <script>
+	document.getElementById('theme').volume = 0.2;
+	document.getElementById('vote_sound').volume = 0.5;
     startTimerModal('14', document.getElementById('timeralli'))
     var left = document.getElementById('left-img');
     var right = document.getElementById('right-img');

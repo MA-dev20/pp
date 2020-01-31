@@ -33,12 +33,12 @@
    Skip mit Leertaste
 </section>
 <%= audio_tag('wait/ping.mp3', id: 'ping') %>
-<%= audio_tag('wait/aufgeregt.mp3', id: 'tag1') %>
-<%= audio_tag('wait/bereit.mp3', id: 'tag2') %>
-<%= audio_tag('wait/kommando.mp3', id: 'tag3') %>
-<%= audio_tag('wait/truppe.mp3', id: 'tag4') %>
+<%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>
+<%= audio_tag(wait_sound, autoplay: true, id: "theme") %>
 <script>
-    pick(4);
+    document.getElementById('theme').volume = 0.2;
+	document.getElementById('ringdoor').volume = 0.5;
+	document.getElementById('ping').volume = 0.5;
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {
             window.location.replace('<%= gda_choose_path %>');

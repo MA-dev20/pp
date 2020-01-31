@@ -64,6 +64,7 @@
 <%= audio_tag(ended_sound, oncanplaythrough: 'startAnimation()', id: 'bestSound', preload: "auto" ) %>
 
 <script type="text/javascript">
+	document.getElementById("bestSound").volume = 0.2;
     function confetti(){
     var flakes = '',
         randomColor;

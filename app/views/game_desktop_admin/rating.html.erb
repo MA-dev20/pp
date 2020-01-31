@@ -73,6 +73,7 @@
 
 <%= audio_tag(rated_sound, oncanplaythrough: 'startAnimation()', id: 'rateSound', preload: "auto" ) %>
 <script>
+	document.getElementById("rateSound").volume = 0.2;
 	function startAnimation() {
 		document.getElementById('rateSound').play();
 		setTimeout(function() {
