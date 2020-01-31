@@ -1010,26 +1010,30 @@ input[type='radio'] {
   font-size: 1.9vh;
   color: #fff;
 }
-.play-time-text {
-  margin-top: 0vh !important;
-}
-.rate-btn {
-  margin-top: 8vh !important;
-}
+// .play-time-text {
+//   margin-top: 0vh !important;
+// }
+// .rate-btn {
+//   margin-top: 8vh !important;
+// }
 .play-cancel-time .button-cancel {
   padding: 0;
   position: relative;
-  width: 98px;
-  height: 98px;
-  max-width: 98px;
-  max-height: 98px;
-  min-width: 98px;
-  min-height: 98px;
+  // width: 200px;
+  // height: 200px;
+  // max-width: 98px;
+  // max-height: 98px;
+  // min-width: 98px;
+  // min-height: 98px;
   background-color: transparent;
   box-shadow: none;
   border: none;
   border-radius: 50%;
 }
+// .play-cancel-time .button-cancel svg {
+//   width: 100%;
+//   height: 100%;
+// }
 .play-cancel-time .button-cancel i {
   position: absolute;
   left: 0;
@@ -1040,7 +1044,7 @@ input[type='radio'] {
   align-items: center;
   justify-content: center;
   color: #ff6b6c;
-  font-size: 2.6vh;
+  font-size: 3.3vh;
 }
 .progress-ring__circle {
   transition: 0.35s stroke-dashoffset;

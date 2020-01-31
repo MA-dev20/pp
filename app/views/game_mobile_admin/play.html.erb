@@ -7,25 +7,25 @@
 <div class="middle middle-play middlePlay-top">
   <% if !params[:wait] %>
   <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: block" %>
-  <div class="middle-content">
+  <div class="middle-content" style="display: none">
     <video id="preview" width="600" height="600" style="display: none" controls></video>
     <video id="recording" width="600" height="600" controls style="display: none;"></video>
   </div>
   <label id="timer" style="display: none">00:00:00</label>
-  <div class="buttons buttons-play mt-0">
+  <div class="buttons buttons-play mt-0 middle-content">
     <div class="play-check-time" style="display: none">
       <button id='uploaded' class="button-check"><i class="fa fa-check"></i></button>
       <p class="play-time-para">Video erfolgreich hochgeladen</p>
     </div>
     <div class="cancel play-cancel-time" id="upload" style="display: none">
       <button id="button-cancel" class="button-cancel">
-        <svg class="progress-ring" width="98" height="98">
-          <circle class="progress-ring__circe" stroke="white" stroke-width="4" fill="transparent" r="39" cx="49"
-            cy="49" />
+        <svg class="progress-ring" width="400" height="400">
+          <circle class="progress-ring__circe" stroke="white" stroke-width="4" fill="transparent" r="152" cx="200"
+            cy="200" />
         </svg>
         <i class="fa fa-times"></i>
       </button>
-      <p class="play-time-para play-time-text nunito-regular">Video wird gespeichert...</p>
+      <p class="play-time-para nunito-regular">Video wird gespeichert...</p>
     </div>
     <div class="bottom rate-btn" style="display: none">
       <%= link_to 'Pitch beenden!', gma_rate_path, class: 'nunito-regular' %>
@@ -373,6 +373,7 @@
               if (uploadingprogress == 100) {
                 $("#uploaded").parent().fadeIn()
                 showInSequence($("#uploaded").parent());
+                // $('.play-check-time').attr('style', 'display: block !important');
                 $("#upload").hide()
                 if (window_open != null) {
                   window.close();
