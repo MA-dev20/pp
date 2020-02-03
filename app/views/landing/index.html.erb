@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="right">
-            <div class="animIsometric" onmouseover="startIsometric()" onmouseout="stopIsometric()" ontouchstart="startIsometric()" ontouchend="stopIsometric()">
+            <div class="animIsometric">
                 <div id="animIsometric"></div>
                 <script>
                     var params = {
@@ -80,8 +80,7 @@
                     };
                     var animIsometric;
                     animIsometric = bodymovin.loadAnimation(params);
-                    function startIsometric() {animIsometric.play()}
-                    function stopIsometric() {animIsometric.pause()}
+                    animIsometric.play()
                 </script>
             </div>
             <%#= image_tag 'landing/pitch.png' %>    
