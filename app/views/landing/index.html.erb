@@ -68,22 +68,7 @@
             </div>
         </div>
         <div class="right">
-            <div class="animIsometric">
-                <div id="animIsometric"></div>
-                <script>
-                    var params = {
-                        container: document.getElementById('animIsometric'),
-                        renderer: 'svg',
-                        loop: true,
-                        autoplay: false,
-                        path: "<%= asset_url('main/animIsometric.json') %>",
-                    };
-                    var animIsometric;
-                    animIsometric = bodymovin.loadAnimation(params);
-                    animIsometric.play()
-                </script>
-            </div>
-            <%#= image_tag 'landing/pitch.png' %>    
+            <%= image_tag 'landing/PeterPitchIsometric.png' %>     
         </div>
     </div>
     <%= image_tag 'landing/shape.svg', class: 'shape s310', id: 'shape1' %>
