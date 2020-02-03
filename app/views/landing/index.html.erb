@@ -43,22 +43,22 @@
             <div class="heading-small">Das Blended Learning Tool für<br>Kommunikation und Vertrieb</div>
             <div class="points">
                 <div class="point">
-                    <%= image_tag 'landing/icon-training.png' %>
+                    <%= image_tag 'landing/training.png' %>
                     <h1>Training</h1>
                     <h5>Interaktiv und Digital</h5>
                 </div>
                 <div class="point">
-                    <%= image_tag 'landing/icon-analyse.png' %>
+                    <%= image_tag 'landing/Analyze.png' %>
                     <h1>Analyse</h1>
                     <h5>Macht Softskills messbar</h5>
                 </div>
                 <div class="point">
-                    <%= image_tag 'landing/icon-recruiting.png' %>
+                    <%= image_tag 'landing/rec.png' %>
                     <h1>Recruiting</h1>
                     <h5>Testet Bewerber</h5>
                 </div>
                 <div class="point">
-                    <%= image_tag 'landing/icon-event.png' %>
+                    <%= image_tag 'landing/event.png' %>
                     <h1>Event</h1>
                     <h5>100% Entertainmentgarantie</h5>
                 </div>
@@ -68,8 +68,23 @@
             </div>
         </div>
         <div class="right">
-            <%= image_tag 'landing/pitch.png' %>
-            
+            <div class="animIsometric" onmouseover="startIsometric()" onmouseout="stopIsometric()" ontouchstart="startIsometric()" ontouchend="stopIsometric()">
+                <div id="animIsometric"></div>
+                <script>
+                    var params = {
+                        container: document.getElementById('animIsometric'),
+                        renderer: 'svg',
+                        loop: true,
+                        autoplay: false,
+                        path: "<%= asset_url('main/animIsometric.json') %>",
+                    };
+                    var animIsometric;
+                    animIsometric = bodymovin.loadAnimation(params);
+                    function startIsometric() {animIsometric.play()}
+                    function stopIsometric() {animIsometric.pause()}
+                </script>
+            </div>
+            <%#= image_tag 'landing/pitch.png' %>    
         </div>
     </div>
     <%= image_tag 'landing/shape.svg', class: 'shape s310', id: 'shape1' %>
