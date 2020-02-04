@@ -27,7 +27,6 @@
 <section id="devise_form">
     <h1>Passwort vergessen?</h1>
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post}) do |f| %>
-        <%= render "devise/shared/error_messages", resource: resource %>
         <div class="form-group ">
             <%= f.email_field :email, class: 'form-field', id: 'loginEmail',placeholder:"Gib deine E-Mail ein!", required: true  %>
         </div>
@@ -38,4 +37,12 @@
     <div class="links">
     	<%= render "admins/shared/links" %>
     </div>
+    <% if flash[:wait_for_activation] %>
+		<div class="register-pop-up">
+			<div class="karte">
+			<h1>Fehler</h1>
+			<div class="text"><%= flash[:wait_for_activation] %></div>
+			</div>
+		</div>
+	<% end %>
 </section>

@@ -15,7 +15,7 @@ class Admins::PasswordsController < Devise::PasswordsController
 		  respond_with(resource)
 		end
 	  else
-		set_flash_message!(:notice, :admin_not_activated)
+		set_flash_message!(:wait_for_activation, :admin_not_activated)
 		render "new"
 	  end
   end

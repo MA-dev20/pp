@@ -22,12 +22,14 @@
 
   <body class="modal-open">
    <% flash.each do |name, msg| %>
+        <% if name != "wait_for_activation" %>
             <% if msg.is_a?(String) %>
                 <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
-                    <%= content_tag :div, msg, :id => "flash_#{name}" %>
-                </div>
-            <% end %>
-        <% end %>
+                	<%= content_tag :div, msg, :id => "flash_#{name}" %>
+            	</div>
+        	<% end %>
+    	<% end %>
+	<% end %>
     <%= yield %>
   </body>
 </html>

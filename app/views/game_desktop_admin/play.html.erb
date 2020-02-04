@@ -35,7 +35,7 @@
 </section>
 
 <%= audio_tag("play/intro.mp3", autoplay: false, loop: false, id: 'intro') %>
-<%= audio_tag(@word.sound, id: "word_sound") %>
+<%= audio_tag(@word.sound ? @word.sound : '', id: "word_sound") %>
 <%= audio_tag('play/theme.mp3', id: 'theme') %>
 <%= audio_tag('play/AufdenPunkt.mp3', id: 'sound_1') %>
 <%= audio_tag('play/BeiderKonkurrenz.mp3', id: 'sound_2') %>
@@ -47,6 +47,7 @@
 <%= audio_tag('play/Quatsch.mp3', id: 'sound_8') %>
 <%= audio_tag('play/Referenzen.mp3', id: 'sound_9') %>
 <%= audio_tag('play/countdown.mp3', id: 'countdown') %>
+<%= audio_tag('play/objectiontheme.mp3', id: 'objectiontheme') %>
 
 <style>
     body {
@@ -218,22 +219,31 @@ document.getElementById("theme").volume = 0.1;
         $(function() {
           if ($('#objection-text').text().trim() == 'Auf den Punkt kommen') {
             document.getElementById('sound_1').play();
+			document.getElementById('objectiontheme').play();
           } else if ($('#objection-text').text().trim() == 'Bei der Konkurrenz') {
               document.getElementById('sound_2').play();
+			  document.getElementById('objectiontheme').play();
           } else if ($('#objection-text').text().trim() == 'Muss ich den Chef Fragen') {
               document.getElementById('sound_3').play();
+			  document.getElementById('objectiontheme').play();
           } else if ($('#objection-text').text().trim() == 'Kein Budget') {
               document.getElementById('sound_4').play();
+			  document.getElementById('objectiontheme').play();
           } else if ($('#objection-text').text().trim() == 'Keine Zeit') {
               document.getElementById('sound_5').play();
+			  document.getElementById('objectiontheme').play();
           } else if ($('#objection-text').text().trim() == 'Kein Interesse') {
               document.getElementById('sound_6').play();
+			  document.getElementById('objectiontheme').play();
           } else if ($('#objection-text').text().trim() == 'Schick mir eine Mail') {
               document.getElementById('sound_7').play();
+			  document.getElementById('objectiontheme').play();
           } else if ($('#objection-text').text().trim() == 'Ist Quatsch') {
               document.getElementById('sound_8').play();
+			  document.getElementById('objectiontheme').play();
           } else if ($('#objection-text').text().trim() == 'Referenzen') {
             document.getElementById('sound_9').play();
+			  document.getElementById('objectiontheme').play();
           }
           document.getElementById('video-bg').pause()
           document.getElementById('theme').pause();
