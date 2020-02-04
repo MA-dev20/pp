@@ -85,6 +85,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def play
+	@peterswords = CatchwordsBasket.find_by(name: 'PetersWords')
     @video_toggle = @game.video_toggle
     if @game.state != 'play'
       @game.update(state: 'play')

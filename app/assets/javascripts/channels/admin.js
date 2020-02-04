@@ -22,7 +22,10 @@ jQuery(document).ready(function() {
             audio.pause()
             if(data['url'] != undefined){
               audio = new Audio(data['url']);
-              audio.play()
+              setTimeout(function(){
+                audio.play();	  
+              },1500)
+              
             }
         }
       }
