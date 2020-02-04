@@ -11,6 +11,7 @@
  *= require perfect-scrollbar
  *= require dropzone
  *= require cropper.min
+ *= require barack
  */
 
 @import "font-awesome-sprockets";
@@ -82,6 +83,69 @@
 #help-popup .video img {
 	height: 150px;
 	width: 300px;
+}
+.video-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, .8);
+    z-index: 101;
+	video {
+		display: block;
+		width: 280px;
+		height: 160px;
+		margin: calc(50vh - 80px) auto;
+	}
+	.close {
+		position: absolute;
+		right: 0;
+		top: 0;
+		height: 60px;
+		width: 60px;
+		line-height: 60px;
+		font-size: 40px;
+		text-align: center;
+		color: #667093;
+		cursor: pointer;
+	}
+}
+@media (min-width: 500px) {
+	 .video-modal video {
+        width: 480px;
+        height: 320px;
+        margin: calc(50vh - 160px) auto;
+    }
+}
+@media (min-width: 700px) {
+	.video-modal video {
+        width: 650px;
+        height: 366px;
+        margin: calc(50vh - 183px) auto;
+    }
+}
+@media (min-width: 900px) {
+	.video-modal video {
+        width: 800px;
+        height: 450px;
+        margin: calc(50vh - 225px) auto;
+    }
+}
+@media (min-width: 1100px) {
+	.video-modal video {
+        width: 1000px;
+        height: 564px;
+        margin: calc(50vh - 282px) auto;
+    }
+}
+@media (min-width: 1300px) {
+	.video-modal video {
+        width: 1200px;
+        height: 674px;
+        margin: calc(50vh - 337px) auto;
+    }
 }
 .customize-sm#words .custom-select {
 	height: 5vh;

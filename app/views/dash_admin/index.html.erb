@@ -309,6 +309,16 @@
 	</div>
 <% end %>
 <div class="fullscren-blur" id="help-popup">
+	<div class="video" onclick="togglevideo('startpitch')">
+		<%= image_tag 'dash/help/startpitch.png' %>
+		<div class="overlay"></div>
+		<div class="play"><i class="fas fa-play"></i></div>
+		<div class="text">Pitch erstellen?</div>
+	</div>
+</div>
+<div class="video-modal" id="videoStartPitch">
+	<div class="close"><i class="fas fa-times" onclick="togglevideo('startpitch')"></i></div>
+	<%= video_tag 'HIW/startpitch.mp4', id: 'modalVideo', controls: true, preload: "auto" %>
 </div>
 
 
@@ -370,6 +380,11 @@
     }
 </style>
 <script>
+	function togglevideo(e) {
+		if(e == "startpitch") {
+			$('#videoStartPitch').toggle();
+		}
+	}
 	function closeModal() {
 		$('.fullscreen-blur').hide();
 	}
