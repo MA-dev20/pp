@@ -399,11 +399,14 @@
 <div id='game_channel' data-game-id="<%= @game.id %>"></div>
 <% end %>
 <script type="text/javascript">
-  $("#list").on("click", function (e) {
-    if (objectionTime == true) {
-      $("#myModal").show()
-    }
-  })
+  setTimeout(function() {
+	  $("#list").on("click", function (e) {
+		if (objectionTime == true) {
+		  $("#myModal").show()
+		}
+	  })
+  },10000)
+  
   $(".close").on("click", function () {
     $("#myModal").hide()
   })
@@ -423,7 +426,7 @@
         setTimeout(function () {
           objectionTime = true;
           $("#list").removeAttr("disabled");
-        }, 10000)
+        }, 15000)
         $("#myModal").hide()
 
       }

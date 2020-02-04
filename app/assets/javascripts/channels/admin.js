@@ -17,7 +17,7 @@ jQuery(document).ready(function() {
           $("body").append(modal);
           $("#play-contant").addClass("play-content-blur");
           $("#myModal").show();
-          time = startTimerModal('15', document.getElementById('timeralli'));
+          time = startTimerModal('14', document.getElementById('timeralli'));
           if(!audio.paused)
             audio.pause()
             if(data['url'] != undefined){
