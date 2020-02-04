@@ -1955,10 +1955,11 @@ label .red {
         width: 400px;
     }
 	#content .head .left .points {
-        width: 600px;
+        width: 500px;
+		height: 140px;
     }
     #content .head .left .points .point {
-        width: 300px;
+        width: 250px;
 		height: 70px;
     }
 	#content .head .left .points .point img {
@@ -1972,6 +1973,10 @@ label .red {
 	#content .head .left .points .point h5 {
 		left: 70px;
 		top: 35px;
+	}
+	#content .head .left .cta {
+		height: 75px;
+		line-height: 75px;
 	}
     body {
         max-width: 100%;
@@ -1995,10 +2000,11 @@ label .red {
     }
     #content .head .left {
         left: 50px;
-        top: 100px;
+        top: 65px;
         width: 680px;
     }
     #content .head .right {
+		top: 50px;
         right: 50px;
         width: 600px;
         float: right;
