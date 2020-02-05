@@ -67,7 +67,7 @@ class GameMobileUserController < ApplicationController
         @random_pass = random_pass
         @user.encrypted_pw = @user.encrypt @random_pass
         @user.save!
-        SendInvitationJob.perform_later(@user, @random_pass)
+        # SendInvitationJob.perform_later(@user, @random_pass)
         TeamUser.create(user_id: @user.id, team_id: @game1.team_id)
         sign_in(@user)
         session[:game_session_id] = @game1.id

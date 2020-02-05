@@ -6,22 +6,20 @@ class InvitationMailer < ApplicationMailer
   #   en.invitation_mailer.before_start_game.subject
   #
   def before_start_game(user, game)
-    @greeting = "Hi"
     @user = user
     @game = game
-    mail to: @user.email
+    mail to: @user.email, subject: 'Neues Spiel'
   end
 
   def new_user user, pass
-    @greeting = "HI #{user.fname}! Your password Is #{pass}"
     @user = user
-    mail to: @user.email
+	@password = pass
+    mail to: @user.email, subject: 'Willkommen bei Peter Pitch'
   end
 
   def received_comments(user, turn)
     @user, @turn = user, turn
-    @greeting = "HI #{user.fname}! You have received comments "
-    mail to: @user.email
+    mail to: @user.email, subject: 'Neue Kommentare'
   end
 end
 
