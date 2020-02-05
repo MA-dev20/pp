@@ -42,6 +42,7 @@ class AdminsController < ApplicationController
 	  if !current_root.nil?
         redirect_to backoffice_edit_admin_path(@admin)
       else
+		sign_in(@admin, :bypass => true)
 	    redirect_to dash_admin_account_path
       end
 	else
