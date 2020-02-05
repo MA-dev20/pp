@@ -131,32 +131,38 @@
 	position: fixed;
 	bottom: 0;
 	left: 0;
-	line-height: 50px;
-	width: calc(100vw - 2vh);
+	line-height: 20px;
+	width: 100%;
 	background-color: rgba(0,0,0,.5);
 	z-index: 1000;
 	text-align: left;
 	color: white;
 	font-weight: bold;
 	padding: 0 1vh;
+	min-height: 50px;
 }
 .cookie-pop-up .text {
+	margin: 15px 0 15px 10px;
 	float: left;
+	max-width: calc(100% - 115px);
 }
 .cookie-pop-up a {
 	color: white;
 }
 .cookie-pop-up .cookie-btn {
-	float: right;
-	margin: 1vh;
+	position: absolute;
+	bottom: 10px;
+	right: 30px;
 	border-radius: 0;
 	background-color: white;
 	color: black;
-	padding: 0 20px;
 	height: 30px;
 	line-height: 30px;
 	font-size: 10px;
 	text-decoration: none;
+	width: 80px;
+	text-align: center;
+	align-self: center;
 }
 .cookie-pop-up .cookie-btn:hover {
 	color: white;
