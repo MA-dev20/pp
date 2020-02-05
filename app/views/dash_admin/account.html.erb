@@ -36,6 +36,16 @@
             <label for="">Nachname</label>
             <%= f.text_field :lname, class: 'field' %>
         </div>
+        <% if flash[:password_length] %>
+        <div class="half-1-3">
+            <label for="">Passwort</label>
+            <%= f.password_field :password, placeholder: flash[:password_length], class: 'field red' %>
+        </div>
+        <div class="half-1-2">
+            <label for="">Passwort wdhl</label>
+            <%= f.password_field :password_confirmation, placeholder: flash[:password_length], class: 'field red' %>
+        </div>
+        <% else %>
         <div class="half-1-3">
             <label for="">Passwort</label>
             <%= f.password_field :password, class: 'field' %>
@@ -44,6 +54,7 @@
             <label for="">Passwort wdhl</label>
             <%= f.password_field :password_confirmation, class: 'field' %>
         </div>
+        <% end %>
     </div>
     <div class="fields">
         <div class="half-1">

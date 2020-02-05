@@ -9,6 +9,15 @@ class Admins::RegistrationsController < Devise::RegistrationsController
       redirect_to after_register_path(@admin)
     end
   end
+  def update
+	resource.skip_password_validation = true
+	resource.update(admin_params)
+	if admin_params[:password].length > 0 && admin_params[:password].length < 6
+	  flash[:password_length] = "min. 6 Zeichen"
+	end
+	sign_in resource
+	redirect_to dash_admin_account_path
+  end
   def destroy
     resource.destroy
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)

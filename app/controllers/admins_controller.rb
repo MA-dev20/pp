@@ -36,6 +36,7 @@ class AdminsController < ApplicationController
   end
   
   def update
+	@admin.skip_password_validation = true
     if @admin.update(admin_params)
 	  if !current_root.nil?
         redirect_to backoffice_edit_admin_path(@admin)
