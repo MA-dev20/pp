@@ -1,8 +1,9 @@
 class SendInvitationJob < ApplicationJob
   queue_as :default
 
-  def perform(user, pass)
+  def perform(user, team)
     @user = user
-    InvitationMailer.new_user(@user, pass).deliver_later
+	@team = team
+    InvitationMailer.new_user(@user, @team).deliver_later
   end
 end

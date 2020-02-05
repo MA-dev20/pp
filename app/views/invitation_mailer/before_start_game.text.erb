@@ -1,3 +1,7 @@
-Invitation#before_start_game
+Hallo <%= @user.fname %>
+========================
+Wir haben ein Spiel gestartet.
+Trete uns bei: <%= root_url + '/' + @game.password %>
 
-<%= @greeting %>, find me in app/views/invitation_mailer/before_start_game.text.erb
+Grüße
+Dein Peter Pitch Team
