@@ -4,7 +4,7 @@
     <div class="img-upload">
         <label for="">Nutzerbild</label>
         <label for="admin_avatar" style="cursor: pointer; height: 11vh; width: 11vh">
-        	<%= image_tag @admin.avatar ? @admin.avatar.quad.url : '', id: "avatar" %>
+        	<%= image_tag @admin.avatar.present? ? @admin.avatar.quad.url : '', id: "avatar" %>
         	<input type="file" id="admin_avatar" accept='image/*'>
         	<i class="fas fa-plus-circle"></i>
         </label>
@@ -12,7 +12,7 @@
     <div class="img-upload">
         <label for="">Logo</label>
         <label for="admin_logo" class="poligon" style="cursor: pointer">
-        	<%= image_tag @admin.logo ? @admin.logo.url : '', id: 'logo' %>
+        	<%= image_tag @admin.logo.present? ? @admin.logo.url : '', id: 'logo' %>
         	<input type="file" id="admin_logo" accept='image/*'>
         	<i class="fas fa-plus-circle"></i>
         </label>

@@ -28,7 +28,7 @@
 
 <section id="sidebar">
     <div class="avatar">
-        <% if @admin.avatar? %>
+        <% if @admin.avatar.present? %>
             <%= image_tag @admin.avatar.quad.url %>
         <% else %>
             <%= image_tag 'defaults/wolf.jpg' %>
