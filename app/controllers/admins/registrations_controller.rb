@@ -20,7 +20,7 @@ class Admins::RegistrationsController < Devise::RegistrationsController
 	if admin_params[:password].length > 0 && admin_params[:password].length < 6
 	  flash[:password_length] = "min. 6 Zeichen"
 	end
-	sign_in resource
+	bypass_sign_in resource
 	redirect_to dash_admin_account_path
 	end
   end
