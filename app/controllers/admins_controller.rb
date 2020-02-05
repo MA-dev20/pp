@@ -6,11 +6,11 @@ class AdminsController < ApplicationController
   def create
     @admin = Admin.find_by(email: admin_params[:email])
     if @admin
-      flash[:admin_email] = 'Email schon vergeben!'
+      flash[:admin_email] = 'Du hast dich bereits registriert!'
 	  if !current_root.nil?
 		redirect_to backoffice_admin_path(@admin)
 	  else
-		redirect_to contact_path
+		redirect_to root_path
 	  end
     else
       @admin = Admin.new(admin_params)
