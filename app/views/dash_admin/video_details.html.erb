@@ -15,7 +15,11 @@
                     <%= @user.fname.to(0).upcase_first() + @user.lname.to(0).upcase_first() %>
                 </div>
             <% end %>
-            <%= @user.fname + ' ' + @user.lname + ' - ' + @turn.created_at.strftime("%d.%m.%Y") %>
+            <%
+                user_fname = @user.fname.present? ? @user.fname : ''
+                user_lname = @user.lname.present? ? @user.lname : ''
+            %>
+            <%= user_fname + ' ' + user_lname + ' - ' + @turn.created_at.strftime("%d.%m.%Y") %>
         </div>
         <div class="head transcript">Do say &amp; Don't say</div>
         <div class="karte counters">
