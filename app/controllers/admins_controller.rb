@@ -37,6 +37,7 @@ class AdminsController < ApplicationController
   
   def update
 	@admin.skip_password_validation = true
+	@admin.skip_reconfirmation!
     if @admin.update(admin_params)
 	  if !current_root.nil?
         redirect_to backoffice_edit_admin_path(@admin)
@@ -125,5 +126,8 @@ class AdminsController < ApplicationController
     
     def admin_params
       params.require(:admin).permit(:fname, :lname, :company_name, :employees, :company_position, :telephone, :message, :street, :city, :avatar, :logo, :zipcode, :email, :password)
+    end
+	def update_params
+      params.require(:admin).permit(:fname, :lname, :company_name, :employees, :company_position, :telephone, :message, :street, :city, :avatar, :logo, :zipcode, :password)
     end
 end
