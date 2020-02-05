@@ -11,9 +11,9 @@ class InvitationMailer < ApplicationMailer
     mail to: @user.email, subject: 'Neues Spiel'
   end
 
-  def new_user user, pass
+  def new_user user, team
     @user = user
-	@password = pass
+	@team = team
     mail to: @user.email, subject: 'Willkommen bei Peter Pitch'
   end
 
