@@ -1,7 +1,7 @@
 <h1><%= @admin.fname %> <%= @admin.lname %></h1>
 <div class="card" id="edit_admin">
     <h3>
-    	<% if @admin.avatar? %>
+    	<% if @admin.avatar.present? %>
     		<%= image_tag @admin.avatar.quad.url %>
     	<% end %>
     	<span class="text">Edit Admin</span>
@@ -54,6 +54,10 @@
         <div class="form-group">
             <label for="">Avatar</label>
             <%= f.file_field :avatar, class: "form-field" %>
+        </div>
+        <div class="form-group">
+            <label for="">Logo</label>
+            <%= f.file_field :logo, class: "form-field" %>
         </div>
         <div class="form-group submit">
             <%= f.hidden_field :site, value: 'backoffice' %>

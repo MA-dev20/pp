@@ -65,8 +65,8 @@ Rails.application.configure do
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { host: 'peterpitch.de' }
-  config.action_mailer.default_options = {from: 'no-reply@peterpitch.de'}
+  config.action_mailer.default_url_options = { host: 'peterpitch.com' }
+  config.action_mailer.default_options = {from: 'no-reply@peterpitch.com'}
   config.action_mailer.perform_caching = false
   config.action_mailer.asset_host = "https://peterpitch.com"
     
@@ -74,8 +74,8 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address:              'smtp.strato.de',
     port:                 587,
-    domain:               'peterpitch.de',
-    user_name:            'resing@peterpitch.de',
+    domain:               'peterpitch.com',
+    user_name:            'resing@peterpitch.com',
     password:             't42Pz5RhzfFWYwqX',
     authentication:       'plain',
     enable_starttls_auto: true }

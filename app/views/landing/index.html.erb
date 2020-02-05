@@ -494,6 +494,14 @@
 	</div>
 </div>
 <% end %>
+<% if flash[:admin_email] %>
+<div class="register-pop-up">
+	<div class="karte">
+	<h1>E-Mail Adresse Vergeben!</h1>
+	<div class="text"><%= flash[:admin_email] %></div>
+	</div>
+</div>
+<% end %>
 <div class="fullscreen-modal" id="loginModal">
     
     <div class="close"><i class="fas fa-times" onclick="showLoginModal()"></i></div>
@@ -543,7 +551,7 @@
 	function hideDontLeaveModal() {
 		$('#dontLeaveModal').hide();
 	}
-	<% if flash[:thanks_for_register] %>
+	<% if flash[:thanks_for_register] || flash[:admin_email] %>
 		setTimeout(function(){$('.register-pop-up').hide();}, 5100);
 	<% end %>
 	if(window.location.hash == '#login') {

@@ -168,7 +168,7 @@
         <div class="karte" id="commentCard">
             <% @comments.each do |c| %>
             <div class="comment" onclick="videoJumpTo(<%= c.time_of_video %>)">
-                <%= image_tag @admin.avatar.quad.url %>
+                <%= image_tag @admin.avatar.present? ? @admin.avatar.quad.url : '' %>
                 <div class="head">
                 <% if c.time_of_video < 10 %>
                   <%= @admin.fname + ' ' + @admin.lname + ' - 0:0' + c.time_of_video.to_s %>
