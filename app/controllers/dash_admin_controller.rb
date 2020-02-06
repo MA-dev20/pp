@@ -524,7 +524,7 @@ class DashAdminController < ApplicationController
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
     @turns_rating = @turns_rating
     if !@turns_rating.present?
-      flash[:danger] = 'Noch keine bewerteten Spiele!'
+      flash[:danger] = 'Noch keine bewerteten Pitches!'
       return redirect_to dash_admin_users_path
     end
     @rating = {
@@ -551,7 +551,7 @@ class DashAdminController < ApplicationController
     @turns_rating = @turns.map(&:turn_rating).flatten.compact
     @turns_rating = @turns_rating.last(7)
     if !@turns_rating.present? || !@team.users.present?
-      flash[:danger] = 'Noch keine bewerteten Spiele!'
+      flash[:danger] = 'Noch keine bewerteten Pitches!'
       return redirect_to dash_admin_users_path
     end
     userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
@@ -574,7 +574,7 @@ class DashAdminController < ApplicationController
     @user1 = User.find(params[:compare_user_id])
     @turns_rating2 = @user1.turn_ratings
     if !@turns_rating2.present? && !@turns_rating.present?
-      flash[:danger] = 'Noch keine bewerteten Spiele!'
+      flash[:danger] = 'Noch keine bewerteten Pitches!'
       return redirect_to dash_admin_users_path
     end
     @userss = @admin.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings).distinct
@@ -593,7 +593,7 @@ class DashAdminController < ApplicationController
     @reviewed_videos = @turns.where.not(recorded_pitch: nil).order('created_at DESC')
     @turns_rating2 = @user1.turn_ratings
     if !@turns_rating2.present? && !@turns_rating.present?
-      flash[:danger] = 'Noch keine bewerteten Spiele!'
+      flash[:danger] = 'Noch keine bewerteten Pitches!'
       return redirect_to dash_admin_users_path
     end
     @rating = @turns_rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]
