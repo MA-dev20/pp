@@ -381,8 +381,15 @@
 </style>
 <script>
 	function togglevideo(e) {
+		var vid;
 		if(e == "startpitch") {
 			$('#videoStartPitch').toggle();
+			vid = document.querySelector('#videoStartPitch #modalVideo');
+		}
+		if(!vid.paused){
+			vid.pause();
+		} else {
+			vid.play();
 		}
 	}
 	function closeModal() {
