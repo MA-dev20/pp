@@ -13,7 +13,7 @@ class GameMobileUserController < ApplicationController
     if @game1
       session[:game_session_id] = @game1.id
     else
-      flash[:danger] = 'Konnte kein passendes Spiel finden!'
+      flash[:danger] = 'Konnte keinen passenden Pitch finden!'
       redirect_to root_path
     end
   end
@@ -29,7 +29,7 @@ class GameMobileUserController < ApplicationController
   def new
     @game1 = Game.find(session[:game_session_id])
     if !@game1
-      flash[:danger] = 'Konnte kein passendes Spiel finden!'
+      flash[:danger] = 'Konnte keinen passenden Pitch finden!'
       redirect_to root_path
     end
   end
@@ -74,7 +74,7 @@ class GameMobileUserController < ApplicationController
         redirect_to gmu_new_name_path
       end
     else
-      flash[:danger] = 'Konnte kein passendes Spiel finden!'
+      flash[:danger] = 'Konnte keinen passenden Pitch finden!'
       redirect_to root_path
     end
   end
@@ -343,7 +343,7 @@ class GameMobileUserController < ApplicationController
         end
         redirect_to gmu_wait_path
       else
-        flash[:danger] = 'Das Spiel ist schon beendet!'
+        flash[:danger] = 'Der Pitch ist schon beendet!'
         redirect_to root_path
       end
     end

@@ -913,7 +913,7 @@ function ratingSpontan() {
 		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% end %>
 		label[i] = "<%= cd[:date].to_s %>";
-		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+		datapoints[i] = {value: <%= cd[:spontan] / 10.0 %>, data: json_data};
 		<% if cd[:spontan2] %>
 		datapoints2[i] = {value: <%= cd[:spontan2] / 10.0 %>, data: json_data};
 		<% else %>
@@ -954,7 +954,7 @@ function ratingCreative() {
 		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% end %>
 		label[i] = "<%= cd[:date].to_s %>";
-		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+		datapoints[i] = {value: <%= cd[:creative] / 10.0 %>, data: json_data};
 		<% if cd[:creative2] %>
 		datapoints2[i] = {value: <%= cd[:creative2] / 10.0 %>, data: json_data};
 		<% else %>
@@ -995,7 +995,7 @@ function ratingBody() {
 		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% end %>
 		label[i] = "<%= cd[:date].to_s %>";
-		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+		datapoints[i] = {value: <%= cd[:body] / 10.0 %>, data: json_data};
 		<% if cd[:body2] %>
 		datapoints2[i] = {value: <%= cd[:body2] / 10.0 %>, data: json_data};
 		<% else %>
@@ -1036,7 +1036,7 @@ function ratingRhet() {
 		json_data['word2'] = "<% if @word2 %><%= @word2.name %><% else %><span class='red'>Wort gelöscht</span><% end %>";
 		<% end %>
 		label[i] = "<%= cd[:date].to_s %>";
-		datapoints[i] = {value: <%= cd[:ges] / 10.0 %>, data: json_data};
+		datapoints[i] = {value: <%= cd[:rhetoric] / 10.0 %>, data: json_data};
 		<% if cd[:rhetoric2] %>
 		datapoints2[i] = {value: <%= cd[:rhetoric2] / 10.0 %>, data: json_data};
 		<% else %>

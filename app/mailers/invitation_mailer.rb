@@ -8,7 +8,7 @@ class InvitationMailer < ApplicationMailer
   def before_start_game(user, game)
     @user = user
     @game = game
-    mail to: @user.email, subject: 'Neues Spiel'
+    mail to: @user.email, subject: 'Neuer Pitch'
   end
 
   def new_user user, team

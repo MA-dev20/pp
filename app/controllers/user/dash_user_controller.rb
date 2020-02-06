@@ -15,7 +15,7 @@ class User::DashUserController < UsersController
     @current_rating = user_rating @user
     @reviewed_videos = @user.turns.where.not(recorded_pitch: nil).order('created_at DESC') 
     if !@turns_rating
-      flash[:danger] = 'Noch keine bewerteten Spiele!'
+      flash[:danger] = 'Noch kein bewerteten Pitch!'
       redirect_to dash_admin_users_path
     end
     @rating = @turns_rating.select("AVG(turn_ratings.body) AS body, AVG(turn_ratings.creative) AS creative, AVG(turn_ratings.spontan) AS spontan, AVG(turn_ratings.ges) AS ges, AVG(turn_ratings.rhetoric) AS rhetoric")[0]

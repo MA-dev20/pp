@@ -55,7 +55,7 @@ class GameMobileAdminController < ApplicationController
       end
     else
       session[:admin_email] = nil
-      flash[:danger] = "Konnte kein passende Spiel finden"
+      flash[:danger] = "Konnte keinen passenden Pitch finden"
       redirect_to root_path
     end
   end

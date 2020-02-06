@@ -32,7 +32,7 @@ class GamesController < ApplicationController
       if @game.save
         redirect_to dash_admin_create_game_2_path(@game)
       else
-        flash[:danger] = 'Konnte Spiel nicht speichern'
+        flash[:danger] = 'Konnte Pitch nicht speichern'
         redirect_to dash_admin_games_path(params[:game][:team_id])
       end
     end
