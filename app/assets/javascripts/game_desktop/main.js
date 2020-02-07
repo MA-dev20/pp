@@ -73,6 +73,7 @@ function pick(xnum) {
 
 // Text Effect on gdesktop Turn
 function textanim() {
+$('#word').show();
 const resolver = {
   resolve: function resolve(options, callback) {
     // The string to resolve
