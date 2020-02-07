@@ -29,6 +29,8 @@
     </div>
 
     <script>
+	checkOrientation();
+ 	window.addEventListener('resize', checkOrientation);
     setTimeout(function() {
       ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);
       $('.mid-img').addClass('pulse');

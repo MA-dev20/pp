@@ -14,3 +14,7 @@
     <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse' %>
 </div>
 <% end %>
+<script>
+	checkOrientation();
+ 	window.addEventListener('resize', checkOrientation);
+</script>

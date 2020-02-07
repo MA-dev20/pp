@@ -9,3 +9,7 @@
    <a href="<%= gma_replay_path %>" class="pol-bg" style="display: inline;"><i class="fas fa-redo"></i></a>
    <a href="<%= gma_ended_game_path %>" class="pol-bg" style="display: inline;" data-confirm="Bist du sicher, dass du keine neue Runde starten möchtest?"><i class="fas fa-times"></i></a>
 </div>
+<script>
+	checkOrientation();
+ 	window.addEventListener('resize', checkOrientation);
+</script>

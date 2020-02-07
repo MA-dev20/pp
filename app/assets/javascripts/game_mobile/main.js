@@ -34,3 +34,12 @@ function ratecircle(id,text_id,val) {
     });
     bar.animate(val);
 }
+function checkOrientation() {
+	if (window.innerHeight > window.innerWidth) {
+		$('#content').show();
+		$('#landscape').hide();
+	} else {
+		$('#content').hide();
+		$('#landscape').show();
+	}
+}

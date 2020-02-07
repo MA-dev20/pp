@@ -11,6 +11,29 @@
 body {
 	font-family: 'BarackPro-Solid' !important;
 }
+#landscape {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	background: linear-gradient(#1dacf1 0%, #1a8ed6 51%, #145daa 100%);
+	color: white;
+	.mid {
+		position: fixed;
+		width: 100%;
+		height: 100px;
+		line-height: 50px;
+		top: calc(50% - 50px);
+		text-align: center;
+		font-size: 30px;
+		i {
+			display: inline;
+		}
+	}
+}
 #content {
     position: absolute;
     top: 0;

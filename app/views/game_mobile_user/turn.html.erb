@@ -11,4 +11,7 @@
 <div class="middle">
     <%= image_tag @cur_user.avatar.quad.url, class: 'mid-img green pulse' %>
 </div>
-
+<script>
+	checkOrientation();
+ 	window.addEventListener('resize', checkOrientation);
+</script>
