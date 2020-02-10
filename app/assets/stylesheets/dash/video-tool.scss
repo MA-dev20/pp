@@ -153,6 +153,24 @@
 	left: 0;
 	height: 31.5vh;
 	width: 100%;
+	.blur {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		filter: blur(2px);
+		padding: 0.4vh 4.3vh;
+	}
+	.blue {
+		position: relative;
+		margin: 10vh 0;
+		line-height: 11vh;
+		font-size: 3vh;
+		font-weight: bold;
+		color: rgba(0,0,0,.3);
+		text-align: center;
+	}
 }
 .video-details .right-part .toggle-my-ratings {
 	position: relative;
@@ -417,10 +435,37 @@
 .video-details .right-part .karte .comment {
     position: relative;
     width: 100%;
-    height: 9.6vh;
+    min-height: 9.6vh;
     border-bottom: 0.1vh solid #dfe1e5;
     padding-top: 1.7vh;
     cursor: pointer;
+	.head {
+		height: 3.7vh;
+		line-height: 3.7vh;
+		font-size: 1.8vh;
+		font-weight: 300;
+		text-align: left;
+	}
+	.edit {
+		position: absolute;
+		top: 1.7vh;
+		right: 0;
+		height: 3.7vh;
+		line-height: 3.7vh;
+		.far {
+			margin: 0 .5vh;
+		}
+		.fa-edit {
+			color: #16e2a5;
+		}
+		.fa-trash-alt {
+			color: lightgrey;
+		}
+		.far:hover {
+			opacity: .5;
+		}
+		
+	}
 }
 .video-details .right-part .karte .comment:hover {
     background-color: rgba(192,192,192,.1);
@@ -435,19 +480,20 @@
     border-radius: 50%;
     margin: 0 1vh 0 0;
 }
-.video-details .right-part .karte .comment .head {
-    height: 3.7vh;
-    line-height: 3.7vh;
-    font-size: 1.8vh;
-    font-weight: 300;
-    text-align: left;
-}
 .video-details .right-part .karte .comment .comment-title {
+	position: relative;
+	min-height: 4.3vh;
+	height: auto;
     font-size: 1.7vh;
+	display: flex;
+	input {
+		position: relative;
+		height: 3vh;
+		margin: .65vh 0 .65vh 3vh;
+	}
 }
 .video-details .right-part .karte .comment .comment-title span {
-    position: relative;
-    float: left;
+    position: absolute;
     left: 0;
     top: 0;
     height: 1.2vh;
@@ -455,9 +501,13 @@
     border-radius: 50%;
     margin: 1.6vh 0.5vh;
 }
-.video-details .right-part .karte .comment .comment-title {
-    margin-left: 4.69vh;
-    line-height: 4.3vh;
+.video-details .right-part .karte .comment .comment-title span#text {
+	position: relative;
+    min-height: 2vh;
+	margin: 1.15vh 0 1.15vh 3vh;
+	line-height: 2vh;
+	width: auto;
+	height: auto;
 }
 .video-details .right-part #videoTime {
     float: left;

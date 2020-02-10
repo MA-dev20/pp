@@ -41,13 +41,14 @@
         </div>
         <div class="head transcript">Transkript</div>
         <div class="karte text" id="video-text">
+        	<div class="blur">
         	<% if @turn.video_text.present? %>
             	<%= @turn.video_text %>
             <% else %>
-            	<div class="red">
-            		Unsere KI verarbeitet das Video gerade. Habe noch etwas Geduld.
-            	</div>
+            	Unsere KI verarbeitet das Video gerade. Habe noch etwas Geduld.
         	<% end %>
+        	</div>
+        	<div class="blue">coming soon...</div>
         </div>
     </div>
     <div class="middle-part karte">
@@ -167,9 +168,9 @@
         <div class="head comments">Kommentare</div>
         <div class="karte" id="commentCard">
             <% @comments.each do |c| %>
-            <div class="comment" onclick="videoJumpTo(<%= c.time_of_video %>)">
+            <div class="comment" id="comment_<%= c.id %>" >
                 <%= image_tag @admin.avatar.present? ? @admin.avatar.quad.url : '' %>
-                <div class="head">
+                <div class="head"  onclick="videoJumpTo(<%= c.time_of_video %>)">
                 <% if c.time_of_video < 10 %>
                   <%= @admin.fname + ' ' + @admin.lname + ' - 0:0' + c.time_of_video.to_s %>
                 <% elsif c.time_of_video < 60 %>
@@ -180,12 +181,31 @@
                   <%= @admin.fname + ' ' + @admin.lname + ' - ' + (c.time_of_video / 60).to_s + ':' + (c.time_of_video % 60).to_s %>
                 <% end %>
                 </div>
-                <div class="comment-title">
-                    <span class="<%= c.type_of_comment %>"></span><%= c.title %>
+                <div class="edit">
+                	<i class="far fa-edit" onclick="editComment(<%= c.id %>)"></i>
+                	<%= link_to '', destroy_comment_path(c.id), class: 'far fa-trash-alt' %>
+                </div>
+                <div class="comment-title" onclick="videoJumpTo(<%= c.time_of_video %>)" id="comment_title_<%= c.id %>">
+                    <span class="<%= c.type_of_comment %>"></span>
+                    <span id="text"><%= c.title %></span>
+                </div>
+                <div class="comment-title" id="comment_form_<%= c.id %>" style="display: none">
+                	<span class="<%= c.type_of_comment %>"></span>
+                	<%= form_for(:comment, url: edit_comment_path(c.id)) do |f| %>
+            			<% f.text_field :title, class: 'form-field', value: c.title, autofocus: true %>
+            		<% end %>	
                 </div>
             </div>
+            
             <% end %>
         </div>
+        <script>
+			function editComment(comment_id) {
+				$('#comment_form_' + comment_id).toggle();
+				$('#comment_form_' + comment_id + ' input').focus();
+				$('#comment_title_' + comment_id).toggle();
+			}
+		</script>
         <div class="progress-in-video"></div>
         <form class="" id="add-comment-form">
             <div class="time" id="videoTime">0:00</div>
@@ -252,13 +272,21 @@
     });
 
     function addCommentToCommentBox(text, type){
-        var comment = $('<div class="comment" onclick="videoJumpTo(2)"></div>')
+		var hms = $('#videoTime').text(); 
+        var a = hms.split(':');
+        var time_seconds = 0; 
+        if (a.length > 2) {
+        time_seconds = (parseInt(a[0]) * 3600) + (parseInt(a[1]) * 60) + (a[2]); 
+        } else {
+        time_seconds = parseInt(a[0]) * 60 + parseInt(a[1])
+        } 
+        var comment = $('<div class="comment" onclick="videoJumpTo('+time_seconds+')"></div>')
         var img = $('<img>');
         $(img).attr('src', admin_img);
         var user = $('<div class=head></div>')
         $(user).text(admin_fname + ' ' + admin_lname + ' - ' + $('#videoTime').text())
         var span_elem = $('<span class="neutral"></span>')
-        $(comment).append(img).append(user).append('<div class=comment-title>' + '<span class='+type+'></span>' + text +'</div>');
+        $(comment).append(img).append(user).append('<div class=comment-title>' + '<span class='+type+'></span><span id="text">' + text +'</span></div>');
         $('#commentCard').append(comment);
     }
 
