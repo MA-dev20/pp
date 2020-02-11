@@ -1,116 +1,251 @@
 <h1><%= @admin.fname %> <%= @admin.lname %></h1>
 
-<div class="card" id="contact">
-    <h3>Kontakt</h3>
-    <table>
-        <tr>
-            <th>Telefonnr.</th>
-            <td><%= @admin.telephone %></td>    
-        </tr>
-        <tr>
-            <th>E-Mail</th>
-            <td><%= @admin.email %></td>    
-        </tr>
-        <tr>
-            <th>Straße / Hsnr.</th>
-            <td><%= @admin.street %></td>
-        </tr>
-        <tr>
-            <th>PLZ / Ort</th>
-            <td><%= @admin.zipcode %> <%= @admin.city %></td>
-        </tr>
-    </table>
+<div class="row">
+	<div class="card">
+		<h3>Admin</h3>
+		<%= form_for(:admin, url: backoffice_edit_admin_path(@admin)) do |f| %>
+		<table>
+			<tr>
+				<th>Vorname</th>
+				<td><%= f.text_field :fname, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Nachname</th>
+				<td><%= f.text_field :lname, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>E-Mail</th>
+				<td><%= f.email_field :email, class: 'form-field' %></td>    
+			</tr>
+			<tr>
+				<th>Passwort</th>
+				<td><%= f.password_field :password, class: 'form-field' %></td>
+			</tr>
+		</table>
+		<%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
+		<% end %>
+	</div>
+	<div class="card">
+		<h3>Kontakt</h3>
+		<%= form_for(:admin, url: backoffice_edit_admin_path(@admin)) do |f| %>
+		<table>
+			<tr>
+				<th>Telefon</th>
+				<td><%= f.text_field :telephone, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Straße #</th>
+				<td><%= f.text_field :street, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>PLZ</th>
+				<td><%= f.number_field :zipcode, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Ort</th>
+				<td><%= f.text_field :city, class: 'form-field' %></td>
+			</tr>
+		</table>
+		<%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
+		<% end %>
+	</div>
+	
+	<div class="card">
+		<h3>Bilder</h3>
+		<%= form_for(:admin, url: backoffice_edit_admin_path(@admin)) do |f| %>
+		<div class="avatar">
+			<label for="admin_avatar">
+				<%= image_tag @admin.avatar? ? @admin.avatar.quad.url : '', id: 'avatar' %>
+			</label>
+			<%= f.file_field :avatar %>
+		</div>
+		<div class="logo">
+			<label for="admin_logo">
+				<%= image_tag @admin.logo? ? @admin.logo.url : '', id: 'logo' %>
+			</label>
+			<%= f.file_field :logo %>
+		</div>
+		<% end %>
+	</div>
+	
+	<div class="card">
+		<h3>Unternehmen</h3>
+		<%= form_for(:admin, url: backoffice_edit_admin_path(@admin)) do |f| %>
+		<table>
+			<tr>
+				<th>Name</th>
+				<td><%= f.text_field :company_name, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Position</th>
+				<td><%= f.text_field :company_position, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Mitarbeiter</th>
+				<td><%= f.number_field :employees, class: 'form-field' %></td>
+			</tr>
+		</table>
+		<%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
+		<% end %>
+	</div>
+	
 </div>
-<div class="card" id="company">
-    <h3>Unternehmen</h3>
-    <table>
-        <tr>
-            <th>Name</th>
-            <td><%= @admin.company_name %></td>
-        </tr>
-        <tr>
-            <th>Position</th>
-            <td><%= @admin.company_position %></td>
-        </tr>
-        <tr>
-            <th>Mitarbeiter</th>
-            <td><%= @admin.employees %></td>
-        </tr>
-    </table>
+
+<div class="row">
+	<div class="card">
+		<% if @admin.activated %>
+			<h3>Stats</h3>
+			<table>
+				<tr>
+					<th>Teams / Users</th>
+					<td><%= @admin.teams.count %> / <%= @admin.users.count %></td>
+				</tr>
+				<tr>
+					<th>Pitches</th>
+					<td><%= @admin.games.count %></td>
+				</tr>
+				<tr>
+					<th>Wort- / Einwandlisten</th>
+					<td><%= @cw_baskets.count %> / <%= @ob_baskets.count %></td>
+				</tr>
+				<tr>
+					<th>Logins</th>
+					<td><%= @admin.sign_in_count %></td>
+				</tr>
+				<tr>
+					<th>Letzte Aktivität</th>
+					<td>
+						<% if !@admin.last_sign_in_at.nil? %>
+							<%= @admin.last_sign_in_at.strftime("%d.%m.%Y") %>
+						<% end %>
+					</td>
+				</tr>
+			</table>
+		<% else %>
+			<h3>Nachricht</h3>
+			<%= @admin.message %>
+		<% end %>	
+	</div>
+	<div class="card">
+	   <h3>Edit</h3>
+		<% if !@admin.activated %><%= link_to 'Akzeptieren', backoffice_activate_admin_path(@admin), class: 'btn btn-green' %><% end %>
+		<%= link_to 'Löschen', backoffice_destroy_admin_path(@admin), class: 'btn btn-green', data: { confirm: 'Are you sure?' } %>
+	</div>
 </div>
-<% if @admin.activated %>
-<div class="card" id="stats">
-    <h3>Stats</h3>
-    <table>
-        <tr>
-            <th>Teams / Users</th>
-            <td><%= @admin.teams.count %> / <%= @admin.users.count %></td>
-        </tr>
-        <tr>
-            <th>Pitches</th>
-            <td><%= @admin.games.count %></td>
-        </tr>
-        <tr>
-            <th>Wort- / Einwandlisten</th>
-            <td><%= @cw_baskets.count %> / <%= @ob_baskets.count %></td>
-        </tr>
-        <tr>
-            <th>Logins</th>
-            <td><%= @admin.sign_in_count %></td>
-        </tr>
-        <tr>
-            <th>Letzte Aktivität</th>
-            <td>
-                <% if !@admin.last_sign_in_at.nil? %>
-                    <%= @admin.last_sign_in_at.strftime("%d.%m.%Y") %>
-                <% end %>
-            </td>
-        </tr>
-    </table>
-</div>
-<% else %>
-<div class="card" id="message">
-    <h3>Nachricht</h3>
-    <%= @admin.message %>
-</div>
-<% end %>
-<div class="card" id="edit">
-   <h3>Edit</h3>
-    <% if !@admin.activated %><%= link_to 'Akzeptieren', backoffice_admin_activate_path(@admin), class: 'btn btn-green' %><% end %>
-    <%= link_to 'Edit', backoffice_edit_admin_path(@admin), class: 'btn btn-green' %>
-    <%= link_to 'Löschen', backoffice_admin_destroy_path(@admin), class: 'btn btn-green', data: { confirm: 'Are you sure?' } %>
-</div>
-<div class="user-overview">
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Spiele</th>
-                <th>Logins</th>
-                <th>Letze Aktivität</th>
-                <th>Erstellt</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% @users.each do |u| %>
-            <tr onclick="redirect('user', <%= u.id %>)">
-                <td><%= u.fname %> <%= u.lname %></td>
-                <td><%= u.email %></td>
-                <td><%= u.turns.count %></td>
-                <td><%= u.sign_in_count %></td>
-                <td>
-                    <% if !u.last_sign_in_at.nil? %>
-                        <%= u.last_sign_in_at.strftime("%d.%m.%Y") %>
-                    <% end %>
-                </td>
-                <td><%= u.created_at.strftime("%d.%m.%Y") %></td>
-            </tr>
-            <% end %>
-        </tbody>
-    </table>
+<div class="popup" id="popup">
+   	<div class="img-container">
+   		<%= image_tag '', id: 'admin_image' %>
+   	</div>
+    <div class="form-group center">
+    	<div class="btn btn-green" id="crop">speichern</div>
+    </div>
+    <div class="close" onclick="hidePopup()"><i class="fas fa-times"></i></div>
 </div>
 <script>
+	    function showPopup() {
+        $('#popup').show();
+    }
+    function hidePopup() {
+        $('#popup').hide();
+    }
+	(function ($) {
+	  $.each(['show', 'hide'], function (i, ev) {
+	    var el = $.fn[ev];
+	    $.fn[ev] = function () {
+	      this.trigger(ev);
+	      return el.apply(this, arguments);
+	    };
+	  });
+	})(jQuery);
+	var inputLogo = document.getElementById('admin_logo');
+	var inputAvatar = document.getElementById('admin_avatar');
+	var image = document.getElementById('admin_image');
+	var editLogo = false;
+	
+	inputLogo.addEventListener('change', function(e) {
+		var files = e.target.files;
+		var done = function(url) {
+			inputLogo.value = '';
+			image.src = url;
+			editLogo = true;
+			$('#popup').show();
+		};
+		var reader, file, url;
+		if(files && files.length > 0) {
+			file = files[0];
+			if(URL) {
+				done(URL.createObjectURL(file));
+			} else if(FileReader) {
+				reader = new FileReader();
+				reader.onload = function(e) {
+					done(reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+	})
+	inputAvatar.addEventListener('change', function(e) {
+		var files = e.target.files;
+		var done = function(url) {
+			inputLogo.value = '';
+			image.src = url;
+			editLogo = false;
+			$('#popup').show();
+		};
+		var reader, file, url;
+		if(files && files.length > 0) {
+			file = files[0];
+			if(URL) {
+				done(URL.createObjectURL(file));
+			} else if(FileReader) {
+				reader = new FileReader();
+				reader.onload = function(e) {
+					done(reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+	})
+	$('#popup').on('show', function() {
+		if(editLogo == true) {
+			cropper = new Cropper(image, {});
+		} else {
+			cropper = new Cropper(image, {
+				aspectRatio: 1,	
+			});	
+		}
+	})
+	$('#popup').on('hide', function() {
+		cropper.destroy();
+		cropper = null;
+	})
+	$('#crop').on('click', function() {
+		var initialURL, canvas;
+		if(cropper) {
+			canvas = cropper.getCroppedCanvas({
+				fillColor: "white"
+			});
+			if(editLogo == true) {
+				initalURL = logo.src;
+				logo.src = canvas.toDataURL();
+				canvas.toBlob(function(blob) {
+					var file = new window.File([blob], 'logo.jpg', {type: 'image/jpg'});
+					var formData = new FormData();
+					formData.append('file', file);
+					uploadImage('logo', formData);
+				});
+			} else {
+				initalURL = avatar.src;
+				avatar.src = canvas.toDataURL();
+				canvas.toBlob(function(blob) {
+					var file = new window.File([blob], 'avatar.jpg', {type: 'image/jpg'});
+					var formData = new FormData();
+					formData.append('file', file);
+					uploadImage('avatar', formData);
+				});
+			}
+		};
+	})
 	function redirect(model, model_id) {
         if(model == 'team') {
             location.replace('/backoffice/teams/'+model_id);
@@ -124,4 +259,31 @@
 			location.replace('/backoffice/games/'+model_id);
 		}
     }
+	function uploadImage(img, formData) {
+		var url;
+		if(img == 'logo') {
+			url = '<%= backoffice_update_admin_logo_path(@admin) %>';
+		} else {
+			url = '<%= backoffice_update_admin_avatar_path(@admin) %>';
+		};
+		$.ajax({
+			url: url,
+			type: 'put',
+			cache: false,
+			async: true,
+			contentType: false,
+			processData: false,
+			data: formData,
+			beforeSend: function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+			success: function(res) {
+				formData = new FormData();
+				if(img == 'logo') {
+					$('#logo').data('url', res.file)
+				} else {
+					$('#avatar').data('url', res.file)
+				}
+				$('#popup').hide();
+			}
+		})	
+	}
 </script>

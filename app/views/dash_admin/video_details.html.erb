@@ -207,25 +207,26 @@
 			}
 		</script>
         <div class="progress-in-video"></div>
-        <form class="" id="add-comment-form">
+        <%= form_for(:comment, url: create_comment_path(@turn.id), html: {id: 'add-comment-form'}) do |f| %>
+           	<%= f.hidden_field :current_time, value: '0'  %>
             <div class="time" id="videoTime">0:00</div>
             <label for="coment_type_of_comment_negative" id="negative">
-                    <input type="radio" value="negative" checked="checked" name="radio" id="comment_type_of_comment_neutral">
+                   	<%= f.radio_button :type_of_comment, :negative %>
                     <span class="checkbox"><span class="dot"></span></span>
                     Negativ
                 </label>
                 <label for="coment_type_of_comment_neutral" id="neutral">
-                        <input type="radio" value="neutral" checked="checked" name="radio" id="comment_type_of_comment_neutral">
+                    <%= f.radio_button :type_of_comment, :neutral, checked: true %>
                     <span class="checkbox"><span class="dot"></span></span>
                     Neutral
                 </label>
                 <label for="coment_type_of_comment_positive" id="positive">
-                    <input type="radio" value="positive" name="radio" id="comment_type_of_comment_positive">
+                    <%= f.radio_button :type_of_comment, :positive %>
                     <span class="checkbox"><span class="dot"></span></span>
                     Positiv
                 </label>
-            <input class="field" placeholder="Kommentar hinzufügen" type="text" name="title" id="comment_title"> 
-        </form>
+                <%= f.text_field :title, placeholder: 'Kommentar hinzufügen', class: "field" %>
+        <% end %>
        
         
     </div>
@@ -252,56 +253,6 @@
 	new PerfectScrollbar('#video-text');
     setDuration();
 
-    $("#add-comment-form").on('submit', function(e){
-      e.preventDefault()
-      var text = $("input[name=title]").val()
-      if(text.length > 0){
-        $("input[name=title]").val('')
-        var type = $("input[name=radio]:checked").val()
-        addCommentToCommentBox(text, type)
-        var hms = $('#videoTime').text(); 
-        var a = hms.split(':');
-        var time_seconds = 0; 
-        if (a.length > 2) {
-        time_seconds = (parseInt(a[0]) * 3600) + (parseInt(a[1]) * 60) + (a[2]); 
-        } else {
-        time_seconds = parseInt(a[0]) * 60 + parseInt(a[1])
-        } 
-        sendToServer(text, type, time_seconds)
-      }
-    });
-
-    function addCommentToCommentBox(text, type){
-		var hms = $('#videoTime').text(); 
-        var a = hms.split(':');
-        var time_seconds = 0; 
-        if (a.length > 2) {
-        time_seconds = (parseInt(a[0]) * 3600) + (parseInt(a[1]) * 60) + (a[2]); 
-        } else {
-        time_seconds = parseInt(a[0]) * 60 + parseInt(a[1])
-        } 
-        var comment = $('<div class="comment" onclick="videoJumpTo('+time_seconds+')"></div>')
-        var img = $('<img>');
-        $(img).attr('src', admin_img);
-        var user = $('<div class=head></div>')
-        $(user).text(admin_fname + ' ' + admin_lname + ' - ' + $('#videoTime').text())
-        var span_elem = $('<span class="neutral"></span>')
-        $(comment).append(img).append(user).append('<div class=comment-title>' + '<span class='+type+'></span><span id="text">' + text +'</span></div>');
-        $('#commentCard').append(comment);
-    }
-
-    function sendToServer(text, type, time_seconds){
-      $.ajax({
-        url: '<%= create_comment_path(@turn.id)%>',
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        data: {title: text, type: type, current_time:  time_seconds},
-        type: 'post',
-        success: function(res){
-          $('#release_it').attr("disabled", false)
-          $("#release_it").css("opacity",1)
-        }
-      })
-    }
 
 
 
@@ -374,7 +325,7 @@
         if(sec < 10) {
             sec = '0' + sec;
         }
-        $('#comment_time_of_video').val(Math.floor(vid.currentTime));
+        $('#comment_current_time').val(Math.floor(vid.currentTime));
         $('#videoTime').text(min + ':' + sec);
         setX(time)
         $('.progressDot').css( "left", ((vid.currentTime / vid.duration) * 282))

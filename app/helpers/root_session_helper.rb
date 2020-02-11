@@ -23,4 +23,13 @@ module RootSessionHelper
       redirect_to root_login_path
     end
   end
+	
+  def is_root?
+	if @current_root.role == 'vertrieb'
+	  return false
+	else
+	  return true
+	end
+  end
+
 end

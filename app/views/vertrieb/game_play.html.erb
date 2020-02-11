@@ -1,0 +1,64 @@
+<%= video_tag 'countdown_120.mp4', id: 'video-bg' %>
+<section id="top">
+	<%= image_tag 'defaults/logo-no_shadow.png', id: 'logo', class: 'fly_in_left' %>
+	<%= image_tag 'vertrieb/user1.jpg', id: 'avatar' %>
+	<span class="penta-img fly_in_right">
+		<% if @vertrieb.logo? %>
+			<%= image_tag @vertrieb.logo.url, id: 'cust-logo' %>
+		<% else %>
+		  Ihr Logo
+		<% end %>
+	</span>
+</section>
+<section id="middle">
+	<div class="countdown fly_in_bottom">
+		<span class="timer animated flipInX" id="timerall">01:20</span>
+	</div>
+	<div id="word" data-target-resolver>PlüschPferd</div>
+</section>
+
+<section id="mobile-wrapper">
+	<section id="head">
+		<h1>Max pitcht!</h1>
+	</section>
+	<section id="middle">
+		<%= image_tag 'vertrieb/user1.jpg', class: 'mid-img pulse' %>
+	</section>
+	<section id="bottom">
+		<div class="btn btn-green">weiter!</div>
+	</section>
+</section>
+<% if @root %>
+<section id="root-control">
+	<%= link_to 'weiter!', game_rate_vertrieb_path, class: "btn btn-green" %>
+</section>
+<% end %>
+
+
+<script>
+	$('#navbar').hide();
+	textanim();
+	function startTimer(duration, display) {
+		var timer = duration, minutes, seconds;
+		var setTimer = setInterval(function() {
+			minutes = parseInt(timer / 60, 10);
+			seconds = parseInt(timer % 60, 10);
+			
+			minutes = minutes < 10 ? "0" + minutes : minutes;
+			seconds = seconds < 10 ? "0" + seconds : seconds;
+			
+			if(timer <= 0) {
+				display.text("00:00")
+			} else {
+				display.text(minutes + ':' + seconds);
+			}
+			timer--;
+		},1000)
+	}
+	function callback() {
+        document.getElementById('video-bg').play();
+    };
+	$('#video-bg').on('ended', function() {
+		window.location.replace("game_rate");
+	})
+</script>

@@ -1,0 +1,30 @@
+<%= form_for(:vertrieb, url: new_vertrieb_path) do |f| %>
+<div class="row">
+	<div class="card">
+		<h3>Neuer Call</h3>
+		<table>
+			<tr>
+				<th>Vorname</th>
+				<td><%= f.text_field :fname, class: 'form-field', required: true %></td>
+			</tr>
+			<tr>
+				<th>Nachname</th>
+				<td><%= f.text_field :name, class: 'form-field', required: true %></td>
+			</tr>
+			<tr>
+				<th>Team</th>
+				<td><%= f.text_field :team_name, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Spielpasswort</th>
+				<td><%= f.text_field :game_password, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td><%= f.text_field :password, class: 'form-field', required: true %></td>
+			</tr>
+		</table>
+		<%= f.submit 'starten!', class: 'btn btn-green' %>
+	</div>
+</div>
+<% end %>

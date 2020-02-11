@@ -1,0 +1,162 @@
+<div class="row">
+	<div class="card">
+		<h3>Bilder</h3>
+		<%= form_for(:vertrieb, url: new_vertrieb_path(@admin)) do |f| %>
+		<div class="avatar">
+			<label for="vertrieb_avatar">
+				<%= image_tag @vertrieb.avatar? ? @vertrieb.avatar.url : '', id: 'avatar' %>
+			</label>
+			<%= f.file_field :avatar %>
+		</div>
+		<div class="logo">
+			<label for="vertrieb_logo">
+				<%= image_tag @vertrieb.logo? ? @vertrieb.logo.url : '', id: 'logo' %>
+			</label>
+			<%= f.file_field :logo %>
+		</div>
+		<% end %>
+		<%= link_to 'starten', start_vertrieb_path, class: 'btn btn-green' %>
+	</div>
+</div>
+<div class="popup" id="popup">
+   	<div class="img-container">
+   		<%= image_tag '', id: 'vertrieb_image' %>
+   	</div>
+    <div class="form-group center">
+    	<div class="btn btn-green" id="crop">speichern</div>
+    </div>
+    <div class="close" onclick="hidePopup()"><i class="fas fa-times"></i></div>
+</div>
+<script>
+	    function showPopup() {
+        $('#popup').show();
+    }
+    function hidePopup() {
+        $('#popup').hide();
+    }
+	(function ($) {
+	  $.each(['show', 'hide'], function (i, ev) {
+	    var el = $.fn[ev];
+	    $.fn[ev] = function () {
+	      this.trigger(ev);
+	      return el.apply(this, arguments);
+	    };
+	  });
+	})(jQuery);
+	var inputLogo = document.getElementById('vertrieb_logo');
+	var inputAvatar = document.getElementById('vertrieb_avatar');
+	var image = document.getElementById('vertrieb_image');
+	var editLogo = false;
+	
+	inputLogo.addEventListener('change', function(e) {
+		var files = e.target.files;
+		var done = function(url) {
+			inputLogo.value = '';
+			image.src = url;
+			editLogo = true;
+			$('#popup').show();
+		};
+		var reader, file, url;
+		if(files && files.length > 0) {
+			file = files[0];
+			if(URL) {
+				done(URL.createObjectURL(file));
+			} else if(FileReader) {
+				reader = new FileReader();
+				reader.onload = function(e) {
+					done(reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+	})
+	inputAvatar.addEventListener('change', function(e) {
+		var files = e.target.files;
+		var done = function(url) {
+			inputLogo.value = '';
+			image.src = url;
+			editLogo = false;
+			$('#popup').show();
+		};
+		var reader, file, url;
+		if(files && files.length > 0) {
+			file = files[0];
+			if(URL) {
+				done(URL.createObjectURL(file));
+			} else if(FileReader) {
+				reader = new FileReader();
+				reader.onload = function(e) {
+					done(reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+	})
+	$('#popup').on('show', function() {
+		if(editLogo == true) {
+			cropper = new Cropper(image, {});
+		} else {
+			cropper = new Cropper(image, {
+				aspectRatio: 1,	
+			});	
+		}
+	})
+	$('#popup').on('hide', function() {
+		cropper.destroy();
+		cropper = null;
+	})
+	$('#crop').on('click', function() {
+		var initialURL, canvas;
+		if(cropper) {
+			canvas = cropper.getCroppedCanvas({
+				fillColor: "white"
+			});
+			if(editLogo == true) {
+				initalURL = logo.src;
+				logo.src = canvas.toDataURL();
+				canvas.toBlob(function(blob) {
+					var file = new window.File([blob], 'logo.jpg', {type: 'image/jpg'});
+					var formData = new FormData();
+					formData.append('file', file);
+					uploadImage('logo', formData);
+				});
+			} else {
+				initalURL = avatar.src;
+				avatar.src = canvas.toDataURL();
+				canvas.toBlob(function(blob) {
+					var file = new window.File([blob], 'avatar.jpg', {type: 'image/jpg'});
+					var formData = new FormData();
+					formData.append('file', file);
+					uploadImage('avatar', formData);
+				});
+			}
+		};
+	})
+	function uploadImage(img, formData) {
+		var url;
+		if(img == 'logo') {
+			url = '<%= update_vertrieb_logo_path(@vertrieb) %>';
+		} else {
+			url = '<%= update_vertrieb_avatar_path(@vertrieb) %>';
+		};
+		$.ajax({
+			url: url,
+			type: 'put',
+			cache: false,
+			async: true,
+			contentType: false,
+			processData: false,
+			data: formData,
+			beforeSend: function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+			success: function(res) {
+				formData = new FormData();
+				if(img == 'logo') {
+					$('#logo').data('url', res.file)
+				} else {
+					$('#avatar').data('url', res.file)
+				}
+				$('#popup').hide();
+			}
+		})	
+	}
+</script>

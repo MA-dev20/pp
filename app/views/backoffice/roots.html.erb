@@ -1,0 +1,29 @@
+<h1>Mitarbeiter</h1>
+<div class="table">
+	<table>
+		<%= form_for(:root, url: backoffice_new_root_path) do |f| %>
+			<tr>
+				<td><%= f.text_field :username, placeholder: 'username', class: "form-field" %></td>
+				<td><%= f.email_field :email, placeholder: 'E-Mail', class: "form-field" %></td>
+				<td><%= f.text_field :role, placeholder: 'Vertrieb / Root', class: "form-field" %></td>
+				<td><%= f.submit 'erstellen' %></td>
+			</tr>
+		<% end %>
+		<thead>
+			<th>Username</th>
+			<th>E-Mail</th>
+			<th>Role</th>
+			<th></th>
+		</thead>
+		<tbody>
+			<% @roots.each do |r| %>
+				<tr>
+					<td><%= r.username %></td>
+					<td><%= r.email %></td>
+					<td><%= r.role %></td>
+					<td><%= link_to '', backoffice_destroy_root_path(r.id), class: 'far fa-trash-alt' %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

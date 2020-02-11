@@ -1,0 +1,83 @@
+<div class="teams">
+	<div class="searchbar">
+		<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+	</div>
+	<button class="btn btn-green">Team erstellen</button>
+	<div class="karte" id="teams">
+		<div class="head left">Teams</div>
+		<div class="table" id="teams-table">
+			<table>
+				<thead>
+					<tr>
+						<th>Teamname</th>
+						<th>Nutzer</th>
+						<th>Score</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="teamname active">
+						<td><%= @vertrieb.team_name %></td>
+						<td>10</td>
+						<td>
+							<div class="circle" id="team_1"></div>
+							<div class="rating">7.8</div>
+						</td>
+						<td><i class="far fa-edit edit"></i></td>
+						<td><%= image_tag 'dash/icons/stats.png' %></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="users">
+	<div class="searchbar">
+		<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+	</div>
+	<button class="btn btn-green">User erstellen</button>
+	<div class="karte" id="users">
+		<div class="head left">Nutzer</div>
+		<select name="" id="select-team" class="custom-select custom-select-lg">
+			<option value="">Alle Teams</option>
+			<option value="1" selected><%= @vertrieb.team_name %></option>
+		</select>
+		<div class="table" id="users-table">
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Pitches</th>
+						<th>Score</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="username">
+						<td>
+							<div class="username-link">
+								<%= image_tag 'vertrieb/user1.jpg' %>
+								Max Mustermann
+							</div>
+						</td>
+						<td>5</td>
+						<td>
+							<div class="circle" id="user_1"></div>
+							<div class="rating">5.8</div>
+						</td>
+						<td><i class="far fa-edit"></i></td>
+						<td><%= image_tag 'dash/icons/stats.png' %></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<% if @root %>
+<section id="root-control">
+	<%= link_to 'weiter!', dash_user_stats_vertrieb_path, class: "btn btn-green" %>
+</section>
+<% end %>

@@ -1,0 +1,405 @@
+<div class="scrollable-content" id="scrollbar">
+	<div class="heading">
+		<%= image_tag 'vertrieb/user1.jpg' %>
+		Max Mustermann's Statistik
+		<div class="select-team custom-select">Alle Teams</div>
+	</div>
+
+<div class="rating-overview">
+	<div class="karte active" id="gesamt">
+		<div class="icon-circle">
+			<i class="fas fa-star"></i>
+		</div>
+		<div class="rating">6.5</div>
+		<label for="">Gesamt</label>
+		<div class="change up">
+			<i class="fas fa-caret-up"></i>
+			0.2
+		</div>
+	</div>
+	
+	<div class="karte" id="spontan">
+		<div class="icon-circle">
+			<i class="fas fa-bolt"></i>
+		</div>
+		<div class="rating">4.8</div>
+		<label for="">Spontanität</label>
+		<div class="change">
+			<i class="fas fa-equals"></i>
+			0.0
+		</div>
+	</div>
+	
+	<div class="karte" id="creative">
+		<div class="icon-circle">
+			<i class="fas fa-lightbulb"></i>
+		</div>
+		<div class="rating">4.8</div>
+		<label for="">Kreativität</label>
+		<div class="change">
+			<i class="fas fa-equals"></i>
+			0.0
+		</div>
+	</div>
+	
+	<div class="karte" id="body">
+		<div class="icon-circle">
+			<i class="fas fa-child"></i>
+		</div>
+		<div class="rating">4.8</div>
+		<label for="">Körpersprache</label>
+		<div class="change">
+			<i class="fas fa-equals"></i>
+			0.0
+		</div>
+	</div>
+
+	<div class="karte" id="rhetoric">
+		<div class="icon-circle">
+			<i class="fas fa-microphone"></i>
+		</div>
+		<div class="rating">4.8</div>
+		<label for="">Rhetorik</label>
+		<div class="change">
+			<i class="fas fa-equals"></i>
+			0.0
+		</div>
+	</div>
+</div>
+
+<div class="heading">Details</div>
+
+<div class="stats-overview">
+	<div class="karte">
+		<label for="">aktive Tage</label>
+		<div class="number">5</div>
+	</div>
+	<div class="karte">
+		<label for="">Pitches</label>
+		<div class="number">7</div>
+	</div>
+	<div class="karte">
+		<label for="">Siegrate</label>
+		<div class="number">10%</div>
+	</div>
+	<div class="karte">
+		<label for="">best score</label>
+		<div class="number best">8.6</div>
+	</div>
+	<div class="karte">
+		<label for="">worst score</label>
+		<div class="number worst">3.4</div>
+	</div>
+</div>
+
+<div class="karte" id="statistic">
+	<div class="head left">Fortschritt</div>
+	
+	<div class="chart">
+		<canvas id="myChart" width="814px" height="280px"></canvas>
+	</div>
+	
+	<div class="divider"></div>
+	
+	<div class="right">
+		<div class="karte bestlist">
+			<div class="place gold">
+				<%= image_tag 'dash/icons/gold.png' %>
+				5
+			</div>
+			<div class="place silver">
+				<%= image_tag 'dash/icons/silver.png' %>
+				4
+			</div>
+			<div class="place bronze">
+				<%= image_tag 'dash/icons/bronze.png' %>
+				6
+			</div> <br>
+			<div class="divider"></div>
+			<div class="table">
+				<div class="table-line highlighted">
+					<div class="name">1. Max Mustermann</div>
+					<div class="points">6.5</div>
+				</div>
+				<div class="table-line">
+					<div class="name">2. Hans Eckert</div>
+					<div class="points">4.8</div>
+				</div>
+				<div class="table-line">
+					<div class="name">3. Er So</div>
+					<div class="points">4.5</div>
+				</div>
+			</div>
+			<%= image_tag 'current.png', class: 'rating-record' %>
+		</div>
+	</div>
+</div>
+
+</div>
+<% if @root %>
+<section id="root-control">
+	<%= link_to 'weiter!', dash_videoanalyse_vertrieb_path, class: "btn btn-green" %>
+</section>
+<% end %>
+<script>
+	new PerfectScrollbar('#scrollbar');
+	
+	var ctx = document.getElementById('myChart');
+	var datapoints = [NaN, NaN, NaN, NaN, NaN, NaN ];
+	var label = [NaN, NaN, NaN, NaN, NaN, NaN ];
+	var data1 = [];
+	var i = 0;
+	<% @chartdata.each do |cd| %>
+		var json_data = <%= cd.to_json.html_safe %>;
+		label[i] = "<%= cd[:date] %>";
+		datapoints[i] = {value: <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>, data: json_data};
+		data1[i] = <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>;
+		i++;
+	<% end %>
+	var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: label,
+        datasets: [{
+            label: 'Max Mustermann',
+            data: data1,
+            fill: false,
+            lineTension:0,
+            spanGaps: true,
+            borderWidth: 3,
+            borderColor: "rgba(67, 148, 236, 1)",
+            pointBackgroundColor: "#4394ec",
+            pointBorderColor: "#fafafa",
+            pointBorderWidth: 3,
+            pointStyle: 'circle',
+            pointRadius: 9,
+            hoverRadius: 9,
+            datapoints: datapoints,
+            extra: datapoints,
+            // box-shadow: 0px 0px 5px 0px rgba(67,148,236,1);
+        }],
+    },
+    options: {
+        layout: {
+            padding: {
+                top: 25,
+                left: 25,
+            }
+        },
+        legend: {
+            display: false,
+        },
+        title: {
+            display: false,
+        },
+        scales: {
+            yAxes: [{
+                gridLines: {
+                    display: true,
+                    color:"rgba(94, 94, 94, 0.15)",
+                    lineWidth: 0.2,
+                    zeroLineColor: "rgba(94, 94, 94, 0.15)",
+                },
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 10,
+                    stepSize: 1,
+                    fontColor:"rgba(0,0,0,1.0)",
+                    fontSize: 14,
+                    fontFamily: 'Nunito',
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display: false,
+                    color:"rgba(255,255,255,1.0)",
+                    lineWidth: 0.2,
+                    zeroLineBorderDashOffset: 1.0,
+                },
+                ticks: {
+                    fontColor:"rgba(0,0,0,1.0)",
+                    fontSize: 14,
+                    fontFamily: 'Nunito',
+                }
+            }],
+        },
+        tooltips: {
+            yAlign: 'left',
+            mode: 'single',
+            onlyShowForDatasetIndex: [0],
+            enabled: false,
+            position: 'nearest',
+            intersect: true,
+            dataPoints: datapoints,
+            custom: function(tooltipModel) {
+                var tooltipEl = document.getElementById('chartjs-tooltip');
+                
+                if (!tooltipEl) {
+                    tooltipEl = document.createElement('div');
+                    tooltipEl.id = 'chartjs-tooltip';
+                    tooltipEl.class = 'chart-tooltip';
+                    tooltipEl.innerHTML = ''
+                    document.body.appendChild(tooltipEl);
+                }
+                if (tooltipModel.opacity === 0) {
+                    tooltipEl.style.opacity = 0;
+                    return;
+                }
+                
+                tooltipEl.classList.remove('above', 'below', 'no-transform');
+                if (tooltipModel.yAlign) {
+                    tooltipEl.classList.add(tooltipModel.yAlign);
+                } else {
+                    tooltipEl.classList.add('no-transform');
+                }
+                
+                function getBody(bodyItem) {
+                    return bodyItems.lines;
+                }
+                if (tooltipModel.body) {
+                    var titleLines = tooltipModel.title || '';
+                    
+                    var innerHtml = '';
+                    titleLines.forEach(function(title){
+                        innerHtml += title;
+                    });
+                    
+                    var tableRoot = tooltipEl;
+                    tableRoot.innerHTML = innerHtml;
+                }
+                var position = this._chart.canvas.getBoundingClientRect();
+                
+                tooltipEl.style.opacity = 1;
+                tooltipEl.style.position = 'absolute';
+                tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX - 280 + 'px';
+                tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 460 + 'px';
+                // tooltipEl.style.left = (((position.left + tooltipModel.caretX)) - ($('#chartjs-tooltip').outerWidth()*1.73))+ 'px';
+                // tooltipEl.style.top = ( (position.top + tooltipModel.caretY) - ($('#chartjs-tooltip').outerHeight()*1.7)) - 18 + 'px';
+                tooltipEl.style.pointerEvents = 'none';
+            },
+            callbacks: {
+                title: function(tooltipItem, data) {
+                    var innerHtml = '<div class="head">';
+                        innerHtml += '<div class="date">'+tooltipItem[0]["xLabel"]+'</div>';
+                        innerHtml += '<div class="word">'+data["datasets"][0]["datapoints"][tooltipItem[0]['index']]["data"]["word"]+'</div></div>';
+
+                        innerHtml += '<div class= "body">';
+                        innerHtml += '<div class="left">';
+
+                        var ges_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"];
+                        var val =  ges_value / 100
+                        val = val.toPrecision(1)
+                        if (val < 0.5 ) {
+                            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+                        } else {
+                            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+                        }
+						innerHtml += '<div class="rating">';
+                        innerHtml += `<div class="circle" style="border-color: ${color_value}">`;
+                        innerHtml += `<span style="color: ${color_value}">`;
+						innerHtml += '' + ges_value / 10.0 + '</span>';
+                        innerHtml += '</div>';
+						innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label">Gesamt</label>';
+
+                        // innerHtml += '<div class="rating">';
+                        // innerHtml += '<div class="circle">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["ges"]/ 10.0+'</div>';
+                        // innerHtml += '<div class="text">Gesamt</div>';
+                        // innerHtml += '</div>';
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Spontanität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Kreativität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Körpersprache</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Rhetorik</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric"] / 10.0+'</div></div>'
+                    
+                        if (data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_spontan"]) {
+                        
+                        innerHtml += '</div><div class="right">'
+                    
+                        // innerHtml += '<div class="rating">';
+                        // innerHtml += '<div class="circle">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_ges"]/ 10.0+'</div>';
+                        // innerHtml += '<div class="text">Meine Bewertung</div>'
+                        // innerHtml += '</div>';
+
+
+                        var admin_ges_value = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_ges"];
+                        var val =  admin_ges_value / 100
+                        val = val.toPrecision(1)
+                        if (val < 0.5 ) {
+                            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+                        } else {
+                            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+                        }
+
+						innerHtml += '<div class="rating">';
+                        innerHtml += `<div class="circle" style="border-color: ${color_value}">`;
+                        innerHtml += `<span style="color: ${color_value}">`;
+						innerHtml += '' + admin_ges_value / 10.0 + '</span>';
+                        innerHtml += '</div>';
+						innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label">Meine Bewertung</label>';
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Spontanität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_spontan"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_spontan"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Kreativität</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_creative"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_creative"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Körpersprache</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_body"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_body"] / 10.0+'</div></div>'
+                    
+                        innerHtml += '<div class="stats">';
+                        innerHtml += '<div class="text">Rhetorik</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_rhetoric"]+'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["admin_rhetoric"] / 10.0+'</div></div>'
+                        } else {
+                        innerHtml += '</div><div class="right">'
+                        // innerHtml += '<div class="rating">';
+                        // innerHtml += '<div class="circle">0</div>';
+                        // innerHtml += '<div class="text">Nicht bewertet!</div>'
+                        // innerHtml += '</div>';
+
+                        innerHtml += '<div class="inner-content text-center">';
+                        innerHtml += '<div class="right-border">';
+                        innerHtml += `<div class="c100 p0 center" style="font-size: 9vh;">`;
+                        innerHtml += '<span>'+0+'</span>';
+                        innerHtml += '<div class="slice">';
+                        innerHtml += `<div class="bar" style="border-color: white">`;
+                        innerHtml += '</div>';
+                        innerHtml += `<div class="fill" style="border-color: white">`;
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '</div>';
+                        innerHtml += '<label class="gesamt-label">Nicht bewertet!</label>';
+                        }
+                        innerHtml += '</div></div>';
+                    return innerHtml
+                },
+            },
+        },
+    }
+});
+</script>

@@ -1,0 +1,94 @@
+<h1>Pitch Übersicht - <%= @game.team.name %> - <%= @game.created_at.strftime('%d.%m.%Y') %></h1>
+
+<div class="row">
+<div class="card">
+	<h3>Pitch Bewertung</h3>
+	<table>
+		<tr>
+			<th>Gesamt</th>
+			<td><%= @game.game_rating ? @game.game_rating.ges : '' %></td>
+		</tr>
+		<tr>
+			<th>Spontanität</th>
+			<td><%= @game.game_rating ? @game.game_rating.spontan : '' %></td>
+		</tr>
+		<tr>
+			<th>Kreativität</th>
+			<td><%= @game.game_rating ? @game.game_rating.creative : '' %></td>
+		</tr>
+		<tr>
+			<th>Körpersprache</th>
+			<td><%= @game.game_rating ? @game.game_rating.body : '' %></td>
+		</tr>
+		<tr>
+			<th>Rhetorik</th>
+			<td><%= @game.game_rating ? @game.game_rating.rhetoric : '' %></td>
+		</tr>
+	</table>
+</div>
+<div class="card">
+	<h3>Datum ändern</h3>
+	<%= form_for(:game, url: backoffice_edit_game_path(@game)) do |f| %>
+		<%= f.date_field :created_at, class: 'form-field' %>
+		<%= f.submit 'speichern', class: 'btn btn-green' %>
+	<% end %>
+</div>
+</div>
+
+<div class="table">
+	<h3>Pitches</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Spieler</th>
+				<th>Wort</th>
+				<th>Spontanität</th>
+				<th>Kreativität</th>
+				<th>Körpersprache</th>
+				<th>Rhetorik</th>
+				<th>Gesamt</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% if @turn = @game.turns.find_by(user_id: nil) %>
+				<%= form_for(:rating, url: backoffice_edit_rating_path(@turn.id)) do |f| %>
+				<%= f.hidden_field :site, value: 'backoffice_game' %>
+				<% @rating = @turn.turn_rating %>
+				<tr class="red">
+					<td><%= @turn.findUser.fname + ' ' + @turn.findUser.lname %></td>
+					<td><%= Word.find_by(id: @turn.word_id) ? Word.find_by(id: @turn.word_id).name : '' %></td>
+					<td><%= f.number_field :spontan, class: 'form-field' %></td>
+					<td><%= f.number_field :creative, class: 'form-field' %></td>
+					<td><%= f.number_field :body, class: 'form-field' %></td>
+					<td><%= f.number_field :rhetoric, class: 'form-field' %></td>
+					<td><%= @rating.ges %></td>
+					<td><%= link_to '', backoffice_destroy_turn_path(@turn), class: 'far fa-trash-alt' %></td>
+				</tr>
+				<% end %>
+			<% end %>
+			<% @game.turns.where.not(user_id: nil).each do |t| %>
+			<%= form_for(:rating, url: backoffice_edit_rating_path(t.id)) do |f| %>
+				<%= f.hidden_field :site, value: 'backoffice_game' %>
+				<% @rating = t.turn_rating %>
+				<tr>
+					<td onclick="redirect(<%= t.user_id %>)"><%= t.findUser.fname + ' ' + t.findUser.lname %></td>
+					<td onclick="redirect(<%= t.user_id %>)"><%= Word.find_by(id: t.word_id) ? Word.find_by(id: t.word_id).name : '' %></td>
+					<td><%= f.number_field :spontan, class: 'form-field' %></td>
+					<td><%= f.number_field :creative, class: 'form-field' %></td>
+					<td><%= f.number_field :body, class: 'form-field' %></td>
+					<td><%= f.number_field :rhetoric, class: 'form-field' %></td>
+					<td onclick="redirect(<%= t.user_id %>)"><%= @rating.ges %></td>
+					<td><%= link_to '', backoffice_destroy_turn_path(t.id), class: 'far fa-trash-alt' %></td>
+				</tr>
+			<% end %>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+<script>
+	function redirect(user_id) {
+		var URL = "<%= backoffice_users_url(@admin) %>";
+        location.replace(URL + '/' + user_id);
+    }
+</script>

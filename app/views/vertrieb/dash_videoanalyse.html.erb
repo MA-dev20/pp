@@ -1,0 +1,129 @@
+<div class="video-details karte">
+	<div class="left-part">
+		
+		<div class="head left small">Plüschpferd</div>
+		
+		<div class="name-date">
+			<%= image_tag 'vertrieb/user1.jpg' %>
+			Max Mustermann - 20.02.2020
+		</div>
+		
+		<div class="head transcript">Do say &amp; Don't say</div>
+		<div class="karte counters">
+			<div class="do">
+				<div class="head">Do say</div>
+				<div class="count">5</div>
+			</div>
+			<div class="dont">
+				<div class="head">Don't say</div>
+				<div class="count">10</div>
+			</div>
+			<div class="wpm">
+				<div class="head">Sprechrate</div>
+				<div class="count">
+					10 <br>
+					<div class="word">Worte/Minute</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="head transcript">Transkript</div>
+		<div class="karte text" id="video-text">
+			Text Text Text
+		</div>
+	</div>
+	
+	<div class="middle-part karte">
+		<div class="video-container">
+			<%= video_tag 'landing.mp4', id: "videoId" %>
+		</div>
+		<div class="progress" id="rogressBar">
+			<div class="progressBar"></div>
+			<div class="progressDot"></div>
+		</div>
+		<div id="progressText"></div>
+		<div class="controls">
+			<%= image_tag 'dash/icons/pause-i.png', class: 'video-pause' %>
+			<%= image_tag 'dash/icons/play-i.png', class: 'video-play' %>
+			<div class="stop"><%= image_tag 'dash/icons/stop-i.png', class: 'fa-stop' %></div>
+			<div class="play"><%= image_tag 'dash/icons/play-i.png', id: 'videoPlay', class: 'fa-play' %></div>
+			<div class="mute"><i class="fas fa-volume-up" id="videoMute"></i></div>
+		</div>
+	</div>
+	
+	<div class="right-part">
+		<div class="rating" id="ratings">
+			<div class="left">
+				<div class="circle">8.6</div>
+				<div class="text">Gesamt</div>
+			</div>
+			
+			<div class="right">
+				<div class="category">
+					<div class="text">Spontanität</div>
+					<div class="bar">
+						<div class="filled" style='width: 56%'></div>
+					</div>
+					<div class="rating">5.6</div>
+				</div>
+				<div class="category">
+					<div class="text">Kreativität</div>
+					<div class="bar">
+						<div class="filled" style='width: 56%'></div>
+					</div>
+					<div class="rating">5.6</div>
+				</div>
+				<div class="category">
+					<div class="text">Körpersprache</div>
+					<div class="bar">
+						<div class="filled" style='width: 56%'></div>
+					</div>
+					<div class="rating">5.6</div>
+				</div>
+				<div class="category">
+					<div class="text">Rhetorik</div>
+					<div class="bar">
+						<div class="filled" style='width: 56%'></div>
+					</div>
+					<div class="rating">5.6</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="head comments">Kommentare</div>
+		<div class="karte" id="commentCard">
+			<div class="comment">
+				<%= image_tag @vertrieb.avatar.quad.url %>
+				<div class="head"><%= @vertrieb.fname + ' ' + @vertrieb.name + ' - 0:01' %></div>
+				<div class="comment-title"><span class="positive"></span>Sehr nice</div>
+			</div>
+		</div>
+		
+		<div class="progress-in-video"></div>
+		
+		<div class="" id="add-comment-form">
+			<div class="time" id="videoTime">0:00</div>
+			<label for="comment_negative" id="negative">
+				<input type="radio" value="negative" name="radio" id="comment_negative">
+				<span class="checkbox"><span class="dot"></span></span>
+				Negativ
+			</label>
+			<label for="comment_neutral" id="neutral">
+				<input type="radio" value="neutral" checked name="radio" id="comment_neutral">
+				<span class="checkbox"><span class="dot"></span></span>
+				Neutral
+			</label>
+			<label for="comment_positive" id="positive">
+				<input type="radio" value="positive" name="radio" id="comment_positive">
+				<span class="checkbox"><span class="dot"></span></span>
+				Positiv
+			</label>
+			<input type="text" class="field" placeholder="Kommentar hinzufügen">
+		</div>
+	</div>
+</div>
+<% if @root %>
+<section id="root-control">
+	<%= link_to 'weiter!', dash_customize_vertrieb_path, class: "btn btn-green" %>
+</section>
+<% end %>

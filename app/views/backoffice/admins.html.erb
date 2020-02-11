@@ -1,72 +1,70 @@
-<div class="content">
-<%= form_for(:admin, url: new_admin_path) do |f| %>
-	<%= f.text_field :fname, placeholder: "Vorname", class: 'form-field' %>
-	<%= f.text_field :lname, placeholder: "Nachname", class: 'form-field' %>
-	<%= f.text_field :email, placeholder: "Email", class: 'form-field' %>
-	<%= f.text_field :company_name, placeholder: "Firma", class: 'form-field' %>
-	<%= f.submit 'new Admin', class: "btn btn-green" %>
-<% end %>
-</div>
-<div class="table" id="admins-table">
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Unternehmen</th>
-                <th class="center">Teams</th>
-                <th class="center">Users</th>
-                <th class="center">Games</th>
-                <th class="center">Letze Aktivität</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% @admins.where(activated: false).each do |a| %>
-            <tr onclick="redirect(<%= a.id %>)" class="red">
-                <td><%= a.fname %> <%= a.lname %></td>
-                <td><%= a.company_name %></td>
-                <td class="center"><%= a.teams.count %></td>
-                <td class="center"><%= a.users.count %></td>
-                <td class="center"><%= a.games.count %></td>
-                <td class="center">
-                    <% if !a.last_sign_in_at.nil? %>
-                        <%= a.last_sign_in_at.strftime("%d.%m.%Y") %>
-                    <% end %>
-                </td>
-            </tr>
-            <% end %>
-            <% @admins.where(activated: nil).each do |a| %>
-            <tr onclick="redirect(<%= a.id %>)" class="red">
-                <td><%= a.fname %> <%= a.lname %></td>
-                <td><%= a.company_name %></td>
-                <td class="center"><%= a.teams.count %></td>
-                <td class="center"><%= a.users.count %></td>
-                <td class="center"><%= a.games.count %></td>
-                <td class="center">
-                    <% if !a.last_sign_in_at.nil? %>
-                        <%= a.last_sign_in_at.strftime("%d.%m.%Y") %>
-                    <% end %>
-                </td>
-            </tr>
-            <% end %>
-            <% @admins.where(activated: true).each do |a| %>
-            <tr onclick="redirect(<%= a.id %>)">
-                <td><%= a.fname %> <%= a.lname %></td>
-                <td><%= a.company_name %></td>
-                <td class="center"><%= a.teams.count %></td>
-                <td class="center"><%= a.users.count %></td>
-                <td class="center"><%= a.games.count %></td>
-                <td class="center">
-                    <% if !a.last_sign_in_at.nil? %>
-                        <%= a.last_sign_in_at.strftime("%d.%m.%Y") %>
-                    <% end %>
-                </td>
-            </tr>
-            <% end %>
-        </tbody>
-    </table>
+<h1>Admins</h1>
+<div class="table">
+	<table>
+		
+		<thead>
+			<tr>
+				<%= form_for(:admin, url: backoffice_new_admin_path) do |f| %>
+					<td><%= f.text_field :fname, placeholder: "Vorname", class: 'form-field' %></td>
+					<td><%= f.text_field :lname, placeholder: "Nachname", class: 'form-field' %></td>
+					<td><%= f.text_field :email, placeholder: "Email", class: 'form-field' %></td>
+					<td><%= f.submit 'erstellen', class: "btn btn-green" %></td>
+				<% end %>
+			</tr>
+			<tr>
+				<th>Unternehmen</th>
+				<th>Name</th>
+				<th>E-Mail</th>
+				<th>Teams</th>
+				<th>Users</th>
+				<th>Pitches</th>
+				<th>Letzt Aktivität</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @admins.where(activated: false).each do |a| %>
+				<tr class="red">
+					<td onclick="redirect(<%= a.id %>)"><%= a.company_name %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.fname %> <%= a.lname %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.email %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.teams.count %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.users.count %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.games.count %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.last_sign_in_at.nil? ? '' : a.last_sign_in_at.strftime("%d.%m.%Y") %></td>
+					<td><%= link_to '', backoffice_destroy_admin_path(a.id), class: 'far fa-trash-alt', data: { confirm: 'Are you sure?' } %></td>
+				</tr>
+			<% end %>
+			<% @admins.where(activated: nil).each do |a| %>
+				<tr class="red">
+					<td onclick="redirect(<%= a.id %>)"><%= a.company_name %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.fname %> <%= a.lname %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.email %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.teams.count %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.users.count %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.games.count %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.last_sign_in_at.nil? ? '' : a.last_sign_in_at.strftime("%d.%m.%Y") %></td>
+					<td><%= link_to '', backoffice_destroy_admin_path(a.id), class: 'far fa-trash-alt', data: { confirm: 'Are you sure?' } %></td>
+				</tr>
+			<% end %>
+			<% @admins.where(activated: true).each do |a| %>
+				<tr>
+					<td onclick="redirect(<%= a.id %>)"><%= a.company_name %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.fname %> <%= a.lname %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.email %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.teams.count %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.users.count %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.games.count %></td>
+					<td onclick="redirect(<%= a.id %>)"><%= a.last_sign_in_at.nil? ? '' : a.last_sign_in_at.strftime("%d.%m.%Y") %></td>
+					<td><%= link_to '', backoffice_destroy_admin_path(a.id), class: 'far fa-trash-alt', data: { confirm: 'Are you sure?' } %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
 </div>
 <script>
     function redirect(admin_id) {
-        location.replace('/backoffice/admins/'+admin_id);
+		var URL = "<%= backoffice_admins_url %>";
+        location.replace(URL + '/'+admin_id);
     }
 </script>

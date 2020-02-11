@@ -1,0 +1,105 @@
+<h1>Team - <%= @team.name %></h1>
+
+<div class="row">
+	<div class="card">
+		<%= form_for(:team, url: backoffice_edit_team_path(@team)) do |f| %>
+		<table>
+			<tr>
+				<th>Name</th>
+				<td><%= f.text_field :name, class: 'form-field' %></td>
+			</tr>
+		</table>
+		<%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
+		<% end %>
+	</div>
+	<div class="card">
+		<h3>User</h3>
+		<%= form_for(:team, url: backoffice_edit_team_path(@team)) do |f| %>
+		<input type="hidden" name="team[users][]" value="" checked>
+		<table>
+			<% @team.users.each do |u| %>
+				<tr>
+				<th><%= u.fname %> <%= u.lname %></th>
+				<td><input type="checkbox" name="team[users][]" value="<%= u.id %>" checked id="team_users_<%= u.id %>"></td>
+				</tr>
+			<% end %>
+			<% @admin.users.each do |u| %>
+				<% if TeamUser.where(team_id: @team.id, user_id: u.id).count == 0 %>
+					<tr>
+					<th><%= u.fname %> <%= u.lname %></th>
+					<td><input type="checkbox" name="team[users][]" value="<%= u.id %>" id="team_users_<%= u.id %>"></td>
+					</tr>
+				<% end %>
+			<% end %>
+		</table>
+		<%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
+		<% end %>
+	</div>
+	<div class="card">
+		<h3>Spiele</h3>
+		<table>
+			<tr>
+				<th>Gesamt</th>
+				<td><%= @team.team_rating ? @team.team_rating.ges : '' %></td>
+			</tr>
+			<tr>
+				<th>Spontanität</th>
+				<td><%= @team.team_rating ? @team.team_rating.spontan : '' %></td>
+			</tr>
+			<tr>
+				<th>Kreativität</th>
+				<td><%= @team.team_rating ? @team.team_rating.creative : '' %></td>
+			</tr>
+			<tr>
+				<th>Körpersprache</th>
+				<td><%= @team.team_rating ? @team.team_rating.body : '' %></td>
+			</tr>
+			<tr>
+				<th>Rhetorik</th>
+				<td><%= @team.team_rating ? @team.team_rating.rhetoric : '' %></td>
+			</tr>
+		</table>
+		<%= form_for(:game, url: backoffice_new_game_path()) do |f| %>
+			<%= f.hidden_field :admin_id, value: @admin.id %>
+			<%= f.hidden_field :team_id, value: @team.id %>
+			<td><%= f.submit 'Neues Spiel erstellen', class: 'btn btn-green' %></td>
+		<% end %>
+	</div>
+</div>
+
+<div class="table">
+	<h3>Spiele</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Datum</th>
+				<th>Spontanität</th>
+				<th>Kreativität</th>
+				<th>Körpersprache</th>
+				<th>Rhetoric</th>
+				<th>Gesamt</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @team.games.each do |g| %>
+				<% @rating = g.game_rating %>
+				<tr>
+					<td onclick="redirect(<%= g.id %>)"><%= g.created_at.strftime('%d.%m.%Y') %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.spontan : '' %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.creative : '' %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.body : '' %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.rhetoric : '' %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.ges : '' %></td>
+					<td><%= link_to '', backoffice_destroy_game_path(g.id, site: 'team'), class: 'far fa-trash-alt' %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+<script>
+	function redirect(game_id) {
+		var URL = "<%= backoffice_games_url(@admin) %>";
+        location.replace(URL + '/' + game_id);
+    }
+</script>

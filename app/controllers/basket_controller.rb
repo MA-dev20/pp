@@ -1,9 +1,7 @@
 class BasketController < ApplicationController
   before_action :set_basket, only: [:edit, :update, :destroy]
     
-  def new
-  end
-    
+  #POST new_basket
   def create
     rand_img = Random.new.rand(1..8)
     if(params[:basket][:type] == "objection")
@@ -40,10 +38,8 @@ class BasketController < ApplicationController
         return
     end
   end
-    
-  def edit
-  end
-    
+
+  #POST edit_basket @basket
   def update
     if params[:basket][:name] == ""
         flash[:basket_name] = 'Gib einen Namen an!'
@@ -57,17 +53,13 @@ class BasketController < ApplicationController
 	else
         redirect_to backoffice_edit_catchword_path(@basket.id)
     end
-    # if params[:basket][:site] == 'admin_dash' && params[:basket][:type] == "objection"
-    #     redirect_to dash_admin_objections_path(@basket.id)
-    # elsif params[:basket][:site] == 'admin_dash'
-    #     redirect_to dash_admin_customize_path
-    # else
-    #     redirect_to backoffice_words_path(@basket.id)
-    # end
   end
-    
+
+  #GET destroy_basket @basket
   def destroy
-    if @basket.objection
+	@admin = @basket.admin
+	@objection = @basket.objection
+    if @objection
       @basket.objections.each do |o|
         if o.catchword_baskets.count == 1
           o.destroy
@@ -87,20 +79,24 @@ class BasketController < ApplicationController
     if !@basket.destroy
       flash[:danger] = 'Konnte Liste NICHT löschen!'
     end
-    if !current_root.nil? && @basket.admin
-      redirect_to backoffice_edit_admin_path(@basket.admin)
-	elsif !current_root.nil?
-      redirect_to backoffice_word_baskets_path
-    else
-      redirect_to  dash_admin_customize_path
+    if !current_admin.nil?
+      redirect_to dash_admin_customize_path
+	elsif @admin && @objection
+	  redirect_to backoffice_objections_path(@admin)
+	elsif @objection
+	  redirect_to backoffice_objections_noadmin_path
+	elsif @admin
+	  redirect_to backoffice_words_path(@admin)
+	else
+	  redirect_to backoffice_words_noadmin_path
     end
   end
-    
+
   private
     def set_basket
       @basket = CatchwordsBasket.find(params[:basket_id])
     end
-    
+
     def basket_params
       params.require(:basket).permit(:name, :admin_id)
     end

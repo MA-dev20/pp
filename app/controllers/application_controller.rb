@@ -1,6 +1,7 @@
 ﻿class ApplicationController < ActionController::Base
   include DatabaseHelper
   include RootSessionHelper
+  include VertriebSessionHelper
   include ApplicationHelper
     
   before_action :configure_permitted_parameters, if: :devise_controller?

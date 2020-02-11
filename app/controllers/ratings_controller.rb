@@ -24,9 +24,8 @@ class RatingsController < ApplicationController
 
   def comment
     @turn = Turn.find(params[:turn_id])
-    type = params[:type].split('vcr-').last
-    @turn.comments.build(title: params[:title], type_of_comment: type, time_of_video: params[:current_time]).save!
-    render json: {response: 'ok'}
+    @turn.comments.build(title: params[:comment][:title], type_of_comment: params[:comment][:type_of_comment], time_of_video: params[:comment][:current_time].to_i).save!
+    redirect_to dash_admin_video_details_path(@turn)
   end
     
   def new_user

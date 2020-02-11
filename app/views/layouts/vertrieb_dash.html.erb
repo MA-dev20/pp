@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>Peter Pitch</title>
+    <%= csrf_meta_tags %>
+    
+    <%= action_cable_meta_tag %>
+    <%= stylesheet_link_tag    'vertrieb/dash', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'vertrieb/dash' %>
+</head>
+<body>
+<div id="vertrieb_channel" data-vertrieb-id="<%= @vertrieb.id %>"></div>
+	<section id="navbar">
+		<div class="dropdown">
+			Hallo, <%= @vertrieb.fname %> <%= @vertrieb.name %>
+			<%= image_tag 'dash/arrow-down.png', class: 'dropdown-img' %>
+		</div>
+	</section>
+	
+	<section id="sidebar">
+		<div class="avatar">
+			<%= image_tag @vertrieb.avatar? ? @vertrieb.avatar.quad.url : 'defaults/wolf.jpg' %>
+		</div>
+		<div class="links">
+			<div class="link <% if current_page?(dash_lets_pitch_vertrieb_path) || current_page?(dash_lets_pitch2_vertrieb_path) %> active <% end %>">
+				<i class="fas fa-gamepad"></i>
+				<div class="text">Let's Pitch</div>
+			</div>
+			<div class="link">
+				<i class="fas fa-user-friends"></i>
+				<div class="text">Nutzer</div>
+			</div>
+			<div class="link">
+				<i class="fab fa-youtube"></i>
+				<div class="text">Video Tool</div>
+			</div>
+		</div>
+		<div class="logo">
+			<%= image_tag 'landing/logo_white.png' %>
+		</div>
+	</section>
+	
+	<section id="content">
+		<%= yield %>
+	</section>
+</body>
+</html>

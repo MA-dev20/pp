@@ -1,0 +1,57 @@
+<section id="navbar">
+    <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
+    <div class="navbar-links" id="navLinks">
+        <div class="link">
+            <%= link_to 'Produkt', '#product' %>
+            <div class="line"></div>
+        </div>
+        <div class="link">
+            <%= link_to 'FAQ', '#faq' %>
+            <div class="line"></div>
+        </div>
+        <div class="link">
+            <%= link_to 'Kontakt', contact_path %>
+            <div class="line"></div>
+        </div>
+        <div class="link">
+          	<i class="login-link" onclick="showLoginModal()">Login</i>
+        </div>
+        <div class="link">
+            <%= link_to 'Demo vereinbaren', contact_path("", subject: "demo"), class: 'btn btn-white' %>
+        </div>
+    </div>
+    <div class="login">
+        <i class="login-link" onclick="showLoginModal()">Login</i>
+        <%= link_to 'Demo vereinbaren', contact_path("", subject: "demo"), class: 'btn btn-white' %>
+    </div>
+    <div class="navbar-mobile" onclick="showNavLinks()">
+        <i class="fas fa-bars"></i>
+    </div>
+</section>
+<section id="content">
+	<% if root_logged_in? %>
+		<%= form_for(:vertrieb, url: new_vertrieb_path) do |f| %>
+			<div class="form-group">
+				<label for="">Name</label>
+				<%= f.text_field :name, class: 'form-field', placeholder: 'Name', required: true %>
+			</div>
+			<div class="form-group">
+				<label for="">Passwort</label>
+				<%= f.text_field :password, class: 'form-field', placeholder: 'Passwort', required: true %>
+			</div>
+			<div class="form-group center">
+				<%= f.submit 'weiter!', class: 'btn btn-green' %>
+			</div>
+		<% end %>
+	<% else %>
+		<%= form_for(:vertrieb, url: login_vertrieb_path) do |f| %>
+			<div class="form-group">
+				<label for="">Passwort</label>
+				<%= f.text_field :password, class: 'form-field', placeholder: 'Passwort eingeben', required: true %>
+			</div>
+			<div class="form-group center">
+				<%= f.submit 'weiter!', class: 'btn btn-green' %>
+			</div>
+		<% end %>
+	<% end %>
+</section>

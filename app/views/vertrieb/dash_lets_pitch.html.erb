@@ -1,0 +1,26 @@
+<%= image_tag 'dash/lets-pitch1.png', class: 'lets-pitch-img1' %>
+<%= image_tag 'dash/lets-pitch2.png', class: 'lets-pitch-img2' %>
+<div class="karte letsplay" id="letsplay">
+	<div class="head">Jetzt Pitch starten!</div>
+	
+	<div class="team">
+		<label for="">
+			Team
+			<span class="newteam-link">Team erstellen</span>
+		</label>
+		<select name="" id="game_team_id" class="custom-select custom-select-lg">
+			<option value="" selected><%= @vertrieb.team_name %></option>
+		</select>
+	</div>
+	<div class="url">
+		<label for="">Pitch-URL</label>
+		<div class="url-field">
+			<div class="text">peterpitch.com/<%= @vertrieb.game_password %></div>
+		</div>
+	</div>
+	<% if @root %>
+	<%= link_to 'weiter!', dash_lets_pitch2_vertrieb_path, class: 'btn btn-green' %>
+	<% else %>
+	<button class="btn btn-green">weiter!</button>
+	<% end %>
+</div>

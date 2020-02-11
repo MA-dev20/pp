@@ -21,13 +21,67 @@
         <%= link_to image_tag('defaults/wolf.jpg'), backoffice_path %>
     </div>
     <div class="links">
-        <div class="link <% if current_page?(backoffice_admins_path) || @admin && current_page?(backoffice_admin_path(@admin)) || @admin && current_page?(backoffice_edit_admin_path(@admin)) %> active <% end %>">
+     	
+      	<% if is_root? %>
+      	<div class="link <%= current_page?(backoffice_path) ? 'active' : '' %>">
+      		<i class="fas fa-book-open"></i>
+      		<div class="text">Übersicht</div>
+      		<%= link_to '', backoffice_path %>
+      	</div>
+        <div class="link <% if current_page?(backoffice_admins_path) || @admin %> active <% end %>">
             <i class="far fa-user"></i>
-            <%= link_to 'Admins', backoffice_admins_path %>
+            <div class="text">Admins</div>
+            <%= link_to '', backoffice_admins_path %>
+            <% if @admin %>
+            	<div class="sublink <%= current_page?(backoffice_teams_path(@admin)) || @team ? 'active' : '' %>">
+            		<i class="fas fa-caret-left"></i>
+            		<div class="text">Teams</div>
+            		<%= link_to '', backoffice_teams_path(@admin) %>
+            	</div>
+				<div class="sublink <%= current_page?(backoffice_users_path(@admin)) || @user ? 'active' : '' %>">
+					<i class="fas fa-caret-left"></i>
+					<div class="text">Users</div>
+					<%= link_to '', backoffice_users_path(@admin) %>
+				</div>
+				<div class="sublink <%= current_page?(backoffice_games_path(@admin)) || @game ? 'active' : '' %>">
+            		<i class="fas fa-caret-left"></i>
+            		<div class="text">Pitches</div>
+            		<%= link_to '', backoffice_games_path(@admin) %>
+            	</div>
+            	<div class="sublink <%= current_page?(backoffice_words_path(@admin)) || @basket && current_page?(backoffice_word_path(@admin, @basket)) ? 'active' : '' %>">
+            		<i class="fas fa-caret-left"></i>
+            		<div class="text">Catchwords</div>
+            		<%= link_to '', backoffice_words_path(@admin) %>
+            	</div>
+            	<div class="sublink <%= current_page?(backoffice_objections_path(@admin)) || @basket && current_page?(backoffice_objection_path(@admin, @basket)) ? 'active' : '' %>">
+            		<i class="fas fa-caret-left"></i>
+            		<div class="text">Objections</div>
+            		<%= link_to '', backoffice_objections_path(@admin) %>
+            	</div>
+			<% end %>
         </div>
-        <div class="link <% if current_page?(backoffice_word_baskets_path) %> active <% end %>">
+        
+        <div class="link <% if current_page?(backoffice_words_noadmin_path) || @basket && current_page?(backoffice_word_noadmin_path(@basket)) %> active <% end %>">
             <i class="far fa-file-word"></i>
-            <%= link_to 'Worte', backoffice_word_baskets_path %>
+            <div class="text">Catchwords</div>
+            <%= link_to '', backoffice_words_noadmin_path %>
+        </div>
+        <div class="link <% if current_page?(backoffice_objections_noadmin_path) || @basket && current_page?(backoffice_objection_noadmin_path(@basket)) %> active <% end %>">
+            <i class="fas fa-bullseye"></i>
+            <div class="text">Objections</div>
+            <%= link_to '', backoffice_objections_noadmin_path %>
+        </div>
+        
+        <div class="link <%= current_page?(backoffice_roots_path) ? 'active' : '' %>">
+        	<i class="far fa-user"></i>
+        	<div class="text">Mitarbeiter</div>
+        	<%= link_to '', backoffice_roots_path %>
+        </div>
+        <% end %>
+        <div class="link <%= current_page?(backoffice_sales_path) ? 'active' : '' %>">
+        	<i class="far fa-money-bill-alt"></i>
+        	<div class="text">Vertrieb</div>
+        	<%= link_to '', backoffice_sales_path %>
         </div>
     </div>
 </section>

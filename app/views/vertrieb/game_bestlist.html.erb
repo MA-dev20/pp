@@ -1,0 +1,104 @@
+<section id="content">
+	<section id="head">
+		<h1>Ihr seid die Besten!</h1>
+	</section>
+	<section id="ended">
+		<div class="rate_1">
+			<div class="line"></div>
+			<div class="rating">
+				<div class="circle">
+					<%= image_tag 'game/wolf_button.png', id: 'wolf1' %>
+					<%= image_tag 'vertrieb/user1.jpg', class: 'avatar', id: 'avatar1' %>
+				</div>
+				<%= image_tag 'game/crown1.png', class: "crown1" %>
+				<%= image_tag 'game/polygon.png', class: 'pol', id: 'pol1' %>
+				<div class="rate_ges" id="rat1">9.6</div>
+			</div>
+		</div>
+		
+		<div class="rate_2">
+			<div class="line"></div>
+			<div class="rating">
+				<div class="circle">
+					<%= image_tag 'game/wolf_button.png', id: 'wolf2' %>
+					<%= image_tag 'vertrieb/user2.jpg', class: "avatar", id: 'avatar2' %>
+				</div>
+				<%= image_tag 'game/crown2.png', class: 'crown2' %>
+            	<%= image_tag 'game/polygon.png', class: 'pol', id: 'pol2' %>
+            	<div class="rate_ges" id='rat2'>8.5</div>
+			</div>
+		</div>
+		
+		<div class="rate_3">
+			<div class="line"></div>
+			<div class="rating">
+				<div class="circle">
+					<%= image_tag 'game/wolf_button.png', id: 'wolf3' %>
+					<%= image_tag "vertrieb/user3.jpg", class: 'avatar', id: 'avatar3'%>
+				</div>
+				<%= image_tag 'game/crown3.png', class: 'crown3' %>
+				<%= image_tag 'game/polygon.png', class: 'pol', id: 'pol3' %>
+				<div class="rate_ges" id='rat3'>7.3</div>
+			</div>
+    	</div>
+	</section>
+</section>
+
+<% if @root %>
+<section id="root-control">
+	<%= link_to 'weiter!', dash_users_vertrieb_path, class: "btn btn-green" %>
+</section>
+<% end %>
+<section id="mobile-wrapper">
+	<section id="head">
+		<h1>Tolle Runde!</h1>
+	</section>
+	<section id="middle">
+		<%= image_tag @vertrieb.avatar? ? @vertrieb.avatar.url : 'defaults/wolf.jpg', class: 'mid-img green pulse' %>
+	</section>
+	<section id="bottom">
+		<div class="btn btn-green">weiter!</div>
+	</section>
+</section>
+
+<div class="confetti" id="confetti"></div>
+<script>
+	startAnimation();
+	function confetti(){
+    var flakes = '',
+        randomColor;
+    var colors=new Array(["#EDE275"],["#FFFFFF"],["#1ddaaf"],["#1a8ed6"]);
+    for(var i = 0, len = 400; i < len; i++) {
+        randomColor = colors[Math.floor(Math.random()*4)];
+        flakes += '<div class="ball" style="background: '+randomColor+'; animation-duration: '+(Math.random() * 9 + 2)+'s; animation-delay: '+(Math.random() * 2 + 0)+'s; transform: translate3d(0,0,0) rotate3d(0,'+Math.random()+',1,'+Math.floor(Math.random()*180)+'deg);"></div>';
+    }
+        document.getElementById('confetti').innerHTML = flakes;
+    };
+	function startAnimation() {
+		setTimeout(function() {
+			$('#avatar3').show();
+			$('#text3').show();
+			$('.crown3').show();
+			$('#pol3').show();
+			$('#rat3').show();
+			$('#wolf3').hide();
+		}, 4000);
+		setTimeout(function() {
+			$('#avatar2').show();
+			$('#text2').show();
+			$('.crown2').show();
+			$('#pol2').show();
+			$('#rat2').show();
+			$('#wolf2').hide();
+		}, 6000);
+		setTimeout(function() {
+			$('#avatar1').show();
+			$('#text1').show();
+			$('.crown1').show();
+			$('#pol1').show();
+			$('#rat1').show();
+			$('#wolf1').hide();
+			confetti();
+		}, 8000);
+	}
+</script>

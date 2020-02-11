@@ -1,7 +1,0 @@
-<% @baskets.each do |b| %>
-    <% if b.objection %>
-    	<%= link_to b.name, backoffice_edit_objection_path(b.id) %>
-    <% else %>
-    	<%= link_to b.name, backoffice_edit_catchword_path(b.id) %>
-    <% end %>
-<% end %>

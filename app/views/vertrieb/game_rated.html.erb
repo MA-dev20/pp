@@ -1,0 +1,94 @@
+<section id="content">
+	<section id="rating">
+		<section id="rating_spontan">
+			<div class="text">Spontanität</div>
+			<div class="circle" id="spontan">
+				<div class="bg_1">
+					<%= image_tag 'game/spontan_blue.png',  class: 'avatar' %>
+            		<%= image_tag 'game/spontan_green.png', class: 'shield' %>
+				</div>
+			</div>
+			<%= image_tag 'game/polygon.png', class: 'pol' %>
+    		<div class="rate" id="spontan_text">?</div>
+		</section>
+		<section id="rating_creative">
+			<div class="text">Kreativität</div>
+			<div class="circle" id="creative">
+				<div class="bg_1">
+					<%= image_tag 'game/creative_blue.png',  class: 'avatar' %>
+            		<%= image_tag 'game/creative_green.png', class: 'shield' %>
+				</div>
+			</div>
+			<%= image_tag 'game/polygon.png', class: 'pol' %>
+    		<div class="rate" id="creative_text">?</div>
+		</section>
+		<section id="rating_body">
+			<div class="text">Körpersprache</div>
+			<div class="circle" id="body">
+				<div class="bg_2">
+					<%= image_tag 'game/body_blue.png',  class: 'avatar' %>
+            		<%= image_tag 'game/body_green.png', class: 'shield' %>
+				</div>
+			</div>
+			<%= image_tag 'game/polygon.png', class: 'pol' %>
+    		<div class="rate" id="body_text">?</div>
+		</section>
+		<section id="rating_rhetoric">
+			<div class="text">Rhetorik</div>
+			<div class="circle" id="rhetoric">
+				<div class="bg_2">
+					<%= image_tag 'game/rhetoric_blue.png',  class: 'avatar' %>
+            		<%= image_tag 'game/rhetoric_green.png', class: 'shield' %>
+				</div>
+			</div>
+			<%= image_tag 'game/polygon.png', class: 'pol' %>
+    		<div class="rate" id="rhetoric_text">?</div>
+		</section>
+		<section id="rating_ges">
+			<div class="text">Gesamt</div>
+			<div class="circle" id="ges">
+				<%= image_tag "vertrieb/user1.jpg", class: 'avatar' %>
+			</div>
+			<%= image_tag 'game/polygon.png', class: 'pol' %>
+    		<div class="rate" id="ges_text">?</div>
+		</section>
+	</section>
+</section>
+<% if @root %>
+	<section id="root-control">
+		<%= link_to 'weiter!', game_bestlist_vertrieb_path, class: 'btn btn-green' %>
+	</section>
+<% end %>
+
+<section id="mobile-wrapper">
+	<section id="head">
+		<h1>Hier ist die Bewertung!</h1>
+	</section>
+	<section id="middle">
+		<%= image_tag 'vertrieb/user1.jpg', class: 'mid-img pulse' %>
+	</section>
+	<section id="bottom">
+		<div class="btn btn-green">weiter!</div>
+	</section>
+</section>
+
+<script>
+	startAnimation();
+	function startAnimation() {
+		setTimeout(function() {
+			ratecircle('#spontan', 'spontan_text', <%= 76 / 100.0 %>);
+		}, 2000);
+		setTimeout(function() {
+			ratecircle('#creative', 'creative_text', <%= 86 / 100.0 %>);
+		}, 4000);
+		setTimeout(function() {
+			ratecircle('#body', 'body_text', <%= 74/ 100.0 %>);
+		}, 6000);
+		setTimeout(function() {
+			ratecircle('#rhetoric', 'rhetoric_text', <%= 99 / 100.0 %>);
+		}, 8000);
+		setTimeout(function() {
+			ratecircleg('#ges', 'ges_text', <%= 84 / 100.0 %>);
+		}, 10000);
+	}
+</script>

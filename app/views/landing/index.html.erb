@@ -1,8 +1,10 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+<% if cookies[:accepted] == 'true' %>
 <!-- Crisp Chat -->
 <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="f6188c63-197c-473a-9f22-0414029984a4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 <!-- END Crisp Chat -->
+<% end %>
 <section id="navbar">
     <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">

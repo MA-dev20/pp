@@ -1,0 +1,10 @@
+<h1>Hallo</h1>
+
+<p>Es gibt eine neue Nachricht im Backoffice</p>
+<p>Name: <%= @admin.fname %> <%= @admin.lname %></p>
+<p>E-Mail: <%= @admin.email %></p>
+<p>Unternehmen: <%= @admin.company_name %></p>
+<p>Mitarbeiter: <%= @admin.employees %></p>
+<p>Nachricht: <%= @admin.message %></p>
+
+<p><%= link_to 'Einloggen!', backoffice_url, class: 'btn btn-green' %></p>

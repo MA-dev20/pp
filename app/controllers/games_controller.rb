@@ -23,7 +23,7 @@ class GamesController < ApplicationController
     if @game && @game.admin_id == @admin.id
       @game.turns.update_all(status: 'ended')
       redirect_to dash_admin_create_game_2_path(@game)
-    elsif @game && @game.admin_id != @admin.id
+    elsif params[:game][:password] == 'vertrieb' || @game && @game.admin_id != @admin.id
         flash[:pop_up] = "Ups, diese URL ist schon vergeben!;-"
 		flash[:pop_up2] = "Sei kreativ und wähle eine andere aus."
         redirect_to dash_admin_games_path(params[:game][:team_id])
@@ -80,40 +80,6 @@ class GamesController < ApplicationController
         redirect_to dash_admin_games_path(params[:game][:team_id])
       end
     end
-  end
-	
-  def create_bo
-	@game = Game.create(game_params)
-	params[:game][:users].each do |u|
-      @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first
-	  @game.turns.create(user_id: u, word_id: @word.id, play: true, played: false, counter: 0)
-	end
-	@team = Team.find(params[:game][:team_id])
-	@game.turns.each do |t|
-	  @user = User.find(t.user_id)
-	  @body = rand(100)
-	  @creative = rand(100)
-	  @rhetoric = rand(100)
-	  @spontan = rand(100)
-	  @ges = (@body + @creative + @rhetoric + @spontan) / 4
-	  t.ratings.create(turn_id: t.id, admin_id: @game.admin_id, ges: @ges, body: @body, creative: @creative, rhetoric: @rhetoric, spontan: @spontan)
-	  @body = rand(100)
-	  @creative = rand(100)
-	  @rhetoric = rand(100)
-	  @spontan = rand(100)
-	  @ges = (@body + @creative + @rhetoric + @spontan) / 4
-	  TurnRating.create(turn_id: t.id, admin_id: @game.admin_id, user_id: t.user_id, game_id: t.game_id, ges: @ges, body: @body, creative: @creative, rhetoric: @rhetoric, spontan: @spontan)
-	  update_user_rating(@user)
-	  t.update(played: true)
-	end
-	update_game_rating(@game)
-	update_team_rating(@team)
-	place = 1
-	@game.turn_ratings.rating_order.each do |tr|
-	  Turn.find(tr.turn_id).update(place: place)
-	  place += 1
-	end
-	redirect_to backoffice_edit_team_path(@team)
   end
    
   def show

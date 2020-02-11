@@ -1,0 +1,221 @@
+<h1><%= @user.fname %> <%= @user.lname %> - Spieler Übersicht</h1>
+<div class="row">
+
+	<div class="card">
+		<h3>User</h3>
+		<%= form_for(:user, url: backoffice_edit_user_path(@user)) do |f| %>
+		<table>
+			<tr>
+				<th>Vorname</th>
+				<td><%= f.text_field :fname, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Nachname</th>
+				<td><%= f.text_field :lname, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td><%= f.email_field :email, class: 'form-field' %></td>
+			</tr>
+			<tr>
+				<th>Passwort</th>
+				<td><%= f.password_field :password, class: 'form-field' %></td>
+			</tr>
+		</table>
+		<%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
+		<% end %>
+	</div>
+
+	<div class="card">
+		<h3>Team</h3>
+		<%= form_for(:user, url: backoffice_edit_user_path(@user)) do |f| %>
+		<input type="hidden" name="user[teams][]" value="" checked>
+		<table>
+			<% @admin.teams.each do |t| %>
+			<tr>
+				<th><%= t.name %></th>
+				<% if TeamUser.where(team_id: t.id, user_id: @user.id).count == 1 %>
+				<td><input type="checkbox" name="user[teams][]" value="<%= t.id %>" checked id="team_users_<%= t.id %>"></td>
+				<% else %>
+				<td><input type="checkbox" name="user[teams][]" value="<%= t.id %>" id="team_users_<%= t.id %>"></td>
+				<% end %>
+			</tr>
+			<% end %>
+		</table>
+		<%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
+		<% end %>
+	</div>
+
+	<div class="card">
+		<h3>Bilder</h3>
+		<%= form_for(:user, url: backoffice_edit_user_path(@user)) do |f| %>
+		<div class="avatar">
+			<label for="user_avatar">
+				<%= image_tag @user.avatar? ? @user.avatar.quad.url : '', id: 'avatar' %>
+			</label>
+			<%= f.file_field :avatar %>
+		</div>
+		<% end %>
+	</div>
+	
+	<div class="card">
+		<h3>Bewertung</h3>
+		<table>
+			<tr>
+				<th>Gesamt</th>
+				<td><%= @user.user_rating ? @user.user_rating.ges : '' %></td>
+			</tr>
+			<tr>
+				<th>Spontanität</th>
+				<td><%= @user.user_rating ? @user.user_rating.spontan : '' %></td>
+			</tr>
+			<tr>
+				<th>Kreativität</th>
+				<td><%= @user.user_rating ? @user.user_rating.creative : '' %></td>
+			</tr>
+			<tr>
+				<th>Körpersprache</th>
+				<td><%= @user.user_rating ? @user.user_rating.body : '' %></td>
+			</tr>
+			<tr>
+				<th>Rhetorik</th>
+				<td><%= @user.user_rating ? @user.user_rating.rhetoric : '' %></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div class="table">
+	<h3>Spiele</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Datum</th>
+				<th>Wort</th>
+				<th>Spontanität</th>
+				<th>Kreativität</th>
+				<th>Körpersprache</th>
+				<th>Rhetoric</th>
+				<th>Gesamt</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @user.turns.each do |t| %>
+			<%= form_for(:rating, url: backoffice_edit_rating_path(t.id)) do |f| %>W
+				<%= f.hidden_field :site, value: 'backoffice_user' %>
+				<% @rating = t.turn_rating %>
+				<tr>
+					<td onclick="redirect(<%= t.game_id %>)"><%= t.created_at.strftime('%d.%m.%Y') %></td>
+					<td onclick="redirect(<%= t.game_id %>)"><%= Word.find_by(id: t.word_id) ? Word.find_by(id: t.word_id).name : '' %></td>
+					<td><%= f.number_field :spontan, class: 'form-field' %></td>
+					<td><%= f.number_field :creative, class: 'form-field' %></td>
+					<td><%= f.number_field :body, class: 'form-field' %></td>
+					<td><%= f.number_field :rhetoric, class: 'form-field' %></td>
+					<td onclick="redirect(<%= t.game_id %>)"><%= @rating.ges %></td>
+					<td><%= link_to '', backoffice_destroy_turn_path(t.id, site: 'user'), class: 'far fa-trash-alt' %></td>
+				</tr>
+				<%= f.submit '', style: 'display: none'%>
+			<% end %>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+
+<div class="popup" id="popup">
+   	<div class="img-container">
+   		<%= image_tag '', id: 'user_image' %>
+   	</div>
+    <div class="form-group center">
+    	<div class="btn btn-green" id="crop">speichern</div>
+    </div>
+    <div class="close" onclick="hidePopup()"><i class="fas fa-times"></i></div>
+</div>
+<script>
+	function showPopup() {
+        $('#popup').show();
+    }
+    function hidePopup() {
+        $('#popup').hide();
+    }
+	(function ($) {
+	  $.each(['show', 'hide'], function (i, ev) {
+	    var el = $.fn[ev];
+	    $.fn[ev] = function () {
+	      this.trigger(ev);
+	      return el.apply(this, arguments);
+	    };
+	  });
+	})(jQuery);
+	var inputAvatar = document.getElementById('user_avatar');
+	var image = document.getElementById('user_image');
+	
+	inputAvatar.addEventListener('change', function(e) {
+		var files = e.target.files;
+		var done = function(url) {
+			inputAvatar.value = '';
+			image.src = url;
+			$('#popup').show();
+		};
+		var reader, file, url;
+		if(files && files.length > 0) {
+			file = files[0];
+			if(URL) {
+				done(URL.createObjectURL(file));
+			} else if(FileReader) {
+				reader = new FileReader();
+				reader.onload = function(e) {
+					done(reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+	})
+	$('#popup').on('show', function() {
+		cropper = new Cropper(image, {
+			aspectRatio: 1,	
+		});
+	})
+	$('#popup').on('hide', function() {
+		cropper.destroy();
+		cropper = null;
+	})
+	$('#crop').on('click', function() {
+		var initialURL, canvas;
+		if(cropper) {
+			canvas = cropper.getCroppedCanvas({
+				fillColor: "white"
+			});
+			initalURL = avatar.src;
+			avatar.src = canvas.toDataURL();
+			canvas.toBlob(function(blob) {
+				var file = new window.File([blob], 'avatar.jpg', {type: 'image/jpg'});
+				var formData = new FormData();
+				formData.append('file', file);
+				uploadImage('avatar', formData);
+			});
+		};
+	})
+	function uploadImage(img, formData) {
+		var url = '<%= backoffice_update_user_avatar_path(@user) %>';
+		$.ajax({
+			url: url,
+			type: 'put',
+			cache: false,
+			async: true,
+			contentType: false,
+			processData: false,
+			data: formData,
+			beforeSend: function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+			success: function(res) {
+				formData = new FormData();
+				$('#avatar').data('url', res.file);
+				$('#popup').hide();
+			}
+		})	
+	}
+	function redirect(game_id) {
+		var URL = "<%= backoffice_games_url(@admin) %>";
+        location.replace(URL + '/' + game_id);
+    }
+</script>

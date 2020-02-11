@@ -1,0 +1,39 @@
+<h1><%= @admin.fname %> <%= @admin.lname %>'s Spieler</h1>
+<div class="table">
+	<table>
+		<thead>
+			<tr>
+				<%= form_for(:user, url: backoffice_new_user_path(@admin)) do |f| %>
+					<td><%= f.text_field :fname, placeholder: 'Vorname', class: 'form-field'%></td>
+					<td><%= f.text_field :lname, placeholder: 'Nachname', class: 'form-field' %></td>
+					<td><%= f.email_field :email, placeholder: 'E-Mail', class: 'form-field' %></td>
+					<td class="center"><%= f.submit 'erstellen', class: 'btn btn-green' %></td>
+				<% end %>
+			</tr>
+			<tr>
+				<th>Name</th>
+				<th>Teams</th>
+				<th>Pitches</th>
+				<th>Letzte Spiel</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @users.each do |u| %>
+			<tr>
+				<td onclick="redirect(<%= u.id %>)"><%= u.fname %> <%= u.lname %></td>
+				<td onclick="redirect(<%= u.id %>)"><%= u.teams.count %></td>
+				<td onclick="redirect(<%= u.id %>)"><%= u.turns.count %></td>
+				<td onclick="redirect(<%= u.id %>)"><%= u.turns.count > 0 ? u.turns.last.created_at.strftime("%d.%m.%Y") : '' %></td>
+				<td><%= link_to '', backoffice_destroy_user_path(u.id), class: 'far fa-trash-alt' %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+<script>
+	function redirect(user_id) {
+		var URL = "<%= backoffice_users_url(@admin) %>";
+        location.replace(URL + '/' + user_id);
+    }
+</script>

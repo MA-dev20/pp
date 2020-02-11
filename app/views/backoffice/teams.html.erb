@@ -1,0 +1,39 @@
+<h1><%= @admin.fname %> <%= @admin.lname %>'s Teams</h1>
+
+<div class="table">
+	<table>
+		<thead>
+			<tr>
+				<%= form_for(:team, url: backoffice_new_team_path(@admin)) do |f| %>
+					<td><%= f.text_field :name, placeholder: 'Teamname', class: 'form-field'%></td>
+					<td><%= f.submit 'erstellen', class: 'btn btn-green' %></td>
+				<% end %>
+			</tr>
+			<tr>
+				<th>Name</th>
+				<th>Users</th>
+				<th>Pitches</th>
+				<th>Letztes Spiel</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @teams.each do |t| %>
+			<tr>
+				<td onclick="redirect(<%= t.id %>)"><%= t.name %></td>
+				<td onclick="redirect(<%= t.id %>)"><%= t.users.count %></td>
+				<td onclick="redirect(<%= t.id %>)"><%= t.games.count %></td>
+				<td onclick="redirect(<%= t.id %>)"><%= t.games.count > 0 ? t.games.last.created_at.strftime('%d.%m.%Y') : '' %></td>
+				<td><%= link_to '', backoffice_destroy_team_path(t.id), class: 'far fa-trash-alt' %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+
+<script>
+	function redirect(team_id) {
+		var URL = "<%= backoffice_teams_url(@admin) %>";
+        location.replace(URL + '/' + team_id);
+    }
+</script>

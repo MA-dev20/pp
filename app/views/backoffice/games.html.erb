@@ -1,0 +1,40 @@
+<h1><%= @admin.fname %> <%= @admin.lname %>'s Pitches</h1>
+<div class="table">
+	<table>
+		<thead>
+			<tr>
+				<th>Team</th>
+				<th>Datum</th>
+				<th>Spieler</th>
+				<th>Spontanität</th>
+				<th>Kreativität</th>
+				<th>Körpersprache</th>
+				<th>Rhetoric</th>
+				<th>Gesamt</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @games.each do |g| %>
+				<% @rating = g.game_rating %>
+				<tr>
+					<td onclick="redirect(<%= g.id %>)"><%= g.team.name %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= g.created_at.strftime('%d.%m.%Y') %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= g.turns.count %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.spontan : '' %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.creative : '' %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.body : '' %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.rhetoric : '' %></td>
+					<td onclick="redirect(<%= g.id %>)"><%= @rating ? @rating.ges : '' %></td>
+					<td><%= link_to '', backoffice_destroy_game_path(g.id), class: 'far fa-trash-alt' %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+<script>
+function redirect(game_id) {
+	var URL = "<%= backoffice_games_url(@admin) %>";
+	location.replace(URL + '/' + game_id);
+}
+</script>

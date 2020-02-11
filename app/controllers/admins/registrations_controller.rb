@@ -6,6 +6,7 @@ class Admins::RegistrationsController < Devise::RegistrationsController
     if !@admin.save
       redirect_to contact_path
     else
+	  RootMailer.after_admin_creation(@admin).deliver
       redirect_to after_register_path(@admin)
     end
   end

@@ -1,0 +1,42 @@
+<%= image_tag 'dash/lets-pitch1.png', class: 'lets-pitch-img1' %>
+<%= image_tag 'dash/lets-pitch2.png', class: 'lets-pitch-img2' %>
+<div class="karte letsplay" id="ownrules">
+	<i class="back small fas fa-arrow-left"></i>
+	<div class="head small">Pitche nach deinen Regeln</div>
+	<div class="karte-content">
+		<div class="time">
+			<label for="">Deine Zeit</label>
+			<div class="field">
+				<div class="time" id="game-time-input">1:20</div>
+				<div class="up"><i class="fa fa-angle-up"></i></div>
+				<div class="down"><i class="fa fa-angle-down"></i></div>
+			</div>
+		</div>
+		
+		<div class="catchwords">
+			<label for="">Deine Catchwords</label>
+			<div class="checked-field">
+				<div class="text">Original Peter's Catchwords</div>
+				<div class="add"><i class="fas fa-plus"></i></div>
+			</div>
+		</div>
+		
+		<div class="objections">
+			<label for="">Deine Einwände</label>
+			<div class="checked-field">
+				<div class="text">Original Peter's Einwände</div>
+				<div class="add"><i class="fas fa-plus"></i></div>
+			</div>
+		</div>
+		
+		<div class="youtube">
+			<label for="">Video hinzufügen</label>
+		</div>
+		
+		<% if @root %>
+			<%= link_to 'weiter!', game_wait_vertrieb_path, class: 'btn btn-green' %>
+		<% else %>
+			<button class="btn btn-green">Pitch starten!</button>
+		<% end %>
+	</div>
+</div>

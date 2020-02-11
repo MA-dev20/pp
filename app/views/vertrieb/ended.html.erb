@@ -1,0 +1,13 @@
+<section id="content">
+	<section id="head">
+		<%= image_tag 'logo-m.png', class: 'logo' %>
+		<h1>Auf wiedersehen<%= @vertrieb ? ', Herr ' + @vertrieb.name : '' %></h1>
+	</section>
+</section>
+<section id="root-control">
+	<% if root_logged_in? %>
+		<%= link_to 'weiter!', backoffice_sales_path, class: "btn btn-green" %>
+	<% else %>
+		<%= link_to 'zur Homepage', root_path, class: 'btn btn-green' %>
+	<% end %>
+</section>

@@ -1,0 +1,110 @@
+<section id="content">
+	<section id="head">
+		<h1>Wer soll pitchen?</h1>
+	</section>
+	
+	<section id="middle">
+		<div id="vote"></div>
+		<div class="circle-left">
+			<%= image_tag 'vertrieb/user1.jpg', class: 'blue', id: 'left-img' %>
+		</div>
+		<div class="circle-right">
+			<%= image_tag 'vertrieb/user3.jpg', class: 'blue', id: 'right-img' %>
+		</div>
+	</section>
+	
+	<section id="bottom">
+		<div class="countdown">
+			<div class="progress">
+				<div id="dynamic" class="progress-bar">
+					<span id="current-progress"></span>
+				</div>
+			</div>
+			<span class="timer" id="timeralli"></span>
+		</div>
+	</section>
+
+	<% if @root %>
+	<section id="root-control">
+		<%= link_to 'weiter!', game_turn_vertrieb_path, class: "btn btn-green" %>
+	</section>
+	<% end %>
+</section>
+<section id="mobile-wrapper">
+	<div id="choose">
+	<section id="head">
+		<h1>Jetzt wählen!</h1>
+	</section>
+	<section id="middle">
+		<%= image_tag 'vertrieb/user1.jpg', class: 'mid-img-left blue', id: 'rate_img_left' %>
+		<%= image_tag 'vertrieb/user3.jpg', class: 'mid-img-right blue', id: 'rate_img_right' %>
+	</section>
+	<section id="bottom">
+		<div class="btn btn-green">weiter!</div>
+	</section>
+	</div>
+	<div id="choosen_left" style="display: none">
+		<section id="head">
+			<h1>Du hast für max gestimmt!</h1>
+		</section>
+		<section id="middle">
+			<%= image_tag 'vertrieb/user1.jpg', class: 'mid-img green pulse' %>
+		</section>
+		<section id="bottom">
+			<div class="btn btn-green">weiter!</div>
+		</section>
+	</div>
+	<div id="choosen_right" style="display: none">
+		<section id="head">
+			<h1>Du hast für Claudia gestimmt!</h1>
+		</section>
+		<section id="middle">
+			<%= image_tag 'vertrieb/user3.jpg', class: 'mid-img green pulse' %>
+		</section>
+		<section id="bottom">
+			<div class="btn btn-green">weiter!</div>
+		</section>
+	</div>
+</section>
+<script>
+	setTimeout(function() {
+		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag('vertrieb/user1.jpg') %>' +'</div>'
+		$('#vote').append(vote);
+		$('#left-img').addClass('pulse-single');
+	}, 1500)
+	setTimeout(function() {
+		vote = '<div class="vote" style="left: calc(50% + 20vh - 48px)">'+ '<%= image_tag('vertrieb/user2.jpg') %>' +'</div>'
+		$('#vote').append(vote);
+		$('#right-img').addClass('pulse-single');
+	}, 3000)
+	setTimeout(function() {
+		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag('vertrieb/user3.jpg') %>' +'</div>'
+		$('#vote').append(vote);
+		$('#left-img').addClass('pulse-single');
+	}, 4500)
+	setTimeout(function() {
+		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag('vertrieb/user4.jpg') %>' +'</div>'
+		$('#vote').append(vote);
+		$('#left-img').addClass('pulse-single');
+	}, 6500)
+	$('#left-img').on('animationend', function() {
+		$('#left-img').removeClass('pulse-single');
+	})
+	$('#right-img').on('animationend', function() {
+		$('#right-img').removeClass('pulse-single');
+	})
+	$('#rate_img_left').on('click', function() {
+		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag @vertrieb.avatar? ? @vertrieb.avatar.url : 'defaults/wolf.jpg' %>' +'</div>'
+		$('#vote').append(vote);
+		$('#left-img').addClass('pulse-single');
+		$('#choose').hide();
+		$('#choosen_left').show();
+	})
+	$('#rate_img_right').on('click', function() {
+		vote = '<div class="vote" style="left: calc(50% + 20vh - 48px)">'+ '<%= image_tag @vertrieb.avatar? ? @vertrieb.avatar.url : 'defaults/wolf.jpg' %>' +'</div>'
+		$('#vote').append(vote);
+		$('#right-img').addClass('pulse-single');
+		$('#choose').hide();
+		$('#choosen_right').show();
+	})
+</script>

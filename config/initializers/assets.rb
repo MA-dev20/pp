@@ -11,4 +11,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules' 'fonts' 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += %w( main/main.scss main/main.js dash/main.scss dash/main.js game_desktop/main.scss game_desktop/main.js game_mobile/main.scss game_mobile/main.js backoffice/main.scss)
+Rails.application.config.assets.precompile += %w( main/main.scss main/main.js dash/main.scss dash/main.js game_desktop/main.scss game_desktop/main.js game_mobile/main.scss game_mobile/main.js backoffice/main.scss vertrieb/main.scss vertrieb/main.js vertrieb/dash.scss vertrieb/dash.js vertrieb/game.scss vertrieb/game.js)

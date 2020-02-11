@@ -1,0 +1,38 @@
+<section id="content">
+	<section id="head">
+		<h1>Max ist dran!</h1>
+	</section>
+	<section id="middle">
+		<div class="circle-left">
+			<%= image_tag 'vertrieb/user1.jpg', class: 'blue middle', id: 'middle_img' %>
+		</div>
+		<div class="circle-right">
+			<%= image_tag 'vertrieb/user3.jpg', class: 'blue hide' %>
+		</div>
+	</section>
+	<section id="bottom">
+		
+	</section>
+	<% if @root %>
+	<section id="root-control">
+		<%= link_to 'weiter!', game_play_vertrieb_path, class: "btn btn-green" %>
+	</section>
+	<% end %>
+</section>
+<section id="mobile-wrapper">
+	<section id="head">
+		<h1>Max ist dran!</h1>
+	</section>
+	<section id="middle">
+		<%= image_tag 'vertrieb/user1.jpg', class: 'mid-img pulse' %>
+	</section>
+	<section id="bottom">
+		<div class="btn btn-green">weiter!</div>
+	</section>
+</section>
+<script>
+	$('#middle_img').on('animationend', function() {
+		$('#middle_img').removeClass('middle blue');
+		$('#middle_img').addClass('pulse mid-img');
+	})
+</script>

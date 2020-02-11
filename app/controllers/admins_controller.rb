@@ -29,6 +29,7 @@ class AdminsController < ApplicationController
 		AdminMailer.after_activate(@admin, password).deliver
         redirect_to backoffice_admin_path(@admin)
       else
+		RootMailer.after_admin_creation(@admin).deliver
         flash[:thanks_for_register] = 'Wir haben deine Nachricht erhalten! Einer unserer Wölfe wird sich zeitnah mir Dir in Verbindung setzen.'
         redirect_to root_path
       end

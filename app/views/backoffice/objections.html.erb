@@ -1,0 +1,38 @@
+<% if @admin %>
+<h1><%= @admin.fname %> <%= @admin.lname %>'s Objections</h1>
+<% else %>
+<h1>Peters Objections</h1>
+<% end %>
+
+<div class="table">
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Erstellt</th>
+				<th>Einwände</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @objections.each do |g| %>
+			<tr>
+				<td onclick="redirect(<%= g.id %>)"><%= g.name %></td>
+				<td onclick="redirect(<%= g.id %>)"><%= g.created_at.strftime('%d.%m.%Y') %></td>
+				<td onclick="redirect(<%= g.id %>)"><%= g.objections.count %></td>
+				<td><%= link_to '', destroy_basket_path(g.id), class: "far fa-trash-alt" %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+<script>
+function redirect(objection_id) {
+	<% if @admin %>
+	  var URL = "<%= backoffice_objections_url(@admin) %>";
+	<% else %>
+	  var URL = "<%= backoffice_objections_noadmin_url %>";
+	<% end %>
+	location.replace(URL + '/' + objection_id);
+}
+</script>

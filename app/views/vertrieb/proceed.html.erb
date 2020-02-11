@@ -1,0 +1,15 @@
+<div id="vertrieb_channel" data-vertrieb-id="<%= @vertrieb.id %>"></div>
+<section id="content">
+	<section id="head">
+		<%= image_tag 'logo-m.png', class: 'logo' %>
+		<h1>Weiter geht's Herr <%= @vertrieb.name %></h1>
+	</section>
+	<section id="middle">
+		<%= image_tag @vertrieb.avatar? ? @vertrieb.avatar.url : 'defaults/wolf.png' %>
+	</section>
+</section>
+<section id="root-control">
+	<% if @root %>
+		<%= link_to 'weiter!', dash_lets_pitch_vertrieb_path, class: "btn btn-green" %>
+	<% end %>
+</section>

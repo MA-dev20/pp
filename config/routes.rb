@@ -131,7 +131,34 @@ Rails.application.routes.draw do
   get 'mobile/user/game/replay', to: 'game_mobile_user#replay', as: 'gmu_replay'
   get 'mobile/user/game/ended', to: 'game_mobile_user#ended', as: 'gmu_ended'
   get 'mobile/user/game/ended_game', to: 'game_mobile_user#ended_game', as: 'gmu_ended_game'
-  
+	
+############
+# Vertrieb #
+############
+	
+  get '/vertrieb', to: 'vertrieb#new', as: 'vertrieb'
+  post 'vertrieb/new', to: 'vertrieb#create', as: 'new_vertrieb'
+  post 'vertrieb/login', to: 'vertrieb#login', as: 'login_vertrieb'
+ 
+  get 'vertrieb/start', to: 'vertrieb#start', as: 'start_vertrieb'
+  get 'vertrieb/proceed', to: 'vertrieb#proceed', as: 'proceed_vertrieb'
+	
+  get "vertrieb/game_wait", to: "vertrieb#game_wait", as: 'game_wait_vertrieb'
+  get 'vertrieb/game_choose', to: 'vertrieb#game_choose', as: 'game_choose_vertrieb'
+  get 'vertrieb/game_turn', to: 'vertrieb#game_turn', as: 'game_turn_vertrieb'
+  get 'vertrieb/game_play', to: 'vertrieb#game_play', as: 'game_play_vertrieb'
+  get 'vertrieb/game_rate', to: 'vertrieb#game_rate', as: 'game_rate_vertrieb'
+  get 'vertrieb/game_rated', to: "vertrieb#game_rated", as: 'game_rated_vertrieb'
+  get 'vertrieb/game_bestlist', to: 'vertrieb#game_bestlist', as: 'game_bestlist_vertrieb'
+	
+  get 'vertrieb/dash_customize', to: 'vertrieb#dash_customize', as: 'dash_customize_vertrieb'
+  get 'vertrieb/dash_lets_pitch', to: 'vertrieb#dash_lets_pitch', as: 'dash_lets_pitch_vertrieb'
+  get 'vertrieb/dash_lets_pitch2', to: 'vertrieb#dash_lets_pitch2', as: 'dash_lets_pitch2_vertrieb'
+  get 'vertrieb/dash_user_stats', to: 'vertrieb#dash_user_stats', as: 'dash_user_stats_vertrieb'
+  get 'vertrieb/dash_users', to: 'vertrieb#dash_users', as: 'dash_users_vertrieb'
+  get 'vertrieb/dash_videoanalyse', to: 'vertrieb#dash_videoanalyse', as: 'dash_videoanalyse_vertrieb'
+	
+  get 'vertrieb/ended', to: 'vertrieb#ended', as: 'ended_vertrieb'
     
 ####################################################################################
 #############
@@ -143,22 +170,72 @@ Rails.application.routes.draw do
 ##############
   
   get 'backoffice', to: 'backoffice#index', as: 'backoffice'
+	
   get 'backoffice/admins', to: 'backoffice#admins', as: 'backoffice_admins'
-    
   get 'backoffice/admins/:admin_id', to: 'backoffice#admin', as: 'backoffice_admin'
-  get 'backoffice/admins/:admin_id/edit', to: 'backoffice#edit_admin', as: 'backoffice_edit_admin'
-  get 'backoffice/teams/:team_id', to: 'backoffice#edit_team', as: 'backoffice_edit_team'
-  get 'backoffice/users/:user_id', to: 'backoffice#edit_user', as: 'backoffice_edit_user'
-  get 'backoffice/catchwords/:basket_id', to: 'backoffice#edit_catchword', as: 'backoffice_edit_catchword'
-  get 'backoffice/objections/:basket_id', to: 'backoffice#edit_objection', as: 'backoffice_edit_objection'
-  get 'backoffice/games/:game_id', to: 'backoffice#edit_game', as: 'backoffice_edit_game'
-  post 'games/:game_id/edit', to: 'backoffice#update_game', as: 'edit_game'
-  post 'ratings/:turn_id/edit', to: 'backoffice#update_rating', as: 'edit_rating'
-  get 'backoffice/games/:game_id/turns/:turn_id', to: 'backoffice#sim_turn', as: 'backoffice_sim_turn'
-  get 'backoffice/admins/:admin_id/activate', to: 'backoffice#activate_admin', as: 'backoffice_admin_activate'
-  get 'backoffice/admins/:admin_id/destroy', to: 'backoffice#destroy_admin', as: 'backoffice_admin_destroy'
-  get 'backoffice/word_baskets', to: 'backoffice#word_baskets', as: 'backoffice_word_baskets'
-  get 'backoffice/word_baskets/:basket_id/words', to: 'backoffice#words', as: 'backoffice_words'
+  get 'backoffice/admins/:admin_id/teams', to: 'backoffice#teams', as: 'backoffice_teams'
+  get 'backoffice/admins/:admin_id/teams/:team_id', to: 'backoffice#team', as: 'backoffice_team'
+  get 'backoffice/admins/:admin_id/users', to: 'backoffice#users', as: 'backoffice_users'
+  get 'backoffice/admins/:admin_id/users/:user_id', to: 'backoffice#user', as: 'backoffice_user'
+  get 'backoffice/admins/:admin_id/games', to: 'backoffice#games', as: 'backoffice_games'
+  get 'backoffice/admins/:admin_id/games/:game_id', to: 'backoffice#game', as: 'backoffice_game'
+  get 'backoffice/admins/:admin_id/words', to: 'backoffice#words', as: 'backoffice_words'
+  get 'backoffice/admins/:admin_id/words/:basket_id', to: 'backoffice#word', as: 'backoffice_word'
+  get 'backoffice/words', to: 'backoffice#words', as: 'backoffice_words_noadmin'
+  get 'backoffice/words/:basket_id', to: 'backoffice#word', as: 'backoffice_word_noadmin'
+  get 'backoffice/admins/:admin_id/objections', to: 'backoffice#objections', as: 'backoffice_objections'
+  get 'backoffice/admins/:admin_id/objections/:basket_id', to: 'backoffice#objection', as: 'backoffice_objection'
+  get 'backoffice/objections', to: 'backoffice#objections', as: 'backoffice_objections_noadmin'
+  get 'backoffice/objections/:basket_id', to: 'backoffice#objection', as: 'backoffice_objection_noadmin'
+  get 'backoffice/roots', to: 'backoffice#roots', as: 'backoffice_roots'
+  get 'backoffice/sales', to: 'backoffice#sales', as: 'backoffice_sales'
+  get 'backoffice/sales/:vertrieb_id/sale_pictures', to: 'backoffice#sale_pictures', as: 'backoffice_sale_pictures'
+  ##############
+  # CRUD Admin #
+  ##############
+  post 'backoffice/admins/new', to: 'backoffice#new_admin', as: 'backoffice_new_admin'
+  get 'backoffice/admins/:admin_id/activate', to: 'backoffice#activate_admin', as: 'backoffice_activate_admin'
+  post 'backoffice/admins/:admin_id/edit', to: 'backoffice#edit_admin', as: 'backoffice_edit_admin'
+  put 'backoffice/admins/:admin_id/update_avatar', to: 'backoffice#update_admin_avatar', as: 'backoffice_update_admin_avatar'
+  put 'backoffice/admins/:admin_id/update_logo', to: 'backoffice#update_admin_logo', as: 'backoffice_update_admin_logo'
+  get 'backoffice/admins/:admin_id/destroy', to: 'backoffice#destroy_admin', as: 'backoffice_destroy_admin'
+  #############
+  # CRUD Team #
+  #############
+  post 'backoffice/admins/:admin_id/teams/new', to: 'backoffice#new_team', as: 'backoffice_new_team'
+  post 'backoffice/teams/:team_id/edit', to: 'backoffice#edit_team', as: 'backoffice_edit_team'
+  get 'backoffice/teams/:team_id/destroy', to: 'backoffice#destroy_team', as: "backoffice_destroy_team"
+  #############
+  # CRUD User #
+  #############
+  post 'backoffice/admins/:admin_id/users/new', to: 'backoffice#new_user', as: 'backoffice_new_user'
+  post 'backoffice/users/:user_id/edit', to: 'backoffice#edit_user', as: 'backoffice_edit_user'
+  put 'backoffice/users/:user_id/update_avatar', to: 'backoffice#update_user_avatar', as: 'backoffice_update_user_avatar'
+  get 'backoffice/users/:user_id/destroy', to: 'backoffice#destroy_user', as: 'backoffice_destroy_user'
+  #############
+  # CRUD Game #
+  #############
+  post 'backoffice/games/new',to: 'backoffice#new_game', as: 'backoffice_new_game'
+  post 'backoffice/games/:game_id/edit',to: 'backoffice#edit_game', as: 'backoffice_edit_game'
+  get 'backoffice/games/:game_id/destroy',to: 'backoffice#destroy_game', as: 'backoffice_destroy_game'
+  #############
+  # CRUD Turn #
+  #############
+  get 'backoffice/turns/:turn_id/destroy', to: "backoffice#destroy_turn", as: "backoffice_destroy_turn"
+  ###############
+  # CRUD Rating #
+  ###############
+  post 'ratings/:turn_id/edit', to: 'backoffice#update_rating', as: 'backoffice_edit_rating'
+  #############
+  # CRUD ROOT #
+  #############
+  post 'backoffice/roots/new', to: 'backoffice#new_root', as: 'backoffice_new_root'
+  get 'backoffice/roots/:root_id/destroy', to: 'backoffice#destroy_root', as: 'backoffice_destroy_root'
+  #################
+  # CRUD Vertrieb #
+  #################
+  put 'backoffice/sales/:vertrieb_id/update_avatar', to: 'backoffice#update_vertrieb_avatar', as: 'update_vertrieb_avatar'
+  put 'backoffice/sales/:vertrieb_id/update_logo', to: 'backoffice#update_vertrieb_logo', as: 'update_vertrieb_logo'
 
 #########
 # Admin #
@@ -281,7 +358,6 @@ Rails.application.routes.draw do
 ########
     
   get 'games/new', to: 'games#new', as: 'new_game'
-  post 'backoffice/games/new', to: "games#create_bo", as: "new_game_bo"
   post 'games/new', to: 'games#create'
   post 'games/:game_id/new', to: 'games#create_2', as: 'new_game_2'
   post 'games/:game_id/update', to: 'games#update', as: 'update_game'
@@ -311,12 +387,10 @@ Rails.application.routes.draw do
 ########
 # Word #
 ########
-    
-  get 'words/:basket_id/new', to: 'words#new', as: 'new_word'
-  post 'words/:basket_id/new', to: 'words#create'
 
-  get 'words/:basket_id/:word_id/edit', to: 'words#edit', as: 'edit_word'
-  post 'words/:basket_id/:word_id/edit', to: 'words#update'
+  post 'words/:basket_id/new', to: 'words#create', as: "new_word"
+
+  post 'words/:basket_id/:word_id/edit', to: 'words#update', as: 'edit_word'
     
   get 'words/:basket_id/:word_id/destroy', to: 'words#destroy', as: 'destroy_word'
   mount ActionCable.server => '/cable'
@@ -342,8 +416,7 @@ Rails.application.routes.draw do
 # Objection #
 #############
 
-  get 'objections/:basket_id/new', to: 'objections#new', as: 'new_objection'
-  post 'objections/:basket_id/new', to: 'objections#create'
+  post 'objections/:basket_id/new', to: 'objections#create', as: 'new_objection'
   post 'objections/:basket_id/:objection_id/edit', to: 'objections#update', as: 'edit_objection'
   get "baskets/:basket_id/objections/:objection_id", to: "objections#destroy", as: 'destroy_objection'
   
@@ -351,12 +424,9 @@ Rails.application.routes.draw do
 # Basket #
 ##########
     
-  get 'basket/new', to: 'basket#new', as: 'new_basket'
-  post 'basket/new', to: 'basket#create'
-  get 'basket/:basket_id/edit', to: 'basket#edit', as: 'edit_basket'
-  post 'basket/:basket_id/edit', to: 'basket#update'
+  post 'basket/new', to: 'basket#create', as: 'new_basket'
+  post 'basket/:basket_id/edit', to: 'basket#update', as: 'edit_basket'
   get 'basket/:basket_id/destroy', to: 'basket#destroy', as: 'destroy_basket'
-  get 'basket/:basket_id/destroy/:site', to: 'basket#destroy', as: 'destroy_basket_admin'
     
 ##############
 # Enter Game #

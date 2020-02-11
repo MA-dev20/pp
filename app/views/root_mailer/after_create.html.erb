@@ -1,0 +1,10 @@
+<h1>Hallo <%= @root.username %></h1>
+
+<p>Deine Zugangsdaten:</p>
+
+<p>Nutzer: <span class="bold"><%= @root.username %></span></p>
+<p>Password: <span class="bold"><%= @password %></span></p>
+
+<p><%= link_to 'Einloggen!', backoffice_url, class: 'btn btn-green' %></p>
+
+<p>Viel Spaß <br> Dein Peter Pitch Team</p>

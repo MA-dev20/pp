@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>Peterpitch</title>
+    <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
+    <%= stylesheet_link_tag    'vertrieb/game', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'vertrieb/game' %>
+</head>
+
+<body>
+	<div id="vertrieb_channel" data-vertrieb-id="<%= @vertrieb.id %>"></div>
+	<section id="navbar">
+        <%= image_tag 'logo-m.png', class: 'logo' %>
+    	- <%= @vertrieb.team_name ||= 'TEAMNAME' %> -
+    	<% if @handy %>
+	   		<%= image_tag 'game/handy_green.png', class: 'handy' %>
+	   	<% elsif @vertrieb.logo.present? %>
+	   		<%= image_tag @vertrieb.logo.url, class: 'company' %>
+	   	<% end %>
+	</section>
+	
+	<%= yield %>
+	
+</body>
+
+<script>
+    
+</script>
+
+</html>

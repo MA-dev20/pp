@@ -5,4 +5,5 @@
  *= require turbolinks
  *= require popper
  *= require bootstrap
+ *= require cropper.min
  */

@@ -1,0 +1,36 @@
+<h1>Objection Übersicht - <%= @basket.name %></h1>
+
+<div class="table">
+	<%= form_for(:objection, url: new_objection_path, html: {id: 'new_objection'}) do |f| %>
+		<label for="objection_sound">
+			<%= f.file_field :sound, multiple: true, onchange: 'submitForm()', style: "display: none" %>
+			<i class="fas fa-plus-circle"></i>
+		</label>
+	<% end %>
+	<h3>Objections</h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Sound</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @basket.objections.order('name').each do |o| %>
+			<tr>
+				<%= form_for(:objection, url: edit_objection_path(@basket, o.id)) do |f| %>
+				<td><%= f.text_field :name, value: o.name, class: 'form-field' %></td>
+				<td><%= audio_tag o.sound, controls: true %></td>
+				<td><%= link_to '', destroy_objection_path(@basket, o.id), class: "far fa-trash-alt" %></td>
+				<% end %>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+<script>
+function submitForm() {
+	$('#new_objection').submit();
+}
+</script>
