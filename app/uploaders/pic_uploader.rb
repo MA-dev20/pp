@@ -17,7 +17,7 @@ class PicUploader < CarrierWave::Uploader::Base
   end
 
   # Process files as they are uploaded:
-  process resize_to_fit: [500, 500]
+  process resize_to_fit: [1300, 1300]
   process :fix_exif_rotation
 
   # Create different versions of your uploaded files:

@@ -1,0 +1,122 @@
+<h1>Blog Eintrag</h1>
+<div class="row">
+	<div class="card">
+		<h3>Blog - <%= @blog.created_at.strftime('%d.%m.%Y') %></h3>
+		<%= form_for(:blog, url: backoffice_edit_blog_path(@blog)) do |f| %>
+		<table>
+			<tr>
+				<th>Title</th>
+				<td><%= f.text_field :title, class: 'form-field' %></td>
+			</tr>
+		</table>
+		<%= f.text_area :text, class: 'form-field', style: 'height: 100px' %>
+		<%= f.submit 'Änderungen speichern', class: 'btn btn-green' %>
+		<% end %>
+	</div>
+	
+	<div class="card">
+		<h3>Bild</h3>
+		<%= form_for(:blog, url: backoffice_edit_blog_path(@blog)) do |f| %>
+		<div class="image">
+			<label for="blog_image">
+				<%= image_tag @blog.image? ? @blog.image.url : '', id: 'blogIMG' %>
+			</label>
+			<%= f.file_field :image %>
+		</div>
+		<% end %>
+	</div>
+</div>
+
+<div class="popup" id="popup">
+   	<div class="img-container">
+   		<%= image_tag '', id: 'root_image' %>
+   	</div>
+    <div class="form-group center">
+    	<div class="btn btn-green" id="crop">speichern</div>
+    </div>
+    <div class="close" onclick="hidePopup()"><i class="fas fa-times"></i></div>
+</div>
+<script>
+	function showPopup() {
+        $('#popup').show();
+    }
+    function hidePopup() {
+        $('#popup').hide();
+    }
+	(function ($) {
+	  $.each(['show', 'hide'], function (i, ev) {
+	    var el = $.fn[ev];
+	    $.fn[ev] = function () {
+	      this.trigger(ev);
+	      return el.apply(this, arguments);
+	    };
+	  });
+	})(jQuery);
+	var inputAvatar = document.getElementById('blog_image');
+	var image = document.getElementById('root_image');
+	
+	inputAvatar.addEventListener('change', function(e) {
+		var files = e.target.files;
+		var done = function(url) {
+			inputAvatar.value = '';
+			image.src = url;
+			$('#popup').show();
+		};
+		var reader, file, url;
+		if(files && files.length > 0) {
+			file = files[0];
+			if(URL) {
+				done(URL.createObjectURL(file));
+			} else if(FileReader) {
+				reader = new FileReader();
+				reader.onload = function(e) {
+					done(reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
+		}
+	})
+	$('#popup').on('show', function() {
+		cropper = new Cropper(image, {
+			aspectRatio: 2,	
+		});
+	})
+	$('#popup').on('hide', function() {
+		cropper.destroy();
+		cropper = null;
+	})
+	$('#crop').on('click', function() {
+		var initialURL, canvas;
+		if(cropper) {
+			canvas = cropper.getCroppedCanvas({
+				fillColor: "white"
+			});
+			initalURL = blogIMG.src;
+			blogIMG.src = canvas.toDataURL();
+			canvas.toBlob(function(blob) {
+				var file = new window.File([blob], 'avatar.jpg', {type: 'image/jpg'});
+				var formData = new FormData();
+				formData.append('file', file);
+				uploadImage(formData);
+			});
+		};
+	})
+	function uploadImage(formData) {
+		var url = '<%= backoffice_update_blog_image_path(@blog) %>';
+		$.ajax({
+			url: url,
+			type: 'put',
+			cache: false,
+			async: true,
+			contentType: false,
+			processData: false,
+			data: formData,
+			beforeSend: function(xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
+			success: function(res) {
+				formData = new FormData();
+				$('#blogIMG').data('url', res.file);
+				$('#popup').hide();
+			}
+		})	
+	}
+</script>

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get '/contact', to: 'landing#contact', as: 'contact'
   get 'datenschutz', to: 'landing#datenschutz', as: 'datenschutz'
   get 'impressum', to: 'landing#impressum', as: 'impressum'
+  get 'blog', to: 'landing#blog', as: 'blog'
 	
   get 'landing/ended_game', to: 'landing#ended_game', as: 'landing_ended_game'
 
@@ -247,6 +248,7 @@ Rails.application.routes.draw do
   #############
   post 'backoffice/blogs/new', to: 'backoffice#new_blog', as: "backoffice_new_blog"
   post 'backoffice/blogs/:blog_id/edit', to: 'backoffice#edit_blog', as: "backoffice_edit_blog"
+  put 'backoffice/blogs/:blog_id/update_image', to: 'backoffice#update_blog_image', as: 'backoffice_update_blog_image'
   get 'backoffice/blogs/:blog_id/destroy', to: 'backoffice#destroy_blog', as: 'backoffice_destroy_blog'
 
 #########

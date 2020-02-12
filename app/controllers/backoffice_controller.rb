@@ -7,7 +7,7 @@ class BackofficeController < ApplicationController
   before_action :set_team, only: [:team, :edit_team, :destroy_team]
   before_action :set_game, only: [:game, :edit_game, :destroy_game]
   before_action :set_vertrieb, only: [:sale_pictures, :update_vertrieb_avatar, :update_vertrieb_logo]
-  before_action :set_blog, only: [:blog, :edit_blog, :destroy_blog]
+  before_action :set_blog, only: [:blog, :edit_blog, :update_blog_image, :destroy_blog]
   before_action :if_basket, only: [:words]
   before_action :set_basket, only: [:word, :objection]
   layout 'backoffice'
@@ -169,7 +169,7 @@ class BackofficeController < ApplicationController
 	end
 	redirect_to backoffice_admins_path
   end
-
+	
   # Teams
   def new_team
 	@team = @admin.teams.new(name: params[:team][:name])
@@ -403,6 +403,10 @@ class BackofficeController < ApplicationController
   end
   def edit_blog
 	@blog.update(blog_params)
+  end
+  def update_blog_image
+	@blog.update(image: params[:file]) if params[:file].present? && @blog.present?
+	render json: {file: @blog.image.url}
   end
   def destroy_blog
 	if !@blog.destroy

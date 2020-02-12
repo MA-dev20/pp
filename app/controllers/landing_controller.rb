@@ -22,6 +22,12 @@ class LandingController < ApplicationController
   def index
   end
 
+  def blog
+	@blogs = Blog.all
+	if params[:blog]
+		@blog = Blog.find(params[:blog])
+	end
+  end
   def ended_game
 	if !current_admin.nil?
 	  sign_out(current_admin)
