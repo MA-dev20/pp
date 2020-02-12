@@ -7,6 +7,14 @@
 @import "font-awesome";
 @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,600,700&display=swap');
 
+body {
+	font-family: 'Nunito', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    background-color: #f4faff;
+}
 #navbar {
 	position: absolute;
 	left: 220px;

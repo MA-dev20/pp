@@ -23,6 +23,7 @@
 				<th>Password</th>
 				<td><%= f.text_field :password, class: 'form-field', required: true %></td>
 			</tr>
+			<%= f.hidden_field :root_id, value: current_root.id %>
 		</table>
 		<%= f.submit 'starten!', class: 'btn btn-green' %>
 	</div>

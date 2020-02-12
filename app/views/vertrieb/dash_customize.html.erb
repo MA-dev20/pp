@@ -1,3 +1,59 @@
+<div class="customize">
+	<div class="customize-sm" id="catchword">
+		<div class="searchbar">
+			<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        	<input type="text" placeholder="Liste suchen" id="searchCW">
+		</div>
+		<button class="btn btn-green">Liste erstellen</button>
+	</div>
+	<div class="karte" id="catchwords">
+		<div class="head left">Catchwords</div>
+		<div class="list" id="catchword-list">
+			<div class="list-karte CWsearch">
+				<div class="pic"></div>
+				<div class="bottom">
+					<div class="name"></div>
+					<div class="count"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="customize-sm" id="objections">
+		<div class="searchbar">
+			<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+        	<input type="text" placeholder="Liste suchen" id="searchOB">
+		</div>
+		<button class="btn btn-green">Liste erstellen</button>
+		<div class="karte">
+			<div class="head left">Einwände</div>
+			<div class="list" id="objection-list">
+				<div class="list-karte OBsearch">
+					<div class="pic"></div>
+					<div class="bottom">
+						<div class="name"></div>
+						<div class="count"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="customize-sm" id="words">
+		<div class="karte">
+			<div class="head left">Wortwahl</div>
+			<div class="custom-select custom-select-lg">
+				<div class="selected" id="selected_word">
+					Do say
+				</div>
+				<div class="links" id="doWordSelect">
+					<div class="do" onclick="showDoes()">Do say</div>
+					<div class="dont" onclick="showDonts()">Don't say</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <% if @root %>
 <section id="root-control">
 	<%= link_to 'weiter!', ended_vertrieb_path, class: "btn btn-green" %>

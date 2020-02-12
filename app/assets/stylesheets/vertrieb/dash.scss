@@ -791,6 +791,25 @@ body {
 				height: 31.5vh;
 				width: 100%;
 				box-shadow: 0 .2vh 1vh 0 rgba(172, 172, 172, .5);
+				.blur {
+					position: absolute;
+					top: 0;
+					left: 0;
+					height: 100%;
+					width: 100%;
+					filter: blur(3px);
+					padding: .4vh 4.3vh;
+				}
+				.blue {
+					position: absolute;
+					margin: 10vh 0;
+					width: calc(100% - 8.6vh);
+					line-height: 11vh;
+					font-size: 3vh;
+					font-weight: bold;
+					color: rgba(0,0,0,.3);
+					text-align: center;
+				}
 			}
 		}
 		.middle-part {
@@ -831,6 +850,7 @@ body {
 					width: 31.8vh;
 					border-radius: .3vh;
 					background-color: rgba(130,130,130,.2);
+					cursor: pointer;
 				}
 				.progressDot {
 					position: relative;
@@ -863,6 +883,7 @@ body {
 					display: inline-flex;
 					align-items: center;
 					justify-content: center;
+					cursor: pointer;
 				}
 				.play {
 					position: absolute;
@@ -874,6 +895,7 @@ body {
 					display: inline-flex;
 					align-items: center;
 					justify-content: center;
+					cursor: pointer;
 				}
 				.mute {
 					position: absolute;
@@ -882,6 +904,7 @@ body {
 					line-height: 2.2vh;
 					bottom: 1.7vh;
 					font-size: 1.6vh;
+					cursor: pointer;
 				}
 			}
 		}

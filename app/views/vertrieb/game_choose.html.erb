@@ -6,10 +6,10 @@
 	<section id="middle">
 		<div id="vote"></div>
 		<div class="circle-left">
-			<%= image_tag 'vertrieb/user1.jpg', class: 'blue', id: 'left-img' %>
+			<%= image_tag 'vertrieb/TillGeers.jpg', class: 'blue', id: 'left-img' %>
 		</div>
 		<div class="circle-right">
-			<%= image_tag 'vertrieb/user3.jpg', class: 'blue', id: 'right-img' %>
+			<%= image_tag 'vertrieb/HannaJackoby.jpg', class: 'blue', id: 'right-img' %>
 		</div>
 	</section>
 	
@@ -36,8 +36,8 @@
 		<h1>Jetzt wählen!</h1>
 	</section>
 	<section id="middle">
-		<%= image_tag 'vertrieb/user1.jpg', class: 'mid-img-left blue', id: 'rate_img_left' %>
-		<%= image_tag 'vertrieb/user3.jpg', class: 'mid-img-right blue', id: 'rate_img_right' %>
+		<%= image_tag 'vertrieb/TillGeers.jpg', class: 'mid-img-left blue', id: 'rate_img_left' %>
+		<%= image_tag 'vertrieb/HannaJackoby.jpg', class: 'mid-img-right blue', id: 'rate_img_right' %>
 	</section>
 	<section id="bottom">
 		<div class="btn btn-green">weiter!</div>
@@ -45,10 +45,10 @@
 	</div>
 	<div id="choosen_left" style="display: none">
 		<section id="head">
-			<h1>Du hast für max gestimmt!</h1>
+			<h1>Du hast für Till gestimmt!</h1>
 		</section>
 		<section id="middle">
-			<%= image_tag 'vertrieb/user1.jpg', class: 'mid-img green pulse' %>
+			<%= image_tag 'vertrieb/TillGeers.jpg', class: 'mid-img green pulse' %>
 		</section>
 		<section id="bottom">
 			<div class="btn btn-green">weiter!</div>
@@ -56,10 +56,10 @@
 	</div>
 	<div id="choosen_right" style="display: none">
 		<section id="head">
-			<h1>Du hast für Claudia gestimmt!</h1>
+			<h1>Du hast für Hanna gestimmt!</h1>
 		</section>
 		<section id="middle">
-			<%= image_tag 'vertrieb/user3.jpg', class: 'mid-img green pulse' %>
+			<%= image_tag 'vertrieb/HannaJackoby.jpg', class: 'mid-img green pulse' %>
 		</section>
 		<section id="bottom">
 			<div class="btn btn-green">weiter!</div>
@@ -68,22 +68,22 @@
 </section>
 <script>
 	setTimeout(function() {
-		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag('vertrieb/user1.jpg') %>' +'</div>'
+		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag('vertrieb/CelinaMoretti.jpg') %>' +'</div>'
 		$('#vote').append(vote);
 		$('#left-img').addClass('pulse-single');
 	}, 1500)
 	setTimeout(function() {
-		vote = '<div class="vote" style="left: calc(50% + 20vh - 48px)">'+ '<%= image_tag('vertrieb/user2.jpg') %>' +'</div>'
+		vote = '<div class="vote" style="left: calc(50% + 20vh - 48px)">'+ '<%= image_tag('vertrieb/TillGeers.jpg') %>' +'</div>'
 		$('#vote').append(vote);
 		$('#right-img').addClass('pulse-single');
 	}, 3000)
 	setTimeout(function() {
-		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag('vertrieb/user3.jpg') %>' +'</div>'
+		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag('vertrieb/HannaJackoby.jpg') %>' +'</div>'
 		$('#vote').append(vote);
 		$('#left-img').addClass('pulse-single');
 	}, 4500)
 	setTimeout(function() {
-		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag('vertrieb/user4.jpg') %>' +'</div>'
+		vote = '<div class="vote" style="left: calc(50% - 20vh - 48px)">'+ '<%= image_tag('vertrieb/RomanWasilewski.jpg') %>' +'</div>'
 		$('#vote').append(vote);
 		$('#left-img').addClass('pulse-single');
 	}, 6500)

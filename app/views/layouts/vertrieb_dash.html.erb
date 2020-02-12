@@ -22,15 +22,19 @@
 			<%= image_tag @vertrieb.avatar? ? @vertrieb.avatar.quad.url : 'defaults/wolf.jpg' %>
 		</div>
 		<div class="links">
-			<div class="link <% if current_page?(dash_lets_pitch_vertrieb_path) || current_page?(dash_lets_pitch2_vertrieb_path) %> active <% end %>">
+			<div class="link <%= current_page?(dash_lets_pitch_vertrieb_path) || current_page?(dash_lets_pitch2_vertrieb_path) ? 'active' : '' %>">
 				<i class="fas fa-gamepad"></i>
 				<div class="text">Let's Pitch</div>
 			</div>
-			<div class="link">
+			<div class="link <%= current_page?(dash_users_vertrieb_path) || current_page?(dash_user_stats_vertrieb_path) ? 'active' : '' %>">
 				<i class="fas fa-user-friends"></i>
 				<div class="text">Nutzer</div>
 			</div>
-			<div class="link">
+			<div class="link <%= current_page?(dash_customize_vertrieb_path) ? 'active' : '' %>">
+				<i class="far fa-list-alt"></i>
+				<div class="text">Customize</div>
+			</div>
+			<div class="link <%= current_page?(dash_videoanalyse_vertrieb_path) ? 'active' : '' %>">
 				<i class="fab fa-youtube"></i>
 				<div class="text">Video Tool</div>
 			</div>

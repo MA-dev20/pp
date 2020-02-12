@@ -1,11 +1,11 @@
 <div class="video-details karte">
 	<div class="left-part">
 		
-		<div class="head left small">Plüschpferd</div>
+		<div class="head left small">PlüschPferd</div>
 		
 		<div class="name-date">
-			<%= image_tag 'vertrieb/user1.jpg' %>
-			Max Mustermann - 20.02.2020
+			<%= image_tag 'vertrieb/TillGeers.jpg' %>
+			Till Geers - <%= @vertrieb.created_at.strftime('%d.%m.%Y') %>
 		</div>
 		
 		<div class="head transcript">Do say &amp; Don't say</div>
@@ -21,21 +21,24 @@
 			<div class="wpm">
 				<div class="head">Sprechrate</div>
 				<div class="count">
-					10 <br>
+					50 <br>
 					<div class="word">Worte/Minute</div>
 				</div>
 			</div>
 		</div>
 		
 		<div class="head transcript">Transkript</div>
-		<div class="karte text" id="video-text">
-			Text Text Text
-		</div>
+        <div class="karte text" id="video-text">
+        	<div class="blur">
+        		Unsere KI verarbeitet das Video gerade. Habe noch etwas Geduld.
+        	</div>
+        	<div class="blue">coming soon...</div>
+        </div>
 	</div>
 	
 	<div class="middle-part karte">
 		<div class="video-container">
-			<%= video_tag 'landing.mp4', id: "videoId" %>
+			<%= video_tag 'landing.mp4', id: "videoId", muted: true %>
 		</div>
 		<div class="progress" id="rogressBar">
 			<div class="progressBar"></div>
@@ -46,7 +49,7 @@
 			<%= image_tag 'dash/icons/pause-i.png', class: 'video-pause' %>
 			<%= image_tag 'dash/icons/play-i.png', class: 'video-play' %>
 			<div class="stop"><%= image_tag 'dash/icons/stop-i.png', class: 'fa-stop' %></div>
-			<div class="play"><%= image_tag 'dash/icons/play-i.png', id: 'videoPlay', class: 'fa-play' %></div>
+			<div class="play" onclick="playVideo()"><%= image_tag 'dash/icons/play-i.png', id: 'videoPlay', class: 'fa-play' %></div>
 			<div class="mute"><i class="fas fa-volume-up" id="videoMute"></i></div>
 		</div>
 	</div>
@@ -54,7 +57,7 @@
 	<div class="right-part">
 		<div class="rating" id="ratings">
 			<div class="left">
-				<div class="circle">8.6</div>
+				<div class="circle">8.4</div>
 				<div class="text">Gesamt</div>
 			</div>
 			
@@ -62,30 +65,30 @@
 				<div class="category">
 					<div class="text">Spontanität</div>
 					<div class="bar">
-						<div class="filled" style='width: 56%'></div>
+						<div class="filled" style='width: 76%'></div>
 					</div>
-					<div class="rating">5.6</div>
+					<div class="rating">7.6</div>
 				</div>
 				<div class="category">
 					<div class="text">Kreativität</div>
 					<div class="bar">
-						<div class="filled" style='width: 56%'></div>
+						<div class="filled" style='width: 86%'></div>
 					</div>
-					<div class="rating">5.6</div>
+					<div class="rating">8.6</div>
 				</div>
 				<div class="category">
 					<div class="text">Körpersprache</div>
 					<div class="bar">
-						<div class="filled" style='width: 56%'></div>
+						<div class="filled" style='width: 99%'></div>
 					</div>
-					<div class="rating">5.6</div>
+					<div class="rating">9.9</div>
 				</div>
 				<div class="category">
 					<div class="text">Rhetorik</div>
 					<div class="bar">
-						<div class="filled" style='width: 56%'></div>
+						<div class="filled" style='width: 84%'></div>
 					</div>
-					<div class="rating">5.6</div>
+					<div class="rating">8.4</div>
 				</div>
 			</div>
 		</div>
@@ -127,3 +130,118 @@
 	<%= link_to 'weiter!', dash_customize_vertrieb_path, class: "btn btn-green" %>
 </section>
 <% end %>
+<script>
+    new PerfectScrollbar('#commentCard');
+	new PerfectScrollbar('#video-text');
+    setDuration();
+	$('#videoId').on('canplay', function() {
+		playVideo();
+	})
+
+
+
+
+    function playVideo() {
+        if($('#videoPlay').hasClass('fa-play')) {
+            document.getElementById('videoId').play();
+            $('#videoPlay').removeClass('fa-play');
+            $('#videoPlay').addClass('fa-pause');
+            video_pause_src = $('.video-pause').attr('src');
+            $('.play img').attr('src', video_pause_src)
+            setProgress();
+        } else {
+            document.getElementById('videoId').pause();
+            $('#videoPlay').removeClass('fa-pause');
+            $('#videoPlay').addClass('fa-play');
+            video_play_src = $('.video-play').attr('src');
+            $('.play img').attr('src', video_play_src)
+        }
+    }
+    function stopVideo() {
+        document.getElementById('videoId').load();
+        if($('#videoPlay').hasClass('fa-pause')) {
+            $('#videoPlay').removeClass('fa-pause');
+            $('#videoPlay').addClass('fa-play');
+            video_play_src = $('.video-play').attr('src');
+            $('.play img').attr('src', video_play_src)
+        }
+    }
+    function getDuration() {
+        var vid = document.getElementById('videoId');
+        var min = Math.floor(vid.duration / 60);
+        var sec = Math.floor(vid.duration % 60);
+        if(sec < 10) {
+            sec = '0' + sec;
+        }
+        return min + ':' + sec;
+    }
+    function setDuration() {
+        var vid = document.getElementById('videoId');
+        vid.play();
+        setTimeout(function(){
+            var duration = getDuration();
+            vid.load();
+            $('#progressText').text('0:00/'+duration)
+            if(($('#progressText').text().split('/')[0] == '0:00') && $('#videoPlay').hasClass('fa-pause')) {
+                $('#videoPlay').removeClass('fa-pause');
+                $('#videoPlay').addClass('fa-play');
+                video_play_src = $('.video-play').attr('src');
+                $('.play img').attr('src', video_play_src)
+                $('.progressDot').css( "left", 0)
+            }
+        },100)
+    }
+    function getProgress() {
+        var vid = document.getElementById('videoId');
+        var time = vid.currentTime
+        var min = Math.floor(time / 60);
+        var sec = Math.floor(time % 60);
+        if(sec < 10) {
+            sec = '0' + sec;
+        }
+        $('#comment_current_time').val(Math.floor(vid.currentTime));
+        $('#videoTime').text(min + ':' + sec);
+        setX(time)
+        $('.progressDot').css( "left", ((vid.currentTime / vid.duration) * 282))
+        return min + ':' + sec;
+    }
+    function setProgress() {
+        var duration = getDuration();
+        var progress = getProgress();
+        var progressdot = $('#progressDot')
+        $('#progressText').text(progress + "/" + duration);
+        var timer = setInterval(function() {
+            progress = getProgress();
+            $('#progressText').text(progress + "/" + duration);
+            if(document.getElementById('videoId').paused) {
+                clearInterval(timer);
+            }
+        },1000);
+    }
+    function videoJumpTo(time) {
+        var vid = document.getElementById('videoId');
+        vid.currentTime = time;
+        if($('#videoPlay').hasClass('fa-play')) {
+            vid.play();
+            $('#videoPlay').removeClass('fa-play');
+            $('#videoPlay').addClass('fa-pause');
+            setProgress();
+        }
+        
+    }
+    function videoJumptoCoords(event) {
+        var left = document.getElementById('progressBar').getBoundingClientRect().left;
+        var x = event.clientX - left;
+        var vid = document.getElementById('videoId');
+        var duration = vid.duration;
+        var time = ((x * duration) / 282);
+        setX(time)
+        videoJumpTo(time);
+    }
+    function setX(time) {
+        var vid = document.getElementById('videoId');
+        var duration = vid.duration;
+        var x = (time / duration) * 282
+        $('.progressDot').css('left', x)
+    }
+</script>

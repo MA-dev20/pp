@@ -2,10 +2,10 @@
 <section id="content">
 	<section id="head">
 		<%= image_tag 'logo-m.png', class: 'logo' %>
-		<h1>Willkommen Herr <%= @vertrieb.name %></h1>
+		<h1>Willkommen, Herr <%= @vertrieb.name %></h1>
 	</section>
 	<section id="middle">
-		<%= image_tag @vertrieb.avatar? ? @vertrieb.avatar.url : 'defaults/wolf.png' %>
+		<%= image_tag @vertrieb.root.avatar? ? @vertrieb.root.avatar.url : 'defaults/wolf.png' %>
 	</section>
 </section>
 <section id="root-control">

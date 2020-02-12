@@ -187,9 +187,13 @@ Rails.application.routes.draw do
   get 'backoffice/admins/:admin_id/objections/:basket_id', to: 'backoffice#objection', as: 'backoffice_objection'
   get 'backoffice/objections', to: 'backoffice#objections', as: 'backoffice_objections_noadmin'
   get 'backoffice/objections/:basket_id', to: 'backoffice#objection', as: 'backoffice_objection_noadmin'
+	
   get 'backoffice/roots', to: 'backoffice#roots', as: 'backoffice_roots'
+  get 'backoffice/roots/:root_id', to: 'backoffice#root', as: 'backoffice_root'
   get 'backoffice/sales', to: 'backoffice#sales', as: 'backoffice_sales'
   get 'backoffice/sales/:vertrieb_id/sale_pictures', to: 'backoffice#sale_pictures', as: 'backoffice_sale_pictures'
+  get 'backoffice/blogs', to: 'backoffice#blogs', as: 'backoffice_blogs'
+  get 'backoffice/blogs/:blog_id', to: 'backoffice#blog', as: 'backoffice_blog'
   ##############
   # CRUD Admin #
   ##############
@@ -230,12 +234,20 @@ Rails.application.routes.draw do
   # CRUD ROOT #
   #############
   post 'backoffice/roots/new', to: 'backoffice#new_root', as: 'backoffice_new_root'
+  post 'backoffice/roots/:root_id/edit', to: 'backoffice#edit_root', as: 'backoffice_edit_root'
+  put 'backoffice/roots/:root_id/update_avatar', to: "backoffice#update_root_avatar", as: "backoffice_update_root_avatar"
   get 'backoffice/roots/:root_id/destroy', to: 'backoffice#destroy_root', as: 'backoffice_destroy_root'
   #################
   # CRUD Vertrieb #
   #################
   put 'backoffice/sales/:vertrieb_id/update_avatar', to: 'backoffice#update_vertrieb_avatar', as: 'update_vertrieb_avatar'
   put 'backoffice/sales/:vertrieb_id/update_logo', to: 'backoffice#update_vertrieb_logo', as: 'update_vertrieb_logo'
+  #############
+  # CRUD Blog #
+  #############
+  post 'backoffice/blogs/new', to: 'backoffice#new_blog', as: "backoffice_new_blog"
+  post 'backoffice/blogs/:blog_id/edit', to: 'backoffice#edit_blog', as: "backoffice_edit_blog"
+  get 'backoffice/blogs/:blog_id/destroy', to: 'backoffice#destroy_blog', as: 'backoffice_destroy_blog'
 
 #########
 # Admin #

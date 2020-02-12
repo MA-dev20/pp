@@ -114,9 +114,15 @@ class VertriebController < ApplicationController
   end
 	
   def dash_user_stats
+	date = @vertrieb.created_at.strftime('%d.%m.%Y')
 	@chartdata = []
-	@chartdata << {date: '20.12.2019', ges: 98, spontan: 95, creative: 93, body: 93, rhetoric: 21, admin_ges: 34, admin_spontan: 23, admin_creative: 25, admin_body: 95, admin_rhetoric: 59, word: 'PlüschPferd'}
-	@chartdata << {date: '10.12.2019', ges: 88, spontan: 85, creative: 83, body: 83, rhetoric: 81, admin_ges: 63, admin_spontan: 63, admin_creative: 65, admin_body: 65, admin_rhetoric: 69, word: 'PlüschPony'}
+	@chartdata << {date: '03.01.2020', ges: 43, spontan: 50, creative: 11, body: 75, rhetoric: 38, admin_ges: 45, admin_spontan: 21, admin_creative: 64, admin_body: 28, admin_rhetoric: 68, word: 'SchuppenSchal'}
+	@chartdata << {date: '10.01.2020', ges: 52, spontan: 74, creative: 36, body: 31, rhetoric: 67, admin_ges: 41, admin_spontan: 75, admin_creative: 15, admin_body: 17, admin_rhetoric: 60, word: 'TennisPfanne'}
+	@chartdata << {date: '17.01.2020', ges: 51, spontan: 40, creative: 63, body: 40, rhetoric: 63, admin_ges: 62, admin_spontan: 28, admin_creative: 99, admin_body: 68, admin_rhetoric: 54, word: 'WildWarner'}
+	@chartdata << {date: '24.01.2020', ges: 66, spontan: 83, creative: 85, body: 63, rhetoric: 33, admin_ges: 68, admin_spontan: 11, admin_creative: 88, admin_body: 91, admin_rhetoric: 83, word: 'WanderSchrank'}
+	@chartdata << {date: '31.01.2020', ges: 77, spontan: 93, creative: 86, body: 64, rhetoric: 68, admin_ges: 78, admin_spontan: 78, admin_creative: 67, admin_body: 78, admin_rhetoric: 87, word: 'DreckSeife'}
+	@chartdata << {date: date, ges: 98, spontan: 95, creative: 93, body: 93, rhetoric: 21, admin_ges: 88, admin_spontan: 99, admin_creative: 94, admin_body: 65, admin_rhetoric: 94, word: 'PlüschPferd'}
+	
 	render layout: 'vertrieb_dash'
 	if @vertrieb.state == 'dash_users'
 	  @vertrieb.update(state: 'dash_user_stats')
@@ -158,6 +164,6 @@ class VertriebController < ApplicationController
 	end
 	
     def vertrieb_params
-	  params.require(:vertrieb).permit(:fname, :name, :avatar, :logo, :team_name, :game_password, :password)
+	  params.require(:vertrieb).permit(:root_id, :fname, :name, :avatar, :logo, :team_name, :game_password, :password)
 	end
 end

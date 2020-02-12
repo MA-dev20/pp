@@ -1,6 +1,7 @@
 class Vertrieb < ApplicationRecord
   mount_uploader :avatar, PicUploader
   mount_uploader :logo, PicUploader
+  belongs_to :root
   after_commit :callback
 	
   def callback

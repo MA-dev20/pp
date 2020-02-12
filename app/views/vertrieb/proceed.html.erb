@@ -5,7 +5,7 @@
 		<h1>Weiter geht's Herr <%= @vertrieb.name %></h1>
 	</section>
 	<section id="middle">
-		<%= image_tag @vertrieb.avatar? ? @vertrieb.avatar.url : 'defaults/wolf.png' %>
+		<%= image_tag @vertrieb.root.avatar? ? @vertrieb.root.avatar.url : 'defaults/wolf.png' %>
 	</section>
 </section>
 <section id="root-control">

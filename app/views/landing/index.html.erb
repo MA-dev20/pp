@@ -83,7 +83,11 @@
     <div class="wie-geil-ist-das animated fadeIn" data-wow-delay=".2s">
         <h1>Wie geil ist das denn?</h1>
         <h5>Nimm den Spaß in deinem Unternehmen ernst und verwandel deine Meetings in wahre Performance-Booster. Mit Peter Pitch treibst du das Mitarbeiter-Rudel zusammen und machst sogar aus den wackeligsten Welpen wahre Wölfe. Stage is yours!</h5>
-        <div class="play-video pulse-shadow"><i class="fas fa-play" onclick="showVideoModal()"></i></div>
+        <div class="video" onclick="playVideo()">
+        	<%= image_tag 'landing/bg-contact.png', id: 'picVideo' %>
+        	<%= video_tag 'landing.mp4', id: 'vidVideo', controls: true, preload: 'auto' %>
+        	<i class="far fa-play-circle" id="playVideo"></i>
+        </div>
     </div>
     <%= image_tag 'landing/shape.svg', class: 'shape s310', id: 'shape3' %>
     <%= image_tag 'landing/shape.svg', class: 'shape s87 right219', id: 'shape4' %>
@@ -530,11 +534,6 @@
     <% end %>
     </div>
 </div>
-
-<div class="video-modal" id="videoModal">
-    <div class="close"><i class="fas fa-times" onclick="showVideoModal()"></i></div>
-    <%= video_tag 'landing.mp4', id: 'modalVideo', controls: true, preload: 'auto' %>
-</div>
 <div class="fullscreen-modal" id="dontLeaveModal">
 	<div class="close" onclick="hideDontLeaveModal()"><i class="fas fa-times"></i></div>
 	<div class="card">
@@ -579,14 +578,21 @@
 	}
   	
   
-    function showVideoModal() {
-        if($('#videoModal').is(":hidden")) {
-            $('#videoModal').show();
-            document.getElementById('modalVideo').play();
-        } else {
-            $('#videoModal').hide();
-            document.getElementById('modalVideo').pause();
-        }
+    function playVideo() {
+		$('#picVideo').hide();
+		$('#vidVideo').show();
+		$('#playVideo').hide();
+		$('#vidVideo').trigger('play');
+		$('#vidVideo').on('ended', function() {
+			$('#picVideo').show();
+			$('#vidVideo').hide();
+			$('#playVideo').show();
+		})
+		$('#vidVideo').on('pause', function() {
+			$('#picVideo').show();
+			$('#vidVideo').hide();
+			$('#playVideo').show();
+		})
     }
     function showLoginModal() {
         $('#loginModal').toggle();

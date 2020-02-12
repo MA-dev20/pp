@@ -18,12 +18,18 @@
 		<tbody>
 			<% @roots.each do |r| %>
 				<tr>
-					<td><%= r.username %></td>
-					<td><%= r.email %></td>
-					<td><%= r.role %></td>
+					<td onclick="redirect(<%= r.id %>)"><%= r.username %></td>
+					<td onclick="redirect(<%= r.id %>)"><%= r.email %></td>
+					<td onclick="redirect(<%= r.id %>)"><%= r.role %></td>
 					<td><%= link_to '', backoffice_destroy_root_path(r.id), class: 'far fa-trash-alt' %></td>
 				</tr>
 			<% end %>
 		</tbody>
 	</table>
 </div>
+<script>
+function redirect(root_id) {
+	var URL = "<%= backoffice_roots_url %>";
+	location.replace(URL + '/'+root_id);
+}
+</script>

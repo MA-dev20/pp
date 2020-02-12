@@ -570,7 +570,7 @@ body {
 			line-height: 5vh;
 			font-size: 1.5vh;
 			text-align: center;
-			margin: 0;
+			margin: 0 .8vh;
 			label {
 				position: absolute;
 				top: 0;
@@ -614,11 +614,17 @@ body {
 		.btn {
 			position: relative;
 			background-color: #16e2a5;
-			height: 4vh;
-			line-height: 4vh;
+			height: 3.9vh;
+			line-height: 3.9vh;
 			border-radius: 2vh;
 			width: auto;
 			margin: 2vh 4vh;
+			border: .1vh solid #16e2a5;
+			cursor: pointer;
+		}
+		.btn:hover {
+			color: #16e2a5;
+			background-color: transparent;
 		}
 	}
 }
@@ -1360,86 +1366,92 @@ body {
 }
 
 @media only screen and (max-width: 1440px) {
-  #ended .rate_1 .line,
-  #ended .rate_2 .line,
-  #ended .rate_3 .line{
-      left: 9vh;
-  }
-  #ended .rate_1 .rating {
-      bottom: 40vh;
-      height: 200px;
-      width: 200px;
-  }
-  #ended .rate_2 .rating {
-      bottom: 30vh;
-      height: 200px;
-      width: 200px;
-  }
-  #ended .rate_3 .rating {
-      bottom: 25vh;
-      height: 200px;
-      width: 200px;
-  }
-  #ended .rate_1 {
-      left: calc(50vw - 100px);
-  }
-  #ended .rate_2 {
-      left: calc(30vw - 100px);
-  }
-  #ended .rate_3 {
-      left: calc(70vw - 100px);
-  }
-  #ended .rate_1 .line {
-      height: 50vh;
-      border-left: 0.6vh solid #f3d786;
-      border-right: 0.6vh solid #f3d786;
-  }
-  #ended .rate_2 .line {
-      height: 40vh;
-      border-left: 0.6vh solid #b9d3e0;
-      border-right: 0.6vh solid #b9d3e0;
-  }
-  #ended .rate_3 .line {
-      height: 30vh;
-      border-left: 0.6vh solid #d3a180;
-      border-right: 0.6vh solid #d3a180;
-  }
-  #ended .rating .circle,
-  #ended .rating .circle img {
-      height: 200px;
-      width: 200px;
-  }
-  #ended .rating .circle .avatar {
-      height: 180px;
-      width: 180px;
-  }
-  #ended .rating .pol,
-  #ended .rating .rate_ges {
-      position: absolute;
-      display: none;
-      bottom: -50px;
-      right: -50px;
-      height: 150px;
-      width: 150px;
-      opacity: 0.8;
-      z-index: 100;
-      line-height: 150px;
-      font-size: 50px;
-  }
-  #ended .rating .crown1 {
-      top: -80px;
-      right: 25px;
-      width: 150px;
-  }
-  #ended .rating .crown2 {
-      top: -120px;
-      left: -92px;
-      width: 240px;
-  }
-  #ended .rating .crown3 {
-      top: -95px;
-      right: -55px;
-      width: 170px;
+  #content {
+		#ended {
+			.rate_1,
+			.rate_2,
+			.rate_3 {
+				width: 200px;
+				.rating {
+					height: 200px;
+      				width: 200px;
+					.circle {
+						width: 200px;
+						height: 200px;
+						img {
+							width: 200px;
+							height: 200px;
+						}
+						.avatar {
+							height: 180px;
+							width: 180px;
+						}
+					}
+					.pol,
+					.rate_ges {
+						position: absolute;
+					  	display: none;
+					  	bottom: -50px;
+					  	right: -50px;
+					  	height: 150px;
+					  	width: 150px;
+					  	opacity: 0.8;
+					  	z-index: 100;
+					  	line-height: 150px;
+					  	font-size: 50px;
+					}
+					.crown1 {
+					  	top: -80px;
+					  	right: 25px;
+					  	width: 150px;
+				  	}
+					.crown2 {
+      					top: -120px;
+      					left: -92px;
+      					width: 240px;
+  					}
+				  	.crown3 {
+						top: -95px;
+					  	right: -55px;
+					  	width: 170px;
+				  	}
+				}
+				.line {
+					left: calc(50% - 29px);
+					width: 50px;
+					height: 45vh;
+					border-left: 0.6vh solid #f3d786;
+      				border-right: 0.6vh solid #f3d786;
+				}
+			}
+			.rate_1 {
+				left: calc(50vw - 100px);
+				.rating {
+					bottom: 40vh;
+				}
+				.line {
+					height: 50vh;
+				}
+			}
+			.rate_2 {
+				left: calc(30vw - 100px);
+				.rating {
+      				bottom: 30vh;
+				}
+				.line {
+					height: 40vh;
+				}
+  			}
+			#ended .rate_3 {
+				left: calc(70vw - 100px);
+				.rating {
+					bottom: 25vh;
+				}
+				.line {
+					height: 30vh;
+				}
+		  	}
+	  }
   }
 }
 @media only screen and (min-width: 1441px) {
@@ -1583,4 +1595,4 @@ body {
     bottom: 1vh;
     right: -1vh;
   }
-} 
+}

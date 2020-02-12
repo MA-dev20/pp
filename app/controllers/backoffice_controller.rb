@@ -1,11 +1,13 @@
 class BackofficeController < ApplicationController
   before_action :if_root
-  before_action :require_root, :set_root
+  before_action :require_root
+  before_action :set_root, only: [:root, :edit_root, :update_root_avatar]
   before_action :set_admin, only: [:admin, :edit_admin, :update_admin_avatar, :update_admin_logo, :activate_admin, :destroy_admin, :teams, :team, :new_team, :users, :user, :new_user, :games, :game]
   before_action :set_user, only: [:user, :edit_user, :update_user_avatar, :destroy_user]
   before_action :set_team, only: [:team, :edit_team, :destroy_team]
   before_action :set_game, only: [:game, :edit_game, :destroy_game]
   before_action :set_vertrieb, only: [:sale_pictures, :update_vertrieb_avatar, :update_vertrieb_logo]
+  before_action :set_blog, only: [:blog, :edit_blog, :destroy_blog]
   before_action :if_basket, only: [:words]
   before_action :set_basket, only: [:word, :objection]
   layout 'backoffice'
@@ -96,6 +98,10 @@ class BackofficeController < ApplicationController
   def roots
 	@roots = Root.all
   end
+  #GET backoffice_root
+  def root
+	@this_root = Root.find(params[:root_id])
+  end
 	
   #GET backoffice_sales
   def sales
@@ -103,6 +109,14 @@ class BackofficeController < ApplicationController
 	
   #GET backoffice_sale_pictures
   def sale_picture
+  end
+	
+  #GET backoffice_blogs
+  def blogs
+	@blogs = Blog.all
+  end
+  #GET backoffice_blog
+  def blog
   end
 	
   ########
@@ -349,6 +363,16 @@ class BackofficeController < ApplicationController
 	end
 	redirect_to backoffice_roots_path
   end
+  def edit_root
+	if !@root.update(root_params)
+      flash[:danger] = 'Konnte Mitarbeiter nicht updaten'
+	end
+	redirect_to backoffice_root_path(@root)
+  end
+  def update_root_avatar
+	@root.update(avatar: params[:file]) if params[:file].present? && @root.present?
+	render json: {file: @root.avatar.url}
+  end
   def destroy_root
 	@troot = Root.find(params[:root_id])
 	if !@troot.destroy
@@ -367,6 +391,26 @@ class BackofficeController < ApplicationController
 	render json: {file: @vertrieb.logo.url}
   end
 	
+  #Blog
+  def new_blog
+	@blog = Blog.new(blog_params)
+	if @blog.save
+	  redirect_to backoffice_blog_path(@blog)
+	else
+	  flash[:danger] = 'Konnte Blog nicht erstellen!'
+	  redirect_to backoffice_blogs_path
+	end
+  end
+  def edit_blog
+	@blog.update(blog_params)
+  end
+  def destroy_blog
+	if !@blog.destroy
+	  flash[:danger] = 'Konnte Blog nicht löschen!'
+	end
+	redirect_to backoffice_blogs_path
+  end
+	
 #############
 # Variables #
 #############
@@ -379,7 +423,7 @@ class BackofficeController < ApplicationController
     end
   end
   def set_root
-    @root = current_root
+    @root = Root.find(params[:root_id])
   end
   def set_admin
     @admin = Admin.find(params[:admin_id])
@@ -395,6 +439,9 @@ class BackofficeController < ApplicationController
   end
   def set_vertrieb
 	@vertrieb = Vertrieb.find(params[:vertrieb_id])
+  end
+  def set_blog
+	@blog = Blog.find(params[:blog_id])
   end
   def set_basket
     @basket = CatchwordsBasket.find(params[:basket_id])
@@ -417,6 +464,9 @@ class BackofficeController < ApplicationController
     params.require(:game).permit(:team_id, :admin_id)
   end
   def root_params
-	params.require(:root).permit(:username, :email, :role, :password)
+	params.require(:root).permit(:username, :email, :role, :password, :password_confirmation, :avatar)
+  end
+  def blog_params
+	params.require(:blog).permit(:title, :text, :image)
   end
 end

@@ -1,0 +1,42 @@
+<h1>Blogs</h1>
+<div class="row">
+	<div class="card">
+		<h3>Neuer Blog</h3>
+		<%= form_for(:blog, url: backoffice_new_blog_path) do |f| %>
+			<table>
+				<tr>
+					<th>Title</th>
+					<td><%= f.text_field :title, class: "form-field" %></td>
+				</tr>
+			</table>
+		<%= f.text_area :text, class: 'form-field', style: 'height: 100px;' %>
+		<%= f.submit 'erstellen', class: 'btn btn-green' %>
+		<% end %>
+	</div>
+</div>
+<div class="table">
+	<table>
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Datum</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @blogs.each do |b| %>
+			<tr>
+				<td onclick="redirect(<%= b.id %>)"><%= b.title %></td>
+				<td onclick="redirect(<%= b.id %>)"><%= b.created_at.strftime('%d.%m.%Y') %></td>
+				<td><%= link_to '', backoffice_destroy_blog_path(b.id), class: 'far fa-trash-alt' %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+<script>
+function redirect(blog_id) {
+	var URL = "<%= backoffice_blogs_url %>";
+	location.replace(URL + '/'+blog_id);
+}
+</script>

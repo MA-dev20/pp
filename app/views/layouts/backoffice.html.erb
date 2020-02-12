@@ -72,17 +72,31 @@
             <%= link_to '', backoffice_objections_noadmin_path %>
         </div>
         
-        <div class="link <%= current_page?(backoffice_roots_path) ? 'active' : '' %>">
+        <h3>Vertrieb</h3>
+        <% end %>
+        <div class="link <%= current_page?(backoffice_roots_path) || @root && current_page?(backoffice_root_path(@root)) ? 'active' : '' %>">
         	<i class="far fa-user"></i>
         	<div class="text">Mitarbeiter</div>
+        	<% if is_root? %>
         	<%= link_to '', backoffice_roots_path %>
+        	<% else %>
+        	<%= link_to '', backoffice_root_path(current_root) %>
+        	<% end %>
         </div>
-        <% end %>
         <div class="link <%= current_page?(backoffice_sales_path) ? 'active' : '' %>">
         	<i class="far fa-money-bill-alt"></i>
-        	<div class="text">Vertrieb</div>
+        	<div class="text">Calls</div>
         	<%= link_to '', backoffice_sales_path %>
         </div>
+        
+        <% if is_root? %>
+       	<h3>Blog</h3>
+       	<div class="link <%= current_page?(backoffice_blogs_path) || @blog && current_page?(backoffice_blog_path(@blog)) ? 'active' : '' %>">
+       		<i class="fas fa-blog"></i>
+       		<div class="text">Blog</div>
+       		<%= link_to '', backoffice_blogs_path %>
+       	</div>
+       	<% end %>
     </div>
 </section>
 <section id="content">

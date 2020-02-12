@@ -13,100 +13,86 @@
 #impressum {
 	width: 300px;
 	margin: 100px auto;
-}
-#impressum p {
-	margin: 0;
-}
-#impressum h3 {
-	margin-bottom: 0;
+	p {margin: 0;}
+	h3 {margin-bottom: 0;}
 }
 #datenschutz {
 	text-align: center;
 	margin-bottom: 100px;
-}
-#datenschutz .head h5 {
-	font-weight: normal;
-}
-#datenschutz .head h1 {
-	font-size: 36px;
-}
-#datenschutz .links,
-#datenschutz section {
-	margin: 0 auto;
-	width: 300px;
-	text-align: left;
-}
-#datenschutz .links a {
-	color: #54b7ff;
-	text-decoration: none;
-	font-weight: bold;
-	font-size: 20px;
-}
-#datenschutz section h1 {
-	font-size: 24px;
-}
-#datenschutz .point {
-	position: relative;
-	margin: 10px 0;
-}
-#datenschutz .point .point {
-	position: absolute;
-	top: 6px;
-	left: 6px;
-	height: 8px;
-	width: 8px;
-	border-radius: 4px;
-	background-color: black;
-	margin: 0;
-}
-#datenschutz .point .text {
-	padding-left: 20px;
-	line-height: 20px;
-}
-#datenschutz h3 {
-	margin-bottom: 0;
+	.head {
+		h5 {font-weight: normal;}
+		h1 {font-size: 36px;}
+	}
+	.links,
+	section {
+		margin: 0 auto;
+		width: 300px;
+		text-align: left;
+	}
+	.links a {
+		color: #54b7ff;
+		text-decoration: none;
+		font-weight: bold;
+		font-size: 20px;		
+	}
+	section h1 {font-size: 24px;}
+	.point {
+		position: relative;
+		margin: 10px 0;
+		.point {
+			position: absolute;
+			top: 6px;
+			left: 6px;
+			height: 8px;
+			width: 8px;
+			border-radius: 4px;
+			background-color: black;
+			margin: 0;
+		}
+		.text {
+			padding-left: 20px;
+			line-height: 20px;
+		}
+	}
+	h3 {margin-bottom: 0;}
 }
 #devise_form {
 	text-align: center;
-}
-#devise_form .form-group {
-	width: 300px;
-	margin: 0 auto;
-}
-#devise_form .form-group label {
-	line-height: 18px;
-	text-align: center;
-}
-#devise_form .links {
-	width: 300px;
-	margin: 0 auto;
+	.form-group {
+		width: 300px;
+		margin: 0 auto;
+		label {
+			line-height: 18px;
+			text-align: center;
+		}
+	}
+	.links {
+		width: 300px;
+		margin: 0 auto;
+	}
+	h1 {font-size: 32px;}
 }
 #confirm {
 	text-align: center;
 	max-width: 500px;
 	margin: 0 auto;
 	padding: 0 10px;
-}
-#confirm .checkmark {
-	position: relative;
-	height: 300px;
-	width: 300px;
-	margin: 20px auto;
-}
-#confirm h1,
-#devise_form h1 {
-	font-size: 32px;
-}
-#confirm .text {
-	font-size: 20px;
-}
-.checkmark path {
-	animation: checkmark 0.25s ease-in-out 0.7s backwards;
-	animation-delay: 1s;
-}
-.checkmark circle {
-	animation: checkmark-circle 0.6s ease-in-out backwards;
-	animation-delay: 0s;
+	.checkmark {
+		position: relative;
+		height: 300px;
+		width: 300px;
+		margin: 20px auto;
+		path {
+			animation: checkmark 0.25s ease-in-out 0.7s backwards;
+			animation-delay: 1s;
+		}
+		circle {
+			animation: checkmark-circle 0.6s ease-in-out backwards;
+			animation-delay: 0s;
+		}
+	}
+	h1 {font-size: 32px;}
+	.text {font-size: 20px;}
 }
 @keyframes checkmark {
     0% {
@@ -126,7 +112,6 @@
         stroke-dashoffset: 1440px
     }
 }
-
 .cookie-pop-up {
 	position: fixed;
 	bottom: 0;
@@ -140,33 +125,31 @@
 	font-weight: bold;
 	padding: 0 1vh;
 	min-height: 50px;
-}
-.cookie-pop-up .text {
-	margin: 15px 0 15px 10px;
-	float: left;
-	max-width: calc(100% - 115px);
-}
-.cookie-pop-up a {
-	color: white;
-}
-.cookie-pop-up .cookie-btn {
-	position: absolute;
-	bottom: 10px;
-	right: 30px;
-	border-radius: 0;
-	background-color: white;
-	color: black;
-	height: 30px;
-	line-height: 30px;
-	font-size: 10px;
-	text-decoration: none;
-	width: 80px;
-	text-align: center;
-	align-self: center;
-}
-.cookie-pop-up .cookie-btn:hover {
-	color: white;
-	background-color: darkgray;
+	.text {
+		margin: 15px 0 15px 10px;
+		float: left;
+		max-width: calc(100% - 115px);
+	}
+	a {color: white;}
+	.cookie-btn {
+		position: absolute;
+		bottom: 10px;
+		right: 30px;
+		border-radius: 0;
+		background-color: white;
+		color: black;
+		height: 30px;
+		line-height: 30px;
+		font-size: 10px;
+		text-decoration: none;
+		width: 80px;
+		text-align: center;
+		align-self: center;
+	}
+	.cookie-btn:hover {
+		color: white;
+		background-color: darkgray;
+	}
 }
 #agb {
 	position: absolute;
@@ -176,34 +159,32 @@
 .switch-box {
 	width: 100%;
 	line-height: 20px;
-}
-.switch-box input[type='checkbox'] {
-	position: absolute;
-	position: absolute;
-	opacity: 0;
-}
-.switch-box .custom-control-label {
-	background-color: white;
-	position: relative;
-	float: left;
-	width: 18px;
-	height: 18px;
-	border-radius: 5px;
-	border: 1px solid #dfe1e5;
-	margin-right: 5px;
-	cursor: pointer;
-}
-.switch-box .custom-control-label .fas {
-	display: none;
-	color: white;
-	text-align: center;
-	line-height: 18px;
-}
-.switch-box .custom-control-input:checked ~ .custom-control-label {
-	background-color: #16e2a5;
-}
-.switch-box .custom-control-input:checked ~ .custom-control-label .fas {
-	display: block;
+	input[type='checkbox'] {
+		position: absolute;
+		position: absolute;
+		opacity: 0;
+	}
+	.custom-control-label {
+		background-color: white;
+		position: relative;
+		float: left;
+		width: 18px;
+		height: 18px;
+		border-radius: 5px;
+		border: 1px solid #dfe1e5;
+		margin-right: 5px;
+		cursor: pointer;
+		.fas {
+			display: none;
+			color: white;
+			text-align: center;
+			line-height: 18px;
+		}
+	}
+	.custom-control-input:checked ~ .custom-control-label {
+		background-color: #16e2a5;
+		.fas {display: block;}
+	}
 }
 .register-pop-up {
 	animation-name: fadeOut;
@@ -217,22 +198,20 @@
 	width: 100vw;
 	background-color: rgba(0, 0, 0, .5);
 	z-index: 2000;
-}
-.register-pop-up .karte {
-	position: relative;
-	top: calc(50% - 100px);
-	height: auto;
-	width: 500px;
-	max-width: 80vw;
-	background-color: white;
-	border-radius: 8px;
-	box-shadow: 0px 0.6vh 2.2vh 0 rgba(172, 172, 172, 0.1);
-	text-align: center;
-	padding: 10px 10px 40px;
-	margin: auto;
-}
-.register-pop-up .karte h1 {
-	border-bottom: 1px solid #dfe1e5;
+	.karte {
+		position: relative;
+		top: calc(50% - 100px);
+		height: auto;
+		width: 500px;
+		max-width: 80vw;
+		background-color: white;
+		border-radius: 8px;
+		box-shadow: 0px 0.6vh 2.2vh 0 rgba(172, 172, 172, 0.1);
+		text-align: center;
+		padding: 10px 10px 40px;
+		margin: auto;
+		h1 {border-bottom: 1px solid #dfe1e5;}
+	}
 }
 .bounceInLeft,
 .bounceInRight {
@@ -294,11 +273,8 @@ label .red {
 	left: 0;
 	width: calc(100% - 40px);
 	padding: 20px;
-}
-
-#contact h1 {
-	margin-bottom: 40px;
-}
+	h1 {margin-bottom: 40px;}
+} 
 .contact-hidden {
 	display: none;
 }
@@ -312,9 +288,7 @@ label .red {
 	line-height: 90px;
 	text-align: left;
 	width: 200px;
-}
-.overlay-text span {
-	font-weight: bold;
+	span {font-weight: bold;}
 }
 .overlay-play {
 	position: fixed;
@@ -738,6 +712,42 @@ label .red {
     position: relative;
     width: 100%;
     text-align: center;
+	.video {
+		position: relative;
+		width: 300px;
+		height: 170px;
+		border-radius: .75rem;
+		overflow: hidden;
+		cursor: pointer;
+		video {
+			min-width: 100%;
+			height: 100%;
+		}
+		img {
+			width: 300px;
+			height: 170px;
+			transition: transform .5s;
+		}
+		video {
+			display: none;
+		}
+		i {
+			position: absolute;
+			top: 60px;
+			left: 125px;
+			height: 50px;
+			width: 50px;
+			font-size: 50px;
+			text-align: center;
+			color: white;
+		}
+	}
+	.video:hover {
+		img {
+			transform: scale(1.1);
+			transition: transform .5s;
+		}
+	}
 }
 #content .wie-geil-ist-das h1,
 #content .references h1,
@@ -1028,7 +1038,7 @@ label .red {
     position: relative;
     width: 276px;
     height: 253px;
-    border-radius: 4px;
+    border-radius: .75rem;
     border: 2px solid #16e2a5;
     box-shadow: 0 10px 10px 0 rgba(172, 172, 172, .4);
 	margin: 10px;
@@ -1205,7 +1215,24 @@ label .red {
     #content {
         left: calc(50vw - 250px);
         width: 500px;
-    }
+		.wie-geil-ist-das {
+			.video {
+				width: 500px;
+				height: 282px;
+				img {
+					width: 500px;
+					height: 282px;
+				}
+				i {
+					top: 101px;
+					left: 210px;
+					height: 80px;
+					width: 80px;
+					font-size: 80px;
+				}
+			}
+		}
+	}
     .fullscreen-modal .card {
         margin-top: calc(50vh - 150px);
         width: 300px;
@@ -1397,6 +1424,18 @@ label .red {
     }
     #content .wie-geil-ist-das {
         margin-top: 50px;
+		.video {
+			width: 700px;
+			height: 394px;
+			img {
+				width: 700px;
+				height: 394px;
+			}
+			i {
+				top: 157px;
+				left: 310px;
+			}
+		}
     }
     #content .references .logo-wheel {
         margin: 50px;
@@ -1576,9 +1615,32 @@ label .red {
         left: 100px;
         top: 366px;
     }
+	#content .wie-geil-ist-das {
+		.video {
+			left: 100px;
+			width: 700px;
+			height: 400px;
+			img {
+				height: 400px;
+				width: 700px;
+			}
+			i {
+				position: absolute;
+				top: 150px;
+				left: 300px;
+				height: 100px;
+				width: 100px;
+				line-height: 100px;
+				text-align: center;
+				font-size: 90px;
+				color: white;
+			}
+		}
+	}
     #content .wie-geil-ist-das h5 {
         left: 100px;
         width: 700px;
+		
     }
     #content .references {
         margin: 0 100px 50px;
@@ -1808,8 +1870,9 @@ label .red {
         top: 566px;
         left: 150px;
     }
-    #content .wie-geil-ist-das h5 {
-        left: 200px;
+	#content .wie-geil-ist-das {
+		h5 {left: 200px;}
+		.video {left: 200px;}
     }
     #content .image-text {
         height: 300px;
@@ -2060,9 +2123,14 @@ label .red {
         left: 1100px;
         z-index: -10;
     }
-    #content .wie-geil-ist-das h5 {
-        left: 300px;
-        font-size: 16px;
+	#content .wie-geil-ist-das {
+		.video {
+			left: 300px;
+		}
+		h5 {
+        	left: 300px;
+        	font-size: 16px;
+		}
     }
     #content .references {
         margin: 50px 0;
@@ -2221,7 +2289,7 @@ label .red {
         width: 350px;
         height: 340px;
         margin: 10px 38px;
-        border-radius: 4px;
+        border-radius: .75rem;
         background-color: white;
     }
     #content .testimonials .card .text {
