@@ -15,14 +15,14 @@
             <div class="line"></div>
         </div>
         <div class="link">
-            <%= link_to 'Login', root_path(anchor: 'login'), class: 'login-link' %> 
+            <i class="login-link" onclick="showLoginModal()">Login</i>
         </div>
         <div class="link">
             <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
         </div>
     </div>
     <div class="login">
-        <%= link_to 'Login', root_path(anchor: 'login'), class: 'login-link' %>
+        <i class="login-link" onclick="showLoginModal()">Login</i>
     </div>
     <div class="navbar-mobile" onclick="showNavLinks()">
         <i class="fas fa-bars"></i>
@@ -50,29 +50,30 @@
     	<%= render "admins/shared/links" %>
     </div>
 </section>
-<section id="footer" class="wow fadeIn">
-    <div class="logo">
-        <%= image_tag 'landing/logo.png', alt: 'Peter Pitch Logo' %>
-    </div>
-    <div class="company">
-        <div class="heading">Unternehmen</div>
-        <div class="links">
-            <%= link_to 'Registrieren', contact_path %>
-            <%= link_to 'Preise', contact_path %>
-            <%= link_to 'FAQ', '#faq' %>
-            <%= link_to 'Login', '#login', onclick: 'showLoginModal()' %>
+<div class="fullscreen-modal" id="loginModal">
+    
+    <div class="close"><i class="fas fa-times" onclick="showLoginModal()"></i></div>
+    <div class="card">
+    <%= form_for(:admin, as: Admin, url: session_path(Admin)) do |f| %>
+        <h2>Login</h2>
+        <div class="form-group ">
+            <label for="">Email</label>
+            <%= f.email_field :email, class: 'form-field', id: 'loginEmail', required: true  %>
         </div>
-    </div>
-    <div class="legal">
-        <div class="heading">Rechtliches</div>
-        <div class="links">
-            <%= link_to 'Impressum', impressum_path %>
-            <%= link_to 'Datenschutz', datenschutz_path %>
+        <div class="form-group">
+            <label for="">Passwort</label>
+            <div class="right"><%= link_to "Passwort vergessen?", new_password_path(Admin) %></div>
+            <%= f.password_field :password, class: 'form-field',id: 'loginPassword', required: true  %>
+            <br>
         </div>
+        <div class="form-group center">
+            <%= f.submit 'Login', class: 'btn btn-green', id: "loginButton" %>
+        </div>
+    <% end %>
     </div>
-    <div class="social">
-        <%= link_to '', 'https://www.instagram.com/peterpitchcom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-instagram" %>
-        <%= link_to '', 'https://www.youtube.com/channel/UCN7MeKNNdXK28uIiJjJ4Fdg', target: "_blank", rel: "noopener noreferrer", class: "fab fa-youtube" %>
-        <%= link_to '', 'https://www.facebook.com/PeterPitchCom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-facebook-f" %>
-    </div>
-</section>
+</div>
+<script>
+	function showLoginModal() {
+        $('#loginModal').toggle();
+    }
+</script>
