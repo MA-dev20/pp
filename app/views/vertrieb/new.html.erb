@@ -6,7 +6,7 @@
             <div class="line"></div>
         </div>
         <div class="link">
-            <%= link_to 'FAQ', '#faq' %>
+            <%= link_to 'FAQ', root_path(anchor: 'faq') %>
             <div class="line"></div>
         </div>
         <div class="link">
@@ -22,7 +22,6 @@
     </div>
     <div class="login">
         <i class="login-link" onclick="showLoginModal()">Login</i>
-        <%= link_to 'Demo vereinbaren', contact_path("", subject: "demo"), class: 'btn btn-white' %>
     </div>
     <div class="navbar-mobile" onclick="showNavLinks()">
         <i class="fas fa-bars"></i>
@@ -64,7 +63,7 @@
         <div class="links">
             <%= link_to 'Registrieren', contact_path %>
             <%= link_to 'Preise', contact_path %>
-            <%= link_to 'FAQ', '#faq' %>
+            <%= link_to 'FAQ', root_path(anchor: 'faq') %>
             <%= link_to 'Login', '#login', onclick: 'showLoginModal()' %>
         </div>
     </div>

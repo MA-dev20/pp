@@ -6,7 +6,7 @@
            	<div class="line"></div>
         </div>
         <div class="link">
-            <%= link_to 'FAQ', '#faq' %>
+            <%= link_to 'FAQ', root_path(anchor: 'faq') %>
             <div class="line"></div>
         </div>
         <div class="link">
@@ -53,7 +53,7 @@
         <div class="links">
             <%= link_to 'Registrieren', contact_path %>
             <%= link_to 'Preise', contact_path %>
-            <%= link_to 'FAQ', '#faq' %>
+            <%= link_to 'FAQ', root_path(anchor: 'faq') %>
             <%= link_to 'Login', '#login', onclick: 'showLoginModal()' %>
             <%= link_to 'Backoffice', login_root_path %>
         </div>
