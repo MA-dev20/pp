@@ -7,7 +7,7 @@ class BackofficeController < ApplicationController
   before_action :set_team, only: [:team, :edit_team, :destroy_team]
   before_action :set_game, only: [:game, :edit_game, :destroy_game]
   before_action :set_vertrieb, only: [:sale_pictures, :update_vertrieb_avatar, :update_vertrieb_logo]
-  before_action :set_blog, only: [:blog, :edit_blog, :update_blog_image, :destroy_blog]
+  before_action :set_blog, only: [:blog, :edit_blog, :update_blog_image, :destroy_blog, :new_blog_paragraph]
   before_action :if_basket, only: [:words]
   before_action :set_basket, only: [:word, :objection]
   layout 'backoffice'
@@ -415,6 +415,30 @@ class BackofficeController < ApplicationController
 	redirect_to backoffice_blogs_path
   end
 	
+  #Blog Paragraphs
+  def new_blog_paragraph
+	if !@blog.blog_paragraphs.create(blog_paragraph_params)
+	  flash[:danger] = 'Konnte Paragrafen nicht anlegen!'
+	end
+	redirect_to backoffice_blog_path(@blog)
+  end
+  def edit_blog_paragraph
+	@blog_paragraph = BlogParagraoh.find(params[:blog_paragraph_id])
+	@blog = @blog_paragraph.blog
+	if !@blog_paragraph.update(blog_paragraph_params)
+	  flash[:danger] = "Konnte Paragrafen nicht udpdaten!"
+	end
+	redirect_to backoffice_blog_path(@blog)
+  end
+  def destroy_blog_paragraph
+	@blog_paragraph = BlogParagraoh.find(params[:blog_paragraph_id])
+	@blog = @blog_paragraph.blog
+	if !@blog_paragraph.destroy
+	  flash[:danger] = 'Konnte Paragrafen nicht löschen!'
+	end
+	redirect_to backoffice_blog_path(@blog)
+  end
+	
 #############
 # Variables #
 #############
@@ -472,5 +496,8 @@ class BackofficeController < ApplicationController
   end
   def blog_params
 	params.require(:blog).permit(:title, :text, :image)
+  end
+  def blog_paragraph_params
+	params.require(:blog_paragraph).permit(:title, :text)
   end
 end

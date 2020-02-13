@@ -1,4 +1,4 @@
-<% content_for :title, "Peter Pitch - Aktivierungs-Link" %>
+<% content_for :title, "Peter Pitch - " + @blog.title %>
 <section id="navbar">
     <%= link_to image_tag('landing/logo.png', alt: 'Peter Pitch Logo'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">
@@ -7,7 +7,7 @@
             <div class="line"></div>
         </div>
         <div class="link">
-            <%= link_to 'FAQ', root_path(anchor: 'faq') %>
+            <%= link_to 'FAQ', '#faq' %>
             <div class="line"></div>
         </div>
         <div class="link">
@@ -15,41 +15,65 @@
             <div class="line"></div>
         </div>
         <div class="link">
-            <%= link_to 'Login', root_path(anchor: 'login'), class: 'login-link' %> 
+          	<i class="login-link" onclick="showLoginModal()">Login</i>
         </div>
         <div class="link">
-            <%= link_to 'Get early access!', contact_path, class: 'btn btn-white' %>
+            <%= link_to 'Demo vereinbaren', contact_path("", subject: "demo"), class: 'btn btn-white' %>
         </div>
     </div>
     <div class="login">
-        <%= link_to 'Login', root_path(anchor: 'login'), class: 'login-link' %>
+        <i class="login-link" onclick="showLoginModal()">Login</i>
+        <%= link_to 'Demo vereinbaren', contact_path("", subject: "demo"), class: 'btn btn-white' %>
     </div>
     <div class="navbar-mobile" onclick="showNavLinks()">
         <i class="fas fa-bars"></i>
     </div>
 </section>
-<section id="devise_form">
-    <h1>Aktivierungs-Link nicht erhalten?</h1>
-    <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-
-    <div class="form-group">
-        <% if resource.errors.any? %>
-            <div class="error">
-                <% resource.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                <% end %>
-            </div>
-        <% end %>
-        <%= f.email_field :email, placeholder: "Gib deine E-Mail ein!", autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'form-field' %>
-    </div>
-    <div class="form-group center">
-        <%= f.submit "Aktivierungs-Link erneut senden", class: 'btn btn-green' %>
-    </div>
-    <% end %>
-    <div class="links">
-    	<%= render "admins/shared/links" %>
-    </div>
+<section id="blog-entry">
+	<div class="head">
+		<h1><%= @blog.title %></h1>
+	</div>
+	<%= image_tag @blog.image? ? @blog.image.url : '' %>
+	<div class="blog">
+		<div class="text">
+			<% @blog.text.split(%r{\r\n}).each do |bt| %>
+				<%= bt %><br>
+			<% end %>
+		</div>
+		<% @blog.blog_paragraphs.each do |bp| %>
+		<h4><%= bp.title %></h4>
+		<div class="text">
+			<% bp.text.split(%r{\r\n}).each do |bt| %>
+				<%= bt %><br>
+			<% end %>
+		</div>
+		<% end %>
+	</div>
 </section>
+<section id="social-links">
+	<%= link_to '', 'https://www.instagram.com/peterpitchcom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-instagram" %>
+   <%= link_to '', 'https://www.youtube.com/channel/UCN7MeKNNdXK28uIiJjJ4Fdg', target: "_blank", rel: "noopener noreferrer", class: "fab fa-youtube" %>
+   <%= link_to '', 'https://www.facebook.com/PeterPitchCom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-facebook-f" %>
+</section>
+<h2 style="text-align: center">Weitere Artikel</h2>
+<section id="blog">
+		<% @blogs.each do |b| %>
+		<div class="card">
+		<%= image_tag b.image? ? b.image.url : '' %>
+		<h5><%= b.created_at.strftime("%d.%m.%Y") %></h5>
+		<h3>
+			<%= b.title %>
+			
+		</h3>
+		<div class="text">
+			<% b.text.split(%r{\r\n}).each do |bt| %>
+				<%= bt %><br>
+			<% end %>
+		</div>
+		<%= link_to '', show_blog_path(b.id) %>
+		</div>
+		<% end %>
+	</section>
 <section id="footer" class="wow fadeIn">
     <div class="logo">
         <%= image_tag 'landing/logo.png', alt: 'Peter Pitch Logo' %>

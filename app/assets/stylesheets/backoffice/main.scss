@@ -14,6 +14,8 @@ body {
     font-stretch: normal;
     letter-spacing: normal;
     background-color: #f4faff;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 #navbar {
 	position: absolute;
@@ -145,12 +147,15 @@ body {
 	}
 	.row {
 		position: relative;
-		display: flex;
-		max-width: 100%;
 		padding: 0 25px;
+		height: auto;
+		display: flex;
+		max-width: calc(100% - 50px);
+		overflow: auto;
 	}
 	.card {
 		position: relative;
+		float: left;
 		min-height: 200px;
 		min-width: 300px;
 		background-color: white;
@@ -235,6 +240,9 @@ body {
 			margin: 10px 0;
 			text-align: center;
 			box-sizing: border-box;
+		}
+		textarea {
+			height: 250px;
 		}
 	}
 	.table {

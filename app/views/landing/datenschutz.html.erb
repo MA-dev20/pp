@@ -3,13 +3,16 @@
     <%= link_to image_tag('landing/logo.png', alt: 'Peter Pitch Logo'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">
         <div class="link">
-            <%= link_to 'Produkt', root_path(anchor: 'product') %>
+            <%= link_to 'Blog', blog_path %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'FAQ', root_path(anchor: 'faq') %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'Kontakt', contact_path %>
+            <div class="line"></div>
         </div>
         <div class="link">
         	<i class="login-link" onclick="showLoginModal()">Login</i>
@@ -259,6 +262,32 @@
 			Nach der Datenschutz-Grundverordnung (DS-GVO) hast du das Recht auf kostenfreie Auskunft über deine durch uns gespeicherten Daten und deren Verwendung. Darüber hinaus kannst du jederzeit deine Ansprüche auf Berichtigung oder Löschung oder auf Einschränkung der Verarbeitung oder der Wahrnehmung deines Widerspruchsrechts gegen die Verarbeitung sowie das Recht auf Datenübertragbarkeit geltend machen. <%= link_to 'Hier', impressum_path() %> findest du die Möglichkeit, uns per E-Mail oder Brief zu kontaktieren. Du hast ferner das Recht, sich bei Beschwerden an die Datenschutz-Aufsichtsbehörde zu wenden.
 		</div>
 	</section>
+</section>
+<section id="footer" class="wow fadeIn">
+    <div class="logo">
+        <%= image_tag 'landing/logo.png', alt: 'Peter Pitch Logo' %>
+    </div>
+    <div class="company">
+        <div class="heading">Unternehmen</div>
+        <div class="links">
+            <%= link_to 'Registrieren', contact_path %>
+            <%= link_to 'Preise', contact_path %>
+            <%= link_to 'FAQ', '#faq' %>
+            <%= link_to 'Login', '#login', onclick: 'showLoginModal()' %>
+        </div>
+    </div>
+    <div class="legal">
+        <div class="heading">Rechtliches</div>
+        <div class="links">
+            <%= link_to 'Impressum', impressum_path %>
+            <%= link_to 'Datenschutz', datenschutz_path %>
+        </div>
+    </div>
+    <div class="social">
+        <%= link_to '', 'https://www.instagram.com/peterpitchcom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-instagram" %>
+        <%= link_to '', 'https://www.youtube.com/channel/UCN7MeKNNdXK28uIiJjJ4Fdg', target: "_blank", rel: "noopener noreferrer", class: "fab fa-youtube" %>
+        <%= link_to '', 'https://www.facebook.com/PeterPitchCom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-facebook-f" %>
+    </div>
 </section>
 <div class="fullscreen-modal" id="loginModal">
     

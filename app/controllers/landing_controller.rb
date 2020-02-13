@@ -24,9 +24,11 @@ class LandingController < ApplicationController
 
   def blog
 	@blogs = Blog.all
-	if params[:blog]
-		@blog = Blog.find(params[:blog])
-	end
+	@blog = @blogs.count == 0 ? nil : @blogs.last
+  end
+  def show_blog
+	@blog = Blog.find(params[:blog_id])
+	@blogs = Blog.where.not(id: @blog.id).last(3)
   end
   def ended_game
 	if !current_admin.nil?

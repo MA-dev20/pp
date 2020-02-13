@@ -2,13 +2,16 @@
     <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">
         <div class="link">
-            <%= link_to 'Produkt', root_path(anchor: 'product') %>
+            <%= link_to 'Blog', blog_path %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'FAQ', root_path(anchor: 'faq') %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'Kontakt', contact_path %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'Login', root_path(anchor: 'login'), class: 'login-link' %> 
@@ -44,4 +47,30 @@
         </div>
         <%= render "admins/shared/links" %>
     <% end %>
+</section>
+<section id="footer" class="wow fadeIn">
+    <div class="logo">
+        <%= image_tag 'landing/logo.png', alt: 'Peter Pitch Logo' %>
+    </div>
+    <div class="company">
+        <div class="heading">Unternehmen</div>
+        <div class="links">
+            <%= link_to 'Registrieren', contact_path %>
+            <%= link_to 'Preise', contact_path %>
+            <%= link_to 'FAQ', '#faq' %>
+            <%= link_to 'Login', '#login', onclick: 'showLoginModal()' %>
+        </div>
+    </div>
+    <div class="legal">
+        <div class="heading">Rechtliches</div>
+        <div class="links">
+            <%= link_to 'Impressum', impressum_path %>
+            <%= link_to 'Datenschutz', datenschutz_path %>
+        </div>
+    </div>
+    <div class="social">
+        <%= link_to '', 'https://www.instagram.com/peterpitchcom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-instagram" %>
+        <%= link_to '', 'https://www.youtube.com/channel/UCN7MeKNNdXK28uIiJjJ4Fdg', target: "_blank", rel: "noopener noreferrer", class: "fab fa-youtube" %>
+        <%= link_to '', 'https://www.facebook.com/PeterPitchCom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-facebook-f" %>
+    </div>
 </section>

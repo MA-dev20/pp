@@ -3,13 +3,16 @@
     <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">
         <div class="link">
-            <%= link_to 'Produkt', root_path(anchor: 'product') %>
+            <%= link_to 'Blog', blog_path %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'FAQ', root_path(anchor: 'faq') %>
+            <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'Kontakt', contact_path %>
+            <div class="line"></div>
         </div>
         <div class="link">
         	<i class="login-link" onclick="showLoginModal()">Login</i>
@@ -22,35 +25,62 @@
         <i class="fas fa-bars"></i>
     </div>
 </section>
-<div id="content">
 <% if @blog %>
-	<div class="blog_card">
-		<%= image_tag @blog.image? ? @blog.image.url : '' %>
-		<h1><%= @blog.title %></h1>
-		<span><%= @blog.created_at.strftime("%d.%m.%Y") %></span>
-		<div class="text">
-			<% @blog.text.split(%r{\r\n}).each do |be| %>
-				<%= be %> <br>
-			<% end %>
-		</div>
+<div class="blog_card">
+	<div class="content">
+	<%= image_tag @blog.image? ? @blog.image.url : '' %>
+	<h5><%= @blog.created_at.strftime("%d.%m.%Y") %></h5>
+	<h1><%= @blog.title %></h1>
+	<div class="text">
+		<% @blog.text.split(%r{\r\n}).each do |be| %>
+			<%= be %> <br>
+		<% end %>
 	</div>
+	<%= link_to 'mehr lesen', show_blog_path(@blog) %>
+	</div>
+</div>
 <% end %>
 <section id="blog">
 	<% @blogs.each do |b| %>
 	<div class="card">
 		<%= image_tag b.image? ? b.image.url : '' %>
+		<h5><%= b.created_at.strftime("%d.%m.%Y") %></h5>
 		<h3>
 			<%= b.title %>
 			
 		</h3>
-		<span><%= b.created_at.strftime('%d.%m.%Y') %></span>
 		<div class="text">
 			<% b.text.split(%r{\r\n}).each do |bt| %>
 				<%= bt %><br>
 			<% end %>
 		</div>
-		<%= link_to 'mehr lesen', blog_path(blog: b.id) %>
+		<%= link_to '', show_blog_path(b.id) %>
 	</div>
 	<% end %>
 </section>
-</div>
+<section id="footer" class="wow fadeIn">
+    <div class="logo">
+        <%= image_tag 'landing/logo.png', alt: 'Peter Pitch Logo' %>
+    </div>
+    <div class="company">
+        <div class="heading">Unternehmen</div>
+        <div class="links">
+            <%= link_to 'Registrieren', contact_path %>
+            <%= link_to 'Preise', contact_path %>
+            <%= link_to 'FAQ', '#faq' %>
+            <%= link_to 'Login', '#login', onclick: 'showLoginModal()' %>
+        </div>
+    </div>
+    <div class="legal">
+        <div class="heading">Rechtliches</div>
+        <div class="links">
+            <%= link_to 'Impressum', impressum_path %>
+            <%= link_to 'Datenschutz', datenschutz_path %>
+        </div>
+    </div>
+    <div class="social">
+        <%= link_to '', 'https://www.instagram.com/peterpitchcom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-instagram" %>
+        <%= link_to '', 'https://www.youtube.com/channel/UCN7MeKNNdXK28uIiJjJ4Fdg', target: "_blank", rel: "noopener noreferrer", class: "fab fa-youtube" %>
+        <%= link_to '', 'https://www.facebook.com/PeterPitchCom/', target: "_blank", rel: "noopener noreferrer", class: "fab fa-facebook-f" %>
+    </div>
+</section>

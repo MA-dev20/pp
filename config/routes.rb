@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get 'datenschutz', to: 'landing#datenschutz', as: 'datenschutz'
   get 'impressum', to: 'landing#impressum', as: 'impressum'
   get 'blog', to: 'landing#blog', as: 'blog'
+  get 'blog/:blog_id', to: 'landing#show_blog', as: 'show_blog'
 	
   get 'landing/ended_game', to: 'landing#ended_game', as: 'landing_ended_game'
 
@@ -250,6 +251,9 @@ Rails.application.routes.draw do
   post 'backoffice/blogs/:blog_id/edit', to: 'backoffice#edit_blog', as: "backoffice_edit_blog"
   put 'backoffice/blogs/:blog_id/update_image', to: 'backoffice#update_blog_image', as: 'backoffice_update_blog_image'
   get 'backoffice/blogs/:blog_id/destroy', to: 'backoffice#destroy_blog', as: 'backoffice_destroy_blog'
+  post 'backoffice/blogs/:blog_id/paragraphs/new', to: 'backoffice#new_blog_paragraph', as: 'backoffice_new_blog_paragraph'
+  post 'backoffice/blog_paragraphs/:blog_paragraph_id/edit', to: "backoffice#edit_blog_paragraph", as: "backoffice_edit_blog_paragraph"
+  get 'backoffice/blog_paragraphs/:blog_paragraph_id/destroy', to: 'backoffice#destroy_blog_paragraph', as: 'backoffice_destroy_blog_paragraph'
 
 #########
 # Admin #
