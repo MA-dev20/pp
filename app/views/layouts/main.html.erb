@@ -8,17 +8,29 @@
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    'main/main', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'main/main'%>
-    <meta property="og:url"           content="https://www.peterpitch.com" />
-    <meta property="og:type"          content="website" />
+    
+    <meta content="text/html; charset=UTF-8" name="Content-Type" />
+    <meta name="description" content="Das digitale Trainingstool für Kommunikation und Vertrieb">
+    <meta name="keywords" content="Vertrieb, Vertriebstraining, Vertriebstool, Kommunikation, Trainingstool, Verkauf, Verkaufstraining">
+    <meta name="application-name" content="Peter Pitch">
+    
+    <meta itemprop="name" content="Peter Pitch">
+    <meta itemprop="description" content="Das digitale Trainingstool für Kommunikation und Vertrieb">
+    <meta itemprop="image" content="<%= image_url('wolfhead-tab.png') %>">
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Peter Pitch">
+    <meta name="twitter:description" content="Das digitale Trainingstool für Kommunikation und Vertrieb">
+    <meta name="twitter:image" content="<%= image_url('wolfhead-tab.png') %>">
+    
     <meta property="og:title"         content="Peter Pitch" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:url"           content="https://www.peterpitch.com" />
+    <meta property="og:image" content="<%= image_url('wolfhead-tab.png') %>" />
     <meta property="og:description"   content="Das digitale Trainingstool für Kommunikation und Vertrieb" />
-    <meta property="og:image" itemprop="image" content="<%= image_url('wolfhead-tab.png') %>" />
     <meta property="og:image:type" content="image/png">
     <meta property="og:site_name"     content="Peter Pitch" >
     <meta property="og:locale"        content="de_DE" />
-    
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@peterpitch" />
     
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158122250-1"></script>
