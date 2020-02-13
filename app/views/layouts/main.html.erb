@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <title>Peter Pitch</title>
+    <title><%= yield(:title) %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= favicon_link_tag 'wolfhead-tab.png', rel: 'icon', type: 'image/png' %>
     <%= csp_meta_tag %>
@@ -9,9 +9,11 @@
     <%= stylesheet_link_tag    'main/main', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'main/main'%>
     
+    <link rel="canonical" href="https://www.peterpitch.com"/&gt;>
+    
     <meta content="text/html; charset=UTF-8" name="Content-Type" />
     <meta name="description" content="Das digitale Trainingstool für Kommunikation und Vertrieb">
-    <meta name="keywords" content="Vertrieb, Vertriebstraining, Vertriebstool, Kommunikation, Trainingstool, Verkauf, Verkaufstraining">
+    <meta name="keywords" content="Vertrieb, Vertriebstraining, Vertriebstool, Kommunikation, Trainingstool, Verkauf, Verkaufstraining, Gamification, Coaching">
     <meta name="application-name" content="Peter Pitch">
     
     <meta itemprop="name" content="Peter Pitch">

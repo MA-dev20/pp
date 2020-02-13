@@ -169,7 +169,7 @@
 	margin-bottom: 100px;
 	.head {
 		h5 {font-weight: normal;}
-		h1 {font-size: 36px;}
+		h2 {font-size: 36px;}
 	}
 	.links,
 	section {
@@ -183,7 +183,7 @@
 		font-weight: bold;
 		font-size: 20px;		
 	}
-	section h1 {font-size: 24px;}
+	section h2 {font-size: 24px;}
 	.point {
 		position: relative;
 		margin: 10px 0;
@@ -218,7 +218,7 @@
 		width: 300px;
 		margin: 0 auto;
 	}
-	h1 {font-size: 32px;}
+	h2 {font-size: 32px;}
 }
 #confirm {
 	text-align: center;
@@ -239,7 +239,7 @@
 			animation-delay: 0s;
 		}
 	}
-	h1 {font-size: 32px;}
+	h2 {font-size: 32px;}
 	.text {font-size: 20px;}
 }
 @keyframes checkmark {
@@ -358,7 +358,7 @@
 		text-align: center;
 		padding: 10px 10px 40px;
 		margin: auto;
-		h1 {border-bottom: 1px solid #dfe1e5;}
+		h2 {border-bottom: 1px solid #dfe1e5;}
 	}
 }
 .bounceInLeft,
@@ -421,7 +421,7 @@ label .red {
 	left: 0;
 	width: calc(100% - 40px);
 	padding: 20px;
-	h1 {margin-bottom: 40px;}
+	h2 {margin-bottom: 40px;}
 } 
 .contact-hidden {
 	display: none;
@@ -822,7 +822,7 @@ label .red {
     color: #4394ec;
 	margin: 10px;
 }
-#content .head .left .points .point h1 {
+#content .head .left .points .point h2 {
     position: absolute;
     left: 60px;
     top: 10px;
@@ -897,16 +897,16 @@ label .red {
 		}
 	}
 }
-#content .wie-geil-ist-das h1,
-#content .references h1,
-#content #hiw h1 {
+#content .wie-geil-ist-das h2,
+#content .references h2,
+#content #hiw h2 {
     color: #0e0e0e;
     font-size: 26px;
     line-height: 32px;
     font-weight: bold;
     text-align: center;
 }
-#content .wie-geil-ist-das h1 {
+#content .wie-geil-ist-das h2 {
     margin-bottom: 10px;
 }
 #content .wie-geil-ist-das h5 {
@@ -965,10 +965,10 @@ label .red {
 #content #hiw .categories {
     color: #667093;
 }
-#content #hiw > h1 {
+#content #hiw > h2 {
     width: 100%;
 }
-#content #hiw .text h1 {
+#content #hiw .text h2 {
     font-weight: 500;
     text-align: center;
     color: #4394ec;
@@ -1012,13 +1012,13 @@ label .red {
     left: 650px;
     top: 70px;
 }
-#content .references h1.desktophead {
+#content .references h2.desktophead {
     display: none;
 }
-#content .references h1 {
+#content .references h2 {
     font-size: 20px;
 }
-#content .references h1 .line1{
+#content .references h2 .line1{
     position: absolute;
     top: 15px;
     width: 30%;
@@ -1026,7 +1026,7 @@ label .red {
     left: 0;
     background-image: linear-gradient(to right, rgba(194, 194, 194, 0), rgba(194, 194, 194, 1));
 }
-#content .references h1 .line2 {
+#content .references h2 .line2 {
     position: absolute;
     top: 15px;
     width: 30%;
@@ -1034,8 +1034,8 @@ label .red {
     right: 0;
     background-image: linear-gradient(to right, rgba(194, 194, 194, 1), rgba(194, 194, 194, 0));
 }
-#content .references h1 .line1,
-#content .references h1 .line2 {
+#content .references h2 .line1,
+#content .references h2 .line2 {
     display: none;
 }
 #content .references .logo-wheel {
@@ -1333,7 +1333,7 @@ label .red {
 	color: #667093;
 	text-align: center;
 }
-#content #secure h1 {
+#content #secure h2 {
 	color: #0e0e0e;
 }
 #content #secure .daten,
@@ -1465,8 +1465,8 @@ label .red {
 	#datenschutz section {
 		width: 700px;
 	}
-    #content .references h1 .line1,
-    #content .references h1 .line2 {
+    #content .references h2 .line1,
+    #content .references h2 .line2 {
         display: block;
         width: 100px;
     }
@@ -1715,8 +1715,8 @@ label .red {
     #navbar .navbar-links .link {
         width: 100px;
     }
-    #content .references h1 .line1,
-    #content .references h1 .line2 {
+    #content .references h2 .line1,
+    #content .references h2 .line2 {
         width: 200px;
     }
     #navbar,
@@ -1796,12 +1796,12 @@ label .red {
     #content .references .mobilehead {
         display: none;
     }
-    #content .references h1.desktophead {
+    #content .references h2.desktophead {
         display: block;
         position: relative;
     }
-    #content .references h1 .line1,
-    #content .references h1 .line2 {
+    #content .references h2 .line1,
+    #content .references h2 .line2 {
         width: 150px;
     }
     #content .references .logo-wheel img {
@@ -1961,8 +1961,8 @@ label .red {
 	}
 }
 @media (min-width: 1100px) {
-    #content .references h1 .line1,
-    #content .references h1 .line2 {
+    #content .references h2 .line1,
+    #content .references h2 .line2 {
         width: 250px;
     }
     #content .references .logo-wheel img {
@@ -2161,14 +2161,14 @@ label .red {
 		right: 499px;
 		font-size: 102px;
 	}
-    #content .references h1 {
+    #content .references h2 {
         font-size: 26px;
     }
     #content .head {
         width: 1300px;
     }
-    #content .references h1 .line1,
-    #content .references h1 .line2 {
+    #content .references h2 .line1,
+    #content .references h2 .line2 {
         width: 400px;
     }
 	#content .head .left .points {
@@ -2183,7 +2183,7 @@ label .red {
 		height: 50px;
 		width: 50px;	
 	}
-	#content .head .left .points .point h1 {
+	#content .head .left .points .point h2 {
 		left: 70px;
 		top: 15px;
 	}

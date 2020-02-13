@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <title>Peter Pitch</title>
+    <title><%= yield(:title) %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= favicon_link_tag 'wolfhead-tab.png', rel: 'icon', type: 'image/png' %>
     <%= csp_meta_tag %>
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    'main/main', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'main/main'%>
-    <meta property="og:url"           content="http://www.peterpitch.com" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="Peterpitch" />
-    <meta property="og:description"   content="Das erste Gamification Tool" />
-    <meta property="og:image"         content="<%= image_url('defaults/wolf.jpg') %>" />
-    <meta property="og:site_name"     content="Peterpitch" >
-    <meta property="og:locale"        content="de_DE" />
     
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@peterpitch" />
+    <meta content="text/html; charset=UTF-8" name="Content-Type" />
+    <meta name="description" content="Das digitale Trainingstool für Kommunikation und Vertrieb">
+    <meta name="keywords" content="Vertrieb, Vertriebstraining, Vertriebstool, Kommunikation, Trainingstool, Verkauf, Verkaufstraining, Gamification, Coaching">
+    <meta name="application-name" content="Peter Pitch">
   </head>
 
   <body class="modal-open">
