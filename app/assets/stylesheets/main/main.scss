@@ -113,6 +113,7 @@
 	top: 0;
 	border-bottom: 1px solid rgba(0,0,0,.2);
 	padding-bottom: 100px;
+	overflow: hidden;
 	.head {
 		position: relative;
 		text-align: center;
@@ -131,6 +132,97 @@
 		width: 300px;
 		margin: 0 auto;
 	}
+	.shape {
+		position: absolute;
+		left: auto;
+		right: auto;
+	}
+	img.s310 {
+		width: 310px;
+	}
+	.s153 {
+		width: 153px;
+	}
+	#shape1 {
+		left: -400px;
+		top: 0px;
+	}
+	#shape2 {
+		left: -100px;
+		top: 300px;
+	}
+	#shape3 {
+		right: -400px;
+		top: 500px;
+	}
+	#shape4 {
+		right: -180px;
+		top: 850px;
+	}
+	#shape5 {
+		left: -400px;
+		top: 900px;
+	}
+	#shape6 {
+		left: -100px;
+		top: 1200px;
+	}
+	#shape7 {
+		right: -400px;
+		top: 1600px;
+	}
+	#shape8 {
+		right: -180px;
+		top: 1950px;
+	}
+	#shape9 {
+		left: -400px;
+		top: 2200px;
+	}
+	#shape10 {
+		left: -100px;
+		top: 2500px;
+	}
+	#shape11 {
+		right: -400px;
+		top: 2700px;
+	}
+	#shape12 {
+		right: -180px;
+		top: 3050px;
+	}
+	#shape13 {
+		left: -400px;
+		top: 3100px;
+	}
+	#shape14 {
+		top: 3400px;
+		left: -100px;
+	}
+	#shape15 {
+		top: 3800px;
+		right: -400px;
+	}
+	#shape16 {
+		top: 4150px;
+		right: -180px;
+	}
+	#shape17 {
+		top: 4400px;
+		left: -400px;
+	}
+	#shape18 {
+		top: 4700px;
+		left: -100px;
+	}
+	#shape19 {
+		top: 4900px;
+		right: -400px;
+	}
+	#shape20 {
+		top: 5250px;
+		right: -180px;
+	}
 	h5 {
 		margin: 5px 0;
 		font-weight: normal;
@@ -146,6 +238,7 @@
 		font-size: 25px;
 	}
 	.blog {
+		position: relative;
 		width: 300px;
 		margin: 0 auto;
 	}
