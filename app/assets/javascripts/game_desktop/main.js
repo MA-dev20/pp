@@ -73,7 +73,6 @@ function pick(xnum) {
 
 // Text Effect on gdesktop Turn
 function textanim() {
-$('#word').show();
 const resolver = {
   resolve: function resolve(options, callback) {
     // The string to resolve
@@ -129,7 +128,6 @@ const resolver = {
       const offset = options.offset;
       const partialString = resolveString.substring(0, offset);
       const combinedOptions = Object.assign({}, options, {partialString: partialString});
-
       doRandomiserEffect(combinedOptions, () => {
         const nextOptions = Object.assign({}, options, {offset: offset + 1});
 

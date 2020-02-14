@@ -115,7 +115,9 @@ document.getElementById("theme").volume = 0.1;
         $('#logo').css('display','block');
         $('#avatar').css('display','block');
         $('.countdown').css('display','block');
-        $('#word').css('display','block');
+        setTimeout(function(){
+			$('#word').show();
+		},500)
         $('.penta-img').css('display', 'inline-flex');
         $('.countdown-timer').css('display','none');
         $("#play-contant").removeClass("custom-blur");
