@@ -63,7 +63,7 @@ class BackofficeController < ApplicationController
 	  @admin = Admin.find(params[:admin_id])
 	  @words = CatchwordsBasket.where(admin_id: @admin.id, objection: false)
 	else
-	  @words = CatchwordsBasket.where(admin_id: nil, objection: false)
+	  @words = CatchwordsBasket.where(admin_id: nil, game_id: nil, objection: false)
 	end
   end
   #GET backoffice_word @admin
@@ -82,7 +82,7 @@ class BackofficeController < ApplicationController
 	  @admin = Admin.find(params[:admin_id])
 	  @objections = CatchwordsBasket.where(admin_id: @admin.id, objection: true)
 	else
-	  @objections = CatchwordsBasket.where(admin_id: nil, objection: true)
+	  @objections = CatchwordsBasket.where(admin_id: nil, game_id: nil, objection: true)
 	end
   end
   #GET backoffice_objection @admin
