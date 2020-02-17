@@ -23,7 +23,7 @@ class Admins::PasswordsController < Devise::PasswordsController
 	  elsif @user
 		password = SecureRandom.urlsafe_base64(8)
 		@user.update(password: password)
-		AdminMailer.after_activate(@user, password).deliver
+		UserMailer.new_password(@user, password).deliver
 	  end
   end
 

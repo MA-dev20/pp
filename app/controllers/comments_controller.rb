@@ -8,6 +8,11 @@ class CommentsController < ApplicationController
     @comment = @turn.comments.new(comments_params)
     if !@comment.save
       flash[:danger] = 'Konnte Comment nicht speichern!'
+	else
+	  if @turn.released && @turn.user
+	    @user = @turn.user
+ 	    UserMailer.new_comment(@user, @comment).deliver
+	  end
     end
     redirect_to dash_admin_video_details_path(@turn)
   end

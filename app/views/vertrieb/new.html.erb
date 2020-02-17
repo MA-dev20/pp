@@ -1,16 +1,20 @@
 <section id="navbar">
     <%= link_to image_tag('landing/logo.png'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">
-        <div class="link">
-            <%= link_to 'Blog', blog_path %>
-            <div class="line"></div>
-        </div>
+       	<div class="link">
+       		<%= link_to 'Produkt', root_path(anchor: 'product') %>
+       		<div class="line"></div>
+       	</div>
         <div class="link">
             <%= link_to 'FAQ', root_path(anchor: 'faq') %>
             <div class="line"></div>
         </div>
         <div class="link">
             <%= link_to 'Kontakt', contact_path %>
+            <div class="line"></div>
+        </div>
+        <div class="link">
+            <%= link_to 'Blog', blog_path %>
             <div class="line"></div>
         </div>
         <div class="link">

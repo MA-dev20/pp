@@ -1757,11 +1757,11 @@ label .red {
         display: block;
         background-color: white;
         top: 0;
-        left: 200px;
+        left: 150px;
         height: 100px;
         line-height: 100px;
         margin: 0 auto;
-        width: 300px;
+        width: 400px;
     }
     #navbar .navbar-links .link {
         position: relative;
@@ -1769,6 +1769,9 @@ label .red {
         width: 80px;
         text-align: center;
         border-bottom: 0px solid #0e0e0e;
+        top: 25px;
+        height: 50px;
+        line-height: 50px;
     }
     #navbar .navbar-mobile {
         display: none;
@@ -1937,7 +1940,8 @@ label .red {
 		font-size: 102px;
 	}
     #navbar .navbar-links {
-        width: 300px;
+		left: 250px;
+        width: 400px;
     }
     #navbar .navbar-links .link {
         width: 100px;
@@ -1956,9 +1960,6 @@ label .red {
         width: 800px;
         height: 450px;
         margin: calc(50vh - 225px) auto;
-    }
-    #navbar .navbar-links {
-        left: 300px;
     }
     #content .head {
         height: 500px;
@@ -2207,7 +2208,7 @@ label .red {
         margin: calc(50vh - 282px) auto;
     }
     #navbar .navbar-links {
-        left: 400px;
+        left: 350px;
     }
     #content .head {
         width: 1100px;
@@ -2437,7 +2438,7 @@ label .red {
         margin: calc(50vh - 337px) auto;
     }
     #navbar .navbar-links {
-        left: 500px;
+        left: 450px;
     }
      #content .head {
         height: 600px;

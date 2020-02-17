@@ -347,6 +347,7 @@ class DashAdminController < ApplicationController
 	@turn = Turn.find(params[:turn_id])
 	if params[:released] == "true"
 	  @turn.update(released: true)
+	  UserMailer.new_video(@turn.user).deliver
 	else
 	  @turn.update(released: false)
 	end
@@ -686,10 +687,13 @@ class DashAdminController < ApplicationController
 	
   def create_replies
 	@comment = Comment.find(params[:comment_id])
+	@turn = @comment.turn
+	@user = @turn.user
 	@reply = @comment.comment_replies.new(reply_params)
 	@reply.admin_id = @admin.id
 	@reply.save
-	redirect_to dash_admin_video_details_path(@comment.turn)
+	UserMailer.new_comment(@user, @comment).deliver
+	redirect_to dash_admin_video_details_path(@turn)
   end
   
   private

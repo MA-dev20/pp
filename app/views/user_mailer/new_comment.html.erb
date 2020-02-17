@@ -1,0 +1,14 @@
+<h1>Hallo <%= @user.fname %> <%= @user.lname %></h1>
+
+<p>Du hast einen neuen Kommentar im Dashboard!</p>
+
+<p><%= @comment.title %></p>
+<% @comment.comment_replies.each do |r| %>
+	<% r.user_id.nil? ? user = Admin.find(r.admin_id) : user = User.find(r.user_id) %>
+	<p><%= user.fname + ' ' + user.lname + ' - ' + r.text %></p>
+<% end %>
+
+<p><%= link_to 'Einloggen!', root_url, class: 'btn btn-green' %></p>
+
+<p>Liebe Grüße</p>
+<p>Dein Peter Pitch-Team</p>
