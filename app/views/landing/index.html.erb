@@ -513,6 +513,14 @@
 	</div>
 </div>
 <% end %>
+<% if flash[:activated] %>
+<div class="register-pop-up">
+	<div class="karte">
+		<h2>Noch nicht akzeptiert!</h2>
+		<div class="text"><%= flash[:activated] %></div>
+	</div>
+</div>
+<% end %>
 <div class="fullscreen-modal" id="loginModal">
     
     <div class="close"><i class="fas fa-times" onclick="showLoginModal()"></i></div>

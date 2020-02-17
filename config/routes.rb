@@ -8,14 +8,6 @@ Rails.application.routes.draw do
   # root to: 'games#show'
   patch 'game_mobile_user/accept_user/:user_id', to: 'game_mobile_user#accept_user', as: 'accept_user'
   patch 'game_mobile_user/reject_user/:user_id', to: 'game_mobile_user#reject_user', as: 'reject_user'
-
-  get 'dash/stats', to: 'user/dash_user#stats', as: 'dash_user_stats'
-  post 'dash/filter_videos', to:  'user/dash_user#filter_videos', as: 'user_filter_videos'
-  get 'dash/videos', to: 'user/dash_user#tool', as: 'dash_user_video_tool'
-  get 'dash/stats/turns/:turn_id', to: 'user/dash_user#turn_show', as: 'dash_user_show_turn'
-  delete 'dash/stats/turns/:turn_id', to: 'user/dash_user#delete_video', as: 'dash_user_delete_video'
-  get 'dash/account', to: 'user/dash_user#account', as: 'dash_user_account'
-  put 'dash/account', to: 'user/dash_user#update_user', as: 'dash_user_account_update'
  
 ###########
 # Landing #
@@ -255,6 +247,14 @@ Rails.application.routes.draw do
   post 'backoffice/blog_paragraphs/:blog_paragraph_id/edit', to: "backoffice#edit_blog_paragraph", as: "backoffice_edit_blog_paragraph"
   get 'backoffice/blog_paragraphs/:blog_paragraph_id/destroy', to: 'backoffice#destroy_blog_paragraph', as: 'backoffice_destroy_blog_paragraph'
 
+########
+# User #
+########
+	
+	get 'user/dash/stats', to: 'dash_user#stats', as: 'dash_user_stats'
+	get 'user/dash/videos', to: 'dash_user#videos', as: "dash_user_videos"
+	get 'user/dash/videos/:turn_id/', to: 'dash_user#video', as: "dash_user_video"
+
 #########
 # Admin #
 #########
@@ -283,6 +283,7 @@ Rails.application.routes.draw do
     #Video Tool
     get 'admins/dash/video_tool', to: 'dash_admin#video_tool', as: 'dash_admin_video_tool'
     get 'admins/dash/turns/:turn_id/video', to: 'dash_admin#video_details', as: 'dash_admin_video_details'
+	get 'admins/dash/turns/:turn_id/release', to: 'dash_admin#release_pitch', as: 'dash_admin_release_pitch'
     
     post 'admins/dash/add_favorite', to: 'dash_admin#add_favorite', as: 'dash_admin_add_favorite'
     post 'admins/dash/remove_favorite', to: 'dash_admin#remove_favorite', as: 'dash_admin_remove_favorite'

@@ -1,192 +1,41 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <title>Peter Pitch</title>
-    <%= favicon_link_tag 'wolfhead-tab.png', rel: 'icon', type: 'image/png' %>
-    <%= csrf_meta_tags %>
-    
-    <%= action_cable_meta_tag %>
-    <%= stylesheet_link_tag    'dash/main', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/microplugin/0.0.3/microplugin.js"></script>
-    <%= javascript_include_tag 'dash/main', 'https://js.stripe.com/v2/' %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
-</head>
-
-<body class="body-open" 
-  <% if content_for?(:body_attributes) %>
-    <%= yield(:body_attributes) %> 
-  <% end %>>
-    <div class="section">
-      <section id="navbar">
-          Hallo, <%= current_user.fname %> <%= current_user.lname %>!
-      </section>
-      
-      <section id="sidebar" >
-          <% if current_user.avatar? %>
-              <%= image_tag current_user.avatar.quad.url %>
-          <% else %>
-              <%= image_tag 'defaults/wolf.jpg' %>
-          <% end %>
-          <div class="links">
-              <div class="link">
-              <% if current_page?(dash_user_stats_path) %>
-                  <%= link_to "Statistics", dash_user_stats_path, class: 'active' %>
-              <% elsif @team && current_page?(dash_admin_team_users_path(@team)) %>
-                  <%= link_to "Statistics", dash_user_stats_path, class: 'active' %>
-              <% elsif @team && @user && current_page?(dash_admin_user_stats_path(@team, @user)) %>
-                  <%= link_to "Statistics", dash_user_stats_path, class: 'active' %>
-              <% elsif @team && @user && @user1 && current_page?(dash_admin_compare_user_stats_path(@team, @user, @user1)) %>
-                  <%= link_to "Statistics", dash_user_stats_path, class: 'active' %>
-              <% else %>
-                  <%= link_to 'Statistics', dash_user_stats_path %>
-              <% end %>
-              </div>
-              <div class="link">
-                  <%= link_to "Videos", dash_user_video_tool_path , class: "#{current_page?(dash_user_video_tool_path) ? 'active' : ''} "%>
-              </div>
-              <div class="link">
-
-              </div>
-          </div>
-      </section>
-      
-    <section id="content" onclick="closeModal()">
-        <% flash.each do |name, msg| %>
-        <% if msg.is_a?(String) && name.to_s != 'pop_up' %>
-        <div class="alert alert-<%= name.to_s == 'notice' ? 'success' : 'danger' %>">
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
-        </div>
-        <% end %>
-        <% end %>
-        <%= yield %>
-    </section>
-
-    <div class="modal-games" id="new_basket">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button type="button" class="close modal-close" onclick="closeBakset()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
-                <div class="modal-body" id="pop_up-body">
-                    <h1>
-                        <span>Liste für Wörter hinzufügen</span><br><br><br>
-                        <%= form_for(:basket, url: dash_admin_new_basket_path) do |f| %>
-                            <%= f.text_field :name, placeholder: 'Listname', class: 'form-control' , required: true%><br><br><br>
-                            <%= f.submit 'Erstellen', class: 'btn btn-green' %>
-                        <% end %>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal-games" id="new_team">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button type="button" class="close modal-close" onclick="closeTeam()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
-                <div class="modal-body" id="pop_up-body">
-                    <h1>
-                        <span>Team hinzufügen</span><br><br><br>
-                        <%= form_for(:team, url: new_team_path(current_user)) do |f| %>
-                            <%= f.text_field :name, placeholder: 'Teamname', class: 'form-control' %><br><br><br>
-                            <%= f.submit 'Erstellen', class: 'btn btn-green' %>
-                        <% end %>
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-
-     <% flash.each do |name, msg| %>
-            <% if msg.is_a?(String) && name.to_s == 'pop_up' %>
-                <div class="modal-games" id="pop_up_flash" tabindex="-1" role="dialog" aria-labelledby="demoModal" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <button type="button" class="close modal-close" onclick="closeModal()" aria-label="Close" style="transform: rotateZ(45deg);">+</button>
-                            <div class="modal-body" id="pop_up-body">
-                                <h1>
-                                <span><%= msg.split(';')[0].to_s %></span><br><br><br>
-                                <%= msg.split(';')[1].to_s %>
-                                <% if msg.split(';')[2] %>
-                                  <br> <br> <br>
-                                  <%= link_to msg.split(';')[2].to_s, dash_admin_path, class: 'btn btn-green' %>
-                                <% end %>
-                                </h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <% end %>
-        <% end %>
-         
-      <div class="dropdown">
-              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <% if current_user.avatar? %>
-                      <%= image_tag current_user.avatar.quad.url %>
-                  <% else %>
-                      <%= image_tag 'defaults/wolf.jpg' %>
-                  <% end %>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <%= link_to "Account", dash_user_account_path , class: 'dropdown-item'%>
-                <%= link_to 'Logout', destroy_admin_session_path, class: 'dropdown-item red' %>
-              </div>
-          </div>
-         
-  </div>
-  
-
-  <%= yield :modal %>
-</body>
-<script>
-    $(document).ready(function() {
-        window.setTimeout(function() {
-           $('.alert').slideUp(500);
-        }, 4000);
-    });
-    
-    $(document).ready( function () {
-        if ($('#pop_up_flash').length != 0){
-            $('#pop_up_flash').show();
-            $('#content').addClass('backgroundblur');
-        }
-    } );
-    function openTeam() {
-        $('#new_team').show();
-        $('#content').addClass('backgroundblur');
-        $('#team_name').focus();
-    };
-    function openBasket() {
-        $('#new_basket').show();
-        $('#content').addClass('backgroundblur');
-        $('#basket_name').focus();
-    };
-
-    function openCatchword() {
-        $('#new_catchword').show();
-        $('#content').addClass('backgroundblur');
-        $('#catchword_name').focus();
-    };
-    function closeTeam() {
-        $('#new_team').hide();
-        $('#content').removeClass('backgroundblur');
-    }
-    function closeBakset() {
-        $('#new_basket').hide();
-        $('#content').removeClass('backgroundblur');
-    }
-
-    function closeCatchword() {
-        $('.catchword-modal').modal("hide");
-    }
-    function closeOwnRule() {
-        $('#own-rules-modal').modal("hide");
-        $(".switch").click()
-        $('#content').removeClass('backgroundblur');
-    }
-    function closeModal() {
-        if($('#pop_up_flash').is(':visible')) {
-        $('#pop_up_flash').hide();
-        $('#content').removeClass('backgroundblur');
-        }
-    }
-</script>
-
+	<head>
+		<title>Peter Pitch - User Dashboard</title>
+		<%= favicon_link_tag 'wolfhead-tab.png', rel: 'icon', type: 'image/png' %>
+		<%= csrf_meta_tags %>
+		
+		<%= stylesheet_link_tag 'dash/main', media: 'all', "data-turbolinks-track": 'reload' %>
+		<%= javascript_include_tag 'dash/main' %>
+	</head>
+	<body>
+		<section id="navbar">
+			<div class="dropdown">
+				Hallo, <%= @user.fname %> <%= @user.lname %>
+				<%= image_tag 'dash/arrow-down.png', class: 'dropdown-img' %>
+			</div>
+		</section>
+		
+		<section id="sidebar">
+			<div class="avatar">
+				<%= image_tag @user.avatar? ? @user.avatar.quad.url : 'defaults/wolf.jpg' %>
+			</div>
+			<div class="links">
+				<div class="link <%= current_page?(dash_user_stats_path) ? 'active' : '' %>">
+					<i class="far fa-chart-bar"></i>
+					<div class="text">Statistik</div>
+					<%= link_to '', dash_user_stats_path %>
+				</div>
+				<div class="link <%= current_page?(dash_user_videos_path) || @turn && current_page?(dash_user_video_path(@turn)) ? 'active' : '' %>">
+					<i class="fab fa-youtube"></i>
+					<div class="text">Video Tool</div>
+					<%= link_to '', dash_user_videos_path %>
+				</div>
+			</div>
+		</section>
+		
+		<section id="content">
+			<%= yield %>
+		</section>
+	</body>
 </html>

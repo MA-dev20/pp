@@ -1,0 +1,174 @@
+<div class="video-tool-container">
+  <div class="video-tool">
+    <div class="searchbar">
+      <%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+      <input type="text" placeholder="Suchen" id="searchPitch">
+    </div>
+    <% if Turn.where(recorded_pitch: nil).first %>
+    <!-- <div class="add" onclick="openDropzone2()">
+      <i class="fas fa-plus"></i>
+    </div> -->
+    <% end %>
+    <div class="karte">
+      <div class="head left">Pitch Videos</div>
+      <div class="sort_by">
+        <label for="" style="padding-right: 10px;">Sortieren nach:</label>
+        <select name="sortBy" id="sortBy" class="custom-select" onchange="redirectUrl()">
+          <% if @sort_by == 'dateASC' %>
+          <option value="date" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'dateDSC') %>')" selected>
+            Datum</option>
+          <% else %>
+          <option value="<%= dash_admin_video_tool_path(sort_by: 'dateASC') %>"
+            onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'dateASC') %>')"
+            <% if @sort_by == 'dateDSC' %>selected<% end %>>Datum</option>
+          <% end %>
+          <% if @sort_by == 'fnameASC' %>
+          <option value="<%= dash_admin_video_tool_path(sort_by: 'fnameDSC') %>" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'fnameDSC') %>')" selected>Vorname
+          </option>
+          <% else %>
+          <option value="<%= dash_admin_video_tool_path(sort_by: 'fnameASC') %>" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'fnameASC') %>')"
+            <% if @sort_by == 'fnameDSC' %>selected<% end %>>Vorname</option>
+          <% end %>
+          <% if @sort_by == 'lnameASC' %>
+          <option value="<%= dash_admin_video_tool_path(sort_by: 'lnameDSC') %>" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'lnameDSC') %>')" selected>
+            Nachname</option>
+          <% else %>
+          <option value="<%= dash_admin_video_tool_path(sort_by: 'lnameASC') %>" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'lnameASC') %>')"
+            <% if @sort_by == 'lnameDSC' %>selected<% end %>>Nachname</option>
+          <% end %>
+          <% if @sort_by == 'ratingASC' %>
+          <option value="<%= dash_admin_video_tool_path(sort_by: 'ratingDSC') %>" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'ratingDSC') %>')" selected>
+            Bewertung</option>
+          <% else %>
+          <option value="<%= dash_admin_video_tool_path(sort_by: 'ratingASC') %>" onclick="redirect('<%= dash_admin_video_tool_path(sort_by: 'ratingASC') %>')"
+            <% if @sort_by == 'ratingDSC' %>selected<% end %>>Bewertung</option>
+          <% end %>
+        </select>
+      </div>
+      <div class="video-list" id="videoList">
+        <% @result.each do |r| %>
+        <div class="video-karte pitches">
+          <div class="top">
+            <div class="video-img" style="background-image: url('<%= asset_path(r[:pitch_url]) %>')"></div>
+            <div class="overlay" onclick="redirect('<%= dash_admin_video_details_url(r[:turn_id]) %>')"></div>
+            <div class="rating"><%= r[:rating].present? ? r[:rating] / 10.0 : 0 %></div>
+            <% turn = Turn.find(r[:turn_id])
+              total_time = turn.recorded_pitch_duration.to_minutes if turn.recorded_pitch_duration.present? 
+            %>
+            <div class="timer"><%= total_time %></div>
+            <div class="play" onclick="redirect('<%= dash_user_video_url(r[:turn_id]) %>')"><i class="fas fa-play"></i></div>
+          </div>
+          <div class="word">
+           	<% if r[:word].present? %>
+            	<%= r[:word] %>
+            <% else %>
+            	<span class="red">Wort gelöscht</span>
+            <% end %>
+          </div>
+          <div class="player">
+            <%= image_tag @user.avatar.quad.url %>
+            <%= (r[:user_fname].present? ? r[:user_fname] : '') + " " + (r[:user_lname].present? ? r[:user_lname] : '') %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="fullscren-blur" id="help-popup">
+</div>
+
+<style>
+  .fa-plus {
+    line-height: unset;
+  }
+  .active {
+    color: #45b1ff;
+  }
+</style>
+
+<script>
+  function toggleDeletePitch() {
+	$("#deletePitch").toggle();
+  }
+  function editVideo(videoId) {
+	  window.location.replace('/admin/dash/videos/'+ videoId +'/edit');
+  }
+  /* search Pitches */
+  $('#searchPitch').keyup(function () {
+    $rows = $('.pitches');
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+      reg = RegExp(val, 'i'),
+      text;
+    $rows.show().filter(function () {
+      text = $(this).find($('.player')).text().replace(/\s+/g, ' ');
+      return !reg.test(text);
+    }).hide();
+  })
+  /* search Pitches */
+  $('#searchVideo').keyup(function () {
+    $rows = $('.videoSearch');
+    var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+      reg = RegExp(val, 'i'),
+      text;
+    $rows.show().filter(function () {
+      text = $(this).find($('.title')).text().replace(/\s+/g, ' ');
+      return !reg.test(text);
+    }).hide();
+  })
+  new PerfectScrollbar('#videoList');
+  function openDropzone() {
+    $('#dropzone1').show();
+  }
+  function closeDropzone() {
+    $('#dropzone1').hide();
+    window.location.reload(true);
+  }
+  function openDropzone2() {
+    $('#dropzone2').show();
+  }
+  function closeDropzone2() {
+    $('#dropzone2').hide();
+    window.location.reload(true);
+  }
+  
+  function redirect(url) {
+    window.location.replace(url);
+  }
+
+  function redirectUrl() {
+    if ($('#sortBy').val() != undefined) {
+      window.location.replace($('#sortBy').val());
+    }
+  }
+
+  $('.heart').on('click', function(e){
+    var target = e.currentTarget
+    var id = $(target).data('id')
+    Favorite(id)
+    e.stopPropagation()
+  });
+  function Favorite(id){
+      var url = '';
+      if ($(`#${id}_heart .fa-heart`).hasClass('far')){
+        url = '<%= dash_admin_add_favorite_path %>'
+      } else {
+        url = '<%= dash_admin_remove_favorite_path %>'
+      }
+      $.ajax({
+        url: url,
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: {id: id},
+        type: 'post',
+        success: function(res){
+          if ($(`#${id}_heart .fa-heart`).hasClass('far')){
+            $(`#${id}_heart .fa-heart`).removeClass('far').addClass('fa').addClass('active');
+          } else {
+            $(`#${id}_heart .fa-heart`).removeClass('fa').addClass('far').removeClass('active');
+          }
+        }
+      })
+    }
+</script>

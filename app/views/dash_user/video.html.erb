@@ -229,12 +229,6 @@
         <% end %>
        
         
-    
-    <% if @turn.released %>
-    	<%= link_to 'Kommentare unveröffentlichen', dash_admin_release_pitch_path(@turn, released: false), class: 'release btn btn-green' %>
-    <% else %>
-    	<%= link_to 'Kommentare veröffentlichen', dash_admin_release_pitch_path(@turn, released: true), class: 'release btn btn-green' %>
-    <% end %>
     </div>
 </div>
 

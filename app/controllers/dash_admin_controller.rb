@@ -343,6 +343,16 @@ class DashAdminController < ApplicationController
     @my_rating = @turn.ratings.find_by(admin_id: @admin.id)
   end
 	
+  def release_pitch
+	@turn = Turn.find(params[:turn_id])
+	if params[:released] == "true"
+	  @turn.update(released: true)
+	else
+	  @turn.update(released: false)
+	end
+	redirect_to dash_admin_video_details_path(@turn)
+  end
+	
   def delete_pitch
 	@turn = Turn.find(params[:turn_id])
 	@turn.remove_recorded_pitch = true
