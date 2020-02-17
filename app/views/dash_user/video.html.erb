@@ -116,7 +116,7 @@
         </div>
         <% end %>
         <div class="head comments">Kommentare</div>
-        <div class="karte" id="commentCard">
+        <div class="karte" id="commentCard" style="height: 37.5vh">
             <% @comments.each do |c| %>
             <div class="comment" id="comment_<%= c.id %>" >
                 <%= image_tag @admin.avatar.present? ? @admin.avatar.quad.url : '' %>
