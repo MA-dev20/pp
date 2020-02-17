@@ -2,10 +2,10 @@
 
 <p>Du hast einen neuen Kommentar im Dashboard!</p>
 
-<p><%= @comment.title %></p>
+<p><span class="bold"><%= @comment.title %></span></p>
 <% @comment.comment_replies.each do |r| %>
 	<% r.user_id.nil? ? user = Admin.find(r.admin_id) : user = User.find(r.user_id) %>
-	<p><%= user.fname + ' ' + user.lname + ' - ' + r.text %></p>
+<p><span class="bold"><%= user.fname + ' ' + user.lname %> </span> - <%= r.text %></p>
 <% end %>
 
 <p><%= link_to 'Einloggen!', root_url, class: 'btn btn-green' %></p>
