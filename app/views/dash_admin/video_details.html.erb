@@ -184,6 +184,9 @@
                 <div class="edit">
                 	<i class="far fa-edit" onclick="editComment(<%= c.id %>)"></i>
                 	<%= link_to '', destroy_comment_path(c.id), class: 'far fa-trash-alt' %>
+                	<i class="fas fa-reply" onclick="addReply(<%= c.id %>)">
+                		<span class="tooltip">antworten</span>
+                	</i>
                 </div>
                 <div class="comment-title" onclick="videoJumpTo(<%= c.time_of_video %>)" id="comment_title_<%= c.id %>">
                     <span class="<%= c.type_of_comment %>"></span>
@@ -195,11 +198,35 @@
             			<% f.text_field :title, class: 'form-field', value: c.title, autofocus: true %>
             		<% end %>	
                 </div>
+                <div class="reply replyForm" id="replyForm_<%= c.id %>">
+                   	<%= form_for(:reply, url: dash_admin_new_reply_path(c.id)) do |f| %>
+                   		<%= f.text_field :text, class: 'form-field' %>
+                   	<% end %>
+                </div>
+                <% c.comment_replies.each do |cr| %>
+                	<% user = cr.user_id.nil? ? Admin.find(cr.admin_id) : User.find(cr.user_id) %>
+                	<div class="reply">
+                		<div class="head">
+                			<span id="image">
+                				<%= image_tag user.avatar? ? user.avatar.quad.url : '' %>
+                			</span>
+                			<span id="text">
+                				<%= user.fname + ' ' + user.lname %>
+                			</span>
+                			
+                		</div>
+                		<span id="text"><%= cr.text %></span>
+                	</div>
+                <% end %>
+                
             </div>
             
             <% end %>
         </div>
         <script>
+			function addReply(comment_id) {
+				$('#replyForm_' + comment_id).toggle();
+			}
 			function editComment(comment_id) {
 				$('#comment_form_' + comment_id).toggle();
 				$('#comment_form_' + comment_id + ' input').focus();
@@ -231,9 +258,9 @@
         
     
     <% if @turn.released %>
-    	<%= link_to 'Kommentare unveröffentlichen', dash_admin_release_pitch_path(@turn, released: false), class: 'release btn btn-green' %>
+    	<%= link_to 'Freigabe aufheben!', dash_admin_release_pitch_path(@turn, released: false), class: 'release btn btn-green' %>
     <% else %>
-    	<%= link_to 'Kommentare veröffentlichen', dash_admin_release_pitch_path(@turn, released: true), class: 'release btn btn-green' %>
+    	<%= link_to 'Jetzt freigeben!', dash_admin_release_pitch_path(@turn, released: true), class: 'release btn btn-green' %>
     <% end %>
     </div>
 </div>

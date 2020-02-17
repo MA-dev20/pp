@@ -10,7 +10,7 @@
 	</head>
 	<body>
 		<section id="navbar">
-			<div class="dropdown">
+			<div class="dropdown" onclick="openDropdown()">
 				Hallo, <%= @user.fname %> <%= @user.lname %>
 				<%= image_tag 'dash/arrow-down.png', class: 'dropdown-img' %>
 			</div>
@@ -37,5 +37,19 @@
 		<section id="content">
 			<%= yield %>
 		</section>
+		<div class="dropdown-content">
+		   <div class="link"><%= link_to('Logout', destroy_user_session_path, class: 'red') %></div>
+		</div>
 	</body>
 </html>
+<script>
+    function openDropdown(){
+        if ($('.dropdown-img').hasClass('rotated')) {
+            $('.dropdown-content').hide();
+            $('.dropdown-img').removeClass('rotated');
+        } else {
+            $('.dropdown-content').show();
+            $('.dropdown-img').addClass('rotated');
+        }
+    }
+</script>

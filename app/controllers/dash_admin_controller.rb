@@ -683,6 +683,14 @@ class DashAdminController < ApplicationController
 
     
   end
+	
+  def create_replies
+	@comment = Comment.find(params[:comment_id])
+	@reply = @comment.comment_replies.new(reply_params)
+	@reply.admin_id = @admin.id
+	@reply.save
+	redirect_to dash_admin_video_details_path(@comment.turn)
+  end
   
   private
     def is_activated
@@ -773,4 +781,7 @@ class DashAdminController < ApplicationController
       end
     end
 
+	def reply_params
+	  params.require(:reply).permit(:text)
+	end
 end

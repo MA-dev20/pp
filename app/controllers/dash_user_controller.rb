@@ -29,12 +29,36 @@ class DashUserController < ApplicationController
 		@result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, date: t.created_at, rating: t.turn_rating.ges}
 	  end
 	end
+	@sort_by = params[:sort_by]
+	if @sort_by == 'ratingASC'
+      @result = @result.sort{|a,b| a[:rating].to_i <=> b[:rating].to_i}
+    elsif @sort_by == 'ratingDSC'
+      @result = @result.sort{|b,a| a[:rating] <=> b[:rating]}
+    elsif @sort_by == 'dateASC'
+      @result = @result.sort{|a,b| a[:date] <=> b[:date]}
+    else
+      @result = @result.sort{|b,a| a[:date] <=> b[:date]}
+    end
   end
 	
   def video
 	@turn = Turn.find(params[:turn_id])
-	@comments = @turn.comments
-	@admin = @user.admin
+	if @turn.released
+		@comments = @turn.comments
+		@admin = @user.admin
+		@rating = @turn.turn_rating
+		@word = @turn.word
+	else
+	  redirect_to dash_user_videos_path
+	end
+  end
+
+  def create_replies
+	@comment = Comment.find(params[:comment_id])
+	@reply = @comment.comment_replies.new(reply_params)
+	@reply.user_id = @user.id
+	@reply.save
+	redirect_to dash_user_video_path(@comment.turn)
   end
 
   private
@@ -47,5 +71,8 @@ class DashUserController < ApplicationController
 		 sign_out @user
 		 redirect_to root_path
 	  end
+	end
+	def reply_params
+	  params.require(:reply).permit(:text)
 	end
 end

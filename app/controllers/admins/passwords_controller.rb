@@ -6,17 +6,24 @@ class Admins::PasswordsController < Devise::PasswordsController
 
 	def create
 	  @admin = Admin.find_by(email: params[:admin][:email])
-	  if @admin.activated == true
-        self.resource = resource_class.send_reset_password_instructions(resource_params)
-		yield resource if block_given?
-		if successfully_sent?(resource)
-		  respond_with({}, location: after_sending_reset_password_instructions_path_for(resource_name))
+	  @user = User.find_by(email: params[:admin][:email])
+	  if @admin
+	    if @admin.activated == true
+		  self.resource = resource_class.send_reset_password_instructions(resource_params)
+		  yield resource if block_given?
+		  if successfully_sent?(resource)
+		    respond_with({}, location: after_sending_reset_password_instructions_path_for(resource_name))
+		  else
+		    respond_with(resource)
+		  end
 		else
-		  respond_with(resource)
+		  set_flash_message!(:wait_for_activation, :admin_not_activated)
+		  render "new"
 		end
-	  else
-		set_flash_message!(:wait_for_activation, :admin_not_activated)
-		render "new"
+	  elsif @user
+		password = SecureRandom.urlsafe_base64(8)
+		@user.update(password: password)
+		AdminMailer.after_activate(@user, password).deliver
 	  end
   end
 

@@ -254,7 +254,7 @@ Rails.application.routes.draw do
 	get 'user/dash/stats', to: 'dash_user#stats', as: 'dash_user_stats'
 	get 'user/dash/videos', to: 'dash_user#videos', as: "dash_user_videos"
 	get 'user/dash/videos/:turn_id/', to: 'dash_user#video', as: "dash_user_video"
-
+	post 'user/dash/comments/:comment_id/replies/new', to: 'dash_user#create_replies', as: 'dash_user_new_reply'
 #########
 # Admin #
 #########
@@ -300,6 +300,7 @@ Rails.application.routes.draw do
 	#edit video
 	get 'admin/dash/videos/:video_id/edit', to: 'dash_admin#video_edit', as: 'dash_admin_video_edit'
 	get 'admin/dash/turns/:turn_id/video/destroy', to: "dash_admin#delete_pitch", as: 'dash_admin_delete_pitch'
+	post 'admin/dash/comments/:comment_id/replies/new', to: 'dash_admin#create_replies', as: 'dash_admin_new_reply'
     
     
     get 'admin/dash/statistics', to: 'dash_admin#statistics', as: 'dash_admin_statistics'

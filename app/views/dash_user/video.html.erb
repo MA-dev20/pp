@@ -82,11 +82,6 @@
                 <%= @rating.ges / 10.0 %>
             </div>
             <div class="text">Gesamt</div>
-            <% if @my_rating.present? %>
-            <div class="toggle-my-ratings">
-            	<div class="toggle right" onclick="toggleRatings()"><div class="dot"></div></div>
-        	</div>
-           	<% end %>
             </div>
             <div class="right">
                 <div class="category">
@@ -120,51 +115,6 @@
             </div>
         </div>
         <% end %>
-        <% if @my_rating.present? %>
-        <div class="rating" id="my_rating">
-            <div class="left">
-            <div class="circle">
-                <%= @my_rating.ges / 10.0 %>
-            </div>
-            <div class="text">Meine Bewertung</div>
-            <% if @rating.present? %>
-            <div class="toggle-my-ratings">
-            	<div class="toggle right" onclick="toggleRatings()"><div class="dot"></div></div>
-        	</div>
-           	<% end %>
-            </div>
-            <div class="right">
-                <div class="category">
-                    <div class="text">Spontanität</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @my_rating.spontan %>%'></div>
-                    </div>
-                    <div class="rating"><%= @my_rating.spontan / 10.0 %></div>
-                </div>
-                <div class="category">
-                    <div class="text">Kreativtät</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @my_rating.creative %>%'></div>
-                    </div>
-                    <div class="rating"><%= @my_rating.creative / 10.0 %></div>
-                </div>
-                <div class="category">
-                    <div class="text">Körpersprache</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @my_rating.body %>%'></div>
-                    </div>
-                    <div class="rating"><%= @my_rating.body / 10.0 %></div>
-                </div>
-                <div class="category">
-                    <div class="text">Rhetorik</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @my_rating.rhetoric %>%'></div>
-                    </div>
-                    <div class="rating"><%= @my_rating.rhetoric / 10.0 %></div>
-                </div>
-            </div>
-        </div>
-        <% end %>
         <div class="head comments">Kommentare</div>
         <div class="karte" id="commentCard">
             <% @comments.each do |c| %>
@@ -182,58 +132,42 @@
                 <% end %>
                 </div>
                 <div class="edit">
-                	<i class="far fa-edit" onclick="editComment(<%= c.id %>)"></i>
-                	<%= link_to '', destroy_comment_path(c.id), class: 'far fa-trash-alt' %>
+                	<i class="fas fa-reply" onclick="addReply(<%= c.id %>)">
+                		<span class="tooltip">antworten</span>
+                	</i>
                 </div>
                 <div class="comment-title" onclick="videoJumpTo(<%= c.time_of_video %>)" id="comment_title_<%= c.id %>">
                     <span class="<%= c.type_of_comment %>"></span>
                     <span id="text"><%= c.title %></span>
                 </div>
-                <div class="comment-title" id="comment_form_<%= c.id %>" style="display: none">
-                	<span class="<%= c.type_of_comment %>"></span>
-                	<%= form_for(:comment, url: edit_comment_path(c.id)) do |f| %>
-            			<% f.text_field :title, class: 'form-field', value: c.title, autofocus: true %>
-            		<% end %>	
+                <div class="reply replyForm" id="replyForm_<%= c.id %>">
+                   	<%= form_for(:reply, url: dash_user_new_reply_path(c.id)) do |f| %>
+                   		<%= f.text_field :text, class: 'form-field' %>
+                   	<% end %>
                 </div>
+                <% c.comment_replies.each do |cr| %>
+                	<% user = cr.user_id.nil? ? Admin.find(cr.admin_id) : User.find(cr.user_id) %>
+                	<div class="reply">
+                		<div class="head">
+                			<span id="image">
+                				<%= image_tag user.avatar? ? user.avatar.quad.url : '' %>
+                			</span>
+                			<span id="text">
+                				<%= user.fname + ' ' + user.lname %>
+                			</span>
+                			
+                		</div>
+                		<span id="text"><%= cr.text %></span>
+                	</div>
+                <% end %>
+                
             </div>
             
             <% end %>
-        </div>
-        <script>
-			function editComment(comment_id) {
-				$('#comment_form_' + comment_id).toggle();
-				$('#comment_form_' + comment_id + ' input').focus();
-				$('#comment_title_' + comment_id).toggle();
-			}
-		</script>
-        <div class="progress-in-video"></div>
-        <%= form_for(:comment, url: create_comment_path(@turn.id), html: {id: 'add-comment-form'}) do |f| %>
-           	<%= f.hidden_field :current_time, value: '0'  %>
-            <div class="time" id="videoTime">0:00</div>
-            <label for="coment_type_of_comment_negative" id="negative">
-                   	<%= f.radio_button :type_of_comment, :negative %>
-                    <span class="checkbox"><span class="dot"></span></span>
-                    Negativ
-                </label>
-                <label for="coment_type_of_comment_neutral" id="neutral">
-                    <%= f.radio_button :type_of_comment, :neutral, checked: true %>
-                    <span class="checkbox"><span class="dot"></span></span>
-                    Neutral
-                </label>
-                <label for="coment_type_of_comment_positive" id="positive">
-                    <%= f.radio_button :type_of_comment, :positive %>
-                    <span class="checkbox"><span class="dot"></span></span>
-                    Positiv
-                </label>
-                <%= f.text_field :title, placeholder: 'Kommentar hinzufügen', class: "field" %>
-        <% end %>
-       
-        
+		</div>        
     </div>
 </div>
 
-<div class="fullscren-blur" id="help-popup">
-</div>
 
 <style>
     .video-play,
@@ -244,7 +178,9 @@
 
 
 <script>
-	
+	function addReply(comment_id) {
+		$('#replyForm_' + comment_id).toggle();
+	}
     var admin_img = '<%= @admin.avatar.quad.url %>'
     var admin_fname = '<%= @admin.fname %>'
     var admin_lname = '<%= @admin.lname %>'
