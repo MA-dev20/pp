@@ -265,6 +265,7 @@ class GameMobileUserController < ApplicationController
     
   def bestlist
     @turn_rating = @game.turn_ratings.where(user_id: @user.id).last
+	@word = @turn_rating.turn.word
   end
     
   def replay
