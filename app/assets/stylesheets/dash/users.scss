@@ -204,6 +204,9 @@ option:focus {
     font-size: 1.8vh;
     line-height: 5.2vh;
     text-align: left;
+	svg {
+		position: absolute;
+	}
 }
 .teams table tbody tr:hover,
 .teams table tbody tr.active 
@@ -229,6 +232,7 @@ option:focus {
 	top: 0;
 	height: 4.3vh;
 	width: 4.3vh;
+	margin: 5px auto;
 }
 .table table td .rating {
 	position: absolute;

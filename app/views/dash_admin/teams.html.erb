@@ -361,7 +361,6 @@
 		});
 		bar.animate(value);
 	}
-	window.onload = function() {
 	<% @teams.each do |t| %>
 		<% if t.team_rating.present? && !t.team_rating.ges.nil? %>
 			drawCircle(<%= t.team_rating.ges / 100.0 %>, '#team_<%= t.id %>');
@@ -372,7 +371,6 @@
 			drawCircle(<%= u.user_rating.ges / 100.0 %>, '#user_<%= u.id %>');
 		<% end %>
 	<% end %>
-	};
 	function toggleDeleteUserModal() {
 		$('#deleteUser').toggle();
 	}

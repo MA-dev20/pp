@@ -60,6 +60,37 @@ class DashUserController < ApplicationController
 	@reply.save
 	redirect_to dash_user_video_path(@comment.turn)
   end
+  
+  #GET dash_user_account
+  def account
+  end
+	
+  #POST dash_user_edit
+  def edit_user
+	if user_params[:password] != user_params[:password_confirmation]
+		flash[:password_length] = "stimmen nicht überein"
+		redirect_to dash_user_account_path
+		return
+	elsif user_params[:password].length > 0 && user_params[:password].length < 6
+	  flash[:password_length] = "min. 6 Zeichen"
+	  redirect_to dash_user_account_path
+	  return
+	elsif User.find_by(email: user_params[:email])
+	  flash[:email] = 'Email schon vergeben!'
+	  redirect_to dash_user_account_path
+	  return
+	end
+	@user.skip_email_changed_notification!
+	@user.update_without_password(user_params)
+	bypass_sign_in @user
+	redirect_to dash_user_account_path
+  end
+	
+  #PUT dash_user_update_avatar
+  def update_avatar
+	@user.update(avatar: params[:file]) if params[:file].present? && @user.present?
+	render json: {file: @user.avatar.url}
+  end
 
   private
 	def set_user
@@ -74,5 +105,8 @@ class DashUserController < ApplicationController
 	end
 	def reply_params
 	  params.require(:reply).permit(:text)
+	end
+	def user_params
+	  params.require(:user).permit(:fname, :lname, :email, :company_name, :password, :password_confirmation, :avatar)
 	end
 end

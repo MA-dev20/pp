@@ -31,6 +31,11 @@
 					<div class="text">Video Tool</div>
 					<%= link_to '', dash_user_videos_path %>
 				</div>
+				<div class="link <%= current_page?(dash_user_account_path) ? 'active' : '' %>">
+					<i class="far fa-user-circle"></i>
+					<div class="text">Account</div>
+					<%= link_to '', dash_user_account_path %>
+				</div>
 			</div>
 		</section>
 		
