@@ -113,7 +113,8 @@
 			initalURL = blogIMG.src;
 			blogIMG.src = canvas.toDataURL();
 			canvas.toBlob(function(blob) {
-				var file = new window.File([blob], 'avatar.jpg', {type: 'image/jpg'});
+				var date = new Date().getTime();
+				var file = new window.File([blob], 'blog_'+date+'.jpg', {type: 'image/jpg'});
 				var formData = new FormData();
 				formData.append('file', file);
 				uploadImage(formData);

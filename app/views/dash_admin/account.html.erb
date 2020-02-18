@@ -172,7 +172,8 @@
 				initalURL = logo.src;
 				logo.src = canvas.toDataURL();
 				canvas.toBlob(function(blob) {
-					var file = new window.File([blob], 'logo.jpg', {type: 'image/jpg'});
+					var date = new Date().getTime();
+					var file = new window.File([blob], 'logo_'+date+'.jpg', {type: 'image/jpg'});
 					var formData = new FormData();
 					formData.append('file', file);
 					uploadImage('logo', formData);
@@ -181,7 +182,8 @@
 				initalURL = avatar.src;
 				avatar.src = canvas.toDataURL();
 				canvas.toBlob(function(blob) {
-					var file = new window.File([blob], 'avatar.jpg', {type: 'image/jpg'});
+					var date = new Date().getTime();
+					var file = new window.File([blob], 'avatar_'+date+'.jpg', {type: 'image/jpg'});
 					var formData = new FormData();
 					formData.append('file', file);
 					uploadImage('avatar', formData);
