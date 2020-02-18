@@ -229,10 +229,7 @@ class DashAdminController < ApplicationController
     elsif params[:obasket_id]
         @objection = @admin.objection_baskets.find(params[:obasket_id])
     end
-    
-    if params[:custom_rating_id]
-      @custom_rating = @admin.custom_ratings.find(params[:custom_rating_id])
-    end
+
     @custom_ratings = @admin.custom_ratings
     ratings = @custom_ratings.where(image: nil)
     ratings.each do |rating|

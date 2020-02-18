@@ -302,6 +302,115 @@
 			
 		</div>
 	</div>
+
+	<% if @custom_rating %>
+	<div class="customize-sm" id="editCustomRating">
+		<div class="karte">
+			<%= link_to '', dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
+			<div class="head small left">Catchwords bearbeiten</div>
+			<%= form_for(:rating, url: edit_custom_rating_path(@custom_rating)) do |f| %>
+				<% if flash[:basket_name] %>
+					<label>Name der Liste
+						<div class="alert alert-label"><%= flash[:basket_name] %></div>
+					</label>
+					<%= f.text_field :name, class: 'field red', value: @catchword.name %>
+				<% else %>
+					<label>Name der Liste</label>
+					<%= f.text_field :name, class: 'field', value: @custom_rating.name %>
+				<% end %>
+				<%= f.hidden_field :admin_id, value: @admin.id %>
+				<%= f.hidden_field :site, value: 'admin_dash' %>
+				<div class="divider"></div>
+				<%= f.submit 'speichern', class: 'btn btn-green' %>
+			<% end %>
+			<%= form_for(:criteria, url: new_rating_criteria_path(@custom_rating)) do |f| %>
+					<label>Catchword hinzufügen
+					<% if flash[:word_name] %>
+						<div class="alert alert-label"><%= flash[:word_name] %></div>
+					<% end %>
+					</label>
+					<div class="field <% if flash[:word_name] %>red<% end %>">
+						<%= f.text_field :name, class: 'custom-submit-field', autofocus: true %>
+						<%= f.hidden_field :site, value: 'admin_dash' %>
+						<%= f.submit "+", class: 'custom-submit' %>
+					</div>
+			<% end %>
+			<table>
+				<thead>
+					<tr onclick="sortTable('catchword-table', 'catchword-sorter')">
+						<th>Catchwords <i class="fas fa-sort" id="catchword-sorter"></i></th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+			</table>
+			<div class="table-content" id="table_content">
+				<table id="catchword-table">
+					<tbody>
+						<% @custom_rating.rating_criteria.each do |rating| %>
+							<tr>
+								<td><%= rating.name %></td>
+								<td>
+									<%= link_to image_tag('dash/icons/minus.png'), destroy_rating_criteria_path(@custom_rating, rating) %>
+								</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+			<i class="remove far fa-trash-alt" onclick="toggleDeleteCatchwordModal()"></i>
+		</div>
+	</div>
+	<% else %>
+	<div class="customize-sm" id="custom_rating">
+			<div class="searchbar">
+				<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
+				<input type="text" placeholder="Liste suchen" id="searchCW">
+			</div>
+			<button class="btn btn-green" onclick="showNewCustomRating()">Liste erstellen</button>
+			<div class="karte" id="custom_rating">
+				<div class="head left">Custom Ratings</div>
+				<div class="list" id="rating-list">
+					<% @custom_ratings.each do |rating| %>
+					<div class="list-karte CWsearch")" onclick="redirect('<%= dash_admin_custom_rating_path(rating.id) %>')">
+						<% 
+							rating_img = rating.image.present? ? rating.image : 1
+							img_url = "dash/randomBGpics/Catchwords/#{rating_img}.jpg"
+						%>
+					<div class="pic" style="background-image: url(<%= image_url(img_url) %>)"></div>
+					<div class="bottom">
+						<div class="name"><%= rating.name %></div>
+							<div class="count"><%= rating.rating_criteria.count %></div>
+						</div>
+					</div>
+					<% end %>
+				</div>
+			</div>
+	</div>
+	<script> new PerfectScrollbar('#rating-list'); </script>
+	<div class="customize-sm hidden" id="newCustomRating">
+		<div class="karte">
+			<i class="back small fas fa-arrow-left" onclick="hideNewCustomRating()"></i>
+			<div class="head left small">Ratings hinzufügen</div>
+			<%= form_for(:rating, url: new_custom_rating_path()) do |f| %>
+				<% if flash[:basket_name] %>
+				<label>Name der Liste
+					<div class="alert alert-newCW"><%= flash[:basket_name] %></div>
+				</label>
+				<%= f.text_field :name, class: 'field red', autofocus: true  %>
+				<% else %>
+				<label>Name der Liste</label>
+				<%= f.text_field :name, class: 'field', autofocus: true  %>
+				<% end %>
+				<%= f.hidden_field :admin_id, value: @admin.id %>
+				<div class="divider"></div>
+				<%= f.submit 'speichern', class: 'btn btn-green' %>
+			<% end %>
+		</div>
+	</div>
+	<% end %>
+	
 	<% if @catchword %>
 	<div class="fullscreen-blur" id="deleteCatchword">
 		<div class="karte">
@@ -373,6 +482,10 @@
 	animation-timing-function: linear;
 }
 
+.scrollable-content {
+	overflow-y: scroll;
+}
+
 @keyframes pulse{
 	0%{
 		box-shadow: 0 0 0.3vh 0 rgba(173,0,0,.3);
@@ -387,6 +500,9 @@
 </style>
 
 <script>
+
+	$('#content').addClass('scrollable-content');
+
 	function toggleDeleteCatchwordModal() {
 		$("#deleteCatchword").toggle();
 	}
@@ -641,6 +757,14 @@ function sortTable(tableId, sorter) {
     function hideNewObjection() {
         $('#newObjection').hide();
         $('#objections').show();
+	}
+	function showNewCustomRating() {
+        $('#newCustomRating').removeClass('hidden');
+        $('#custom_rating').hide();
+    }
+    function hideNewCustomRating() {
+        $('#newCustomRating').addClass('hidden');
+        $('#custom_rating').show();
     }
     function redirect(path) {
         window.location.replace(path);
