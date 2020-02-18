@@ -210,7 +210,7 @@ class GameMobileAdminController < ApplicationController
     
   def rated
     @count = @turn.ratings.count
-	@turnCount = @game.turns.where(status: "accepted").count - 1
+	  @turnCount = @game.turns.where(status: "accepted").count - 1
     if @turn.ratings.count == @game.turns.where(status: "accepted").count - 1
       redirect_to gma_rating_path
     end

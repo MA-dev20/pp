@@ -21,6 +21,8 @@ class Admin < ApplicationRecord
   has_many :catchword_baskets , class_name: "CatchwordsBasket", dependent: :destroy
   has_many :objection_baskets , class_name: "ObjectionsBasket", dependent: :destroy
   has_many :videos, dependent: :destroy
+  has_many :custom_ratings, dependent: :destroy
+  has_many :custom_rating_criteria, dependent: :destroy
 
 
   enum plan_type: [:year , :month, :trial]

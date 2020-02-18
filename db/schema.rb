@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_052835) do
+ActiveRecord::Schema.define(version: 2020_02_18_105335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,23 @@ ActiveRecord::Schema.define(version: 2020_01_21_052835) do
     t.index ["unlock_token"], name: "index_admins_on_unlock_token", unique: true
   end
 
+  create_table "blog_paragraphs", force: :cascade do |t|
+    t.bigint "blog_id"
+    t.string "title"
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blog_id"], name: "index_blog_paragraphs_on_blog_id"
+  end
+
+  create_table "blogs", force: :cascade do |t|
+    t.string "image"
+    t.string "text"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "cards", force: :cascade do |t|
     t.bigint "admin_id"
     t.datetime "created_at", null: false
@@ -105,6 +122,18 @@ ActiveRecord::Schema.define(version: 2020_01_21_052835) do
     t.index ["game_id"], name: "index_catchwords_baskets_on_game_id"
   end
 
+  create_table "comment_replies", force: :cascade do |t|
+    t.bigint "comment_id"
+    t.bigint "admin_id"
+    t.bigint "user_id"
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_comment_replies_on_admin_id"
+    t.index ["comment_id"], name: "index_comment_replies_on_comment_id"
+    t.index ["user_id"], name: "index_comment_replies_on_user_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.string "type_of_comment"
     t.integer "time_of_video"
@@ -114,6 +143,30 @@ ActiveRecord::Schema.define(version: 2020_01_21_052835) do
     t.datetime "updated_at", null: false
     t.boolean "release_it", default: false
     t.index ["turn_id"], name: "index_comments_on_turn_id"
+  end
+
+  create_table "custom_rating_criteria", force: :cascade do |t|
+    t.bigint "turn_id"
+    t.bigint "game_id"
+    t.bigint "user_id"
+    t.bigint "admin_id"
+    t.bigint "rating_criteria_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_custom_rating_criteria_on_admin_id"
+    t.index ["game_id"], name: "index_custom_rating_criteria_on_game_id"
+    t.index ["rating_criteria_id"], name: "index_custom_rating_criteria_on_rating_criteria_id"
+    t.index ["turn_id"], name: "index_custom_rating_criteria_on_turn_id"
+    t.index ["user_id"], name: "index_custom_rating_criteria_on_user_id"
+  end
+
+  create_table "custom_ratings", force: :cascade do |t|
+    t.bigint "admin_id"
+    t.integer "game_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_custom_ratings_on_admin_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -207,6 +260,15 @@ ActiveRecord::Schema.define(version: 2020_01_21_052835) do
     t.index ["admin_id"], name: "index_plans_on_admin_id"
   end
 
+  create_table "rating_criteria", force: :cascade do |t|
+    t.bigint "custom_rating_id"
+    t.string "name"
+    t.integer "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["custom_rating_id"], name: "index_rating_criteria_on_custom_rating_id"
+  end
+
   create_table "ratings", force: :cascade do |t|
     t.bigint "turn_id"
     t.integer "user_id"
@@ -239,6 +301,9 @@ ActiveRecord::Schema.define(version: 2020_01_21_052835) do
     t.boolean "edit_root"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.string "role"
+    t.string "avatar"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -324,6 +389,7 @@ ActiveRecord::Schema.define(version: 2020_01_21_052835) do
     t.integer "dont_words", default: 0
     t.integer "words_count", default: 0
     t.text "video_text"
+    t.boolean "released", default: false
     t.index ["game_id"], name: "index_turns_on_game_id"
   end
 
@@ -360,13 +426,31 @@ ActiveRecord::Schema.define(version: 2020_01_21_052835) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.integer "status", default: 2
-    t.string "encrypted_pw"
     t.string "street"
     t.string "zipcode"
     t.string "city"
     t.string "logo"
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.index ["admin_id"], name: "index_users_on_admin_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  create_table "vertriebs", force: :cascade do |t|
+    t.string "name"
+    t.string "password"
+    t.string "state"
+    t.string "fname"
+    t.string "avatar"
+    t.string "logo"
+    t.string "game_password"
+    t.string "team_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "root_id"
+    t.index ["root_id"], name: "index_vertriebs_on_root_id"
   end
 
   create_table "videos", force: :cascade do |t|
@@ -391,12 +475,22 @@ ActiveRecord::Schema.define(version: 2020_01_21_052835) do
   add_foreign_key "catchwords_basket_words", "words"
   add_foreign_key "catchwords_baskets", "admins"
   add_foreign_key "catchwords_baskets", "games"
+  add_foreign_key "comment_replies", "admins"
+  add_foreign_key "comment_replies", "comments"
+  add_foreign_key "comment_replies", "users"
   add_foreign_key "comments", "turns"
+  add_foreign_key "custom_rating_criteria", "admins"
+  add_foreign_key "custom_rating_criteria", "games"
+  add_foreign_key "custom_rating_criteria", "rating_criteria", column: "rating_criteria_id"
+  add_foreign_key "custom_rating_criteria", "turns"
+  add_foreign_key "custom_rating_criteria", "users"
+  add_foreign_key "custom_ratings", "admins"
   add_foreign_key "game_ratings", "games"
   add_foreign_key "game_ratings", "teams"
   add_foreign_key "games", "admins"
   add_foreign_key "games", "teams"
   add_foreign_key "games", "videos"
+  add_foreign_key "rating_criteria", "custom_ratings"
   add_foreign_key "ratings", "turns"
   add_foreign_key "root_admins", "admins"
   add_foreign_key "root_admins", "roots"

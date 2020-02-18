@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  turn: one
+  game: one
+  user: one
+  admin: one
+  rating_criteria: one
+
+two:
+  turn: two
+  game: two
+  user: two
+  admin: two
+  rating_criteria: two
