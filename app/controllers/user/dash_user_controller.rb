@@ -47,7 +47,7 @@ class User::DashUserController < UsersController
   def update_user
   	@user.attributes = (user_params)
   	if params[:user][:password].present? && (params[:user][:password] == params[:user][:password_confirmation])
-  		@user.encrypted_pw = @user.encrypt(params[:user][:password])
+  		@user.password = params[:user][:password]
   	elsif params[:user][:password].present? || params[:user][:password_confirmation].present?
   		flash[:error] = "Password Doesnot match"
   		return	redirect_to dash_user_account_path

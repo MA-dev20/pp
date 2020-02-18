@@ -1,4 +1,5 @@
 <% content_for :title, "Peter Pitch - " + @blog.title %>
+<% content_for :description, @blog.text %>
 <section id="navbar">
     <%= link_to image_tag('landing/logo.png', alt: 'Peter Pitch Logo'), root_path, class: 'logo'%>
     <div class="navbar-links" id="navLinks">
@@ -39,13 +40,8 @@
 	<%= image_tag @blog.image? ? @blog.image.url : '' %>
 	
 	<div class="blog">
-		<div class="text">
-			<% @blog.text.split(%r{\r\n}).each do |bt| %>
-				<%= bt %><br>
-			<% end %>
-		</div>
 		<% @blog.blog_paragraphs.each do |bp| %>
-		<h4><%= bp.title %></h4>
+		<% if bp.title != '' %><h4><%= bp.title %></h4><% end %>
 		<div class="text">
 			<% bp.text.split(%r{\r\n}).each do |bt| %>
 				<%= bt %><br>

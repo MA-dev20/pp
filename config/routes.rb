@@ -255,6 +255,9 @@ Rails.application.routes.draw do
 	get 'user/dash/videos', to: 'dash_user#videos', as: "dash_user_videos"
 	get 'user/dash/videos/:turn_id/', to: 'dash_user#video', as: "dash_user_video"
 	post 'user/dash/comments/:comment_id/replies/new', to: 'dash_user#create_replies', as: 'dash_user_new_reply'
+	get 'user/dash/account', to: 'dash_user#account', as: 'dash_user_account'
+	post 'user/dash/edit', to: 'dash_user#edit_user', as: 'dash_user_edit'
+	put 'user/dash/avatar', to: 'dash_user#update_avatar', as: 'dash_user_update_avatar'
 #########
 # Admin #
 #########

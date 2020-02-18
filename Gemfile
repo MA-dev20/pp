@@ -16,6 +16,7 @@ gem 'ajax-datatables-rails'
 gem 'jquery-datatables'
 gem 'kaminari'
 gem 'will_paginate'
+gem 'sitemap_generator', '~> 6.1'
 
 gem 'streamio-ffmpeg'
 

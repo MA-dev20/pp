@@ -12,8 +12,12 @@ class UsersController < ApplicationController
     if !user_params[:email].empty? || Admin.find_by(email: user_params[:email]).nil? || User.find_by(email: user_params[:email]).nil?
       @random_pass = random_pass
       @user = User.new(user_params)
-      @user.encrypted_pw = @user.encrypt @random_pass
-      @user.save
+      @user.password = @random_pass
+      if @user.save
+		AdminMailer.after_activate(@user, @random_pass).deliver
+	  else
+		flash[:danger] = "Konnte User nicht erstellen"
+	  end
       if params[:user][:teams].present?
         @user.teams.destroy_all
         params[:user][:teams].each do |t|
@@ -21,11 +25,6 @@ class UsersController < ApplicationController
         end
       else
         @user.teams.destroy_all
-      end
-      if @user.save
-        SendInvitationJob.perform_later(@user, @random_pass)
-      else
-        flash[:danger] = "Konnte User nicht erstellen"
       end
     end
     if !current_root.nil?
