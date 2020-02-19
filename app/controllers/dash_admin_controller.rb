@@ -388,9 +388,9 @@ class DashAdminController < ApplicationController
       format.js do
         render json: {url: "#{url}"}
       end
-      # format.png do
-      #   send_data(kit.to_png, :type => "image/png", :disposition => 'inline')
-      # end
+      format.png do
+        send_data(kit.to_png, :type => "image/png", :disposition => 'inline')
+      end
     end
   end
 
