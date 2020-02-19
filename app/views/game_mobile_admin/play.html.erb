@@ -1,4 +1,11 @@
 <%= render partial: 'header' , locals: {can: true}%>
+<% if params[:reacted].present? %>
+<style>
+	.head {
+		animation: none !important;
+	}
+</style>
+<% end %>
 <div class="head head-play">
   <div style="display: none" id="current_user_id" data-id='<%= @turn.to_json.to_s.html_safe %>'></div>
   <h1><%= @cur_user.fname %> Pitcht!</h1>  
@@ -6,7 +13,9 @@
 
 <div class="middle middle-play middlePlay-top">
   <% if !params[:wait] %>
-  <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', id: 'img-dp', style: "display: block" %>
+  	<% if params[:video] == 'true' %>
+  		<%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse' %>
+  	<% end %>
   <div class="middle-content" style="display: none">
     <video id="preview" width="600" height="600" style="display: none" controls></video>
     <video id="recording" width="600" height="600" controls style="display: none;"></video>
@@ -32,7 +41,6 @@
     </div>
   </div>
   <% else %>
-  <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse', style: "display: block" %>
   <div class="middle-content">
     <div class="text">
         Das Pitch-Video wird in einem Hintergrund Tab hochgeladen. Du kannst hier einfach weiterspielen.    </div>
@@ -47,6 +55,19 @@
   </div>
 </div>
 <% else %>
+<div class="react" onclick="react()">
+	<div class="text">&#x1F600;</div>
+	<div id="reactions">
+		<a href="<%= gma_react_path('', emoji: '&#x1F680;') %>">&#x1F680;</a>
+		<a href="<%= gma_react_path('', emoji: '&#x1F44D;') %>">&#x1F44D;</a>
+		<a href="<%= gma_react_path('', emoji: '&#x1F929;') %>">&#x1F929;</a>
+		<a href="<%= gma_react_path('', emoji: '&#x1F60E;') %>">&#x1F60E;</a>
+		<a href="<%= gma_react_path('', emoji: '&#x1F602;') %>">&#x1F602;</a>
+		<a href="<%= gma_react_path('', emoji: '&#x1F634;') %>">&#x1F634;</a>
+		<a href="<%= gma_react_path('', emoji: '&#x1F64F;') %>">&#x1F64F;</a>
+		<a href="<%= gma_react_path('', emoji: '&#x1F43A;') %>">&#x1F43A;</a>
+	</div>
+</div>
 <div class="bottom" style="display: block !important">
   <%= link_to 'Pitch beenden!', gma_rate_path, class: 'nunito-regular' %>
 </div>
@@ -143,6 +164,9 @@
 </style>
 
 <script>
+  function react() {
+	$('#reactions').toggle();
+  }
   var uploadingprogress = 0;
   var timer = document.getElementById("timer");
   var seconds = 0, minutes = 0, hours = 0, secondsCount = 0;
