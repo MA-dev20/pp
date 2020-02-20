@@ -87,7 +87,7 @@
                 <div class="pic" style="background-image: url(<%= image_url(img_url) %>)"></div>
                 <div class="bottom">
                 	<div class="name"><%= c.name %></div>
-                    	<div class="count"><%= c.words.count %></div>
+                    	<div class="count"><%= c.words.size %></div>
                     </div>
                 </div>
             	<% end %>
@@ -100,9 +100,9 @@
 	        <i class="back small fas fa-arrow-left" onclick="hideNewCatchword()"></i>
         	<div class="head left small">Catchwords hinzufügen</div>
         	<%= form_for(:basket, url: new_basket_path()) do |f| %>
-            	<% if flash[:basket_name] %>
+            	<% if flash[:cbasket_name] %>
             	<label>Name der Liste
-            		<div class="alert alert-newCW"><%= flash[:basket_name] %></div>
+            		<div class="alert alert-newCW"><%= flash[:cbasket_name] %></div>
             	</label>
             	<%= f.text_field :name, class: 'field red', autofocus: true  %>
             	<% else %>
@@ -207,7 +207,7 @@
                     </div>
                     <div class="bottom">
                         <div class="name"><%= o.name %></div>
-                        <div class="count"><%= o.objections.count %></div>
+                        <div class="count"><%= o.objections.size %></div>
                     </div>
                 </div>
             	<% end %>
@@ -307,13 +307,13 @@
 	<div class="customize-sm" id="editCustomRating">
 		<div class="karte">
 			<%= link_to '', dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
-			<div class="head small left">Catchwords bearbeiten</div>
+			<div class="head small left">Ratings bearbeiten</div>
 			<%= form_for(:rating, url: edit_custom_rating_path(@custom_rating)) do |f| %>
-				<% if flash[:basket_name] %>
+				<% if flash[:custom_rating_update] %>
 					<label>Name der Liste
-						<div class="alert alert-label"><%= flash[:basket_name] %></div>
+						<div class="alert alert-label"><%= flash[:custom_rating_update] %></div>
 					</label>
-					<%= f.text_field :name, class: 'field red', value: @catchword.name %>
+					<%= f.text_field :name, class: 'field red', value: @custom_rating.name %>
 				<% else %>
 					<label>Name der Liste</label>
 					<%= f.text_field :name, class: 'field', value: @custom_rating.name %>
@@ -324,12 +324,12 @@
 				<%= f.submit 'speichern', class: 'btn btn-green' %>
 			<% end %>
 			<%= form_for(:criteria, url: new_rating_criteria_path(@custom_rating)) do |f| %>
-					<label>Catchword hinzufügen
-					<% if flash[:word_name] %>
-						<div class="alert alert-label"><%= flash[:word_name] %></div>
+					<label>Rating hinzufügen
+					<% if flash[:rating_name] %>
+						<div class="alert alert-label"><%= flash[:rating_name] %></div>
 					<% end %>
 					</label>
-					<div class="field <% if flash[:word_name] %>red<% end %>">
+					<div class="field <% if flash[:rating_name] %>red<% end %>">
 						<%= f.text_field :name, class: 'custom-submit-field', autofocus: true %>
 						<%= f.hidden_field :site, value: 'admin_dash' %>
 						<%= f.submit "+", class: 'custom-submit' %>
@@ -337,16 +337,16 @@
 			<% end %>
 			<table>
 				<thead>
-					<tr onclick="sortTable('catchword-table', 'catchword-sorter')">
-						<th>Catchwords <i class="fas fa-sort" id="catchword-sorter"></i></th>
+					<tr onclick="sortTable('rating-table', 'rating-sorter')">
+						<th>Ratings <i class="fas fa-sort" id="rating-sorter"></i></th>
 						<th></th>
 						<th></th>
 						<th></th>
 					</tr>
 				</thead>
 			</table>
-			<div class="table-content" id="table_content">
-				<table id="catchword-table">
+			<div class="table-content" id="rating_table_content">
+				<table id="rating-table">
 					<tbody>
 						<% @custom_rating.rating_criteria.each do |rating| %>
 							<tr>
@@ -362,18 +362,19 @@
 			<i class="remove far fa-trash-alt" onclick="toggleDeleteCatchwordModal()"></i>
 		</div>
 	</div>
+	<script> new PerfectScrollbar('#rating_table_content'); </script>
 	<% else %>
 	<div class="customize-sm" id="custom_rating">
 			<div class="searchbar">
 				<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
-				<input type="text" placeholder="Liste suchen" id="searchCW">
+				<input type="text" placeholder="Liste suchen" id="searchCR">
 			</div>
 			<button class="btn btn-green" onclick="showNewCustomRating()">Liste erstellen</button>
 			<div class="karte" id="custom_rating">
 				<div class="head left">Custom Ratings</div>
 				<div class="list" id="rating-list">
-					<% @custom_ratings.each do |rating| %>
-					<div class="list-karte CWsearch")" onclick="redirect('<%= dash_admin_custom_rating_path(rating.id) %>')">
+					<% @custom_ratings.includes(:rating_criteria).each do |rating| %>
+					<div class="list-karte CRsearch")" onclick="redirect('<%= dash_admin_custom_rating_path(rating.id) %>')">
 						<% 
 							rating_img = rating.image.present? ? rating.image : 1
 							img_url = "dash/randomBGpics/Catchwords/#{rating_img}.jpg"
@@ -381,7 +382,7 @@
 					<div class="pic" style="background-image: url(<%= image_url(img_url) %>)"></div>
 					<div class="bottom">
 						<div class="name"><%= rating.name %></div>
-							<div class="count"><%= rating.rating_criteria.count %></div>
+							<div class="count"><%= rating.rating_criteria.size %></div>
 						</div>
 					</div>
 					<% end %>
@@ -394,9 +395,9 @@
 			<i class="back small fas fa-arrow-left" onclick="hideNewCustomRating()"></i>
 			<div class="head left small">Ratings hinzufügen</div>
 			<%= form_for(:rating, url: new_custom_rating_path()) do |f| %>
-				<% if flash[:basket_name] %>
+				<% if flash[:custom_rating] %>
 				<label>Name der Liste
-					<div class="alert alert-newCW"><%= flash[:basket_name] %></div>
+					<div class="alert alert-newCW"><%= flash[:custom_rating] %></div>
 				</label>
 				<%= f.text_field :name, class: 'field red', autofocus: true  %>
 				<% else %>
@@ -434,6 +435,20 @@
 			</div>
 			<div class="bottom" style="display: flex;">
 				<%= link_to 'löschen', destroy_basket_path(@objection, 'dash_admin'), class: 'btn btn-green' %>
+				<button class="btn btn-green" onclick="toggleDeleteCatchwordModal()">Close</button>
+			</div>
+		</div>
+	</div>
+	<% end %>
+	<% if @custom_rating %>
+	<div class="fullscreen-blur" id="deleteCatchword">
+		<div class="karte">
+			<div class="head">Liste löschen?</div>
+			<div class="body">
+				Bist du sicher das du die Einwände unwiederuflich löschen möchtest?
+			</div>
+			<div class="bottom" style="display: flex;">
+				<%= link_to 'löschen', destroy_custom_rating_path(@custom_rating, 'dash_admin'), class: 'btn btn-green' %>
 				<button class="btn btn-green" onclick="toggleDeleteCatchwordModal()">Close</button>
 			</div>
 		</div>
@@ -690,6 +705,17 @@ var stream, form, globalForm,recorder, audio, timer;
             text = $(this).find('.name').text().replace(/\s+/g, ' ');
             return !reg.test(text);
         }).hide();
+		})
+		/* search Ratings */
+        $('#searchCR').keyup(function() {
+            $rows = $('.CRsearch');
+            var val = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+            reg = RegExp(val, 'i'),
+            text;
+        $rows.show().filter(function() {
+            text = $(this).find('.name').text().replace(/\s+/g, ' ');
+            return !reg.test(text);
+        }).hide();
         })
 function sortTable(tableId, sorter) {
   var table, rows, switching, i, x, y, shouldSwitch, sorter;
@@ -740,7 +766,9 @@ function sortTable(tableId, sorter) {
     <% if flash[:cbasket_name] %>
         showNewCatchword();
     <% elsif flash[:obasket_name] %>
-        showNewObjection();
+		showNewObjection();
+	<% elsif flash[:custom_rating] %>
+		showNewCustomRating()
     <% end %>
     function showNewCatchword() {
         $('#newCatchword').show();

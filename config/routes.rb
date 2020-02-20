@@ -454,8 +454,8 @@ Rails.application.routes.draw do
 
   post 'rating/new', to: 'custom_rating#create', as: 'new_custom_rating'
   post 'rating/:rating_id/edit', to: 'custom_rating#update', as: 'edit_custom_rating'
-  get 'rating/:rating_id/destroy', to: 'custom_rating#destroy', as: 'destroy_custom_rating'
-  get 'admin/dash/customize/custom_rating/:custom_rating_id', to: 'dash_admin#customize', as: 'dash_admin_custom_rating'
+  get 'rating/:rating_id', to: 'custom_rating#destroy', as: 'destroy_custom_rating'
+  get 'admin/dash/customize/custom_rating/:rating_id', to: 'dash_admin#customize', as: 'dash_admin_custom_rating'
 
 ##########
 # Rating Criteria #
@@ -463,7 +463,7 @@ Rails.application.routes.draw do
 
 post 'ratings/:rating_id/new', to: 'rating_criteria#create', as: "new_rating_criteria"
 post 'rating/:rating_id/:criteria_id/edit', to: 'rating_criteria#update', as: 'edit_rating_criteria'
-get 'ratings/:rating_id/:criteria_id/destroy', to: 'rating_criteria#destroy', as: 'destroy_rating_criteria'
+get 'rating/:rating_id/criteria/:criteria_id', to: 'rating_criteria#destroy', as: 'destroy_rating_criteria'
 
 ##############
 # Enter Game #

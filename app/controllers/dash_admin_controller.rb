@@ -230,8 +230,8 @@ class DashAdminController < ApplicationController
         @objection = @admin.objection_baskets.find(params[:obasket_id])
     end
     
-    if params[:custom_rating_id]
-      @custom_rating = @admin.custom_ratings.find(params[:custom_rating_id])
+    if params[:rating_id]
+      @custom_rating = @admin.custom_ratings.find(params[:rating_id])
     end
     @custom_ratings = @admin.custom_ratings
     ratings = @custom_ratings.where(image: nil)
@@ -280,8 +280,8 @@ class DashAdminController < ApplicationController
         oword.update(image: rand_img)
       end
     end
-    @catchwords = @admin.catchword_baskets.where(objection: false)
-    @objections = @admin.objection_baskets
+    @catchwords = @admin.catchword_baskets.where(objection: false).includes(:words)
+    @objections = @admin.objection_baskets.includes(:objections)
   end
     
 	
