@@ -15,7 +15,7 @@ class BasketController < ApplicationController
         if params[:basket][:type] == "objection"
         flash[:obasket_name] = 'Gib einen Namen an!'
         else
-        flash[:basket_name] = 'Gib einen Namen an!'
+        flash[:cbasket_name] = 'Gib einen Namen an!'
         end
         if params[:basket][:site]
             redirect_to dash_admin_customize_path()
