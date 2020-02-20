@@ -1,5 +1,5 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :youtube_video, :update_video_status]
+  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :react, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :youtube_video, :update_video_status]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email, :video_testings, :ended_game]
   before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
   layout 'game_mobile'
@@ -193,6 +193,11 @@ class GameMobileAdminController < ApplicationController
       end
     end
     @game.save!
+  end
+  def react
+	@emoji = params[:emoji]
+    ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'react', emoji: @emoji, user_pic: @admin.avatar.quad.url
+	redirect_to gma_play_path('', reacted: 'true')
   end
     
   def rate

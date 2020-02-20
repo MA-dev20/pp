@@ -72,4 +72,68 @@
     text-align: center;
     color: white;
     font-size: 8vh;
+	overflow: hidden;
+}
+.reactions {
+	position: absolute;
+	bottom: 5vh;
+	height: 40vh;
+	left: 5vh;
+	width: 70vh;
+	overflow: hidden;
+	#reactions {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 70vh;
+	}
+	.react {
+		position: relative;
+		height: 10vh;
+		width: 100%;
+		bottom: 0;
+		animation-name: from_button;
+		animation-duration: .25s;
+		animation-iteration-count: 1;
+		animation-timing-function: linear;
+		img {
+			position: absolute;
+			margin: .5vh;
+			height: 9vh;
+			width: 9vh;
+			border-radius: 50%;
+		}
+		.username {
+			display: none;
+			position: absolute;
+			left: 10vh;
+			top: 0;
+			height: 3vh;
+			line-height: 3vh;
+			font-size: 2vh;
+			color: white;
+		}
+		.emoji {
+			position: absolute;
+			left: 12vh;
+			top: 0vh;
+			line-height: 10vh;
+			width: 60vh;
+			font-size: 7vh;
+		}
+	}
+	.react:nth-last-child(4) {
+		filter: opacity(.5);
+	}
+	.react:nth-last-child(5) {
+		opacity: .1;
+	}
+}
+@keyframes from_button {
+	from {
+		height: 0;
+	}
+	to {
+		height: 10vh;
+	}
 }

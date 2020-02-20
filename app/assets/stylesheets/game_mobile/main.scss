@@ -44,6 +44,97 @@ body {
     background: linear-gradient(#1dacf1 0%, #1a8ed6 51%, #145daa 100%);
     color: white;
     font-family: 'BarackPro-Solid';
+	.react {
+		position: absolute;
+		bottom: calc(50% - 150px);
+		right: calc(50% - 150px);
+		width: 300px;
+		height: 300px;
+		border-radius: 50%;
+		.text {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 100;
+			width: 300px;
+			height: 300px;
+			border-radius: 50%;
+			background-color: white;
+			color: #1dacf1;
+			line-height: 300px;
+			text-align: center;
+			font-size: 150px;
+			box-shadow: 0 0 20px 5px rgba(0, 0, 0, .3);
+		}
+		#reactions {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			z-index: 1;
+			text-align: center;
+		}
+		a {
+			position: absolute;
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			line-height: 150px;
+			font-size: 80px;
+			text-decoration: none;
+			color: inherit;
+			background-color: white;
+			box-shadow: 0 0 20px 5px rgba(0, 0, 0, .3);
+			animation-name: plop;
+			animation-duration: 1s;
+			animation-iteration-count: 1;
+		}
+		a:first-child {
+			top: -200px;
+			left: 75px;
+		}
+		a:nth-child(2) {
+			top: -135px;
+			left: 270px;
+		}
+		a:nth-child(3) {
+			top: 75px;
+			left: 350px;
+		}
+		a:nth-child(4) {
+			top: 285px;
+			left: 270px;
+		}
+		a:nth-child(5) {
+			top: 350px;
+			left: 75px;
+		}
+		a:nth-child(6) {
+			top: 285px;
+			left: -120px;
+		}
+		a:nth-child(7) {
+			top: 75px;
+			left: -200px;
+		}
+		a:last-child {
+			top: -135px;
+			left: -120px;
+		}
+	}
+}
+@keyframes plop {
+	from {
+		top: 150px;
+		left: 150px;
+		height: 0px;
+		width: 0px;
+		font-size: 0px;
+		line-height: 0px;
+		animation-fill-mode: forwards;
+	}
 }
 @media only screen
     and (orientation: landscape) {

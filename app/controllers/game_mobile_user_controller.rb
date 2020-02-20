@@ -1,5 +1,5 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :intro, :choose, :choosen, :turn, :play, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :video_uploading]
+  before_action :authenticate_game!, :set_game, only: [:wait, :intro, :choose, :choosen, :turn, :play, :react, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :video_uploading]
   before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user, :video_uploading, :ended_game]
   before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
   # before_action :pop_up ,only: :create
@@ -255,6 +255,12 @@ class GameMobileUserController < ApplicationController
   end
     
   def play
+  end
+	
+  def react
+	@emoji = params[:emoji]
+    ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'react', emoji: @emoji, user_pic: @user.avatar.quad.url
+	redirect_to gmu_play_path('', reacted: 'true')
   end
     
   def rate

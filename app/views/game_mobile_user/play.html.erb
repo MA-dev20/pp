@@ -1,4 +1,11 @@
 <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
+<% if params[:reacted].present? %>
+<style>
+	.head {
+		animation: none !important;
+	}
+</style>
+<% end %>
 <div class="head">
     <h1 class="nunito-bold">
     <% if @cur_user == @user %>
@@ -8,10 +15,23 @@
     <% end %>
     </h1>
 </div>
-<div class="middle">
-    <%= image_tag @cur_user.avatar.quad.url || 'defaults/wolf.jpg', class: 'mid-img green pulse' %>
+<div class="react" onclick="react()">
+	<div class="text">&#x1F600;</div>
+	<div id="reactions">
+		<a href="<%= gmu_react_path('', emoji: '&#x1F680;') %>">&#x1F680;</a>
+		<a href="<%= gmu_react_path('', emoji: '&#x1F44D;') %>">&#x1F44D;</a>
+		<a href="<%= gmu_react_path('', emoji: '&#x1F929;') %>">&#x1F929;</a>
+		<a href="<%= gmu_react_path('', emoji: '&#x1F60E;') %>">&#x1F60E;</a>
+		<a href="<%= gmu_react_path('', emoji: '&#x1F602;') %>">&#x1F602;</a>
+		<a href="<%= gmu_react_path('', emoji: '&#x1F634;') %>">&#x1F634;</a>
+		<a href="<%= gmu_react_path('', emoji: '&#x1F64F;') %>">&#x1F64F;</a>
+		<a href="<%= gmu_react_path('', emoji: '&#x1F43A;') %>">&#x1F43A;</a>
+	</div>
 </div>
 <script>
 	checkOrientation();
  	window.addEventListener('resize', checkOrientation);
+	function react() {
+		$('#reactions').toggle();
+	}
 </script>
