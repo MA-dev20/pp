@@ -194,7 +194,12 @@ class GameMobileUserController < ApplicationController
   end
     
   def new_turn
-    @game1 = Game.find(session[:game_session_id])
+    if session[:game_session_id]
+      @game1 = Game.find(session[:game_session_id])
+    else
+      @game1 = current_game
+      session[:game_session_id] = @game1.id
+    end
     @turn = @game1.turns.where(status: "accepted").find_by(user_id: @user.id)
     if @turn
        sign_in(@game1)
