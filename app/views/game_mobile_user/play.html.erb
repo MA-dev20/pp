@@ -4,6 +4,9 @@
 	.head {
 		animation: none !important;
 	}
+	.react #reactions a {
+		animation: none !important;
+	}
 </style>
 <% end %>
 <div class="head">
@@ -15,7 +18,7 @@
     <% end %>
     </h1>
 </div>
-<div class="react" onclick="react()">
+<div class="react">
 	<div class="text">&#x1F600;</div>
 	<div id="reactions">
 		<a href="<%= gmu_react_path('', emoji: '&#x1F680;') %>">&#x1F680;</a>
@@ -31,7 +34,4 @@
 <script>
 	checkOrientation();
  	window.addEventListener('resize', checkOrientation);
-	function react() {
-		$('#reactions').toggle();
-	}
 </script>
