@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CustomRatingCriteriumTest < ActiveSupport::TestCase
+class UsersCustomRatingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

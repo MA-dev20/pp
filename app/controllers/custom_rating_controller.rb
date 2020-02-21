@@ -28,7 +28,7 @@ class CustomRatingController < ApplicationController
   end
 
   def destroy
-    if @custom_rating.rating_criteria.destroy_all && @custom_rating.destroy
+    if @custom_rating.destroy
         flash[:success] = 'Criteria aus Liste gelöscht!'
     else
         flash[:danger] = 'Konnte criteria NICHT löschen!'

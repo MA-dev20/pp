@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_18_132833) do
+ActiveRecord::Schema.define(version: 2020_02_21_103252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,28 +145,13 @@ ActiveRecord::Schema.define(version: 2020_02_18_132833) do
     t.index ["turn_id"], name: "index_comments_on_turn_id"
   end
 
-  create_table "custom_rating_criteria", force: :cascade do |t|
-    t.bigint "turn_id"
-    t.bigint "game_id"
-    t.bigint "user_id"
-    t.bigint "admin_id"
-    t.bigint "rating_criteria_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["admin_id"], name: "index_custom_rating_criteria_on_admin_id"
-    t.index ["game_id"], name: "index_custom_rating_criteria_on_game_id"
-    t.index ["rating_criteria_id"], name: "index_custom_rating_criteria_on_rating_criteria_id"
-    t.index ["turn_id"], name: "index_custom_rating_criteria_on_turn_id"
-    t.index ["user_id"], name: "index_custom_rating_criteria_on_user_id"
-  end
-
   create_table "custom_ratings", force: :cascade do |t|
     t.bigint "admin_id"
     t.integer "game_id"
     t.string "name"
+    t.integer "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "image"
     t.index ["admin_id"], name: "index_custom_ratings_on_admin_id"
   end
 
@@ -224,7 +209,9 @@ ActiveRecord::Schema.define(version: 2020_02_18_132833) do
     t.boolean "video_is_pitch"
     t.boolean "replay", default: false
     t.boolean "video_uploaded_start", default: false
+    t.bigint "custom_rating_id"
     t.index ["admin_id"], name: "index_games_on_admin_id"
+    t.index ["custom_rating_id"], name: "index_games_on_custom_rating_id"
     t.index ["team_id"], name: "index_games_on_team_id"
     t.index ["video_id"], name: "index_games_on_video_id"
   end
@@ -391,6 +378,8 @@ ActiveRecord::Schema.define(version: 2020_02_18_132833) do
     t.integer "words_count", default: 0
     t.text "video_text"
     t.boolean "released", default: false
+    t.bigint "custom_rating_id"
+    t.index ["custom_rating_id"], name: "index_turns_on_custom_rating_id"
     t.index ["game_id"], name: "index_turns_on_game_id"
   end
 
@@ -439,6 +428,15 @@ ActiveRecord::Schema.define(version: 2020_02_18_132833) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "users_custom_ratings", force: :cascade do |t|
+    t.bigint "custom_rating_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["custom_rating_id"], name: "index_users_custom_ratings_on_custom_rating_id"
+    t.index ["user_id"], name: "index_users_custom_ratings_on_user_id"
+  end
+
   create_table "vertriebs", force: :cascade do |t|
     t.string "name"
     t.string "password"
@@ -480,15 +478,11 @@ ActiveRecord::Schema.define(version: 2020_02_18_132833) do
   add_foreign_key "comment_replies", "comments"
   add_foreign_key "comment_replies", "users"
   add_foreign_key "comments", "turns"
-  add_foreign_key "custom_rating_criteria", "admins"
-  add_foreign_key "custom_rating_criteria", "games"
-  add_foreign_key "custom_rating_criteria", "rating_criteria", column: "rating_criteria_id"
-  add_foreign_key "custom_rating_criteria", "turns"
-  add_foreign_key "custom_rating_criteria", "users"
   add_foreign_key "custom_ratings", "admins"
   add_foreign_key "game_ratings", "games"
   add_foreign_key "game_ratings", "teams"
   add_foreign_key "games", "admins"
+  add_foreign_key "games", "custom_ratings"
   add_foreign_key "games", "teams"
   add_foreign_key "games", "videos"
   add_foreign_key "rating_criteria", "custom_ratings"
@@ -501,8 +495,11 @@ ActiveRecord::Schema.define(version: 2020_02_18_132833) do
   add_foreign_key "teams", "admins"
   add_foreign_key "turn_ratings", "games"
   add_foreign_key "turn_ratings", "turns"
+  add_foreign_key "turns", "custom_ratings"
   add_foreign_key "turns", "games"
   add_foreign_key "user_ratings", "users"
   add_foreign_key "users", "admins"
+  add_foreign_key "users_custom_ratings", "custom_ratings"
+  add_foreign_key "users_custom_ratings", "users"
   add_foreign_key "videos", "admins"
 end

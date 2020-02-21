@@ -5,10 +5,10 @@ class Turn < ApplicationRecord
   belongs_to :user, required: false
   belongs_to :admin, required: false
   belongs_to :word, required: false
+  belongs_to :custom_rating, required: false
   has_one :turn_rating, dependent: :destroy
   has_many :ratings, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :custom_rating_criteria, dependent: :destroy  
   mount_uploader :recorded_pitch, PitchUploader
   after_save :save_duration_for_pitch
   

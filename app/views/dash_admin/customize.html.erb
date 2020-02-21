@@ -374,17 +374,19 @@
 				<div class="head left">Custom Ratings</div>
 				<div class="list" id="rating-list">
 					<% @custom_ratings.includes(:rating_criteria).each do |rating| %>
-					<div class="list-karte CRsearch")" onclick="redirect('<%= dash_admin_custom_rating_path(rating.id) %>')">
-						<% 
-							rating_img = rating.image.present? ? rating.image : 1
-							img_url = "dash/randomBGpics/Catchwords/#{rating_img}.jpg"
-						%>
-					<div class="pic" style="background-image: url(<%= image_url(img_url) %>)"></div>
-					<div class="bottom">
-						<div class="name"><%= rating.name %></div>
-							<div class="count"><%= rating.rating_criteria.size %></div>
-						</div>
-					</div>
+						<% unless rating.name == 'PP' %>
+							<div class="list-karte CRsearch" onclick="redirect('<%= dash_admin_custom_rating_path(rating.id) %>')">
+								<% 
+									rating_img = rating.image.present? ? rating.image : 1
+									img_url = "dash/randomBGpics/Catchwords/#{rating_img}.jpg"
+								%>
+							<div class="pic" style="background-image: url(<%= image_url(img_url) %>)"></div>
+							<div class="bottom">
+								<div class="name"><%= rating.name %></div>
+									<div class="count"><%= rating.rating_criteria.size %></div>
+								</div>
+							</div>
+						<% end %>
 					<% end %>
 				</div>
 			</div>

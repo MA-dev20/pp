@@ -244,6 +244,37 @@
                 </div>
             </div>
         </div>
+
+        <div class="ratings">
+            <label>Deine Rating
+                <% if flash[:select_catchword] %>
+                <div class="alert alert-game2">
+                    <%= flash[:select_catchword] %>
+                </div>
+                <% end %>
+            </label>
+            <input type="checkbox" name="game[rating]" value="pp" multiple id="game_ratings_pp">
+            <% @admin.custom_ratings.each do |cr| %>
+            <input type="checkbox" name="game[rating]" value="<%= cr.id %>" multiple id="game_ratings_<%= cr.id %>">
+            <% end %>
+            <div class="checked-field <% if flash[:select_catchword] %>red<% end %>">
+                <div class="text">Original Peter's Ratings</div>
+                <div class="add" onclick="ratingsShow()"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="unchecked-field">
+                <% @admin.custom_ratings.each do |cr| %>
+				    <% unless cr.name == 'PP' %>
+                        <div class="checkbox" onclick="moveRatings(this)" data-value="game_ratings_<%= cr.id %>">
+                            <label for="game_ratings_<%= cr.id %>"><%= cr.name %> <i class="fas fa-plus"></i></label>
+                        </div>
+                    <% end %>
+                <% end %>
+                <!-- <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_pp" style="border-color: #54b7ff">
+                    <label for="game_baskets_pp">PetersWords<i class="fas fa-times"></i></label>
+                </div> -->
+            </div>
+        </div>
+
         <div class="youtube">
             <label for="" onclick="openYoutube()">Video hinzufügen</label>
             <input type="text" class="field" name="game[youtube_url]" id="youtube-link" placeholder="Youtube-Link einfügen">
@@ -419,6 +450,7 @@
         if ($(".objections > .unchecked-field").css('display') == 'none') {
             $(".objections > .unchecked-field").show();
             $(".catchwords > .unchecked-field").hide();
+            $(".ratings > .unchecked-field").hide();
             document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
         } else {
             $(".objections > .unchecked-field").hide();
@@ -443,6 +475,7 @@
         if ($(".catchwords > .unchecked-field").css('display') == 'none') {
             $(".catchwords > .unchecked-field").show();
             $(".objections > .unchecked-field").hide();
+            $(".ratings > .unchecked-field").hide();
             document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
         } else {
             $(".catchwords > .unchecked-field").hide();
@@ -462,6 +495,32 @@
 			$('.catchwords > .checked-field .text').hide();
             e.querySelector('.fas').className = "fas fa-times";
             document.querySelector('.catchwords > .checked-field').appendChild(e);
+        }
+    }
+    function ratingsShow() {
+        if ($(".ratings > .unchecked-field").css('display') == 'none') {
+            $(".ratings > .unchecked-field").show();
+            $(".objections > .unchecked-field").hide();
+            $(".catchwords > .unchecked-field").hide();
+            document.querySelector('.karte-content').scrollTo(0, document.querySelector('.karte-content').scrollHeight);
+        } else {
+            $(".catchwords > .unchecked-field").hide();
+            document.querySelector('.karte-content').scrollTo(0, 0);
+        }
+    }
+    function moveRatings(e) {
+        var id = e.getAttribute('data-value');
+        var checkbox = document.getElementById(id);
+        if (checkbox.checked) {
+            e.querySelector('.fas').className = "fas fa-plus";
+            document.querySelector('.ratings > .unchecked-field').appendChild(e);
+			if($('.ratings .checked-field').children('.checkbox').length == 0) {
+				$('.ratings > .checked-field .text').show();	
+			}
+        } else {
+			$('.ratings > .checked-field .text').hide();
+            e.querySelector('.fas').className = "fas fa-times";
+            document.querySelector('.ratings > .checked-field').appendChild(e);
         }
     }
 	function moveUser(e) {

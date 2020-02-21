@@ -44,7 +44,9 @@ class GamesController < ApplicationController
 	  set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
 	elsif params[:game][:baskets].nil?
 	  set_words_for_game(@game, ["pp"], params[:game][:seconds])
-	end
+  end
+
+  set_ratings_for_game(@game, params[:game][:rating])  
 	set_objections_for_game(@game, params[:game][:objections])
 	set_video_for_game(@game, params[:game][:video_name], params[:game][:video], params[:game][:video_turn], params[:game][:youtube_url])
 	sign_in(@game)
@@ -108,6 +110,26 @@ class GamesController < ApplicationController
       game.build_catchword_basket.save! if game.catchword_basket.nil?
       game.catchword_basket.words.destroy_all
       game.catchword_basket.words << words if words.present?
+    end
+
+    def set_ratings_for_game(game, rating)
+
+      if rating
+        game.custom_rating_id = rating
+      else
+        default_rating = current_admin.custom_ratings.find_by_name('PP')
+        if default_rating
+          game.custom_rating_id = default_rating.id
+        else
+          default_rating = current_admin.custom_ratings.create(name: 'PP')
+          default_rating.rating_criteria.create(name: 'Spontanität')
+          default_rating.rating_criteria.create(name: 'Kreativtät')
+          default_rating.rating_criteria.create(name: 'Körpersprache')
+          default_rating.rating_criteria.create(name: 'Rhetorik')
+          game.custom_rating_id = default_rating.id          
+        end
+      end
+      game.save!
     end
 
     def set_objections_for_game(game, objections_bas)

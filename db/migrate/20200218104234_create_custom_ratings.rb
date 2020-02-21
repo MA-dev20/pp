@@ -4,6 +4,7 @@ class CreateCustomRatings < ActiveRecord::Migration[5.2]
       t.references :admin, foreign_key: true
       t.integer :game_id
       t.string :name
+      t.integer :image
 
       t.timestamps
     end
