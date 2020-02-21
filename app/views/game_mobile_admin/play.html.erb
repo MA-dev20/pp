@@ -4,6 +4,9 @@
 	.head {
 		animation: none !important;
 	}
+	.react #reactions a {
+		animation: none !important;
+	}
 </style>
 <% end %>
 <div class="head head-play">
@@ -55,7 +58,7 @@
   </div>
 </div>
 <% else %>
-<div class="react" onclick="react()">
+<div class="react">
 	<div class="text">&#x1F600;</div>
 	<div id="reactions">
 		<a href="<%= gma_react_path('', emoji: '&#x1F680;') %>">&#x1F680;</a>
@@ -164,9 +167,6 @@
 </style>
 
 <script>
-  function react() {
-	$('#reactions').toggle();
-  }
   var uploadingprogress = 0;
   var timer = document.getElementById("timer");
   var seconds = 0, minutes = 0, hours = 0, secondsCount = 0;
