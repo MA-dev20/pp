@@ -18,6 +18,8 @@ class LandingController < ApplicationController
   end
   def impressum
   end
+  def product
+  end
 	
   def index
   end
