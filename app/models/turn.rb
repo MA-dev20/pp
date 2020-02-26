@@ -11,6 +11,10 @@ class Turn < ApplicationRecord
   has_many :comments, dependent: :destroy
   mount_uploader :recorded_pitch, PitchUploader
   after_save :save_duration_for_pitch
+
+  has_many :custom_rating_criteria
+  has_many :turn_rating_criteria
+
   
   TURN_QUERY = 'users.*,(select count(*) from turns t1 where t1.user_id=users.id and place=1) as gold_count, (select count(*) from turns t1 where t1.user_id=users.id and place=2) as silver_count, (select count(*) from turns t1 where t1.user_id=users.id and place=3) as bronze_count'
     

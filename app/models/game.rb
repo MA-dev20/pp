@@ -11,6 +11,9 @@ class Game < ApplicationRecord
   has_many :turns, dependent: :destroy
   has_many :turn_ratings
   
+  has_many :custom_rating_criteria
+  has_many :turn_rating_criteria
+
   has_one :catchword_basket , class_name: "CatchwordsBasket", dependent: :destroy
   has_one :objection_basket , class_name: "ObjectionsBasket", dependent: :destroy
 

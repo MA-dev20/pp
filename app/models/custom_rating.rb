@@ -4,8 +4,8 @@ class CustomRating < ApplicationRecord
   has_many :games
   has_many :turns
 
-  has_many :users_custom_ratings
-  has_many :users, through: :users_custom_ratings
+  # has_many :users_custom_ratings
+  # has_many :users, through: :users_custom_ratings
 
   before_destroy :delete_associated_objects
 

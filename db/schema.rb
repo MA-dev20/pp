@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_103252) do
+ActiveRecord::Schema.define(version: 2020_02_25_082356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,11 +145,28 @@ ActiveRecord::Schema.define(version: 2020_02_21_103252) do
     t.index ["turn_id"], name: "index_comments_on_turn_id"
   end
 
-  create_table "custom_ratings", force: :cascade do |t|
+  create_table "custom_rating_criteria", force: :cascade do |t|
+    t.string "name"
+    t.integer "value"
+    t.boolean "disabled", default: false
+    t.bigint "rating_criteria_id"
+    t.bigint "game_id"
+    t.bigint "user_id"
     t.bigint "admin_id"
-    t.integer "game_id"
+    t.bigint "turn_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_custom_rating_criteria_on_admin_id"
+    t.index ["game_id"], name: "index_custom_rating_criteria_on_game_id"
+    t.index ["rating_criteria_id"], name: "index_custom_rating_criteria_on_rating_criteria_id"
+    t.index ["turn_id"], name: "index_custom_rating_criteria_on_turn_id"
+    t.index ["user_id"], name: "index_custom_rating_criteria_on_user_id"
+  end
+
+  create_table "custom_ratings", force: :cascade do |t|
     t.string "name"
     t.integer "image"
+    t.bigint "admin_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_custom_ratings_on_admin_id"
@@ -249,9 +266,9 @@ ActiveRecord::Schema.define(version: 2020_02_21_103252) do
   end
 
   create_table "rating_criteria", force: :cascade do |t|
-    t.bigint "custom_rating_id"
     t.string "name"
     t.integer "value"
+    t.bigint "custom_rating_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["custom_rating_id"], name: "index_rating_criteria_on_custom_rating_id"
@@ -337,6 +354,24 @@ ActiveRecord::Schema.define(version: 2020_02_21_103252) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_teams_on_admin_id"
+  end
+
+  create_table "turn_rating_criteria", force: :cascade do |t|
+    t.string "name"
+    t.integer "value"
+    t.boolean "ended", default: false
+    t.bigint "rating_criteria_id"
+    t.bigint "game_id"
+    t.bigint "user_id"
+    t.bigint "admin_id"
+    t.bigint "turn_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_turn_rating_criteria_on_admin_id"
+    t.index ["game_id"], name: "index_turn_rating_criteria_on_game_id"
+    t.index ["rating_criteria_id"], name: "index_turn_rating_criteria_on_rating_criteria_id"
+    t.index ["turn_id"], name: "index_turn_rating_criteria_on_turn_id"
+    t.index ["user_id"], name: "index_turn_rating_criteria_on_user_id"
   end
 
   create_table "turn_ratings", force: :cascade do |t|
@@ -428,15 +463,6 @@ ActiveRecord::Schema.define(version: 2020_02_21_103252) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  create_table "users_custom_ratings", force: :cascade do |t|
-    t.bigint "custom_rating_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["custom_rating_id"], name: "index_users_custom_ratings_on_custom_rating_id"
-    t.index ["user_id"], name: "index_users_custom_ratings_on_user_id"
-  end
-
   create_table "vertriebs", force: :cascade do |t|
     t.string "name"
     t.string "password"
@@ -478,6 +504,11 @@ ActiveRecord::Schema.define(version: 2020_02_21_103252) do
   add_foreign_key "comment_replies", "comments"
   add_foreign_key "comment_replies", "users"
   add_foreign_key "comments", "turns"
+  add_foreign_key "custom_rating_criteria", "admins"
+  add_foreign_key "custom_rating_criteria", "games"
+  add_foreign_key "custom_rating_criteria", "rating_criteria", column: "rating_criteria_id"
+  add_foreign_key "custom_rating_criteria", "turns"
+  add_foreign_key "custom_rating_criteria", "users"
   add_foreign_key "custom_ratings", "admins"
   add_foreign_key "game_ratings", "games"
   add_foreign_key "game_ratings", "teams"
@@ -493,13 +524,16 @@ ActiveRecord::Schema.define(version: 2020_02_21_103252) do
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"
   add_foreign_key "teams", "admins"
+  add_foreign_key "turn_rating_criteria", "admins"
+  add_foreign_key "turn_rating_criteria", "games"
+  add_foreign_key "turn_rating_criteria", "rating_criteria", column: "rating_criteria_id"
+  add_foreign_key "turn_rating_criteria", "turns"
+  add_foreign_key "turn_rating_criteria", "users"
   add_foreign_key "turn_ratings", "games"
   add_foreign_key "turn_ratings", "turns"
   add_foreign_key "turns", "custom_ratings"
   add_foreign_key "turns", "games"
   add_foreign_key "user_ratings", "users"
   add_foreign_key "users", "admins"
-  add_foreign_key "users_custom_ratings", "custom_ratings"
-  add_foreign_key "users_custom_ratings", "users"
   add_foreign_key "videos", "admins"
 end

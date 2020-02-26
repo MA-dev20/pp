@@ -465,6 +465,8 @@ post 'ratings/:rating_id/new', to: 'rating_criteria#create', as: "new_rating_cri
 post 'rating/:rating_id/:criteria_id/edit', to: 'rating_criteria#update', as: 'edit_rating_criteria'
 get 'rating/:rating_id/criteria/:criteria_id', to: 'rating_criteria#destroy', as: 'destroy_rating_criteria'
 
+post 'ratings/:turn_id/admin/new', to: 'rating_criteria#create_admin_rating', as: "new_admin_rating_criteria"
+
 ##############
 # Enter Game #
 ##############

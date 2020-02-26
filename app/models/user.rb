@@ -15,8 +15,11 @@ class User < ApplicationRecord
   has_many :turns, dependent: :destroy
   has_many :turn_ratings, dependent: :destroy
 
-  has_many :users_custom_ratings
-  has_many :custom_ratings, through: :users_custom_ratings
+  has_many :custom_rating_criteria
+  has_many :turn_rating_criteria
+
+  # has_many :users_custom_ratings
+  # has_many :custom_ratings, through: :users_custom_ratings
   
   mount_uploader :logo, PicUploader
     

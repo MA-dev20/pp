@@ -23,6 +23,8 @@ class Admin < ApplicationRecord
   has_many :videos, dependent: :destroy
   has_many :custom_ratings, dependent: :destroy
   has_many :custom_rating_criteria, dependent: :destroy
+  has_many :turn_rating_criteria, dependent: :destroy
+
 
 
   enum plan_type: [:year , :month, :trial]

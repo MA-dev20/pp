@@ -226,7 +226,7 @@
             </label>
             <input type="checkbox" name="game[objections][]" value="pp" multiple id="game_objections_pp">
             <% @admin.catchword_baskets.where(objection: true).each do |b| %>
-            <input type="checkbox" name="game[objections][]" value="<%= b.id %>" multiple
+            <input type="checkbox" class="obj-check" name="game[objections][]" value="<%= b.id %>" multiple
                 id="game_objections_<%= b.id %>">
             <% end %>
             <div class="checked-field <% if flash[:select_objection] %>red<% end %>">
@@ -253,10 +253,10 @@
                 </div>
                 <% end %>
             </label>
-            <input type="checkbox" name="game[rating]" value="pp" multiple id="game_ratings_pp">
             <% @admin.custom_ratings.each do |cr| %>
-            <input type="checkbox" name="game[rating]" value="<%= cr.id %>" multiple id="game_ratings_<%= cr.id %>">
+                <input type="radio" class="radio-rating" name="game[rating]" value="<%= cr.id %>" id="game_ratings_<%= cr.id %>">
             <% end %>
+
             <div class="checked-field <% if flash[:select_catchword] %>red<% end %>">
                 <div class="text">Original Peter's Ratings</div>
                 <div class="add" onclick="ratingsShow()"><i class="fas fa-plus"></i></div>
@@ -264,13 +264,13 @@
             <div class="unchecked-field">
                 <% @admin.custom_ratings.each do |cr| %>
 				    <% unless cr.name == 'PP' %>
-                        <div class="checkbox" onclick="moveRatings(this)" data-value="game_ratings_<%= cr.id %>">
-                            <label for="game_ratings_<%= cr.id %>"><%= cr.name %> <i class="fas fa-plus"></i></label>
+                        <div class="checkbox checkbox-<%= cr.id %>" onclick="moveRatings(this)" data-value="game_ratings_<%= cr.id %>">
+                            <label><%= cr.name %> <i class="fas fa-plus"></i></label>
                         </div>
                     <% end %>
                 <% end %>
-                <!-- <div class="checkbox" onclick="moveCatchwords(this)" data-value="game_baskets_pp" style="border-color: #54b7ff">
-                    <label for="game_baskets_pp">PetersWords<i class="fas fa-times"></i></label>
+                <!-- <div class="checkbox" onclick="moveRatings(this)" data-value="game_objections_pp" style="border-color: #54b7ff">
+                    <label for="game_objections_pp">PetersEinwände <i class="fas fa-times"></i></label>
                 </div> -->
             </div>
         </div>
@@ -409,6 +409,11 @@
     .karte.letsplay .add .fas {
         font-size: 1.8vh;
     }
+
+    .radio-rating {
+        display: none;
+    }
+
 </style>
 <script>
 	function togglevideo(e) {
@@ -508,20 +513,85 @@
             document.querySelector('.karte-content').scrollTo(0, 0);
         }
     }
+    
     function moveRatings(e) {
         var id = e.getAttribute('data-value');
+        var class_name = $(e).attr('class').split(' ')[1]
         var checkbox = document.getElementById(id);
-        if (checkbox.checked) {
+
+
+        var cross_btn_clicked = $(`.${class_name} .fa-times`).length
+        if (cross_btn_clicked) {
+            $(checkbox).prop("checked", false);
             e.querySelector('.fas').className = "fas fa-plus";
             document.querySelector('.ratings > .unchecked-field').appendChild(e);
-			if($('.ratings .checked-field').children('.checkbox').length == 0) {
-				$('.ratings > .checked-field .text').show();	
-			}
+            if($('.ratings .checked-field').children('.checkbox').length == 0) {
+                $('.ratings > .checked-field .text').show();
+            }
         } else {
-			$('.ratings > .checked-field .text').hide();
-            e.querySelector('.fas').className = "fas fa-times";
-            document.querySelector('.ratings > .checked-field').appendChild(e);
+            if ($(`.${class_name} .fa-plus`).length) {
+                $(".ratings input[type=radio]").each(function() {
+                    if (this.id == id ){
+                        $(this).prop("checked", true);                
+                    } else {
+                        $(this).prop("checked", false);
+                    }
+                });            
+            }
+
+            if($('.ratings .checked-field').children('.checkbox').length) {
+                var checked_checkbox = document.querySelector('.ratings > .checked-field .checkbox')
+                document.querySelector('.ratings > .checked-field').removeChild(checked_checkbox);
+                checked_checkbox.querySelector('.fas').className = "fas fa-plus";
+                document.querySelector('.ratings > .unchecked-field').appendChild(checked_checkbox);
+
+                $('.ratings > .checked-field .text').hide();
+                e.querySelector('.fas').className = "fas fa-times";
+                document.querySelector('.ratings > .checked-field').appendChild(e);
+            } else {
+                $('.ratings > .checked-field .text').hide();
+                e.querySelector('.fas').className = "fas fa-times";
+                document.querySelector('.ratings > .checked-field').appendChild(e);
+            }
         }
+
+
+
+
+
+
+
+
+
+        
+        
+        // if (checkbox.checked) {
+        //     e.querySelector('.fas').className = "fas fa-plus";
+        //     document.querySelector('.ratings > .unchecked-field').appendChild(e);
+        //     if($('.ratings .checked-field').children('.checkbox').length == 0) {
+        //         $('.ratings > .checked-field .text').show();
+        //     }
+        //     $(`#${id}`).prop('checked', false)
+        //     $(`#game_ratings_2`).prop('checked', true)
+
+        // } else {
+            
+        //     if($('.ratings .checked-field').children('.checkbox').length) {
+        //         var checked_checkbox = document.querySelector('.ratings > .checked-field .checkbox')
+        //         document.querySelector('.ratings > .checked-field').removeChild(checked_checkbox);
+        //         checked_checkbox.querySelector('.fas').className = "fas fa-plus";
+        //         document.querySelector('.ratings > .unchecked-field').appendChild(checked_checkbox);
+
+        //         $('.ratings > .checked-field .text').hide();
+        //         e.querySelector('.fas').className = "fas fa-times";
+        //         document.querySelector('.ratings > .checked-field').appendChild(e);
+        //     } else {
+        //         $('.ratings > .checked-field .text').hide();
+        //         e.querySelector('.fas').className = "fas fa-times";
+        //         document.querySelector('.ratings > .checked-field').appendChild(e);
+        //     }
+        // }
+        
     }
 	function moveUser(e) {
         var selected = document.querySelector('#newteam .selected_users');

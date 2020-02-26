@@ -76,6 +76,7 @@
 	document.getElementById("rateSound").volume = 0.2;
 	function startAnimation() {
 		document.getElementById('rateSound').play();
+        // var circle_ids = ['#spontan', '#creativ', '#body']
 		setTimeout(function() {
 			ratecircle('#spontan', 'spontan_text', <%= @rating.spontan / 100.0 %>);
 		}, 2000);

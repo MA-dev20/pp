@@ -1,12 +1,48 @@
 module DatabaseHelper
   
-  def update_turn_rating(turn)
+  def update_turn_rating_old(turn)
     @ratings = turn.ratings.all
     if TurnRating.find_by(turn_id: turn.id)
       TurnRating.find_by(turn_id: turn.id).update(ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
     else
       TurnRating.create(turn_id: turn.id, admin_id: turn.admin_id, user_id: turn.user_id, game_id: turn.game_id, ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
     end
+  end
+
+  def update_turn_rating(turn, custom_rating)
+    @custom_ratings_criteria = turn.custom_rating_criteria.all
+    @turn_rating_criteria = TurnRatingCriterium.find_by(turn_id: turn.id)
+    ratings_avg = {}
+    custom_rating.rating_criteria.each do |rating|
+      rating_value_hash = @custom_ratings_criteria.find_by(name: rating[:name]).attributes.slice('value')
+      avg = rating_value_hash.values.inject(0, :+) / rating_value_hash.length
+      ratings_avg[rating[:name]] = avg
+    end
+    rating_value_hash = @custom_ratings_criteria.find_by(name: 'ges').attributes.slice('value')
+    avg = rating_value_hash.values.inject(0, :+) / rating_value_hash.length
+    ges_avg = avg
+
+    
+    if @turn_rating_criteria
+      ratings_avg.each do |key, value|
+        @turn_rating_criteria.find_by(name: key).update(value: value)
+      end
+      @turn_rating_criteria.find_by(name: 'ges').update(value: ges_avg)
+
+      # @turn_rating_criteria.update(ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
+    else
+      ratings_avg.each do |key, value|
+        # @turn_rating_criteria.find_by(name: key).update(value: value)
+        rating_criteria = custom_rating.rating_criteria.find_by(name: key)
+        TurnRatingCriterium.create(rating_criteria_id: rating_criteria.id,turn_id: turn.id, admin_id: turn.admin.id, user_id: turn.user_id, game_id: turn.game_id, name: key, value: value)
+      end
+      TurnRatingCriterium.create(turn_id: turn.id, admin_id: turn.admin.id, user_id: turn.user_id, game_id: turn.game_id, name: 'ges', value: ges_avg)
+
+      # TurnRating.create(turn_id: turn.id, admin_id: turn.admin_id, user_id: turn.user_id, game_id: turn.game_id, ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
+    end
+
+    debugger
+
   end
 
   def update_user_rating(user)
