@@ -234,27 +234,35 @@
 			margin-bottom: 500px;
 			img {
 				position: absolute;
-				width: 145px;
+				width: 135px;
 			}
 			.objection {
 				left: 0;
 				top: 0;
+				border-radius: 10px;
+				box-shadow: 0 5px 10px 0 rgba(0,0,0,.2);
 			}
 			.catchword {
 				top: 50px;
 				right: 0;
+				border-radius: 10px;
+				box-shadow: 0 5px 10px 0 rgba(0,0,0,.2);
 			}
 			.skills {
-				top: 150px;
+				top: 170px;
 				left: 0;
+				border-radius: 10px;
+				box-shadow: 0 5px 10px 0 rgba(0,0,0,.2);
 			}
 			.does {
-				top: 200px;
+				top: 220px;
 				right: 0;
+				border-radius: 10px;
+				box-shadow: 0 5px 10px 0 rgba(0,0,0,.2);
 			}
 			.dots {
 				z-index: -1;
-				top: 250px;
+				top: 270px;
 				left: 120px;
 				width: 60px;
 				transform: rotate(90deg);
@@ -277,7 +285,7 @@
 }
 .fadeInPar {
 	animation-name: fadeInPar;
-	animation-duration: .5s;
+	animation-duration: 1s;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-out;
 }
@@ -384,16 +392,16 @@
 			.image {
 				margin-bottom: 700px;
 				img {
-					width: 240px;
+					width: 220px;
 				}
 				.skills {
-					top: 250px;
+					top: 270px;
 				}
 				.does {
-					top: 300px;
+					top: 320px;
 				}
 				.dots {
-					top: 430px;
+					top: 450px;
 					width: 80px;
 					left: 220px;
 				}
@@ -628,16 +636,16 @@
 				margin: 0;
 				width: 350px;
 				img {
-					width: 170px;
+					width: 160px;
 				}
 				.does {
-					top: 220px;
+					top: 240px;
 				}
 				.skills {
-					top: 170px;
+					top: 190px;
 				}
 				.dots {
-					top: 230px;
+					top: 250px;
 					left: -50px;
 					width: 80px;
 				}
@@ -818,7 +826,7 @@
 			}
 		}
 		#customize {
-			min-height: 500px;
+			min-height: 550px;
 			.text {
 				left: 500px;
 				width: 400px;
@@ -828,16 +836,16 @@
 			.image {
 				width: 450px;
 				img {
-					width: 220px;
+					width: 210px;
 				}
 				.does {
-					top: 270px;
+					top: 300px;
 				}
 				.skills {
-					top: 220px;
+					top: 250px;
 				}
 				.dots {
-					top: 330px;
+					top: 350px;
 				}
 			}
 		}
@@ -957,7 +965,7 @@
 			}
 		}
 		#customize {
-			min-height: 600px;
+			min-height: 700px;
 			.text {
 				left: 600px;
 				width: 500px;
@@ -966,16 +974,16 @@
 			.image {
 				width: 550px;
 				img {
-					width: 270px;
+					width: 260px;
 				}
 				.does {
-					top: 320px;
+					top: 350px;
 				}
 				.skills {
-					top: 270px;
+					top: 300px;
 				}
 				.dots {
-					top: 400px;
+					top: 450px;
 					width: 100px;
 				}
 			}
@@ -1134,7 +1142,7 @@
 			}
 		}
 		#customize {
-			min-height: 700px;
+			min-height: 800px;
 			.text {
 				left: 700px;
 				width: 600px;
@@ -1144,16 +1152,16 @@
 			.image {
 				width: 650px;
 				img {
-					width: 320px;
+					width: 310px;
 				}
 				.does {
-					top: 370px;
+					top: 400px;
 				}
 				.skills {
-					top: 320px;
+					top: 350px;
 				}
 				.dots {
-					top: 500px;
+					top: 550px;
 					width: 100px;
 				}
 			}
