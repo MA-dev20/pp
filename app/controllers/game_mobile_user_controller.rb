@@ -252,7 +252,10 @@ class GameMobileUserController < ApplicationController
   end
     
   def rate
-    if @user == @cur_user || @turn.ratings.find_by(user_id: @user.id)
+    # debugger
+    @custom_rating = @game.custom_rating
+    # if @user == @cur_user || @turn.ratings.find_by(user_id: @user.id)
+    if @user == @cur_user || @turn.custom_rating_criteria.find_by(user_id: @user.id)
         redirect_to gmu_rated_path
     end
   end

@@ -11,7 +11,7 @@ module DatabaseHelper
 
   def update_turn_rating(turn, custom_rating)
     @custom_ratings_criteria = turn.custom_rating_criteria.all
-    @turn_rating_criteria = TurnRatingCriterium.find_by(turn_id: turn.id)
+    @turn_rating_criteria = TurnRatingCriterium.where(turn_id: turn.id)
     ratings_avg = {}
     custom_rating.rating_criteria.each do |rating|
       rating_value_hash = @custom_ratings_criteria.find_by(name: rating[:name]).attributes.slice('value')
@@ -41,7 +41,7 @@ module DatabaseHelper
       # TurnRating.create(turn_id: turn.id, admin_id: turn.admin_id, user_id: turn.user_id, game_id: turn.game_id, ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
     end
 
-    debugger
+    # debugger
 
   end
 

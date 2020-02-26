@@ -201,8 +201,11 @@ class GameMobileAdminController < ApplicationController
     end
     @game.video_uploading = false
     @game.save
+    debugger
     @custom_rating = @game.custom_rating
-    if @turn.ratings.find_by(admin_id: @admin.id)
+    # if @turn.ratings.find_by(admin_id: @admin.id)
+    #   redirect_to gma_rated_path
+    if @turn.custom_rating_criteria.find_by(admin_id: @admin.id)
       redirect_to gma_rated_path
     elsif @admin == @cur_user
       redirect_to gma_rated_path

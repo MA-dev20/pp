@@ -2,8 +2,16 @@
 <div class="head">
     <h1 class="nunito-bold">Jetzt <%= @cur_user.fname %> bewerten!</h1>
 </div>
-<%= form_for(:rating, url: new_rating_user_path(@turn)) do |f| %>
-<div class="middle">
+<%= form_for(:rating, url: new_user_rating_criteria(@turn)) do |f| %>
+    <div class="middle">
+        <% @custom_rating.rating_criteria.each_with_index do |rating, index| %>
+            <div class="row">
+                <%= f.label rating.name, class: 'nunito-bold' %> <div class="output" id="val<%= index+1 %>"></div>
+                <%= f.range_field rating.name, min: 0, max: 100, id: "slider#{index+1}" %>
+            </div>  
+        <% end %>
+    </div>
+<!-- <div class="middle">
     <div class="row">
         <%= f.label 'Spontanität: ', class: 'nunito-bold' %> <div class="output" id="val1"></div>
         <%= f.range_field :spontan, min: 0, max: 100, id: 'slider1' %>
@@ -20,7 +28,7 @@
         <%= f.label 'Rhetorik: ', class: 'nunito-bold' %> <div class="output" id="val4"></div>
         <%= f.range_field :rhetoric, min: 0, max: 100, id: 'slider4' %>
     </div>
-</div>
+</div> -->
 <div class="bottom">
     <%= f.submit 'weiter!', class: 'link nunito-regular' %>
 </div>
