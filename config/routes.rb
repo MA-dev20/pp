@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'admins/:admin_id/confirm', to: "landing#after_confirm", as: 'admin_after_confirm'
   get 'cookies', to: 'landing#accept_cookies', as: 'accept_cookies'
   get '/contact', to: 'landing#contact', as: 'contact'
+  get 'product', to: 'landing#product', as: 'product'
   get 'datenschutz', to: 'landing#datenschutz', as: 'datenschutz'
   get 'impressum', to: 'landing#impressum', as: 'impressum'
   get 'blog', to: 'landing#blog', as: 'blog'
