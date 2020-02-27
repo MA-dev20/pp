@@ -201,7 +201,6 @@ class GameMobileAdminController < ApplicationController
     end
     @game.video_uploading = false
     @game.save
-    debugger
     @custom_rating = @game.custom_rating
     # if @turn.ratings.find_by(admin_id: @admin.id)
     #   redirect_to gma_rated_path
@@ -213,15 +212,17 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rated
-    @count = @turn.ratings.count
+    # @count = @turn.ratings.count
+    @count = @turn.custom_rating_criteria.where.not(rating_criteria_id: nil).count / @game.custom_rating.rating_criteria.count
 	  @turnCount = @game.turns.where(status: "accepted").count - 1
-    if @turn.ratings.count == @game.turns.where(status: "accepted").count - 1
+    if @turn.ratings.count == @turnCount
       redirect_to gma_rating_path
     end
   end
     
   def rating
-    @rating = Rating.find_by(turn_id: @turn.id)
+    # @rating = Rating.find_by(turn_id: @turn.id)
+    @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
       redirect_to gma_rating_path

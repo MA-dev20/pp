@@ -17,6 +17,7 @@ class User < ApplicationRecord
 
   has_many :custom_rating_criteria
   has_many :turn_rating_criteria
+  has_many :user_rating_criteria
 
   # has_many :users_custom_ratings
   # has_many :custom_ratings, through: :users_custom_ratings

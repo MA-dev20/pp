@@ -252,12 +252,10 @@ class GameMobileUserController < ApplicationController
   end
     
   def rate
-    # debugger
     @custom_rating = @game.custom_rating
     # if @user == @cur_user || @turn.ratings.find_by(user_id: @user.id)
     if @user == @cur_user || @turn.custom_rating_criteria.find_by(user_id: @user.id)
-
-        redirect_to gmu_rated_path
+      redirect_to gmu_rated_path
     end
   end
     
@@ -268,8 +266,10 @@ class GameMobileUserController < ApplicationController
   end
     
   def bestlist
-    @turn_rating = @game.turn_ratings.where(user_id: @user.id).last
-	@word = @turn_rating.turn.word
+    # @turn_rating = @game.turn_ratings.where(user_id: @user.id).last
+    # @word = @turn_rating.turn.word
+    @turn_rating = @game.turn_rating_criteria.where(user_id: @user.id, name: 'ges').last
+	  @word = @turn_rating.turn.word
   end
     
   def replay

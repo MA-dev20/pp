@@ -2,7 +2,7 @@
 <div class="head">
     <h1 class="nunito-bold">Jetzt <%= @cur_user.fname %> bewerten!</h1>
 </div>
-<%= form_for(:rating, url: new_user_rating_criteria(@turn)) do |f| %>
+<%= form_for(:rating, url: new_user_rating_criteria_path(@turn)) do |f| %>
     <div class="middle">
         <% @custom_rating.rating_criteria.each_with_index do |rating, index| %>
             <div class="row">

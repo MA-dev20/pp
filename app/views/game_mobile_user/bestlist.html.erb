@@ -21,10 +21,10 @@
             - Teile dein Ergebnis -
         </div>
         <div class="links1">
-            <%= social_share_button_tag('Ich habe ' + @word.name + ' gepitcht. Mein Pitchscore war ' + (@turn_rating.ges/ 10.0).to_s + ' ! Wie gut bist du?', :url => "https://www.peterpitch.com", desc: 'Mein Pitchscore ist ' + (@turn_rating.ges/ 10.0).to_s + ' ! Wie gut bist du?', :allow_sites => %w(twitter linkedin Xing)) %>
+            <%= social_share_button_tag('Ich habe ' + @word.name + ' gepitcht. Mein Pitchscore war ' + (@turn_rating.value/ 10.0).to_s + ' ! Wie gut bist du?', :url => "https://www.peterpitch.com", desc: 'Mein Pitchscore ist ' + (@turn_rating.value/ 10.0).to_s + ' ! Wie gut bist du?', :allow_sites => %w(twitter linkedin Xing)) %>
         </div>
         <div class="links2">
-            <%= social_share_button_tag('Ich habe ' + @word.name + ' gepitcht. Mein Pitchscore war ' + (@turn_rating.ges/ 10.0).to_s + ' ! Wie gut bist du? https://www.peterpitch.com', :url => "https://www.peterpitch.com", desc: 'Mein Pitchscore ist ' + (@turn_rating.ges/ 10.0).to_s + ' ! Wie gut bist du?', :allow_sites => %w(whatsapp_app facebook)) %>
+            <%= social_share_button_tag('Ich habe ' + @word.name + ' gepitcht. Mein Pitchscore war ' + (@turn_rating.value/ 10.0).to_s + ' ! Wie gut bist du? https://www.peterpitch.com', :url => "https://www.peterpitch.com", desc: 'Mein Pitchscore ist ' + (@turn_rating.value/ 10.0).to_s + ' ! Wie gut bist du?', :allow_sites => %w(whatsapp_app facebook)) %>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
 	checkOrientation();
  	window.addEventListener('resize', checkOrientation);
     setTimeout(function() {
-      ratecircle('#ges', 'ges_text', <%= @turn_rating.ges / 100.0 %>);
+      ratecircle('#ges', 'ges_text', <%= @turn_rating.value / 100.0 %>);
       $('.mid-img').addClass('pulse');
     }, 1500);
     function showModal() {

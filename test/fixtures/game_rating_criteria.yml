@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  value: 1
+  team: one
+  rating_criteria: one
+  game: one
+
+two:
+  name: MyString
+  value: 1
+  team: two
+  rating_criteria: two
+  game: two
