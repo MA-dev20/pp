@@ -14,7 +14,7 @@
             <%= image_tag 'game/crown1.png', class: 'crown1' %>
             <%= image_tag 'game/polygon.png', class: 'pol', id: 'pol1' %>
             <div class="rate_ges" id='rat1'>
-                <%= @turn_ratings.first.ges / 10.0 %>
+                <%= @turn_ratings.first.value / 10.0 %>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
             <%= image_tag 'game/crown2.png', class: 'crown2' %>
             <%= image_tag 'game/polygon.png', class: 'pol', id: 'pol2' %>
             <div class="rate_ges" id='rat2'>
-                <%= @turn_ratings.second.ges / 10.0 %>
+                <%= @turn_ratings.second.value / 10.0 %>
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
             <%= image_tag 'game/crown3.png', class: 'crown3' %>
             <%= image_tag 'game/polygon.png', class: 'pol', id: 'pol3' %>
             <div class="rate_ges" id='rat3'>
-                <%= @turn_ratings.third.ges / 10.0 %>
+                <%= @turn_ratings.third.value / 10.0 %>
             </div>
         </div>
     </div>

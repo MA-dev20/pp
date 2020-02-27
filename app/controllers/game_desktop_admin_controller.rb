@@ -113,7 +113,7 @@ class GameDesktopAdminController < ApplicationController
     end
     update_turn_rating(@turn, @custom_rating)
     if @user != @admin
-      update_user_rating @user
+      update_user_rating(@user, @custom_rating, @game)
     end
     @turn_rating = @turn.turn_rating_criteria
     # @rating = @turn.turn_rating
@@ -137,9 +137,10 @@ class GameDesktopAdminController < ApplicationController
     if @game.state != 'bestlist'
       @game.update(state: 'bestlist')
     end
-    update_game_rating @game
-    update_team_rating @team
-    @turn_ratings = @game.turn_ratings.where(ended: false).rating_order
+    update_game_rating(@game.custom_rating, @game)
+    # update_team_rating @team
+    # @turn_ratings = @game.turn_ratings.where(ended: false).rating_order
+    @turn_ratings = @game.turn_rating_criteria.where(rating_criteria_id: nil, ended: false).order('value desc')
     place = 1
     @turn_ratings.each do |t|
         @turn = Turn.find(t.turn_id)
