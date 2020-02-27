@@ -62,7 +62,7 @@
 					<td><%= f.number_field :creative, class: 'form-field' %></td>
 					<td><%= f.number_field :body, class: 'form-field' %></td>
 					<td><%= f.number_field :rhetoric, class: 'form-field' %></td>
-					<td><%= @rating.ges %></td>
+					<td><%= @rating.nil? ? '' : @rating.ges %></td>
 					<td><%= link_to '', backoffice_destroy_turn_path(@turn), class: 'far fa-trash-alt' %></td>
 				</tr>
 				<% end %>
@@ -78,7 +78,7 @@
 					<td><%= f.number_field :creative, class: 'form-field' %></td>
 					<td><%= f.number_field :body, class: 'form-field' %></td>
 					<td><%= f.number_field :rhetoric, class: 'form-field' %></td>
-					<td onclick="redirect(<%= t.user_id %>)"><%= @rating.ges %></td>
+					<td onclick="redirect(<%= t.user_id %>)"><%= @rating.nil? ? '' : @rating.ges %></td>
 					<td><%= link_to '', backoffice_destroy_turn_path(t.id), class: 'far fa-trash-alt' %></td>
 				</tr>
 			<% end %>
