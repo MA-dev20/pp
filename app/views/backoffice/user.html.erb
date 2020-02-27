@@ -112,7 +112,7 @@
 					<td><%= f.number_field :creative, class: 'form-field' %></td>
 					<td><%= f.number_field :body, class: 'form-field' %></td>
 					<td><%= f.number_field :rhetoric, class: 'form-field' %></td>
-					<td onclick="redirect(<%= t.game_id %>)"><%= @rating.ges %></td>
+					<td onclick="redirect(<%= t.game_id %>)"><%= @rating ? @rating.ges : '' %></td>
 					<td><%= link_to '', backoffice_destroy_turn_path(t.id, site: 'user'), class: 'far fa-trash-alt' %></td>
 				</tr>
 				<%= f.submit '', style: 'display: none'%>
