@@ -68,6 +68,7 @@ class RatingCriteriaController < ApplicationController
     @ges_rating_criteria = @turn.custom_rating_criteria.new(user_id: @user.id, game_id: @game.id, name: 'ges', value: @ges)
 
     ratings_count = @turn.custom_rating_criteria.where.not(rating_criteria_id: nil).count / @custom_rating.rating_criteria.count
+
     # @custom_rating.rating_criteria.each_with_index do |rating, index|
     #   @custom_rating.rating_criteria.find_by(name: rating_names[index]).update(value: rating_values[index])
     # end
