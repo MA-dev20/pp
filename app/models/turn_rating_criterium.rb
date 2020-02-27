@@ -4,6 +4,7 @@ class TurnRatingCriterium < ApplicationRecord
   belongs_to :user, required: false
   belongs_to :admin, required: false
   belongs_to :turn
+  belongs_to :custom_rating
 
   #methhods call with new
   TurnRatingCriterium.class_eval do 

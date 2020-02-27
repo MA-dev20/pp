@@ -2,8 +2,19 @@
 <div class="head">
     <h1 class="nunito-bold">Jetzt <%= @cur_user.fname %> bewerten!</h1>
 </div>
+<%
+    if @custom_rating.rating_criteria.count == 1
+        @top = 65
+    elsif @custom_rating.rating_criteria.count == 2
+        @top = 60
+    elsif @custom_rating.rating_criteria.count == 3
+        @top = 55
+    else
+        @top = 50
+    end
+%>
 <%= form_for(:rating, url: new_admin_rating_criteria_path(@turn)) do |f| %>
-    <div class="middle">
+    <div class="middle" style="top: calc(<%= @top %>% - 350px);">
         <% @custom_rating.rating_criteria.each_with_index do |rating, index| %>
             <div class="row">
                 <%= f.label rating.name, class: 'nunito-bold' %> <div class="output" id="val<%= index+1 %>"></div>
@@ -60,31 +71,41 @@ $('input[type="range"]').rangeslider({
     // Callback function
     onSlideEnd: function(position, value) {}
 });
-    var slider1 = document.getElementById("slider1");
-    var output1 = document.getElementById("val1");
-    output1.innerHTML = parseFloat(slider1.value / 10.0).toFixed(1);
-    var slider2 = document.getElementById("slider2");
-    var output2 = document.getElementById("val2");
-    output2.innerHTML = parseFloat(slider2.value / 10.0).toFixed(1);
-    var slider3 = document.getElementById("slider3");
-    var output3 = document.getElementById("val3");
-    output3.innerHTML = parseFloat(slider3.value / 10.0).toFixed(1);
-    var slider4 = document.getElementById("slider4");
-    var output4 = document.getElementById("val4");
-    output4.innerHTML = parseFloat(slider4.value / 10.0).toFixed(1);
+
+    var ratings_count = <%= @custom_rating.rating_criteria.count %>;
+    if (ratings_count >= 1) {
+        var slider1 = document.getElementById("slider1");
+        var output1 = document.getElementById("val1");
+        output1.innerHTML = parseFloat(slider1.value / 10.0).toFixed(1);
+        slider1.oninput = function() {
+            output1.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
+        }
+    }
+    if (ratings_count >= 2) {
+        var slider2 = document.getElementById("slider2");
+        var output2 = document.getElementById("val2");
+        output2.innerHTML = parseFloat(slider2.value / 10.0).toFixed(1);
+        slider2.oninput = function() {
+            output2.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
+        }
+    }
+    if (ratings_count >= 3) {
+        var slider3 = document.getElementById("slider3");
+        var output3 = document.getElementById("val3");
+        output3.innerHTML = parseFloat(slider3.value / 10.0).toFixed(1);
+        slider3.oninput = function() {
+            output3.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
+        }
+    }
+    if (ratings_count >= 4) {
+        var slider4 = document.getElementById("slider4");
+        var output4 = document.getElementById("val4");
+        output4.innerHTML = parseFloat(slider4.value / 10.0).toFixed(1);
+        slider4.oninput = function() {
+            output4.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
+        }
+    }
     
-    slider1.oninput = function() {
-        output1.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
-    }
-    slider2.oninput = function() {
-        output2.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
-    }
-    slider3.oninput = function() {
-        output3.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
-    }
-    slider4.oninput = function() {
-        output4.innerHTML = parseFloat(this.value / 10.0).toFixed(1);
-    }
 </script>
 <script>
 	checkOrientation();

@@ -11,7 +11,8 @@ module DatabaseHelper
 
   def update_turn_rating(turn, custom_rating)
     @custom_ratings_criteria = turn.custom_rating_criteria.all
-    @turn_rating_criteria = TurnRatingCriterium.where(turn_id: turn.id)
+    @turn_rating_criteria = TurnRatingCriterium.where(turn_id: turn.id, custom_rating_id: custom_rating.id)
+    
     ratings_avg = {}
     custom_rating.rating_criteria.each do |rating|
       rating_value_hash = @custom_ratings_criteria.where(name: rating[:name]).map{|rating| rating.attributes.slice('value')}
@@ -34,15 +35,15 @@ module DatabaseHelper
     else
       ratings_avg.each do |key, value|
         rating_criteria = custom_rating.rating_criteria.find_by(name: key)
-        TurnRatingCriterium.create(rating_criteria_id: rating_criteria.id,turn_id: turn.id, admin_id: turn.admin.id, user_id: turn.user_id, game_id: turn.game_id, name: key, value: value)
+        TurnRatingCriterium.create(custom_rating_id: custom_rating.id, rating_criteria_id: rating_criteria.id,turn_id: turn.id, admin_id: turn.admin.id, user_id: turn.user_id, game_id: turn.game_id, name: key, value: value)
       end
-      TurnRatingCriterium.create(turn_id: turn.id, admin_id: turn.admin.id, user_id: turn.user_id, game_id: turn.game_id, name: 'ges', value: ges_avg)
+      TurnRatingCriterium.create(custom_rating_id: custom_rating.id, turn_id: turn.id, admin_id: turn.admin.id, user_id: turn.user_id, game_id: turn.game_id, name: 'ges', value: ges_avg)
     end
   end
 
   def update_user_rating(user, custom_rating, game)
 
-    @ratings = TurnRatingCriterium.where(user_id: user.id)
+    @ratings = TurnRatingCriterium.where(user_id: user.id, custom_rating_id: custom_rating.id)
     ratings_avg = {}
     ratings_alt_avg = {}
     ges_avg = 0
@@ -74,34 +75,34 @@ module DatabaseHelper
       end
     end
 
-    if UserRatingCriterium.find_by(user_id: user.id) && ratings_count > 1
+    if UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id) && ratings_count > 1
       ratings_avg.each do |key, value|
-        UserRatingCriterium.find_by(user_id: user.id, name: key).update(value: value)
-        UserRatingCriterium.find_by(user_id: user.id, name: "change_#{key}").update(value: value - ratings_alt_avg[key])
+        UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id, name: key).update(value: value)
+        UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id, name: "change_#{key}").update(value: value - ratings_alt_avg[key])
       end
-      UserRatingCriterium.find_by(user_id: user.id, name: 'ges').update(value: ges_avg)
-      UserRatingCriterium.find_by(user_id: user.id, name: 'change_ges').update(value: ges_avg - ges_alt_avg)
-    elsif UserRatingCriterium.find_by(user_id: user.id)
+      UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id, name: 'ges').update(value: ges_avg)
+      UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id, name: 'change_ges').update(value: ges_avg - ges_alt_avg)
+    elsif UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id)
       ratings_avg.each do |key, value|
-        UserRatingCriterium.find_by(user_id: user.id, name: key).update(value: value)
-        UserRatingCriterium.find_by(user_id: user.id, name: "change_#{key}").update(value: value)
+        UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id, name: key).update(value: value)
+        UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id, name: "change_#{key}").update(value: value)
       end
-      UserRatingCriterium.find_by(user_id: user.id, name: 'ges').update(value: ges_avg)
-      UserRatingCriterium.find_by(user_id: user.id, name: 'change_ges').update(value: ges_avg)
+      UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id, name: 'ges').update(value: ges_avg)
+      UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id, name: 'change_ges').update(value: ges_avg)
     else
       ratings_avg.each do |key, value|
         rating_criteria = custom_rating.rating_criteria.find_by(name: key)
-        UserRatingCriterium.create(user_id: user.id, game_id: game.id, rating_criteria_id: rating_criteria.id, name: key, value: value)
-        UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: "change_#{key}", value: value)
+        UserRatingCriterium.create(custom_rating_id: custom_rating.id, user_id: user.id, game_id: game.id, rating_criteria_id: rating_criteria.id, name: key, value: value)
+        UserRatingCriterium.create(custom_rating_id: custom_rating.id, user_id: user.id, game_id: game.id, name: "change_#{key}", value: value)
       end
-      UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: 'ges', value: ges_avg)
-      UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: 'change_ges', value: ges_avg)      
+      UserRatingCriterium.create(custom_rating_id: custom_rating.id, user_id: user.id, game_id: game.id, name: 'ges', value: ges_avg)
+      UserRatingCriterium.create(custom_rating_id: custom_rating.id, user_id: user.id, game_id: game.id, name: 'change_ges', value: ges_avg)      
     end
   end
 
 
   def update_game_rating(custom_rating, game)
-    @ratings = TurnRatingCriterium.where(game_id: game.id)
+    @ratings = TurnRatingCriterium.where(game_id: game.id, custom_rating_id: custom_rating.id)
 
     ratings_avg = {}
     ges_avg = 0
