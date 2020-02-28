@@ -360,11 +360,11 @@ class DashAdminController < ApplicationController
     @comments = @turn.comments.order('time_of_video ASC')
     @word = Word.find_by(id: @turn.word_id)
     @user = @turn.findUser
-    @rating = @turn.turn_rating
-    @my_rating = @turn.ratings.find_by(admin_id: @admin.id)
+    # @rating = @turn.turn_rating
+    # @my_rating = @turn.ratings.find_by(admin_id: @admin.id)
 
-    # @ratings = @turn.turn_rating_criteria
-    # @my_ratings = @turn.custom_rating_criteria.where(admin_id: @admin.id)
+    @ratings = @turn.turn_rating_criteria
+    @my_ratings = @turn.custom_rating_criteria.where(admin_id: @admin.id)
   end
 	
   def release_pitch

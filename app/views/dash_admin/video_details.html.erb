@@ -75,93 +75,56 @@
         </div>
     </div>
     <div class="right-part">
-    	<% if @rating.present? %>
+    	<% if @ratings.present? %>
         <div class="rating" id="ratings">
             <div class="left">
             <div class="circle">
-                <%= @rating.ges / 10.0 %>
+                <%= @ratings.find_by(name: 'ges').value / 10.0 %>
             </div>
             <div class="text">Gesamt</div>
-            <% if @my_rating.present? %>
+            <% if @my_ratings.present? %>
             <div class="toggle-my-ratings">
             	<div class="toggle right" onclick="toggleRatings()"><div class="dot"></div></div>
         	</div>
            	<% end %>
             </div>
             <div class="right">
-                <div class="category">
-                    <div class="text">Spontanität</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @rating.spontan %>%'></div>
+                <% @ratings.where.not(name: 'ges').each do |rating| %>
+                    <div class="category">
+                        <div class="text"><%= rating.name %></div>
+                        <div class="bar">
+                            <div class="filled" style='width: <%= rating.value %>%'></div>
+                        </div>
+                        <div class="rating"><%= rating.value / 10.0 %></div>
                     </div>
-                    <div class="rating"><%= @rating.spontan / 10.0 %></div>
-                </div>
-                <div class="category">
-                    <div class="text">Kreativtät</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @rating.creative %>%'></div>
-                    </div>
-                    <div class="rating"><%= @rating.creative / 10.0 %></div>
-                </div>
-                <div class="category">
-                    <div class="text">Körpersprache</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @rating.body %>%'></div>
-                    </div>
-                    <div class="rating"><%= @rating.body / 10.0 %></div>
-                </div>
-                <div class="category">
-                    <div class="text">Rhetorik</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @rating.rhetoric %>%'></div>
-                    </div>
-                    <div class="rating"><%= @rating.rhetoric / 10.0 %></div>
-                </div>
+                <% end %>
+
             </div>
         </div>
         <% end %>
-        <% if @my_rating.present? %>
+        <% if @my_ratings.present? %>
         <div class="rating" id="my_rating">
             <div class="left">
             <div class="circle">
-                <%= @my_rating.ges / 10.0 %>
+                <%= @my_ratings.find_by(name: 'ges').value / 10.0 %>
             </div>
             <div class="text">Meine Bewertung</div>
-            <% if @rating.present? %>
+            <% if @ratings.present? %>
             <div class="toggle-my-ratings">
             	<div class="toggle right" onclick="toggleRatings()"><div class="dot"></div></div>
         	</div>
            	<% end %>
             </div>
             <div class="right">
-                <div class="category">
-                    <div class="text">Spontanität</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @my_rating.spontan %>%'></div>
+                <% @my_ratings.where.not(name: 'ges').each do |my_rating| %>
+                    <div class="category">
+                        <div class="text"><%= my_rating.name %></div>
+                        <div class="bar">
+                            <div class="filled" style='width: <%= my_rating.value %>%'></div>
+                        </div>
+                        <div class="rating"><%= my_rating.value / 10.0 %></div>
                     </div>
-                    <div class="rating"><%= @my_rating.spontan / 10.0 %></div>
-                </div>
-                <div class="category">
-                    <div class="text">Kreativtät</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @my_rating.creative %>%'></div>
-                    </div>
-                    <div class="rating"><%= @my_rating.creative / 10.0 %></div>
-                </div>
-                <div class="category">
-                    <div class="text">Körpersprache</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @my_rating.body %>%'></div>
-                    </div>
-                    <div class="rating"><%= @my_rating.body / 10.0 %></div>
-                </div>
-                <div class="category">
-                    <div class="text">Rhetorik</div>
-                    <div class="bar">
-                        <div class="filled" style='width: <%= @my_rating.rhetoric %>%'></div>
-                    </div>
-                    <div class="rating"><%= @my_rating.rhetoric / 10.0 %></div>
-                </div>
+                <% end %>
             </div>
         </div>
         <% end %>
