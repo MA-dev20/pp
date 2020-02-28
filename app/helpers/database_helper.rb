@@ -12,7 +12,6 @@ module DatabaseHelper
   def update_turn_rating(turn, custom_rating)
     @custom_ratings_criteria = turn.custom_rating_criteria.all
     @turn_rating_criteria = TurnRatingCriterium.where(turn_id: turn.id)
-    # @turn_rating_criteria = TurnRatingCriterium.where(turn_id: turn.id, custom_rating_id: custom_rating.id)
     
     ratings_avg = {}
     custom_rating.rating_criteria.each do |rating|
@@ -42,7 +41,6 @@ module DatabaseHelper
 
   def update_user_rating(user, custom_rating, game)
 
-    # @ratings = TurnRatingCriterium.where(user_id: user.id, custom_rating_id: custom_rating.id)
     @ratings = TurnRatingCriterium.where(user_id: user.id)
     
     ratings_avg = {}
@@ -52,18 +50,14 @@ module DatabaseHelper
     ratings_count = 0
 
     if @ratings.present?
-      # Calculate ratings_count
-      ratings_count = @ratings.where(name: 'ges').count 
-      # ratings_count = @ratings.where.not(rating_criteria_id: nil).count / custom_rating.rating_criteria.count
       
       # Get all names from @ratings and then distict names and then get average of their values
       ratings_name_hash = @ratings.map{|u| u.attributes.slice('name')}
       uniq_ratings_name = ratings_name_hash.uniq {|rating| rating['name']}
-      
-      uniq_ratings_name.each do |key, value|
-        rating_value_hash = @ratings.where(name: value).map{|rating| rating.attributes.slice('value')}
+      uniq_ratings_name.each do |rating_hash|
+        rating_value_hash = @ratings.where(name: rating_hash['name']).map{|rating| rating.attributes.slice('value')}
         avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-        ratings_avg[rating[:name]] = avg
+        ratings_avg[rating_hash['name']] = avg
       end
 
       # custom_rating.rating_criteria.each do |rating|
@@ -77,17 +71,18 @@ module DatabaseHelper
       # avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
       # ges_avg = avg
 
-      if ratings_count > 1
-        # @ratings_alt = @ratings.where.not(id: @ratings.last.id)
-        @ratings_alt = @ratings.where.not(turn_id: @ratings.last.turn_id)
 
+      # Calculate ratings_count
+      ratings_count = @ratings.where(name: 'ges').count       
+      if ratings_count > 1
+        @ratings_alt = @ratings.where.not(turn_id: @ratings.last.turn_id)
         ratings_name_hash = @ratings_alt.map{|u| u.attributes.slice('name')}
         uniq_ratings_name = ratings_name_hash.uniq {|rating| rating['name']}
         
-        uniq_ratings_name.each do |key, value|
-          rating_value_hash = @ratings_alt.where(name: value).map{|rating| rating.attributes.slice('value')}
+        uniq_ratings_name.each do |rating_hash|
+          rating_value_hash = @ratings_alt.where(name: rating_hash['name']).map{|rating| rating.attributes.slice('value')}
           avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-          ratings_avg[rating[:name]] = avg
+          ratings_alt_avg[rating_hash['name']] = avg
         end
 
         # Get all names from @ratings_alt and then distict names and then get average of their values
@@ -101,6 +96,7 @@ module DatabaseHelper
         # ges_alt_avg = avg
       end
     end
+
 
     @user_rating_criterium = UserRatingCriterium.find_by(user_id: user.id)
     if @user_rating_criterium && ratings_count > 1
@@ -184,10 +180,10 @@ module DatabaseHelper
     ratings_name_hash = @ratings.map{|u| u.attributes.slice('name')}
     uniq_ratings_name = ratings_name_hash.uniq {|rating| rating['name']}
     
-    uniq_ratings_name.each do |key, value|
-      rating_value_hash = @ratings.where(name: value).map{|rating| rating.attributes.slice('value')}
+    uniq_ratings_name.each do |rating_hash|
+      rating_value_hash = @ratings.where(name: rating_hash['name']).map{|rating| rating.attributes.slice('value')}
       avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-      ratings_avg[rating[:name]] = avg
+      ratings_avg[rating_hash['name']] = avg
     end
 
     if GameRatingCriterium.find_by(game_id: game.id)
