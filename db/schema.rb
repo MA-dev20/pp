@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_172259) do
+ActiveRecord::Schema.define(version: 2020_02_27_122525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,8 +195,6 @@ ActiveRecord::Schema.define(version: 2020_02_27_172259) do
     t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "custom_rating_id"
-    t.index ["custom_rating_id"], name: "index_game_rating_criteria_on_custom_rating_id"
     t.index ["game_id"], name: "index_game_rating_criteria_on_game_id"
     t.index ["rating_criteria_id"], name: "index_game_rating_criteria_on_rating_criteria_id"
     t.index ["team_id"], name: "index_game_rating_criteria_on_team_id"
@@ -382,9 +380,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_172259) do
     t.bigint "turn_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "custom_rating_id"
     t.index ["admin_id"], name: "index_turn_rating_criteria_on_admin_id"
-    t.index ["custom_rating_id"], name: "index_turn_rating_criteria_on_custom_rating_id"
     t.index ["game_id"], name: "index_turn_rating_criteria_on_game_id"
     t.index ["rating_criteria_id"], name: "index_turn_rating_criteria_on_rating_criteria_id"
     t.index ["turn_id"], name: "index_turn_rating_criteria_on_turn_id"
@@ -443,8 +439,6 @@ ActiveRecord::Schema.define(version: 2020_02_27_172259) do
     t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "custom_rating_id"
-    t.index ["custom_rating_id"], name: "index_user_rating_criteria_on_custom_rating_id"
     t.index ["game_id"], name: "index_user_rating_criteria_on_game_id"
     t.index ["rating_criteria_id"], name: "index_user_rating_criteria_on_rating_criteria_id"
     t.index ["user_id"], name: "index_user_rating_criteria_on_user_id"
@@ -542,7 +536,6 @@ ActiveRecord::Schema.define(version: 2020_02_27_172259) do
   add_foreign_key "custom_rating_criteria", "turns"
   add_foreign_key "custom_rating_criteria", "users"
   add_foreign_key "custom_ratings", "admins"
-  add_foreign_key "game_rating_criteria", "custom_ratings"
   add_foreign_key "game_rating_criteria", "games"
   add_foreign_key "game_rating_criteria", "rating_criteria", column: "rating_criteria_id"
   add_foreign_key "game_rating_criteria", "teams"
@@ -561,7 +554,6 @@ ActiveRecord::Schema.define(version: 2020_02_27_172259) do
   add_foreign_key "team_users", "users"
   add_foreign_key "teams", "admins"
   add_foreign_key "turn_rating_criteria", "admins"
-  add_foreign_key "turn_rating_criteria", "custom_ratings"
   add_foreign_key "turn_rating_criteria", "games"
   add_foreign_key "turn_rating_criteria", "rating_criteria", column: "rating_criteria_id"
   add_foreign_key "turn_rating_criteria", "turns"
@@ -570,7 +562,6 @@ ActiveRecord::Schema.define(version: 2020_02_27_172259) do
   add_foreign_key "turn_ratings", "turns"
   add_foreign_key "turns", "custom_ratings"
   add_foreign_key "turns", "games"
-  add_foreign_key "user_rating_criteria", "custom_ratings"
   add_foreign_key "user_rating_criteria", "games"
   add_foreign_key "user_rating_criteria", "rating_criteria", column: "rating_criteria_id"
   add_foreign_key "user_rating_criteria", "users"
