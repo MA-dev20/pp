@@ -57,61 +57,88 @@ module DatabaseHelper
       # ratings_count = @ratings.where.not(rating_criteria_id: nil).count / custom_rating.rating_criteria.count
       
       # Get all names from @ratings and then distict names and then get average of their values
-      custom_rating.rating_criteria.each do |rating|
-        if @ratings.where(name: rating[:name]).present?
-          rating_value_hash = @ratings.where(name: rating[:name]).map{|rating| rating.attributes.slice('value')}
-          avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-          ratings_avg[rating[:name]] = avg
-        end
+      ratings_name_hash = @ratings.map{|u| u.attributes.slice('name')}
+      uniq_ratings_name = ratings_name_hash.uniq {|rating| rating['name']}
+      
+      uniq_ratings_name.each do |key, value|
+        rating_value_hash = @ratings.where(name: value).map{|rating| rating.attributes.slice('value')}
+        avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+        ratings_avg[rating[:name]] = avg
       end
-      rating_value_hash = @ratings.where(name: 'ges').map{|rating| rating.attributes.slice('value')}
-      avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-      ges_avg = avg
+
+      # custom_rating.rating_criteria.each do |rating|
+      #   if @ratings.where(name: rating[:name]).present?
+      #     rating_value_hash = @ratings.where(name: rating[:name]).map{|rating| rating.attributes.slice('value')}
+      #     avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+      #     ratings_avg[rating[:name]] = avg
+      #   end
+      # end
+      # rating_value_hash = @ratings.where(name: 'ges').map{|rating| rating.attributes.slice('value')}
+      # avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+      # ges_avg = avg
 
       if ratings_count > 1
         # @ratings_alt = @ratings.where.not(id: @ratings.last.id)
         @ratings_alt = @ratings.where.not(turn_id: @ratings.last.turn_id)
 
-        # Get all names from @ratings_alt and then distict names and then get average of their values
-        custom_rating.rating_criteria.each do |rating|
-          rating_value_hash = @ratings_alt.where(name: rating[:name]).map{|rating| rating.attributes.slice('value')}
+        ratings_name_hash = @ratings_alt.map{|u| u.attributes.slice('name')}
+        uniq_ratings_name = ratings_name_hash.uniq {|rating| rating['name']}
+        
+        uniq_ratings_name.each do |key, value|
+          rating_value_hash = @ratings_alt.where(name: value).map{|rating| rating.attributes.slice('value')}
           avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-          ratings_alt_avg[rating[:name]] = avg
+          ratings_avg[rating[:name]] = avg
         end
-        rating_value_hash = @ratings_alt.where(name: 'ges').map{|rating| rating.attributes.slice('value')}
-        avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-        ges_alt_avg = avg
+
+        # Get all names from @ratings_alt and then distict names and then get average of their values
+        # custom_rating.rating_criteria.each do |rating|
+        #   rating_value_hash = @ratings_alt.where(name: rating[:name]).map{|rating| rating.attributes.slice('value')}
+        #   avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+        #   ratings_alt_avg[rating[:name]] = avg
+        # end
+        # rating_value_hash = @ratings_alt.where(name: 'ges').map{|rating| rating.attributes.slice('value')}
+        # avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+        # ges_alt_avg = avg
       end
     end
 
     @user_rating_criterium = UserRatingCriterium.find_by(user_id: user.id)
     if @user_rating_criterium && ratings_count > 1
       ratings_avg.each do |key, value|
-        UserRatingCriterium.find_by(user_id: user.id, name: key).update(value: value)
-        # Think about its else part debug it
-        if ratings_alt_avg[key].present?
-          UserRatingCriterium.find_by(user_id: user.id, name: "change_#{key}").update(value: value - ratings_alt_avg[key])
+        if UserRatingCriterium.find_by(user_id: user.id, name: key)
+          UserRatingCriterium.find_by(user_id: user.id, name: key).update(value: value)
+          if ratings_alt_avg[key].present?
+            UserRatingCriterium.find_by(user_id: user.id, name: "change_#{key}").update(value: value - ratings_alt_avg[key])
+          end
+        else
+          UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: key, value: value)
+          UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: "change_#{key}", value: value)
         end
+        # Think about its else part debug it
+        # if ratings_alt_avg[key].present?
+        #   UserRatingCriterium.find_by(user_id: user.id, name: "change_#{key}").update(value: value - ratings_alt_avg[key])
+        # end
       end
-      UserRatingCriterium.find_by(user_id: user.id, name: 'ges').update(value: ges_avg)
-      UserRatingCriterium.find_by(user_id: user.id, name: 'change_ges').update(value: ges_avg - ges_alt_avg)
+      # UserRatingCriterium.find_by(user_id: user.id, name: 'ges').update(value: ges_avg)
+      # UserRatingCriterium.find_by(user_id: user.id, name: 'change_ges').update(value: ges_avg - ges_alt_avg)
     elsif @user_rating_criterium
       ratings_avg.each do |key, value|
         UserRatingCriterium.find_by(user_id: user.id, name: key).update(value: value)
         UserRatingCriterium.find_by(user_id: user.id, name: "change_#{key}").update(value: value)
       end
-      UserRatingCriterium.find_by(user_id: user.id, name: 'ges').update(value: ges_avg)
-      UserRatingCriterium.find_by(user_id: user.id, name: 'change_ges').update(value: ges_avg)
+      # UserRatingCriterium.find_by(user_id: user.id, name: 'ges').update(value: ges_avg)
+      # UserRatingCriterium.find_by(user_id: user.id, name: 'change_ges').update(value: ges_avg)
     else
       ratings_avg.each do |key, value|
         #rating_criteria not necessary
-        rating_criteria = custom_rating.rating_criteria.find_by(name: key)
-        UserRatingCriterium.create(user_id: user.id, game_id: game.id, rating_criteria_id: rating_criteria.id, name: key, value: value)
+        # rating_criteria = custom_rating.rating_criteria.find_by(name: key)
+        UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: key, value: value)
         UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: "change_#{key}", value: value)
       end
-      UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: 'ges', value: ges_avg)
-      UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: 'change_ges', value: ges_avg)      
+      # UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: 'ges', value: ges_avg)
+      # UserRatingCriterium.create(user_id: user.id, game_id: game.id, name: 'change_ges', value: ges_avg)      
     end
+
     # if UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id) && ratings_count > 1
     #   ratings_avg.each do |key, value|
     #     UserRatingCriterium.find_by(custom_rating_id: custom_rating.id, user_id: user.id, name: key).update(value: value)
@@ -142,30 +169,39 @@ module DatabaseHelper
     @ratings = TurnRatingCriterium.where(game_id: game.id)
 
     ratings_avg = {}
-    ges_avg = 0
+    # ges_avg = 0
     
     # Get all names from @ratings and then distict names and then get average of their values
-    custom_rating.rating_criteria.each do |rating|
-      rating_value_hash = @ratings.where(name: rating[:name]).map{|rating| rating.attributes.slice('value')}
+    # custom_rating.rating_criteria.each do |rating|
+    #   rating_value_hash = @ratings.where(name: rating[:name]).map{|rating| rating.attributes.slice('value')}
+    #   avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+    #   ratings_avg[rating[:name]] = avg
+    # end
+    # rating_value_hash = @ratings.where(name: 'ges').map{|rating| rating.attributes.slice('value')}
+    # avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+    # ges_avg = avg
+
+    ratings_name_hash = @ratings.map{|u| u.attributes.slice('name')}
+    uniq_ratings_name = ratings_name_hash.uniq {|rating| rating['name']}
+    
+    uniq_ratings_name.each do |key, value|
+      rating_value_hash = @ratings.where(name: value).map{|rating| rating.attributes.slice('value')}
       avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
       ratings_avg[rating[:name]] = avg
     end
-    rating_value_hash = @ratings.where(name: 'ges').map{|rating| rating.attributes.slice('value')}
-    avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-    ges_avg = avg
 
     if GameRatingCriterium.find_by(game_id: game.id)
       ratings_avg.each do |key, value|
         GameRatingCriterium.find_by(game_id: game.id, name: key).update(value: value)
       end
-      GameRatingCriterium.find_by(game_id: game.id, name: 'ges').update(value: ges_avg)
+      # GameRatingCriterium.find_by(game_id: game.id, name: 'ges').update(value: ges_avg)
     else
       ratings_avg.each do |key, value|
         #rating_criteria necessary or not?
-        rating_criteria = custom_rating.rating_criteria.find_by(name: key)
-        GameRatingCriterium.create(game_id: game.id, team_id: game.team_id, rating_criteria_id: rating_criteria.id, name: key, value: value)
+        # rating_criteria = custom_rating.rating_criteria.find_by(name: key)
+        GameRatingCriterium.create(game_id: game.id, team_id: game.team_id, name: key, value: value)
       end
-      GameRatingCriterium.create(game_id: game.id, team_id: game.team_id, name: 'ges', value: ges_avg)
+      # GameRatingCriterium.create(game_id: game.id, team_id: game.team_id, name: 'ges', value: ges_avg)
     end
   end
 
