@@ -140,6 +140,7 @@ class GameDesktopAdminController < ApplicationController
     update_game_rating(@game.custom_rating, @game)
     # update_team_rating @team
     # @turn_ratings = @game.turn_ratings.where(ended: false).rating_order
+    update_team_rating(@team, @game)    
     @turn_ratings = @game.turn_rating_criteria.where(rating_criteria_id: nil, ended: false).order('value desc')
     place = 1
     @turn_ratings.each do |t|

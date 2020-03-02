@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_122525) do
+ActiveRecord::Schema.define(version: 2020_03_02_072458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -334,6 +334,15 @@ ActiveRecord::Schema.define(version: 2020_02_27_122525) do
     t.index ["admin_id"], name: "index_subscriptions_on_admin_id"
   end
 
+  create_table "team_rating_criteria", force: :cascade do |t|
+    t.string "name"
+    t.integer "value"
+    t.bigint "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_team_rating_criteria_on_team_id"
+  end
+
   create_table "team_ratings", force: :cascade do |t|
     t.bigint "team_id"
     t.integer "ges"
@@ -549,6 +558,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_122525) do
   add_foreign_key "ratings", "turns"
   add_foreign_key "root_admins", "admins"
   add_foreign_key "root_admins", "roots"
+  add_foreign_key "team_rating_criteria", "teams"
   add_foreign_key "team_ratings", "teams"
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"
