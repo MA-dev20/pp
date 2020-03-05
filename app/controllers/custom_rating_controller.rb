@@ -10,7 +10,7 @@ class CustomRatingController < ApplicationController
         redirect_to dash_admin_custom_rating_path(custom_rating.id)
         return 
       else
-        flash[:danger] = "Konnte nicht speichern!"
+        flash[:custom_rating] = "Konnte nicht speichern!"
       end
     end
     redirect_to dash_admin_customize_path
