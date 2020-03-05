@@ -70,13 +70,16 @@
 <script> new PerfectScrollbar('#table_content'); </script>
 	<% else %>
 	<div class="customize-sm" id="catchwords">
-    	<div class="searchbar">
+    	<!-- <div class="searchbar">
         	<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
         	<input type="text" placeholder="Liste suchen" id="searchCW">
     	</div>
-    	<button class="btn btn-green" onclick="showNewCatchword()">Liste erstellen</button>
-    	<div class="karte" id="catchwords">
-        	<div class="head left">Catchwords</div>
+    	<button class="btn btn-green" onclick="showNewCatchword()">Liste erstellen</button> -->
+		<div class="karte" id="catchwords">
+			<div class="head-flex">
+				<div class="left">Catchwords</div>
+				<div class="right"><button class="custom-submit" onclick="showNewCatchword()">+</button></div>	
+			</div>
         	<div class="list" id="catchword-list">
             	<% @catchwords.each do |c| %>
                 <div class="list-karte CWsearch" onclick="redirect('<%= dash_admin_catchwords_url(c.id) %>')">
@@ -189,13 +192,18 @@
 <script> new PerfectScrollbar('#table_content'); </script>
 	<% else %>
 		<div class="customize-sm" id="objections">
-    	<div class="searchbar">
+    	<!-- <div class="searchbar">
         	<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
         	<input type="text" placeholder="Liste suchen" id="searchOB">
     	</div>
-    	<button class="btn btn-green" onclick="showNewObjection()">Liste erstellen</button>
+    	<button class="btn btn-green" onclick="showNewObjection()">Liste erstellen</button> -->
     	<div class="karte">
-        	<div class="head left">Einwände</div>
+			<div class="head-flex">
+				<div class="left">Einwände</div>
+				<div class="right"><button class="custom-submit" onclick="showNewObjection()">+</button></div>	
+			</div>
+			<!-- <div class="head left">Einwände</div> -->
+        	<!-- <div class="head right">Einwände</div>			 -->
         	<div class="list" id="objection-list">
             	<% @objections.each do |o| %>
                 <% 
@@ -365,13 +373,16 @@
 	<script> new PerfectScrollbar('#rating_table_content'); </script>
 	<% else %>
 	<div class="customize-sm" id="custom_rating">
-			<div class="searchbar">
+			<!-- <div class="searchbar">
 				<%= image_tag 'dash/icons/search.png', id: 'search-icon' %>
 				<input type="text" placeholder="Liste suchen" id="searchCR">
 			</div>
-			<button class="btn btn-green" onclick="showNewCustomRating()">Liste erstellen</button>
+			<button class="btn btn-green" onclick="showNewCustomRating()">Liste erstellen</button> -->
 			<div class="karte" id="custom_rating">
-				<div class="head left">Custom Ratings</div>
+				<div class="head-flex">
+					<div class="left">Custom Ratings</div>
+					<div class="right"><button class="custom-submit" onclick="showNewCustomRating()">+</button></div>	
+				</div>
 				<div class="list" id="rating-list">
 					<% @custom_ratings.includes(:rating_criteria).each do |rating| %>
 						<% unless rating.name == 'PP' %>
