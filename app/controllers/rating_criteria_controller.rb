@@ -77,7 +77,7 @@ class RatingCriteriaController < ApplicationController
 
   def destroy
     rating_criteria = RatingCriterium.find(params[:criteria_id])
-    if @custom_rating.rating_criteria.delete(rating_criteria)
+    if @custom_rating.rating_criteria.destroy(rating_criteria)
         flash[:success] = 'Criteria aus Liste gelöscht!'
     else
         flash[:danger] = 'Konnte criteria NICHT löschen!'
