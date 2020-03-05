@@ -33,10 +33,11 @@ class DashAdminController < ApplicationController
   end
     
   #Stats
-    
+
   def user_stats
+
     if @user.turns.count == 0 || !@user.user_rating.present?
-	  flash[:pop_up] = 'Der Spieler hat noch keine Statisiken!'
+      flash[:pop_up] = 'Der Spieler hat noch keine Statisiken!'
       redirect_to dash_admin_teams_path
       return
     end
@@ -68,6 +69,7 @@ class DashAdminController < ApplicationController
     @reviewed_videos.flatten!
     @reviewed_videos.sort_by! {|t| t.created_at}
     @reviewed_videos.reverse!
+    
     @team_users = []
     @team_userss.each do |u|
       ges =  u.user_rating&.ges.present? ? u.user_rating.ges.to_f : 0.0
@@ -327,9 +329,9 @@ class DashAdminController < ApplicationController
     @turns.each do |t|
 	  @word = Word.find_by(id: t.word_id)
 	  if @word
-      	@result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, word: @word.name, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRating.find_by(turn_id: t.id)&.ges}
+      	@result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, word: @word.name, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRatingCriterium.find_by(turn_id: t.id, name: 'ges')&.value}
 	  else
-		@result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRating.find_by(turn_id: t.id)&.ges}
+		@result << {turn_id: t.id, favorite: t.favorite, pitch_url: t.recorded_pitch.thumb.url, user_avatar: t.findUser.avatar.quad.url, user_fname: t.findUser.fname, user_lname: t.findUser.lname, date: t.created_at, rating: TurnRatingCriterium.find_by(turn_id: t.id, name: 'ges')&.value}
 	  end
     end
     if @sort_by == 'fnameASC'

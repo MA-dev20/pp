@@ -263,7 +263,7 @@
             </div>
             <div class="unchecked-field">
                 <% @admin.custom_ratings.each do |cr| %>
-				    <% unless cr.name == 'PP' %>
+				    <% if cr.name != 'PP' && cr.rating_criteria.present? %>
                         <div class="checkbox checkbox-<%= cr.id %>" onclick="moveRatings(this)" data-value="game_ratings_<%= cr.id %>">
                             <label><%= cr.name %> <i class="fas fa-plus"></i></label>
                         </div>

@@ -193,7 +193,7 @@ module DatabaseHelper
     end
   end
 
-  def update_team_rating(team)
+  def update_team_rating_old(team)
     @ratings = GameRating.where(team_id: team.id)
     if TeamRating.find_by(team_id: team.id) && @ratings.count > 1
       @ratings_alt = @ratings.where.not(id: @ratings.last.id)
