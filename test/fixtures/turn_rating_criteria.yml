@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  value: 1
+  ended: false
+  rating_criteria: one
+  game: one
+  user: one
+  admin: one
+  turn: one
+
+two:
+  name: MyString
+  value: 1
+  ended: false
+  rating_criteria: two
+  game: two
+  user: two
+  admin: two
+  turn: two

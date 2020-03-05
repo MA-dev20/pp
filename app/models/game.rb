@@ -6,10 +6,17 @@ class Game < ApplicationRecord
   belongs_to :admin
   belongs_to :team
   belongs_to :turn, required: false
+  belongs_to :custom_rating, required: false
   has_one :game_rating, dependent: :destroy
   has_many :turns, dependent: :destroy
   has_many :turn_ratings
   
+  has_many :custom_rating_criteria
+  has_many :turn_rating_criteria
+  has_many :user_rating_criteria
+  has_many :game_rating_criteria
+
+
   has_one :catchword_basket , class_name: "CatchwordsBasket", dependent: :destroy
   has_one :objection_basket , class_name: "ObjectionsBasket", dependent: :destroy
 

@@ -21,8 +21,10 @@
     float: left;
     position: relative;
     width: 44.55vh;
-    height: 75.35vh;
-    top: 8.6vh;
+    // height: 75.35vh;
+    // top: 8.6vh;
+    top: 0.4vh;
+    top: -1.6vh;
 }
 .customize-sm {
     margin-right: 6.3vh;
@@ -32,7 +34,8 @@
 }
 .customize-sm#words .custom-select {
 	position: absolute;
-	top: 11vh;
+    // top: 11vh;
+    top: 5vh;
 	right: 2vh;
 	width: 15vh;
 	cursor: pointer;
@@ -81,9 +84,11 @@
     width: 17.5vh;
 }
 .customize-sm > .karte {
-    margin-top: 7.9vh;
+    margin-top: 1.9vh;
     // height: 67.45vh;
-    height: 60vh;
+    // margin-top: -6vh;
+    // height: 60vh;
+    height: 42vh;
     padding-right: 3.5vh;
     padding-left: 3.5vh;
 }
@@ -97,7 +102,8 @@
 }
 .customize-sm > .karte > .list {
     position: relative;
-    height: 43.2vh;
+    // height: 43.2vh;
+    height: 28vh;
     width: 100%;
 }
 .customize-sm > .karte > .list > .list-karte {
@@ -155,7 +161,33 @@
 }
 .customize-sm#words .table {
 	position: relative;
-	height: 40vh;
+    // height: 40vh;
+	height: 22vh;    
+}
+.head-flex {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1.2vh;
+    padding-right: 1.2vh;
+    font-size: 3.7vh;
+    line-height: 11.7vh;
+    height: 11.7vh;
+}
+.head-flex .custom-submit {
+    line-height: 2.4vh;
+    font-size: 2.4vh;
+    position: relative;
+    border-radius: 50%;
+    background-color: #16e2a5;
+    border: none;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    top: -0.6vh;
+    height: 3.3vh;
+    width: 3.3vh;
+    padding: 0 0 0.1vh 0;
 }
 .customize-sm#words .table table {
 	margin: 0 1vh 0 0;

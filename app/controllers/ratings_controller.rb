@@ -10,6 +10,8 @@ class RatingsController < ApplicationController
     @rating = @turn.ratings.new(rating_params)
     @rating.ges = (@rating.body + @rating.creative + @rating.rhetoric + @rating.spontan) / 4
     @rating.admin_id = @admin.id
+    debugger
+
     if @rating.save && @turn.ratings.count == (@game.turns.where(status: 'accepted').count - 1)
       @game.update(state: 'rating')
       redirect_to gma_rating_path
@@ -37,6 +39,8 @@ class RatingsController < ApplicationController
     @rating = @turn.ratings.new(rating_params)
     @rating.ges = (@rating.body + @rating.creative + @rating.rhetoric + @rating.spontan) / 4
     @rating.user_id = @user.id
+
+    debugger
     if @rating.save && @turn.ratings.count == (@game.turns.where(status: 'accepted').count - 1)
       @game.update(state: 'rating')
       redirect_to gmu_rated_path

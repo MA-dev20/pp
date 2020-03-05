@@ -66,7 +66,7 @@ class GameMobileUserController < ApplicationController
         @user = @admin.users.new(email: params[:user][:email])
         @user.password = random_pass
         @user.save!
-    		@team = Team.find_by(id: @game1.team_id)
+		    @team = Team.find_by(id: @game1.team_id)
         SendInvitationJob.perform_later(@user, @team)
         TeamUser.create(user_id: @user.id, team_id: @game1.team_id)
         sign_in(@user)
@@ -264,8 +264,10 @@ class GameMobileUserController < ApplicationController
   end
     
   def rate
-    if @user == @cur_user || @turn.ratings.find_by(user_id: @user.id)
-        redirect_to gmu_rated_path
+    @custom_rating = @game.custom_rating
+    # if @user == @cur_user || @turn.ratings.find_by(user_id: @user.id)
+    if @user == @cur_user || @turn.custom_rating_criteria.find_by(user_id: @user.id)
+      redirect_to gmu_rated_path
     end
   end
     
@@ -276,8 +278,10 @@ class GameMobileUserController < ApplicationController
   end
     
   def bestlist
-    @turn_rating = @game.turn_ratings.where(user_id: @user.id).last
-	@word = @turn_rating.turn.word
+    # @turn_rating = @game.turn_ratings.where(user_id: @user.id).last
+    # @word = @turn_rating.turn.word
+    @turn_rating = @game.turn_rating_criteria.where(user_id: @user.id, name: 'ges').last
+	  @word = @turn_rating.turn.word
   end
     
   def replay

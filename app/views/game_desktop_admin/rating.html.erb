@@ -1,70 +1,93 @@
 <section id="gd_rated">
-<section id="gd_rated_spontan">
-    <div class="text nunito-bold">
-        Spontanität
-    </div>
-    <div class="circle" id='spontan'>
-        <div class="bg_1">
-            <%= image_tag 'game/spontan_blue.png',  class: 'avatar' %>
-            <%= image_tag 'game/spontan_green.png', class: 'shield' %>
+<% if @turn_rating.length - 1 == 1 %>
+    <section id="gd_rated_ges">
+        <div class="text nunito-bold">
+            <!-- Gesamt -->
+            <%= @turn_rating[0][:name] %>
         </div>
-    </div>
-    <%= image_tag 'game/polygon.png', class: 'pol' %>
-    <div class="rate" id="spontan_text">?</div>
-</section>
-
-<section id="gd_rated_creativ">
-    <div class="text nunito-bold">
-        Kreativität
-    </div>
-    <div class="circle" id="creativ">
-        <div class="bg_1">
-            <%= image_tag 'game/creative_blue.png',  class: 'avatar' %>
-            <%= image_tag 'game/creative_green.png', class: 'shield' %>
+        <div class="circle" id="ges">
+            <%= image_tag @user.avatar.quad.url, class: 'avatar' %>
         </div>
-    </div>
-    <%= image_tag 'game/polygon.png', class: 'pol' %>
-    <div class="rate" id='creativ_text'>?</div>
-</section>
+        <%= image_tag 'game/polygon.png', class: 'pol' %>
+        <div class="rate" id='ges_text'>?</div>
+    </section>
+<% else %>
+    <% if @turn_rating.length - 1 >= 2 %>
+        <section id="gd_rated_spontan">
+            <div class="text nunito-bold">
+                <!-- Spontanität -->
+                <%= @turn_rating[0][:name] %>
+            </div>
+            <div class="circle" id='spontan'>
+                <div class="bg_1">
+                    <%= image_tag 'game/spontan_blue.png',  class: 'avatar' %>
+                    <%= image_tag 'game/spontan_green.png', class: 'shield' %>
+                </div>
+            </div>
+            <%= image_tag 'game/polygon.png', class: 'pol' %>
+            <div class="rate" id="spontan_text">?</div>
+        </section>
+    <% end %>
+    <% if @turn_rating.length - 1 >= 3 %>
+        <section id="gd_rated_creativ">
+            <div class="text nunito-bold">
+                <!-- Kreativität -->
+                <%= @turn_rating[2][:name] %>
+            </div>
+            <div class="circle" id="creativ">
+                <div class="bg_1">
+                    <%= image_tag 'game/creative_blue.png',  class: 'avatar' %>
+                    <%= image_tag 'game/creative_green.png', class: 'shield' %>
+                </div>
+            </div>
+            <%= image_tag 'game/polygon.png', class: 'pol' %>
+            <div class="rate" id='creativ_text'>?</div>
+        </section>
+    <% end %>
+    <% if @turn_rating.length - 1 >= 2 %>
+        <section id="gd_rated_body">
+            <div class="text nunito-bold">
+                <!-- Körpersprache -->
+                <%= @turn_rating[1][:name] %>
+            </div>
+            <div class="circle" id='body'>
+                <div class="bg_2">
+                    <%= image_tag 'game/body_blue.png',  class: 'avatar' %>
+                    <%= image_tag 'game/body_green.png', class: 'shield' %>
+                </div>
+            </div>
+            <%= image_tag 'game/polygon.png', class: 'pol' %>
+            <div class="rate" id='body_text'>?</div>
+        </section>
+    <% end %>
+    <% if @turn_rating.length - 1 >= 4 %>
+        <section id="gd_rated_rhetoric">
+            <div class="text nunito-bold">
+                <!-- Rhetorik -->
+                <%= @turn_rating[3][:name] %>
+            </div>
+            <div class="circle" id="rhetoric">
+                <div class="bg_2">
+                    <%= image_tag 'game/rhetoric_blue.png',  class: 'avatar' %>
+                    <%= image_tag 'game/rhetoric_green.png', class: 'shield' %>
+                </div>
+            </div>
+            <%= image_tag 'game/polygon.png', class: 'pol' %>
+            <div class="rate" id='rhetoric_text'>?</div>
+        </section>
+    <% end %>
 
-<section id="gd_rated_body">
-    <div class="text nunito-bold">
-        Körpersprache
-    </div>
-    <div class="circle" id='body'>
-        <div class="bg_2">
-            <%= image_tag 'game/body_blue.png',  class: 'avatar' %>
-            <%= image_tag 'game/body_green.png', class: 'shield' %>
+    <section id="gd_rated_ges">
+        <div class="text nunito-bold">
+            Gesamt
         </div>
-    </div>
-    <%= image_tag 'game/polygon.png', class: 'pol' %>
-    <div class="rate" id='body_text'>?</div>
-</section>
-
-<section id="gd_rated_rhetoric">
-    <div class="text nunito-bold">
-        Rhetorik
-    </div>
-    <div class="circle" id="rhetoric">
-        <div class="bg_2">
-            <%= image_tag 'game/rhetoric_blue.png',  class: 'avatar' %>
-            <%= image_tag 'game/rhetoric_green.png', class: 'shield' %>
+        <div class="circle" id="ges">
+            <%= image_tag @user.avatar.quad.url, class: 'avatar' %>
         </div>
-    </div>
-    <%= image_tag 'game/polygon.png', class: 'pol' %>
-    <div class="rate" id='rhetoric_text'>?</div>
-</section>
-
-<section id="gd_rated_ges">
-    <div class="text nunito-bold">
-        Gesamt
-    </div>
-    <div class="circle" id="ges">
-        <%= image_tag @user.avatar.quad.url, class: 'avatar' %>
-    </div>
-    <%= image_tag 'game/polygon.png', class: 'pol' %>
-    <div class="rate" id='ges_text'>?</div>
-</section>
+        <%= image_tag 'game/polygon.png', class: 'pol' %>
+        <div class="rate" id='ges_text'>?</div>
+    </section>
+<% end %>
 
 <section id="skip" class="nunito-bold">
    Skip mit Leertaste
@@ -76,21 +99,68 @@
 	document.getElementById("rateSound").volume = 0.2;
 	function startAnimation() {
 		document.getElementById('rateSound').play();
-		setTimeout(function() {
-			ratecircle('#spontan', 'spontan_text', <%= @rating.spontan / 100.0 %>);
-		}, 2000);
-		setTimeout(function() {
-			ratecircle('#creativ', 'creativ_text', <%= @rating.creative / 100.0 %>);
-		}, 4000);
-		setTimeout(function() {
-			ratecircle('#body', 'body_text', <%= @rating.body / 100.0 %>);
-		}, 6000);
-		setTimeout(function() {
-			ratecircle('#rhetoric', 'rhetoric_text', <%= @rating.rhetoric / 100.0 %>);
-		}, 8000);
-		setTimeout(function() {
-			ratecircleg('#ges', 'ges_text', <%= @rating.ges / 100.0 %>);
-		}, 10000);
+        var circle_ids = ['#spontan', '#creativ', '#body', '#rhetoric', '#ges']
+        var circle_text = ['spontan_text', 'creativ_text', 'body_text', 'rhetoric_text', 'ges_text']
+
+        var ratings = <%= @turn_rating.to_json.html_safe %>;
+        // debugger
+        // var delay = 2000
+//         for(var i = 0; i < 5; i++) {
+//             // debugger
+//             setTimeout(function() {
+//                 ratecircle(circle_ids[i], circle_text[i], (ratings[i]['value'] / 100.0));
+//             }, delay);
+//             delay = delay + 2000
+//         }
+        if (ratings.length - 1 == 1) {
+            setTimeout(function() {
+                ratecircleg('#ges', 'ges_text', (ratings[0]['value'] / 100.0));
+            }, 2000);            
+        } else {
+            if (ratings.length - 1 == 2) {
+                setTimeout(function() {
+                    ratecircle('#spontan', 'spontan_text', (ratings[0]['value'] / 100.0));
+                }, 2000);
+                setTimeout(function() {
+                    ratecircle('#body', 'body_text', (ratings[1]['value'] / 100.0));
+                }, 4000);
+                setTimeout(function() {
+                    ratecircleg('#ges', 'ges_text', (ratings[2]['value'] / 100.0));
+                }, 6000);
+            }
+            else if (ratings.length - 1 == 3) {
+                setTimeout(function() {
+                    ratecircle('#spontan', 'spontan_text', (ratings[0]['value'] / 100.0));
+                }, 2000);
+                setTimeout(function() {
+                    ratecircle('#body', 'body_text', (ratings[1]['value'] / 100.0));
+                }, 4000);
+                setTimeout(function() {
+                    ratecircle('#creativ', 'creativ_text', (ratings[2]['value'] / 100.0));
+                }, 6000);
+                setTimeout(function() {
+                    ratecircleg('#ges', 'ges_text', (ratings[3]['value'] / 100.0));
+                }, 8000);
+            }
+            else if (ratings.length - 1 == 4) {
+                setTimeout(function() {
+                    ratecircle('#spontan', 'spontan_text', (ratings[0]['value'] / 100.0));
+                }, 2000);
+                setTimeout(function() {
+                    ratecircle('#body', 'body_text', (ratings[1]['value'] / 100.0));
+                }, 4000);
+                setTimeout(function() {
+                    ratecircle('#creativ', 'creativ_text', (ratings[2]['value'] / 100.0));
+                }, 6000);
+                setTimeout(function() {
+                    ratecircle('#rhetoric', 'rhetoric_text', (ratings[3]['value'] / 100.0));
+                }, 8000);
+                setTimeout(function() {
+                    ratecircleg('#ges', 'ges_text', (ratings[4]['value'] / 100.0));
+                }, 10000);
+            }
+        }
+		
 	}
     $(window).keypress(function (e) {
         if (e.key === ' ' || e.key === 'Spacebar') {

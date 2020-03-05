@@ -206,7 +206,10 @@ class GameMobileAdminController < ApplicationController
     end
     @game.video_uploading = false
     @game.save
-    if @turn.ratings.find_by(admin_id: @admin.id)
+    @custom_rating = @game.custom_rating
+    # if @turn.ratings.find_by(admin_id: @admin.id)
+    #   redirect_to gma_rated_path
+    if @turn.custom_rating_criteria.find_by(admin_id: @admin.id)
       redirect_to gma_rated_path
     elsif @admin == @cur_user
       redirect_to gma_rated_path
@@ -214,15 +217,17 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rated
-    @count = @turn.ratings.count
-	@turnCount = @game.turns.where(status: "accepted").count - 1
-    if @turn.ratings.count == @game.turns.where(status: "accepted").count - 1
+    # @count = @turn.ratings.count
+    @count = @turn.custom_rating_criteria.where.not(rating_criteria_id: nil).count / @game.custom_rating.rating_criteria.count
+	  @turnCount = @game.turns.where(status: "accepted").count - 1
+    if @turn.ratings.count == @turnCount
       redirect_to gma_rating_path
     end
   end
     
   def rating
-    @rating = Rating.find_by(turn_id: @turn.id)
+    # @rating = Rating.find_by(turn_id: @turn.id)
+    @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
       redirect_to gma_rating_path
@@ -286,7 +291,8 @@ class GameMobileAdminController < ApplicationController
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
       @game.turns.update_all(status: "ended")
-      @game.turn_ratings.update_all(ended: true)
+      # @game.turn_ratings.update_all(ended: true)
+      @game.turn_rating_criteria.update_all(ended: true)
     end
     session[:game_session_id] = @game.id
     redirect_to gma_new_avatar_path
