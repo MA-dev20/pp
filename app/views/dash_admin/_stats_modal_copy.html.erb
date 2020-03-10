@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div id="myModal" class="modal status-modal fade" role="dialog">
         <div class="inner">
-            <div style="position: relative;">
+            <div style="width: 100vh;position: relative;">
                 <button type="button" class="close">&times;</button>
                 <div class="modal-dialog">
                     <!-- Modal content-->
@@ -17,17 +17,11 @@
                                     <tr>
                                         <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 5%;"></th>
                                         <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 30%;">Name</th>
-
                                         <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%; text-align: center; padding-right: 20px;">Ges</th>
-                                        <% rating_names_org = team_users_rating_names.select{|rating| (!rating.start_with? 'change') && (rating != 'ges')} %>                                        
-                                        <% rating_names = team_users_rating_names.select{|rating| (!rating.start_with? 'change') && (rating != 'ges')}.map {|rating| rating.downcase}.sort{|x,y| x<=>y} %>
-                                        <% rating_names.each do |rating_name| %>
-                                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;"><%= rating_name.titleize %></th>
-                                        <% end %>
-                                        <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Spon</th> -->
-                                        <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Korp</th> -->
-                                        <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Krea</th> -->
-                                        <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Rhet</th> -->
+                                        <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Spon</th>
+                                        <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Korp</th>
+                                        <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Krea</th>
+                                        <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Rhet</th>
                                         <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/gold.png", style="width: 20px"></th>
                                         <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/silver.png", style="width: 20px"></th>
                                         <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/bronze.png", style="width: 20px"></th>
@@ -38,9 +32,10 @@
                                             <td style="padding: 0 10px;width: 5%;"></td>
                                             <td style="padding: 0 10px;width: 30%;"></td>
                                             <td style="padding: 0 10px;width: 10%;"></td>
-                                            <% rating_names.each do |rating_name| %>
-                                                <td style="padding: 0 10px;width: 10%;"></td>
-                                            <% end %>
+                                            <td style="padding: 0 10px;width: 10%;"></td>
+                                            <td style="padding: 0 10px;width: 10%;"></td>
+                                            <td style="padding: 0 10px;width: 10%;"></td>
+                                            <td style="padding: 0 10px;width: 10%;"></td>
                                             <td style="padding: 0 10px;width: 5%;"></td>
                                             <td style="padding: 0 10px;width: 5%;"></td>
                                             <td style="padding: 0 10px;width: 5%;"></td>
@@ -50,39 +45,36 @@
                             </div>
                             <div id="team-users" class="table-scroll table-scroll-live">
                             <table style="width: 100%">
-                                    <tbody>
-                                        <% team_users.each.with_index(1) do |user,i| %>
-                                        <tr>
-                                            <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= i %>.</td>
-                                            <td style="padding: 10px; text-align: left; width: 30%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= "#{user[:fname]} #{user[:lname]}" %></td>
-                                            <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>">
-                                                
-                                                <% ges = user[:ges].present? ? user[:ges] : 0 %>
-                                                <% color_value = number_with_precision(user[:ges].present? ? user[:ges].to_f / 100.0 : 0.0, precision:1) %>
-                                                <div>
-                                                    <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                                                        <div class="<%= color_value %> c100 p<%= ges.round %> center" style="font-size: 5vh;line-height: 6vh;font-weight: 600;margin: 0 !important;">
-                                                            <span class="ges-rating" style="color: #000000 !important;"><%= ((number_with_precision user[:ges].to_f / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges].to_f / 10, precision: 1) %></span>
-                                                            <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                                                        </div>
+                                <tbody>
+                                    <% team_users.each.with_index(1) do |user,i| %>
+                                    <tr>
+                                        <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= i %>.</td>
+                                        <td style="padding: 10px; text-align: left; width: 30%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= "#{user[:fname]} #{user[:lname]}" %></td>
+                                        <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>">
+                                            <!-- <div class="rating">
+                                                <%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %>
+                                            </div> -->
+                                            <% ges = user[:ges].present? ? user[:ges] : 0 %>
+                                            <% color_value = number_with_precision(user[:ges].present? ? user[:ges].to_f / 100.0 : 0.0, precision:1) %>
+                                            <div>
+                                                <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                                                    <div class="<%= color_value %> c100 p<%= ges.round %> center" style="font-size: 5vh;line-height: 6vh;font-weight: 600;margin: 0 !important;">
+                                                        <span class="ges-rating" style="color: #000000 !important;"><%= ((number_with_precision user[:ges] / 10, precision: 1) == "10.0") ? 10 : (number_with_precision user[:ges] / 10, precision: 1) %></span>
+                                                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                                                     </div>
                                                 </div>
-                                            </td>
-                                            <% rating_names.each do |rating_name| %>
-                                                <% @index_value = nil %>
-                                                <% rating_names_org.each_with_index do |rating_org, index| %>
-                                                    <% if rating_org.downcase == rating_name %>
-                                                        <% @index_value = index %>
-                                                    <% end %>
-                                                <% end %>
-                                                <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= (@index_value.present? && user[rating_names_org[@index_value].to_sym].present?) ? (number_with_precision user[rating_names_org[@index_value].to_sym].to_f / 10, precision: 1) : 0.0 %></td>
-                                            <% end %>
-                                            <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:gold] %></td>
-                                            <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:silver] %></td>
-                                            <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:bronze] %></td>
-                                        </tr>
-                                        <% end %>
-                                    </tbody>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:spon] / 10, precision: 1 %></td>
+                                        <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:rhetoric] / 10, precision: 1 %></td>
+                                        <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:creative] / 10, precision: 1 %></td>
+                                        <td style="padding: 10px; text-align: left; width: 10%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= number_with_precision user[:body] / 10, precision: 1 %></td>
+                                        <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:gold] %></td>
+                                        <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:silver] %></td>
+                                        <td style="padding: 10px; text-align: left; width: 5%; <%= i == 1 ? 'border-top: 0' : 'border-top: 1px solid #dfe1e5;' %>"><%= user[:bronze] %></td>
+                                    </tr>
+                                    <% end %>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -169,7 +161,7 @@
     }
 
     .status-modal .modal-dialog {
-        /* max-width: 100vh; */
+        max-width: 100vh;
         width: 100%;
         margin: 0 auto;
     }
@@ -230,7 +222,7 @@
     .status-modal table th:nth-child(2) {
         width: 25vh;
         width: 30%;
-        /* word-break: break-word; */
+        word-break: break-word;
     }
 
     .status-modal table td:nth-child(3) {
@@ -277,11 +269,6 @@
     .table-scroll {
         height: 31vh;
         position: relative;
-    }
-    @media (min-width: 576px) {
-        .modal-dialog {
-            max-width: unset !important;
-        }
     }
 </style>
     

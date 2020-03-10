@@ -270,6 +270,7 @@ Rails.application.routes.draw do
     
     #Stats
     get 'admin/dash/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_user_stats'
+    
     get 'admin/dash/users/:user_id/stats/compare/:user2_id', to: 'dash_admin#user_stats_compare', as: 'dash_admin_user_stats_compare'
     get 'admin/dash/teams/:team_id/users/:user_id/stats', to: 'dash_admin#user_stats', as: 'dash_admin_team_user_stats'
     
