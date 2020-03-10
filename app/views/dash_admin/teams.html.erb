@@ -187,7 +187,7 @@
                         <% else %>
                         <td><a class="username-link" href="<%= dash_admin_user_stats_path(u.id) %>"><div class="circle"></div><%= (u.fname.present? ? u.fname : "") + " " + (u.lname.present? ? u.lname : "") %></a></td>
                         <% end %>
-                        <td><%= u.turns.count %></td>
+                        <td><%= u.turn_rating_criteria.present? ? u.turn_rating_criteria.where(name: 'ges').count : 0 %></td>
                         <td>
                         	<% if u.user_rating_criteria.present? && !u.user_rating_criteria.find_by(name: 'ges')&.value.nil? %>
                         		<div class="circle" id="user_<%= u.id %>"></div>
