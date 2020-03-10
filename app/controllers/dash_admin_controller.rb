@@ -1,7 +1,7 @@
 class DashAdminController < ApplicationController
   before_action :authenticate_admin!, :set_admin , :is_activated, unless: :skip_action?
   before_action :set_team, only: [:games, :team_stats, :team_users, :compare_user_stats,:team_stats_share]
-  before_action :set_user, only: [:user_stats, :compare_user_stats, :user_stats_compare]
+  before_action :set_user, only: [:user_stats, :user_stats_copy, :compare_user_stats, :user_stats_compare]
   # skip_before_action :check_expiration_date, only: [:billing, :user_list]
   include ApplicationHelper
   include ActionView::Helpers::NumberHelper
@@ -35,144 +35,211 @@ class DashAdminController < ApplicationController
   #Stats
 
   def user_stats
-
-    if @user.turns.count == 0 || !@user.user_rating.present?
+    if @user.turns.count == 0 || !@user.user_rating_criteria.present?
       flash[:pop_up] = 'Der Spieler hat noch keine Statisiken!'
       redirect_to dash_admin_teams_path
       return
     end
     @users = @admin.users.all
     @turns = @user.turns.all
-    @user_rating = @user.user_rating
-    @turn_ratings = @user.turn_ratings.order('created_at ASC')
+    @user_rating_criteria = @user.user_rating_criteria.order('LOWER(name) ASC')
+    @turn_ratings = @user.turn_rating_criteria
     @date = @turn_ratings.first&.created_at&.beginning_of_day
     @days = 1;
-    @turn_ratings.each do |tr|
-        bod = tr.created_at.beginning_of_day
-        if @date != bod
-            @date = bod
-            @days = @days + 1
-        end
+    @ges_ratings = @turn_ratings.where(name: 'ges')
+    @ges_ratings.each do |gr|
+      bod = gr.created_at.beginning_of_day
+      if @date != bod
+          @date = bod
+          @days = @days + 1
+      end
     end
     @user_ratings = []
     @users.each do |u|
-        if u.user_rating
-          @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges.present? ? u.user_rating.ges : 0 }
+        if u.user_rating_criteria
+          ges_rating = u.user_rating_criteria.find_by_name('ges')
+          @user_ratings << {user_id: u.id, fname: u.fname, rating: ges_rating.present? ? ges_rating.value : 0 }
         end
     end
-
+    
     @team = @user.teams.first
-    @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
+    @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_rating_criteria, :turns).distinct
     @reviewed_videos = @team_userss.map do |user| 
       user.turns.where.not(recorded_pitch: nil)
     end
     @reviewed_videos.flatten!
     @reviewed_videos.sort_by! {|t| t.created_at}
     @reviewed_videos.reverse!
-    
+
     @team_users = []
+    @team_user_rating_names = []
     @team_userss.each do |u|
-      ges =  u.user_rating&.ges.present? ? u.user_rating.ges.to_f : 0.0
-      spon = u.user_rating&.spontan.present? ? u.user_rating.spontan.to_f : 0.0
-      creative =  u.user_rating&.creative.present? ? u.user_rating.creative.to_f : 0.0
-      rhetoric = u.user_rating&.rhetoric.present? ? u.user_rating.rhetoric.to_f : 0.0
-      body = u.user_rating&.body.present? ? u.user_rating.body.to_f : 0.0
-      average =  (ges + spon + creative + rhetoric + body) / 5
-      @team_users << {user_id: u.id, fname: u.fname, lname: u.lname, ges: ges, spon: spon, rhetoric: rhetoric, creative: creative, body: body, average: average, gold: u.gold_count, silver: u.silver_count, bronze: u.bronze_count}
+      user_rating_data = {}
+      u.user_rating_criteria.each do |rating|
+        user_rating_data[rating[:name].to_sym] = rating[:value]
+          unless @team_user_rating_names.include? rating[:name]
+            @team_user_rating_names << rating[:name]
+          end
+      end
+      if user_rating_data.present?
+        average = user_rating_data.values.sum / user_rating_data.length
+        @team_users << user_rating_data.merge({user_id: u.id, fname: u.fname, lname: u.lname, average: average, gold: u.gold_count, silver: u.silver_count, bronze: u.bronze_count})
+      end
     end
     @team_users = @team_users.sort_by {|u| -u[:average]}
 
+    @turn_rating_names = []
     @user_ratings.sort_by{|e| -e[:rating] if e[:rating].present? }
-    # @chartdata = @turn_ratings.map{|t| {turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn_pitch: t.turn.recorded_pitch?}}
     @chartdata = []
-    @turn_ratings.each do |t|
-      if t.present?
-        turn_pitch = t.turn.recorded_pitch?
-      else
-        turn_pitch = false
+    
+    uniq_turn_ids = @turn_ratings.pluck(:turn_id).uniq
+    uniq_turn_ids.each do |turn_id|
+      rating_data = {}
+      turn_ratingss = @turn_ratings.where(turn_id: turn_id)
+      turn_ratingss.each do |tr|
+        rating_data[tr[:name].to_sym] = tr[:value]
+          unless @turn_rating_names.include? tr[:name]
+            @turn_rating_names << tr[:name]
+          end
       end
-      @chartdata << {turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn_pitch: turn_pitch}
+      turn_pitch = turn_ratingss.first.turn.recorded_pitch?
+      @chartdata << rating_data.merge({turn_id: turn_id, date: turn_ratingss.first.created_at.strftime("%d.%m.%Y"), turn_pitch: turn_pitch})
     end
   end
     
   def user_stats_compare
     @user2 = User.find(params[:user2_id])
     if @user.turns.count == 0 || @user2.turns.count == 0
-	  flash[:pop_up] = 'Der Spieler hat noch keine Statisiken!'
+	    flash[:pop_up] = 'Der Spieler hat noch keine Statisiken!'
       redirect_to dash_admin_teams_path
       return
     end
     @users = @admin.users.all
     @turns = @user.turns.all
-    @user_rating = @user.user_rating
-    @turn_ratings = @user.turn_ratings.order('created_at ASC')
-    @date = @turn_ratings.first&.created_at.beginning_of_day
-    @days = 1
-    @turn_ratings.each do |tr|
-      bod = tr.created_at.beginning_of_day
+    @user_rating_criteria = @user.user_rating_criteria
+    @turn_ratings = @user.turn_rating_criteria
+    @date = @turn_ratings.first&.created_at&.beginning_of_day
+    @days = 1;
+    @ges_ratings = @turn_ratings.where(name: 'ges')
+    @ges_ratings.each do |gr|
+      bod = gr.created_at.beginning_of_day
       if @date != bod
-        @date = bod
-        @days = @days + 1
+          @date = bod
+          @days = @days + 1
       end
     end
     @user_ratings = []
     @users.each do |u|
-      if u.user_rating
-        @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating.ges.present? ? u.user_rating.ges : 0}
-      end
+        if u.user_rating_criteria
+          ges_rating = u.user_rating_criteria.find_by_name('ges')
+          @user_ratings << {user_id: u.id, fname: u.fname, rating: ges_rating.present? ? ges_rating.value : 0 }
+        end
     end
-
-
+    
     @team = @user.teams.first
-    @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
+    @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_rating_criteria, :turns).distinct
     @reviewed_videos = @team_userss.map do |user| 
       user.turns.where.not(recorded_pitch: nil)
     end
     @reviewed_videos.flatten!
     @reviewed_videos.sort_by! {|t| t.created_at}
     @reviewed_videos.reverse!
+
     @team_users = []
+    @team_user_rating_names = []
     @team_userss.each do |u|
-      ges =  u.user_rating&.ges.present? ? u.user_rating.ges.to_f : 0.0
-      spon = u.user_rating&.spontan.present? ? u.user_rating.spontan.to_f : 0.0
-      creative =  u.user_rating&.creative.present? ? u.user_rating.creative.to_f : 0.0
-      rhetoric = u.user_rating&.rhetoric.present? ? u.user_rating.rhetoric.to_f : 0.0
-      body = u.user_rating&.body.present? ? u.user_rating.body.to_f : 0.0
-      average =  (ges + spon + creative + rhetoric + body) / 5
-      @team_users << {user_id: u.id, fname: u.fname, lname: u.lname, ges: ges, spon: spon, rhetoric: rhetoric, creative: creative, body: body, average: average, gold: u.gold_count, silver: u.silver_count, bronze: u.bronze_count}
+      user_rating_data = {}
+      u.user_rating_criteria.each do |rating|
+        user_rating_data[rating[:name].to_sym] = rating[:value]
+          unless @team_user_rating_names.include? rating[:name]
+            @team_user_rating_names << rating[:name]
+          end
+      end
+      if user_rating_data.present?
+        average = user_rating_data.values.sum / user_rating_data.length
+        @team_users << user_rating_data.merge({user_id: u.id, fname: u.fname, lname: u.lname, average: average, gold: u.gold_count, silver: u.silver_count, bronze: u.bronze_count})
+      end
     end
     @team_users = @team_users.sort_by {|u| -u[:average]}
 
+    @user_ratings.sort_by{|e| -e[:rating] if e[:rating].present? }
+    @chartdata = [] 
 
-    @user_ratings.sort_by{|e| -e[:rating]}
-    @chartdata = []
-	@turnrating2 = @user2.turn_ratings.order('created_at ASC')
-	@turnrating2 = @turnrating2.last(6)
-	i = 0
-    @turn_ratings.last(6).each do |t|
-      if t.present?
-        turn_pitch = t.turn.recorded_pitch?
-      else
-        turn_pitch = false
+	  # @turnrating2 = @user2.turn_rating_criteria
+	  # @turnrating2 = @turnrating2.last(6)
+	  # i = 0
+    # @turn_ratings.last(6).each do |t|
+    #   if t.present?
+    #     turn_pitch = t.turn.recorded_pitch?
+    #   else
+    #     turn_pitch = false
+    #   end
+    #   if @turnrating2[i]
+    #     @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn2_id: @turnrating2[i].turn_id, date2: @turnrating2[i].created_at.strftime("%d.%m.%Y"), ges2: @turnrating2[i].ges,  spontan2: @turnrating2[i].spontan, creative2: @turnrating2[i].creative, body2: @turnrating2[i].body, rhetoric2: @turnrating2[i].rhetoric, turn_pitch: turn_pitch}
+    #   else
+    #     @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn_pitch: turn_pitch}
+    #   end
+	  #   i = i + 1
+    # end
+
+    @turnratings2 = @user2.turn_rating_criteria
+    @turnratings2_ges = @turnratings2.where(name: 'ges').last(6)
+    @turn_ratings_ges = @turn_ratings.where(name: 'ges').last(6)
+    i = 0
+    @turn_ratings_ges.each_with_index do |turn_rating, index|
+      rating_data = {}
+      turn_ratingss = @turn_ratings.where(turn_id: turn_rating.turn_id).order('name ASC')
+      turn_ratingss.each do |tr|
+        rating_data[tr[:name].to_sym] = tr[:value]
       end
-      if @turnrating2[i]
-        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn2_id: @turnrating2[i].turn_id, date2: @turnrating2[i].created_at.strftime("%d.%m.%Y"), ges2: @turnrating2[i].ges,  spontan2: @turnrating2[i].spontan, creative2: @turnrating2[i].creative, body2: @turnrating2[i].body, rhetoric2: @turnrating2[i].rhetoric, turn_pitch: turn_pitch}
-      else
-        @chartdata << {game_id: t.game_id, turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric, turn_pitch: turn_pitch}
+      turn_ratingss_names = turn_ratingss.map(&:name)
+      ii = 0
+      turn_ratingss_names.each_with_index do |name, index|
+        if name != 'ges'
+          rating_data["name_#{ii}"] = name
+          ii += 1
+        end
       end
-	  i = i + 1
+      rating_data["names_count"] = turn_ratingss.count - 1
+
+      turn_pitch = turn_ratingss.first.turn.recorded_pitch?
+      if @turnratings2_ges[index].present?
+        rating_data2 = {}
+        turn_ratingss2 = @turnratings2.where(turn_id: @turnratings2_ges[index].turn_id).order('name ASC')
+        turn_ratingss_names2 = turn_ratingss2.map(&:name)
+        ii = 0
+        turn_ratingss_names2.each_with_index do |name, index|
+          if name != 'ges'        
+            rating_data2["name2_#{ii}"] = name
+            ii += 1
+          end
+        end
+        rating_data2["names2_count"] = turn_ratingss2.count - 1
+
+        turn_ratingss2.each do |tr|
+          rating_data2["#{tr[:name]}2".to_sym] = tr[:value]
+        end
+        merged_rating_data = rating_data2.merge(rating_data)
+        @chartdata << merged_rating_data.merge({game_id: turn_ratingss.first.game_id, turn_id: turn_rating.turn_id, date: turn_ratingss.first.created_at.strftime("%d.%m.%Y"), turn2_id: turn_ratingss2.first.turn_id, date2: turn_ratingss2.first.created_at.strftime("%d.%m.%Y"), turn_pitch: turn_pitch})
+      else
+        @chartdata << rating_data.merge({game_id: turn_ratingss.first.game_id, turn_id: turn_rating.turn_id, date: turn_ratingss.first.created_at.strftime("%d.%m.%Y"), turn_pitch: turn_pitch})
+      end
+      i = i + 1
     end
+    
   end
     
   def team_stats
-    @team_rating = TeamRating.find_by(team_id: @team.id)
-    if @team_rating.nil?
-	  flash[:pop_up] = 'Das Team hat noch keine Statisiken!'
+    @team_rating_criteria = TeamRatingCriterium.where(team_id: @team.id).order('LOWER(name) ASC')
+    if @team_rating_criteria.nil?
+	    flash[:pop_up] = 'Das Team hat noch keine Statisiken!'
       redirect_to dash_admin_teams_path
       return
     end
     @games = Game.where(team_id: @team.id)
-    @game_ratings = GameRating.where(team_id: @team.id).all.order('created_at ASC')
+    # @game_ratings = GameRatingCriterium.where(team_id: @team.id).all.order('created_at ASC')
+    @game_ratings = GameRatingCriterium.where(team_id: @team.id).all
+    @ges_ratings = @game_ratings.where(name: 'ges')
     @date = @games.first.created_at.beginning_of_day
     @days = 1
     @games.each do |g|
@@ -182,47 +249,66 @@ class DashAdminController < ApplicationController
             @days = @days + 1
         end
     end
-    @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_ratings, :turns).distinct
+    @team_userss = @team.users.select(%Q"#{Turn::TURN_QUERY}").includes(:turn_rating_criteria, :turns).distinct
     @reviewed_videos = @team_userss.map do |user| 
       user.turns.where.not(recorded_pitch: nil)
     end
     @reviewed_videos.flatten!
     @reviewed_videos.sort_by! {|t| t.created_at}
-    @reviewed_videos.reverse!
+    @reviewed_videos.reverse!    
+
     @teams = @admin.teams.all
     @user_ratings = []
-    @team_users = []
     @team.users.each do |u|
-        if u.user_rating
-            @user_ratings << {user_id: u.id, fname: u.fname, rating: u.user_rating&.ges.present? ? u.user_rating.ges : 0}
+        if u.user_rating_criteria
+          ges_rating = u.user_rating_criteria.find_by_name('ges')
+          @user_ratings << {user_id: u.id, fname: u.fname, rating: ges_rating.present? ? ges_rating.value : 0 }
         end
-        # @selected_user = @team_userss.select { |user| user.id == u.id }.first
-        # @team_users << {user_id: u.id, fname: u.fname, lname: u.lname, ges: u.user_rating&.ges.present? ? u.user_rating.ges.to_f : 0.0, spon: u.user_rating&.spontan.present? ? u.user_rating.spontan.to_f : 0.0, rhetoric: u.user_rating&.rhetoric.present? ? u.user_rating.rhetoric.to_f : 0.0, creative: u.user_rating&.creative.present? ? u.user_rating.creative.to_f : 0.0, body: u.user_rating&.body.present? ? u.user_rating.body.to_f : 0.0, gold: @selected_user.gold_count, silver: @selected_user.silver_count, bronze: @selected_user.bronze_count}
     end
+    @team_users = []
+    @team_user_rating_names = []
     @team_userss.each do |u|
-      ges =  u.user_rating&.ges.present? ? u.user_rating.ges.to_f : 0.0
-      spon = u.user_rating&.spontan.present? ? u.user_rating.spontan.to_f : 0.0
-      creative =  u.user_rating&.creative.present? ? u.user_rating.creative.to_f : 0.0
-      rhetoric = u.user_rating&.rhetoric.present? ? u.user_rating.rhetoric.to_f : 0.0
-      body = u.user_rating&.body.present? ? u.user_rating.body.to_f : 0.0
-      average =  (ges + spon + creative + rhetoric + body) / 5
-      @team_users << {user_id: u.id, fname: u.fname, lname: u.lname, ges: ges, spon: spon, rhetoric: rhetoric, creative: creative, body: body, average: average, gold: u.gold_count, silver: u.silver_count, bronze: u.bronze_count}
+      user_rating_data = {}
+      u.user_rating_criteria.each do |rating|
+        user_rating_data[rating[:name].to_sym] = rating[:value]
+          unless @team_user_rating_names.include? rating[:name]
+            @team_user_rating_names << rating[:name]
+          end
+      end
+      if user_rating_data.present?
+        average = user_rating_data.values.sum / user_rating_data.length
+        @team_users << user_rating_data.merge({user_id: u.id, fname: u.fname, lname: u.lname, average: average, gold: u.gold_count, silver: u.silver_count, bronze: u.bronze_count})
+      end
     end
     @team_users = @team_users.sort_by {|u| -u[:average]}
-    @user_ratings.sort_by{|e| -e[:rating]}
-    # @chartdata = @game_ratings.map{|g| {game_id: g.game_id, date: g.created_at.strftime("%d.%m.%Y"), ges: g.ges, spontan: g.spontan, creative: g.creative, body: g.body, rhetoric: g.rhetoric}}
+    @user_ratings.sort_by{|e| -e[:rating] if e[:rating].present? }
+        
+    @game_rating_names = []
     @chartdata = []
-    @game_ratings.each do |g|
-      turn_rating = TurnRating.where(game_id: g.game_id).first
-      if turn_rating.present?
-        turn_pitch = turn_rating.turn.recorded_pitch?
-      else
-        turn_pitch = false
+    uniq_game_ids = @game_ratings.pluck(:game_id).uniq
+    uniq_game_ids.each do |game_id|
+      rating_data = {}
+      game_ratingss = @game_ratings.where(game_id: game_id)
+      game_ratingss.each do |gr|
+        rating_data[gr[:name].to_sym] = gr[:value]
+          unless @game_rating_names.include? gr[:name]
+            @game_rating_names << gr[:name]
+          end
       end
-      @chartdata << {game_id: g.game_id, turn_id: turn_rating&.turn_id, date: g.created_at.strftime("%d.%m.%Y"), ges: g.ges, spontan: g.spontan, creative: g.creative, body: g.body, rhetoric: g.rhetoric, turn_pitch: turn_pitch}
+      turn_ratingss_names = game_ratingss.map(&:name)
+      ii = 0
+      turn_ratingss_names.each_with_index do |name, index|
+        if name != 'ges'        
+          rating_data["name_#{ii}"] = name
+          ii += 1
+        end
+      end
+      rating_data["names_count"] = turn_ratingss_names.count - 1
+      turn_rating = TurnRatingCriterium.where(game_id: game_id).first
+      turn_pitch = turn_rating.present? ? turn_rating.turn.recorded_pitch? : false
+      @chartdata << rating_data.merge({game_id: game_id, turn_id: turn_rating.turn_id, date: game_ratingss.first.created_at.strftime("%d.%m.%Y"), turn_pitch: turn_pitch})
     end
   end
-
     
   #Customize
   def customize

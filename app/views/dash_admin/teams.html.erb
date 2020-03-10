@@ -23,9 +23,9 @@
                         <td onclick="selectTeam(<%= t.id %>)" id="search" ><%= t.name %></td>
                         <td onclick="selectTeam(<%= t.id %>)"><%= t.users.count %></td>
                         <td onclick="selectTeam(<%= t.id %>)">
-                        	<% if t.team_rating.present? && !t.team_rating.ges.nil? %>
+                        	<% if t.team_rating_criteria.present? && !t.team_rating_criteria.find_by(name: 'ges')&.value.nil? %>
                         		<div class="circle" id="team_<%= t.id %>"></div>
-                        		<div class="rating"><%= t.team_rating.ges / 10.0 %></div>
+                        		<div class="rating"><%= t.team_rating_criteria.find_by(name: 'ges').value / 10.0 %></div>
                         	<% else %>
                         		<div class="rating">0</div>
                         	<% end %>
@@ -189,9 +189,9 @@
                         <% end %>
                         <td><%= u.turns.count %></td>
                         <td>
-                        	<% if u.user_rating.present? && !u.user_rating.ges.nil? %>
+                        	<% if u.user_rating_criteria.present? && !u.user_rating_criteria.find_by(name: 'ges')&.value.nil? %>
                         		<div class="circle" id="user_<%= u.id %>"></div>
-                        		<div class="rating"><%= u.user_rating.ges / 10.0 %></div>
+                        		<div class="rating"><%= u.user_rating_criteria.find_by(name: 'ges').value / 10.0 %></div>
                         	<% else %>
                         		<div class="rating">0</div>
                         	<% end %>
@@ -362,13 +362,13 @@
 		bar.animate(value);
 	}
 	<% @teams.each do |t| %>
-		<% if t.team_rating.present? && !t.team_rating.ges.nil? %>
-			drawCircle(<%= t.team_rating.ges / 100.0 %>, '#team_<%= t.id %>');
+		<% if t.team_rating_criteria.present? && !t.team_rating_criteria.find_by(name: 'ges')&.value.nil? %>
+			drawCircle(<%= t.team_rating_criteria.find_by(name: 'ges').value / 100.0 %>, '#team_<%= t.id %>');
 		<% end %>
 	<% end %>
 	<% @users.each do |u| %>
-		<% if u.user_rating.present? && !u.user_rating.ges.nil? %>
-			drawCircle(<%= u.user_rating.ges / 100.0 %>, '#user_<%= u.id %>');
+		<% if u.user_rating_criteria.present? && !u.user_rating_criteria.find_by(name: 'ges')&.value.nil? %>
+			drawCircle(<%= u.user_rating_criteria.find_by(name: 'ges').value / 100.0 %>, '#user_<%= u.id %>');
 		<% end %>
 	<% end %>
 	function toggleDeleteUserModal() {

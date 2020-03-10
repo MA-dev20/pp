@@ -4,11 +4,11 @@
     <div class="select-team custom-select" onclick="teamSelect()">Alle Teams
         <div class="teams" id="scrollTeams" >
             <% @teams.each do |t| %>
-                <% if t.team_rating %>
+                <% if t.team_rating_criteria.present? %>
                     <div class="team" onmouseover="teamSelectUser(this)" onmouseout="teamSelectUserHide(this)"><%= link_to t.name, dash_admin_team_stats_path(t.id) %> <i class="fas fa-caret-left"></i>
                         <div class="users" id="scrollUsers">
                             <% t.users.each do |u| %>
-                                <% if u.user_rating %>
+                                <% if u.user_rating_criteria.present? %>
                                     <div class="user"><%= link_to (u.fname.present? ? u.fname : "") + ' ' + (u.lname.present? ? u.lname : ""), dash_admin_user_stats_path(u.id) %></div>
                                 <% end %>
                             <% end %>
@@ -20,203 +20,111 @@
     </div>
 </div>
 
-<div class="rating-overview">
-    <div class="karte active" onclick="ratingGes()" id="gesamt">
-        <div class="icon-circle">
-            <i class="fas fa-star"></i>
-        </div>
-        <!-- <div class="rating">
-            <%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %>
-        </div> -->
-        <% ges = @team_rating.ges.present? ? @team_rating.ges : 0 %>
-        <div>
-            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="right-border">
-                    <div id="chart_ges" class="c100 p<%= ges %> center" style="font-size: 12vh;">
-                        <span class="rating-1"><%= @team_rating.ges.present? ? ((@team_rating.ges / 10.0 == 10.0) ? '10' : (@team_rating.ges / 10.0)) : '0.0' %></span>
-                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+<div class="overly-me">
+    <div class="rating-wrapper">
+        <div class="rating-overview">
+            <% @team_ratings = @team_rating_criteria.select { |rating| (!rating.name.start_with? 'change') && (rating.name != 'ges')} %>
+            <% team_rating_ges = @team_rating_criteria.select { |rating| rating.name == 'ges'}.first %>
+            <div class="karte rating-block active" id="ges">
+                <div class="icon-circle">
+                    <i class="fas fa-star"></i>
+                </div>
+                <% rating_value = team_rating_ges.value.present? ? team_rating_ges.value : 0 %>
+                <div>
+                    <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                        <div class="right-border">
+                            <div class="c100 p<%= rating_value %> center" style="font-size: 12vh;">
+                                <span class="rating-1"><%= team_rating_ges.value.present? ? ((team_rating_ges.value / 10.0 == 10.0) ? '10' : (team_rating_ges.value / 10.0)) : '0.0' %></span>
+                                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                
+                <label>Gesamt</label>
+                <% change_rating = @team_rating_criteria.find_by_name("change_ges") %>
+                <% if change_rating.value.present? %>
+                <% if change_rating.value > 0 %>
+                    <div class="change up">
+                        <i class="fas fa-caret-up"></i>
+                        <%= (change_rating.value / 10.0).round(1) %>
+                    </div>
+                <% elsif change_rating.value < 0 %>
+                    <div class="change down">
+                        <i class="fas fa-caret-down"></i>
+                        <%= (change_rating.value / 10.0).round(1) %>
+                    </div>
+                <% else %>
+                    <div class="change equal">
+                        <i class="fas fa-equals"></i>
+                        <%= (change_rating.value / 10.0).round(1) %>
+                    </div>
+                <% end %>
+                <% end %>
+            </div>
+            <% @team_ratings.each_with_index do |team_rating, index| %>
+                <div class="karte rating-block <%= team_rating.name == 'ges' ? 'active' : '' %>" id="<%= team_rating.name %>">
+                    <div class="icon-circle">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <% rating_value = team_rating.value.present? ? team_rating.value : 0 %>
+                    <div>
+                        <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                            <div class="right-border">
+                                <div class="c100 p<%= rating_value %> center" style="font-size: 12vh;">
+                                    <span class="rating-1"><%= team_rating.value.present? ? ((team_rating.value / 10.0 == 10.0) ? '10' : (team_rating.value / 10.0)) : '0.0' %></span>
+                                    <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <label><%= team_rating.name == 'ges' ? 'Gesamt' : team_rating.name %></label>
+                    <% change_rating = @team_rating_criteria.find_by_name("change_#{team_rating.name}") %>
+                    <% if change_rating.value.present? %>
+                    <% if change_rating.value > 0 %>
+                        <div class="change up">
+                            <i class="fas fa-caret-up"></i>
+                            <%= (change_rating.value / 10.0).round(1) %>
+                        </div>
+                    <% elsif change_rating.value < 0 %>
+                        <div class="change down">
+                            <i class="fas fa-caret-down"></i>
+                            <%= (change_rating.value / 10.0).round(1) %>
+                        </div>
+                    <% else %>
+                        <div class="change equal">
+                            <i class="fas fa-equals"></i>
+                            <%= (change_rating.value / 10.0).round(1) %>
+                        </div>
+                    <% end %>
+                    <% end %>
+                </div>
+            <% end %>
+            <div class="karte rating-block hidden-me">
+                <div class="icon-circle">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div>
+                    <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                        <div class="right-border">
+                            <div class="c100 p0 center" style="font-size: 12vh;">
+                                <span class="rating-1"></span>
+                                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <label>Gesamt</label>
+                <div class="change up">
+                    <i class="fas fa-caret-up"></i>
                 </div>
             </div>
         </div>
-        
-        <label>Gesamt</label>
-        <% if @team_rating.change_ges.present? %>
-        <% if @team_rating.change_ges > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@team_rating.change_ges / 10.0).round(1) %>
-            </div>
-        <% elsif @team_rating.change_ges < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@team_rating.change_ges / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@team_rating.change_ges / 10.0).round(1) %>
-            </div>
-        <% end %>
-        <% end %>
-    </div>
-    
-    <div class="karte" onclick="ratingSpontan()" id="spontan">
-        <div class="icon-circle">
-            <i class="fas fa-bolt"></i>
-        </div>
-        <!-- <div class="rating">
-            <%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '0.0' %>
-        </div> -->
-        <% spontan = @team_rating.spontan.present? ? @team_rating.spontan : 0 %>
-        <div>
-            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="right-border">
-                    <div id="chart_spontan" class="c100 p<%= spontan %> center" style="font-size: 12vh;">
-                        <span class="rating-1"><%= @team_rating.spontan.present? ? ((@team_rating.spontan / 10.0 == 10.0) ? '10' : (@team_rating.spontan / 10.0)) : '0.0' %></span>
-                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <label>Spontanität</label>
-        <% if @team_rating.change_spontan.present? %>
-        <% if @team_rating.change_spontan > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@team_rating.change_spontan / 10.0).round(1) %>
-            </div>
-        <% elsif @team_rating.change_spontan < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@team_rating.change_spontan / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@team_rating.change_spontan / 10.0).round(1) %>
-            </div>
-        <% end %>
-        <% end %>
-    </div>
-    
-    <div class="karte" onclick="ratingCreative()" id="creative">
-        <div class="icon-circle">
-          	<i class="fas fa-lightbulb"></i>
-        </div>
-        <!-- <div class="rating">
-            <%= @team_rating.creative.present? ? ((@team_rating.creative / 10.0 == 10.0) ? '10' : (@team_rating.creative / 10.0)) : '0.0' %>
-        </div> -->
-        <% creative = @team_rating.creative.present? ? @team_rating.creative : 0 %>
-        <div>
-            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="right-border">
-                    <div id="chart_creative" class="c100 p<%= creative %> center" style="font-size: 12vh;">
-                        <span class="rating-1"><%= @team_rating.creative.present? ? ((@team_rating.creative / 10.0 == 10.0) ? '10' : (@team_rating.creative / 10.0)) : '0.0' %></span>
-                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <label>Kreativität</label>
-        <% if @team_rating.change_creative.present? %>
-        <% if @team_rating.change_creative > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@team_rating.change_creative / 10.0).round(1) %>
-            </div>
-        <% elsif @team_rating.change_creative < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@team_rating.change_creative / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@team_rating.change_creative / 10.0).round(1) %>
-            </div>
-        <% end %>
-        <% end %>
-    </div>
-    
-    <div class="karte" onclick="ratingBody()" id="body">
-        <div class="icon-circle">
-            <i class="fas fa-child"></i>
-        </div>
-        <!-- <div class="rating">
-            <%= @team_rating.body.present? ? ((@team_rating.body / 10.0 == 10.0) ? '10' : (@team_rating.body / 10.0)) : '' %>
-        </div> -->
-        <% body = @team_rating.body.present? ? @team_rating.body : 0 %>
-        <div>
-            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="right-border">
-                    <div id="chart_body" class="c100 p<%= body %> center" style="font-size: 12vh;">
-                        <span class="rating-1"><%= @team_rating.body.present? ? ((@team_rating.body / 10.0 == 10.0) ? '10' : (@team_rating.body / 10.0)) : '' %></span>
-                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <label>Körpersprache</label>
-        <% if @team_rating.change_body.present? %>
-        <% if @team_rating.change_body > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@team_rating.change_body / 10.0).round(1) %>
-            </div>
-        <% elsif @team_rating.change_body < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@team_rating.change_body / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@team_rating.change_body / 10.0).round(1) %>
-            </div>
-        <% end %>
-        <% end %>
-    </div>
-    
-    <div class="karte" onclick="ratingRhet()" id="rhetoric">
-        <div class="icon-circle">
-           	<i class="fas fa-microphone"></i>
-        </div>
-        <!-- <div class="rating">
-            <%= @team_rating.rhetoric.present? ? ((@team_rating.rhetoric / 10.0 == '10.0') ? '10' : (@team_rating.rhetoric / 10.0)) : '' %>
-        </div> -->
-        <% rhetoric = @team_rating.rhetoric.present? ? @team_rating.rhetoric : 0 %>
-        <div>
-            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                <div class="right-border">
-                    <div id="chart_rhetorik" class="c100 p<%= rhetoric %> center" style="font-size: 12vh;">
-                        <span class="rating-1"><%= @team_rating.rhetoric.present? ? ((@team_rating.rhetoric / 10.0 == '10.0') ? '10' : (@team_rating.rhetoric / 10.0)) : '0.0' %></span>
-                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <label>Rhetorik</label>
-        <% if @team_rating.change_rhetoric.present? %>
-        <% if @team_rating.change_rhetoric > 0 %>
-            <div class="change up">
-                <i class="fas fa-caret-up"></i>
-                <%= (@team_rating.change_rhetoric / 10.0).round(1) %>
-            </div>
-        <% elsif @team_rating.change_rhetoric < 0 %>
-            <div class="change down">
-                <i class="fas fa-caret-down"></i>
-                <%= (@team_rating.change_rhetoric / 10.0).round(1) %>
-            </div>
-        <% else %>
-            <div class="change equal">
-                <i class="fas fa-equals"></i>
-                <%= (@team_rating.change_rhetoric / 10.0).round(1) %>
-            </div>
-        <% end %>
-        <% end %>
     </div>
 </div>
+
 
 <div class="heading">Details</div>
 
@@ -231,13 +139,13 @@
     </div>
     <div class="karte">
         <label for="">best score</label>
-        <% best_rating = number_with_precision(@game_ratings.reorder('ges DESC').first.ges.present? ? @game_ratings.reorder('ges DESC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
-        <div class="number best-rating"><%= (@game_ratings.reorder('ges DESC').first.ges.present? ? (@game_ratings.reorder('ges DESC').first.ges / 10.0) : 0.0) %></div>
+        <% best_rating = number_with_precision(@ges_ratings.reorder('value DESC').first.value.present? ? @ges_ratings.reorder('value DESC').first.value.to_f / 100.0 : 0.0, precision:1) %>
+        <div class="number best-rating"><%= (@ges_ratings.reorder('value DESC').first.value.present? ? (@ges_ratings.reorder('value DESC').first.value / 10.0) : 0.0) %></div>
     </div>
     <div class="karte">
         <label for="">worst score</label>
-        <% worst_rating = number_with_precision(@game_ratings.reorder('ges ASC').first.ges.present? ? @game_ratings.reorder('ges ASC').first.ges.to_f / 100.0 : 0.0, precision:1) %>
-        <div class="number worst-rating"><%= (@game_ratings.reorder('ges ASC').first.ges.present? ?  (@game_ratings.reorder('ges ASC').first.ges / 10.0) : 0.0) %></div>
+        <% worst_rating = number_with_precision(@ges_ratings.reorder('value ASC').first.value.present? ? @ges_ratings.reorder('value ASC').first.value.to_f / 100.0 : 0.0, precision:1) %>
+        <div class="number worst-rating"><%= (@ges_ratings.reorder('value ASC').first.value.present? ?  (@ges_ratings.reorder('value ASC').first.value / 10.0) : 0.0) %></div>
     </div>
 </div>
 
@@ -255,7 +163,7 @@
                        1.<%=  @team_users.first[:fname] %>
                     </div>
                     <div class="points">
-                       <%= number_with_precision @team_users.first[:ges] / 10, precision: 1 %>
+                       <%= number_with_precision @team_users.first[:ges].to_f / 10, precision: 1 %>
                     </div>
                 </div>
                 <% if @team_users.length > 1 %>
@@ -264,7 +172,7 @@
                         2.<%=  @team_users.second[:fname] %>
                     </div>
                     <div class="points">
-                        <%= number_with_precision @team_users.second[:ges] / 10, precision: 1 %>
+                        <%= number_with_precision @team_users.second[:ges].to_f / 10, precision: 1 %>
                     </div>
                 </div>
                 <% if @team_users.length > 2 %>
@@ -273,7 +181,7 @@
                        	3.<%=  @team_users.third[:fname] %>
                     </div>
                     <div class="points">
-                        <%= number_with_precision @team_users.third[:ges] / 10, precision: 1 %>
+                        <%= number_with_precision @team_users.third[:ges].to_f / 10, precision: 1 %>
                     </div>
                 </div>
                 <% else %>
@@ -326,83 +234,136 @@
 <div class="fullscren-blur" id="help-popup">
 </div>
 
-<%= render partial: 'stats_modal', locals: {team_id: @team.id, team_users: @team_users} %>
+<%= render partial: 'stats_modal', locals: {team_id: @team.id, team_users: @team_users, team_users_rating_names: @team_user_rating_names} %>
 
 
 <style>
 
-    .video-list {
-        cursor: pointer;
-    }
-
-    #videoList .top .video-img {
-        top: -1.5vh;
-        right: 0;
-        bottom: -1.5vh;
-        left: 0;
-    }
-
-    #videoList .fa-play {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        top: 1.7vh;
-    }
-
-    #videoList .top .play {
-        position: absolute;
-        top: 4.5vh;
-        left: 6.2vh;
-        height: 5.2vh;
-        width: 5.2vh;
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        line-height: 6.2vh;
-        text-align: center;
-        color: white;
-        font-size: 1.8vh;
-        align-items: center;
-    }
-
-    #videoList .top {
-        position: relative;
-        border-top-left-radius: 0.8vh;
-        border-top-right-radius: 0.8vh;
-        height: 14.5vh;
-        width: auto;
-        overflow: hidden;
-        border-radius: 0.8vh;
-    }
-
-    .video-box {
-        padding-top: 2vh;
-        text-align: center;
-    }
-
-    .video-box h6,
-    .video-box {
-        font-size: 1.8vh;
-    }
-
-    .video-box a {
-        padding-top: 1vh;
-        display: flex; 
-        justify-content: center; 
-        text-decoration: none; 
-        color: #16e2a5;
-    }
-
-    .rating-record {
-        cursor: pointer;
-        position: absolute;
-        right: -6.5vh;
-        top: 3vh;
-        width: 4vh;
-        height: 4vh;
-    }
-
-    
+        .rating-wrapper {
+            overflow-x: scroll;
+            width: 192vh;
+        }
+        
+        .rating-overview {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-y: hidden;
+            overflow-x: auto;
+        }
+        
+        .rating-overview .karte {
+            flex: 0 0 auto;
+        }
+        
+        .video-list {
+                cursor: pointer;
+            }
+        
+            #videoList .top .video-img {
+                top: -1.5vh;
+                right: 0;
+                bottom: -1.5vh;
+                left: 0;
+            }
+        
+            #videoList .fa-play {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                top: 1.7vh;
+            }
+        
+            #videoList .top .play {
+                position: absolute;
+                top: 4.5vh;
+                left: 6.2vh;
+                height: 5.2vh;
+                width: 5.2vh;
+                background-color: rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                line-height: 6.2vh;
+                text-align: center;
+                color: white;
+                font-size: 1.8vh;
+                align-items: center;
+            }
+        
+            #videoList .top {
+                position: relative;
+                border-top-left-radius: 0.8vh;
+                border-top-right-radius: 0.8vh;
+                height: 14.5vh;
+                width: auto;
+                overflow: hidden;
+                border-radius: 0.8vh;
+            }
+        
+            .video-box {
+                padding-top: 2vh;
+                text-align: center;
+            }
+        
+            .video-box h6,
+            .video-box {
+                font-size: 1.8vh;
+            }
+        
+            .video-box a {
+                padding-top: 1vh;
+                display: flex; 
+                justify-content: center; 
+                text-decoration: none; 
+                color: #16e2a5;
+            }
+        
+            .rating-record {
+                cursor: pointer;
+                position: absolute;
+                right: -6.5vh;
+                top: 8vh;
+                width: 4vh;
+                height: 4vh;
+            }
+        
+            .active .p0 .bar,
+            .active .p0 .fill {
+                border: none !important;
+            }
+            .overly-me {
+                width: 132.6vh;
+                margin: 0 auto;
+                position: relative;
+                min-height: 25vh;
+                display: block;
+            }
+            .overly-me:after {
+                content: '';
+                background-color: rgba(255, 255, 255, 0.59);
+                top: 0;
+                right: -28vh;
+                bottom: 0;
+                width: 20vh;
+                display: block;
+                position: absolute;
+                z-index: 1;
+            }
+            .rating-wrapper {
+                overflow-x: scroll;
+                width: 160vh;
+                position: absolute;
+            }
+            .rating-overview .karte:last-child {
+                margin-right: 20vh;
+            }
+            .hidden-me {
+                visibility: hidden;
+                width: 20vh !important;
+            }
+            #content {
+                overflow-x: hidden;
+            }
+            
 </style>
 
 <script>
@@ -411,79 +372,63 @@
         window.location.replace(url);
     }
 
-    function myColor(div) {
-        var class_name = 0
-        var val = 0
-    if(div == 'chart_ges') {
-        val = <%= number_with_precision(@team_rating.ges.present? ? @team_rating.ges.to_f / 100.0 : 0.0, precision:1) %>;
-        class_name = <%= ges %>
-    } else if(div == 'chart_spontan') {
-        val = <%= number_with_precision(@team_rating.spontan.present? ? @team_rating.spontan.to_f / 100.0 : 0.0, precision:1) %>;
-        class_name = <%= spontan %>
-    } else if(div == 'chart_creative') {
-        val = <%= number_with_precision(@team_rating.creative.present? ? @team_rating.creative.to_f / 100.0 : 0.0, precision:1) %>;
-        class_name = <%= creative %>
-    } else if(div == 'chart_body') {
-        val = <%= number_with_precision(@team_rating.body.present? ? @team_rating.body.to_f / 100.0 : 0.0, precision:1) %>;
-        class_name = <%= body %>
-    } else if(div == 'chart_rhetorik') {
-        val = <%= number_with_precision(@team_rating.rhetoric.present? ? @team_rating.rhetoric.to_f / 100.0 : 0.0, precision:1) %>;
-        class_name = <%= rhetoric %>
+    function myColor() {
+        let class_name = 0;
+        let val = 0;
+        <% @team_ratings.each do |team_rating| %>
+            class_name = <%= team_rating[:value].present? ? team_rating[:value] : 0 %>
+            val = <%= number_with_precision(team_rating[:value].present? ? team_rating[:value].to_f / 100.0 : 0.0, precision:1) %>;
+            if (val != 0.0) {
+                let color_value = '#fff';
+                if (val < 0.5 ) {
+                    color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+                } else {
+                    color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+                }
+                $(`.rating-overview .c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
+                $(`.rating-overview .c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
+                $(`.rating-overview .c100.p${class_name} .rating-1`).attr('style',`color: ${color_value}`);
+            }
+        <% end %>
     }
-    if (val != 0.0) {
-        if (val < 0.5 ) {
-            var color_value = '#'+(Math.round(255-(val*2))).toString(16)+(Math.round(107+(val*288))).toString(16)+(Math.round(108+(val*180))).toString(16);
+    myColor();
+
+    function ratingColor(class_name, rating) {
+        if (rating < 0.5 ) {
+            var color_value = '#'+(Math.round(255-(rating*2))).toString(16)+(Math.round(107+(rating*288))).toString(16)+(Math.round(108+(rating*180))).toString(16);
         } else {
-            var color_value = '#'+(Math.round(29+((1-val)*450))).toString(16)+(Math.round(218+((1-val)*66))).toString(16)+(Math.round(175+((1-val)*46))).toString(16);
+            var color_value = '#'+(Math.round(29+((1-rating)*450))).toString(16)+(Math.round(218+((1-rating)*66))).toString(16)+(Math.round(175+((1-rating)*46))).toString(16);
         }
-        $(`.rating-overview .c100.p${class_name} .bar`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`.rating-overview .c100.p${class_name} .fill`).attr('style',`border: 0.08em solid ${color_value}`)
-        $(`.rating-overview .c100.p${class_name} .rating-1`).attr('style',`color: ${color_value}`);
+        $(`.${class_name}`).attr('style',`color: ${color_value}`);
     }
-}
 
-myColor('chart_ges');
-myColor('chart_spontan');
-myColor('chart_creative');
-myColor('chart_body');
-myColor('chart_rhetorik');
-
-function ratingColor(class_name, rating) {
-    if (rating < 0.5 ) {
-        var color_value = '#'+(Math.round(255-(rating*2))).toString(16)+(Math.round(107+(rating*288))).toString(16)+(Math.round(108+(rating*180))).toString(16);
-    } else {
-        var color_value = '#'+(Math.round(29+((1-rating)*450))).toString(16)+(Math.round(218+((1-rating)*66))).toString(16)+(Math.round(175+((1-rating)*46))).toString(16);
-    }
-    $(`.${class_name}`).attr('style',`color: ${color_value}`);
-}
-
-var best_rating = <%= best_rating %>
-var worst_rating = <%= worst_rating %>
-ratingColor('best-rating', best_rating);
-ratingColor('worst-rating', worst_rating);
+    var best_rating = <%= best_rating %>
+    var worst_rating = <%= worst_rating %>
+    ratingColor('best-rating', best_rating);
+    ratingColor('worst-rating', worst_rating);
 
     
-    new PerfectScrollbar('#team-users');
+    // new PerfectScrollbar('#team-users');
     $(".rating-record").on('click',function(){
         $('#myModal').modal('show');
     });
 
     console.log('<%= @chartdata.count %>')
     new PerfectScrollbar('#scrollbar');
-function teamSelect() {
-    setTimeout(function() {
-        $('.heading .select-team .teams').show();
-    }, 100);
-}
-function teamSelectHide() {
-    $('.heading .select-team .teams').hide();
-}
-function teamSelectUser(elem) {
-    $(elem).children().show();
-}
-function teamSelectUserHide(elem) {
-    $(elem).find('.users').hide();
-}
+    function teamSelect() {
+        setTimeout(function() {
+            $('.heading .select-team .teams').show();
+        }, 100);
+    }
+    function teamSelectHide() {
+        $('.heading .select-team .teams').hide();
+    }
+    function teamSelectUser(elem) {
+        $(elem).children().show();
+    }
+    function teamSelectUserHide(elem) {
+        $(elem).find('.users').hide();
+    }
 var ctx = document.getElementById("myChart");
 var datapoints = [NaN, NaN, NaN, NaN, NaN, NaN ];
 var datapoints2 = [NaN, NaN, NaN, NaN, NaN, NaN ];
@@ -683,27 +628,35 @@ var myChart = new Chart(ctx, {
                         innerHtml += '</div>';
                         innerHtml += '<label class="gesamt-label">Gesamt</label>';
 
-                    
+                        var names_count = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["names_count"]
+                        if (names_count > 0) {
+                        var name_0 = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["name_0"]
                         innerHtml += '<div class="stats">';
-                        innerHtml += '<div class="text">Spontanität</div>';
-                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan"]+'%"></div></div>';
-                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["spontan"] / 10.0+'</div></div>'
-                    
+                        innerHtml += '<div class="text">'+ name_0 +'</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+ data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"][name_0] +'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"][name_0] / 10.0+'</div></div>'
+                        }
+                        if (names_count > 1) {
+                        var name_1 = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["name_1"]
                         innerHtml += '<div class="stats">';
-                        innerHtml += '<div class="text">Kreativität</div>';
-                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative"]+'%"></div></div>';
-                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["creative"] / 10.0+'</div></div>'
-                    
+                        innerHtml += '<div class="text">'+ name_1 +'</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+ data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"][name_1] +'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"][name_1] / 10.0+'</div></div>'
+                        }
+                        if (names_count > 2) {
+                        var name_2 = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["name_2"]
                         innerHtml += '<div class="stats">';
-                        innerHtml += '<div class="text">Körpersprache</div>';
-                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body"]+'%"></div></div>';
-                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["body"] / 10.0+'</div></div>'
-                    
+                        innerHtml += '<div class="text">'+ name_2 +'</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+ data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"][name_2] +'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"][name_2] / 10.0+'</div></div>'
+                        }
+                        if (names_count > 3) {
+                        var name_3 = data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["name_3"]
                         innerHtml += '<div class="stats">';
-                        innerHtml += '<div class="text">Rhetorik</div>';
-                        innerHtml += '<div class="line"><div class="fill" style="width: '+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric"]+'%"></div></div>';
-                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"]["rhetoric"] / 10.0+'</div></div>'
-                    
+                        innerHtml += '<div class="text">'+ name_3 +'</div>';
+                        innerHtml += '<div class="line"><div class="fill" style="width: '+ data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"][name_3] +'%"></div></div>';
+                        innerHtml += '<div class="line-text">'+data["datasets"][0]["datapoints"][tooltipItem[0]["index"]]["data"][name_3] / 10.0+'</div></div>'
+                        }
                     return innerHtml
                 },
             },
@@ -722,99 +675,26 @@ canvas.onclick = function (evt) {
     }
 };
 
-function ratingGes() {
-    i = 0;
-    $('.active').removeClass('active');
-    $('#gesamt').addClass('active');
-    <% @chartdata.last(6).each do |cd| %>
-        datapoints[i].value = <%= (cd[:ges].present? ? cd[:ges] : 0) / 10.0 %>;
-        i++;
-    <% end %>
-    i = 0;
-    datapoints.forEach(function(el){
-    if(el.value == undefined){
-        data1[i] = el
-    }else{
-        data1[i] = el.value
-    }
-        i++;        
+    $('.rating-block').on('click', function(){
+        i = 0;
+        let id = $(this).attr('id')
+        $('.active').removeClass('active');
+        $(`#${id}`).addClass('active');
+        let chartData = <%= @chartdata.last(6).to_json.html_safe %>
+        chartData.forEach(function(cd) {
+            datapoints[i].value = ((cd[`${id}`] == undefined) ? undefined : cd[`${id}`]) / 10.0
+            i++;
+        })
+        i = 0;
+        datapoints.forEach(function(el){
+        if(el.value == undefined){
+            data1[i] = el
+        }else{
+            data1[i] = el.value
+        }
+            i++;        
+        })
+        window.myChart.update();
     })
-    window.myChart.update();
-}
-function ratingSpontan() {
-    i = 0;
-    $('.active').removeClass('active');
-    $('#spontan').addClass('active');
-    <% @chartdata.last(6).each do |cd| %>
-        datapoints[i].value = <%= (cd[:spontan].present? ? cd[:spontan] : 0) / 10.0 %>;
-        i++;
-    <% end %>
-    i = 0;
-    datapoints.forEach(function(el){
-    if(el.value == undefined){
-        data1[i] = el
-    }else{
-        data1[i] = el.value
-    }
-        i++;        
-    })
-    window.myChart.update();
-}
-function ratingCreative() {
-    i = 0;
-    $('.active').removeClass('active');
-    $('#creative').addClass('active');
-    <% @chartdata.last(6).each do |cd| %>
-        datapoints[i].value = <%= (cd[:creative].present? ? cd[:creative] : 0) / 10.0 %>;
-        i++;
-    <% end %>
-    i = 0;
-    datapoints.forEach(function(el){
-    if(el.value == undefined){
-        data1[i] = el
-    }else{
-        data1[i] = el.value
-    }
-        i++;        
-    })
-    window.myChart.update();
-}
-function ratingBody() {
-    i = 0;
-    $('.active').removeClass('active');
-    $('#body').addClass('active');
-    <% @chartdata.last(6).each do |cd| %>
-        datapoints[i].value = <%= (cd[:body].present? ? cd[:body] : 0) / 10.0 %>;
-        i++;
-    <% end %>
-    i = 0;
-    datapoints.forEach(function(el){
-    if(el.value == undefined){
-        data1[i] = el
-    }else{
-        data1[i] = el.value
-    }
-        i++;        
-    })
-    window.myChart.update();
-}
-function ratingRhet() {
-    i = 0;
-    $('.active').removeClass('active');
-    $('#rhetoric').addClass('active');
-    <% @chartdata.last(6).each do |cd| %>
-        datapoints[i].value = <%= (cd[:rhetoric].present? ? cd[:rhetoric] : 0) / 10.0 %>;
-        i++;
-    <% end %>
-    i = 0;
-    datapoints.forEach(function(el){
-    if(el.value == undefined){
-        data1[i] = el
-    }else{
-        data1[i] = el.value
-    }
-        i++;        
-    })
-    window.myChart.update();
-}
+
 </script>
