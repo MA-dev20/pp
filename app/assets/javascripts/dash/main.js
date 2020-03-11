@@ -10,4 +10,5 @@
  *= require dropzone
  *= require game_desktop/progressbar.min
  *= require cropper.min
+ *= require slick/slick.min
  */
