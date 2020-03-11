@@ -401,53 +401,51 @@
 
 <script>
 
-$('.rating-overview').slick({
-  dots: false,
-  infinite: false,
-  speed: 300,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  arrows: true,
-  prevArrow:"<i class='fas fa-left fa-chevron-circle-left'></i>",
-  nextArrow:"<i class='fas fa-right fa-chevron-circle-right'></i>",      
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        infinite: true,
-        dots: false
-      }
-    },
-    {
-      breakpoint: 600,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 4
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 4
-      }
+    let user_ratings_length = <%= @user_ratings.length + 1 %>;
+    if (user_ratings_length > 5){
+    $('.rating-overview').slick({
+    dots: false,
+    infinite: false,
+    speed: 300,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    arrows: true,
+    prevArrow:"<i class='fas fa-left fa-chevron-circle-left'></i>",
+    nextArrow:"<i class='fas fa-right fa-chevron-circle-right'></i>",      
+    responsive: [
+        {
+        breakpoint: 1024,
+        settings: {
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            infinite: true,
+            dots: false
+        }
+        },
+        {
+        breakpoint: 600,
+        settings: {
+            slidesToShow: 5,
+            slidesToScroll: 5
+        }
+        },
+        {
+        breakpoint: 480,
+        settings: {
+            slidesToShow: 5,
+            slidesToScroll: 5
+        }
+        }
+    ]
+    });
+        $('.fa-left').css('display', 'block');
+        $('.fa-right').css('display', 'block');
     }
-    // You can unslick at a given breakpoint now by adding:
-    // settings: "unslick"
-    // instead of a settings object
-  ]
-});
-
-let user_ratings_length = <%= @user_ratings.length + 1 %>;
-if (user_ratings_length <= 4){
-    $('.fa-left').css('display', 'none');
-    $('.fa-right').css('display', 'none');
-} else {
-    $('.fa-left').css('display', 'block');
-    $('.fa-right').css('display', 'block');
-}
+    else {
+        $('.fa-left').css('display', 'none');
+        $('.fa-right').css('display', 'none');
+        $('.rating-overview').css('overflow', 'hidden');
+    }
 
     function myColor() {
         let class_name = 0;
