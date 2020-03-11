@@ -401,7 +401,7 @@
 
 <script>
 
-    let user_ratings_length = <%= @user_ratings.length + 1 %>;
+    var user_ratings_length = <%= @user_ratings.length + 1 %>;
     if (user_ratings_length > 5){
     $('.rating-overview').slick({
     dots: false,
