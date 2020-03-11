@@ -116,7 +116,7 @@ class DashAdminController < ApplicationController
     end
     @users = @admin.users.all
     @turns = @user.turns.all
-    @user_rating_criteria = @user.user_rating_criteria
+    @user_rating_criteria = @user.user_rating_criteria.order('LOWER(name) ASC')
     @turn_ratings = @user.turn_rating_criteria
     @date = @turn_ratings.first&.created_at&.beginning_of_day
     @days = 1;

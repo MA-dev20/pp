@@ -28,108 +28,84 @@
         </div>
     </div>
 
-    <div class="overly-me">
-        <div class="rating-wrapper">
-            <div class="rating-overview">
-                <% @user_ratings = @user_rating_criteria.select { |rating| (!rating.name.start_with? 'change') && (rating.name != 'ges')} %>
-                <% user_rating_ges = @user_rating_criteria.select { |rating| rating.name == 'ges'}.first %>
-                <div class="karte rating-block active" id="ges">
-                        <div class="icon-circle">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <% rating_value = user_rating_ges.value.present? ? user_rating_ges.value : 0 %>
-                        <div>
-                            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                                <div class="right-border">
-                                    <div class="c100 p<%= rating_value %> center" style="font-size: 12vh;">
-                                        <span class="rating-1"><%= user_rating_ges.value.present? ? ((user_rating_ges.value / 10.0 == 10.0) ? '10' : (user_rating_ges.value / 10.0)) : '0.0' %></span>
-                                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <label>Gesamt</label>
-                        <% change_rating = @user_rating_criteria.find_by_name("change_ges") %>
-                        <% if change_rating.value.present? %>
-                        <% if change_rating.value > 0 %>
-                            <div class="change up">
-                                <i class="fas fa-caret-up"></i>
-                                <%= (change_rating.value / 10.0).round(1) %>
-                            </div>
-                        <% elsif change_rating.value < 0 %>
-                            <div class="change down">
-                                <i class="fas fa-caret-down"></i>
-                                <%= (change_rating.value / 10.0).round(1) %>
-                            </div>
-                        <% else %>
-                            <div class="change equal">
-                                <i class="fas fa-equals"></i>
-                                <%= (change_rating.value / 10.0).round(1) %>
-                            </div>
-                        <% end %>
-                        <% end %>
+    <div class="rating-overview">
+        <% @user_ratings = @user_rating_criteria.select { |rating| (!rating.name.start_with? 'change') && (rating.name != 'ges')} %>
+        <% user_rating_ges = @user_rating_criteria.select { |rating| rating.name == 'ges'}.first %>
+        <div class="karte rating-block active" id="ges">
+                <div class="icon-circle">
+                    <i class="fas fa-star"></i>
                 </div>
-                <% @user_ratings.each_with_index do |user_rating, index| %>
-                    <div class="karte rating-block" id="<%= user_rating.name %>">
-                        <div class="icon-circle">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <% rating_value = user_rating.value.present? ? user_rating.value : 0 %>
-                        <div>
-                            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                                <div class="right-border">
-                                    <div class="c100 p<%= rating_value %> center" style="font-size: 12vh;">
-                                        <span class="rating-1"><%= user_rating.value.present? ? ((user_rating.value / 10.0 == 10.0 ? '10' : (user_rating.value / 10.0)))  : '0.0' %></span>
-                                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                                    </div>
-                                </div>
+                <% rating_value = user_rating_ges.value.present? ? user_rating_ges.value : 0 %>
+                <div>
+                    <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                        <div class="right-border">
+                            <div class="c100 p<%= rating_value %> center" style="font-size: 12vh;">
+                                <span class="rating-1"><%= user_rating_ges.value.present? ? ((user_rating_ges.value / 10.0 == 10.0) ? '10' : (user_rating_ges.value / 10.0)) : '0.0' %></span>
+                                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                             </div>
                         </div>
-                        <label><%= user_rating.name == 'ges' ? 'Gesamt' : user_rating.name %></label>
-                        <% change_rating = @user_rating_criteria.find_by_name("change_#{user_rating.name}") %>
-                        <% if change_rating.value.present? %>
-                        <% if change_rating.value > 0 %>
-                            <div class="change up">
-                                <i class="fas fa-caret-up"></i>
-                                <%= (change_rating.value / 10.0).round(1) %>
-                            </div>
-                        <% elsif change_rating.value < 0 %>
-                            <div class="change down">
-                                <i class="fas fa-caret-down"></i>
-                                <%= (change_rating.value / 10.0).round(1) %>
-                            </div>
-                        <% else %>
-                            <div class="change equal">
-                                <i class="fas fa-equals"></i>
-                                <%= (change_rating.value / 10.0).round(1) %>
-                            </div>
-                        <% end %>
-                        <% end %>
+                    </div>
+                </div>
+                
+                <label>Gesamt</label>
+                <% change_rating = @user_rating_criteria.find_by_name("change_ges") %>
+                <% if change_rating.value.present? %>
+                <% if change_rating.value > 0 %>
+                    <div class="change up">
+                        <i class="fas fa-caret-up"></i>
+                        <%= (change_rating.value / 10.0).round(1) %>
+                    </div>
+                <% elsif change_rating.value < 0 %>
+                    <div class="change down">
+                        <i class="fas fa-caret-down"></i>
+                        <%= (change_rating.value / 10.0).round(1) %>
+                    </div>
+                <% else %>
+                    <div class="change equal">
+                        <i class="fas fa-equals"></i>
+                        <%= (change_rating.value / 10.0).round(1) %>
                     </div>
                 <% end %>
-                <div class="karte rating-block hidden-me">
-                        <div class="icon-circle">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div>
-                            <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
-                                <div class="right-border">
-                                    <div class="c100 p0 center" style="font-size: 12vh;">
-                                        <span class="rating-1"></span>
-                                        <div class="slice"><div class="bar"></div><div class="fill"></div></div>
-                                    </div>
-                                </div>
+                <% end %>
+        </div>
+        <% @user_ratings.each_with_index do |user_rating, index| %>
+            <div class="karte rating-block" id="<%= user_rating.name %>">
+                <div class="icon-circle">
+                    <i class="fas fa-star"></i>
+                </div>
+                <% rating_value = user_rating.value.present? ? user_rating.value : 0 %>
+                <div>
+                    <div class="inner-content text-center" style="margin: 0.8vh auto 0;">
+                        <div class="right-border">
+                            <div class="c100 p<%= rating_value %> center" style="font-size: 12vh;">
+                                <span class="rating-1"><%= user_rating.value.present? ? ((user_rating.value / 10.0 == 10.0 ? '10' : (user_rating.value / 10.0)))  : '0.0' %></span>
+                                <div class="slice"><div class="bar"></div><div class="fill"></div></div>
                             </div>
                         </div>
-                        
-                        <label>Gesamt</label>
-                        <div class="change up">
-                            <i class="fas fa-caret-up"></i>
-                        </div>
-                </div> 
+                    </div>
+                </div>
+                <label><%= user_rating.name == 'ges' ? 'Gesamt' : user_rating.name %></label>
+                <% change_rating = @user_rating_criteria.find_by_name("change_#{user_rating.name}") %>
+                <% if change_rating.value.present? %>
+                <% if change_rating.value > 0 %>
+                    <div class="change up">
+                        <i class="fas fa-caret-up"></i>
+                        <%= (change_rating.value / 10.0).round(1) %>
+                    </div>
+                <% elsif change_rating.value < 0 %>
+                    <div class="change down">
+                        <i class="fas fa-caret-down"></i>
+                        <%= (change_rating.value / 10.0).round(1) %>
+                    </div>
+                <% else %>
+                    <div class="change equal">
+                        <i class="fas fa-equals"></i>
+                        <%= (change_rating.value / 10.0).round(1) %>
+                    </div>
+                <% end %>
+                <% end %>
             </div>
-        </div>
+        <% end %>
     </div>
 
     <div class="heading">Details</div>
@@ -276,10 +252,14 @@
         }
         
         .rating-overview {
-            display: flex;
+            /* display: flex;
             flex-wrap: nowrap;
             overflow-y: hidden;
-            overflow-x: auto;
+            overflow-x: auto; */
+            position: relative;
+            width: 132.6vh;
+            /* overflow: hidden; */
+            margin: 0 auto;
         }
         
         .rating-overview .karte {
@@ -394,15 +374,81 @@
             #content {
                 overflow-x: hidden;
             }
+
+            .rating-overview .karte:last-child {
+                margin-right: 0 !important;
+            }
+
+            .fa-left,
+            .fa-right {
+                position: absolute;
+                top: 11vh;
+                color: #16e2a5;
+                z-index: 1;
+            }
+
+            .fa-left {
+                left: -1.8vh;
+            }
+            .fa-right {
+                right: 0;
+            }
             
 </style>
 
 <script>
+$('.rating-overview').slick({
+  dots: false,
+  infinite: false,
+  speed: 300,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  arrows: true,
+  prevArrow:"<i class='fas fa-left fa-chevron-circle-left'></i>",
+  nextArrow:"<i class='fas fa-right fa-chevron-circle-right'></i>",      
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        infinite: true,
+        dots: false
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 4
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 4
+      }
+    }
+    // You can unslick at a given breakpoint now by adding:
+    // settings: "unslick"
+    // instead of a settings object
+  ]
+});
 
+let user_ratings_length = <%= @user_ratings.length + 1 %>;
+if (user_ratings_length <= 4){
+    $('.fa-left').css('display', 'none');
+    $('.fa-right').css('display', 'none');
+} else {
+    $('.fa-left').css('display', 'block');
+    $('.fa-right').css('display', 'block');
+}
 function myColor() {
         let class_name = 0;
         let val = 0;
-        <% @user_ratings.each do |user_rating| %>
+        <% user_ratings = @user_rating_criteria.select { |rating| (!rating.name.start_with? 'change')} %>
+        <% user_ratings.each do |user_rating| %>
             class_name = <%= user_rating[:value].present? ? user_rating[:value] : 0 %>
             val = <%= number_with_precision(user_rating[:value].present? ? user_rating[:value].to_f / 100.0 : 0.0, precision:1) %>;
             if (val != 0.0) {
