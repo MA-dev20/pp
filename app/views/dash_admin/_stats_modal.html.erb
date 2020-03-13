@@ -12,47 +12,30 @@
                         <h4 class="modal-title" style="text-align: center">Team Vertrieb</h4>
                     </div>
                     <div class="modal-body" style="background-color: #fff;">
-                            <div style="width: 100%">
-                            <table style="width: 100%">
-                                <thead>
-                                    <tr>
-                                        <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 5%;"></th>
-                                        <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 30%;">Name</th>
-
-                                        <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%; text-align: center; padding-right: 20px;">Ges</th>
-
-                                        <% rating_names_org = team_users_rating_names.select{|rating| (!rating.start_with? 'change') && (rating != 'ges')} %>                                        
-                                        <% rating_names = team_users_rating_names.select{|rating| (!rating.start_with? 'change') && (rating != 'ges')}.map {|rating| rating.downcase}.sort{|x,y| x<=>y} %>
-                                        <% rating_names.each do |rating_name| %>
-                                            <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;"><%= rating_name.titleize %></th>
-                                        <% end %>
-
-                                        <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Spon</th> -->
-                                        <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Korp</th> -->
-                                        <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Krea</th> -->
-                                        <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Rhet</th> -->
-                                        <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/gold.png", style="width: 20px"></th>
-                                        <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/silver.png", style="width: 20px"></th>
-                                        <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/bronze.png", style="width: 20px"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        <tr>
-                                            <td style="padding: 0 10px;width: 5%;"></td>
-                                            <td style="padding: 0 10px;width: 30%;"></td>
-                                            <td style="padding: 0 10px;width: 10%;"></td>
-                                            <% rating_names.each do |rating_name| %>
-                                                <td style="padding: 0 10px;width: 10%;"></td>
-                                            <% end %>
-                                            <td style="padding: 0 10px;width: 5%;"></td>
-                                            <td style="padding: 0 10px;width: 5%;"></td>
-                                            <td style="padding: 0 10px;width: 5%;"></td>
-                                        </tr>
-                                    </tbody>
-                            </table>
-                            </div>
                             <div id="team-users" class="table-scroll table-scroll-live">
                             <table style="width: 100%">
+                                    <thead>
+                                            <tr>
+                                                <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 5%;"></th>
+                                                <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; width: 30%;">Name</th>
+        
+                                                <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%; text-align: center; padding-right: 20px;">Ges</th>
+        
+                                                <% rating_names_org = team_users_rating_names.select{|rating| (!rating.start_with? 'change') && (rating != 'ges')} %>                                        
+                                                <% rating_names = team_users_rating_names.select{|rating| (!rating.start_with? 'change') && (rating != 'ges')}.map {|rating| rating.downcase}.sort{|x,y| x<=>y} %>
+                                                <% rating_names.each do |rating_name| %>
+                                                    <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;"><%= rating_name.titleize %></th>
+                                                <% end %>
+        
+                                                <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Spon</th> -->
+                                                <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Korp</th> -->
+                                                <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Krea</th> -->
+                                                <!-- <th style="padding: 10px;text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 10%;">Rhet</th> -->
+                                                <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/gold.png", style="width: 20px"></th>
+                                                <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/silver.png", style="width: 20px"></th>
+                                                <th style="text-align: left; border-bottom: 1px solid #dfe1e5; max-width: 5%;"><img src="<%= root_url %>/bronze.png", style="width: 20px"></th>
+                                            </tr>
+                                    </thead>
                                     <tbody>
                                         <% team_users.each.with_index(1) do |user,i| %>
                                         <tr>
@@ -242,7 +225,7 @@
 
     .download-btn {
         position: absolute;
-        bottom: 24vh;
+        bottom: 26vh;
         width: 100%;
         justify-content: center;
         text-align: center;
