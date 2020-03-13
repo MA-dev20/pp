@@ -6,7 +6,7 @@ class DashUserController < ApplicationController
 	@turns = @user.turns
 	@turn_ratings = @user.turn_ratings
 	@chartdata = []
-	@date = @turn_ratings.first&.created_at.beginning_of_day
+	@date = @turn_ratings.first&.created_at&.beginning_of_day
 	@days = 1
 	@turn_ratings.each do |t|
 	 @chartdata << {turn_id: t.turn_id, date: t.created_at.strftime("%d.%m.%Y"), ges: t.ges, spontan: t.spontan, creative: t.creative, body: t.body, rhetoric: t.rhetoric}
