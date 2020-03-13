@@ -867,7 +867,7 @@ class DashAdminController < ApplicationController
 
 
     def html_to_jpg html_content, team_id
-      kit = IMGKit.new(html_content, quality: 5)
+      kit = IMGKit.new(html_content, quality: 5, width: 1500)
       kit.stylesheets << "#{Rails.root}/public/css/png.css"
       dirname = File.dirname(Rails.root + "public/pngs/teams/#{team_id}/image")
       unless File.directory?(dirname)
