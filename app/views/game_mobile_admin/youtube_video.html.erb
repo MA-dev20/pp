@@ -16,7 +16,7 @@
         <%= link_to 'skip!', gma_choose_path, class: 'nunito-regular' %>
     </div>
 </section>
-<%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>
+<%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor', muted: @game.mute_sound) %>
 
 <script type="text/javascript">
     <% @pending_users.each do | user | %>

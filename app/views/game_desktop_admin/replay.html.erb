@@ -32,9 +32,9 @@
 <section id="skip" class="nunito-bold">
    Skip mit Leertaste
 </section>
-<%= audio_tag('wait/ping.mp3', id: 'ping') %>
-<%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>
-<%= audio_tag(wait_sound, autoplay: true, id: "theme") %>
+<%= audio_tag('wait/ping.mp3', id: 'ping', muted: @game.mute_sound) %>
+<%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor', muted: @game.mute_sound) %>
+<%= audio_tag(wait_sound, autoplay: true, id: "theme", muted: @game.mute_sound) %>
 <script>
     document.getElementById('theme').volume = 0.2;
 	document.getElementById('ringdoor').volume = 0.5;

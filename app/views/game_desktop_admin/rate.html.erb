@@ -10,7 +10,7 @@
    Skip mit Leertaste
 </section>
 <input type="hidden" value=true id="admin" name="">
-<%= audio_tag(rate_sound, autoplay: true, id: 'theme') %>
+<%= audio_tag(rate_sound, autoplay: true, id: 'theme', muted: @game.mute_sound) %>
 
 <script>
 	document.getElementById("theme").volume = 0.2;

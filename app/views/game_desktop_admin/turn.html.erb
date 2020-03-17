@@ -58,7 +58,7 @@
 <section id="skip" class="nunito-bold">
    Skip mit Leertaste
 </section>
-<%= audio_tag(turn_sound, autoplay: true, id: 'theme') %>
+<%= audio_tag(turn_sound, autoplay: true, id: 'theme', muted: @game.mute_sound) %>
 
 <script>
 	document.getElementById('theme').volume = 0.2;

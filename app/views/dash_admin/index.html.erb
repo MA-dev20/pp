@@ -40,6 +40,11 @@
             <%= f.text_field :password, class: 'custom-url-field' %>
         </div>
     </div>
+    <input type="text" id="game_sound" name="game[mute_sound]" value="false" style="display: none">
+    <div class="toggle-my-ratings toggle-my-ratings-1">
+        <div class="toggle toggle-game right" onclick="soundCheck()"><div class="dot"></div></div>
+        <div class="text">Game sound</div>
+    </div>
     <button class="btn btn-green" onclick="submitForm()">weiter!</button>
     <% end %>
 </div>
@@ -126,6 +131,11 @@
             <div class="text">peterpitch.com/</div>
             <%= f.text_field :password, class: 'custom-url-field' %>
         </div>
+    </div>
+    <input type="text" id="game_sound" name="game[mute_sound]" value="false" style="display: none">
+    <div class="toggle-my-ratings toggle-my-ratings-1">
+        <div class="toggle toggle-game right" onclick="soundCheck()"><div class="dot"></div></div>
+        <div class="text">Game sound</div>
     </div>
     <button class="btn btn-green" onclick="submitForm()">weiter!</button>
     <% end %>
@@ -416,6 +426,21 @@
 
 </style>
 <script>
+    function soundCheck() {
+        var toggle = $('.toggle-game');
+        // var input_field = $('#game_sound');
+        if (toggle.hasClass('left')) {
+            toggle.removeClass('left');
+            toggle.addClass('right');
+            // input_field.val('false')
+            $('#game_sound').attr('value', 'false')
+        } else {
+            toggle.removeClass('right');
+            toggle.addClass('left');
+            // input_field.val('true')
+            $('#game_sound').attr('value', 'true')
+        }
+    }
 	function togglevideo(e) {
 		var vid;
 		if(e == "startpitch") {

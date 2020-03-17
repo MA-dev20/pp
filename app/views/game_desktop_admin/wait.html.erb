@@ -46,10 +46,9 @@
 
 <!-- Button trigger modal -->
 
-
-<%= audio_tag('wait/ping.mp3', id: 'ping') %>
-<%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>
-<%= audio_tag(wait_sound, autoplay: true, id: "theme") %>
+<%= audio_tag('wait/ping.mp3', id: 'ping', muted: @game.mute_sound) %>
+<%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor', muted: @game.mute_sound) %>
+<%= audio_tag(wait_sound, autoplay: true, id: "theme", muted: @game.mute_sound) %>
 </section>
 <script>
 	document.getElementById('theme').volume = 0.2;

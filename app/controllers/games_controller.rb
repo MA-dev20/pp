@@ -28,7 +28,8 @@ class GamesController < ApplicationController
 		flash[:pop_up2] = "Sei kreativ und wähle eine andere aus."
         redirect_to dash_admin_games_path(params[:game][:team_id])
     else
-      @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password])
+      mute_sound = params[:game][:mute_sound] == 'true'
+      @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password], mute_sound: mute_sound)
       if @game.save
         redirect_to dash_admin_create_game_2_path(@game)
       else

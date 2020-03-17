@@ -1,9 +1,9 @@
 <% if @game.wait_seconds == 80 %>
-<%= video_tag 'countdown.mp4', id: 'video-bg', autoplay: true %>
+<%= video_tag 'countdown.mp4', id: 'video-bg', autoplay: true, muted: @game.mute_sound %>
 <% elsif @game.wait_seconds == 150 %>
-<%= video_tag 'countdown_230.mp4', id: 'video-bg', autoplay: true %>
+<%= video_tag 'countdown_230.mp4', id: 'video-bg', autoplay: true, muted: @game.mute_sound %>
 <% else %>
-<%= video_tag 'countdown_5.mp4', id: 'video-bg', autoplay: true %>
+<%= video_tag 'countdown_5.mp4', id: 'video-bg', autoplay: true, muted: @game.mute_sound %>
 <% end %>
 <section id="gd_play">
     <div class="top">
@@ -41,20 +41,20 @@
    Skip mit Leertaste
 </section>
 
-<%= audio_tag("play/intro.mp3", autoplay: false, loop: false, id: 'intro') %>
-<%= audio_tag(@word.sound ? @word.sound : '', id: "word_sound") %>
-<%= audio_tag('play/theme.mp3', id: 'theme') %>
-<%= audio_tag('play/AufdenPunkt.mp3', id: 'sound_1') %>
-<%= audio_tag('play/BeiderKonkurrenz.mp3', id: 'sound_2') %>
-<%= audio_tag('play/ChefFragen.mp3', id: 'sound_3') %>
-<%= audio_tag('play/KeinBudget.mp3', id: 'sound_4') %>
-<%= audio_tag('play/KeineZeit.mp3', id: 'sound_5') %>
-<%= audio_tag('play/KeinInteresse.mp3', id: 'sound_6') %>
-<%= audio_tag('play/Mail.mp3', id: 'sound_7') %>
-<%= audio_tag('play/Quatsch.mp3', id: 'sound_8') %>
-<%= audio_tag('play/Referenzen.mp3', id: 'sound_9') %>
-<%= audio_tag('play/countdown.mp3', id: 'countdown') %>
-<%= audio_tag('play/objectiontheme.mp3', id: 'objectiontheme') %>
+<%= audio_tag("play/intro.mp3", autoplay: false, loop: false, id: 'intro', muted: @game.mute_sound) %>
+<%= audio_tag(@word.sound ? @word.sound : '', id: "word_sound", muted: @game.mute_sound) %>
+<%= audio_tag('play/theme.mp3', id: 'theme', muted: @game.mute_sound) %>
+<%= audio_tag('play/AufdenPunkt.mp3', id: 'sound_1', muted: @game.mute_sound) %>
+<%= audio_tag('play/BeiderKonkurrenz.mp3', id: 'sound_2', muted: @game.mute_sound) %>
+<%= audio_tag('play/ChefFragen.mp3', id: 'sound_3', muted: @game.mute_sound) %>
+<%= audio_tag('play/KeinBudget.mp3', id: 'sound_4', muted: @game.mute_sound) %>
+<%= audio_tag('play/KeineZeit.mp3', id: 'sound_5', muted: @game.mute_sound) %>
+<%= audio_tag('play/KeinInteresse.mp3', id: 'sound_6', muted: @game.mute_sound) %>
+<%= audio_tag('play/Mail.mp3', id: 'sound_7', muted: @game.mute_sound) %>
+<%= audio_tag('play/Quatsch.mp3', id: 'sound_8', muted: @game.mute_sound) %>
+<%= audio_tag('play/Referenzen.mp3', id: 'sound_9', muted: @game.mute_sound) %>
+<%= audio_tag('play/countdown.mp3', id: 'countdown', muted: @game.mute_sound) %>
+<%= audio_tag('play/objectiontheme.mp3', id: 'objectiontheme', muted: @game.mute_sound) %>
 
 <style>
     body {

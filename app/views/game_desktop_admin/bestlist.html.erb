@@ -61,7 +61,7 @@
 <div class="confetti" id="confetti"></div>
 
 
-<%= audio_tag(ended_sound, oncanplaythrough: 'startAnimation()', id: 'bestSound', preload: "auto" ) %>
+<%= audio_tag(ended_sound, oncanplaythrough: 'startAnimation()', id: 'bestSound', preload: "auto", muted: @game.mute_sound) %>
 
 <script type="text/javascript">
 	document.getElementById("bestSound").volume = 0.2;

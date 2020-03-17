@@ -1,11 +1,11 @@
 <% if @video %>
 <div class="video-bg">
 	<%= video_tag @video, id: 'video-blur', autoplay: false, controls: false, muted: true %>
-	<%= video_tag @video, id: 'video', autoplay: false, controls: false, onended: 'redir()' %>	
+	<%= video_tag @video, id: 'video', autoplay: false, controls: false, onended: 'redir()', muted: @game.mute_sound %>	
 </div>
 
 <% else %>
-<%= video_tag 'gameintro.mp4', id: 'video-bg', autoplay: false, controls: false, onended: 'redir()' %>
+<%= video_tag 'gameintro.mp4', id: 'video-bg', autoplay: false, controls: false, onended: 'redir()', muted: @game.mute_sound %>
 <% end %>
 <section id="skip" style="color: black" class="nunito-bold">
    Skip mit Leertaste

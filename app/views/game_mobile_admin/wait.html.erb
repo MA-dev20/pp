@@ -20,7 +20,7 @@
     <%= link_to "Los geht's!", url, class: 'nunito-regular' %>
 </div>
 </section>
-<%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor') %>
+<%= audio_tag('wait/ringdoor.mp3', id: 'ringdoor', muted: @game.mute_sound) %>
 
 <script type="text/javascript">
     <% @pending_users.each do |user| %>

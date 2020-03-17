@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_072458) do
+ActiveRecord::Schema.define(version: 2020_03_16_105905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,6 +240,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_072458) do
     t.boolean "replay", default: false
     t.boolean "video_uploaded_start", default: false
     t.bigint "custom_rating_id"
+    t.boolean "mute_sound", default: false
     t.index ["admin_id"], name: "index_games_on_admin_id"
     t.index ["custom_rating_id"], name: "index_games_on_custom_rating_id"
     t.index ["team_id"], name: "index_games_on_team_id"

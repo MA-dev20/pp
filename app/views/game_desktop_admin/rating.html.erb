@@ -94,7 +94,7 @@
 </section>
 </section>
 
-<%= audio_tag(rated_sound, oncanplaythrough: 'startAnimation()', id: 'rateSound', preload: "auto" ) %>
+<%= audio_tag(rated_sound, oncanplaythrough: 'startAnimation()', id: 'rateSound', preload: "auto", muted: @game.mute_sound) %>
 <script>
 	document.getElementById("rateSound").volume = 0.2;
 	function startAnimation() {

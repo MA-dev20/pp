@@ -22,8 +22,8 @@
     </div>
 </section>
 </section>
-<%= audio_tag(choose_sound, autoplay: true, id: 'theme') %>
-<%= audio_tag("choose/ping.mp3", id: 'vote_sound') %>
+<%= audio_tag(choose_sound, autoplay: true, id: 'theme', muted: @game.mute_sound) %>
+<%= audio_tag("choose/ping.mp3", id: 'vote_sound', muted: @game.mute_sound) %>
 
 <script>
 	document.getElementById('theme').volume = 0.2;
