@@ -91,14 +91,6 @@ class RatingCriteriaController < ApplicationController
     params.require(:criteria).permit(:name)
   end
 
-  # def authenticate
-  #   if current_admin.nil? && current_root.nil?
-  #     flash[:danger] = "Bitte logge dich ein!"
-  #     redirect_to new_session_path(admin)
-  #     return
-  #   end
-  # end
-
   def set_custom_rating
     @custom_rating = CustomRating.find(params[:rating_id])
   end
@@ -107,8 +99,5 @@ class RatingCriteriaController < ApplicationController
     @turn = Turn.find_by(id: params[:turn_id])
     @turn.update(played: true)
   end
-  
-  # def rating_params
-  #   params.require(:rating).permit(:body, :creative, :rhetoric, :spontan)
-  # end
+
 end

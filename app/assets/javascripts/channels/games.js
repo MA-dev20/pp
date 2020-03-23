@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
       },
       received: function(data) {
         var game_state = data['desktop'];
-
+        
         console.log(data)
         // console.log(App.videoInProgress)
         if (App.videoInProgress && location.pathname.split("admin")[0]=="/mobile/" && location.pathname.split("admin")[1]=="/play") {

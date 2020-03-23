@@ -1,6 +1,7 @@
 class GameDesktopAdminController < ApplicationController
   before_action :authenticate_game!, :authenticate_admin!, :set_vars, except: [:replay, :ended, :ended_game]
-  before_action :set_turn, only: [:play, :rate, :rating]
+  before_action :set_turn, only: [:play, :rate, :rating, :skip_rating]
+  before_action :check_for_rating, only: [:rating]
     
   layout 'game_desktop'
 	
@@ -115,10 +116,52 @@ class GameDesktopAdminController < ApplicationController
     if @user != @admin
       update_user_rating(@user, @custom_rating, @game)
     end
-    @turn_rating = @turn.turn_rating_criteria
-    # @rating = @turn.turn_rating
+    # debugger
+    # if @game.rating_user_id.present?
+    #   @turn_rating = User.find(@game.rating_user_id).custom_rating_criteria.where(game_id: @game.id, turn_id: @turn.id)
+    #   # debugger
+    #   unless @turn_rating.present?
+    #     # if @game.state != 'rate'
+    #     #   @game.update(state: 'rate')
+    #     # end
+    #     # @game.update(state: 'turn')
+    #     # redirect_to gda_after_rating_path
+    #   end
+    # elsif @game.rating_option == 2
+    # else
+    #   @turn_rating = @turn.turn_rating_criteria
+    # end
+    @rating = @turn.turn_rating
   end
+  
+  def skip_rating
+    @custom_rating = @game.custom_rating
+    @disabled_ratings_count = @turn.custom_rating_criteria.where(disabled: false).where.not(rating_criteria_id: nil).count / @custom_rating.rating_criteria.count
+    if @game.state != 'rating' && @disabled_ratings_count == 0
+      @turn.update(status: 'ended')
+    elsif @game.state != 'rating'
+      @turn.update(played: true)
+      @game.update(state: 'rating')
+    end
+    update_turn_rating(@turn, @custom_rating)
+    if @user != @admin
+      update_user_rating(@user, @custom_rating, @game)
+    end
+    @rating = @turn.turn_rating
     
+    @turns = @game.turns.where(status: "accepted").playable.sample(100)
+    if @turns.count == 1
+      redirect_to gda_turn_path
+      return
+    elsif @turns.count == 0
+      redirect_to gda_bestlist_path
+      return
+    else
+      redirect_to gda_choose_path
+      return
+    end
+  end
+
   def after_rating
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1
@@ -202,6 +245,7 @@ class GameDesktopAdminController < ApplicationController
   end
     
   private
+
     def set_vars
       @game = current_game
       @admin = current_admin
@@ -212,5 +256,11 @@ class GameDesktopAdminController < ApplicationController
       @turn = Turn.find(@game.current_turn)
       @user = @turn.findUser
       @word = Word.find(@turn.word_id)
+    end
+
+    def check_for_rating
+      if @game.rating_option == 2
+        redirect_to gda_skip_rating_path
+      end
     end
 end

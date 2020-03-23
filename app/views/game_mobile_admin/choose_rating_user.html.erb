@@ -1,0 +1,35 @@
+<%= render partial: 'header' , locals: {can: false}%>
+<div class="head">
+    <h1 class="nunito-bold">Spiel beitreten Folie</h1>
+</div>
+<div class="middle">
+    <%= image_tag @admin.avatar.quad.url || 'game/wolf_button.png', class: 'mid-img green pulse' %>
+</div>
+<div class="select-users">
+    <%= form_tag gma_after_wait_path, id: "user_form" do %>
+        <%= select_tag 'user_id',  options_for_select(@game.users.collect{ |u| ["#{u.fname} #{u.lname}", u.id] }) %>
+    <% end %>
+</div>
+<div class="bottom">
+    <!-- <%= link_to 'weiter', '', class: 'nunito-regular', id: 'weiter' %> -->
+    <button class="btn btn-green" onclick="submitForm()">weiter</button>
+</div>
+<style>
+    .select-users {
+        font-size: 1.67vh;
+        top: 65%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        position: absolute;
+    }
+</style>
+<script>
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+
+    function submitForm() {
+        $('#user_form').unbind('submit');
+        $('#user_form').submit();
+    }
+</script>

@@ -1,11 +1,12 @@
 class GameMobileUserController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:wait, :intro, :choose, :choosen, :turn, :play, :react, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :video_uploading]
+  before_action :authenticate_game!, :set_game, only: [:wait, :skip_rating, :intro, :choose, :choosen, :turn, :play, :react, :rate, :rated, :rating, :bestlist, :ended, :reject_user ,:accept_user, :video_uploading]
   before_action :authenticate_user!, :set_user, except: [:welcome, :new, :create,:reject_user ,:accept_user, :video_uploading, :ended_game]
-  before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating]
+  before_action :set_turn, only: [:turn, :play, :rate, :rated, :rating, :skip_rating]
   # before_action :pop_up ,only: :create
   before_action :reset_session_of_already_user, only: [:new, :welcome]
   layout 'game_mobile'
   before_action :check_for_turn, only: [:wait]
+  before_action :check_for_rating, only: [:rating]
 
     
   def welcome
@@ -227,13 +228,25 @@ class GameMobileUserController < ApplicationController
   end
      
   def intro
-	@admin = Admin.find(@game.admin_id)
+	  @admin = Admin.find(@game.admin_id)
     turn =  Turn.where(user_id:  current_user.id, game_id:  @game.id, admin_id: @admin.id).first
-	render "wait"
+	  render "wait"
   end
+
   def choose
-    @turn1 = Turn.find_by(id: @game.turn1)
-    @turn2 = Turn.find_by(id: @game.turn2)
+    if @game.rating_option == 2
+      @turns = @game.turns.where(status: "accepted").playable.sample(2)
+      if @game.state != 'choose'
+        @turn1 = @turns.first
+        @turn2 = @turns.second
+      else
+        @turn1 = Turn.find_by(id: @game.turn1)
+        @turn2 = Turn.find_by(id: @game.turn2)
+      end
+    else
+        @turn1 = Turn.find_by(id: @game.turn1)
+        @turn2 = Turn.find_by(id: @game.turn2)
+    end
   end
     
   def choosen
@@ -252,20 +265,24 @@ class GameMobileUserController < ApplicationController
   end
     
   def turn
+    # @turns = @game.turns.where(status: 'accepted').playable
+    # if @game.state != 'turn' && @turns.count == 1
+    #   @turn = @turns.first
+    # end
+    # @cur_user = Turn.find_by(id: @game.current_turn).findUser
   end
     
   def play
   end
 	
   def react
-	@emoji = params[:emoji]
+	  @emoji = params[:emoji]
     ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'react', emoji: @emoji, user_pic: @user.avatar.quad.url
-	redirect_to gmu_play_path('', reacted: 'true')
+	  redirect_to gmu_play_path('', reacted: 'true')
   end
     
   def rate
     @custom_rating = @game.custom_rating
-    # if @user == @cur_user || @turn.ratings.find_by(user_id: @user.id)
     if @user == @cur_user || @turn.custom_rating_criteria.find_by(user_id: @user.id)
       redirect_to gmu_rated_path
     end
@@ -276,12 +293,24 @@ class GameMobileUserController < ApplicationController
     
   def rating
   end
+
+  def skip_rating
+    @turns = @game.turns.where(status: "accepted").playable.sample(100)
+    if @turns.count == 1
+      redirect_to gmu_turn_path
+      return
+    elsif @turns.count == 0
+      redirect_to gmu_bestlist_path
+      return
+    else
+      redirect_to gmu_choose_path
+      return
+    end
+  end
     
   def bestlist
-    # @turn_rating = @game.turn_ratings.where(user_id: @user.id).last
-    # @word = @turn_rating.turn.word
     @turn_rating = @game.turn_rating_criteria.where(user_id: @user.id, name: 'ges').last
-	  @word = @turn_rating.turn.word
+    @word = @turn_rating.turn.word
   end
     
   def replay
@@ -293,7 +322,7 @@ class GameMobileUserController < ApplicationController
   def ended
     sign_out(@game)
     sign_out(@user)
-	redirect_to landing_ended_game_path
+	  redirect_to landing_ended_game_path
   end
 
   def ended_game
@@ -305,6 +334,7 @@ class GameMobileUserController < ApplicationController
   end
     
   private
+  
     def set_game
       @game = current_game
       @state = @game.state
@@ -315,7 +345,7 @@ class GameMobileUserController < ApplicationController
     
     def set_turn
       @turn = Turn.find_by(id: @game.current_turn)
-      @cur_user = @turn.findUser
+      @cur_user = @turn.findUser.reload
     end
     
     def user_params
@@ -372,5 +402,11 @@ class GameMobileUserController < ApplicationController
     def check_for_turn
       redirect_to gmu_replay_path if !@game.has_turn_of_user?(current_user)
       return
+    end
+
+    def check_for_rating
+      if @game.rating_option == 2
+        redirect_to gmu_skip_rating_path
+      end
     end
 end

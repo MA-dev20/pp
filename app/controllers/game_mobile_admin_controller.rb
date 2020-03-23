@@ -1,7 +1,8 @@
 class GameMobileAdminController < ApplicationController
-  before_action :authenticate_game!, :set_game, only: [:intro, :save_video,:wait, :choose, :choosen, :turn, :play, :react, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :youtube_video, :update_video_status]
+  before_action :authenticate_game!, :set_game, only: [:intro, :skip_rating, :choose_rating_user, :after_wait, :save_video,:wait, :choose, :choosen, :turn, :play, :react, :rate, :rated, :rating, :after_rating, :bestlist, :ended, :replay, :choose, :error, :welcome, :video_cancel, :youtube_video, :update_video_status]
   before_action :authenticate_admin!, :set_admin, except: [:new, :create, :password, :check_email, :video_testings, :ended_game]
-  before_action :set_turn, only: [:play, :rate, :rated, :rating, :save_video]
+  before_action :set_turn, only: [:play, :rate, :rated, :skip_rating, :rating, :save_video]
+  before_action :check_for_rating, only: [:rating]
   layout 'game_mobile'
   skip_before_action :verify_authenticity_token, only: [:save_video]
     
@@ -16,6 +17,16 @@ class GameMobileAdminController < ApplicationController
     @game1 = Game.first
     @turn  = Turn.first
     @record = true
+  end
+
+  def choose_rating_user
+  end
+
+  def after_wait
+    if params[:user_id]
+      @game.update(rating_user_id: params[:user_id].to_i)
+    end
+    redirect_to gma_intro_path
   end
 
   def password
@@ -125,7 +136,8 @@ class GameMobileAdminController < ApplicationController
   end
 
   def choose
-    @turns = @game.turns.where(status: "accepted").playable.sample(2)  
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    # debugger  
     if @game.state != 'choose' && @turns.count <= 1
       redirect_to gea_mobile_path
       return
@@ -155,6 +167,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def turn
+    # debugger
     @turns = @game.turns.where(status: 'accepted').playable
     if @game.state != 'turn' && @turns.count == 1
       @turn = @turns.first
@@ -167,6 +180,9 @@ class GameMobileAdminController < ApplicationController
       else
         @game.update(state: 'turn', current_turn: @turn2.id)
       end
+    end
+    if @game.rating_option == 2
+	    ActionCable.server.broadcast "game_#{@game.id}_channel",game_state: "turn", game_admin_id: @game.admin_id
     end
     @cur_user = Turn.find_by(id: @game.current_turn).findUser
   end
@@ -207,8 +223,6 @@ class GameMobileAdminController < ApplicationController
     @game.video_uploading = false
     @game.save
     @custom_rating = @game.custom_rating
-    # if @turn.ratings.find_by(admin_id: @admin.id)
-    #   redirect_to gma_rated_path
     if @turn.custom_rating_criteria.find_by(admin_id: @admin.id)
       redirect_to gma_rated_path
     elsif @admin == @cur_user
@@ -217,7 +231,6 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rated
-    # @count = @turn.ratings.count
     @count = @turn.custom_rating_criteria.where.not(rating_criteria_id: nil).count / @game.custom_rating.rating_criteria.count
 	  @turnCount = @game.turns.where(status: "accepted").count - 1
     if @turn.ratings.count == @turnCount
@@ -226,7 +239,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rating
-    # @rating = Rating.find_by(turn_id: @turn.id)
+    # debugger
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
@@ -236,9 +249,36 @@ class GameMobileAdminController < ApplicationController
       @turn.update(status: "ended")
       redirect_to gma_after_rating_path
       return
+    elsif @game.state == 'rating' && @game.rating_option == 2 
+      @turn.update(status: "ended")
+      redirect_to gma_after_rating_path
+      return
     elsif @game.state != 'rating'
       @turn.update(played: true)
       @game.update(state: 'rating')
+    end
+  end
+
+  def skip_rating
+    @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
+    # debugger
+    if @rating && @game.state == 'rate'
+      @game.update(state: 'rating')
+      # redirect_to gma_rating_path
+      # return
+    elsif @game.state != 'rating' 
+      @turn.update(status: "ended")
+    end
+    @turns = @game.turns.where(status: "accepted").playable.sample(100)
+    if @turns.count == 1
+      redirect_to gma_turn_path
+      return
+    elsif @turns.count == 0
+      redirect_to gma_bestlist_path
+      return
+    else
+      redirect_to gma_choose_path
+      return
     end
   end
     
@@ -265,7 +305,6 @@ class GameMobileAdminController < ApplicationController
   def ended
     @game = current_game
     if @game.state != 'ended'
-      # @game.update(state: 'ended_game', active: false)
       @game.update(state: 'ended', active: false)
     end
     sign_out(@game)
@@ -291,18 +330,14 @@ class GameMobileAdminController < ApplicationController
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
       @game.turns.update_all(status: "ended")
-      # @game.turn_ratings.update_all(ended: true)
       @game.turn_rating_criteria.update_all(ended: true)
     end
     session[:game_session_id] = @game.id
     redirect_to gma_new_avatar_path
   end
-
-  # def update_video_status
-  #   @game.update(video_uploaded_start: eval(params[:recording]))
-  # end
     
   private
+
     def set_game
       @game = current_game
       @team = Team.find(@game.team_id)
@@ -353,6 +388,12 @@ class GameMobileAdminController < ApplicationController
     def check_for_turn
       # redirect_to gma_new_avatar_path if !@game.has_turn_of_user?(current_user)
       return
+    end
+
+    def check_for_rating
+      if @game.rating_option == 2
+        redirect_to gma_skip_rating_path
+      end
     end
 end
 

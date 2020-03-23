@@ -1,11 +1,11 @@
 <%= render partial: 'game_mobile_admin/header' , locals: {can: false}%>
 <div class="head">
     <h1>
-    <% if @user == @cur_user %>
-      <h1 class="nunito-bold"><%= @cur_user.fname %>, du bist dran!</h1>
-    <% else %>
-      <h1 class="nunito-bold"><%= @cur_user.fname %> ist dran!</h1>
-    <% end %>
+      <% if @user == @cur_user %>
+        <h1 class="nunito-bold"><%= @cur_user.fname %>, du bist dran!</h1>
+      <% else %>
+        <h1 class="nunito-bold"><%= @cur_user.fname %> ist dran!</h1>
+      <% end %>
     </h1>
 </div>
 <div class="middle">
