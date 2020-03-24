@@ -19,7 +19,19 @@ class GameMobileAdminController < ApplicationController
     @record = true
   end
 
-  def choose_rating_user; end
+  def choose_rating_user
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    if @game.rating_option != 1 || @turns.count <= 1
+      redirect_to gea_mobile_path
+      return
+    else
+      @acc_turns = @game.turns.where(status: "accepted").playable.all
+      @users = []
+      @acc_turns.each do |turn|
+        @users << turn.user if turn.user.present? 
+      end
+    end    
+  end
 
   def after_wait
     if params[:user_id]

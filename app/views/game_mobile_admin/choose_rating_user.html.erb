@@ -10,7 +10,7 @@
     </div>
     <div class="middle">
         <%= form_tag gma_after_wait_path, id: "user_form" do %>
-            <%= select_tag 'user_id',  options_for_select(@game.users.uniq.collect{ |u| ["#{u.fname} #{u.lname}", u.id] }) %>
+            <%= select_tag 'user_id',  options_for_select(@users.uniq.collect{ |u| ["#{u.fname} #{u.lname}", u.id] }) %>
         <% end %>
     </div>
     <div class="bottom">
