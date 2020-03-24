@@ -257,10 +257,10 @@ class GameMobileAdminController < ApplicationController
       @game.update(state: 'rating')
       redirect_to gma_rating_path
       return
-    elsif ((@game.state != 'rating' || @game.state == 'rating') && @game.rating_option == 2) 
-      # @turn.update(status: "ended")
-      redirect_to gma_after_rating_path
-      return
+    # elsif ((@game.state != 'rating' || @game.state == 'rating') && @game.rating_option == 2) 
+    #   # @turn.update(status: "ended")
+    #   redirect_to gma_after_rating_path
+    #   return
     elsif @game.state != 'rating' 
       @turn.update(status: "ended")
       redirect_to gma_after_rating_path
@@ -275,7 +275,7 @@ class GameMobileAdminController < ApplicationController
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
-      redirect_to gma_skip_rating_path
+      redirect_to gma_rating_path
       return
     elsif @game.state != 'rating' 
       # @turn.update(status: "ended")
