@@ -24,7 +24,12 @@
     <%if @game.state != 'play' %>
        <section id="navbar" class="nunito-extrabold">
            <%= image_tag 'logo-m.png', class: 'logo' %>
+           <% if @game.state == 'rating' && @game.rating_user_id.present? %>
+           <% @U = User.find(@game.rating_user_id) %>
+           Bewertung von: Maximilane Mustermeier <%= image_tag @U.avatar.quad.url, class: 'rating-img'%>
+           <% else %>
            - <%= @game.team.name %> -
+           <% end %>
            <% if @handy %>
            <%= image_tag 'game/handy_green.png', class: 'handy' %>
            <% elsif current_admin.logo.present? %>

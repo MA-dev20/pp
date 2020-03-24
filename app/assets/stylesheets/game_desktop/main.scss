@@ -60,6 +60,13 @@ body {
         animation-direction: alternate;
         animation-timing-function: ease-in-out;
     }
+	.rating-img {
+		display: inline-block;
+		height: 5vh;
+		margin: 1vh 0 1vh 0;
+		border-radius: 50%;
+	}
+	
 }
 @keyframes handy {
     to {opacity: 0;}
