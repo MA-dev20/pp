@@ -103,10 +103,10 @@ class GameDesktopAdminController < ApplicationController
   def rating
     @custom_rating = @game.custom_rating
     @disabled_ratings_count = @turn.custom_rating_criteria.where(disabled: false).where.not(rating_criteria_id: nil).count / @custom_rating.rating_criteria.count
-    # if @game.state != 'rating' && @disabled_ratings_count == 0
-      # @turn.update(status: 'ended')
-      # redirect_to gda_after_rating_path
-      # return
+    if @game.state != 'rating' && @disabled_ratings_count == 0
+      @turn.update(status: 'ended')
+      redirect_to gda_after_rating_path
+      return
     if @game.state != 'rating'
       @turn.update(played: true)
       @game.update(state: 'rating')
@@ -139,11 +139,10 @@ class GameDesktopAdminController < ApplicationController
   def skip_rating
     @custom_rating = @game.custom_rating
     @disabled_ratings_count = @turn.custom_rating_criteria.where(disabled: false).where.not(rating_criteria_id: nil).count / @custom_rating.rating_criteria.count
-    # if @game.state != 'rating' && @disabled_ratings_count == 0
-    #   debugger
-    #   @turn.update(status: 'ended')
-    #   redirect_to gda_after_rating_path
-    #   return
+    if @game.state != 'rating' && @disabled_ratings_count == 0
+      @turn.update(status: 'ended')
+      redirect_to gda_after_rating_path
+      return
     if @game.state != 'rating'
       @turn.update(played: true)
       @game.update(state: 'rating')
