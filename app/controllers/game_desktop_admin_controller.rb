@@ -107,7 +107,7 @@ class GameDesktopAdminController < ApplicationController
       @turn.update(status: 'ended')
       redirect_to gda_after_rating_path
       return
-    if @game.state != 'rating'
+    elsif @game.state != 'rating'
       @turn.update(played: true)
       @game.update(state: 'rating')
     end
