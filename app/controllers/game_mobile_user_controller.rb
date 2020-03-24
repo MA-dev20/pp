@@ -297,6 +297,17 @@ class GameMobileUserController < ApplicationController
   end
 
   def skip_rating
+    @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
+    if @rating && @game.state == 'rate'
+      @game.update(state: 'rating')
+      redirect_to gmu_skip_rating_path
+      return
+    elsif @game.state != 'rating' 
+      # @turn.update(status: "ended")
+      @turn.update(played: true)
+      @game.update(state: 'rating')
+    end
+    
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1
       sleep 1

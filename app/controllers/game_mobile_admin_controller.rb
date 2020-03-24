@@ -246,7 +246,6 @@ class GameMobileAdminController < ApplicationController
   def rated
     @count = @turn.custom_rating_criteria.where.not(rating_criteria_id: nil).count / @game.custom_rating.rating_criteria.count
     @turnCount = @game.turns.where(status: "accepted").count - 1
-    # debugger    
     if @turn.ratings.count == @turnCount
       redirect_to gma_rating_path
     end
@@ -276,12 +275,13 @@ class GameMobileAdminController < ApplicationController
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
-      redirect_to gma_rating_path
+      redirect_to gma_skip_rating_path
       return
-    end
-    # elsif @game.state != 'rating' 
+    elsif @game.state != 'rating' 
       # @turn.update(status: "ended")
-    # end
+      @turn.update(played: true)
+      @game.update(state: 'rating')
+    end
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1
       redirect_to gma_turn_path
