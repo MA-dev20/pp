@@ -117,21 +117,25 @@ class GameDesktopAdminController < ApplicationController
       update_user_rating(@user, @custom_rating, @game)
     end
     # debugger
-    # if @game.rating_user_id.present?
-    #   @turn_rating = User.find(@game.rating_user_id).custom_rating_criteria.where(game_id: @game.id, turn_id: @turn.id)
-    #   # debugger
-    #   unless @turn_rating.present?
-    #     # if @game.state != 'rate'
-    #     #   @game.update(state: 'rate')
-    #     # end
-    #     # @game.update(state: 'turn')
-    #     # redirect_to gda_after_rating_path
-    #   end
-    # elsif @game.rating_option == 2
-    # else
-    #   @turn_rating = @turn.turn_rating_criteria
-    # end
-    @rating = @turn.turn_rating
+    if @game.rating_user_id.present?
+      @turn_rating_copy = User.find(@game.rating_user_id).custom_rating_criteria.where(game_id: @game.id, turn_id: @turn.id)
+      @turn_rating = []
+      @turn_rating_copy.each do |tr|
+        @turn_rating << tr if tr.name != 'ges'
+      end
+      @turn_rating << @turn_rating_copy.where(name: 'ges').first
+      unless @turn_rating_copy.present?
+        # if @game.state != 'rate'
+        #   @game.update(state: 'rate')
+        # end
+        # @game.update(state: 'turn')
+        # redirect_to gda_after_rating_path
+      end
+    elsif @game.rating_option == 2
+    else
+      @turn_rating = @turn.turn_rating_criteria
+    end
+    # @rating = @turn.turn_rating
   end
   
   def skip_rating
@@ -171,6 +175,9 @@ class GameDesktopAdminController < ApplicationController
       redirect_to gda_bestlist_path
       return
     else
+      if @game.rating_user_id.present?
+        @game.update(state: 'choose')
+      end
       redirect_to gda_choose_path
       return
     end
@@ -261,6 +268,13 @@ class GameDesktopAdminController < ApplicationController
     def check_for_rating
       if @game.rating_option == 2
         redirect_to gda_skip_rating_path
+      elsif @game.rating_user_id.present?
+        @turn = Turn.find_by(id: @game.current_turn)
+        @cur_user = @turn.findUser if @turn
+        @turn_rating_copy = User.find(@game.rating_user_id).custom_rating_criteria.where(game_id: @game.id, turn_id: @turn.id)
+        unless @turn_rating_copy.present?
+          redirect_to gda_skip_rating_path
+        end
       end
     end
 end

@@ -297,12 +297,14 @@ class GameMobileUserController < ApplicationController
   def skip_rating
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1
+      sleep 1
       redirect_to gmu_turn_path
       return
     elsif @turns.count == 0
       redirect_to gmu_bestlist_path
       return
     else
+      sleep 1
       redirect_to gmu_choose_path
       return
     end
@@ -310,7 +312,12 @@ class GameMobileUserController < ApplicationController
     
   def bestlist
     @turn_rating = @game.turn_rating_criteria.where(user_id: @user.id, name: 'ges').last
-    @word = @turn_rating.turn.word
+    if @turn_rating.nil?
+      redirect_to gmu_bestlist_path
+      return
+    else
+      @word = @turn_rating.turn.word
+    end
   end
     
   def replay
@@ -407,6 +414,18 @@ class GameMobileUserController < ApplicationController
     def check_for_rating
       if @game.rating_option == 2
         redirect_to gmu_skip_rating_path
+      elsif @game.rating_user_id.present?
+        @turn = Turn.find_by(id: @game.current_turn)
+        @cur_user = @turn.findUser if @turn
+        @turn_rating_copy = User.find(@game.rating_user_id).custom_rating_criteria.where(game_id: @game.id, turn_id: @turn.id)
+        # @turn_rating = []
+        # @turn_rating_copy.each do |tr|
+        #   @turn_rating << tr if tr.name != 'ges'
+        # end
+        # @turn_rating << @turn_rating_copy.where(name: 'ges').first
+        unless @turn_rating_copy.present?
+          redirect_to gmu_skip_rating_path
+        end
       end
     end
 end

@@ -103,15 +103,7 @@
         var circle_text = ['spontan_text', 'creativ_text', 'body_text', 'rhetoric_text', 'ges_text']
 
         var ratings = <%= @turn_rating.to_json.html_safe %>;
-        // debugger
-        // var delay = 2000
-//         for(var i = 0; i < 5; i++) {
-//             // debugger
-//             setTimeout(function() {
-//                 ratecircle(circle_ids[i], circle_text[i], (ratings[i]['value'] / 100.0));
-//             }, delay);
-//             delay = delay + 2000
-//         }
+        
         if (ratings.length - 1 == 1) {
             setTimeout(function() {
                 ratecircleg('#ges', 'ges_text', (ratings[0]['value'] / 100.0));
