@@ -11,6 +11,7 @@ class GameMobileUserController < ApplicationController
     
   def welcome
     @game1 = Game.where(password: params[:password], active: true).first
+    # @game1 = Game.where(password: params[:password]).first
     if @game1
       session[:game_session_id] = @game1.id
     else
@@ -28,6 +29,7 @@ class GameMobileUserController < ApplicationController
   end
     
   def new
+    #Todo: sometimes session give nil value
     @game1 = Game.find(session[:game_session_id])
     if !@game1
       flash[:danger] = 'Konnte keinen passenden Pitch finden!'
