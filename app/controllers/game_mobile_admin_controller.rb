@@ -384,11 +384,6 @@ class GameMobileAdminController < ApplicationController
       end
     end
 
-    def check_for_turn
-      # redirect_to gma_new_avatar_path if !@game.has_turn_of_user?(current_user)
-      return
-    end
-
     def check_for_rating
       if @game.rating_option == 2
         redirect_to gma_skip_rating_path
@@ -396,11 +391,6 @@ class GameMobileAdminController < ApplicationController
         @turn = Turn.find_by(id: @game.current_turn)
         @cur_user = @turn.findUser if @turn
         @turn_rating_copy = User.find(@game.rating_user_id).custom_rating_criteria.where(game_id: @game.id, turn_id: @turn.id)
-        # @turn_rating = []
-        # @turn_rating_copy.each do |tr|
-        #   @turn_rating << tr if tr.name != 'ges'
-        # end
-        # @turn_rating << @turn_rating_copy.where(name: 'ges').first
         unless @turn_rating_copy.present?
           redirect_to gma_skip_rating_path
         end

@@ -418,11 +418,6 @@ class GameMobileUserController < ApplicationController
         @turn = Turn.find_by(id: @game.current_turn)
         @cur_user = @turn.findUser if @turn
         @turn_rating_copy = User.find(@game.rating_user_id).custom_rating_criteria.where(game_id: @game.id, turn_id: @turn.id)
-        # @turn_rating = []
-        # @turn_rating_copy.each do |tr|
-        #   @turn_rating << tr if tr.name != 'ges'
-        # end
-        # @turn_rating << @turn_rating_copy.where(name: 'ges').first
         unless @turn_rating_copy.present?
           redirect_to gmu_skip_rating_path
         end
