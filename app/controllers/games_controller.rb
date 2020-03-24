@@ -21,7 +21,6 @@ class GamesController < ApplicationController
       return
     end
     if @game && @game.admin_id == @admin.id
-      @game.update(rating_option: params[:game][:rating_option].to_i)
       @game.turns.update_all(status: 'ended')
       redirect_to dash_admin_create_game_2_path(@game)
     elsif params[:game][:password] == 'vertrieb' || @game && @game.admin_id != @admin.id
@@ -30,7 +29,7 @@ class GamesController < ApplicationController
         redirect_to dash_admin_games_path(params[:game][:team_id])
     else
       mute_sound = params[:game][:mute_sound] == 'true'
-      @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password], mute_sound: mute_sound, rating_option: params[:game][:rating_option].to_i)
+      @game = Game.new(admin_id: @admin.id, team_id: params[:game][:team_id], active: true, state: 'intro', password: params[:game][:password], mute_sound: mute_sound)
       if @game.save
         redirect_to dash_admin_create_game_2_path(@game)
       else
@@ -41,7 +40,8 @@ class GamesController < ApplicationController
   end
 	
   def create_2
-	@game = Game.find(params[:game_id])
+  @game = Game.find(params[:game_id])
+  @game.update(rating_option: params[:game][:rating_option].to_i)
 	if !params[:game][:baskets].nil?
 	  set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
 	elsif params[:game][:baskets].nil?

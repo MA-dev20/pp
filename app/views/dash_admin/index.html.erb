@@ -45,11 +45,7 @@
         <div class="toggle toggle-game right" onclick="soundCheck()"><div class="dot"></div></div>
         <div class="text">Game sound</div>
     </div>
-    <select name="game[rating_option]" id="">
-        <option value="0" selected="selected">All</option>
-        <option value="1">One User</option>
-        <option value="2">Nothing</option>
-    </select>
+    
     <button class="btn btn-green" onclick="submitForm()">weiter!</button>
     <% end %>
 </div>
@@ -293,27 +289,33 @@
         <div class="rate-type">
         	<label for="">Bewertungsausgabe</label>
         	<div class="form-group">
-        		<input type="radio" id="all_ratings" name="rateType" value="alle" checked>
+        		<input type="radio" id="all_ratings" name="game[rating_option]" value="0" checked>
         		<label for="all_ratings">
         			Gesamtbewertung anzeigen
         			<i class="far fa-dot-circle"></i><i class="far fa-circle"></i>        		
         		</label>
         	</div>
         	<div class="form-group">
-        		<input type="radio" id="no_ratings" name="rateType" value="kein">
+        		<input type="radio" id="no_ratings" name="game[rating_option]" value="2">
         		<label for="no_ratings">
         			Keine Bewertungen anzeigen
         			<i class="far fa-dot-circle"></i><i class="far fa-circle"></i>
         		</label>
         	</div>
         	<div class="form-group">
-        		<input type="radio" id="one_rating" name="rateType" value="1user">
+        		<input type="radio" id="one_rating" name="game[rating_option]" value="1">
         		<label for="one_rating">
         			Bewertung einer bestimmten Person anzeigen
         			<i class="far fa-dot-circle"></i><i class="far fa-circle"></i>	
         		</label>
         	</div>
         </div>
+
+        <!-- <select name="game[rating_option]" id="">
+                <option value="0" selected="selected">All</option>
+                <option value="1">One User</option>
+                <option value="2">Nothing</option>
+            </select> -->
 
         <div class="youtube">
             <label for="" onclick="openYoutube()">Video hinzufügen</label>
