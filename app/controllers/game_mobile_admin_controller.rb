@@ -239,7 +239,6 @@ class GameMobileAdminController < ApplicationController
   end
     
   def rating
-    # debugger
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
