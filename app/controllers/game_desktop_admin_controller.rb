@@ -103,6 +103,7 @@ class GameDesktopAdminController < ApplicationController
   def rating
     @custom_rating = @game.custom_rating
     @disabled_ratings_count = @turn.custom_rating_criteria.where(disabled: false).where.not(rating_criteria_id: nil).count / @custom_rating.rating_criteria.count
+    debugger
     if @game.state != 'rating' && @disabled_ratings_count == 0
       @turn.update(status: 'ended')
       redirect_to gda_after_rating_path
@@ -130,28 +131,40 @@ class GameDesktopAdminController < ApplicationController
   def skip_rating
     @custom_rating = @game.custom_rating
     @disabled_ratings_count = @turn.custom_rating_criteria.where(disabled: false).where.not(rating_criteria_id: nil).count / @custom_rating.rating_criteria.count
-    if @game.state != 'rating' && @disabled_ratings_count == 0
-      # @turn.update(status: 'ended')
-      @turn.update(played: true)
-      @game.update(state: 'rating')
-      # debugger
-      redirect_to gda_after_rating_path
-      # return
-    elsif @game.state != 'rating'
-      @turn.update(played: true)
+    # current_admin.custom_rating_criteria.where(turn_id: @turn.id)
+    if @game.state != 'rating'
       @game.update(state: 'rating')
     end
-    update_turn_rating(@turn, @custom_rating)
-    if @user != @admin
-      update_user_rating(@user, @custom_rating, @game)
-    end
-    @rating = @turn.turn_rating
+    debugger
+    unless @turn.user.present?
+      unless current_admin.custom_rating_criteria.where(turn_id: @turn.id).present?
+        @turn.update(played: true)
+        redirect_to gda_after_rating_path
+      end
+    end 
+    # if @game.state != 'rating' && @disabled_ratings_count == 0
+    #   # @turn.update(status: 'ended')
+    #   @turn.update(played: true)
+    #   @game.update(state: 'rating')
+    #   # debugger
+    #   redirect_to gda_after_rating_path
+    #   # return
+    # elsif @game.state != 'rating'
+    #   @turn.update(played: true)
+    #   @game.update(state: 'rating')
+    # end
+
+    # update_turn_rating(@turn, @custom_rating)
+    # if @user != @admin
+    #   update_user_rating(@user, @custom_rating, @game)
+    # end
+    # @rating = @turn.turn_rating
     
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1
       redirect_to gda_turn_path
       return
-    elsif @turns.count == 0
+    elsif @turns.count == 0 && @game.not_played_count == 0
       redirect_to gda_bestlist_path
       return
     else

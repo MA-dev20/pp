@@ -26,6 +26,8 @@ class GameMobileAdminController < ApplicationController
       return
     else
       @acc_turns = @game.turns.where(status: "accepted").playable.all
+      @game.update(not_played_count: @acc_turns.count)
+
       @users = []
       @acc_turns.each do |turn|
         @users << turn.user if turn.user.present? 
@@ -221,6 +223,8 @@ class GameMobileAdminController < ApplicationController
         @game.state ='play'
       end
     end
+    value = @game.not_played_count - 1
+    @game.not_played_count = value
     @game.save!
   end
   def react
@@ -236,6 +240,7 @@ class GameMobileAdminController < ApplicationController
     @game.video_uploading = false
     @game.save
     @custom_rating = @game.custom_rating
+    debugger
     if @turn.custom_rating_criteria.find_by(admin_id: @admin.id)
       redirect_to gma_rated_path
     elsif @admin == @cur_user
@@ -257,10 +262,6 @@ class GameMobileAdminController < ApplicationController
       @game.update(state: 'rating')
       redirect_to gma_rating_path
       return
-    # elsif ((@game.state != 'rating' || @game.state == 'rating') && @game.rating_option == 2) 
-    #   # @turn.update(status: "ended")
-    #   redirect_to gma_after_rating_path
-    #   return
     elsif @game.state != 'rating' 
       @turn.update(status: "ended")
       redirect_to gma_after_rating_path
@@ -273,24 +274,23 @@ class GameMobileAdminController < ApplicationController
 
   def skip_rating
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
-    # debugger
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
       redirect_to gma_rating_path
       return
-    elsif @game.state == 'choose' || @game.state == 'turn'
-      @game.update(state: 'rating')
     elsif @game.state != 'rating'
-      # @turn.update(status: "ended")
-      @turn.update(played: true)
+      unless @turn.user.present?
+        # current_admin.custom_rating_criteria.where(turn_id: @turn.id)
+        @turn.update(played: true)
+      end      
       @game.update(state: 'rating')
     end
+    
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
-    # debugger
     if @turns.count == 1
       redirect_to gma_turn_path
       return
-    elsif @turns.count == 0
+    elsif @turns.count == 0 && @game.not_played_count == 0
       redirect_to gma_bestlist_path
       return
     else

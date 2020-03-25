@@ -238,19 +238,22 @@ class GameMobileUserController < ApplicationController
   end
 
   def choose
-    if @game.rating_option == 2
-      @turns = @game.turns.where(status: "accepted").playable.sample(2)
-      if @game.state != 'choose'
-        @turn1 = @turns.first
-        @turn2 = @turns.second
-      else
-        @turn1 = Turn.find_by(id: @game.turn1)
-        @turn2 = Turn.find_by(id: @game.turn2)
-      end
-    else
-        @turn1 = Turn.find_by(id: @game.turn1)
-        @turn2 = Turn.find_by(id: @game.turn2)
-    end
+    # if @game.rating_option == 2
+    #   @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    #   if @game.state != 'choose'
+    #     @turn1 = @turns.first
+    #     @turn2 = @turns.second
+    #     @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
+    #   else
+    #     @turn1 = Turn.find_by(id: @game.turn1)
+    #     @turn2 = Turn.find_by(id: @game.turn2)
+    #   end
+    # else
+    #     @turn1 = Turn.find_by(id: @game.turn1)
+    #     @turn2 = Turn.find_by(id: @game.turn2)
+    # end
+    @turn1 = Turn.find_by(id: @game.turn1)
+    @turn2 = Turn.find_by(id: @game.turn2)
   end
     
   def choosen
@@ -307,7 +310,7 @@ class GameMobileUserController < ApplicationController
       # end
       redirect_to gmu_turn_path
       return
-    elsif @turns.count == 0
+    elsif @turns.count == 0 && @game.not_played_count == 0
       redirect_to gmu_bestlist_path
       return
     else

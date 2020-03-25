@@ -51,8 +51,10 @@ module DatabaseHelper
       uniq_ratings_name = ratings_name_hash.uniq {|rating| rating['name']}
       uniq_ratings_name.each do |rating_hash|
         rating_value_hash = @ratings.where(name: rating_hash['name']).map{|rating| rating.attributes.slice('value')}
-        avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-        ratings_avg[rating_hash['name']] = avg
+        if rating_value_hash.length != 0         
+          avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+          ratings_avg[rating_hash['name']] = avg
+        end
       end
 
       ratings_count = @ratings.where(name: 'ges').count       
@@ -63,8 +65,10 @@ module DatabaseHelper
         
         uniq_ratings_name.each do |rating_hash|
           rating_value_hash = @ratings_alt.where(name: rating_hash['name']).map{|rating| rating.attributes.slice('value')}
-          avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-          ratings_alt_avg[rating_hash['name']] = avg
+          if rating_value_hash.length != 0   
+            avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+            ratings_alt_avg[rating_hash['name']] = avg
+          end
         end
       end
     end
