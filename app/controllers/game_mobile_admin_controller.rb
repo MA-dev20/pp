@@ -278,7 +278,9 @@ class GameMobileAdminController < ApplicationController
       @game.update(state: 'rating')
       redirect_to gma_rating_path
       return
-    elsif @game.state != 'rating' && @game.state != 'choose'
+    elsif @game.state == 'choose' || @game.state == 'turn'
+      @game.update(state: 'rating')
+    elsif @game.state != 'rating'
       # @turn.update(status: "ended")
       @turn.update(played: true)
       @game.update(state: 'rating')
