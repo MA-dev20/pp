@@ -296,15 +296,15 @@ class GameMobileUserController < ApplicationController
   def rating; end
 
   def skip_rating
-    if @game.state != 'rating'
-      @game.update(state: 'rating')
-    end
+    # if @game.state != 'rating'
+    #   @game.update(state: 'rating')
+    # end
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1
       sleep 1
-      if @game.state != 'turn'
-        @game.update(state: 'turn')
-      end
+      # if @game.state != 'turn'
+      #   @game.update(state: 'turn')
+      # end
       redirect_to gmu_turn_path
       return
     elsif @turns.count == 0
@@ -312,12 +312,12 @@ class GameMobileUserController < ApplicationController
       return
     else
       sleep 1
-      @turns = @game.turns.where(status: "accepted").playable.sample(2)
-      if @game.state != 'choose'
-        @turn1 = @turns.first
-        @turn2 = @turns.second
-        @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
-      end
+      # @turns = @game.turns.where(status: "accepted").playable.sample(2)
+      # if @game.state != 'choose'
+      #   @turn1 = @turns.first
+      #   @turn2 = @turns.second
+      #   @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
+      # end
       redirect_to gmu_choose_path
       return
     end

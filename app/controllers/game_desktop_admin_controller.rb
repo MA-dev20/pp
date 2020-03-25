@@ -135,7 +135,7 @@ class GameDesktopAdminController < ApplicationController
       @turn.update(played: true)
       @game.update(state: 'rating')
       # debugger
-      # redirect_to gda_after_rating_path
+      redirect_to gda_after_rating_path
       # return
     elsif @game.state != 'rating'
       @turn.update(played: true)
