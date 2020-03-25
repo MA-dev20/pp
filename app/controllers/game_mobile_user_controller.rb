@@ -11,6 +11,7 @@ class GameMobileUserController < ApplicationController
     
   def welcome
     @game1 = Game.where(password: params[:password], active: true).first
+    # @game1 = Game.where(password: params[:password]).first
     if @game1
       session[:game_session_id] = @game1.id
     else
@@ -28,6 +29,7 @@ class GameMobileUserController < ApplicationController
   end
     
   def new
+    #Todo: sometimes session give nil value
     @game1 = Game.find(session[:game_session_id])
     if !@game1
       flash[:danger] = 'Konnte keinen passenden Pitch finden!'
@@ -85,7 +87,9 @@ class GameMobileUserController < ApplicationController
     @user = User.where(id: params[:user_id]).first
     if @user.update_attributes(status: 1)
       @turn = Turn.where(user_id: @user.id).destroy_all
-      TurnRating.where(user_id:  @user.id).destroy_all
+      #Todo: check this
+      # TurnRating.where(user_id:  @user.id).destroy_all
+      TurnRatingCriterium.where(user_id:  @user.id).destroy_all
       TeamUser.where(user_id: @user.id).destroy_all
       @user.destroy
       if @user
@@ -272,8 +276,7 @@ class GameMobileUserController < ApplicationController
     # @cur_user = Turn.find_by(id: @game.current_turn).findUser
   end
     
-  def play
-  end
+  def play; end
 	
   def react
 	  @emoji = params[:emoji]
@@ -288,16 +291,20 @@ class GameMobileUserController < ApplicationController
     end
   end
     
-  def rated
-  end
+  def rated; end
     
-  def rating
-  end
+  def rating; end
 
   def skip_rating
+    # if @game.state != 'rating'
+    #   @game.update(state: 'rating')
+    # end
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1
       sleep 1
+      # if @game.state != 'turn'
+      #   @game.update(state: 'turn')
+      # end
       redirect_to gmu_turn_path
       return
     elsif @turns.count == 0
@@ -305,6 +312,12 @@ class GameMobileUserController < ApplicationController
       return
     else
       sleep 1
+      # @turns = @game.turns.where(status: "accepted").playable.sample(2)
+      # if @game.state != 'choose'
+      #   @turn1 = @turns.first
+      #   @turn2 = @turns.second
+      #   @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
+      # end
       redirect_to gmu_choose_path
       return
     end

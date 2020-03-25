@@ -103,7 +103,6 @@ class GameDesktopAdminController < ApplicationController
   def rating
     @custom_rating = @game.custom_rating
     @disabled_ratings_count = @turn.custom_rating_criteria.where(disabled: false).where.not(rating_criteria_id: nil).count / @custom_rating.rating_criteria.count
-    # if @game.state != 'rating' && @turn.ratings.where(disabled: false).count == 0
     if @game.state != 'rating' && @disabled_ratings_count == 0
       @turn.update(status: 'ended')
       redirect_to gda_after_rating_path
@@ -116,7 +115,6 @@ class GameDesktopAdminController < ApplicationController
     if @user != @admin
       update_user_rating(@user, @custom_rating, @game)
     end
-    # debugger
     if @game.rating_user_id.present?
       @turn_rating_copy = User.find(@game.rating_user_id).custom_rating_criteria.where(game_id: @game.id, turn_id: @turn.id)
       @turn_rating = []
@@ -124,25 +122,21 @@ class GameDesktopAdminController < ApplicationController
         @turn_rating << tr if tr.name != 'ges'
       end
       @turn_rating << @turn_rating_copy.where(name: 'ges').first
-      unless @turn_rating_copy.present?
-        # if @game.state != 'rate'
-        #   @game.update(state: 'rate')
-        # end
-        # @game.update(state: 'turn')
-        # redirect_to gda_after_rating_path
-      end
-    elsif @game.rating_option == 2
     else
       @turn_rating = @turn.turn_rating_criteria
     end
-    # @rating = @turn.turn_rating
   end
   
   def skip_rating
     @custom_rating = @game.custom_rating
     @disabled_ratings_count = @turn.custom_rating_criteria.where(disabled: false).where.not(rating_criteria_id: nil).count / @custom_rating.rating_criteria.count
     if @game.state != 'rating' && @disabled_ratings_count == 0
-      @turn.update(status: 'ended')
+      # @turn.update(status: 'ended')
+      @turn.update(played: true)
+      @game.update(state: 'rating')
+      # debugger
+      redirect_to gda_after_rating_path
+      # return
     elsif @game.state != 'rating'
       @turn.update(played: true)
       @game.update(state: 'rating')
@@ -168,6 +162,7 @@ class GameDesktopAdminController < ApplicationController
 
   def after_rating
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
+    debugger
     if @turns.count == 1
       redirect_to gda_turn_path
       return
@@ -191,7 +186,7 @@ class GameDesktopAdminController < ApplicationController
     # update_team_rating @team
     # @turn_ratings = @game.turn_ratings.where(ended: false).rating_order
     update_team_rating(@team, @game)    
-    @turn_ratings = @game.turn_rating_criteria.where(rating_criteria_id: nil, ended: false).order('value desc')
+    @turn_ratings = @game.turn_rating_criteria.where(rating_criteria_id: nil, ended: false).where.not(value: nil).order('value desc')
     place = 1
     @turn_ratings.each do |t|
         @turn = Turn.find(t.turn_id)
@@ -239,7 +234,9 @@ class GameDesktopAdminController < ApplicationController
       @game.turn_ratings.update_all(ended: true)
       @game.turns.update_all(status: "ended")
       ids = @game.turns.pluck(:id)
-      Rating.where('turn_id IN (?)',ids).update_all(disabled: true)
+      #Todo: check
+      # Rating.where('turn_id IN (?)',ids).update_all(disabled: true)
+      CustomRatingCriterium.where('turn_id IN (?)',ids).update_all(disabled: true)
     else
       @game1 = @admin.games.where(team_id: @game.team_id, state: 'wait', password: @game.password, active: true).first
     end

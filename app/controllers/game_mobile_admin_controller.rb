@@ -20,6 +20,17 @@ class GameMobileAdminController < ApplicationController
   end
 
   def choose_rating_user
+    @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    if @game.rating_option != 1 || @turns.count <= 1
+      redirect_to gea_mobile_path
+      return
+    else
+      @acc_turns = @game.turns.where(status: "accepted").playable.all
+      @users = []
+      @acc_turns.each do |turn|
+        @users << turn.user if turn.user.present? 
+      end
+    end    
   end
 
   def after_wait
@@ -88,6 +99,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def new_turn
+    #Todo: sometimes session give nil value
     @game1 = Game.find(session[:game_session_id])
     @turn = @game1.turns.find_by(admin_id: @admin.id, admin_turn: true)
     @turn.update(status: 'ended') if @turn.present?
@@ -110,6 +122,7 @@ class GameMobileAdminController < ApplicationController
     else
       ActionCable.server.broadcast "game_#{@game.id}_channel",desktop: "intro", game_admin_id: @game.admin_id
     end
+  # @game.update(state: 'intro')
 	@game.update(active: false, state: 'intro')
   end
     
@@ -137,7 +150,6 @@ class GameMobileAdminController < ApplicationController
 
   def choose
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
-    # debugger  
     if @game.state != 'choose' && @turns.count <= 1
       redirect_to gea_mobile_path
       return
@@ -145,6 +157,7 @@ class GameMobileAdminController < ApplicationController
       @turn1 = @turns.first
       @turn2 = @turns.second
       @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
+      # @game.update(turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
     else
       @turn1 = Turn.find_by(id: @game.turn1)
       @turn2 = Turn.find_by(id: @game.turn2)
@@ -167,11 +180,11 @@ class GameMobileAdminController < ApplicationController
   end
     
   def turn
-    # debugger
     @turns = @game.turns.where(status: 'accepted').playable
     if @game.state != 'turn' && @turns.count == 1
       @turn = @turns.first
       @game.update(state: 'turn', active: false, current_turn: @turn.id)
+      # @game.update(state: 'turn', current_turn: @turn.id)
     elsif @game.state != 'turn'
       @turn1 = Turn.find_by(id: @game.turn1)
       @turn2 = Turn.find_by(id: @game.turn2)
@@ -232,7 +245,7 @@ class GameMobileAdminController < ApplicationController
     
   def rated
     @count = @turn.custom_rating_criteria.where.not(rating_criteria_id: nil).count / @game.custom_rating.rating_criteria.count
-	  @turnCount = @game.turns.where(status: "accepted").count - 1
+    @turnCount = @game.turns.where(status: "accepted").count - 1
     if @turn.ratings.count == @turnCount
       redirect_to gma_rating_path
     end
@@ -244,11 +257,11 @@ class GameMobileAdminController < ApplicationController
       @game.update(state: 'rating')
       redirect_to gma_rating_path
       return
+    # elsif ((@game.state != 'rating' || @game.state == 'rating') && @game.rating_option == 2) 
+    #   # @turn.update(status: "ended")
+    #   redirect_to gma_after_rating_path
+    #   return
     elsif @game.state != 'rating' 
-      @turn.update(status: "ended")
-      redirect_to gma_after_rating_path
-      return
-    elsif @game.state == 'rating' && @game.rating_option == 2 
       @turn.update(status: "ended")
       redirect_to gma_after_rating_path
       return
@@ -260,14 +273,20 @@ class GameMobileAdminController < ApplicationController
 
   def skip_rating
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
+    # debugger
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
       redirect_to gma_rating_path
       return
-    elsif @game.state != 'rating' 
-      @turn.update(status: "ended")
+    elsif @game.state == 'choose' || @game.state == 'turn'
+      @game.update(state: 'rating')
+    elsif @game.state != 'rating'
+      # @turn.update(status: "ended")
+      @turn.update(played: true)
+      @game.update(state: 'rating')
     end
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
+    # debugger
     if @turns.count == 1
       redirect_to gma_turn_path
       return

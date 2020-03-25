@@ -16,13 +16,16 @@ module DatabaseHelper
     ratings_avg = {}
     custom_rating.rating_criteria.each do |rating|
       rating_value_hash = @custom_ratings_criteria.where(name: rating[:name]).map{|rating| rating.attributes.slice('value')}
-      avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-      ratings_avg[rating[:name]] = avg
+      if rating_value_hash.length != 0 
+        avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+        ratings_avg[rating[:name]] = avg
+      end
     end
     rating_value_hash = @custom_ratings_criteria.where(name: 'ges').map{|rating| rating.attributes.slice('value')}
-    avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-    ges_avg = avg
-    
+    if rating_value_hash.length != 0 
+      avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+      ges_avg = avg
+    end
     if @turn_rating_criteria.present?
       ratings_avg.each do |key, value|
         @turn_rating_criteria.find_by(name: key).update(value: value)
@@ -101,7 +104,16 @@ module DatabaseHelper
     
     uniq_ratings_name.each do |rating_hash|
       rating_value_hash = @ratings.where(name: rating_hash['name']).map{|rating| rating.attributes.slice('value')}
-      avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+      # avg = rating_value_hash.sum {|rating| rating['value'] unless rating['value'].nil? } / rating_value_hash.length
+      count = 0
+      values = 0
+      rating_value_hash.each do |rating|
+        unless rating['value'].nil?
+          values += rating['value']
+          count += 1
+        end
+      end
+      avg = values / count
       ratings_avg[rating_hash['name']] = avg
     end
 
