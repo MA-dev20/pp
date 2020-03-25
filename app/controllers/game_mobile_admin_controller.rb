@@ -151,7 +151,7 @@ class GameMobileAdminController < ApplicationController
 
   def choose
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
-    if @game.rating_option == 2 && @game.choose_counter == 0
+    if (@game.rating_option == 1 || @game.rating_option == 2) && @game.choose_counter == 0
       @acc_turns = @game.turns.where(status: 'accepted').playable.all
       @game.update(not_played_count: @acc_turns.count, choose_counter: 1)
     end
