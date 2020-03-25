@@ -243,8 +243,8 @@ ActiveRecord::Schema.define(version: 2020_03_25_082631) do
     t.boolean "mute_sound", default: false
     t.integer "rating_option", default: 0
     t.integer "rating_user_id"
-    t.integer "played_count", default: 0
     t.integer "not_played_count", default: 0
+    t.integer "choose_counter", default: 0
     t.index ["admin_id"], name: "index_games_on_admin_id"
     t.index ["custom_rating_id"], name: "index_games_on_custom_rating_id"
     t.index ["team_id"], name: "index_games_on_team_id"

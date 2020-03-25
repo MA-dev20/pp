@@ -27,7 +27,6 @@ class GameMobileAdminController < ApplicationController
     else
       @acc_turns = @game.turns.where(status: "accepted").playable.all
       @game.update(not_played_count: @acc_turns.count)
-
       @users = []
       @acc_turns.each do |turn|
         @users << turn.user if turn.user.present? 
@@ -114,7 +113,7 @@ class GameMobileAdminController < ApplicationController
   end
     
   def intro
-	@turns = @game.turns.where(status: "accepted").playable.sample(2)
+  @turns = @game.turns.where(status: "accepted").playable.sample(2)
 	if !@game.video.nil?
 		@video = true
 	end
@@ -152,6 +151,10 @@ class GameMobileAdminController < ApplicationController
 
   def choose
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
+    if @game.rating_option == 2 && @game.choose_counter == 0
+      @acc_turns = @game.turns.where(status: 'accepted').playable.all
+      @game.update(not_played_count: @acc_turns.count, choose_counter: 1)
+    end
     if @game.state != 'choose' && @turns.count <= 1
       redirect_to gea_mobile_path
       return
@@ -221,12 +224,13 @@ class GameMobileAdminController < ApplicationController
     else
       if @game.state != 'play'
         @game.state ='play'
+        value = @game.not_played_count - 1
+        @game.not_played_count = value
       end
     end
-    value = @game.not_played_count - 1
-    @game.not_played_count = value
     @game.save!
   end
+
   def react
 	@emoji = params[:emoji]
     ActionCable.server.broadcast "count_#{@game.id}_channel", count: 'react', emoji: @emoji, user_pic: @admin.avatar.quad.url
@@ -240,7 +244,7 @@ class GameMobileAdminController < ApplicationController
     @game.video_uploading = false
     @game.save
     @custom_rating = @game.custom_rating
-    debugger
+    # debugger
     if @turn.custom_rating_criteria.find_by(admin_id: @admin.id)
       redirect_to gma_rated_path
     elsif @admin == @cur_user
@@ -274,9 +278,10 @@ class GameMobileAdminController < ApplicationController
 
   def skip_rating
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
+    # debugger
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
-      redirect_to gma_rating_path
+      redirect_to gma_skip_rating_path
       return
     elsif @game.state != 'rating'
       unless @turn.user.present?
@@ -301,10 +306,14 @@ class GameMobileAdminController < ApplicationController
     
   def after_rating
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
+    flag = true
+    if @game.rating_user_id.present?
+      flag = (@game.not_played_count == 0) ? true : false
+    end
     if @turns.count == 1
       redirect_to gma_turn_path
       return
-    elsif @turns.count == 0
+    elsif @turns.count == 0 && flag
       redirect_to gma_bestlist_path
       return
     else
@@ -343,6 +352,8 @@ class GameMobileAdminController < ApplicationController
     
   def replay
     @game.replay = true
+    @game.not_played_count = 0
+    @game.choose_counter = 0
     @game.save!
     if @game.state != 'replay'
       @game.update(state: 'replay', active: true)
