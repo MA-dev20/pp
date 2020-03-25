@@ -274,8 +274,7 @@ class GameMobileUserController < ApplicationController
     # @cur_user = Turn.find_by(id: @game.current_turn).findUser
   end
     
-  def play
-  end
+  def play; end
 	
   def react
 	  @emoji = params[:emoji]
@@ -290,11 +289,9 @@ class GameMobileUserController < ApplicationController
     end
   end
     
-  def rated
-  end
+  def rated; end
     
-  def rating
-  end
+  def rating; end
 
   def skip_rating
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
