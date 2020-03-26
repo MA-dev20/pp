@@ -369,3 +369,63 @@ option:focus {
     height: 0;
     width: 0;
 }
+
+
+.lets-pitch-img1 {
+    position: absolute;
+    width: 47vh;
+    top: 4vh;
+    left: 4vh;
+}
+.lets-pitch-img2 {
+    position: absolute;
+    width: 47vh;
+    top: 18vh;
+    right: 4vh;
+}
+.custom-switch {
+    padding-left: 3.8vh;
+}
+.custom-switch .custom-control-label::before {
+    width: 3.2vh;
+    height: 1.9vh;
+    left: -3.8vh;
+    border-radius: 1.5vh;
+}
+.custom-control-label::before {
+    top: 0.7vh;
+}
+.custom-control {
+    position: relative;
+    display: block;
+    min-height: 2.6vh;
+}
+
+.custom-switch .custom-control-label::after {
+    top: calc(0.8vh + 0.2vh);
+    margin: 0.1vh 0.1vh;
+    height: 1.27vh;
+    width: 1.27vh;
+}
+
+.custom-control-label::after {
+    top: 0.45rem;
+}
+
+.custom-control-label::before {
+    top: 0.45rem;
+}
+
+.karte.letsplay .time .field .time {
+    text-align: inherit;
+    padding-left: 1.6vh;
+    line-height: 4.3vh;
+}
+
+.karte.letsplay .add .fas {
+    font-size: 1.8vh;
+}
+
+.radio-rating {
+    display: none;
+}
