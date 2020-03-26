@@ -286,7 +286,7 @@ class GameMobileAdminController < ApplicationController
       redirect_to gma_skip_rating_path
       return
     elsif @game.state != 'rating'
-      unless @turn.user.present?
+      unless @turn.user.present? && @turn.custom_rating_criteria.present?
         # current_admin.custom_rating_criteria.where(turn_id: @turn.id)
         @turn.update(played: true)
       end      
