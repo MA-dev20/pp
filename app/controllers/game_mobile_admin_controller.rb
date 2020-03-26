@@ -26,7 +26,7 @@ class GameMobileAdminController < ApplicationController
       return
     else
       @acc_turns = @game.turns.where(status: "accepted").playable.all
-      @game.update(not_played_count: @acc_turns.count + 1)
+      @game.update(not_played_count: @acc_turns.count)
       @users = []
       @acc_turns.each do |turn|
         @users << turn.user if turn.user.present? 
@@ -155,7 +155,7 @@ class GameMobileAdminController < ApplicationController
     @turns = @game.turns.where(status: "accepted").playable.sample(2)
     if (@game.rating_option == 1 || @game.rating_option == 2) && @game.choose_counter == 0
       @acc_turns = @game.turns.where(status: 'accepted').playable.all
-      @game.update(not_played_count: @acc_turns.count + 1, choose_counter: 1)
+      @game.update(not_played_count: @acc_turns.count, choose_counter: 1)
     end
     if @game.state != 'choose' && @turns.count <= 1
       redirect_to gea_mobile_path
