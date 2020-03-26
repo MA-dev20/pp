@@ -31,6 +31,7 @@ class GameMobileAdminController < ApplicationController
       @acc_turns.each do |turn|
         @users << turn.user if turn.user.present? 
       end
+      @users.sort!{|a,b| a[:fname].downcase <=> b[:fname].downcase}
     end    
   end
 
