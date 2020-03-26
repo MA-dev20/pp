@@ -307,14 +307,14 @@ class GameMobileUserController < ApplicationController
     if @game.rating_user_id.present? || @game.rating_option == 2
       flag = (@game.not_played_count == 0) ? true : false
     end
-    if @turns.count == 1
+    if @turns.count == 1 && @game.not_played_count == 1
       sleep 1
       # if @game.state != 'turn'
       #   @game.update(state: 'turn')
       # end
       redirect_to gmu_turn_path
       return
-    elsif @turns.count == 0 && flag
+    elsif @turns.count == 0 && @game.not_played_count == 0
       redirect_to gmu_bestlist_path
       return
     else

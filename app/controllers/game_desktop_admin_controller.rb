@@ -144,7 +144,12 @@ class GameDesktopAdminController < ApplicationController
     #   end
     # end
 
-    if @turn.custom_rating_criteria.present?
+    if @game.state != 'rating'
+      @turn.update(played: true)
+      @game.update(state: 'rating')
+    end
+
+    if @turn.played == true && @turn.custom_rating_criteria.present?
       update_turn_rating(@turn, @custom_rating)
       if @user != @admin
         update_user_rating(@user, @custom_rating, @game)
@@ -164,7 +169,7 @@ class GameDesktopAdminController < ApplicationController
     # end
     
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
-    if @turns.count == 1
+    if @turns.count == 1 && @game.not_played_count == 1
       redirect_to gda_turn_path
       return
     elsif @turns.count == 0 && @game.not_played_count == 0
