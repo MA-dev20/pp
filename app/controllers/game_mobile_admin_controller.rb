@@ -123,6 +123,7 @@ class GameMobileAdminController < ApplicationController
     else
       ActionCable.server.broadcast "game_#{@game.id}_channel",desktop: "intro", game_admin_id: @game.admin_id
     end
+  #Todo: new Task
   # @game.update(state: 'intro')
 	@game.update(active: false, state: 'intro')
   end
@@ -162,6 +163,7 @@ class GameMobileAdminController < ApplicationController
       @turn1 = @turns.first
       @turn2 = @turns.second
       @game.update(active: false, turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
+      #Todo: new Task
       # @game.update(turn1: @turn1.id, turn2: @turn2.id, state: 'choose')
     else
       @turn1 = Turn.find_by(id: @game.turn1)
@@ -189,6 +191,7 @@ class GameMobileAdminController < ApplicationController
     if @game.state != 'turn' && @turns.count == 1
       @turn = @turns.first
       @game.update(state: 'turn', active: false, current_turn: @turn.id)
+      #Todo: new task
       # @game.update(state: 'turn', current_turn: @turn.id)
     elsif @game.state != 'turn'
       @turn1 = Turn.find_by(id: @game.turn1)
@@ -244,7 +247,6 @@ class GameMobileAdminController < ApplicationController
     @game.video_uploading = false
     @game.save
     @custom_rating = @game.custom_rating
-    # debugger
     if @turn.custom_rating_criteria.find_by(admin_id: @admin.id)
       redirect_to gma_rated_path
     elsif @admin == @cur_user
@@ -278,7 +280,6 @@ class GameMobileAdminController < ApplicationController
 
   def skip_rating
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
-    # debugger
     if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
       redirect_to gma_skip_rating_path

@@ -280,9 +280,6 @@
                         </div>
                     <% end %>
                 <% end %>
-                <!-- <div class="checkbox" onclick="moveRatings(this)" data-value="game_objections_pp" style="border-color: #54b7ff">
-                    <label for="game_objections_pp">PetersEinwände <i class="fas fa-times"></i></label>
-                </div> -->
             </div>
         </div>
         
@@ -310,12 +307,6 @@
         		</label>
         	</div>
         </div>
-
-        <!-- <select name="game[rating_option]" id="">
-                <option value="0" selected="selected">All</option>
-                <option value="1">One User</option>
-                <option value="2">Nothing</option>
-            </select> -->
 
         <div class="youtube">
             <label for="" onclick="openYoutube()">Video hinzufügen</label>
@@ -395,81 +386,16 @@
 </div>
 
 
-<style>
-
-    .lets-pitch-img1 {
-        position: absolute;
-        width: 47vh;
-        top: 4vh;
-        left: 4vh;
-    }
-    .lets-pitch-img2 {
-        position: absolute;
-        width: 47vh;
-        top: 18vh;
-        right: 4vh;
-    }
-    .custom-switch {
-        padding-left: 3.8vh;
-    }
-    .custom-switch .custom-control-label::before {
-        width: 3.2vh;
-        height: 1.9vh;
-        left: -3.8vh;
-        border-radius: 1.5vh;
-    }
-    .custom-control-label::before {
-        top: 0.7vh;
-    }
-    .custom-control {
-        position: relative;
-        display: block;
-        min-height: 2.6vh;
-    }
-
-    .custom-switch .custom-control-label::after {
-    top: calc(0.8vh + 0.2vh);
-    margin: 0.1vh 0.1vh;
-    height: 1.27vh;
-    width: 1.27vh;
-}
-
-    .custom-control-label::after {
-        top: 0.45rem;
-    }
-
-    .custom-control-label::before {
-        top: 0.45rem;
-    }
-
-    .karte.letsplay .time .field .time {
-        text-align: inherit;
-        padding-left: 1.6vh;
-        line-height: 4.3vh;
-    }
-
-    .karte.letsplay .add .fas {
-        font-size: 1.8vh;
-    }
-
-    .radio-rating {
-        display: none;
-    }
-
-</style>
 <script>
     function soundCheck() {
         var toggle = $('.toggle-game');
-        // var input_field = $('#game_sound');
         if (toggle.hasClass('left')) {
             toggle.removeClass('left');
             toggle.addClass('right');
-            // input_field.val('false')
             $('#game_sound').attr('value', 'false')
         } else {
             toggle.removeClass('right');
             toggle.addClass('left');
-            // input_field.val('true')
             $('#game_sound').attr('value', 'true')
         }
     }
@@ -610,46 +536,9 @@
                 e.querySelector('.fas').className = "fas fa-times";
                 document.querySelector('.ratings > .checked-field').appendChild(e);
             }
-        }
-
-
-
-
-
-
-
-
-
-        
-        
-        // if (checkbox.checked) {
-        //     e.querySelector('.fas').className = "fas fa-plus";
-        //     document.querySelector('.ratings > .unchecked-field').appendChild(e);
-        //     if($('.ratings .checked-field').children('.checkbox').length == 0) {
-        //         $('.ratings > .checked-field .text').show();
-        //     }
-        //     $(`#${id}`).prop('checked', false)
-        //     $(`#game_ratings_2`).prop('checked', true)
-
-        // } else {
-            
-        //     if($('.ratings .checked-field').children('.checkbox').length) {
-        //         var checked_checkbox = document.querySelector('.ratings > .checked-field .checkbox')
-        //         document.querySelector('.ratings > .checked-field').removeChild(checked_checkbox);
-        //         checked_checkbox.querySelector('.fas').className = "fas fa-plus";
-        //         document.querySelector('.ratings > .unchecked-field').appendChild(checked_checkbox);
-
-        //         $('.ratings > .checked-field .text').hide();
-        //         e.querySelector('.fas').className = "fas fa-times";
-        //         document.querySelector('.ratings > .checked-field').appendChild(e);
-        //     } else {
-        //         $('.ratings > .checked-field .text').hide();
-        //         e.querySelector('.fas').className = "fas fa-times";
-        //         document.querySelector('.ratings > .checked-field').appendChild(e);
-        //     }
-        // }
-        
+        }    
     }
+
 	function moveUser(e) {
         var selected = document.querySelector('#newteam .selected_users');
 		var unselected = document.querySelector('#newteam .unselected_user');
@@ -664,7 +553,6 @@
 			$('#searchNewTeam').val("");
 		}
     }
-
 
     function flash() {
         if ($('.alert-team')[0]) { showTeam(); }
