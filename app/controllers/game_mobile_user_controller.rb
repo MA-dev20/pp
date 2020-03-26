@@ -30,6 +30,10 @@ class GameMobileUserController < ApplicationController
     
   def new
     #Todo: sometimes session give nil value
+    unless session[:game_session_id].present?
+      redirect_to request.referer
+      return
+    end
     @game1 = Game.find(session[:game_session_id])
     if !@game1
       flash[:danger] = 'Konnte keinen passenden Pitch finden!'
