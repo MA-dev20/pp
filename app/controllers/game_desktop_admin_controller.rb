@@ -151,10 +151,10 @@ class GameDesktopAdminController < ApplicationController
     #   end
     # end
 
-    if @game.state != 'rating'
-      @turn.update(played: true)
-      @game.update(state: 'rating')
-    end
+    # if @game.state != 'rating'
+    #   @turn.update(played: true)
+    #   @game.update(state: 'rating')
+    # end
 
     if @turn.played == true && @turn.custom_rating_criteria.present?
       update_turn_rating(@turn, @custom_rating)
