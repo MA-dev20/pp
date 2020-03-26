@@ -191,11 +191,12 @@ class GameDesktopAdminController < ApplicationController
   def after_rating
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
     flag = true
+    flag2 = true
     if @game.rating_user_id.present?
       flag = (@game.not_played_count == 0) ? true : false
+      flag2 = (@game.not_played_count == 1) ? true : false
     end
-    debugger
-    if @turns.count == 1
+    if @turns.count == 1 && flag2
       redirect_to gda_turn_path
       return
     elsif @turns.count == 0 && flag

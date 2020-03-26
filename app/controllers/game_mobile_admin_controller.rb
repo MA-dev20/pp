@@ -210,6 +210,11 @@ class GameMobileAdminController < ApplicationController
   end
     
   def play
+    if ((@game.rating_option == 1 || @game.rating_option == 2) && !@turn.played) {
+      @turn.update(played: true)
+      value = @game.not_played_count - 1
+      @game.update(not_played_count: value)
+    }
     if params[:video] == "true"
       @game.video_toggle = true
       session[:video_record] = params[:video]
@@ -228,8 +233,6 @@ class GameMobileAdminController < ApplicationController
     else
       if @game.state != 'play'
         @game.state ='play'
-        value = @game.not_played_count - 1
-        @game.not_played_count = value
       end
     end
     @game.save!
@@ -288,7 +291,7 @@ class GameMobileAdminController < ApplicationController
     elsif @game.state != 'rating'
       unless @turn.user.present? && @turn.custom_rating_criteria.present?
         # current_admin.custom_rating_criteria.where(turn_id: @turn.id)
-        @turn.update(played: true)
+        # @turn.update(played: true)
       end      
       @game.update(state: 'rating')
     end
