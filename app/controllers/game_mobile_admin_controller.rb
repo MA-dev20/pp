@@ -210,12 +210,12 @@ class GameMobileAdminController < ApplicationController
   end
     
   def play
-    if ((@game.rating_option == 1 || @game.rating_option == 2) && !@turn.played)
+    if ((@game.rating_option == 1 || @game.rating_option == 2) && @turn.played == false)
       @turn.update(played: true)
       value = @game.not_played_count - 1
       @game.update(not_played_count: value)
     end
-    
+
     if params[:video] == "true"
       @game.video_toggle = true
       session[:video_record] = params[:video]
