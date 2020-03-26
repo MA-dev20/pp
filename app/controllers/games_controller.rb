@@ -42,6 +42,7 @@ class GamesController < ApplicationController
   def create_2
   @game = Game.find(params[:game_id])
   @game.update(rating_option: params[:game][:rating_option].to_i)
+  
 	if !params[:game][:baskets].nil?
 	  set_words_for_game(@game, params[:game][:baskets], params[:game][:seconds])
 	elsif params[:game][:baskets].nil?
