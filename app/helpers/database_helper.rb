@@ -1,14 +1,5 @@
 module DatabaseHelper
   
-  def update_turn_rating_old(turn)
-    @ratings = turn.ratings.all
-    if TurnRating.find_by(turn_id: turn.id)
-      TurnRating.find_by(turn_id: turn.id).update(ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
-    else
-      TurnRating.create(turn_id: turn.id, admin_id: turn.admin_id, user_id: turn.user_id, game_id: turn.game_id, ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
-    end
-  end
-
   def update_turn_rating(turn, custom_rating)
     @custom_ratings_criteria = turn.custom_rating_criteria.all
     @turn_rating_criteria = TurnRatingCriterium.where(turn_id: turn.id)
@@ -16,16 +7,13 @@ module DatabaseHelper
     ratings_avg = {}
     custom_rating.rating_criteria.each do |rating|
       rating_value_hash = @custom_ratings_criteria.where(name: rating[:name]).map{|rating| rating.attributes.slice('value')}
-      # if rating_value_hash.length != 0 
-        avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-        ratings_avg[rating[:name]] = avg
-      # end
+      avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+      ratings_avg[rating[:name]] = avg
     end
     rating_value_hash = @custom_ratings_criteria.where(name: 'ges').map{|rating| rating.attributes.slice('value')}
-    # if rating_value_hash.length != 0 
-      avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
-      ges_avg = avg
-    # end
+    avg = rating_value_hash.sum {|rating| rating['value']} / rating_value_hash.length
+    ges_avg = avg
+
     if @turn_rating_criteria.present?
       ratings_avg.each do |key, value|
         @turn_rating_criteria.find_by(name: key).update(value: value)
@@ -99,7 +87,6 @@ module DatabaseHelper
     end
   end
 
-
   def update_game_rating(custom_rating, game)
     ratings_avg = {}
     @ratings = TurnRatingCriterium.where(game_id: game.id)
@@ -108,16 +95,7 @@ module DatabaseHelper
     
     uniq_ratings_name.each do |rating_hash|
       rating_value_hash = @ratings.where(name: rating_hash['name']).map{|rating| rating.attributes.slice('value')}
-      # avg = rating_value_hash.sum {|rating| rating['value'] unless rating['value'].nil? } / rating_value_hash.length
-      count = 0
-      values = 0
-      rating_value_hash.each do |rating|
-        unless rating['value'].nil?
-          values += rating['value']
-          count += 1
-        end
-      end
-      avg = values / count
+      avg = rating_value_hash.sum { |rating| rating['value'] } / rating_value_hash.length
       ratings_avg[rating_hash['name']] = avg
     end
 
@@ -187,6 +165,16 @@ module DatabaseHelper
     end
   end
 
+
+  
+  def update_turn_rating_old(turn)
+    @ratings = turn.ratings.all
+    if TurnRating.find_by(turn_id: turn.id)
+      TurnRating.find_by(turn_id: turn.id).update(ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
+    else
+      TurnRating.create(turn_id: turn.id, admin_id: turn.admin_id, user_id: turn.user_id, game_id: turn.game_id, ges: @ratings.average(:ges), body: @ratings.average(:body), creative: @ratings.average(:creative), rhetoric: @ratings.average(:rhetoric), spontan: @ratings.average(:spontan))
+    end
+  end
 
   def update_user_rating_old(user)
     @ratings = TurnRating.where(user_id: user.id)
