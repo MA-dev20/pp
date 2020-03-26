@@ -285,16 +285,24 @@ class GameMobileAdminController < ApplicationController
 
   def skip_rating
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
-    if @rating && @game.state == 'rate'
+    # if @rating && @game.state == 'rate'
+    #   @game.update(state: 'rating')
+    #   redirect_to gma_skip_rating_path
+    #   return
+    # elsif @game.state != 'rating'
+    #   # unless @turn.user.present? && @turn.custom_rating_criteria.present?
+    #     # current_admin.custom_rating_criteria.where(turn_id: @turn.id)
+    #     # @turn.update(played: true)
+    #   # end      
+    #   @game.update(state: 'rating') 
+    # end
+
+    if @rating.present? && @game.state != 'rating'
       @game.update(state: 'rating')
-      redirect_to gma_skip_rating_path
-      return
+    elsif !@rating.present?
+      # @turn.update(status: "ended")
     elsif @game.state != 'rating'
-      # unless @turn.user.present? && @turn.custom_rating_criteria.present?
-        # current_admin.custom_rating_criteria.where(turn_id: @turn.id)
-        # @turn.update(played: true)
-      # end      
-      @game.update(state: 'rating')
+      @game.update(state: 'rating') 
     end
     
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
