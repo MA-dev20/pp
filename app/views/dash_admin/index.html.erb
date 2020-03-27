@@ -43,7 +43,7 @@
     <input type="text" id="game_sound" name="game[mute_sound]" value="false" style="display: none">
     <div class="toggle-my-ratings toggle-my-ratings-1">
         <div class="toggle toggle-game right" onclick="soundCheck()"><div class="dot"></div></div>
-        <div class="text">Game sound</div>
+        <div class="text">Pitch sound</div>
     </div>
     
     <button class="btn btn-green" onclick="submitForm()">weiter!</button>
@@ -192,7 +192,7 @@
     <%= form_for(:game, url: new_game_2_path(@game), html: {id: 'game-form'}) do |f| %>
     <div class="karte-content">
         <div class="time">
-            <label>Deine Zeit</label><br>
+            <label>Zeit</label><br>
             <div class="field">
                 <input id="game-time" type="number" name="game[seconds]" value="80" style="display: none;">
                 <div class="time" id="game-time-input">1:20</div>
@@ -202,7 +202,7 @@
         </div>
 
         <div class="catchwords">
-            <label>Deine Catchwords
+            <label>Catchwords
                 <% if flash[:select_catchword] %>
                 <div class="alert alert-game2">
                     <%= flash[:select_catchword] %>
@@ -230,7 +230,7 @@
         </div>
 
         <div class="objections">
-            <label>Deine Einwände
+            <label>Einwände
                 <% if flash[:select_objection] %>
                 <div class="alert alert-game2"><%= flash[:select_objection] %></div>
                 <% end %>
@@ -257,7 +257,7 @@
         </div>
 
         <div class="ratings">
-            <label>Deine Rating
+            <label>Bewertungskriterium
                 <% if flash[:select_catchword] %>
                 <div class="alert alert-game2">
                     <%= flash[:select_catchword] %>
@@ -269,7 +269,7 @@
             <% end %>
 
             <div class="checked-field <% if flash[:select_catchword] %>red<% end %>">
-                <div class="text">Original Peter's Ratings</div>
+                <div class="text">Original Peter's Kriterien</div>
                 <div class="add" onclick="ratingsShow()"><i class="fas fa-plus"></i></div>
             </div>
             <div class="unchecked-field">
@@ -284,7 +284,7 @@
         </div>
         
         <div class="rate-type">
-        	<label for="">Bewertungsausgabe</label>
+        	<label for="">Bewertungsausgabe (nach jedem Pitch)</label>
         	<div class="form-group">
         		<input type="radio" id="all_ratings" name="game[rating_option]" value="0" checked>
         		<label for="all_ratings">

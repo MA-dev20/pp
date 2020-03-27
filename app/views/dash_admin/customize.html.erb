@@ -322,7 +322,7 @@
 	<div class="customize-sm edit-ratings-wrapper" id="editCustomRating">
 		<div class="karte">
 			<%= link_to '', dash_admin_customize_path, class: 'back small fas fa-arrow-left' %>
-			<div class="head small left">Ratings bearbeiten</div>
+			<div class="head small left">Liste bearbeiten</div>
 			<div id="edit_rating">
 				<%= form_for(:rating, url: edit_custom_rating_path(@custom_rating), html: {id: 'edit_form'}) do |f| %>
 					<% if flash[:custom_rating_update] %>
@@ -340,7 +340,7 @@
 					<%#= f.submit 'speichern', class: 'btn btn-green' %>
 				<% end %>
 				<%= form_for(:criteria, url: new_rating_criteria_path(@custom_rating)) do |f| %>
-						<label>Rating hinzufügen
+						<label>Bewertungskriterium hinzufügen
 						<% if flash[:rating_name] %>
 							<div class="alert alert-label"><%= flash[:rating_name] %></div>
 						<% end %>
@@ -354,7 +354,7 @@
 				<table>
 					<thead>
 						<tr onclick="sortTable('rating-table', 'rating-sorter')">
-							<th>Ratings <i class="fas fa-sort" id="rating-sorter"></i></th>
+							<th>Bewertungskriterien <i class="fas fa-sort" id="rating-sorter"></i></th>
 							<th></th>
 							<th></th>
 							<th></th>
@@ -391,7 +391,7 @@
 			<button class="btn btn-green" onclick="showNewCustomRating()">Liste erstellen</button> -->
 			<div class="karte" id="custom_rating">
 				<div class="head-flex">
-					<div class="left">Custom Ratings</div>
+					<div class="left">Bewertungen</div>
 					<div class="right"><button class="custom-submit" onclick="showNewCustomRating()">+</button></div>	
 				</div>
 				<div class="list" id="rating-list">
@@ -469,7 +469,7 @@
 		<div class="karte">
 			<div class="head">Liste löschen?</div>
 			<div class="body">
-				Bist du sicher das du die Einwände unwiederuflich löschen möchtest?
+				Bist du sicher das du die Bewertungen unwiederuflich löschen möchtest?
 			</div>
 			<div class="bottom" style="display: flex;">
 				<%= link_to 'löschen', destroy_custom_rating_path(@custom_rating, 'dash_admin'), class: 'btn btn-green' %>
