@@ -207,6 +207,19 @@ class GameMobileAdminController < ApplicationController
 	    ActionCable.server.broadcast "game_#{@game.id}_channel",game_state: "turn", game_admin_id: @game.admin_id
     end
     @cur_user = Turn.find_by(id: @game.current_turn).findUser
+
+    if @game.rating_option == 2 || @game.rating_option == 1
+      @current_turn = Turn.find(@game.current_turn)
+      if @current_turn.custom_rating_criteria.present?
+        unless TurnRatingCriterium.where(turn_id: @current_turn.id).present?
+          @custom_rating = @game.custom_rating
+          update_turn_rating(@current_turn, @custom_rating)
+          if @cur_user != @admin
+            update_user_rating(@cur_user, @custom_rating, @game)
+          end
+        end
+      end
+    end
   end
     
   def play
@@ -285,25 +298,18 @@ class GameMobileAdminController < ApplicationController
 
   def skip_rating
     @rating = CustomRatingCriterium.find_by(turn_id: @turn.id)
-    # if @rating && @game.state == 'rate'
-    #   @game.update(state: 'rating')
-    #   redirect_to gma_skip_rating_path
-    #   return
-    # elsif @game.state != 'rating'
-    #   # unless @turn.user.present? && @turn.custom_rating_criteria.present?
-    #     # current_admin.custom_rating_criteria.where(turn_id: @turn.id)
-    #     # @turn.update(played: true)
-    #   # end      
-    #   @game.update(state: 'rating') 
-    # end
-
-    if @rating.present? && @game.state != 'rating'
+    if @rating && @game.state == 'rate'
       @game.update(state: 'rating')
-    elsif !@rating.present?
-      # @turn.update(status: "ended")
+      redirect_to gma_skip_rating_path
+      return
     elsif @game.state != 'rating'
+      # unless @turn.user.present? && @turn.custom_rating_criteria.present?
+        # current_admin.custom_rating_criteria.where(turn_id: @turn.id)
+        # @turn.update(played: true)
+      # end      
       @game.update(state: 'rating') 
     end
+
     
     @turns = @game.turns.where(status: "accepted").playable.sample(100)
     if @turns.count == 1 && @game.not_played_count == 1

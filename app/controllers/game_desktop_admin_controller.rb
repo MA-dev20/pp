@@ -83,6 +83,20 @@ class GameDesktopAdminController < ApplicationController
     @turn2 = Turn.find_by(id: @game.turn2)
     @turn = Turn.find_by(id: @game.current_turn)
     @user = @turn.findUser
+
+    if @game.rating_option == 2 || @game.rating_option == 1
+      @current_turn = Turn.find(@game.current_turn)
+      if @current_turn.custom_rating_criteria.present?
+        unless TurnRatingCriterium.where(turn_id: @current_turn.id).present?
+          @current_user = @current_turn.findUser
+          @custom_rating = @game.custom_rating
+          update_turn_rating(@current_turn, @custom_rating)
+          if @current_user != @admin
+            update_user_rating(@current_user, @custom_rating, @game)
+          end
+        end
+      end
+    end
   end
     
   def play
@@ -151,18 +165,21 @@ class GameDesktopAdminController < ApplicationController
     #   end
     # end
 
-    if @game.state != 'rating'
-      @turn.update(played: true)
-      @game.update(state: 'rating')
-    end
+    # if @game.state != 'rating'
+    #   @turn.update(played: true)
+    #   @game.update(state: 'rating')
+    # end
 
-    # if @turn.played == true && @turn.custom_rating_criteria.present?
+    # debugger
+
+    if @turn.played == true && @turn.custom_rating_criteria.present?
       update_turn_rating(@turn, @custom_rating)
       if @user != @admin
         update_user_rating(@user, @custom_rating, @game)
       end
       @rating = @turn.turn_rating
-    # end 
+    end 
+
     # if @game.state != 'rating' && @disabled_ratings_count == 0
     #   # @turn.update(status: 'ended')
     #   @turn.update(played: true)
@@ -212,6 +229,19 @@ class GameDesktopAdminController < ApplicationController
   end
     
   def bestlist
+    if @game.rating_option == 2 || @game.rating_option == 1
+      @current_turn = Turn.find(@game.current_turn)
+      if @current_turn.custom_rating_criteria.present?
+        unless TurnRatingCriterium.where(turn_id: @current_turn.id).present?
+          @current_user = @current_turn.findUser
+          @custom_rating = @game.custom_rating
+          update_turn_rating(@current_turn, @custom_rating)
+          if @current_user != @admin
+            update_user_rating(@current_user, @custom_rating, @game)
+          end
+        end
+      end
+    end
     if @game.state != 'bestlist'
       @game.update(state: 'bestlist')
     end
