@@ -323,7 +323,24 @@ class GameMobileUserController < ApplicationController
   end
     
   def bestlist
-    @turn_rating = @game.turn_rating_criteria.where(user_id: @user.id, name: 'ges').last
+    if @game.turn_rating_criteria.where(user_id: @user.id, name: 'ges', ended: false).present?
+      @turn_rating = @game.turn_rating_criteria.where(user_id: @user.id, name: 'ges', ended: false).last
+    else
+      if @game.rating_option == 2 || @game.rating_option == 1
+        @current_turn = Turn.find(@game.current_turn)
+        if @current_turn.custom_rating_criteria.present?
+          unless TurnRatingCriterium.where(turn_id: @current_turn.id).present?
+            @current_user = @current_turn.findUser
+            @custom_rating = @game.custom_rating
+            update_turn_rating(@current_turn, @custom_rating)
+            if @current_user != @admin
+              update_user_rating(@current_user, @custom_rating, @game)
+            end
+          end
+        end
+      end
+      @turn_rating = @game.turn_rating_criteria.where(user_id: @user.id, name: 'ges', ended: false).last
+    end
     if @turn_rating.nil?
       redirect_to gmu_bestlist_path
       return
