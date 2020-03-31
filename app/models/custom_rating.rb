@@ -5,7 +5,7 @@ class CustomRating < ApplicationRecord
   has_many :games, dependent: :nullify
   has_many :turns, dependent: :nullify
 
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, scope: :admin
 
   # has_many :users_custom_ratings
   # has_many :users, through: :users_custom_ratings
