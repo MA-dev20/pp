@@ -92,7 +92,10 @@
 .video-details .left-part .head.small {
 	line-height: 4vh;
 	height: 6vh;
-	font-weight: bold;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .video-details .left-part .name-date {
     position: relative;
@@ -839,6 +842,9 @@
     text-align: left;
     padding: 0 1.8vh;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .video-karte .player img {
     height: 2.35vh;
