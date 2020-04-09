@@ -48,7 +48,16 @@ module ApplicationHelper
   end
   
   def generate_qr(text)
-    RQRCode::QRCode.new( text, :size => 15, :level => :h )
+    # RQRCode::QRCode.new( text, :size => 15, :level => :h )
+    qrcode = RQRCode::QRCode.new(text)
+    svg = qrcode.as_svg(
+      offset: 0,
+      color: '145daa',
+      shape_rendering: 'crispEdges',
+      module_size: 8,
+      standalone: true
+    )
+    svg
   end
 
 end

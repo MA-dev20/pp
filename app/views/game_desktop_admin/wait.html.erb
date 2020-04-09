@@ -15,7 +15,8 @@
 
 <div class="qr-code-wrapper">
     <div class="qr-img-div">
-        <%= raw generate_qr("#{request.host_with_port}/#{@game.password}").as_html %>
+        <%#= raw generate_qr("#{request.host_with_port}/#{@game.password}").as_html %>
+        <%= generate_qr("#{request.host_with_port}/#{@game.password}").html_safe %>
     </div>
 </div>
 
