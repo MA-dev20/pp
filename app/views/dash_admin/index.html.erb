@@ -624,6 +624,9 @@
         } else if ($('#game-time').val() == 150) {
             $('#game-time').val(300);
             $('#game-time-input').text('5:00');
+        }  else if ($('#game-time').val() == 20) {
+            $('#game-time').val(80);
+            $('#game-time-input').text('1:20');
         }
     }
     function timeDown() {
@@ -633,6 +636,9 @@
         } else if ($('#game-time').val() == 300) {
             $('#game-time').val(150);
             $('#game-time-input').text('2:30');
+        } else if ($('#game-time').val() == 80) {
+            $('#game-time').val(20);
+            $('#game-time-input').text('0:20');
         }
     }
 

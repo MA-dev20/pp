@@ -19,6 +19,8 @@
         @context = '01:20'   
         elsif @game.wait_seconds == 150
         @context = '02:30'
+        elsif @game.wait_seconds == 20
+        @context = '00:20'
         else
         @context = '05:00'
         end
@@ -27,6 +29,7 @@
         <div class="countdown fly_in_bottom">
           <span class="timer animated flipInX" id='timerall'><%= @context %></span>
         </div>
+        <div id="fullWord" style="display:none"><%= @word.name %></div>
         <div id="word" style="display:none" data-target-resolver><%= @word.name %></div>
     </div>
 </section>
@@ -85,14 +88,22 @@
 </style>
 
 <script type="text/javascript">
-<% if !@peterswords.words.find_by(id: @word.id).nil? %>
-	document.getElementById("word_sound").volume = 0.5;
-<% end %>
-document.getElementById("intro").volume = 0.2;
-document.getElementById("countdown").volume = 0.5;
-document.getElementById("theme").volume = 0.1;
+    <% if !@peterswords.words.find_by(id: @word.id).nil? %>
+        document.getElementById("word_sound").volume = 0.5;
+    <% end %>
+    document.getElementById("intro").volume = 0.2;
+    document.getElementById("countdown").volume = 0.5;
+    document.getElementById("theme").volume = 0.1;
     $('#navbar').hide();
 
+    const WORD_LENGTH = document.getElementById('fullWord').textContent.length
+    if (WORD_LENGTH > 78) {
+        $('#word').css({'font-size': '8vh'});
+        $('.countdown').css({'font-size': '6vh', 'top': '68.5vh'});
+    } else if (WORD_LENGTH > 35) {
+        $('#word').css({'font-size': '9vh'});
+        $('.countdown').css({'font-size': '6vh', 'top': '68vh'});
+    }
     function callback() {
 		<% if @game.wait_seconds == 80 %>
 			document.getElementById('video-bg').currentTime = 9;

@@ -129,15 +129,13 @@ const strings = [
     document.getElementById('word').innerHTML
 ];
 
+
 let counter = 0;
 
+const WORD_LENGTH = document.getElementById('fullWord').textContent.length
 const options = {
   // Initial position
   offset: 0,
-  // Timeout between each random character
-  timeout: 15,
-  // Number of random characters to show
-  iterations: 10,
   // Random characters to pick from
   characters: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'x', '#', '%', '&', '-', '+', '_', '?', '/', '\\', '='],
   // String to resolve
@@ -145,7 +143,17 @@ const options = {
   // The element
   element: document.querySelector('[data-target-resolver]')
 }
-
+if (WORD_LENGTH > 57) {
+  options.timeout = 6 // Timeout between each random character 
+  options.iterations = 4 // Number of random characters to show
+} else if (WORD_LENGTH > 35) {
+  options.timeout = 10 
+  options.iterations = 5
+} else {
+  options.timeout = 15
+  options.iterations = 10
+}
 resolver.resolve(options, callback);
+
 }
 /* END */
