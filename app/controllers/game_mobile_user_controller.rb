@@ -409,7 +409,15 @@ class GameMobileUserController < ApplicationController
         @word = Word.all.sample(5).first if @word.nil?
       end
       if @game.own_words
-        @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
+        if !@game.catchword_basket.nil?
+          CatchwordsBasket.find_by(game_id: @game.id, type: nil).words.each do |word|
+            unless @game.turns.find_by(word_id: word.id).present?
+              @word = word
+            end
+          end
+          @word = CatchwordsBasket.find_by(game_id: @game.id, type: nil).words.sample(5).first if @word.nil?
+        end
+        # @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(50).first if @word.nil?
       else
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(50).first if CatchwordsBasket.find_by(name: 'PetersWords').present?
