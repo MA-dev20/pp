@@ -98,11 +98,11 @@
 
     const WORD_LENGTH = document.getElementById('fullWord').textContent.length
     if (WORD_LENGTH > 78) {
-        $('#word').css({'font-size': '8vh'});
-        $('.countdown').css({'font-size': '6vh', 'top': '68.5vh'});
+        $('#word').css({'font-size': '8vh', 'line-height': '11vh'});
+        $('.countdown').css({'font-size': '13vh', 'top': '68vh','line-height': '12vh', 'height': '12vh'});
     } else if (WORD_LENGTH > 35) {
-        $('#word').css({'font-size': '9vh'});
-        $('.countdown').css({'font-size': '6vh', 'top': '68vh'});
+        $('#word').css({'font-size': '9vh', 'line-height': '11vh'});
+        $('.countdown').css({'font-size': '13vh', 'top': '68vh','line-height': '12vh', 'height': '12vh'});
     }
     function callback() {
 		<% if @game.wait_seconds == 80 %>
