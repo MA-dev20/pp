@@ -410,7 +410,10 @@ class GameMobileAdminController < ApplicationController
       @game = Game.find(session[:game_session_id])
       sign_in(@game)
       if @game.own_words
-        @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
+        if !@game.catchword_basket.nil?
+          @word = CatchwordsBasket.find_by(game_id: @game.id, type: nil).words.sample(5).first
+        end
+        # @word = @game.catchword_basket.words.sample(5).first if !@game.catchword_basket.nil?
         @word = CatchwordsBasket.find_by(name: 'PetersWords').words.all.sample(5).first if @word.nil?
         @word = Word.all.sample(5).first if @word.nil?
       else
