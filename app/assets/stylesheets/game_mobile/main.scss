@@ -1311,3 +1311,10 @@ input[type='radio'] {
       justify-content: center;
   }
 }
+
+.ellipsis-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 90%;
+}

@@ -525,9 +525,8 @@
     margin-left: -5.6vh !important;
 }
 
-.ellipsis-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 90%;
+.text-overflow-center {
+    margin-left: -100%;
+    margin-right: -100%;
+    text-align: center;
 }
