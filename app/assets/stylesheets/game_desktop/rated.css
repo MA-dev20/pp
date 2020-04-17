@@ -524,3 +524,10 @@
     display: table !important;
     margin-left: -5.6vh !important;
 }
+
+.ellipsis-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 90%;
+}

@@ -17,7 +17,7 @@
     <div class="middle" style="top: calc(<%= @top %>% - 350px);">
         <% @custom_rating.rating_criteria.each_with_index do |rating, index| %>
             <div class="row">
-                <label for="" class="nunito-bold"><%= rating.name.titleize %></label><div class="output" id="val<%= index+1 %>"></div>
+                <label for="" class="ellipsis-text nunito-bold"><%= rating.name.titleize %></label><div class="output" id="val<%= index+1 %>"></div>
                 <%= f.range_field rating.name, min: 0, max: 100, id: "slider#{index+1}" %>
             </div>  
         <% end %>
