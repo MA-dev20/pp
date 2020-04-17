@@ -1,7 +1,17 @@
 <section id="gd_rated">
 <% if @turn_rating.length - 1 == 1 %>
     <section id="gd_rated_ges">
-        <div class="text nunito-bold">
+        <%
+            name = @turn_rating[0][:name]
+            if name.length > 10 && name.length <= 13
+                gd_rated_class = 'gd_rated_text_size9'
+            elsif name.length > 28
+                gd_rated_class = 'gd_rated_text_size28'
+            elsif name.length > 13
+                gd_rated_class = 'gd_rated_text_size13'
+            end
+        %>
+        <div class="text nunito-bold <%= gd_rated_class %>">
             <%= @turn_rating[0][:name] %>
         </div>
         <div class="circle" id="ges">
@@ -12,8 +22,16 @@
     </section>
 <% else %>
     <% if @turn_rating.length - 1 >= 2 %>
+        <%
+            name = @turn_rating[0][:name]
+            if name.length >= 28
+                gd_rated_class = 'gd_criteria_text_size28'
+            elsif name.length > 15
+                gd_rated_class = 'gd_criteria_text_size15'
+            end
+        %>
         <section id="gd_rated_spontan">
-            <div class="text nunito-bold">
+            <div class="text nunito-bold <%= gd_rated_class %>">
                 <%= @turn_rating[0][:name] %>
             </div>
             <div class="circle" id='spontan'>
@@ -27,8 +45,16 @@
         </section>
     <% end %>
     <% if @turn_rating.length - 1 >= 3 %>
+        <%
+            name = @turn_rating[2][:name]
+            if name.length >= 28
+                gd_rated_class = 'gd_criteria_text_size28'
+            elsif name.length > 15
+                gd_rated_class = 'gd_criteria_text_size15'
+            end
+        %>
         <section id="gd_rated_creativ">
-            <div class="text nunito-bold">
+            <div class="text nunito-bold <%= gd_rated_class %>">
                 <%= @turn_rating[2][:name] %>
             </div>
             <div class="circle" id="creativ">
@@ -42,8 +68,16 @@
         </section>
     <% end %>
     <% if @turn_rating.length - 1 >= 2 %>
+        <%
+            name = @turn_rating[1][:name]
+            if name.length >= 28
+                gd_rated_class = 'gd_criteria_text_size28'
+            elsif name.length > 15
+                gd_rated_class = 'gd_criteria_text_size15'
+            end
+        %>
         <section id="gd_rated_body">
-            <div class="text nunito-bold">
+            <div class="text nunito-bold <%= gd_rated_class %>">
                 <%= @turn_rating[1][:name] %>
             </div>
             <div class="circle" id='body'>
@@ -57,8 +91,16 @@
         </section>
     <% end %>
     <% if @turn_rating.length - 1 >= 4 %>
+        <%
+            name = @turn_rating[3][:name]
+            if name.length >= 28
+                gd_rated_class = 'gd_criteria_text_size28'
+            elsif name.length > 15
+                gd_rated_class = 'gd_criteria_text_size15'
+            end
+        %>
         <section id="gd_rated_rhetoric">
-            <div class="text nunito-bold">
+            <div class="text nunito-bold <%= gd_rated_class %>">
                 <%= @turn_rating[3][:name] %>
             </div>
             <div class="circle" id="rhetoric">
