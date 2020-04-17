@@ -15,7 +15,7 @@
             end
         %>
         <div class="text nunito-bold <%= gd_rated_class %>">
-            <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[0][:name] %></span>
+            <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[0][:name].split(' ').map(&:capitalize).join(" ") %></span>
         </div>
         <div class="circle" id="ges">
             <%= image_tag @user.avatar.quad.url, class: 'avatar' %>
@@ -29,8 +29,10 @@
             gd_rated_class = ''
             name = @turn_rating[0][:name]
             if name.match(" ").present?
-                if name.length >= 28
-                    gd_rated_class = 'gd_criteria_text_size28'
+                if name.length > 25 && name.length < 30 
+                    gd_rated_class = 'gd_criteria_text_size25'
+                elsif name.length >= 30 
+                    gd_rated_class = 'gd_criteria_text_size30'            
                 elsif name.length > 15
                     gd_rated_class = 'gd_criteria_text_size15'
                 end
@@ -38,7 +40,7 @@
         %>
         <section id="gd_rated_spontan">
             <div class="text nunito-bold <%= gd_rated_class %>">
-                <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[0][:name] %></span>
+                <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[0][:name].split(' ').map(&:capitalize).join(" ") %></span>
             </div>
             <div class="circle" id='spontan'>
                 <div class="bg_1">
@@ -55,8 +57,10 @@
             gd_rated_class = ''
             name = @turn_rating[2][:name]
             if name.match(" ").present?
-                if name.length >= 28
-                    gd_rated_class = 'gd_criteria_text_size28'
+                if name.length > 25 && name.length < 30 
+                    gd_rated_class = 'gd_criteria_text_size25'
+                elsif name.length >= 30 
+                    gd_rated_class = 'gd_criteria_text_size30'            
                 elsif name.length > 15
                     gd_rated_class = 'gd_criteria_text_size15'
                 end
@@ -64,7 +68,7 @@
         %>
         <section id="gd_rated_creativ">
             <div class="text nunito-bold <%= gd_rated_class %>">
-                <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[2][:name] %></span>
+                <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[2][:name].split(' ').map(&:capitalize).join(" ") %></span>
             </div>
             <div class="circle" id="creativ">
                 <div class="bg_1">
@@ -81,8 +85,10 @@
             gd_rated_class = ''
             name = @turn_rating[1][:name]
             if name.match(" ").present?
-                if name.length >= 28
-                    gd_rated_class = 'gd_criteria_text_size28'
+                if name.length > 25 && name.length < 30 
+                    gd_rated_class = 'gd_criteria_text_size25'
+                elsif name.length >= 30 
+                    gd_rated_class = 'gd_criteria_text_size30'            
                 elsif name.length > 15
                     gd_rated_class = 'gd_criteria_text_size15'
                 end
@@ -90,7 +96,7 @@
         %>
         <section id="gd_rated_body">
             <div class="text nunito-bold <%= gd_rated_class %>">
-                <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[1][:name] %></span>
+                <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[1][:name].split(' ').map(&:capitalize).join(" ") %></span>
             </div>
             <div class="circle" id='body'>
                 <div class="bg_2">
@@ -107,8 +113,10 @@
             gd_rated_class = ''
             name = @turn_rating[3][:name]
             if name.match(" ").present?
-                if name.length >= 28
-                    gd_rated_class = 'gd_criteria_text_size28'
+                if name.length > 25 && name.length < 30 
+                    gd_rated_class = 'gd_criteria_text_size25'
+                elsif name.length >= 30 
+                    gd_rated_class = 'gd_criteria_text_size30'            
                 elsif name.length > 15
                     gd_rated_class = 'gd_criteria_text_size15'
                 end
@@ -116,7 +124,7 @@
         %>
         <section id="gd_rated_rhetoric">
             <div class="text nunito-bold <%= gd_rated_class %>">
-                <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[3][:name] %></span>
+                <span class="<%= 'text-overflow-center' unless gd_rated_class.present? %>"><%= @turn_rating[3][:name].split(' ').map(&:capitalize).join(" ") %></span>
             </div>
             <div class="circle" id="rhetoric">
                 <div class="bg_2">

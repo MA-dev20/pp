@@ -518,11 +518,17 @@
     top: -4vh !important;
     line-height: 4vh !important;
 }
-.gd_criteria_text_size28 {
+.gd_criteria_text_size30 {
     top: -4vh !important;
     line-height: 4vh !important;
     display: table !important;
     margin-left: -5.6vh !important;
+}
+.gd_criteria_text_size25 {
+    top: -4vh !important;
+    line-height: 4vh !important;
+    display: table !important;
+    margin-left: -2.6vh !important;
 }
 
 .text-overflow-center {
