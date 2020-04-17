@@ -144,7 +144,12 @@ class GameDesktopAdminController < ApplicationController
       end
       @turn_rating << @turn_rating_copy.where(name: 'ges').first
     else
-      @turn_rating = @turn.turn_rating_criteria
+      @turn_rating = []
+      @turn_rating_copy = @turn.turn_rating_criteria
+      @turn_rating_copy.each do |tr|
+        @turn_rating << tr if tr.name != 'ges'
+      end
+      @turn_rating << @turn_rating_copy.where(name: 'ges').first
     end
   end
   
